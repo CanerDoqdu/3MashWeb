@@ -1,2 +1,2 @@
 # 3MashWeb
-ikas temalarını ikas builders ile cli seviyesinde yeni tema oluşturma
+ikas temalarını ikas builders ile cli seviyesinde yeniden düzenleme ve tema oluşturma
