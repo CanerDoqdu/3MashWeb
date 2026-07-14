@@ -1,0 +1,1635 @@
+{
+  "name": "3MashTemplate",
+  "version": "1.0.0",
+  "projectId": "2tplvqpo",
+  "globalStyles": "./src/global.css",
+  "components": [
+    {
+      "id": "2tplvqpo-gegXWtHSDG",
+      "name": "Example Component",
+      "entry": "./src/components/ExampleComponent/index.tsx",
+      "styles": "./src/components/ExampleComponent/styles.css",
+      "props": [
+        {
+          "name": "title",
+          "displayName": "Title",
+          "type": "TEXT",
+          "required": true,
+          "defaultValue": "Hello World",
+          "description": "The main title text"
+        },
+        {
+          "name": "description",
+          "displayName": "Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "This is an example ikas code component built with Preact.",
+          "description": "The description text below the title"
+        },
+        {
+          "name": "showButton",
+          "displayName": "Show Button",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "description": "Whether to show the action button"
+        },
+        {
+          "name": "buttonText",
+          "displayName": "Button Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Click Me",
+          "description": "The text displayed on the button"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-OFz4UxPGay",
+      "name": "Example Section",
+      "entry": "./src/components/ExampleSection/index.tsx",
+      "styles": "./src/components/ExampleSection/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "heading",
+          "displayName": "Heading",
+          "type": "TEXT",
+          "required": true,
+          "defaultValue": "Welcome to Our Store",
+          "description": "The section heading text",
+          "groupId": "content"
+        },
+        {
+          "name": "subtitle",
+          "displayName": "Subtitle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Discover our latest products and collections.",
+          "description": "The subtitle text below the heading",
+          "groupId": "content"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "description": "The section background color",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content",
+          "description": "Text and copy settings"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Colors and visual style"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-8bHcojLLoH",
+      "name": "ZayNavbar",
+      "entry": "./src/components/ZayNavbar/index.tsx",
+      "styles": "./src/components/ZayNavbar/styles.css",
+      "type": "section",
+      "isHeader": true,
+      "props": [
+        {
+          "name": "logoHref",
+          "displayName": "Logo Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/",
+          "groupId": "content"
+        },
+        {
+          "name": "showTopBar",
+          "displayName": "Show Top Bar",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "top-bar"
+        },
+        {
+          "name": "emailText",
+          "displayName": "Email Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "info@company.com",
+          "groupId": "top-bar"
+        },
+        {
+          "name": "emailHref",
+          "displayName": "Email Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "mailto:info@company.com",
+          "groupId": "top-bar"
+        },
+        {
+          "name": "phoneText",
+          "displayName": "Phone Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "010-020-0340",
+          "groupId": "top-bar"
+        },
+        {
+          "name": "phoneHref",
+          "displayName": "Phone Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "tel:010-020-0340",
+          "groupId": "top-bar"
+        },
+        {
+          "name": "facebookHref",
+          "displayName": "Facebook Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://fb.com/templatemo",
+          "groupId": "social"
+        },
+        {
+          "name": "instagramHref",
+          "displayName": "Instagram Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://www.instagram.com/",
+          "groupId": "social"
+        },
+        {
+          "name": "twitterHref",
+          "displayName": "Twitter Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://twitter.com/",
+          "groupId": "social"
+        },
+        {
+          "name": "linkedinHref",
+          "displayName": "LinkedIn Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://www.linkedin.com/",
+          "groupId": "social"
+        },
+        {
+          "name": "homeText",
+          "displayName": "Home Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Home",
+          "groupId": "navigation"
+        },
+        {
+          "name": "homeHref",
+          "displayName": "Home Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/",
+          "groupId": "navigation"
+        },
+        {
+          "name": "aboutText",
+          "displayName": "About Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "About",
+          "groupId": "navigation"
+        },
+        {
+          "name": "aboutHref",
+          "displayName": "About Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/about",
+          "groupId": "navigation"
+        },
+        {
+          "name": "shopText",
+          "displayName": "Shop Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Shop",
+          "groupId": "navigation"
+        },
+        {
+          "name": "shopHref",
+          "displayName": "Shop Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "navigation"
+        },
+        {
+          "name": "contactText",
+          "displayName": "Contact Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Contact",
+          "groupId": "navigation"
+        },
+        {
+          "name": "contactHref",
+          "displayName": "Contact Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/contact",
+          "groupId": "navigation"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Search Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Search ...",
+          "groupId": "actions"
+        },
+        {
+          "name": "searchAriaLabel",
+          "displayName": "Search Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Search",
+          "groupId": "actions"
+        },
+        {
+          "name": "menuAriaLabel",
+          "displayName": "Menu Button Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Toggle navigation",
+          "groupId": "actions"
+        },
+        {
+          "name": "cartHref",
+          "displayName": "Cart Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/cart",
+          "groupId": "actions"
+        },
+        {
+          "name": "cartCount",
+          "displayName": "Cart Count",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "7",
+          "groupId": "actions"
+        },
+        {
+          "name": "cartAriaLabel",
+          "displayName": "Cart Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Cart",
+          "groupId": "actions"
+        },
+        {
+          "name": "accountHref",
+          "displayName": "Account Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/account",
+          "groupId": "actions"
+        },
+        {
+          "name": "accountCount",
+          "displayName": "Account Count",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "+99",
+          "groupId": "actions"
+        },
+        {
+          "name": "accountAriaLabel",
+          "displayName": "Account Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Account",
+          "groupId": "actions"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "topBarBackgroundColor",
+          "displayName": "Top Bar Background",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#212934",
+          "groupId": "appearance"
+        },
+        {
+          "name": "topBarTextColor",
+          "displayName": "Top Bar Text",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#cfd6e1",
+          "groupId": "appearance"
+        },
+        {
+          "name": "logoColor",
+          "displayName": "Logo Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#59ab6e",
+          "groupId": "appearance"
+        },
+        {
+          "name": "linkColor",
+          "displayName": "Link Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#212934",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#69bb7e",
+          "groupId": "appearance"
+        },
+        {
+          "name": "iconColor",
+          "displayName": "Icon Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#212934",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeBackgroundColor",
+          "displayName": "Badge Background",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#e9eef5",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeTextColor",
+          "displayName": "Badge Text",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#212934",
+          "groupId": "appearance"
+        },
+        {
+          "name": "facebookAriaLabel",
+          "displayName": "Facebook Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Facebook",
+          "groupId": "social"
+        },
+        {
+          "name": "instagramAriaLabel",
+          "displayName": "Instagram Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Instagram",
+          "groupId": "social"
+        },
+        {
+          "name": "twitterAriaLabel",
+          "displayName": "Twitter Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Twitter",
+          "groupId": "social"
+        },
+        {
+          "name": "linkedinAriaLabel",
+          "displayName": "LinkedIn Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "LinkedIn",
+          "groupId": "social"
+        },
+        {
+          "name": "logoText",
+          "displayName": "Logo Text",
+          "type": "TEXT",
+          "required": true,
+          "defaultValue": "Zay",
+          "groupId": "content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content",
+          "description": "Logo settings"
+        },
+        {
+          "id": "top-bar",
+          "name": "Top Bar",
+          "description": "Contact details shown above the main navbar"
+        },
+        {
+          "id": "social",
+          "name": "Social Links",
+          "description": "Social media links"
+        },
+        {
+          "id": "navigation",
+          "name": "Navigation",
+          "description": "Main menu links"
+        },
+        {
+          "id": "actions",
+          "name": "Actions",
+          "description": "Search, cart, and account controls"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Navbar colors"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-5wUyve00Wp",
+      "name": "ZayHeroCarousel",
+      "entry": "./src/components/ZayHeroCarousel/index.tsx",
+      "styles": "./src/components/ZayHeroCarousel/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "slide1ImageUrl",
+          "displayName": "Slide 1 Image URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide1ImageAlt",
+          "displayName": "Slide 1 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Zay eCommerce banner product illustration",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide1Title",
+          "displayName": "Slide 1 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<strong>Zay</strong> eCommerce",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide1Subtitle",
+          "displayName": "Slide 1 Subtitle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tiny and Perfect eCommerce Template",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide1Description",
+          "displayName": "Slide 1 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Zay Shop is an eCommerce HTML5 CSS template with latest version of Bootstrap 5. This template is 100% free provided by TemplateMo website.",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide2ImageUrl",
+          "displayName": "Slide 2 Image URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide2ImageAlt",
+          "displayName": "Slide 2 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Zay product showcase illustration",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide2Title",
+          "displayName": "Slide 2 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Proident occaecat",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide2Subtitle",
+          "displayName": "Slide 2 Subtitle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Aliquip ex ea commodo consequat",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide2Description",
+          "displayName": "Slide 2 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "You are permitted to use this Zay CSS template for your commercial websites. You are not permitted to re-distribute the template ZIP file in any kind of template collection websites.",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide3ImageUrl",
+          "displayName": "Slide 3 Image URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide3ImageAlt",
+          "displayName": "Slide 3 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Zay shopping banner illustration",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide3Title",
+          "displayName": "Slide 3 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Repr in voluptate",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide3Subtitle",
+          "displayName": "Slide 3 Subtitle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ullamco laboris nisi ut",
+          "groupId": "slides"
+        },
+        {
+          "name": "slide3Description",
+          "displayName": "Slide 3 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "We bring you free CSS templates for your websites. If you wish to support TemplateMo, please make a small contribution or tell your friends about our website.",
+          "groupId": "slides"
+        },
+        {
+          "name": "autoPlay",
+          "displayName": "Auto Play",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "controls"
+        },
+        {
+          "name": "autoPlayDelay",
+          "displayName": "Auto Play Delay",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 6000,
+          "groupId": "controls"
+        },
+        {
+          "name": "previousAriaLabel",
+          "displayName": "Previous Button Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Previous slide",
+          "groupId": "controls"
+        },
+        {
+          "name": "nextAriaLabel",
+          "displayName": "Next Button Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Next slide",
+          "groupId": "controls"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#efefef",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#212934",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#59ab6e",
+          "groupId": "appearance"
+        },
+        {
+          "name": "indicatorColor",
+          "displayName": "Indicator Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#59ab6e",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "slides",
+          "name": "Slides",
+          "description": "Slide content and images"
+        },
+        {
+          "id": "controls",
+          "name": "Controls",
+          "description": "Carousel behavior and labels"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Carousel colors"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-0uwEpcacCH",
+      "name": "ZayCategoryShowcase",
+      "entry": "./src/components/ZayCategoryShowcase/index.tsx",
+      "styles": "./src/components/ZayCategoryShowcase/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "heading",
+          "displayName": "Heading",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Categories of The Month",
+          "groupId": "content"
+        },
+        {
+          "name": "description",
+          "displayName": "Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "groupId": "content"
+        },
+        {
+          "name": "category1ImageUrl",
+          "displayName": "Category 1 Image URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "categories"
+        },
+        {
+          "name": "category1ImageAlt",
+          "displayName": "Category 1 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Watches category",
+          "groupId": "categories"
+        },
+        {
+          "name": "category1Title",
+          "displayName": "Category 1 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Watches",
+          "groupId": "categories"
+        },
+        {
+          "name": "category1Href",
+          "displayName": "Category 1 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "categories"
+        },
+        {
+          "name": "category1ButtonText",
+          "displayName": "Category 1 Button Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Go Shop",
+          "groupId": "categories"
+        },
+        {
+          "name": "category2ImageUrl",
+          "displayName": "Category 2 Image URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "categories"
+        },
+        {
+          "name": "category2ImageAlt",
+          "displayName": "Category 2 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Shoes category",
+          "groupId": "categories"
+        },
+        {
+          "name": "category2Title",
+          "displayName": "Category 2 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Shoes",
+          "groupId": "categories"
+        },
+        {
+          "name": "category2Href",
+          "displayName": "Category 2 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "categories"
+        },
+        {
+          "name": "category2ButtonText",
+          "displayName": "Category 2 Button Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Go Shop",
+          "groupId": "categories"
+        },
+        {
+          "name": "category3ImageUrl",
+          "displayName": "Category 3 Image URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "categories"
+        },
+        {
+          "name": "category3ImageAlt",
+          "displayName": "Category 3 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Accessories category",
+          "groupId": "categories"
+        },
+        {
+          "name": "category3Title",
+          "displayName": "Category 3 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Accessories",
+          "groupId": "categories"
+        },
+        {
+          "name": "category3Href",
+          "displayName": "Category 3 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "categories"
+        },
+        {
+          "name": "category3ButtonText",
+          "displayName": "Category 3 Button Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Go Shop",
+          "groupId": "categories"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#212934",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#525b66",
+          "groupId": "appearance"
+        },
+        {
+          "name": "buttonBackgroundColor",
+          "displayName": "Button Background",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#59ab6e",
+          "groupId": "appearance"
+        },
+        {
+          "name": "buttonTextColor",
+          "displayName": "Button Text",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content",
+          "description": "Section heading and intro text"
+        },
+        {
+          "id": "categories",
+          "name": "Categories",
+          "description": "Category card content"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Section colors"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-b8MULjvQlW",
+      "name": "ZayFeaturedProducts",
+      "entry": "./src/components/ZayFeaturedProducts/index.tsx",
+      "styles": "./src/components/ZayFeaturedProducts/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "heading",
+          "displayName": "Heading",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Featured Product",
+          "groupId": "content"
+        },
+        {
+          "name": "description",
+          "displayName": "Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.",
+          "groupId": "content"
+        },
+        {
+          "name": "product1ImageUrl",
+          "displayName": "Product 1 Image URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "products"
+        },
+        {
+          "name": "product1ImageAlt",
+          "displayName": "Product 1 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Gym Weight",
+          "groupId": "products"
+        },
+        {
+          "name": "product1Href",
+          "displayName": "Product 1 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop-single",
+          "groupId": "products"
+        },
+        {
+          "name": "product1Title",
+          "displayName": "Product 1 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Gym Weight",
+          "groupId": "products"
+        },
+        {
+          "name": "product1Price",
+          "displayName": "Product 1 Price",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "$240.00",
+          "groupId": "products"
+        },
+        {
+          "name": "product1Rating",
+          "displayName": "Product 1 Rating",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "products"
+        },
+        {
+          "name": "product1Description",
+          "displayName": "Product 1 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.",
+          "groupId": "products"
+        },
+        {
+          "name": "product1ReviewsText",
+          "displayName": "Product 1 Reviews Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Reviews (24)",
+          "groupId": "products"
+        },
+        {
+          "name": "product2ImageUrl",
+          "displayName": "Product 2 Image URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "products"
+        },
+        {
+          "name": "product2ImageAlt",
+          "displayName": "Product 2 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Cloud Nike Shoes",
+          "groupId": "products"
+        },
+        {
+          "name": "product2Href",
+          "displayName": "Product 2 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop-single",
+          "groupId": "products"
+        },
+        {
+          "name": "product2Title",
+          "displayName": "Product 2 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Cloud Nike Shoes",
+          "groupId": "products"
+        },
+        {
+          "name": "product2Price",
+          "displayName": "Product 2 Price",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "$480.00",
+          "groupId": "products"
+        },
+        {
+          "name": "product2Rating",
+          "displayName": "Product 2 Rating",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "products"
+        },
+        {
+          "name": "product2Description",
+          "displayName": "Product 2 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Aenean gravida dignissim finibus. Nullam ipsum diam, posuere vitae pharetra sed, commodo ullamcorper.",
+          "groupId": "products"
+        },
+        {
+          "name": "product2ReviewsText",
+          "displayName": "Product 2 Reviews Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Reviews (48)",
+          "groupId": "products"
+        },
+        {
+          "name": "product3ImageUrl",
+          "displayName": "Product 3 Image URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "products"
+        },
+        {
+          "name": "product3ImageAlt",
+          "displayName": "Product 3 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Summer Addides Shoes",
+          "groupId": "products"
+        },
+        {
+          "name": "product3Href",
+          "displayName": "Product 3 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop-single",
+          "groupId": "products"
+        },
+        {
+          "name": "product3Title",
+          "displayName": "Product 3 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Summer Addides Shoes",
+          "groupId": "products"
+        },
+        {
+          "name": "product3Price",
+          "displayName": "Product 3 Price",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "$360.00",
+          "groupId": "products"
+        },
+        {
+          "name": "product3Rating",
+          "displayName": "Product 3 Rating",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 5,
+          "groupId": "products"
+        },
+        {
+          "name": "product3Description",
+          "displayName": "Product 3 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Curabitur ac mi sit amet diam luctus porta. Phasellus pulvinar sagittis diam, et scelerisque ipsum lobortis nec.",
+          "groupId": "products"
+        },
+        {
+          "name": "product3ReviewsText",
+          "displayName": "Product 3 Reviews Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Reviews (74)",
+          "groupId": "products"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#e9eef5",
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardBackgroundColor",
+          "displayName": "Card Background",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#212934",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#bcbcbc",
+          "groupId": "appearance"
+        },
+        {
+          "name": "starColor",
+          "displayName": "Star Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ede861",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content",
+          "description": "Section heading and intro text"
+        },
+        {
+          "id": "products",
+          "name": "Products",
+          "description": "Featured product cards"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Product section colors"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-NG7ap4uoAo",
+      "name": "ZayFooter",
+      "entry": "./src/components/ZayFooter/index.tsx",
+      "styles": "./src/components/ZayFooter/styles.css",
+      "type": "section",
+      "isFooter": true,
+      "props": [
+        {
+          "name": "brandTitle",
+          "displayName": "Brand Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Zay Shop",
+          "groupId": "brand"
+        },
+        {
+          "name": "productsTitle",
+          "displayName": "Products Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Products",
+          "groupId": "products"
+        },
+        {
+          "name": "infoTitle",
+          "displayName": "Info Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Further Info",
+          "groupId": "info"
+        },
+        {
+          "name": "addressText",
+          "displayName": "Address Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "123 Consectetur at ligula 10660",
+          "groupId": "contact"
+        },
+        {
+          "name": "phoneText",
+          "displayName": "Phone Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "010-020-0340",
+          "groupId": "contact"
+        },
+        {
+          "name": "phoneHref",
+          "displayName": "Phone Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "tel:010-020-0340",
+          "groupId": "contact"
+        },
+        {
+          "name": "emailText",
+          "displayName": "Email Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "info@company.com",
+          "groupId": "contact"
+        },
+        {
+          "name": "emailHref",
+          "displayName": "Email Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "mailto:info@company.com",
+          "groupId": "contact"
+        },
+        {
+          "name": "productLink1Text",
+          "displayName": "Product Link 1 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Luxury",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink1Href",
+          "displayName": "Product Link 1 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink2Text",
+          "displayName": "Product Link 2 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sport Wear",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink2Href",
+          "displayName": "Product Link 2 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink3Text",
+          "displayName": "Product Link 3 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Men's Shoes",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink3Href",
+          "displayName": "Product Link 3 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink4Text",
+          "displayName": "Product Link 4 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Women's Shoes",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink4Href",
+          "displayName": "Product Link 4 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink5Text",
+          "displayName": "Product Link 5 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Popular Dress",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink5Href",
+          "displayName": "Product Link 5 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink6Text",
+          "displayName": "Product Link 6 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Gym Accessories",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink6Href",
+          "displayName": "Product Link 6 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink7Text",
+          "displayName": "Product Link 7 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sport Shoes",
+          "groupId": "products"
+        },
+        {
+          "name": "productLink7Href",
+          "displayName": "Product Link 7 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop",
+          "groupId": "products"
+        },
+        {
+          "name": "infoLink1Text",
+          "displayName": "Info Link 1 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Home",
+          "groupId": "info"
+        },
+        {
+          "name": "infoLink1Href",
+          "displayName": "Info Link 1 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/",
+          "groupId": "info"
+        },
+        {
+          "name": "infoLink2Text",
+          "displayName": "Info Link 2 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "About Us",
+          "groupId": "info"
+        },
+        {
+          "name": "infoLink2Href",
+          "displayName": "Info Link 2 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/about",
+          "groupId": "info"
+        },
+        {
+          "name": "infoLink3Text",
+          "displayName": "Info Link 3 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Shop Locations",
+          "groupId": "info"
+        },
+        {
+          "name": "infoLink3Href",
+          "displayName": "Info Link 3 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/shop-locations",
+          "groupId": "info"
+        },
+        {
+          "name": "infoLink4Text",
+          "displayName": "Info Link 4 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "FAQs",
+          "groupId": "info"
+        },
+        {
+          "name": "infoLink4Href",
+          "displayName": "Info Link 4 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/faq",
+          "groupId": "info"
+        },
+        {
+          "name": "infoLink5Text",
+          "displayName": "Info Link 5 Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Contact",
+          "groupId": "info"
+        },
+        {
+          "name": "infoLink5Href",
+          "displayName": "Info Link 5 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/contact",
+          "groupId": "info"
+        },
+        {
+          "name": "facebookHref",
+          "displayName": "Facebook Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "http://facebook.com/",
+          "groupId": "social"
+        },
+        {
+          "name": "facebookAriaLabel",
+          "displayName": "Facebook Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Facebook",
+          "groupId": "social"
+        },
+        {
+          "name": "instagramHref",
+          "displayName": "Instagram Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://www.instagram.com/",
+          "groupId": "social"
+        },
+        {
+          "name": "instagramAriaLabel",
+          "displayName": "Instagram Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Instagram",
+          "groupId": "social"
+        },
+        {
+          "name": "twitterHref",
+          "displayName": "Twitter Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://twitter.com/",
+          "groupId": "social"
+        },
+        {
+          "name": "twitterAriaLabel",
+          "displayName": "Twitter Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Twitter",
+          "groupId": "social"
+        },
+        {
+          "name": "linkedinHref",
+          "displayName": "LinkedIn Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://www.linkedin.com/",
+          "groupId": "social"
+        },
+        {
+          "name": "linkedinAriaLabel",
+          "displayName": "LinkedIn Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "LinkedIn",
+          "groupId": "social"
+        },
+        {
+          "name": "emailInputLabel",
+          "displayName": "Email Input Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Email address",
+          "groupId": "subscribe"
+        },
+        {
+          "name": "emailPlaceholder",
+          "displayName": "Email Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Email address",
+          "groupId": "subscribe"
+        },
+        {
+          "name": "subscribeButtonText",
+          "displayName": "Subscribe Button Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Subscribe",
+          "groupId": "subscribe"
+        },
+        {
+          "name": "copyrightText",
+          "displayName": "Copyright Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<span>Copyright &copy; 2021 Company Name | Designed by <a href=\"https://templatemo.com\" target=\"_blank\" rel=\"sponsored\">TemplateMo</a></span>",
+          "groupId": "legal"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#212934",
+          "groupId": "appearance"
+        },
+        {
+          "name": "bottomBackgroundColor",
+          "displayName": "Bottom Background",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#1d242d",
+          "groupId": "appearance"
+        },
+        {
+          "name": "headingColor",
+          "displayName": "Heading Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#cfd6e1",
+          "groupId": "appearance"
+        },
+        {
+          "name": "brandColor",
+          "displayName": "Brand Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#59ab6e",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#cfd6e1",
+          "groupId": "appearance"
+        },
+        {
+          "name": "linkColor",
+          "displayName": "Link Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#dcdde1",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#68bb7d",
+          "groupId": "appearance"
+        },
+        {
+          "name": "borderColor",
+          "displayName": "Border Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#2d343f",
+          "groupId": "appearance"
+        },
+        {
+          "name": "subscribeButtonBackgroundColor",
+          "displayName": "Subscribe Button Background",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#59ab6e",
+          "groupId": "appearance"
+        },
+        {
+          "name": "subscribeButtonTextColor",
+          "displayName": "Subscribe Button Text",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "brand",
+          "name": "Brand",
+          "description": "Store identity and contact heading"
+        },
+        {
+          "id": "contact",
+          "name": "Contact",
+          "description": "Address, phone, and email"
+        },
+        {
+          "id": "products",
+          "name": "Product Links",
+          "description": "Product column links"
+        },
+        {
+          "id": "info",
+          "name": "Info Links",
+          "description": "Further information links"
+        },
+        {
+          "id": "social",
+          "name": "Social Links",
+          "description": "Footer social links"
+        },
+        {
+          "id": "subscribe",
+          "name": "Subscribe",
+          "description": "Email subscription form labels"
+        },
+        {
+          "id": "legal",
+          "name": "Legal",
+          "description": "Copyright text"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Footer colors"
+        }
+      ]
+    }
+  ]
+}

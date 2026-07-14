@@ -1,0 +1,23 @@
+diff --git a/dist/utils/forbid-external-packages.js b/dist/utils/forbid-external-packages.js
+index 9f2f8ab..f76789d 100644
+--- a/dist/utils/forbid-external-packages.js
++++ b/dist/utils/forbid-external-packages.js
+@@ -49,6 +49,9 @@ function packageRootOf(specifier) {
+     }
+     return specifier.split("/")[0];
+ }
++function isWindowsAbsolutePath(specifier) {
++    return /^[A-Za-z]:[\\/]/.test(specifier) || specifier.startsWith("\\\\");
++}
+ /**
+  * Fail the build when a code component imports an npm package that is not on the allowlist.
+  *
+@@ -65,6 +68,8 @@ export function forbidExternalPackagesPlugin() {
+             // Bare specifiers only — skip relative ("./", "../") and absolute ("/") imports.
+             build.onResolve({ filter: /^[^./]/ }, (args) => {
+                 const specifier = args.path;
++                if (isWindowsAbsolutePath(specifier))
++                    return undefined;
+                 if (NODE_BUILTINS.has(specifier))
+                     return undefined;
+                 const root = packageRootOf(specifier);

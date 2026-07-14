@@ -1,0 +1,125 @@
+.zay-category-showcase {
+  width: 100%;
+  padding: 58px 0 64px;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
+.zay-category-showcase *,
+.zay-category-showcase *::before,
+.zay-category-showcase *::after {
+  box-sizing: border-box;
+}
+
+.zay-category-showcase__container {
+  width: min(100% - 32px, 1140px);
+  margin: 0 auto;
+}
+
+.zay-category-showcase__intro {
+  max-width: 640px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.zay-category-showcase__heading {
+  margin: 0 0 10px;
+  font-size: 48px;
+  line-height: 1.15;
+  font-weight: 200;
+  letter-spacing: 0;
+}
+
+.zay-category-showcase__description {
+  color: var(--zay-category-muted);
+  font-size: 18px;
+  line-height: 1.45;
+  font-weight: 300;
+}
+
+.zay-category-showcase__description p {
+  margin: 0;
+}
+
+.zay-category-showcase__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.zay-category-showcase__card {
+  margin-top: 16px;
+  padding: 48px 48px 0;
+  text-align: center;
+}
+
+.zay-category-showcase__image-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.zay-category-showcase__image {
+  width: min(100%, 300px);
+  aspect-ratio: 1;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #dee2e6;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.zay-category-showcase__title {
+  margin: 16px 0;
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.zay-category-showcase__button-row {
+  margin: 0;
+  text-align: center;
+}
+
+.zay-category-showcase__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
+  border-radius: 4px;
+  background: var(--zay-category-button-bg);
+  color: var(--zay-category-button-text);
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.zay-category-showcase__button:hover {
+  filter: brightness(0.96);
+}
+
+@media (min-width: 768px) {
+  .zay-category-showcase__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 575px) {
+  .zay-category-showcase {
+    padding: 42px 0 50px;
+  }
+
+  .zay-category-showcase__card {
+    padding: 32px 32px 0;
+  }
+
+  .zay-category-showcase__heading {
+    font-size: 36px;
+  }
+
+  .zay-category-showcase__description,
+  .zay-category-showcase__button {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,229 @@
+.zay-footer {
+  width: 100%;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
+.zay-footer *,
+.zay-footer *::before,
+.zay-footer *::after {
+  box-sizing: border-box;
+}
+
+.zay-footer__container {
+  width: min(100% - 32px, 1140px);
+  margin: 0 auto;
+}
+
+.zay-footer__columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 48px 0 22px;
+}
+
+.zay-footer__heading {
+  margin: 0 0 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--zay-footer-border);
+  color: var(--zay-footer-heading);
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 300;
+  letter-spacing: 0;
+}
+
+.zay-footer__heading--brand {
+  color: var(--zay-footer-brand);
+  font-weight: 500;
+}
+
+.zay-footer__list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.zay-footer__list-item,
+.zay-footer__contact-item {
+  min-height: 26px;
+  color: inherit;
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 300;
+}
+
+.zay-footer a {
+  color: var(--zay-footer-link);
+  text-decoration: none;
+}
+
+.zay-footer a:hover {
+  color: var(--zay-footer-accent);
+}
+
+.zay-footer__contact-list {
+  gap: 12px;
+}
+
+.zay-footer__contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.zay-footer__contact-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-top: 3px;
+  fill: currentColor;
+}
+
+.zay-footer__divider {
+  width: 100%;
+  height: 1px;
+  margin: 0 0 22px;
+  background: var(--zay-footer-border);
+}
+
+.zay-footer__utility {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 26px;
+}
+
+.zay-footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.zay-footer__social-link {
+  width: 47px;
+  height: 47px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--zay-footer-border);
+  border-radius: 50%;
+  color: var(--zay-footer-link);
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.zay-footer__social-link:hover {
+  background: var(--zay-footer-link);
+  color: #212934;
+}
+
+.zay-footer__social-icon {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.zay-footer__subscribe {
+  width: min(100%, 360px);
+  display: flex;
+  align-items: stretch;
+}
+
+.zay-footer__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.zay-footer__input {
+  min-width: 0;
+  flex: 1 1 auto;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid var(--zay-footer-border);
+  border-right: 0;
+  border-radius: 4px 0 0 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 300;
+  outline: none;
+}
+
+.zay-footer__input::placeholder {
+  color: var(--zay-footer-link);
+  opacity: 0.75;
+}
+
+.zay-footer__button {
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 1px solid var(--zay-footer-subscribe-bg);
+  border-radius: 0 4px 4px 0;
+  background: var(--zay-footer-subscribe-bg);
+  color: var(--zay-footer-subscribe-text);
+  font: inherit;
+  font-size: 18px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.zay-footer__button:hover {
+  filter: brightness(0.96);
+}
+
+.zay-footer__bottom {
+  background: var(--zay-footer-bottom-bg);
+  padding: 18px 0;
+}
+
+.zay-footer__copyright {
+  color: inherit;
+  font-size: 18px;
+  line-height: 1.45;
+  font-weight: 300;
+}
+
+.zay-footer__copyright p,
+.zay-footer__copyright span {
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .zay-footer__columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .zay-footer__utility {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (max-width: 575px) {
+  .zay-footer__container {
+    width: min(100% - 24px, 1140px);
+  }
+
+  .zay-footer__heading {
+    font-size: 26px;
+  }
+
+  .zay-footer__list-item,
+  .zay-footer__contact-item,
+  .zay-footer__input,
+  .zay-footer__button,
+  .zay-footer__copyright {
+    font-size: 16px;
+  }
+}

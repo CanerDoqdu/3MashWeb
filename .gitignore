@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.cursor/
+.ikas/
+3MashTemplate/
+.DS_Store
+*.log
+.ikas-dev-state.json
+asd
