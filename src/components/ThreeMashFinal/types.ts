@@ -1,17 +1,6 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
-  sectionHtml?: string;
-  backgroundColor?: string;
-  textColor?: string;
-  subTextColor?: string;
-  mutedTextColor?: string;
-  lineColor?: string;
-  panelColor?: string;
-  darkColor?: string;
-  accentColor?: string;
-  accentTextColor?: string;
-  accentSoftColor?: string;
-  dangerColor?: string;
+  sectionAnchorId?: string;
   titleText?: string;
   titleEmphasis?: string;
   descriptionHtml?: string;
@@ -19,4 +8,12 @@ export interface Props {
   primaryButtonHref?: string;
   secondaryButtonText?: string;
   secondaryButtonHref?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  subTextColor?: string;
+  accentColor?: string;
+  primaryButtonBackgroundColor?: string;
+  primaryButtonTextColor?: string;
+  secondaryButtonTextColor?: string;
+  buttonRadius?: number;
 }

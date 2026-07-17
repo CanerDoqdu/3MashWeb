@@ -235,6 +235,52 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-curing-image-saturation": percentage(raw(props, "productImageSaturation"), 100, 0, 260),
     "--tmr-curing-image-hue": `${numberInRange(raw(props, "productImageHue"), 0, -180, 180)}deg`,
     "--tmr-curing-image-invert": percentage(raw(props, "productImageInvert"), 0, 0, 100),
+    "--tmr-roi-bg": value(raw(props, "backgroundColor"), "#C7F136"),
+    "--tmr-roi-text": value(raw(props, "textColor"), "#0E0E0C"),
+    "--tmr-roi-sub": value(raw(props, "subTextColor"), "#2C3A09"),
+    "--tmr-roi-eyebrow": value(raw(props, "accentTextColor"), "#3D4D0E"),
+    "--tmr-roi-button-bg": value(raw(props, "buttonBackgroundColor"), "#0E0E0C"),
+    "--tmr-roi-button-text": value(raw(props, "buttonTextColor"), "#FFFFFF"),
+    "--tmr-roi-button-radius": `${numberInRange(raw(props, "buttonRadius"), 10, 0, 32)}px`,
+    "--tmr-eco-icon-width": `${numberInRange(raw(props, "iconImageWidth"), 44, 12, 96)}px`,
+    "--tmr-eco-icon-height": `${numberInRange(raw(props, "iconImageHeight"), 44, 12, 96)}px`,
+    "--tmr-eco-icon-x": `${numberInRange(raw(props, "iconImageXOffset"), 0, -32, 32)}px`,
+    "--tmr-eco-icon-y": `${numberInRange(raw(props, "iconImageYOffset"), 0, -32, 32)}px`,
+    "--tmr-eco-icon-fit": imageFit(raw(props, "iconImageFit")),
+    "--tmr-eco-icon-opacity": percentage(raw(props, "iconImageOpacity"), 100, 0, 100),
+    "--tmr-eco-icon-brightness": percentage(raw(props, "iconImageBrightness"), 100, 0, 220),
+    "--tmr-eco-icon-contrast": percentage(raw(props, "iconImageContrast"), 100, 0, 220),
+    "--tmr-eco-icon-saturation": percentage(raw(props, "iconImageSaturation"), 100, 0, 260),
+    "--tmr-eco-icon-hue": `${numberInRange(raw(props, "iconImageHue"), 0, -180, 180)}deg`,
+    "--tmr-eco-icon-invert": percentage(raw(props, "iconImageInvert"), 0, 0, 100),
+    "--tmr-eco-item-radius": `${numberInRange(raw(props, "itemRadius"), 16, 0, 32)}px`,
+    "--tmr-eco-icon-box-radius": `${numberInRange(raw(props, "iconBoxRadius"), 14, 0, 32)}px`,
+    "--tmr-trust-avatar-width": `${numberInRange(raw(props, "profileImageWidth"), 58, 24, 120)}px`,
+    "--tmr-trust-avatar-height": `${numberInRange(raw(props, "profileImageHeight"), 58, 24, 120)}px`,
+    "--tmr-trust-avatar-x": `${numberInRange(raw(props, "profileImageXOffset"), 0, -40, 40)}px`,
+    "--tmr-trust-avatar-y": `${numberInRange(raw(props, "profileImageYOffset"), 0, -40, 40)}px`,
+    "--tmr-trust-avatar-fit": imageFit(raw(props, "profileImageFit")),
+    "--tmr-trust-avatar-opacity": percentage(raw(props, "profileImageOpacity"), 100, 0, 100),
+    "--tmr-trust-avatar-brightness": percentage(raw(props, "profileImageBrightness"), 100, 0, 220),
+    "--tmr-trust-avatar-contrast": percentage(raw(props, "profileImageContrast"), 100, 0, 220),
+    "--tmr-trust-avatar-saturation": percentage(raw(props, "profileImageSaturation"), 100, 0, 260),
+    "--tmr-trust-avatar-hue": `${numberInRange(raw(props, "profileImageHue"), 0, -180, 180)}deg`,
+    "--tmr-trust-avatar-invert": percentage(raw(props, "profileImageInvert"), 0, 0, 100),
+    "--tmr-trust-logo-height": `${numberInRange(raw(props, "trustedLogoHeight"), 34, 12, 120)}px`,
+    "--tmr-trust-logo-opacity": percentage(raw(props, "trustedLogoOpacity"), 75, 0, 100),
+    "--tmr-trust-logo-grayscale": percentage(raw(props, "trustedLogoGrayscale"), 100, 0, 100),
+    "--tmr-trust-card-radius": `${numberInRange(raw(props, "cardRadius"), 20, 0, 36)}px`,
+    "--tmr-final-bg": value(raw(props, "backgroundColor"), "#0E0E0C"),
+    "--tmr-final-text": value(raw(props, "textColor"), "#FFFFFF"),
+    "--tmr-final-sub": value(raw(props, "subTextColor"), "#A5A59A"),
+    "--tmr-final-primary-bg": value(raw(props, "primaryButtonBackgroundColor"), "#C7F136"),
+    "--tmr-final-primary-text": value(raw(props, "primaryButtonTextColor"), "#0E0E0C"),
+    "--tmr-final-secondary-text": value(raw(props, "secondaryButtonTextColor"), "#FFFFFF"),
+    "--tmr-final-button-radius": `${numberInRange(raw(props, "buttonRadius"), 10, 0, 32)}px`,
+    "--tmr-footer-bg": value(raw(props, "backgroundColor"), "#0E0E0C"),
+    "--tmr-footer-text": value(raw(props, "textColor"), "#FFFFFF"),
+    "--tmr-footer-muted": value(raw(props, "mutedTextColor"), "#8B8B80"),
+    "--tmr-footer-line": value(raw(props, "lineColor"), "#26261F"),
   } as any;
 }
 
@@ -403,7 +449,7 @@ function faqContent(props: ThreeMashSectionRenderProps) {
   return `<div class="tmr-faq">${defaults
     .map(([question, answer], index) => {
       const number = index + 1;
-      const open = index === 0 ? " open" : "";
+      const open = index === 0 && raw(props, "openFirstFaq") !== false ? " open" : "";
       return `<details${open}><summary>${field(props, `faq${number}Question`, question)}<span>+</span></summary><div>${field(props, `faq${number}AnswerHtml`, answer)}</div></details>`;
     })
     .join("")}</div>`;
@@ -438,6 +484,7 @@ export function renderCuringHtml(props: ThreeMashSectionRenderProps) {
 export function renderEcosystemHtml(props: ThreeMashSectionRenderProps) {
   return indexedSection(props, {
     anchor: "ekosistem",
+    className: "tmr-ecosystem",
     indexNumber: "05",
     indexText: "Uçtan Uca",
     titleText: "Dijital akışın her parçası,",
@@ -450,7 +497,7 @@ export function renderEcosystemHtml(props: ThreeMashSectionRenderProps) {
 export function renderTrustHtml(props: ThreeMashSectionRenderProps) {
   return indexedSection(props, {
     anchor: "guven",
-    className: "tmr-section-tight",
+    className: "tmr-section-tight tmr-trust-section",
     indexNumber: "06",
     indexText: "Referanslar",
     titleText: "Türkiye'nin en büyük lab'ları neden",
@@ -463,7 +510,7 @@ export function renderTrustHtml(props: ThreeMashSectionRenderProps) {
 export function renderFaqHtml(props: ThreeMashSectionRenderProps) {
   return indexedSection(props, {
     anchor: "sss",
-    className: "tmr-section-tight",
+    className: "tmr-section-tight tmr-faq-section",
     indexNumber: "07",
     indexText: "Sık Sorulanlar",
     titleText: "Kısa, net cevaplar.",
@@ -473,11 +520,11 @@ export function renderFaqHtml(props: ThreeMashSectionRenderProps) {
 }
 
 export function renderRoiHtml(props: ThreeMashSectionRenderProps) {
-  return `<div class="tmr-roi"><div class="tmr-wrap"><div class="tmr-roi-num"><span>${value(props.eyebrowText, "YATIRIMIN GERİ DÖNÜŞÜ")}</span><b>${value(props.valueText, "&lt; 6 ay")}</b></div><p>${value(props.descriptionHtml, "3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b>")}</p><a class="tmr-btn" href="${escapeAttr(value(props.ctaHref, "#hesap"))}">${value(props.ctaText, "Kliniğiniz için hesaplayalım →")}</a></div></div>`;
+  return `<div id="${escapeAttr(field(props, "sectionAnchorId", "yatirim"))}" class="tmr-roi"><div class="tmr-wrap"><div class="tmr-roi-num"><span>${value(props.eyebrowText, "YATIRIMIN GERİ DÖNÜŞÜ")}</span><b>${value(props.valueText, "&lt; 6 ay")}</b></div><p>${value(props.descriptionHtml, "3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b>")}</p><a class="tmr-btn" href="${escapeAttr(value(props.ctaHref, "#hesap"))}">${value(props.ctaText, "Kliniğiniz için hesaplayalım →")}</a></div></div>`;
 }
 
 export function renderFinalHtml(props: ThreeMashSectionRenderProps) {
-  return `<section class="tmr-final"><div class="tmr-wrap"><h2>${heading(value(props.titleText, "Bu görünmez kaybı"), value(props.titleEmphasis, "birlikte azaltalım."))}</h2><p>${value(props.descriptionHtml, "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b>")}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(value(props.primaryButtonHref, "https://3mash.com/pages/iletisim"))}">${value(props.primaryButtonText, "Uzmana danış — ücretsiz")}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(value(props.secondaryButtonHref, "https://3mash.com/pages/mash-academy"))}">${value(props.secondaryButtonText, "Mash Academy'yi keşfet")}</a></div></div></section>`;
+  return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(value(props.titleText, "Bu görünmez kaybı"), value(props.titleEmphasis, "birlikte azaltalım."))}</h2><p>${value(props.descriptionHtml, "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b>")}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(value(props.primaryButtonHref, "https://3mash.com/pages/iletisim"))}">${value(props.primaryButtonText, "Uzmana danış — ücretsiz")}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(value(props.secondaryButtonHref, "https://3mash.com/pages/mash-academy"))}">${value(props.secondaryButtonText, "Mash Academy'yi keşfet")}</a></div></div></section>`;
 }
 
 export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
@@ -491,8 +538,8 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
   }
 
   const products = value(
-    props.productsColumnHtml,
-    linkList("product", "Ürünler", [
+    undefined,
+    linkList("product", field(props, "productColumnTitle", "Ürünler"), [
       ["3D Yazıcılar", "https://3mash.com/3d-yazicilar"],
       ["Dental Reçineler", "https://3mash.com/dental-3d-yazici-recineleri"],
       ["Yıkama &amp; Kürleme", "https://3mash.com/yikama-kurleme-cihazlari"],
@@ -500,8 +547,8 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
     ]),
   );
   const company = value(
-    props.companyColumnHtml,
-    linkList("company", "Şirket", [
+    undefined,
+    linkList("company", field(props, "companyColumnTitle", "Şirket"), [
       ["Hakkımızda", "https://3mash.com/pages/about-us"],
       ["Mash Academy", "https://3mash.com/pages/mash-academy"],
       ["Blog", "https://3mash.com/blog"],
@@ -509,14 +556,14 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
     ]),
   );
   const contact = value(
-    props.contactColumnHtml,
-    linkList("contact", "İletişim", [
+    undefined,
+    linkList("contact", field(props, "contactColumnTitle", "İletişim"), [
       ["info@3mash.com", "mailto:info@3mash.com"],
       ["Antalya Teknokent, Konyaaltı", "#"],
       ["@3mashsocial", "https://instagram.com/3mashsocial"],
     ]),
   );
-  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><div class="tmr-footer-logo"><span>∞</span><b>${value(props.logoText, "mash")}</b></div><p>${value(props.descriptionText, "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.")}</p></div><div>${products}</div><div>${company}</div><div>${contact}</div></div><div class="tmr-base"><span>${value(props.copyrightText, "© 2026 3MASH Teknoloji A.Ş.")}</span><span>${value(props.legalText, "KVKK · İade &amp; Garanti · Mesafeli Satış")}</span></div></div></footer>`;
+  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><div class="tmr-footer-logo"><span>${field(props, "logoMarkText", "∞")}</span><b>${value(props.logoText, "mash")}</b></div><p>${value(props.descriptionText, "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.")}</p></div><div>${products}</div><div>${company}</div><div>${contact}</div></div><div class="tmr-base"><span>${value(props.copyrightText, "© 2026 3MASH Teknoloji A.Ş.")}</span><span>${value(props.legalText, "KVKK · İade &amp; Garanti · Mesafeli Satış")}</span></div></div></footer>`;
 }
 
 export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSectionRenderProps; fallback: string }) {
