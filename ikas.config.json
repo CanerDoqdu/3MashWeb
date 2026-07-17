@@ -3188,6 +3188,16 @@
         {
           "id": "appearance",
           "name": "Appearance"
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced HTML",
+          "description": "Full section HTML override"
+        },
+        {
+          "id": "cards",
+          "name": "Product Cards",
+          "description": "Carousel card content, images, specs and links"
         }
       ]
     },
@@ -3592,6 +3602,26 @@
         {
           "id": "appearance",
           "name": "Appearance"
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced HTML",
+          "description": "Full section HTML override"
+        },
+        {
+          "id": "reasons",
+          "name": "Reason Cards",
+          "description": "Three curing problem cards"
+        },
+        {
+          "id": "products",
+          "name": "Product Cards",
+          "description": "Machine cards, images, specs and links"
+        },
+        {
+          "id": "academyLinks",
+          "name": "Academy Links",
+          "description": "Read-more links under product cards"
         }
       ]
     },
@@ -3730,6 +3760,11 @@
         {
           "id": "appearance",
           "name": "Appearance"
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced HTML",
+          "description": "Full section HTML override"
         }
       ]
     },
@@ -4015,6 +4050,16 @@
         {
           "id": "appearance",
           "name": "Appearance"
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced HTML",
+          "description": "Full section HTML override"
+        },
+        {
+          "id": "items",
+          "name": "Ecosystem Items",
+          "description": "Icon grid titles, uploads and links"
         }
       ]
     },
@@ -4293,6 +4338,21 @@
         {
           "id": "appearance",
           "name": "Appearance"
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced HTML",
+          "description": "Full section HTML override"
+        },
+        {
+          "id": "testimonials",
+          "name": "Testimonials",
+          "description": "Profile photos, quotes and people details"
+        },
+        {
+          "id": "trustedLogos",
+          "name": "Trusted Logos",
+          "description": "Trusted brand logo strip"
         }
       ]
     },
@@ -4515,6 +4575,16 @@
         {
           "id": "appearance",
           "name": "Appearance"
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced HTML",
+          "description": "Full section HTML override"
+        },
+        {
+          "id": "questions",
+          "name": "FAQ Items",
+          "description": "Questions and answers"
         }
       ]
     },
@@ -4667,6 +4737,11 @@
         {
           "id": "appearance",
           "name": "Appearance"
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced HTML",
+          "description": "Full section HTML override"
         }
       ]
     },
@@ -4973,6 +5048,31 @@
         {
           "id": "appearance",
           "name": "Appearance"
+        },
+        {
+          "id": "productLinks",
+          "name": "Product Links",
+          "description": "Footer product column links"
+        },
+        {
+          "id": "companyLinks",
+          "name": "Company Links",
+          "description": "Footer company column links"
+        },
+        {
+          "id": "contactLinks",
+          "name": "Contact Links",
+          "description": "Footer contact column links"
+        },
+        {
+          "id": "legal",
+          "name": "Legal Bar",
+          "description": "Copyright and legal text"
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced HTML",
+          "description": "Column/full HTML overrides"
         }
       ]
     }
