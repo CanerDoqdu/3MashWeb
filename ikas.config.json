@@ -5,919 +5,122 @@
   "globalStyles": "./src/global.css",
   "components": [
     {
-      "id": "2tplvqpo-gegXWtHSDG",
-      "name": "Example Component",
-      "entry": "./src/components/ExampleComponent/index.tsx",
-      "styles": "./src/components/ExampleComponent/styles.css",
-      "props": [
-        {
-          "name": "title",
-          "displayName": "Title",
-          "type": "TEXT",
-          "required": true,
-          "defaultValue": "Hello World",
-          "description": "The main title text"
-        },
-        {
-          "name": "description",
-          "displayName": "Description",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "This is an example ikas code component built with Preact.",
-          "description": "The description text below the title"
-        },
-        {
-          "name": "showButton",
-          "displayName": "Show Button",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "description": "Whether to show the action button"
-        },
-        {
-          "name": "buttonText",
-          "displayName": "Button Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Click Me",
-          "description": "The text displayed on the button"
-        }
-      ]
-    },
-    {
-      "id": "2tplvqpo-OFz4UxPGay",
-      "name": "Example Section",
-      "entry": "./src/components/ExampleSection/index.tsx",
-      "styles": "./src/components/ExampleSection/styles.css",
+      "id": "2tplvqpo-xzdCWg2Gdm",
+      "name": "ThreeMashHeader",
+      "entry": "./src/components/ThreeMashHeader/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
       "type": "section",
       "props": [
         {
-          "name": "heading",
-          "displayName": "Heading",
-          "type": "TEXT",
-          "required": true,
-          "defaultValue": "Welcome to Our Store",
-          "description": "The section heading text",
-          "groupId": "content"
-        },
-        {
-          "name": "subtitle",
-          "displayName": "Subtitle",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Discover our latest products and collections.",
-          "description": "The subtitle text below the heading",
-          "groupId": "content"
-        },
-        {
-          "name": "backgroundColor",
-          "displayName": "Background Color",
-          "type": "COLOR",
-          "required": false,
-          "description": "The section background color",
-          "groupId": "appearance"
-        }
-      ],
-      "propGroups": [
-        {
-          "id": "content",
-          "name": "Content",
-          "description": "Text and copy settings"
-        },
-        {
-          "id": "appearance",
-          "name": "Appearance",
-          "description": "Colors and visual style"
-        }
-      ]
-    },
-    {
-      "id": "2tplvqpo-8bHcojLLoH",
-      "name": "ZayNavbar",
-      "entry": "./src/components/ZayNavbar/index.tsx",
-      "styles": "./src/components/ZayNavbar/styles.css",
-      "type": "section",
-      "isHeader": true,
-      "props": [
-        {
-          "name": "logoHref",
-          "displayName": "Logo Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/",
-          "groupId": "content"
-        },
-        {
-          "name": "showTopBar",
-          "displayName": "Show Top Bar",
+          "name": "showAnnouncement",
+          "displayName": "Show Announcement",
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": true,
-          "groupId": "top-bar"
+          "groupId": "announcement"
         },
         {
-          "name": "emailText",
-          "displayName": "Email Text",
+          "name": "announcementHighlightText",
+          "displayName": "Announcement Highlight Text",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "info@company.com",
-          "groupId": "top-bar"
+          "defaultValue": "Fırsatı kaçırmayın.",
+          "groupId": "announcement"
         },
         {
-          "name": "emailHref",
-          "displayName": "Email Link",
+          "name": "announcementText",
+          "displayName": "Announcement Text",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "mailto:info@company.com",
-          "groupId": "top-bar"
+          "defaultValue": "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
+          "groupId": "announcement"
         },
         {
-          "name": "phoneText",
-          "displayName": "Phone Text",
+          "name": "announcementCtaText",
+          "displayName": "Announcement CTA Text",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "010-020-0340",
-          "groupId": "top-bar"
+          "defaultValue": "Hemen hesaplayın",
+          "groupId": "announcement"
         },
         {
-          "name": "phoneHref",
-          "displayName": "Phone Link",
+          "name": "announcementHref",
+          "displayName": "Announcement Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "tel:010-020-0340",
-          "groupId": "top-bar"
-        },
-        {
-          "name": "facebookHref",
-          "displayName": "Facebook Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://fb.com/templatemo",
-          "groupId": "social"
-        },
-        {
-          "name": "instagramHref",
-          "displayName": "Instagram Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://www.instagram.com/",
-          "groupId": "social"
-        },
-        {
-          "name": "twitterHref",
-          "displayName": "Twitter Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://twitter.com/",
-          "groupId": "social"
-        },
-        {
-          "name": "linkedinHref",
-          "displayName": "LinkedIn Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://www.linkedin.com/",
-          "groupId": "social"
-        },
-        {
-          "name": "homeText",
-          "displayName": "Home Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Home",
-          "groupId": "navigation"
-        },
-        {
-          "name": "homeHref",
-          "displayName": "Home Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/",
-          "groupId": "navigation"
-        },
-        {
-          "name": "aboutText",
-          "displayName": "About Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "About",
-          "groupId": "navigation"
-        },
-        {
-          "name": "aboutHref",
-          "displayName": "About Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/about",
-          "groupId": "navigation"
-        },
-        {
-          "name": "shopText",
-          "displayName": "Shop Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Shop",
-          "groupId": "navigation"
-        },
-        {
-          "name": "shopHref",
-          "displayName": "Shop Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "navigation"
-        },
-        {
-          "name": "contactText",
-          "displayName": "Contact Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Contact",
-          "groupId": "navigation"
-        },
-        {
-          "name": "contactHref",
-          "displayName": "Contact Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/contact",
-          "groupId": "navigation"
-        },
-        {
-          "name": "searchPlaceholder",
-          "displayName": "Search Placeholder",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Search ...",
-          "groupId": "actions"
-        },
-        {
-          "name": "searchAriaLabel",
-          "displayName": "Search Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Search",
-          "groupId": "actions"
-        },
-        {
-          "name": "menuAriaLabel",
-          "displayName": "Menu Button Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Toggle navigation",
-          "groupId": "actions"
-        },
-        {
-          "name": "cartHref",
-          "displayName": "Cart Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/cart",
-          "groupId": "actions"
-        },
-        {
-          "name": "cartCount",
-          "displayName": "Cart Count",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "7",
-          "groupId": "actions"
-        },
-        {
-          "name": "cartAriaLabel",
-          "displayName": "Cart Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Cart",
-          "groupId": "actions"
-        },
-        {
-          "name": "accountHref",
-          "displayName": "Account Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/account",
-          "groupId": "actions"
-        },
-        {
-          "name": "accountCount",
-          "displayName": "Account Count",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "+99",
-          "groupId": "actions"
-        },
-        {
-          "name": "accountAriaLabel",
-          "displayName": "Account Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Account",
-          "groupId": "actions"
-        },
-        {
-          "name": "backgroundColor",
-          "displayName": "Background Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#ffffff",
-          "groupId": "appearance"
-        },
-        {
-          "name": "topBarBackgroundColor",
-          "displayName": "Top Bar Background",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#212934",
-          "groupId": "appearance"
-        },
-        {
-          "name": "topBarTextColor",
-          "displayName": "Top Bar Text",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#cfd6e1",
-          "groupId": "appearance"
-        },
-        {
-          "name": "logoColor",
-          "displayName": "Logo Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#59ab6e",
-          "groupId": "appearance"
-        },
-        {
-          "name": "linkColor",
-          "displayName": "Link Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#212934",
-          "groupId": "appearance"
-        },
-        {
-          "name": "accentColor",
-          "displayName": "Accent Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#69bb7e",
-          "groupId": "appearance"
-        },
-        {
-          "name": "iconColor",
-          "displayName": "Icon Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#212934",
-          "groupId": "appearance"
-        },
-        {
-          "name": "badgeBackgroundColor",
-          "displayName": "Badge Background",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#e9eef5",
-          "groupId": "appearance"
-        },
-        {
-          "name": "badgeTextColor",
-          "displayName": "Badge Text",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#212934",
-          "groupId": "appearance"
-        },
-        {
-          "name": "facebookAriaLabel",
-          "displayName": "Facebook Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Facebook",
-          "groupId": "social"
-        },
-        {
-          "name": "instagramAriaLabel",
-          "displayName": "Instagram Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Instagram",
-          "groupId": "social"
-        },
-        {
-          "name": "twitterAriaLabel",
-          "displayName": "Twitter Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Twitter",
-          "groupId": "social"
-        },
-        {
-          "name": "linkedinAriaLabel",
-          "displayName": "LinkedIn Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "LinkedIn",
-          "groupId": "social"
+          "defaultValue": "#hesap",
+          "groupId": "announcement"
         },
         {
           "name": "logoText",
           "displayName": "Logo Text",
           "type": "TEXT",
           "required": true,
-          "defaultValue": "Zay",
-          "groupId": "content"
-        }
-      ],
-      "propGroups": [
-        {
-          "id": "content",
-          "name": "Content",
-          "description": "Logo settings"
+          "defaultValue": "mash",
+          "groupId": "brand"
         },
         {
-          "id": "top-bar",
-          "name": "Top Bar",
-          "description": "Contact details shown above the main navbar"
-        },
-        {
-          "id": "social",
-          "name": "Social Links",
-          "description": "Social media links"
-        },
-        {
-          "id": "navigation",
-          "name": "Navigation",
-          "description": "Main menu links"
-        },
-        {
-          "id": "actions",
-          "name": "Actions",
-          "description": "Search, cart, and account controls"
-        },
-        {
-          "id": "appearance",
-          "name": "Appearance",
-          "description": "Navbar colors"
-        }
-      ]
-    },
-    {
-      "id": "2tplvqpo-5wUyve00Wp",
-      "name": "ZayHeroCarousel",
-      "entry": "./src/components/ZayHeroCarousel/index.tsx",
-      "styles": "./src/components/ZayHeroCarousel/styles.css",
-      "type": "section",
-      "props": [
-        {
-          "name": "slide1ImageUrl",
-          "displayName": "Slide 1 Image URL",
+          "name": "logoHref",
+          "displayName": "Logo Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "",
-          "groupId": "slides"
+          "defaultValue": "#",
+          "groupId": "brand"
         },
         {
-          "name": "slide1ImageAlt",
-          "displayName": "Slide 1 Image Alt",
+          "name": "productsMenuText",
+          "displayName": "Products Menu Text",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Zay eCommerce banner product illustration",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide1Title",
-          "displayName": "Slide 1 Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<strong>Zay</strong> eCommerce",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide1Subtitle",
-          "displayName": "Slide 1 Subtitle",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Tiny and Perfect eCommerce Template",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide1Description",
-          "displayName": "Slide 1 Description",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Zay Shop is an eCommerce HTML5 CSS template with latest version of Bootstrap 5. This template is 100% free provided by TemplateMo website.",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide2ImageUrl",
-          "displayName": "Slide 2 Image URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide2ImageAlt",
-          "displayName": "Slide 2 Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Zay product showcase illustration",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide2Title",
-          "displayName": "Slide 2 Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Proident occaecat",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide2Subtitle",
-          "displayName": "Slide 2 Subtitle",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Aliquip ex ea commodo consequat",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide2Description",
-          "displayName": "Slide 2 Description",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "You are permitted to use this Zay CSS template for your commercial websites. You are not permitted to re-distribute the template ZIP file in any kind of template collection websites.",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide3ImageUrl",
-          "displayName": "Slide 3 Image URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide3ImageAlt",
-          "displayName": "Slide 3 Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Zay shopping banner illustration",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide3Title",
-          "displayName": "Slide 3 Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Repr in voluptate",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide3Subtitle",
-          "displayName": "Slide 3 Subtitle",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Ullamco laboris nisi ut",
-          "groupId": "slides"
-        },
-        {
-          "name": "slide3Description",
-          "displayName": "Slide 3 Description",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "We bring you free CSS templates for your websites. If you wish to support TemplateMo, please make a small contribution or tell your friends about our website.",
-          "groupId": "slides"
-        },
-        {
-          "name": "autoPlay",
-          "displayName": "Auto Play",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "controls"
-        },
-        {
-          "name": "autoPlayDelay",
-          "displayName": "Auto Play Delay",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 6000,
-          "groupId": "controls"
-        },
-        {
-          "name": "previousAriaLabel",
-          "displayName": "Previous Button Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Previous slide",
-          "groupId": "controls"
-        },
-        {
-          "name": "nextAriaLabel",
-          "displayName": "Next Button Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Next slide",
-          "groupId": "controls"
-        },
-        {
-          "name": "backgroundColor",
-          "displayName": "Background Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#efefef",
-          "groupId": "appearance"
-        },
-        {
-          "name": "textColor",
-          "displayName": "Text Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#212934",
-          "groupId": "appearance"
-        },
-        {
-          "name": "accentColor",
-          "displayName": "Accent Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#59ab6e",
-          "groupId": "appearance"
-        },
-        {
-          "name": "indicatorColor",
-          "displayName": "Indicator Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#59ab6e",
-          "groupId": "appearance"
-        }
-      ],
-      "propGroups": [
-        {
-          "id": "slides",
-          "name": "Slides",
-          "description": "Slide content and images"
-        },
-        {
-          "id": "controls",
-          "name": "Controls",
-          "description": "Carousel behavior and labels"
-        },
-        {
-          "id": "appearance",
-          "name": "Appearance",
-          "description": "Carousel colors"
-        }
-      ]
-    },
-    {
-      "id": "2tplvqpo-0uwEpcacCH",
-      "name": "ZayCategoryShowcase",
-      "entry": "./src/components/ZayCategoryShowcase/index.tsx",
-      "styles": "./src/components/ZayCategoryShowcase/styles.css",
-      "type": "section",
-      "props": [
-        {
-          "name": "heading",
-          "displayName": "Heading",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Categories of The Month",
-          "groupId": "content"
-        },
-        {
-          "name": "description",
-          "displayName": "Description",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-          "groupId": "content"
-        },
-        {
-          "name": "category1ImageUrl",
-          "displayName": "Category 1 Image URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "categories"
-        },
-        {
-          "name": "category1ImageAlt",
-          "displayName": "Category 1 Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Watches category",
-          "groupId": "categories"
-        },
-        {
-          "name": "category1Title",
-          "displayName": "Category 1 Title",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Watches",
-          "groupId": "categories"
-        },
-        {
-          "name": "category1Href",
-          "displayName": "Category 1 Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "categories"
-        },
-        {
-          "name": "category1ButtonText",
-          "displayName": "Category 1 Button Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Go Shop",
-          "groupId": "categories"
-        },
-        {
-          "name": "category2ImageUrl",
-          "displayName": "Category 2 Image URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "categories"
-        },
-        {
-          "name": "category2ImageAlt",
-          "displayName": "Category 2 Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Shoes category",
-          "groupId": "categories"
-        },
-        {
-          "name": "category2Title",
-          "displayName": "Category 2 Title",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Shoes",
-          "groupId": "categories"
-        },
-        {
-          "name": "category2Href",
-          "displayName": "Category 2 Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "categories"
-        },
-        {
-          "name": "category2ButtonText",
-          "displayName": "Category 2 Button Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Go Shop",
-          "groupId": "categories"
-        },
-        {
-          "name": "category3ImageUrl",
-          "displayName": "Category 3 Image URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "categories"
-        },
-        {
-          "name": "category3ImageAlt",
-          "displayName": "Category 3 Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Accessories category",
-          "groupId": "categories"
-        },
-        {
-          "name": "category3Title",
-          "displayName": "Category 3 Title",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Accessories",
-          "groupId": "categories"
-        },
-        {
-          "name": "category3Href",
-          "displayName": "Category 3 Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "categories"
-        },
-        {
-          "name": "category3ButtonText",
-          "displayName": "Category 3 Button Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Go Shop",
-          "groupId": "categories"
-        },
-        {
-          "name": "backgroundColor",
-          "displayName": "Background Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#ffffff",
-          "groupId": "appearance"
-        },
-        {
-          "name": "textColor",
-          "displayName": "Text Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#212934",
-          "groupId": "appearance"
-        },
-        {
-          "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#525b66",
-          "groupId": "appearance"
-        },
-        {
-          "name": "buttonBackgroundColor",
-          "displayName": "Button Background",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#59ab6e",
-          "groupId": "appearance"
-        },
-        {
-          "name": "buttonTextColor",
-          "displayName": "Button Text",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#ffffff",
-          "groupId": "appearance"
-        }
-      ],
-      "propGroups": [
-        {
-          "id": "content",
-          "name": "Content",
-          "description": "Section heading and intro text"
-        },
-        {
-          "id": "categories",
-          "name": "Categories",
-          "description": "Category card content"
-        },
-        {
-          "id": "appearance",
-          "name": "Appearance",
-          "description": "Section colors"
-        }
-      ]
-    },
-    {
-      "id": "2tplvqpo-b8MULjvQlW",
-      "name": "ZayFeaturedProducts",
-      "entry": "./src/components/ZayFeaturedProducts/index.tsx",
-      "styles": "./src/components/ZayFeaturedProducts/styles.css",
-      "type": "section",
-      "props": [
-        {
-          "name": "heading",
-          "displayName": "Heading",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Featured Product",
-          "groupId": "content"
-        },
-        {
-          "name": "description",
-          "displayName": "Description",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.",
-          "groupId": "content"
-        },
-        {
-          "name": "product1ImageUrl",
-          "displayName": "Product 1 Image URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
+          "defaultValue": "Ürünler",
           "groupId": "products"
         },
         {
-          "name": "product1ImageAlt",
-          "displayName": "Product 1 Image Alt",
+          "name": "productsFeatureEyebrow",
+          "displayName": "Products Feature Eyebrow",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Gym Weight",
+          "defaultValue": "YENİ · DÜNYADA İLK",
           "groupId": "products"
         },
         {
-          "name": "product1Href",
-          "displayName": "Product 1 Link",
+          "name": "productsFeatureTitle",
+          "displayName": "Products Feature Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/shop-single",
+          "defaultValue": "MASH C4P Akıllı Kürleme Cihazı",
+          "groupId": "products"
+        },
+        {
+          "name": "productsFeatureDescription",
+          "displayName": "Products Feature Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Reçineye göre otomatik kürleme. Sonuç kalitesini kullanıcı hatasından çıkarır.",
+          "groupId": "products"
+        },
+        {
+          "name": "productsFeatureCtaText",
+          "displayName": "Products Feature CTA Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Keşfet",
+          "groupId": "products"
+        },
+        {
+          "name": "productsFeatureHref",
+          "displayName": "Products Feature Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/yikama-kurleme-cihazlari",
+          "groupId": "products"
+        },
+        {
+          "name": "productsCol1Title",
+          "displayName": "Products Column 1 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Üretim",
           "groupId": "products"
         },
         {
@@ -925,63 +128,23 @@
           "displayName": "Product 1 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Gym Weight",
-          "groupId": "products"
-        },
-        {
-          "name": "product1Price",
-          "displayName": "Product 1 Price",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "$240.00",
-          "groupId": "products"
-        },
-        {
-          "name": "product1Rating",
-          "displayName": "Product 1 Rating",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 3,
+          "defaultValue": "3D Yazıcılar",
           "groupId": "products"
         },
         {
           "name": "product1Description",
           "displayName": "Product 1 Description",
-          "type": "RICH_TEXT",
+          "type": "TEXT",
           "required": false,
-          "defaultValue": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.",
+          "defaultValue": "P1D / P16L hassas baskı",
           "groupId": "products"
         },
         {
-          "name": "product1ReviewsText",
-          "displayName": "Product 1 Reviews Text",
+          "name": "product1Href",
+          "displayName": "Product 1 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Reviews (24)",
-          "groupId": "products"
-        },
-        {
-          "name": "product2ImageUrl",
-          "displayName": "Product 2 Image URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "products"
-        },
-        {
-          "name": "product2ImageAlt",
-          "displayName": "Product 2 Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Cloud Nike Shoes",
-          "groupId": "products"
-        },
-        {
-          "name": "product2Href",
-          "displayName": "Product 2 Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop-single",
+          "defaultValue": "https://3mash.com/3d-yazicilar",
           "groupId": "products"
         },
         {
@@ -989,63 +152,23 @@
           "displayName": "Product 2 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Cloud Nike Shoes",
-          "groupId": "products"
-        },
-        {
-          "name": "product2Price",
-          "displayName": "Product 2 Price",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "$480.00",
-          "groupId": "products"
-        },
-        {
-          "name": "product2Rating",
-          "displayName": "Product 2 Rating",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 3,
+          "defaultValue": "Yıkama & Kürleme",
           "groupId": "products"
         },
         {
           "name": "product2Description",
           "displayName": "Product 2 Description",
-          "type": "RICH_TEXT",
+          "type": "TEXT",
           "required": false,
-          "defaultValue": "Aenean gravida dignissim finibus. Nullam ipsum diam, posuere vitae pharetra sed, commodo ullamcorper.",
+          "defaultValue": "Yıkama ve akıllı kürleme",
           "groupId": "products"
         },
         {
-          "name": "product2ReviewsText",
-          "displayName": "Product 2 Reviews Text",
+          "name": "product2Href",
+          "displayName": "Product 2 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Reviews (48)",
-          "groupId": "products"
-        },
-        {
-          "name": "product3ImageUrl",
-          "displayName": "Product 3 Image URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "products"
-        },
-        {
-          "name": "product3ImageAlt",
-          "displayName": "Product 3 Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Summer Addides Shoes",
-          "groupId": "products"
-        },
-        {
-          "name": "product3Href",
-          "displayName": "Product 3 Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop-single",
+          "defaultValue": "https://3mash.com/yikama-kurleme-cihazlari",
           "groupId": "products"
         },
         {
@@ -1053,506 +176,359 @@
           "displayName": "Product 3 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Summer Addides Shoes",
-          "groupId": "products"
-        },
-        {
-          "name": "product3Price",
-          "displayName": "Product 3 Price",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "$360.00",
-          "groupId": "products"
-        },
-        {
-          "name": "product3Rating",
-          "displayName": "Product 3 Rating",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 5,
+          "defaultValue": "Dental Reçineler",
           "groupId": "products"
         },
         {
           "name": "product3Description",
           "displayName": "Product 3 Description",
-          "type": "RICH_TEXT",
+          "type": "TEXT",
           "required": false,
-          "defaultValue": "Curabitur ac mi sit amet diam luctus porta. Phasellus pulvinar sagittis diam, et scelerisque ipsum lobortis nec.",
+          "defaultValue": "Dental reçine seçenekleri",
           "groupId": "products"
         },
         {
-          "name": "product3ReviewsText",
-          "displayName": "Product 3 Reviews Text",
+          "name": "product3Href",
+          "displayName": "Product 3 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Reviews (74)",
+          "defaultValue": "https://3mash.com/dental-3d-yazici-recineleri",
           "groupId": "products"
+        },
+        {
+          "name": "productsCol2Title",
+          "displayName": "Products Column 2 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tamamlayıcı",
+          "groupId": "products"
+        },
+        {
+          "name": "product4Title",
+          "displayName": "Product 4 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Masaüstü Tarayıcılar",
+          "groupId": "products"
+        },
+        {
+          "name": "product4Description",
+          "displayName": "Product 4 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Lab için hassas tarama",
+          "groupId": "products"
+        },
+        {
+          "name": "product4Href",
+          "displayName": "Product 4 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/masasustu-tarayicilar",
+          "groupId": "products"
+        },
+        {
+          "name": "product5Title",
+          "displayName": "Product 5 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Zirkon Bloklar & Titanyum",
+          "groupId": "products"
+        },
+        {
+          "name": "product5Description",
+          "displayName": "Product 5 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Freze sarfları",
+          "groupId": "products"
+        },
+        {
+          "name": "product5Href",
+          "displayName": "Product 5 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/zirkon-bloklar",
+          "groupId": "products"
+        },
+        {
+          "name": "product6Title",
+          "displayName": "Product 6 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Dental Fırınlar",
+          "groupId": "products"
+        },
+        {
+          "name": "product6Description",
+          "displayName": "Product 6 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sinterleme çözümleri",
+          "groupId": "products"
+        },
+        {
+          "name": "product6Href",
+          "displayName": "Product 6 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/dental-firinlar",
+          "groupId": "products"
+        },
+        {
+          "name": "whyMenuText",
+          "displayName": "Why Menu Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Neden 3mash?",
+          "groupId": "why"
+        },
+        {
+          "name": "why1Number",
+          "displayName": "Why 1 Number",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "01",
+          "groupId": "why"
+        },
+        {
+          "name": "why1Title",
+          "displayName": "Why 1 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yılda $126K'ya varan görünmez kayıp",
+          "groupId": "why"
+        },
+        {
+          "name": "why1Description",
+          "displayName": "Why 1 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tekrarlanan işlerin kliniğinize gerçek maliyeti",
+          "groupId": "why"
+        },
+        {
+          "name": "why1Href",
+          "displayName": "Why 1 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#sorun",
+          "groupId": "why"
+        },
+        {
+          "name": "why2Number",
+          "displayName": "Why 2 Number",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "02",
+          "groupId": "why"
+        },
+        {
+          "name": "why2Title",
+          "displayName": "Why 2 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sebep: ölçüsel hassasiyet",
+          "groupId": "why"
+        },
+        {
+          "name": "why2Description",
+          "displayName": "Why 2 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "250–500µm sapma bandı vs ±20µm güvenli bölge",
+          "groupId": "why"
+        },
+        {
+          "name": "why2Href",
+          "displayName": "Why 2 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#sebep",
+          "groupId": "why"
+        },
+        {
+          "name": "why3Number",
+          "displayName": "Why 3 Number",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "03",
+          "groupId": "why"
+        },
+        {
+          "name": "why3Title",
+          "displayName": "Why 3 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Çözüm: uyumlu ekosistem",
+          "groupId": "why"
+        },
+        {
+          "name": "why3Description",
+          "displayName": "Why 3 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yazıcı + reçine + parametre bilgisi, birlikte kalibre",
+          "groupId": "why"
+        },
+        {
+          "name": "why3Href",
+          "displayName": "Why 3 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#cozum",
+          "groupId": "why"
+        },
+        {
+          "name": "why4Number",
+          "displayName": "Why 4 Number",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "04",
+          "groupId": "why"
+        },
+        {
+          "name": "why4Title",
+          "displayName": "Why 4 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ve kürleme — son %20'lik fark",
+          "groupId": "why"
+        },
+        {
+          "name": "why4Description",
+          "displayName": "Why 4 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Doğru basılan iş, yanlış kürlenirse yine başarısız olur",
+          "groupId": "why"
+        },
+        {
+          "name": "why4Href",
+          "displayName": "Why 4 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#kurleme",
+          "groupId": "why"
+        },
+        {
+          "name": "referencesText",
+          "displayName": "References Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Referanslar",
+          "groupId": "links"
+        },
+        {
+          "name": "referencesHref",
+          "displayName": "References Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#guven",
+          "groupId": "links"
+        },
+        {
+          "name": "academyText",
+          "displayName": "Academy Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Academy",
+          "groupId": "links"
+        },
+        {
+          "name": "academyHref",
+          "displayName": "Academy Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/pages/mash-academy",
+          "groupId": "links"
+        },
+        {
+          "name": "searchHref",
+          "displayName": "Search Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#",
+          "groupId": "links"
+        },
+        {
+          "name": "searchAriaLabel",
+          "displayName": "Search Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ara",
+          "groupId": "links"
+        },
+        {
+          "name": "accountHref",
+          "displayName": "Account Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/login",
+          "groupId": "links"
+        },
+        {
+          "name": "accountAriaLabel",
+          "displayName": "Account Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hesabım",
+          "groupId": "links"
+        },
+        {
+          "name": "cartHref",
+          "displayName": "Cart Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/",
+          "groupId": "links"
+        },
+        {
+          "name": "cartAriaLabel",
+          "displayName": "Cart Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sepet",
+          "groupId": "links"
+        },
+        {
+          "name": "cartCount",
+          "displayName": "Cart Count",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "links"
+        },
+        {
+          "name": "mobileMenuLabel",
+          "displayName": "Mobile Menu Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Menü",
+          "groupId": "links"
         },
         {
           "name": "backgroundColor",
           "displayName": "Background Color",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#e9eef5",
+          "defaultValue": "#FAFAF7",
           "groupId": "appearance"
         },
         {
-          "name": "cardBackgroundColor",
-          "displayName": "Card Background",
+          "name": "announcementBackgroundColor",
+          "displayName": "Announcement Background",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#ffffff",
+          "defaultValue": "#0E0E0C",
           "groupId": "appearance"
         },
         {
-          "name": "textColor",
-          "displayName": "Text Color",
+          "name": "announcementTextColor",
+          "displayName": "Announcement Text Color",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#212934",
-          "groupId": "appearance"
-        },
-        {
-          "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#bcbcbc",
-          "groupId": "appearance"
-        },
-        {
-          "name": "starColor",
-          "displayName": "Star Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#ede861",
-          "groupId": "appearance"
-        }
-      ],
-      "propGroups": [
-        {
-          "id": "content",
-          "name": "Content",
-          "description": "Section heading and intro text"
-        },
-        {
-          "id": "products",
-          "name": "Products",
-          "description": "Featured product cards"
-        },
-        {
-          "id": "appearance",
-          "name": "Appearance",
-          "description": "Product section colors"
-        }
-      ]
-    },
-    {
-      "id": "2tplvqpo-NG7ap4uoAo",
-      "name": "ZayFooter",
-      "entry": "./src/components/ZayFooter/index.tsx",
-      "styles": "./src/components/ZayFooter/styles.css",
-      "type": "section",
-      "isFooter": true,
-      "props": [
-        {
-          "name": "brandTitle",
-          "displayName": "Brand Title",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Zay Shop",
-          "groupId": "brand"
-        },
-        {
-          "name": "productsTitle",
-          "displayName": "Products Title",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Products",
-          "groupId": "products"
-        },
-        {
-          "name": "infoTitle",
-          "displayName": "Info Title",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Further Info",
-          "groupId": "info"
-        },
-        {
-          "name": "addressText",
-          "displayName": "Address Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "123 Consectetur at ligula 10660",
-          "groupId": "contact"
-        },
-        {
-          "name": "phoneText",
-          "displayName": "Phone Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "010-020-0340",
-          "groupId": "contact"
-        },
-        {
-          "name": "phoneHref",
-          "displayName": "Phone Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "tel:010-020-0340",
-          "groupId": "contact"
-        },
-        {
-          "name": "emailText",
-          "displayName": "Email Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "info@company.com",
-          "groupId": "contact"
-        },
-        {
-          "name": "emailHref",
-          "displayName": "Email Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "mailto:info@company.com",
-          "groupId": "contact"
-        },
-        {
-          "name": "productLink1Text",
-          "displayName": "Product Link 1 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Luxury",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink1Href",
-          "displayName": "Product Link 1 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink2Text",
-          "displayName": "Product Link 2 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Sport Wear",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink2Href",
-          "displayName": "Product Link 2 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink3Text",
-          "displayName": "Product Link 3 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Men's Shoes",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink3Href",
-          "displayName": "Product Link 3 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink4Text",
-          "displayName": "Product Link 4 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Women's Shoes",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink4Href",
-          "displayName": "Product Link 4 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink5Text",
-          "displayName": "Product Link 5 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Popular Dress",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink5Href",
-          "displayName": "Product Link 5 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink6Text",
-          "displayName": "Product Link 6 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Gym Accessories",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink6Href",
-          "displayName": "Product Link 6 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink7Text",
-          "displayName": "Product Link 7 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Sport Shoes",
-          "groupId": "products"
-        },
-        {
-          "name": "productLink7Href",
-          "displayName": "Product Link 7 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop",
-          "groupId": "products"
-        },
-        {
-          "name": "infoLink1Text",
-          "displayName": "Info Link 1 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Home",
-          "groupId": "info"
-        },
-        {
-          "name": "infoLink1Href",
-          "displayName": "Info Link 1 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/",
-          "groupId": "info"
-        },
-        {
-          "name": "infoLink2Text",
-          "displayName": "Info Link 2 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "About Us",
-          "groupId": "info"
-        },
-        {
-          "name": "infoLink2Href",
-          "displayName": "Info Link 2 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/about",
-          "groupId": "info"
-        },
-        {
-          "name": "infoLink3Text",
-          "displayName": "Info Link 3 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Shop Locations",
-          "groupId": "info"
-        },
-        {
-          "name": "infoLink3Href",
-          "displayName": "Info Link 3 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/shop-locations",
-          "groupId": "info"
-        },
-        {
-          "name": "infoLink4Text",
-          "displayName": "Info Link 4 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "FAQs",
-          "groupId": "info"
-        },
-        {
-          "name": "infoLink4Href",
-          "displayName": "Info Link 4 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/faq",
-          "groupId": "info"
-        },
-        {
-          "name": "infoLink5Text",
-          "displayName": "Info Link 5 Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Contact",
-          "groupId": "info"
-        },
-        {
-          "name": "infoLink5Href",
-          "displayName": "Info Link 5 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/contact",
-          "groupId": "info"
-        },
-        {
-          "name": "facebookHref",
-          "displayName": "Facebook Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "http://facebook.com/",
-          "groupId": "social"
-        },
-        {
-          "name": "facebookAriaLabel",
-          "displayName": "Facebook Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Facebook",
-          "groupId": "social"
-        },
-        {
-          "name": "instagramHref",
-          "displayName": "Instagram Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://www.instagram.com/",
-          "groupId": "social"
-        },
-        {
-          "name": "instagramAriaLabel",
-          "displayName": "Instagram Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Instagram",
-          "groupId": "social"
-        },
-        {
-          "name": "twitterHref",
-          "displayName": "Twitter Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://twitter.com/",
-          "groupId": "social"
-        },
-        {
-          "name": "twitterAriaLabel",
-          "displayName": "Twitter Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Twitter",
-          "groupId": "social"
-        },
-        {
-          "name": "linkedinHref",
-          "displayName": "LinkedIn Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://www.linkedin.com/",
-          "groupId": "social"
-        },
-        {
-          "name": "linkedinAriaLabel",
-          "displayName": "LinkedIn Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "LinkedIn",
-          "groupId": "social"
-        },
-        {
-          "name": "emailInputLabel",
-          "displayName": "Email Input Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Email address",
-          "groupId": "subscribe"
-        },
-        {
-          "name": "emailPlaceholder",
-          "displayName": "Email Placeholder",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Email address",
-          "groupId": "subscribe"
-        },
-        {
-          "name": "subscribeButtonText",
-          "displayName": "Subscribe Button Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Subscribe",
-          "groupId": "subscribe"
-        },
-        {
-          "name": "copyrightText",
-          "displayName": "Copyright Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<span>Copyright &copy; 2021 Company Name | Designed by <a href=\"https://templatemo.com\" target=\"_blank\" rel=\"sponsored\">TemplateMo</a></span>",
-          "groupId": "legal"
-        },
-        {
-          "name": "backgroundColor",
-          "displayName": "Background Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#212934",
-          "groupId": "appearance"
-        },
-        {
-          "name": "bottomBackgroundColor",
-          "displayName": "Bottom Background",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#1d242d",
-          "groupId": "appearance"
-        },
-        {
-          "name": "headingColor",
-          "displayName": "Heading Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#cfd6e1",
-          "groupId": "appearance"
-        },
-        {
-          "name": "brandColor",
-          "displayName": "Brand Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#59ab6e",
-          "groupId": "appearance"
-        },
-        {
-          "name": "textColor",
-          "displayName": "Text Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#cfd6e1",
-          "groupId": "appearance"
-        },
-        {
-          "name": "linkColor",
-          "displayName": "Link Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#dcdde1",
+          "defaultValue": "#CFCFC6",
           "groupId": "appearance"
         },
         {
@@ -1560,76 +536,2275 @@
           "displayName": "Accent Color",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#68bb7d",
+          "defaultValue": "#C7F136",
           "groupId": "appearance"
         },
         {
-          "name": "borderColor",
-          "displayName": "Border Color",
+          "name": "textColor",
+          "displayName": "Text Color",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#2d343f",
+          "defaultValue": "#0E0E0C",
           "groupId": "appearance"
         },
         {
-          "name": "subscribeButtonBackgroundColor",
-          "displayName": "Subscribe Button Background",
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#59ab6e",
+          "defaultValue": "#8F8F86",
           "groupId": "appearance"
         },
         {
-          "name": "subscribeButtonTextColor",
-          "displayName": "Subscribe Button Text",
+          "name": "lineColor",
+          "displayName": "Line Color",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#ffffff",
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeColor",
+          "displayName": "Badge Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "logoImageUrl",
+          "displayName": "Logo Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "brand",
+          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown."
+        },
+        {
+          "name": "logoImageAlt",
+          "displayName": "Logo Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3mash",
+          "groupId": "brand"
+        },
+        {
+          "name": "logoSvg",
+          "displayName": "Logo SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "brand",
+          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown."
+        },
+        {
+          "name": "productsFeatureImageUrl",
+          "displayName": "Products Feature Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Upload image here; size, position and effects are controlled in the related controls group."
+        },
+        {
+          "name": "productsFeatureImageAlt",
+          "displayName": "Products Feature Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH C4P Akıllı Kürleme Cihazı",
+          "groupId": "products"
+        },
+        {
+          "name": "product1IconSvg",
+          "displayName": "Product 1 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product2IconSvg",
+          "displayName": "Product 2 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product3IconSvg",
+          "displayName": "Product 3 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product4IconSvg",
+          "displayName": "Product 4 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product5IconSvg",
+          "displayName": "Product 5 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product6IconSvg",
+          "displayName": "Product 6 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "searchIconSvg",
+          "displayName": "Search Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "accountIconSvg",
+          "displayName": "Account Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "cartIconSvg",
+          "displayName": "Cart Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "searchDrawerTitle",
+          "displayName": "Search Drawer Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Arama",
+          "groupId": "links"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Search Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürün, kategori veya içerik ara",
+          "groupId": "links"
+        },
+        {
+          "name": "searchCloseLabel",
+          "displayName": "Search Close Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kapat",
+          "groupId": "links"
+        },
+        {
+          "name": "searchSubmitLabel",
+          "displayName": "Search Submit Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ara",
+          "groupId": "links"
+        },
+        {
+          "name": "searchQueryParam",
+          "displayName": "Search Query Param",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "q",
+          "groupId": "links"
+        },
+        {
+          "name": "whyMenuEyebrow",
+          "displayName": "Why Menu Eyebrow",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3MASH AKIŞI",
+          "groupId": "why"
+        },
+        {
+          "name": "whyMenuDescription",
+          "displayName": "Why Menu Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Daha az tekrar, daha net iş akışı ve uyumlu dental üretim ekosistemi.",
+          "groupId": "why"
+        },
+        {
+          "name": "product1IconImageUrl",
+          "displayName": "Product 1 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product2IconImageUrl",
+          "displayName": "Product 2 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product3IconImageUrl",
+          "displayName": "Product 3 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product4IconImageUrl",
+          "displayName": "Product 4 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product5IconImageUrl",
+          "displayName": "Product 5 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product6IconImageUrl",
+          "displayName": "Product 6 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "searchIconImageUrl",
+          "displayName": "Search Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "accountIconImageUrl",
+          "displayName": "Account Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "cartIconImageUrl",
+          "displayName": "Cart Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "logoImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "logoImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "logoImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoSvgWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "productsFeatureImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 152,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 122,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "productsFeatureImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "productsFeatureImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productIconImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 24,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 24,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "productIconImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "productIconImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconSvgWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 21,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 21,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "actionIconImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "actionIconImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "actionIconImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconSvgWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconSvgControls"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "announcement",
+          "name": "Announcement",
+          "description": "Top black promotion bar"
+        },
+        {
+          "id": "brand",
+          "name": "Brand",
+          "description": "Logo and homepage link",
+          "children": [
+            {
+              "id": "logoImageControls",
+              "name": "Logo Image Controls",
+              "description": "Image size, position and effects"
+            },
+            {
+              "id": "logoSvgControls",
+              "name": "Logo SVG Controls",
+              "description": "SVG size, position and effects"
+            }
+          ]
+        },
+        {
+          "id": "products",
+          "name": "Products Menu",
+          "description": "Product mega menu content",
+          "children": [
+            {
+              "id": "productsFeatureImageControls",
+              "name": "Products Feature Image Controls",
+              "description": "Feature image size, position and effects"
+            },
+            {
+              "id": "productIconImageControls",
+              "name": "Product Icon Image Controls",
+              "description": "Shared controls for product icon images"
+            },
+            {
+              "id": "productIconSvgControls",
+              "name": "Product Icon SVG Controls",
+              "description": "Shared controls for product icon SVGs"
+            }
+          ]
+        },
+        {
+          "id": "why",
+          "name": "Why Menu",
+          "description": "Problem and solution mega menu content"
+        },
+        {
+          "id": "links",
+          "name": "Links",
+          "description": "Header links and icon labels",
+          "children": [
+            {
+              "id": "actionIconImageControls",
+              "name": "Action Icon Image Controls",
+              "description": "Shared controls for header action icon images"
+            },
+            {
+              "id": "actionIconSvgControls",
+              "name": "Action Icon SVG Controls",
+              "description": "Shared controls for header action icon SVGs"
+            }
+          ]
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Header colors"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-7WBRoaV98X",
+      "name": "ThreeMashHero",
+      "entry": "./src/components/ThreeMashHero/index.tsx",
+      "styles": "./src/components/ThreeMashHero/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "eyebrowText",
+          "displayName": "Eyebrow Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "DENTAL ÜRETİMİN GÖRÜNMEZ FATURASI",
+          "groupId": "content"
+        },
+        {
+          "name": "titleBeforeAmount",
+          "displayName": "Title Before Amount",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kliniğiniz her yıl",
+          "groupId": "content"
+        },
+        {
+          "name": "titleAfterAmount",
+          "displayName": "Title After Amount",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "sessizce kaybediyor olabilir.",
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Title Emphasis",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Farkında bile olmadan.",
+          "groupId": "content"
+        },
+        {
+          "name": "subtitleStart",
+          "displayName": "Subtitle Start",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu para reklama gitmiyor, yeni cihaza da gitmiyor. Hastanın ağzına",
+          "groupId": "content"
+        },
+        {
+          "name": "subtitleStrongOne",
+          "displayName": "Subtitle Strong One",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ilk seferde oturmayan işler",
+          "groupId": "content"
+        },
+        {
+          "name": "subtitleMiddle",
+          "displayName": "Subtitle Middle",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "yüzünden, sessizce üretim maliyetine dönüşüyor. Yandaki değerleri",
+          "groupId": "content"
+        },
+        {
+          "name": "subtitleStrongTwo",
+          "displayName": "Subtitle Strong Two",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "kendinize göre ayarlayın",
+          "groupId": "content"
+        },
+        {
+          "name": "subtitleEnd",
+          "displayName": "Subtitle End",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "— yukarıdaki rakam anında sizin kliniğinize göre güncellenir.",
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Primary Button Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sebebini görün ↓",
+          "groupId": "buttons"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Primary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#sebep",
+          "groupId": "buttons"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "Secondary Button Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ücretsiz danışmanlık",
+          "groupId": "buttons"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "Secondary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/pages/iletisim",
+          "groupId": "buttons"
+        },
+        {
+          "name": "hintText",
+          "displayName": "Hint Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bağlayıcılık yok · 20 dk",
+          "groupId": "buttons"
+        },
+        {
+          "name": "calculatorAnchorId",
+          "displayName": "Calculator Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "hesap",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "calculatorEyebrow",
+          "displayName": "Calculator Eyebrow",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TASARRUF HESAPLAYICI",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "calculatorBadgeText",
+          "displayName": "Calculator Badge Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "TAHMİNİ",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "clinicModeText",
+          "displayName": "Clinic Mode Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Klinik",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "labModeText",
+          "displayName": "Lab Mode Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Laboratuvar",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "clinicWorkLabel",
+          "displayName": "Clinic Work Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Aylık restoratif vaka",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "labWorkLabel",
+          "displayName": "Lab Work Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Aylık üretim adedi",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "rptLabel",
+          "displayName": "Repeat Rate Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Mevcut tekrar oranınız (RPT)",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "costLabel",
+          "displayName": "Cost Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bir tekrarın size maliyeti",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "costDetailText",
+          "displayName": "Cost Detail Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "costDetailHref",
+          "displayName": "Cost Detail Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3MASH-Maliyet-Detay.html",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "currentLossLabel",
+          "displayName": "Current Loss Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tahmini yıllık kayıp",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "currentLossNote",
+          "displayName": "Current Loss Note",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "· mevcut oranla",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "targetLossLabel",
+          "displayName": "Target Loss Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hedef oranla",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "targetLossNote",
+          "displayName": "Target Loss Note",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "· ≤%3, 3mash desteğiyle",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "savingsEyebrow",
+          "displayName": "Savings Eyebrow",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "YILLIK TASARRUF POTANSİYELİNİZ",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "alreadyTargetText",
+          "displayName": "Already Target Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Zaten hedef banttasınız 👏",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "fineTextBeforeLink",
+          "displayName": "Fine Text Before Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Basitleştirilmiş bir tahmindir; sonuçlar iş akışınıza göre değişir. Kesin analiz için",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "fineLinkText",
+          "displayName": "Fine Link Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ücretsiz danışmanlık",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "fineLinkHref",
+          "displayName": "Fine Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/pages/iletisim",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "fineTextAfterLink",
+          "displayName": "Fine Text After Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "alın.",
+          "groupId": "calculatorText"
+        },
+        {
+          "name": "currencyPrefix",
+          "displayName": "Currency Prefix",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "$",
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "percentPrefix",
+          "displayName": "Percent Prefix",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "%",
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "negativePrefix",
+          "displayName": "Negative Prefix",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "−",
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "positivePrefix",
+          "displayName": "Positive Prefix",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "+",
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "locale",
+          "displayName": "Number Locale",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "tr-TR",
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "targetRepeatRate",
+          "displayName": "Target Repeat Rate",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "clinicWorkMin",
+          "displayName": "Clinic Work Min",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 20,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "clinicWorkMax",
+          "displayName": "Clinic Work Max",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 500,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "clinicWorkStep",
+          "displayName": "Clinic Work Step",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 10,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "clinicWorkDefault",
+          "displayName": "Clinic Work Default",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 120,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "clinicRptDefault",
+          "displayName": "Clinic RPT Default",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 10,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "clinicCostMin",
+          "displayName": "Clinic Cost Min",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "clinicCostMax",
+          "displayName": "Clinic Cost Max",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1500,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "clinicCostStep",
+          "displayName": "Clinic Cost Step",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 25,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "clinicCostDefault",
+          "displayName": "Clinic Cost Default",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 500,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "labWorkMin",
+          "displayName": "Lab Work Min",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "labWorkMax",
+          "displayName": "Lab Work Max",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 2000,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "labWorkStep",
+          "displayName": "Lab Work Step",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 25,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "labWorkDefault",
+          "displayName": "Lab Work Default",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 300,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "labRptDefault",
+          "displayName": "Lab RPT Default",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 8,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "labCostMin",
+          "displayName": "Lab Cost Min",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 50,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "labCostMax",
+          "displayName": "Lab Cost Max",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 600,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "labCostStep",
+          "displayName": "Lab Cost Step",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 25,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "labCostDefault",
+          "displayName": "Lab Cost Default",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 200,
+          "groupId": "calculatorSettings"
+        },
+        {
+          "name": "stat1Value",
+          "displayName": "Stat 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "±20",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat1Suffix",
+          "displayName": "Stat 1 Suffix",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "µm",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat1Label",
+          "displayName": "Stat 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "her baskıda boyutsal hassasiyet — insan saç telinin yarısı",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat2Value",
+          "displayName": "Stat 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "≤%3",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat2Suffix",
+          "displayName": "Stat 2 Suffix",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat2Label",
+          "displayName": "Stat 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3mash müşterilerinde tekrarlanan iş oranı (%7–12'den)",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat3Value",
+          "displayName": "Stat 3 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "<6",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat3Suffix",
+          "displayName": "Stat 3 Suffix",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ay",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat3Label",
+          "displayName": "Stat 3 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "yatırımın kendini geri ödeme potansiyeli",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat4Value",
+          "displayName": "Stat 4 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "580",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat4Suffix",
+          "displayName": "Stat 4 Suffix",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "+",
+          "groupId": "stats"
+        },
+        {
+          "name": "stat4Label",
+          "displayName": "Stat 4 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "dental lab & klinik bu sistemle üretiyor",
+          "groupId": "stats"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#55554E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#F2F8DC",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#3D4D0E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "showTitleUnderline",
+          "displayName": "Show Title Underline",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "content"
+        },
+        {
+          "name": "titleUnderlineImageUrl",
+          "displayName": "Title Underline Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content",
+          "description": "Upload image here; size, position and effects are controlled in the image controls group."
+        },
+        {
+          "name": "titleUnderlineImageAlt",
+          "displayName": "Title Underline Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "content"
+        },
+        {
+          "name": "titleUnderlineImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 72,
+          "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "titleUnderlineImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "titleUnderlineImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "titleUnderlineImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "titleUnderlineImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "fill",
+          "groupId": "titleUnderlineImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "titleUnderlineImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "titleUnderlineImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "titleUnderlineImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "titleUnderlineImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "titleUnderlineImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "titleUnderlineImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "titleUnderlineImageControls"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content",
+          "description": "Hero text content",
+          "children": [
+            {
+              "id": "titleUnderlineImageControls",
+              "name": "Title Underline Image Controls",
+              "description": "Underline image size, position and effects"
+            }
+          ]
+        },
+        {
+          "id": "buttons",
+          "name": "Buttons",
+          "description": "Hero call to action links"
+        },
+        {
+          "id": "calculatorText",
+          "name": "Calculator Text",
+          "description": "Calculator labels and helper text"
+        },
+        {
+          "id": "calculatorSettings",
+          "name": "Calculator Settings",
+          "description": "Calculator ranges and defaults"
+        },
+        {
+          "id": "stats",
+          "name": "Stats",
+          "description": "Bottom metric strip"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Hero colors"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-c1vlDpXArJ",
+      "name": "ThreeMashProblem",
+      "entry": "./src/components/ThreeMashProblem/index.tsx",
+      "styles": "./src/components/ThreeMashProblem/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "sebep",
+          "groupId": "content"
+        },
+        {
+          "name": "indexNumber",
+          "displayName": "Index Number",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "02",
+          "groupId": "content"
+        },
+        {
+          "name": "indexText",
+          "displayName": "Index Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sorunun Kaynağı",
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kaybın görünmeyen sebebi:",
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Title Emphasis",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ölçüsel hassasiyet.",
+          "groupId": "content"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Side Text HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Diş hekimliği dijitalleşti; herkes benzer cihazlara erişiyor. Asıl fark, ürettiğiniz işin <b>ilk seferde</b> oturup oturmadığı.",
+          "groupId": "content"
+        },
+        {
+          "name": "badLabel",
+          "displayName": "Bad Card Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Piyasada yaygın kurulum",
+          "groupId": "cards"
+        },
+        {
+          "name": "badValue",
+          "displayName": "Bad Card Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "250–500µm",
+          "groupId": "cards"
+        },
+        {
+          "name": "badDescriptionHtml",
+          "displayName": "Bad Card Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yanlış parametre, reçine uyumsuzluğu ve eksik kalibrasyonla sapma <b>güvenli sınırın 2–5 katına</b> çıkar. Tekrar oranı yükselir (bazı pratiklerde <b>%42'ye</b>) → yüksek hacimli bir işletmede yılda <b>−$126K'ya varan</b> kayıp.",
+          "groupId": "cards"
+        },
+        {
+          "name": "goodLabel",
+          "displayName": "Good Card Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3mash ekosistemiyle",
+          "groupId": "cards"
+        },
+        {
+          "name": "goodValue",
+          "displayName": "Good Card Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "±20µm",
+          "groupId": "cards"
+        },
+        {
+          "name": "goodDescriptionHtml",
+          "displayName": "Good Card Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yazıcı, reçine ve kürleme <b>birlikte kalibre</b> edildiğinde: her baskıda tekrar edilebilir hassasiyet → <b>≤%3 remake</b> → yılda <b>$72–162K'ya varan</b> tasarruf potansiyeli.",
+          "groupId": "cards"
+        },
+        {
+          "name": "showHairNote",
+          "displayName": "Show Hair Note",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "notes"
+        },
+        {
+          "name": "hairNoteHtml",
+          "displayName": "Hair Note HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "<b>Ölçek için:</b> bir insan saç teli ~70 µm. Piyasadaki sapma saç telinin <b>5 katına</b> çıkabiliyor; biz saç telinin <b>yarısında</b> çalışıyoruz — ve bunu tek seferlik değil, <b>her baskıda</b> taahhüt ediyoruz.",
+          "groupId": "notes"
+        },
+        {
+          "name": "showReference",
+          "displayName": "Show Reference Text",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "notes"
+        },
+        {
+          "name": "referenceHtml",
+          "displayName": "Reference HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bilimsel dayanak: full-arch model doğruluğu sistemden sisteme <b>3–190 µm</b> arasında değişiyor (Etemad-Shahidi ve ark., <a href='https://doi.org/10.3390/jcm9103357' target='_blank' rel='noopener'>J Clin Med 2020</a>); SLA/DLP/PolyJet en doğru teknolojiler (Németh ve ark., <a href='https://doi.org/10.1016/j.jdent.2023.104532' target='_blank' rel='noopener'>J Dentistry 2023</a>). Tekrar oranı ve sebepleri: <a href='https://doi.org/10.1111/jopr.12995' target='_blank' rel='noopener'>McCracken ve ark., J Prosthodont 2019</a>.",
+          "groupId": "notes"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#55554E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineStrongColor",
+          "displayName": "Line Strong Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#D4D4CC",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#3D4D0E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "hairImageUrl",
+          "displayName": "Hair Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "notes",
+          "description": "Upload image here; size, position and effects are controlled in the image controls group."
+        },
+        {
+          "name": "hairImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 58,
+          "groupId": "hairImageControls"
+        },
+        {
+          "name": "hairImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 58,
+          "groupId": "hairImageControls"
+        },
+        {
+          "name": "hairImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "hairImageControls"
+        },
+        {
+          "name": "hairImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "hairImageControls"
+        },
+        {
+          "name": "hairImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "hairImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "hairImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "hairImageControls"
+        },
+        {
+          "name": "hairImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "hairImageControls"
+        },
+        {
+          "name": "hairImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "hairImageControls"
+        },
+        {
+          "name": "hairImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "hairImageControls"
+        },
+        {
+          "name": "hairImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "hairImageControls"
+        },
+        {
+          "name": "hairImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "hairImageControls"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "cards",
+          "name": "Cards"
+        },
+        {
+          "id": "notes",
+          "name": "Notes",
+          "children": [
+            {
+              "id": "hairImageControls",
+              "name": "Hair Image Controls",
+              "description": "Hair image size, position and effects"
+            }
+          ]
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-lF34fcXs5a",
+      "name": "ThreeMashRemaining",
+      "entry": "./src/components/ThreeMashRemaining/index.tsx",
+      "styles": "./src/components/ThreeMashRemaining/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "solutionHtml",
+          "displayName": "03 Solution HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "sections"
+        },
+        {
+          "name": "curingHtml",
+          "displayName": "04 Curing HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "sections"
+        },
+        {
+          "name": "roiHtml",
+          "displayName": "ROI Band HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "sections"
+        },
+        {
+          "name": "ecosystemHtml",
+          "displayName": "05 Ecosystem HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "sections"
+        },
+        {
+          "name": "trustHtml",
+          "displayName": "06 Trust HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "sections"
+        },
+        {
+          "name": "faqHtml",
+          "displayName": "07 FAQ HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "sections"
+        },
+        {
+          "name": "finalHtml",
+          "displayName": "Final CTA HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "sections"
+        },
+        {
+          "name": "footerHtml",
+          "displayName": "Footer HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "sections"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "darkColor",
+          "displayName": "Dark Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
           "groupId": "appearance"
         }
       ],
       "propGroups": [
         {
-          "id": "brand",
-          "name": "Brand",
-          "description": "Store identity and contact heading"
-        },
-        {
-          "id": "contact",
-          "name": "Contact",
-          "description": "Address, phone, and email"
-        },
-        {
-          "id": "products",
-          "name": "Product Links",
-          "description": "Product column links"
-        },
-        {
-          "id": "info",
-          "name": "Info Links",
-          "description": "Further information links"
-        },
-        {
-          "id": "social",
-          "name": "Social Links",
-          "description": "Footer social links"
-        },
-        {
-          "id": "subscribe",
-          "name": "Subscribe",
-          "description": "Email subscription form labels"
-        },
-        {
-          "id": "legal",
-          "name": "Legal",
-          "description": "Copyright text"
+          "id": "sections",
+          "name": "Sections",
+          "description": "Remaining page HTML sections"
         },
         {
           "id": "appearance",
           "name": "Appearance",
-          "description": "Footer colors"
+          "description": "Remaining page colors"
         }
       ]
+    }
+  ],
+  "customTypes": [
+    {
+      "id": "czO3k2QK5J",
+      "name": "LogoImageFit",
+      "type": "enum",
+      "enumOptions": {
+        "Contain": "contain",
+        "Cover": "cover",
+        "Fill": "fill",
+        "Scale down": "scale-down"
+      },
+      "isDynamic": false
     }
   ]
 }

@@ -28,15 +28,7 @@ An ikas code components project.
 3MashTemplate/
 ├── src/
 │   ├── components/
-│   │   ├── ExampleComponent/  # A child component (type: "component")
-│   │   │   ├── index.tsx
-│   │   │   ├── styles.css
-│   │   │   └── types.ts
-│   │   ├── ExampleSection/    # A page-level section (type: "section")
-│   │   │   ├── index.tsx
-│   │   │   ├── styles.css
-│   │   │   └── types.ts
-│   │   └── index.ts
+│   │   └── index.ts           # Auto-generated component exports
 │   ├── global.css             # Unscoped global styles
 │   └── global-types.ts        # Auto-generated shared enum types
 ├── ikas.config.json
