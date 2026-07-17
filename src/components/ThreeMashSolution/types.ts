@@ -1,4 +1,6 @@
 // This file is auto-generated — do not edit manually.
+import type { IkasImage } from "@ikas/bp-storefront";
+
 export interface Props {
   sectionHtml?: string;
   backgroundColor?: string;
@@ -19,4 +21,43 @@ export interface Props {
   titleEmphasis?: string;
   sideHtml?: string;
   contentHtml?: string;
+  solutionCard1Tag?: string;
+  solutionCard1ImageUrl?: IkasImage | null;
+  solutionCard1ImageAlt?: string;
+  solutionCard1Title?: string;
+  solutionCard1DescriptionHtml?: string;
+  solutionCard1Spec1Label?: string;
+  solutionCard1Spec1Value?: string;
+  solutionCard1Spec2Label?: string;
+  solutionCard1Spec2Value?: string;
+  solutionCard1Spec3Label?: string;
+  solutionCard1Spec3Value?: string;
+  solutionCard1CtaText?: string;
+  solutionCard1CtaHref?: string;
+  solutionCard2Tag?: string;
+  solutionCard2ImageUrl?: IkasImage | null;
+  solutionCard2ImageAlt?: string;
+  solutionCard2Title?: string;
+  solutionCard2DescriptionHtml?: string;
+  solutionCard2Spec1Label?: string;
+  solutionCard2Spec1Value?: string;
+  solutionCard2Spec2Label?: string;
+  solutionCard2Spec2Value?: string;
+  solutionCard2Spec3Label?: string;
+  solutionCard2Spec3Value?: string;
+  solutionCard2CtaText?: string;
+  solutionCard2CtaHref?: string;
+  solutionCard3Tag?: string;
+  solutionCard3ImageUrl?: IkasImage | null;
+  solutionCard3ImageAlt?: string;
+  solutionCard3Title?: string;
+  solutionCard3DescriptionHtml?: string;
+  solutionCard3Spec1Label?: string;
+  solutionCard3Spec1Value?: string;
+  solutionCard3Spec2Label?: string;
+  solutionCard3Spec2Value?: string;
+  solutionCard3Spec3Label?: string;
+  solutionCard3Spec3Value?: string;
+  solutionCard3CtaText?: string;
+  solutionCard3CtaHref?: string;
 }

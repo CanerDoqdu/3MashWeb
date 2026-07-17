@@ -2905,6 +2905,279 @@
           "type": "TEXT",
           "required": false,
           "groupId": "content"
+        },
+        {
+          "name": "solutionCard1Tag",
+          "displayName": "Solution Card 1 Tag",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1ImageUrl",
+          "displayName": "Solution Card 1 Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1ImageAlt",
+          "displayName": "Solution Card 1 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1Title",
+          "displayName": "Solution Card 1 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1DescriptionHtml",
+          "displayName": "Solution Card 1 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1Spec1Label",
+          "displayName": "Solution Card 1 Spec 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1Spec1Value",
+          "displayName": "Solution Card 1 Spec 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1Spec2Label",
+          "displayName": "Solution Card 1 Spec 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1Spec2Value",
+          "displayName": "Solution Card 1 Spec 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1Spec3Label",
+          "displayName": "Solution Card 1 Spec 3 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1Spec3Value",
+          "displayName": "Solution Card 1 Spec 3 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1CtaText",
+          "displayName": "Solution Card 1 Button Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1CtaHref",
+          "displayName": "Solution Card 1 Button Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2Tag",
+          "displayName": "Solution Card 2 Tag",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2ImageUrl",
+          "displayName": "Solution Card 2 Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2ImageAlt",
+          "displayName": "Solution Card 2 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2Title",
+          "displayName": "Solution Card 2 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2DescriptionHtml",
+          "displayName": "Solution Card 2 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2Spec1Label",
+          "displayName": "Solution Card 2 Spec 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2Spec1Value",
+          "displayName": "Solution Card 2 Spec 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2Spec2Label",
+          "displayName": "Solution Card 2 Spec 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2Spec2Value",
+          "displayName": "Solution Card 2 Spec 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2Spec3Label",
+          "displayName": "Solution Card 2 Spec 3 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2Spec3Value",
+          "displayName": "Solution Card 2 Spec 3 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2CtaText",
+          "displayName": "Solution Card 2 Button Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard2CtaHref",
+          "displayName": "Solution Card 2 Button Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3Tag",
+          "displayName": "Solution Card 3 Tag",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3ImageUrl",
+          "displayName": "Solution Card 3 Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3ImageAlt",
+          "displayName": "Solution Card 3 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3Title",
+          "displayName": "Solution Card 3 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3DescriptionHtml",
+          "displayName": "Solution Card 3 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3Spec1Label",
+          "displayName": "Solution Card 3 Spec 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3Spec1Value",
+          "displayName": "Solution Card 3 Spec 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3Spec2Label",
+          "displayName": "Solution Card 3 Spec 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3Spec2Value",
+          "displayName": "Solution Card 3 Spec 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3Spec3Label",
+          "displayName": "Solution Card 3 Spec 3 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3Spec3Value",
+          "displayName": "Solution Card 3 Spec 3 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3CtaText",
+          "displayName": "Solution Card 3 Button Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard3CtaHref",
+          "displayName": "Solution Card 3 Button Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
         }
       ],
       "propGroups": [
@@ -3054,6 +3327,258 @@
         {
           "name": "contentHtml",
           "displayName": "Body Content HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "reason1Eyebrow",
+          "displayName": "Reason 1 Eyebrow",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "reason1Title",
+          "displayName": "Reason 1 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "reason1DescriptionHtml",
+          "displayName": "Reason 1 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "reason2Eyebrow",
+          "displayName": "Reason 2 Eyebrow",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "reason2Title",
+          "displayName": "Reason 2 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "reason2DescriptionHtml",
+          "displayName": "Reason 2 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "reason3Eyebrow",
+          "displayName": "Reason 3 Eyebrow",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "reason3Title",
+          "displayName": "Reason 3 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "reason3DescriptionHtml",
+          "displayName": "Reason 3 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1Tag",
+          "displayName": "Product Card 1 Tag",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1ImageUrl",
+          "displayName": "Product Card 1 Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1ImageAlt",
+          "displayName": "Product Card 1 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1Title",
+          "displayName": "Product Card 1 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1DescriptionHtml",
+          "displayName": "Product Card 1 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1Spec1Label",
+          "displayName": "Product Card 1 Spec 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1Spec1Value",
+          "displayName": "Product Card 1 Spec 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1Spec2Label",
+          "displayName": "Product Card 1 Spec 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1Spec2Value",
+          "displayName": "Product Card 1 Spec 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1CtaText",
+          "displayName": "Product Card 1 Button Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct1CtaHref",
+          "displayName": "Product Card 1 Button Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2Tag",
+          "displayName": "Product Card 2 Tag",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2ImageUrl",
+          "displayName": "Product Card 2 Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2ImageAlt",
+          "displayName": "Product Card 2 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2Title",
+          "displayName": "Product Card 2 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2DescriptionHtml",
+          "displayName": "Product Card 2 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2Spec1Label",
+          "displayName": "Product Card 2 Spec 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2Spec1Value",
+          "displayName": "Product Card 2 Spec 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2Spec2Label",
+          "displayName": "Product Card 2 Spec 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2Spec2Value",
+          "displayName": "Product Card 2 Spec 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2CtaText",
+          "displayName": "Product Card 2 Button Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "curingProduct2CtaHref",
+          "displayName": "Product Card 2 Button Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "readMoreText",
+          "displayName": "Read More Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "readMoreLink1Text",
+          "displayName": "Read More Link 1 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "readMoreLink1Href",
+          "displayName": "Read More Link 1 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "readMoreLink2Text",
+          "displayName": "Read More Link 2 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "readMoreLink2Href",
+          "displayName": "Read More Link 2 URL",
           "type": "TEXT",
           "required": false,
           "groupId": "content"
@@ -3347,6 +3872,139 @@
           "type": "TEXT",
           "required": false,
           "groupId": "content"
+        },
+        {
+          "name": "showIcons",
+          "displayName": "Show Icons",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem1IconImageUrl",
+          "displayName": "Item 1 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem1Title",
+          "displayName": "Item 1 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem1Href",
+          "displayName": "Item 1 Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem2IconImageUrl",
+          "displayName": "Item 2 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem2Title",
+          "displayName": "Item 2 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem2Href",
+          "displayName": "Item 2 Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem3IconImageUrl",
+          "displayName": "Item 3 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem3Title",
+          "displayName": "Item 3 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem3Href",
+          "displayName": "Item 3 Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem4IconImageUrl",
+          "displayName": "Item 4 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem4Title",
+          "displayName": "Item 4 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem4Href",
+          "displayName": "Item 4 Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem5IconImageUrl",
+          "displayName": "Item 5 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem5Title",
+          "displayName": "Item 5 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem5Href",
+          "displayName": "Item 5 Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem6IconImageUrl",
+          "displayName": "Item 6 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem6Title",
+          "displayName": "Item 6 Title",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ecosystemItem6Href",
+          "displayName": "Item 6 Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
         }
       ],
       "propGroups": [
@@ -3499,6 +4157,132 @@
           "type": "TEXT",
           "required": false,
           "groupId": "content"
+        },
+        {
+          "name": "testimonial1Text",
+          "displayName": "Testimonial 1 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial1ImageUrl",
+          "displayName": "Testimonial 1 Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial1ImageAlt",
+          "displayName": "Testimonial 1 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial1Name",
+          "displayName": "Testimonial 1 Name",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial1Role",
+          "displayName": "Testimonial 1 Role",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial2Text",
+          "displayName": "Testimonial 2 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial2ImageUrl",
+          "displayName": "Testimonial 2 Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial2ImageAlt",
+          "displayName": "Testimonial 2 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial2Name",
+          "displayName": "Testimonial 2 Name",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial2Role",
+          "displayName": "Testimonial 2 Role",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial3Text",
+          "displayName": "Testimonial 3 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial3ImageUrl",
+          "displayName": "Testimonial 3 Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial3ImageAlt",
+          "displayName": "Testimonial 3 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial3Name",
+          "displayName": "Testimonial 3 Name",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "testimonial3Role",
+          "displayName": "Testimonial 3 Role",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "trustedLabel",
+          "displayName": "Trusted Logos Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "trustedImageUrl",
+          "displayName": "Trusted Logos Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "trustedImageAlt",
+          "displayName": "Trusted Logos Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
         }
       ],
       "propGroups": [
@@ -3648,6 +4432,76 @@
         {
           "name": "contentHtml",
           "displayName": "Body Content HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq1Question",
+          "displayName": "FAQ 1 Question",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq1AnswerHtml",
+          "displayName": "FAQ 1 Answer HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq2Question",
+          "displayName": "FAQ 2 Question",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq2AnswerHtml",
+          "displayName": "FAQ 2 Answer HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq3Question",
+          "displayName": "FAQ 3 Question",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq3AnswerHtml",
+          "displayName": "FAQ 3 Answer HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq4Question",
+          "displayName": "FAQ 4 Question",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq4AnswerHtml",
+          "displayName": "FAQ 4 Answer HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq5Question",
+          "displayName": "FAQ 5 Question",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "faq5AnswerHtml",
+          "displayName": "FAQ 5 Answer HTML",
           "type": "TEXT",
           "required": false,
           "groupId": "content"
@@ -3952,6 +4806,160 @@
         {
           "name": "legalText",
           "displayName": "Legal Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "productLink1Text",
+          "displayName": "Product Link 1 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "productLink1Href",
+          "displayName": "Product Link 1 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "productLink2Text",
+          "displayName": "Product Link 2 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "productLink2Href",
+          "displayName": "Product Link 2 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "productLink3Text",
+          "displayName": "Product Link 3 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "productLink3Href",
+          "displayName": "Product Link 3 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "productLink4Text",
+          "displayName": "Product Link 4 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "productLink4Href",
+          "displayName": "Product Link 4 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "companyLink1Text",
+          "displayName": "Company Link 1 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "companyLink1Href",
+          "displayName": "Company Link 1 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "companyLink2Text",
+          "displayName": "Company Link 2 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "companyLink2Href",
+          "displayName": "Company Link 2 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "companyLink3Text",
+          "displayName": "Company Link 3 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "companyLink3Href",
+          "displayName": "Company Link 3 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "companyLink4Text",
+          "displayName": "Company Link 4 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "companyLink4Href",
+          "displayName": "Company Link 4 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contactLink1Text",
+          "displayName": "Contact Link 1 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contactLink1Href",
+          "displayName": "Contact Link 1 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contactLink2Text",
+          "displayName": "Contact Link 2 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contactLink2Href",
+          "displayName": "Contact Link 2 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contactLink3Text",
+          "displayName": "Contact Link 3 Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contactLink3Href",
+          "displayName": "Contact Link 3 URL",
           "type": "TEXT",
           "required": false,
           "groupId": "content"

@@ -1,4 +1,6 @@
 // This file is auto-generated — do not edit manually.
+import type { IkasImage } from "@ikas/bp-storefront";
+
 export interface Props {
   sectionHtml?: string;
   backgroundColor?: string;
@@ -19,4 +21,40 @@ export interface Props {
   titleEmphasis?: string;
   sideHtml?: string;
   contentHtml?: string;
+  reason1Eyebrow?: string;
+  reason1Title?: string;
+  reason1DescriptionHtml?: string;
+  reason2Eyebrow?: string;
+  reason2Title?: string;
+  reason2DescriptionHtml?: string;
+  reason3Eyebrow?: string;
+  reason3Title?: string;
+  reason3DescriptionHtml?: string;
+  curingProduct1Tag?: string;
+  curingProduct1ImageUrl?: IkasImage | null;
+  curingProduct1ImageAlt?: string;
+  curingProduct1Title?: string;
+  curingProduct1DescriptionHtml?: string;
+  curingProduct1Spec1Label?: string;
+  curingProduct1Spec1Value?: string;
+  curingProduct1Spec2Label?: string;
+  curingProduct1Spec2Value?: string;
+  curingProduct1CtaText?: string;
+  curingProduct1CtaHref?: string;
+  curingProduct2Tag?: string;
+  curingProduct2ImageUrl?: IkasImage | null;
+  curingProduct2ImageAlt?: string;
+  curingProduct2Title?: string;
+  curingProduct2DescriptionHtml?: string;
+  curingProduct2Spec1Label?: string;
+  curingProduct2Spec1Value?: string;
+  curingProduct2Spec2Label?: string;
+  curingProduct2Spec2Value?: string;
+  curingProduct2CtaText?: string;
+  curingProduct2CtaHref?: string;
+  readMoreText?: string;
+  readMoreLink1Text?: string;
+  readMoreLink1Href?: string;
+  readMoreLink2Text?: string;
+  readMoreLink2Href?: string;
 }
