@@ -2743,11 +2743,13 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Content"
+          "name": "Content",
+          "description": "Problem section heading and intro text"
         },
         {
           "id": "cards",
-          "name": "Cards"
+          "name": "Cards",
+          "description": "Loss comparison cards and copy"
         },
         {
           "id": "notes",
@@ -2758,11 +2760,13 @@
               "name": "Hair Image Controls",
               "description": "Hair image size, position and effects"
             }
-          ]
+          ],
+          "description": "Hair note image, helper text and reference"
         },
         {
           "id": "appearance",
-          "name": "Appearance"
+          "name": "Appearance",
+          "description": "Problem section colors"
         }
       ]
     },
