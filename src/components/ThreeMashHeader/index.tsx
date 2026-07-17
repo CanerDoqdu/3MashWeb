@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
+import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
 import vectorPrinterImage from "../../assets/vectorprinter-data";
 import { Props } from "./types";
@@ -20,8 +21,17 @@ type FlowItem = {
 
 type ActiveMenu = "products" | "why" | null;
 
+const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
+
 function href(value?: string) {
   return value && value.trim() ? value : "#";
+}
+
+function text(value: string | undefined, fallback: string) {
+  const trimmed = value?.trim();
+  return trimmed || fallback;
 }
 
 function svgMarkup(value: unknown) {
@@ -148,6 +158,43 @@ function InlineIcon({ image, svg, className }: { image?: unknown; svg?: unknown;
   return <InlineSvg svg={svg} className={className} />;
 }
 
+function legacyProductIcon(image: unknown, svg: unknown, replacement: string, tokens: string[]) {
+  if (imageSource(image)) {
+    return { iconImageUrl: image, iconSvg: svg };
+  }
+
+  const markup = svgMarkup(svg);
+  if (markup && tokens.some((token) => markup.includes(token))) {
+    return { iconImageUrl: replacement, iconSvg: undefined };
+  }
+
+  return { iconImageUrl: image, iconSvg: svg };
+}
+
+function resolveProductIcon(image: unknown, svg: unknown, replacement: string, tokens: string[], showIcons: boolean) {
+  if (!showIcons) {
+    return { iconImageUrl: undefined, iconSvg: undefined };
+  }
+
+  const resolved = legacyProductIcon(image, svg, replacement, tokens);
+  if (imageSource(resolved.iconImageUrl) || svgMarkup(resolved.iconSvg)) {
+    return resolved;
+  }
+
+  return { iconImageUrl: replacement, iconSvg: undefined };
+}
+
+function resolveActionIcon(image: unknown, svg: unknown, fallbackSvg: string, showIcons: boolean) {
+  if (!showIcons) {
+    return { image: undefined, svg: undefined };
+  }
+
+  return {
+    image,
+    svg: imageSource(image) || svgMarkup(svg) ? svg : fallbackSvg,
+  };
+}
+
 function ProductLink({ item }: { item: MenuItem }) {
   const hasIcon = Boolean(imageSource(item.iconImageUrl) || svgMarkup(item.iconSvg));
 
@@ -203,23 +250,31 @@ export function ThreeMashHeader(props: Props) {
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const showProductIcons = props.showProductIcons !== false;
+  const showActionIcons = props.showActionIcons !== false;
+  const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
+  const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
+  const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
   const productPrimary: MenuItem[] = [
-    { title: props.product1Title, description: props.product1Description, href: props.product1Href, iconImageUrl: props.product1IconImageUrl, iconSvg: props.product1IconSvg },
-    { title: props.product2Title, description: props.product2Description, href: props.product2Href, iconImageUrl: props.product2IconImageUrl, iconSvg: props.product2IconSvg },
-    { title: props.product3Title, description: props.product3Description, href: props.product3Href, iconImageUrl: props.product3IconImageUrl, iconSvg: props.product3IconSvg },
+    { title: props.product1Title, description: props.product1Description, href: props.product1Href, ...resolveProductIcon(props.product1IconImageUrl, props.product1IconSvg, ecoPrinterIcon, ["printer", "M6 9V3h12v6"], showProductIcons) },
+    { title: props.product2Title, description: props.product2Description, href: props.product2Href, ...resolveProductIcon(props.product2IconImageUrl, props.product2IconSvg, ecoScannerIcon, ["washer", "circle cx=\"12\" cy=\"14\"", "M7 7h10"], showProductIcons) },
+    { title: props.product3Title, description: props.product3Description, href: props.product3Href, ...resolveProductIcon(props.product3IconImageUrl, props.product3IconSvg, ecoResinIcon, ["flask-conical", "M10 2v7.5"], showProductIcons) },
   ];
 
   const productSecondary: MenuItem[] = [
-    { title: props.product4Title, description: props.product4Description, href: props.product4Href, iconImageUrl: props.product4IconImageUrl, iconSvg: props.product4IconSvg },
-    { title: props.product5Title, description: props.product5Description, href: props.product5Href, iconImageUrl: props.product5IconImageUrl, iconSvg: props.product5IconSvg },
-    { title: props.product6Title, description: props.product6Description, href: props.product6Href, iconImageUrl: props.product6IconImageUrl, iconSvg: props.product6IconSvg },
+    { title: props.product4Title, description: props.product4Description, href: props.product4Href, ...resolveProductIcon(props.product4IconImageUrl, props.product4IconSvg, ecoCuringIcon, ["scan-line", "M3 7V5a2 2"], showProductIcons) },
+    { title: props.product5Title, description: props.product5Description, href: props.product5Href, ...resolveProductIcon(props.product5IconImageUrl, props.product5IconSvg, ecoBlocksIcon, ["class=\"box\"", "M12 2 3 7l9 5"], showProductIcons) },
+    { title: props.product6Title, description: props.product6Description, href: props.product6Href, ...resolveProductIcon(props.product6IconImageUrl, props.product6IconSvg, ecoOvenIcon, ["flame", "a3.5 3.5"], showProductIcons) },
   ];
 
   const whyItems: FlowItem[] = [
-    { number: props.why1Number, title: props.why1Title, description: props.why1Description, href: props.why1Href },
-    { number: props.why2Number, title: props.why2Title, description: props.why2Description, href: props.why2Href },
-    { number: props.why3Number, title: props.why3Title, description: props.why3Description, href: props.why3Href },
-    { number: props.why4Number, title: props.why4Title, description: props.why4Description, href: props.why4Href },
+    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Görünmez yıllık kayıp"), description: text(props.why1Description, "$126K'ya varan tekrar maliyetini hesaplayın"), href: text(props.why1Href, "#hesap") },
+    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Sebep: ölçüsel hassasiyet"), description: text(props.why2Description, "250-500 µm sapma bandı vs ±20 µm güvenli bölge"), href: text(props.why2Href, "#sebep") },
+    { number: text(props.why3Number, "03"), title: text(props.why3Title, "Çözüm: uyumlu ekosistem"), description: text(props.why3Description, "Yazıcı + reçine + parametre bilgisi, birlikte kalibre"), href: text(props.why3Href, "#cozum") },
+    { number: text(props.why4Number, "04"), title: text(props.why4Title, "Ve kürleme - son %20'lik fark"), description: text(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"), href: text(props.why4Href, "#kurleme") },
+    { number: text(props.why5Number, "05"), title: text(props.why5Title, "Uçtan uca ekosistem"), description: text(props.why5Description, "Yazıcı, reçine, tarama, sarf ve eğitim tek çatı altında"), href: text(props.why5Href, "#ekosistem") },
+    { number: text(props.why6Number, "06"), title: text(props.why6Title, "Referanslar"), description: text(props.why6Description, "Lab ve kliniklerin gerçek üretim deneyimleri"), href: text(props.why6Href, "#guven") },
+    { number: text(props.why7Number, "07"), title: text(props.why7Title, "Sık sorulanlar"), description: text(props.why7Description, "Hassasiyet, maliyet ve ekosistem sorularına net cevaplar"), href: text(props.why7Href, "#sss") },
   ];
 
   const themeStyle = {
@@ -254,7 +309,7 @@ export function ThreeMashHeader(props: Props) {
     "--tmh-logo-svg-hue": `${numberInRange(props.logoSvgHue, 0, -180, 180)}deg`,
     "--tmh-logo-svg-invert": percentage(props.logoSvgInvert, 0, 0, 100),
     ...imageControlVars("tmh-products-feature-image", props, "productsFeatureImage", 152, 122, 260),
-    ...imageControlVars("tmh-product-icon-image", props, "productIconImage", 24, 24, 48),
+    ...imageControlVars("tmh-product-icon-image", props, "productIconImage", 34, 34, 48),
     ...svgControlVars("tmh-product-icon-svg", props, "productIconSvg", 21, 21, 48),
     ...imageControlVars("tmh-action-icon-image", props, "actionIconImage", 22, 22, 36),
     ...svgControlVars("tmh-action-icon-svg", props, "actionIconSvg", 22, 22, 36),
@@ -416,14 +471,14 @@ export function ThreeMashHeader(props: Props) {
                   if (!isSearchOpen) setIsSearchOpen(true);
                 }}
               >
-                <InlineIcon image={props.searchIconImageUrl} svg={props.searchIconSvg} className="tmh-action-svg" />
+                <InlineIcon image={searchIcon.image} svg={searchIcon.svg} className="tmh-action-svg" />
               </button>
             </form>
             <a href={href(props.accountHref)} aria-label={props.accountAriaLabel || ""}>
-              <InlineIcon image={props.accountIconImageUrl} svg={props.accountIconSvg} className="tmh-action-svg" />
+              <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
             </a>
             <a href={href(props.cartHref)} aria-label={props.cartAriaLabel || ""} className="tmh-cart">
-              <InlineIcon image={props.cartIconImageUrl} svg={props.cartIconSvg} className="tmh-action-svg" />
+              <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
             </a>
           </div>
 

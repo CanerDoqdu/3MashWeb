@@ -1,4 +1,11 @@
 export { ThreeMashHeader } from "./ThreeMashHeader/index";
 export { ThreeMashHero } from "./ThreeMashHero/index";
 export { ThreeMashProblem } from "./ThreeMashProblem/index";
-export { ThreeMashRemaining } from "./ThreeMashRemaining/index";
+export { ThreeMashSolution } from "./ThreeMashSolution/index";
+export { ThreeMashCuring } from "./ThreeMashCuring/index";
+export { ThreeMashRoi } from "./ThreeMashRoi/index";
+export { ThreeMashEcosystem } from "./ThreeMashEcosystem/index";
+export { ThreeMashTrust } from "./ThreeMashTrust/index";
+export { ThreeMashFaq } from "./ThreeMashFaq/index";
+export { ThreeMashFinal } from "./ThreeMashFinal/index";
+export { ThreeMashFooter } from "./ThreeMashFooter/index";

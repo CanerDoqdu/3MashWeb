@@ -199,4 +199,18 @@ export interface Props {
   actionIconSvgSaturation?: number;
   actionIconSvgHue?: number;
   actionIconSvgInvert?: number;
+  why5Number?: string;
+  why5Title?: string;
+  why5Description?: string;
+  why5Href?: string;
+  why6Number?: string;
+  why6Title?: string;
+  why6Description?: string;
+  why6Href?: string;
+  why7Number?: string;
+  why7Title?: string;
+  why7Description?: string;
+  why7Href?: string;
+  showProductIcons?: boolean;
+  showActionIcons?: boolean;
 }

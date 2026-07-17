@@ -283,6 +283,10 @@
   cursor: pointer;
 }
 
+.tmhero-calc.is-lab-mode .tmhero-slider input[type="range"] {
+  background: linear-gradient(90deg, var(--tmhero-lab-accent) var(--p, 50%), #e8e8e1 var(--p, 50%));
+}
+
 .tmhero-slider input[type="range"]::-webkit-slider-thumb {
   width: 21px;
   height: 21px;
@@ -316,6 +320,15 @@
 
 .tmhero-calc-link:hover {
   border-color: var(--tmhero-accent-text);
+}
+
+.tmhero-calc.is-lab-mode .tmhero-calc-link {
+  color: var(--tmhero-lab-accent-text);
+  border-bottom-color: var(--tmhero-lab-accent);
+}
+
+.tmhero-calc.is-lab-mode .tmhero-calc-link:hover {
+  border-bottom-color: var(--tmhero-lab-accent-text);
 }
 
 .tmhero-output {
@@ -378,7 +391,19 @@
   line-height: 1.12;
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
-  overflow-wrap: anywhere;
+  min-height: 35px;
+  display: flex;
+  align-items: center;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
+.tmhero-total-value.is-message {
+  font-size: 23px;
+  line-height: 1.18;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tmhero-fine {
@@ -543,6 +568,11 @@
 
   .tmhero-total-value {
     font-size: 27px;
+    min-height: 31px;
+  }
+
+  .tmhero-total-value.is-message {
+    font-size: 20px;
   }
 
   .tmhero-stats {

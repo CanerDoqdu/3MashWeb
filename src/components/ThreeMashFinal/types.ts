@@ -1,13 +1,6 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
-  solutionHtml?: string;
-  curingHtml?: string;
-  roiHtml?: string;
-  ecosystemHtml?: string;
-  trustHtml?: string;
-  faqHtml?: string;
-  finalHtml?: string;
-  footerHtml?: string;
+  sectionHtml?: string;
   backgroundColor?: string;
   textColor?: string;
   subTextColor?: string;
@@ -19,4 +12,11 @@ export interface Props {
   accentTextColor?: string;
   accentSoftColor?: string;
   dangerColor?: string;
+  titleText?: string;
+  titleEmphasis?: string;
+  descriptionHtml?: string;
+  primaryButtonText?: string;
+  primaryButtonHref?: string;
+  secondaryButtonText?: string;
+  secondaryButtonHref?: string;
 }

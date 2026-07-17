@@ -195,6 +195,7 @@ export function ThreeMashHero(props: Props) {
   const positive = props.positivePrefix || "";
   const formattedLoss = `${currency}${formatPlain(currentLoss, props.locale)}`;
   const titleUnderlineImage = imageSource(props.titleUnderlineImageUrl);
+  const isAtTarget = rpt <= targetRepeatRate;
 
   const themeStyle = {
     "--tmhero-bg": props.backgroundColor || "#FAFAF7",
@@ -206,6 +207,8 @@ export function ThreeMashHero(props: Props) {
     "--tmhero-accent": props.accentColor || "#C7F136",
     "--tmhero-accent-soft": props.accentSoftColor || "#F2F8DC",
     "--tmhero-accent-text": props.accentTextColor || "#3D4D0E",
+    "--tmhero-lab-accent": props.labAccentColor || "#7C4DFF",
+    "--tmhero-lab-accent-text": props.labAccentTextColor || "#4F2FCF",
     "--tmhero-danger": props.dangerColor || "#E2492F",
     "--tmhero-title-underline-width": percentage(props.titleUnderlineImageWidth, 72, 10, 140),
     "--tmhero-title-underline-height": `${numberInRange(props.titleUnderlineImageHeight, 22, 4, 80)}px`,
@@ -263,7 +266,7 @@ export function ThreeMashHero(props: Props) {
           </div>
 
           <div className="tmhero-calculator-side" id={props.calculatorAnchorId || undefined}>
-            <div className="tmhero-calc">
+            <div className={`tmhero-calc${mode === "lab" ? " is-lab-mode" : ""}`}>
               <div className="tmhero-calc-head">
                 <span className="tmhero-micro">{props.calculatorEyebrow || ""}</span>
                 <span className="tmhero-est">{props.calculatorBadgeText || ""}</span>
@@ -363,10 +366,8 @@ export function ThreeMashHero(props: Props) {
 
               <div className="tmhero-total">
                 <div className="tmhero-micro">{props.savingsEyebrow || ""}</div>
-                <div className="tmhero-total-value">
-                  {rpt <= targetRepeatRate
-                    ? props.alreadyTargetText || ""
-                    : `${positive}${currency}${formatPlain(savings, props.locale)}`}
+                <div className={`tmhero-total-value${isAtTarget ? " is-message" : ""}`}>
+                  {isAtTarget ? props.alreadyTargetText || "" : `${positive}${currency}${formatPlain(savings, props.locale)}`}
                 </div>
               </div>
 

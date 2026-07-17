@@ -99,4 +99,6 @@ export interface Props {
   titleUnderlineImageSaturation?: number;
   titleUnderlineImageHue?: number;
   titleUnderlineImageInvert?: number;
+  labAccentColor?: string;
+  labAccentTextColor?: string;
 }

@@ -296,7 +296,7 @@
           "displayName": "Why 1 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Yılda $126K'ya varan görünmez kayıp",
+          "defaultValue": "Görünmez yıllık kayıp",
           "groupId": "why"
         },
         {
@@ -304,7 +304,7 @@
           "displayName": "Why 1 Description",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Tekrarlanan işlerin kliniğinize gerçek maliyeti",
+          "defaultValue": "'ya varan tekrar maliyetini hesaplayın",
           "groupId": "why"
         },
         {
@@ -312,7 +312,7 @@
           "displayName": "Why 1 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#sorun",
+          "defaultValue": "#hesap",
           "groupId": "why"
         },
         {
@@ -1082,7 +1082,7 @@
           "displayName": "Width",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 24,
+          "defaultValue": 34,
           "groupId": "productIconImageControls"
         },
         {
@@ -1090,7 +1090,7 @@
           "displayName": "Height",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 24,
+          "defaultValue": 34,
           "groupId": "productIconImageControls"
         },
         {
@@ -1414,6 +1414,118 @@
           "required": false,
           "defaultValue": 0,
           "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "why5Number",
+          "displayName": "Why 5 Number",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "05",
+          "groupId": "why"
+        },
+        {
+          "name": "why5Title",
+          "displayName": "Why 5 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uçtan uca ekosistem",
+          "groupId": "why"
+        },
+        {
+          "name": "why5Description",
+          "displayName": "Why 5 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yazıcı, reçine, tarama, sarf ve eğitim tek çatı altında",
+          "groupId": "why"
+        },
+        {
+          "name": "why5Href",
+          "displayName": "Why 5 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#ekosistem",
+          "groupId": "why"
+        },
+        {
+          "name": "why6Number",
+          "displayName": "Why 6 Number",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "06",
+          "groupId": "why"
+        },
+        {
+          "name": "why6Title",
+          "displayName": "Why 6 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Referanslar",
+          "groupId": "why"
+        },
+        {
+          "name": "why6Description",
+          "displayName": "Why 6 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Lab ve kliniklerin gerçek üretim deneyimleri",
+          "groupId": "why"
+        },
+        {
+          "name": "why6Href",
+          "displayName": "Why 6 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#guven",
+          "groupId": "why"
+        },
+        {
+          "name": "why7Number",
+          "displayName": "Why 7 Number",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "07",
+          "groupId": "why"
+        },
+        {
+          "name": "why7Title",
+          "displayName": "Why 7 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sık sorulanlar",
+          "groupId": "why"
+        },
+        {
+          "name": "why7Description",
+          "displayName": "Why 7 Description",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hassasiyet, maliyet ve ekosistem sorularına net cevaplar",
+          "groupId": "why"
+        },
+        {
+          "name": "why7Href",
+          "displayName": "Why 7 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#sss",
+          "groupId": "why"
+        },
+        {
+          "name": "showProductIcons",
+          "displayName": "Show Product Icons",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "products"
+        },
+        {
+          "name": "showActionIcons",
+          "displayName": "Show Navbar Icons",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "links"
         }
       ],
       "propGroups": [
@@ -2257,6 +2369,22 @@
           "required": false,
           "defaultValue": 0,
           "groupId": "titleUnderlineImageControls"
+        },
+        {
+          "name": "labAccentColor",
+          "displayName": "Lab Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#7C4DFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "labAccentTextColor",
+          "displayName": "Lab Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#4F2FCF",
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -2639,67 +2767,18 @@
       ]
     },
     {
-      "id": "2tplvqpo-lF34fcXs5a",
-      "name": "ThreeMashRemaining",
-      "entry": "./src/components/ThreeMashRemaining/index.tsx",
-      "styles": "./src/components/ThreeMashRemaining/styles.css",
+      "id": "2tplvqpo-wLCLjthGwD",
+      "name": "ThreeMashSolution",
+      "entry": "./src/components/ThreeMashSolution/index.tsx",
+      "styles": "./src/components/ThreeMashSolution/styles.css",
       "type": "section",
       "props": [
         {
-          "name": "solutionHtml",
-          "displayName": "03 Solution HTML",
+          "name": "sectionHtml",
+          "displayName": "Section HTML",
           "type": "TEXT",
           "required": false,
-          "groupId": "sections"
-        },
-        {
-          "name": "curingHtml",
-          "displayName": "04 Curing HTML",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "sections"
-        },
-        {
-          "name": "roiHtml",
-          "displayName": "ROI Band HTML",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "sections"
-        },
-        {
-          "name": "ecosystemHtml",
-          "displayName": "05 Ecosystem HTML",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "sections"
-        },
-        {
-          "name": "trustHtml",
-          "displayName": "06 Trust HTML",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "sections"
-        },
-        {
-          "name": "faqHtml",
-          "displayName": "07 FAQ HTML",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "sections"
-        },
-        {
-          "name": "finalHtml",
-          "displayName": "Final CTA HTML",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "sections"
-        },
-        {
-          "name": "footerHtml",
-          "displayName": "Footer HTML",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "sections"
+          "groupId": "content"
         },
         {
           "name": "backgroundColor",
@@ -2777,18 +2856,1115 @@
           "type": "COLOR",
           "required": false,
           "groupId": "appearance"
+        },
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexNumber",
+          "displayName": "Section Number",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexText",
+          "displayName": "Section Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Italic Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Side Text HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contentHtml",
+          "displayName": "Body Content HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
         }
       ],
       "propGroups": [
         {
-          "id": "sections",
-          "name": "Sections",
-          "description": "Remaining page HTML sections"
+          "id": "content",
+          "name": "Content"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Remaining page colors"
+          "name": "Appearance"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-WhqzboWYcS",
+      "name": "ThreeMashCuring",
+      "entry": "./src/components/ThreeMashCuring/index.tsx",
+      "styles": "./src/components/ThreeMashCuring/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionHtml",
+          "displayName": "Section HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "darkColor",
+          "displayName": "Dark Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexNumber",
+          "displayName": "Section Number",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexText",
+          "displayName": "Section Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Italic Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Side Text HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contentHtml",
+          "displayName": "Body Content HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-0WoA6MXRW2",
+      "name": "ThreeMashRoi",
+      "entry": "./src/components/ThreeMashRoi/index.tsx",
+      "styles": "./src/components/ThreeMashRoi/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionHtml",
+          "displayName": "Section HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "darkColor",
+          "displayName": "Dark Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Eyebrow Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "valueText",
+          "displayName": "Value Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ctaText",
+          "displayName": "Button Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "ctaHref",
+          "displayName": "Button Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-2qoDMjwV3E",
+      "name": "ThreeMashEcosystem",
+      "entry": "./src/components/ThreeMashEcosystem/index.tsx",
+      "styles": "./src/components/ThreeMashEcosystem/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionHtml",
+          "displayName": "Section HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "darkColor",
+          "displayName": "Dark Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexNumber",
+          "displayName": "Section Number",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexText",
+          "displayName": "Section Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Italic Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Side Text HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contentHtml",
+          "displayName": "Body Content HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-x3HXPCBvou",
+      "name": "ThreeMashTrust",
+      "entry": "./src/components/ThreeMashTrust/index.tsx",
+      "styles": "./src/components/ThreeMashTrust/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionHtml",
+          "displayName": "Section HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "darkColor",
+          "displayName": "Dark Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexNumber",
+          "displayName": "Section Number",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexText",
+          "displayName": "Section Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Italic Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Side Text HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contentHtml",
+          "displayName": "Body Content HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-7BxBDv5SsA",
+      "name": "ThreeMashFaq",
+      "entry": "./src/components/ThreeMashFaq/index.tsx",
+      "styles": "./src/components/ThreeMashFaq/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionHtml",
+          "displayName": "Section HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "darkColor",
+          "displayName": "Dark Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexNumber",
+          "displayName": "Section Number",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "indexText",
+          "displayName": "Section Label",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Italic Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Side Text HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contentHtml",
+          "displayName": "Body Content HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-dfwE8beD9V",
+      "name": "ThreeMashFinal",
+      "entry": "./src/components/ThreeMashFinal/index.tsx",
+      "styles": "./src/components/ThreeMashFinal/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionHtml",
+          "displayName": "Section HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "darkColor",
+          "displayName": "Dark Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Italic Title Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Primary Button Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Primary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "Secondary Button Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "Secondary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-ZLcKfjubsQ",
+      "name": "ThreeMashFooter",
+      "entry": "./src/components/ThreeMashFooter/index.tsx",
+      "styles": "./src/components/ThreeMashFooter/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionHtml",
+          "displayName": "Section HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "darkColor",
+          "displayName": "Dark Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "logoText",
+          "displayName": "Logo Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Description Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "productsColumnHtml",
+          "displayName": "Products Column HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "companyColumnHtml",
+          "displayName": "Company Column HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "contactColumnHtml",
+          "displayName": "Contact Column HTML",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "copyrightText",
+          "displayName": "Copyright Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "legalText",
+          "displayName": "Legal Text",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
         }
       ]
     }
