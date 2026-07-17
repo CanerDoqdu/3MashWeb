@@ -2776,8 +2776,631 @@
       "entry": "./src/components/ThreeMashSolution/index.tsx",
       "styles": "./src/components/ThreeMashSolution/styles.css",
       "type": "section",
-      "props": [],
-      "propGroups": []
+      "props": [
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "cozum",
+          "groupId": "content"
+        },
+        {
+          "name": "indexNumber",
+          "displayName": "Section Number",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "03",
+          "groupId": "content"
+        },
+        {
+          "name": "indexText",
+          "displayName": "Section Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Çözüm · Üretim Ekosistemi",
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hassasiyet cihazdan çıkmaz;",
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Italic Title Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "uyumdan çıkar.",
+          "groupId": "content"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Side Text HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kuronun oturması üç şeyin senkronuna bağlı: <b>yazıcı, reçine, kürleme.</b> Biz üçünü birlikte kalibre edip know-how'ıyla teslim ediyoruz — elinizdeki başka marka cihaza bile.",
+          "groupId": "content"
+        },
+        {
+          "name": "solutionCard1Tag",
+          "displayName": "Card 1 Tag",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "PROFESYONEL",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1Title",
+          "displayName": "Card 1 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P1D",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1DescriptionHtml",
+          "displayName": "Card 1 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Malzemeye göre tasarlanmış optik sistemle <b>profesyonel DLP</b> üretim. Yüksek hacimli lab ve kliniklerin motoru.",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1ImageUrl",
+          "displayName": "Card 1 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload a replacement product image. If empty, the bundled product image is used.",
+          "defaultValue": "",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1ImageAlt",
+          "displayName": "Card 1 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P1D",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1Spec1Label",
+          "displayName": "Card 1 Spec 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Işık kaynağı",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1Spec1Value",
+          "displayName": "Card 1 Spec 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "385 nm DLP",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1Spec2Label",
+          "displayName": "Card 1 Spec 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hassasiyet",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1Spec2Value",
+          "displayName": "Card 1 Spec 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "±20 µm",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1Spec3Label",
+          "displayName": "Card 1 Spec 3 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Karakter",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1Spec3Value",
+          "displayName": "Card 1 Spec 3 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tekrar edilebilirlik",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1CtaText",
+          "displayName": "Card 1 CTA Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard1CtaHref",
+          "displayName": "Card 1 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2Tag",
+          "displayName": "Card 2 Tag",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "GİRİŞ SEGMENTİ",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2Title",
+          "displayName": "Card 2 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P16L",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2DescriptionHtml",
+          "displayName": "Card 2 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Dijitale yeni geçenler için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2ImageUrl",
+          "displayName": "Card 2 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload a replacement product image. If empty, the bundled product image is used.",
+          "defaultValue": "",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2ImageAlt",
+          "displayName": "Card 2 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P16L",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2Spec1Label",
+          "displayName": "Card 2 Spec 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Teknoloji",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2Spec1Value",
+          "displayName": "Card 2 Spec 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "LCD · revize",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2Spec2Label",
+          "displayName": "Card 2 Spec 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Rol",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2Spec2Value",
+          "displayName": "Card 2 Spec 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ekosisteme giriş",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2Spec3Label",
+          "displayName": "Card 2 Spec 3 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Destek",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2Spec3Value",
+          "displayName": "Card 2 Spec 3 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kurulum + eğitim",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2CtaText",
+          "displayName": "Card 2 CTA Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard2CtaHref",
+          "displayName": "Card 2 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3Tag",
+          "displayName": "Card 3 Tag",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "RESMİ DİSTRİBÜTÖR",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3Title",
+          "displayName": "Card 3 Title",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "CRS Reçineler",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3DescriptionHtml",
+          "displayName": "Card 3 Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "<b>CE Class IIa</b> biyouyumlu &amp; model reçineleri; cihazınızın parametreleriyle <b>birlikte kalibre edilmiş</b> teslim edilir.",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3ImageUrl",
+          "displayName": "Card 3 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload a replacement product image. If empty, the bundled product image is used.",
+          "defaultValue": "",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3ImageAlt",
+          "displayName": "Card 3 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "CRS Reçineler",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3Spec1Label",
+          "displayName": "Card 3 Spec 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sertifika",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3Spec1Value",
+          "displayName": "Card 3 Spec 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "CE Class IIa",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3Spec2Label",
+          "displayName": "Card 3 Spec 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uygulama",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3Spec2Value",
+          "displayName": "Card 3 Spec 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Model · geçici · splint · guide",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3Spec3Label",
+          "displayName": "Card 3 Spec 3 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uyum",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3Spec3Value",
+          "displayName": "Card 3 Spec 3 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Marka bağımsız",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3CtaText",
+          "displayName": "Card 3 CTA Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "cards"
+        },
+        {
+          "name": "solutionCard3CtaHref",
+          "displayName": "Card 3 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/dental-3d-yazici-recineleri",
+          "groupId": "cards"
+        },
+        {
+          "name": "carouselAriaLabel",
+          "displayName": "Carousel Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Çözüm ürünleri",
+          "groupId": "carousel"
+        },
+        {
+          "name": "carouselDurationSeconds",
+          "displayName": "Slide Duration Seconds",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 24,
+          "groupId": "carousel"
+        },
+        {
+          "name": "pauseOnHover",
+          "displayName": "Pause On Hover",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "carousel"
+        },
+        {
+          "name": "edgeFadeWidth",
+          "displayName": "Moving Edge Fade Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 44,
+          "groupId": "carousel"
+        },
+        {
+          "name": "cardGap",
+          "displayName": "Card Gap",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "carousel"
+        },
+        {
+          "name": "productImageWidth",
+          "displayName": "Layout - Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 170,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageHeight",
+          "displayName": "Layout - Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 156,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageXOffset",
+          "displayName": "Layout - X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageYOffset",
+          "displayName": "Layout - Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageFit",
+          "displayName": "Layout - Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "productImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "productImageOpacity",
+          "displayName": "Effects - Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageBrightness",
+          "displayName": "Effects - Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageContrast",
+          "displayName": "Effects - Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageSaturation",
+          "displayName": "Effects - Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageHue",
+          "displayName": "Effects - Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageInvert",
+          "displayName": "Effects - Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#55554E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#3D4D0E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#F2F8DC",
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardMediaStartColor",
+          "displayName": "Card Media Start Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#F4F4EF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardMediaEndColor",
+          "displayName": "Card Media End Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E9E9E2",
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardRadius",
+          "displayName": "Card Radius",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 20,
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content",
+          "description": "Section label, heading and side copy"
+        },
+        {
+          "id": "cards",
+          "name": "Product Cards",
+          "description": "Carousel card text, uploads, links and specs"
+        },
+        {
+          "id": "carousel",
+          "name": "Carousel Settings",
+          "description": "Slider timing, gap and edge fade"
+        },
+        {
+          "id": "productImageControls",
+          "name": "Product Image Controls",
+          "description": "Image layout and effects for the Section 3 carousel cards"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Section colors and card styling"
+        }
+      ]
     },
     {
       "id": "2tplvqpo-WhqzboWYcS",

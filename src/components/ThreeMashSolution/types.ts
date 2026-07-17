@@ -1,3 +1,83 @@
 // This file is auto-generated — do not edit manually.
+import type { IkasImage } from "@ikas/bp-storefront";
+import type { LogoImageFit } from "../../global-types";
+
 export interface Props {
+  sectionAnchorId?: string;
+  indexNumber?: string;
+  indexText?: string;
+  titleText?: string;
+  titleEmphasis?: string;
+  sideHtml?: string;
+  solutionCard1Tag?: string;
+  solutionCard1Title?: string;
+  solutionCard1DescriptionHtml?: string;
+  /** Upload a replacement product image. If empty, the bundled product image is used. */
+  solutionCard1ImageUrl?: IkasImage | null;
+  solutionCard1ImageAlt?: string;
+  solutionCard1Spec1Label?: string;
+  solutionCard1Spec1Value?: string;
+  solutionCard1Spec2Label?: string;
+  solutionCard1Spec2Value?: string;
+  solutionCard1Spec3Label?: string;
+  solutionCard1Spec3Value?: string;
+  solutionCard1CtaText?: string;
+  solutionCard1CtaHref?: string;
+  solutionCard2Tag?: string;
+  solutionCard2Title?: string;
+  solutionCard2DescriptionHtml?: string;
+  /** Upload a replacement product image. If empty, the bundled product image is used. */
+  solutionCard2ImageUrl?: IkasImage | null;
+  solutionCard2ImageAlt?: string;
+  solutionCard2Spec1Label?: string;
+  solutionCard2Spec1Value?: string;
+  solutionCard2Spec2Label?: string;
+  solutionCard2Spec2Value?: string;
+  solutionCard2Spec3Label?: string;
+  solutionCard2Spec3Value?: string;
+  solutionCard2CtaText?: string;
+  solutionCard2CtaHref?: string;
+  solutionCard3Tag?: string;
+  solutionCard3Title?: string;
+  solutionCard3DescriptionHtml?: string;
+  /** Upload a replacement product image. If empty, the bundled product image is used. */
+  solutionCard3ImageUrl?: IkasImage | null;
+  solutionCard3ImageAlt?: string;
+  solutionCard3Spec1Label?: string;
+  solutionCard3Spec1Value?: string;
+  solutionCard3Spec2Label?: string;
+  solutionCard3Spec2Value?: string;
+  solutionCard3Spec3Label?: string;
+  solutionCard3Spec3Value?: string;
+  solutionCard3CtaText?: string;
+  solutionCard3CtaHref?: string;
+  carouselAriaLabel?: string;
+  carouselDurationSeconds?: number;
+  pauseOnHover?: boolean;
+  edgeFadeWidth?: number;
+  cardGap?: number;
+  productImageWidth?: number;
+  productImageHeight?: number;
+  productImageXOffset?: number;
+  productImageYOffset?: number;
+  productImageFit?: LogoImageFit;
+  productImageOpacity?: number;
+  productImageBrightness?: number;
+  productImageContrast?: number;
+  productImageSaturation?: number;
+  productImageHue?: number;
+  productImageInvert?: number;
+  backgroundColor?: string;
+  textColor?: string;
+  subTextColor?: string;
+  mutedTextColor?: string;
+  lineColor?: string;
+  panelColor?: string;
+  accentColor?: string;
+  accentTextColor?: string;
+  accentSoftColor?: string;
+  dangerColor?: string;
+  cardMediaStartColor?: string;
+  cardMediaEndColor?: string;
+  cardRadius?: number;
 }

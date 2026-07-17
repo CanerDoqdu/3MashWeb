@@ -89,6 +89,20 @@ function value(value: unknown, fallback: string) {
   return trimmed || fallback;
 }
 
+function numberInRange(value: unknown, fallback: number, min: number, max: number) {
+  const parsed = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(max, Math.max(min, parsed));
+}
+
+function percentage(value: unknown, fallback: number, min: number, max: number) {
+  return `${numberInRange(value, fallback, min, max)}%`;
+}
+
+function imageFit(value: unknown) {
+  return value === "cover" || value === "fill" || value === "scale-down" ? value : "contain";
+}
+
 function escapeAttr(value: unknown) {
   return String(value ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
@@ -187,6 +201,23 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-accent-text": props.accentTextColor || "#3D4D0E",
     "--tmr-accent-soft": props.accentSoftColor || "#F2F8DC",
     "--tmr-danger": props.dangerColor || "#E2492F",
+    "--tmr-solution-carousel-duration": `${numberInRange(raw(props, "carouselDurationSeconds"), 24, 4, 90)}s`,
+    "--tmr-solution-edge-fade-width": `${numberInRange(raw(props, "edgeFadeWidth"), 44, 0, 120)}px`,
+    "--tmr-solution-card-gap": `${numberInRange(raw(props, "cardGap"), 22, 8, 48)}px`,
+    "--tmr-solution-card-radius": `${numberInRange(raw(props, "cardRadius"), 20, 0, 36)}px`,
+    "--tmr-solution-media-start": value(raw(props, "cardMediaStartColor"), "#F4F4EF"),
+    "--tmr-solution-media-end": value(raw(props, "cardMediaEndColor"), "#E9E9E2"),
+    "--tmr-solution-image-width": `${numberInRange(raw(props, "productImageWidth"), 170, 48, 280)}px`,
+    "--tmr-solution-image-height": `${numberInRange(raw(props, "productImageHeight"), 156, 48, 240)}px`,
+    "--tmr-solution-image-x": `${numberInRange(raw(props, "productImageXOffset"), 0, -90, 90)}px`,
+    "--tmr-solution-image-y": `${numberInRange(raw(props, "productImageYOffset"), 0, -90, 90)}px`,
+    "--tmr-solution-image-fit": imageFit(raw(props, "productImageFit")),
+    "--tmr-solution-image-opacity": percentage(raw(props, "productImageOpacity"), 100, 0, 100),
+    "--tmr-solution-image-brightness": percentage(raw(props, "productImageBrightness"), 100, 0, 220),
+    "--tmr-solution-image-contrast": percentage(raw(props, "productImageContrast"), 100, 0, 220),
+    "--tmr-solution-image-saturation": percentage(raw(props, "productImageSaturation"), 100, 0, 260),
+    "--tmr-solution-image-hue": `${numberInRange(raw(props, "productImageHue"), 0, -180, 180)}deg`,
+    "--tmr-solution-image-invert": percentage(raw(props, "productImageInvert"), 0, 0, 100),
   } as any;
 }
 
@@ -267,7 +298,8 @@ function solutionCards(props: ThreeMashSectionRenderProps) {
 
 function solutionContent(props: ThreeMashSectionRenderProps) {
   const cards = solutionCards(props);
-  return `<div class="tmr-products tmr-products-slider" aria-label="Çözüm ürünleri"><div class="tmr-products-track">${cards}${cards}${cards}</div></div>`;
+  const noPause = raw(props, "pauseOnHover") === false ? " tmr-products-no-pause" : "";
+  return `<div class="tmr-products tmr-products-slider${noPause}" aria-label="${escapeAttr(field(props, "carouselAriaLabel", "Çözüm ürünleri"))}"><div class="tmr-products-track">${cards}${cards}${cards}</div></div>`;
 }
 
 function curingReasons(props: ThreeMashSectionRenderProps) {
@@ -363,7 +395,7 @@ function faqContent(props: ThreeMashSectionRenderProps) {
 export function renderSolutionHtml(props: ThreeMashSectionRenderProps) {
   return indexedSection(props, {
     anchor: "cozum",
-    className: "tmr-section-tight",
+    className: "tmr-section-tight tmr-solution",
     indexNumber: "03",
     indexText: "Çözüm · Üretim Ekosistemi",
     titleText: "Hassasiyet cihazdan çıkmaz;",
