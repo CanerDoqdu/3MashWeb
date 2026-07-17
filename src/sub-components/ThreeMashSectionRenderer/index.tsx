@@ -218,6 +218,23 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-solution-image-saturation": percentage(raw(props, "productImageSaturation"), 100, 0, 260),
     "--tmr-solution-image-hue": `${numberInRange(raw(props, "productImageHue"), 0, -180, 180)}deg`,
     "--tmr-solution-image-invert": percentage(raw(props, "productImageInvert"), 0, 0, 100),
+    "--tmr-curing-background": value(raw(props, "backgroundColor"), "#0E0E0C"),
+    "--tmr-curing-reason-bg": value(raw(props, "reasonCardBackgroundColor"), "#161612"),
+    "--tmr-curing-product-media-start": value(raw(props, "productMediaStartColor"), "#1D1D17"),
+    "--tmr-curing-product-media-end": value(raw(props, "productMediaEndColor"), "#14140F"),
+    "--tmr-curing-reason-radius": `${numberInRange(raw(props, "reasonCardRadius"), 18, 0, 36)}px`,
+    "--tmr-curing-product-radius": `${numberInRange(raw(props, "productCardRadius"), 20, 0, 36)}px`,
+    "--tmr-curing-image-width": `${numberInRange(raw(props, "productImageWidth"), 190, 48, 300)}px`,
+    "--tmr-curing-image-height": `${numberInRange(raw(props, "productImageHeight"), 170, 48, 260)}px`,
+    "--tmr-curing-image-x": `${numberInRange(raw(props, "productImageXOffset"), 0, -90, 90)}px`,
+    "--tmr-curing-image-y": `${numberInRange(raw(props, "productImageYOffset"), 0, -90, 90)}px`,
+    "--tmr-curing-image-fit": imageFit(raw(props, "productImageFit")),
+    "--tmr-curing-image-opacity": percentage(raw(props, "productImageOpacity"), 100, 0, 100),
+    "--tmr-curing-image-brightness": percentage(raw(props, "productImageBrightness"), 100, 0, 220),
+    "--tmr-curing-image-contrast": percentage(raw(props, "productImageContrast"), 100, 0, 220),
+    "--tmr-curing-image-saturation": percentage(raw(props, "productImageSaturation"), 100, 0, 260),
+    "--tmr-curing-image-hue": `${numberInRange(raw(props, "productImageHue"), 0, -180, 180)}deg`,
+    "--tmr-curing-image-invert": percentage(raw(props, "productImageInvert"), 0, 0, 100),
   } as any;
 }
 
@@ -408,7 +425,7 @@ export function renderSolutionHtml(props: ThreeMashSectionRenderProps) {
 export function renderCuringHtml(props: ThreeMashSectionRenderProps) {
   return indexedSection(props, {
     anchor: "kurleme",
-    className: "tmr-dark",
+    className: "tmr-dark tmr-curing",
     indexNumber: "04",
     indexText: "Kritik Son Adım",
     titleText: "Sadece yazıcı değil. Sonucu",

@@ -3410,94 +3410,11 @@
       "type": "section",
       "props": [
         {
-          "name": "sectionHtml",
-          "displayName": "Section HTML",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "backgroundColor",
-          "displayName": "Background Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "textColor",
-          "displayName": "Text Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "subTextColor",
-          "displayName": "Sub Text Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "lineColor",
-          "displayName": "Line Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "panelColor",
-          "displayName": "Panel Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "darkColor",
-          "displayName": "Dark Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "accentColor",
-          "displayName": "Accent Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "accentTextColor",
-          "displayName": "Accent Text Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "accentSoftColor",
-          "displayName": "Accent Soft Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
-          "name": "dangerColor",
-          "displayName": "Danger Color",
-          "type": "COLOR",
-          "required": false,
-          "groupId": "appearance"
-        },
-        {
           "name": "sectionAnchorId",
           "displayName": "Section Anchor ID",
           "type": "TEXT",
           "required": false,
+          "defaultValue": "kurleme",
           "groupId": "content"
         },
         {
@@ -3505,6 +3422,7 @@
           "displayName": "Section Number",
           "type": "TEXT",
           "required": false,
+          "defaultValue": "04",
           "groupId": "content"
         },
         {
@@ -3512,6 +3430,7 @@
           "displayName": "Section Label",
           "type": "TEXT",
           "required": false,
+          "defaultValue": "Kritik Son Adım",
           "groupId": "content"
         },
         {
@@ -3519,6 +3438,7 @@
           "displayName": "Title Text",
           "type": "TEXT",
           "required": false,
+          "defaultValue": "Sadece yazıcı değil. Sonucu",
           "groupId": "content"
         },
         {
@@ -3526,6 +3446,7 @@
           "displayName": "Italic Title Text",
           "type": "TEXT",
           "required": false,
+          "defaultValue": "kürleme tamamlar.",
           "groupId": "content"
         },
         {
@@ -3533,13 +3454,7 @@
           "displayName": "Side Text HTML",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "contentHtml",
-          "displayName": "Body Content HTML",
-          "type": "TEXT",
-          "required": false,
+          "defaultValue": "Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:",
           "groupId": "content"
         },
         {
@@ -3547,282 +3462,537 @@
           "displayName": "Reason 1 Eyebrow",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "SEBEP 01",
+          "groupId": "reasonCards"
         },
         {
           "name": "reason1Title",
           "displayName": "Reason 1 Title",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Mekanik dayanım",
+          "groupId": "reasonCards"
         },
         {
           "name": "reason1DescriptionHtml",
           "displayName": "Reason 1 Description HTML",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.",
+          "groupId": "reasonCards"
         },
         {
           "name": "reason2Eyebrow",
           "displayName": "Reason 2 Eyebrow",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "SEBEP 02",
+          "groupId": "reasonCards"
         },
         {
           "name": "reason2Title",
           "displayName": "Reason 2 Title",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Ölçüsel doğruluk",
+          "groupId": "reasonCards"
         },
         {
           "name": "reason2DescriptionHtml",
           "displayName": "Reason 2 Description HTML",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.",
+          "groupId": "reasonCards"
         },
         {
           "name": "reason3Eyebrow",
           "displayName": "Reason 3 Eyebrow",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "SEBEP 03",
+          "groupId": "reasonCards"
         },
         {
           "name": "reason3Title",
           "displayName": "Reason 3 Title",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Biyouyumluluk & renk",
+          "groupId": "reasonCards"
         },
         {
           "name": "reason3DescriptionHtml",
           "displayName": "Reason 3 Description HTML",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.",
+          "groupId": "reasonCards"
         },
         {
           "name": "curingProduct1Tag",
-          "displayName": "Product Card 1 Tag",
+          "displayName": "Product 1 Tag",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "curingProduct1ImageUrl",
-          "displayName": "Product Card 1 Image",
-          "type": "IMAGE",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "curingProduct1ImageAlt",
-          "displayName": "Product Card 1 Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
+          "defaultValue": "385NM · LCD",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct1Title",
-          "displayName": "Product Card 1 Title",
+          "displayName": "Product 1 Title",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "MASH P16L – 385nm",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct1DescriptionHtml",
-          "displayName": "Product Card 1 Description HTML",
+          "displayName": "Product 1 Description HTML",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Dental üretim için 385nm ışık kaynağıyla <b>net detay</b> ve kontrollü yüzey kalitesi. Dijital akışa güçlü başlangıç.",
+          "groupId": "productCards"
+        },
+        {
+          "name": "curingProduct1ImageUrl",
+          "displayName": "Product 1 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload a replacement product image. If empty, the bundled product image is used.",
+          "groupId": "productCards"
+        },
+        {
+          "name": "curingProduct1ImageAlt",
+          "displayName": "Product 1 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P16L – 385nm",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct1Spec1Label",
-          "displayName": "Product Card 1 Spec 1 Label",
+          "displayName": "Product 1 Spec 1 Label",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Dalga boyu",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct1Spec1Value",
-          "displayName": "Product Card 1 Spec 1 Value",
+          "displayName": "Product 1 Spec 1 Value",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "385 nm",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct1Spec2Label",
-          "displayName": "Product Card 1 Spec 2 Label",
+          "displayName": "Product 1 Spec 2 Label",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Rol",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct1Spec2Value",
-          "displayName": "Product Card 1 Spec 2 Value",
+          "displayName": "Product 1 Spec 2 Value",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Üretim yazıcısı",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct1CtaText",
-          "displayName": "Product Card 1 Button Text",
+          "displayName": "Product 1 CTA Text",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "İncele",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct1CtaHref",
-          "displayName": "Product Card 1 Button Link",
+          "displayName": "Product 1 CTA Link",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct2Tag",
-          "displayName": "Product Card 2 Tag",
+          "displayName": "Product 2 Tag",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "curingProduct2ImageUrl",
-          "displayName": "Product Card 2 Image",
-          "type": "IMAGE",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "curingProduct2ImageAlt",
-          "displayName": "Product Card 2 Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
+          "defaultValue": "YIKAMA · KÜRLEME",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct2Title",
-          "displayName": "Product Card 2 Title",
+          "displayName": "Product 2 Title",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Creality UW02",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct2DescriptionHtml",
-          "displayName": "Product Card 2 Description HTML",
+          "displayName": "Product 2 Description HTML",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Baskı sonrası yıkama ve kürleme adımlarını <b>tek kontrollü akışta</b> toplar. P16L ile tamamlayıcı başlangıç seti.",
+          "groupId": "productCards"
+        },
+        {
+          "name": "curingProduct2ImageUrl",
+          "displayName": "Product 2 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload a replacement product image. If empty, the bundled product image is used.",
+          "groupId": "productCards"
+        },
+        {
+          "name": "curingProduct2ImageAlt",
+          "displayName": "Product 2 Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Creality UW02",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct2Spec1Label",
-          "displayName": "Product Card 2 Spec 1 Label",
+          "displayName": "Product 2 Spec 1 Label",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Görev",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct2Spec1Value",
-          "displayName": "Product Card 2 Spec 1 Value",
+          "displayName": "Product 2 Spec 1 Value",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Yıkama + kürleme",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct2Spec2Label",
-          "displayName": "Product Card 2 Spec 2 Label",
+          "displayName": "Product 2 Spec 2 Label",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Uyum",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct2Spec2Value",
-          "displayName": "Product Card 2 Spec 2 Value",
+          "displayName": "Product 2 Spec 2 Value",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "P16L + CRS",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct2CtaText",
-          "displayName": "Product Card 2 Button Text",
+          "displayName": "Product 2 CTA Text",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "İncele",
+          "groupId": "productCards"
         },
         {
           "name": "curingProduct2CtaHref",
-          "displayName": "Product Card 2 Button Link",
+          "displayName": "Product 2 CTA Link",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "https://3mash.com/yikama-kurleme-cihazlari",
+          "groupId": "productCards"
+        },
+        {
+          "name": "productImageWidth",
+          "displayName": "Layout - Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 190,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageHeight",
+          "displayName": "Layout - Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 170,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageXOffset",
+          "displayName": "Layout - X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageYOffset",
+          "displayName": "Layout - Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageFit",
+          "displayName": "Layout - Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "productImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "productImageOpacity",
+          "displayName": "Effects - Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageBrightness",
+          "displayName": "Effects - Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageContrast",
+          "displayName": "Effects - Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageSaturation",
+          "displayName": "Effects - Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageHue",
+          "displayName": "Effects - Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productImageControls"
+        },
+        {
+          "name": "productImageInvert",
+          "displayName": "Effects - Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productImageControls"
         },
         {
           "name": "readMoreText",
           "displayName": "Read More Text",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Derine inmek isteyenlere, Mash Academy'den:",
+          "groupId": "readMore"
         },
         {
           "name": "readMoreLink1Text",
-          "displayName": "Read More Link 1 Text",
+          "displayName": "Link 1 Text",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "Overcure ve Undercure Nedir?",
+          "groupId": "readMore"
         },
         {
           "name": "readMoreLink1Href",
-          "displayName": "Read More Link 1 URL",
+          "displayName": "Link 1 URL",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "https://3mash.com/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber",
+          "groupId": "readMore"
         },
         {
           "name": "readMoreLink2Text",
-          "displayName": "Read More Link 2 Text",
+          "displayName": "Link 2 Text",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "385nm mi 405nm mi?",
+          "groupId": "readMore"
         },
         {
           "name": "readMoreLink2Href",
-          "displayName": "Read More Link 2 URL",
+          "displayName": "Link 2 URL",
           "type": "TEXT",
           "required": false,
-          "groupId": "content"
+          "defaultValue": "https://3mash.com/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi",
+          "groupId": "readMore"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#A5A59A",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8B8B80",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#26261F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#161612",
+          "groupId": "appearance"
+        },
+        {
+          "name": "darkColor",
+          "displayName": "Dark Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Accent Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#3D4D0E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentSoftColor",
+          "displayName": "Accent Soft Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#1C1C17",
+          "groupId": "appearance"
+        },
+        {
+          "name": "dangerColor",
+          "displayName": "Danger Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "reasonCardBackgroundColor",
+          "displayName": "Reason Card Background",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#161612",
+          "groupId": "appearance"
+        },
+        {
+          "name": "productMediaStartColor",
+          "displayName": "Product Media Start Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#1D1D17",
+          "groupId": "appearance"
+        },
+        {
+          "name": "productMediaEndColor",
+          "displayName": "Product Media End Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#14140F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "reasonCardRadius",
+          "displayName": "Reason Card Radius",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 18,
+          "groupId": "appearance"
+        },
+        {
+          "name": "productCardRadius",
+          "displayName": "Product Card Radius",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 20,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
         {
           "id": "content",
-          "name": "Content"
+          "name": "Content",
+          "description": "Section label, heading and side copy"
+        },
+        {
+          "id": "reasonCards",
+          "name": "Reason Cards",
+          "description": "Three curing risk cards"
+        },
+        {
+          "id": "productCards",
+          "name": "Product Cards",
+          "description": "Curing product card text, uploads, links and specs"
+        },
+        {
+          "id": "productImageControls",
+          "name": "Product Image Controls",
+          "description": "Image layout and effects for curing product cards"
+        },
+        {
+          "id": "readMore",
+          "name": "Read More Links",
+          "description": "Academy read-more text and links"
         },
         {
           "id": "appearance",
-          "name": "Appearance"
-        },
-        {
-          "id": "advanced",
-          "name": "Advanced HTML",
-          "description": "Full section HTML override"
-        },
-        {
-          "id": "reasons",
-          "name": "Reason Cards",
-          "description": "Three curing problem cards"
-        },
-        {
-          "id": "products",
-          "name": "Product Cards",
-          "description": "Machine cards, images, specs and links"
-        },
-        {
-          "id": "academyLinks",
-          "name": "Academy Links",
-          "description": "Read-more links under product cards"
+          "name": "Appearance",
+          "description": "Section colors and card styling"
         }
       ]
     },
