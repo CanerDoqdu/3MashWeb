@@ -4181,7 +4181,7 @@
           "displayName": "Show Icons",
           "type": "BOOLEAN",
           "required": false,
-          "defaultValue": false,
+          "defaultValue": true,
           "groupId": "items"
         },
         {
