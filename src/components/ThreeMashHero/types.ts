@@ -24,10 +24,6 @@ export interface Props {
   labModeText?: string;
   clinicWorkLabel?: string;
   labWorkLabel?: string;
-  rptLabel?: string;
-  costLabel?: string;
-  costDetailText?: string;
-  costDetailHref?: string;
   currentLossLabel?: string;
   currentLossNote?: string;
   targetLossLabel?: string;
@@ -43,7 +39,6 @@ export interface Props {
   negativePrefix?: string;
   positivePrefix?: string;
   locale?: string;
-  targetRepeatRate?: number;
   clinicWorkMin?: number;
   clinicWorkMax?: number;
   clinicWorkStep?: number;
@@ -101,4 +96,20 @@ export interface Props {
   titleUnderlineImageInvert?: number;
   labAccentColor?: string;
   labAccentTextColor?: string;
+  clinicRptLabel?: string;
+  clinicRptMin?: number;
+  clinicRptMax?: number;
+  clinicRptStep?: number;
+  clinicCostLabel?: string;
+  clinicCostDetailText?: string;
+  clinicCostDetailHref?: string;
+  labRptLabel?: string;
+  labRptMin?: number;
+  labRptMax?: number;
+  labRptStep?: number;
+  labCostLabel?: string;
+  labCostDetailText?: string;
+  labCostDetailHref?: string;
+  clinicTargetRepeatRate?: number;
+  labTargetRepeatRate?: number;
 }

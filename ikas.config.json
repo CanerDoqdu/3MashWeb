@@ -1727,7 +1727,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "hesap",
-          "groupId": "calculatorText"
+          "groupId": "calculatorGeneral"
         },
         {
           "name": "calculatorEyebrow",
@@ -1735,7 +1735,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "TASARRUF HESAPLAYICI",
-          "groupId": "calculatorText"
+          "groupId": "calculatorGeneral"
         },
         {
           "name": "calculatorBadgeText",
@@ -1743,71 +1743,39 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "TAHMİNİ",
-          "groupId": "calculatorText"
+          "groupId": "calculatorGeneral"
         },
         {
           "name": "clinicModeText",
-          "displayName": "Clinic Mode Text",
+          "displayName": "Tab Text",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Klinik",
-          "groupId": "calculatorText"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "labModeText",
-          "displayName": "Lab Mode Text",
+          "displayName": "Tab Text",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Laboratuvar",
-          "groupId": "calculatorText"
+          "groupId": "labCalculator"
         },
         {
           "name": "clinicWorkLabel",
-          "displayName": "Clinic Work Label",
+          "displayName": "Work Label",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Aylık restoratif vaka",
-          "groupId": "calculatorText"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "labWorkLabel",
-          "displayName": "Lab Work Label",
+          "displayName": "Work Label",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Aylık üretim adedi",
-          "groupId": "calculatorText"
-        },
-        {
-          "name": "rptLabel",
-          "displayName": "Repeat Rate Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Mevcut tekrar oranınız (RPT)",
-          "groupId": "calculatorText"
-        },
-        {
-          "name": "costLabel",
-          "displayName": "Cost Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Bir tekrarın size maliyeti",
-          "groupId": "calculatorText"
-        },
-        {
-          "name": "costDetailText",
-          "displayName": "Cost Detail Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →",
-          "groupId": "calculatorText"
-        },
-        {
-          "name": "costDetailHref",
-          "displayName": "Cost Detail Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "3MASH-Maliyet-Detay.html",
-          "groupId": "calculatorText"
+          "groupId": "labCalculator"
         },
         {
           "name": "currentLossLabel",
@@ -1815,7 +1783,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Tahmini yıllık kayıp",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "currentLossNote",
@@ -1823,7 +1791,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "· mevcut oranla",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "targetLossLabel",
@@ -1831,7 +1799,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Hedef oranla",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "targetLossNote",
@@ -1839,7 +1807,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "· ≤%3, 3mash desteğiyle",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "savingsEyebrow",
@@ -1847,7 +1815,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "YILLIK TASARRUF POTANSİYELİNİZ",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "alreadyTargetText",
@@ -1855,7 +1823,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Zaten hedef banttasınız 👏",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "fineTextBeforeLink",
@@ -1863,7 +1831,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Basitleştirilmiş bir tahmindir; sonuçlar iş akışınıza göre değişir. Kesin analiz için",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "fineLinkText",
@@ -1871,7 +1839,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "ücretsiz danışmanlık",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "fineLinkHref",
@@ -1879,7 +1847,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://3mash.com/pages/iletisim",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "fineTextAfterLink",
@@ -1887,7 +1855,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "alın.",
-          "groupId": "calculatorText"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "currencyPrefix",
@@ -1895,7 +1863,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "$",
-          "groupId": "calculatorSettings"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "percentPrefix",
@@ -1903,7 +1871,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "%",
-          "groupId": "calculatorSettings"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "negativePrefix",
@@ -1911,7 +1879,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "−",
-          "groupId": "calculatorSettings"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "positivePrefix",
@@ -1919,7 +1887,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "+",
-          "groupId": "calculatorSettings"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "locale",
@@ -1927,159 +1895,151 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "tr-TR",
-          "groupId": "calculatorSettings"
-        },
-        {
-          "name": "targetRepeatRate",
-          "displayName": "Target Repeat Rate",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 3,
-          "groupId": "calculatorSettings"
+          "groupId": "calculatorOutput"
         },
         {
           "name": "clinicWorkMin",
-          "displayName": "Clinic Work Min",
+          "displayName": "Work Min",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 20,
-          "groupId": "calculatorSettings"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "clinicWorkMax",
-          "displayName": "Clinic Work Max",
+          "displayName": "Work Max",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 500,
-          "groupId": "calculatorSettings"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "clinicWorkStep",
-          "displayName": "Clinic Work Step",
+          "displayName": "Work Step",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 10,
-          "groupId": "calculatorSettings"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "clinicWorkDefault",
-          "displayName": "Clinic Work Default",
+          "displayName": "Work Default",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 120,
-          "groupId": "calculatorSettings"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "clinicRptDefault",
-          "displayName": "Clinic RPT Default",
+          "displayName": "RPT Default",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 10,
-          "groupId": "calculatorSettings"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "clinicCostMin",
-          "displayName": "Clinic Cost Min",
+          "displayName": "Cost Min",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "calculatorSettings"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "clinicCostMax",
-          "displayName": "Clinic Cost Max",
+          "displayName": "Cost Max",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 1500,
-          "groupId": "calculatorSettings"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "clinicCostStep",
-          "displayName": "Clinic Cost Step",
+          "displayName": "Cost Step",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 25,
-          "groupId": "calculatorSettings"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "clinicCostDefault",
-          "displayName": "Clinic Cost Default",
+          "displayName": "Cost Default",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 500,
-          "groupId": "calculatorSettings"
+          "groupId": "clinicCalculator"
         },
         {
           "name": "labWorkMin",
-          "displayName": "Lab Work Min",
+          "displayName": "Work Min",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "calculatorSettings"
+          "groupId": "labCalculator"
         },
         {
           "name": "labWorkMax",
-          "displayName": "Lab Work Max",
+          "displayName": "Work Max",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 2000,
-          "groupId": "calculatorSettings"
+          "groupId": "labCalculator"
         },
         {
           "name": "labWorkStep",
-          "displayName": "Lab Work Step",
+          "displayName": "Work Step",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 25,
-          "groupId": "calculatorSettings"
+          "groupId": "labCalculator"
         },
         {
           "name": "labWorkDefault",
-          "displayName": "Lab Work Default",
+          "displayName": "Work Default",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 300,
-          "groupId": "calculatorSettings"
+          "groupId": "labCalculator"
         },
         {
           "name": "labRptDefault",
-          "displayName": "Lab RPT Default",
+          "displayName": "RPT Default",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 8,
-          "groupId": "calculatorSettings"
+          "groupId": "labCalculator"
         },
         {
           "name": "labCostMin",
-          "displayName": "Lab Cost Min",
+          "displayName": "Cost Min",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 50,
-          "groupId": "calculatorSettings"
+          "groupId": "labCalculator"
         },
         {
           "name": "labCostMax",
-          "displayName": "Lab Cost Max",
+          "displayName": "Cost Max",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 600,
-          "groupId": "calculatorSettings"
+          "groupId": "labCalculator"
         },
         {
           "name": "labCostStep",
-          "displayName": "Lab Cost Step",
+          "displayName": "Cost Step",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 25,
-          "groupId": "calculatorSettings"
+          "groupId": "labCalculator"
         },
         {
           "name": "labCostDefault",
-          "displayName": "Lab Cost Default",
+          "displayName": "Cost Default",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 200,
-          "groupId": "calculatorSettings"
+          "groupId": "labCalculator"
         },
         {
           "name": "stat1Value",
@@ -2385,6 +2345,134 @@
           "required": false,
           "defaultValue": "#4F2FCF",
           "groupId": "appearance"
+        },
+        {
+          "name": "clinicRptLabel",
+          "displayName": "RPT Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Mevcut tekrar oranınız (RPT)",
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "clinicRptMin",
+          "displayName": "RPT Min",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "clinicRptMax",
+          "displayName": "RPT Max",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 20,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "clinicRptStep",
+          "displayName": "RPT Step",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "clinicCostLabel",
+          "displayName": "Cost Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bir tekrarın size maliyeti",
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "clinicCostDetailText",
+          "displayName": "Cost Detail Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →",
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "clinicCostDetailHref",
+          "displayName": "Cost Detail Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3MASH-Maliyet-Detay.html",
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "labRptLabel",
+          "displayName": "RPT Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Mevcut tekrar oranınız (RPT)",
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "labRptMin",
+          "displayName": "RPT Min",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1,
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "labRptMax",
+          "displayName": "RPT Max",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 20,
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "labRptStep",
+          "displayName": "RPT Step",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1,
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "labCostLabel",
+          "displayName": "Cost Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bir tekrarın size maliyeti",
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "labCostDetailText",
+          "displayName": "Cost Detail Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →",
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "labCostDetailHref",
+          "displayName": "Cost Detail Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3MASH-Maliyet-Detay.html",
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "clinicTargetRepeatRate",
+          "displayName": "Target Repeat Rate",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "labTargetRepeatRate",
+          "displayName": "Target Repeat Rate",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "labCalculator"
         }
       ],
       "propGroups": [
@@ -2406,16 +2494,6 @@
           "description": "Hero call to action links"
         },
         {
-          "id": "calculatorText",
-          "name": "Calculator Text",
-          "description": "Calculator labels and helper text"
-        },
-        {
-          "id": "calculatorSettings",
-          "name": "Calculator Settings",
-          "description": "Calculator ranges and defaults"
-        },
-        {
           "id": "stats",
           "name": "Stats",
           "description": "Bottom metric strip"
@@ -2424,6 +2502,33 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Hero colors"
+        },
+        {
+          "id": "calculator",
+          "name": "Calculator",
+          "description": "Klinik ve Laboratuvar hesaplayıcı ayarları",
+          "children": [
+            {
+              "id": "calculatorGeneral",
+              "name": "Genel",
+              "description": "Başlık, rozet ve ortak hesaplayıcı ayarları"
+            },
+            {
+              "id": "clinicCalculator",
+              "name": "Klinik",
+              "description": "Klinik sekmesi label, range ve varsayılan değerleri"
+            },
+            {
+              "id": "labCalculator",
+              "name": "Laboratuvar",
+              "description": "Laboratuvar sekmesi label, range ve varsayılan değerleri"
+            },
+            {
+              "id": "calculatorOutput",
+              "name": "Sonuç & Format",
+              "description": "Sonuç metinleri, prefixler ve ince açıklama"
+            }
+          ]
         }
       ]
     },

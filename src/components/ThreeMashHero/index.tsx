@@ -9,11 +9,19 @@ type Preset = {
   workMax: number;
   workStep: number;
   workDefault: number;
+  rptLabel?: string;
+  rptMin: number;
+  rptMax: number;
+  rptStep: number;
   rptDefault: number;
+  targetRepeatRate: number;
+  costLabel?: string;
   costMin: number;
   costMax: number;
   costStep: number;
   costDefault: number;
+  costDetailText?: string;
+  costDetailHref?: string;
 };
 
 function href(value?: string) {
@@ -105,7 +113,6 @@ function StatBlock({ value, suffix, label }: { value?: string; suffix?: string; 
 }
 
 export function ThreeMashHero(props: Props) {
-  const targetRepeatRate = safeNumber(props.targetRepeatRate, 3);
   const presets = useMemo<Record<Mode, Preset>>(
     () => ({
       clinic: {
@@ -114,11 +121,19 @@ export function ThreeMashHero(props: Props) {
         workMax: safeNumber(props.clinicWorkMax, 500),
         workStep: safeNumber(props.clinicWorkStep, 10),
         workDefault: safeNumber(props.clinicWorkDefault, 120),
+        rptLabel: props.clinicRptLabel,
+        rptMin: safeNumber(props.clinicRptMin, 1),
+        rptMax: safeNumber(props.clinicRptMax, 20),
+        rptStep: safeNumber(props.clinicRptStep, 1),
         rptDefault: safeNumber(props.clinicRptDefault, 10),
+        targetRepeatRate: safeNumber(props.clinicTargetRepeatRate, 3),
+        costLabel: props.clinicCostLabel,
         costMin: safeNumber(props.clinicCostMin, 100),
         costMax: safeNumber(props.clinicCostMax, 1500),
         costStep: safeNumber(props.clinicCostStep, 25),
         costDefault: safeNumber(props.clinicCostDefault, 500),
+        costDetailText: props.clinicCostDetailText,
+        costDetailHref: props.clinicCostDetailHref,
       },
       lab: {
         workLabel: props.labWorkLabel,
@@ -126,11 +141,19 @@ export function ThreeMashHero(props: Props) {
         workMax: safeNumber(props.labWorkMax, 2000),
         workStep: safeNumber(props.labWorkStep, 25),
         workDefault: safeNumber(props.labWorkDefault, 300),
+        rptLabel: props.labRptLabel,
+        rptMin: safeNumber(props.labRptMin, 1),
+        rptMax: safeNumber(props.labRptMax, 20),
+        rptStep: safeNumber(props.labRptStep, 1),
         rptDefault: safeNumber(props.labRptDefault, 8),
+        targetRepeatRate: safeNumber(props.labTargetRepeatRate, 3),
+        costLabel: props.labCostLabel,
         costMin: safeNumber(props.labCostMin, 50),
         costMax: safeNumber(props.labCostMax, 600),
         costStep: safeNumber(props.labCostStep, 25),
         costDefault: safeNumber(props.labCostDefault, 200),
+        costDetailText: props.labCostDetailText,
+        costDetailHref: props.labCostDetailHref,
       },
     }),
     [
@@ -139,21 +162,37 @@ export function ThreeMashHero(props: Props) {
       props.clinicWorkMax,
       props.clinicWorkStep,
       props.clinicWorkDefault,
+      props.clinicRptLabel,
+      props.clinicRptMin,
+      props.clinicRptMax,
+      props.clinicRptStep,
       props.clinicRptDefault,
+      props.clinicTargetRepeatRate,
+      props.clinicCostLabel,
       props.clinicCostMin,
       props.clinicCostMax,
       props.clinicCostStep,
       props.clinicCostDefault,
+      props.clinicCostDetailText,
+      props.clinicCostDetailHref,
       props.labWorkLabel,
       props.labWorkMin,
       props.labWorkMax,
       props.labWorkStep,
       props.labWorkDefault,
+      props.labRptLabel,
+      props.labRptMin,
+      props.labRptMax,
+      props.labRptStep,
       props.labRptDefault,
+      props.labTargetRepeatRate,
+      props.labCostLabel,
       props.labCostMin,
       props.labCostMax,
       props.labCostStep,
       props.labCostDefault,
+      props.labCostDetailText,
+      props.labCostDetailHref,
     ],
   );
 
@@ -186,7 +225,7 @@ export function ThreeMashHero(props: Props) {
 
   const yearly = work * 12;
   const currentLoss = yearly * (rpt / 100) * cost;
-  const targetLoss = yearly * (targetRepeatRate / 100) * cost;
+  const targetLoss = yearly * (active.targetRepeatRate / 100) * cost;
   const cappedTargetLoss = Math.min(currentLoss, targetLoss);
   const savings = Math.max(0, currentLoss - targetLoss);
   const currency = props.currencyPrefix || "";
@@ -195,7 +234,7 @@ export function ThreeMashHero(props: Props) {
   const positive = props.positivePrefix || "";
   const formattedLoss = `${currency}${formatPlain(currentLoss, props.locale)}`;
   const titleUnderlineImage = imageSource(props.titleUnderlineImageUrl);
-  const isAtTarget = rpt <= targetRepeatRate;
+  const isAtTarget = rpt <= active.targetRepeatRate;
 
   const themeStyle = {
     "--tmhero-bg": props.backgroundColor || "#FAFAF7",
@@ -300,7 +339,7 @@ export function ThreeMashHero(props: Props) {
 
               <div className="tmhero-slider">
                 <div className="tmhero-slider-label">
-                  <span>{props.rptLabel || ""}</span>
+                  <span>{active.rptLabel || ""}</span>
                   <b>
                     {percent}
                     {rpt}
@@ -308,19 +347,19 @@ export function ThreeMashHero(props: Props) {
                 </div>
                 <input
                   type="range"
-                  min={1}
-                  max={20}
-                  step={1}
+                  min={active.rptMin}
+                  max={active.rptMax}
+                  step={active.rptStep}
                   value={rpt}
-                  style={{ "--p": `${rangeProgress(rpt, 1, 20)}%` } as any}
+                  style={{ "--p": `${rangeProgress(rpt, active.rptMin, active.rptMax)}%` } as any}
                   onInput={(event) => setRpt(Number((event.currentTarget as HTMLInputElement).value))}
-                  aria-label={props.rptLabel || undefined}
+                  aria-label={active.rptLabel || undefined}
                 />
               </div>
 
               <div className="tmhero-slider">
                 <div className="tmhero-slider-label">
-                  <span>{props.costLabel || ""}</span>
+                  <span>{active.costLabel || ""}</span>
                   <b>
                     {currency}
                     {formatPlain(cost, props.locale)}
@@ -334,10 +373,10 @@ export function ThreeMashHero(props: Props) {
                   value={cost}
                   style={{ "--p": `${rangeProgress(cost, active.costMin, Math.max(active.costMax, cost))}%` } as any}
                   onInput={(event) => setCost(Number((event.currentTarget as HTMLInputElement).value))}
-                  aria-label={props.costLabel || undefined}
+                  aria-label={active.costLabel || undefined}
                 />
-                <a className="tmhero-calc-link" href={href(props.costDetailHref)}>
-                  {props.costDetailText || ""}
+                <a className="tmhero-calc-link" href={href(active.costDetailHref)}>
+                  {active.costDetailText || ""}
                 </a>
               </div>
 
