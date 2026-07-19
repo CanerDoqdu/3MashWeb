@@ -1526,6 +1526,14 @@
           "required": false,
           "defaultValue": true,
           "groupId": "links"
+        },
+        {
+          "name": "showWhyItemGlow",
+          "displayName": "Show Why Item Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "why"
         }
       ],
       "propGroups": [
@@ -3029,10 +3037,17 @@
         },
         {
           "name": "solutionCard1CtaHref",
-          "displayName": "Card 1 CTA Link",
-          "type": "TEXT",
+          "displayName": "Card 1 CTA Page Link",
+          "type": "LINK",
           "required": false,
-          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "defaultValue": {
+            "id": "solution-card-p1d-link",
+            "linkType": "PAGE",
+            "label": "MASH P1D",
+            "pageId": "egF4vDuOju",
+            "pageType": "CUSTOM",
+            "subLinks": []
+          },
           "groupId": "cards"
         },
         {
@@ -3134,10 +3149,17 @@
         },
         {
           "name": "solutionCard2CtaHref",
-          "displayName": "Card 2 CTA Link",
-          "type": "TEXT",
+          "displayName": "Card 2 CTA Page Link",
+          "type": "LINK",
           "required": false,
-          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "defaultValue": {
+            "id": "solution-card-p16l-link",
+            "linkType": "PAGE",
+            "label": "MASH P16L",
+            "pageId": "NCjIeO1nu4",
+            "pageType": "CUSTOM",
+            "subLinks": []
+          },
           "groupId": "cards"
         },
         {
@@ -3239,10 +3261,17 @@
         },
         {
           "name": "solutionCard3CtaHref",
-          "displayName": "Card 3 CTA Link",
-          "type": "TEXT",
+          "displayName": "Card 3 CTA Page Link",
+          "type": "LINK",
           "required": false,
-          "defaultValue": "https://3mash.com/dental-3d-yazici-recineleri",
+          "defaultValue": {
+            "id": "solution-card-crs-link",
+            "linkType": "PAGE",
+            "label": "CRS Reçineler",
+            "pageId": "hw1iKDxUMY",
+            "pageType": "CUSTOM",
+            "subLinks": []
+          },
           "groupId": "cards"
         },
         {
@@ -3477,6 +3506,137 @@
           "required": false,
           "defaultValue": 20,
           "groupId": "appearance"
+        },
+        {
+          "name": "solutionCard2MediaMode",
+          "displayName": "Active Media",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "image1",
+          "groupId": "p16lMedia",
+          "enumTypeId": "F6cuRCkPSl"
+        },
+        {
+          "name": "solutionCard2ShowThumbnails",
+          "displayName": "Show Hover Thumbnails",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image1Enabled",
+          "displayName": "Image 1 Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image2Enabled",
+          "displayName": "Image 2 Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image3Enabled",
+          "displayName": "Image 3 Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image4Enabled",
+          "displayName": "Image 4 Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image2Url",
+          "displayName": "Image 2 Upload",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image2Alt",
+          "displayName": "Image 2 Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P16L alternatif görsel 1",
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image3Url",
+          "displayName": "Image 3 Upload",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image3Alt",
+          "displayName": "Image 3 Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P16L alternatif görsel 2",
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image4Url",
+          "displayName": "Image 4 Upload",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2Image4Alt",
+          "displayName": "Image 4 Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P16L alternatif görsel 3",
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2VideoEnabled",
+          "displayName": "Video Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2VideoUpload",
+          "displayName": "Video Upload",
+          "type": "VIDEO",
+          "required": false,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2VideoUrl",
+          "displayName": "Video URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2VideoPosterUrl",
+          "displayName": "Video Poster Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard2VideoLabel",
+          "displayName": "Video Thumbnail Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Video",
+          "groupId": "p16lMedia"
         }
       ],
       "propGroups": [
@@ -3504,6 +3664,11 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Section colors and card styling"
+        },
+        {
+          "id": "p16lMedia",
+          "name": "P16L Media",
+          "description": "Giriş Segmenti kartı için çoklu görsel ve video kontrolü"
         }
       ]
     },
@@ -5693,14 +5858,6 @@
           "groupId": "appearance"
         },
         {
-          "name": "logoMarkText",
-          "displayName": "Logo Mark Text",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "∞",
-          "groupId": "brand"
-        },
-        {
           "name": "productColumnTitle",
           "displayName": "Product Column Title",
           "type": "TEXT",
@@ -5723,13 +5880,226 @@
           "required": false,
           "defaultValue": "İletişim",
           "groupId": "contactLinks"
+        },
+        {
+          "name": "logoHref",
+          "displayName": "Logo Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/",
+          "groupId": "brand"
+        },
+        {
+          "name": "logoImageUrl",
+          "displayName": "Logo Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown.",
+          "groupId": "brand"
+        },
+        {
+          "name": "logoImageAlt",
+          "displayName": "Logo Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3mash",
+          "groupId": "brand"
+        },
+        {
+          "name": "logoSvg",
+          "displayName": "Logo SVG",
+          "type": "SVG",
+          "required": false,
+          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown.",
+          "groupId": "brand"
+        },
+        {
+          "name": "logoImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "footerLogoImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "logoImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerLogoImageControls"
+        },
+        {
+          "name": "logoSvgWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "logoSvgHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "logoSvgXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "logoSvgYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "logoSvgOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "logoSvgBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "logoSvgContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "logoSvgSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "logoSvgHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "logoSvgInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerLogoSvgControls"
         }
       ],
       "propGroups": [
         {
           "id": "brand",
           "name": "Brand",
-          "description": "Footer brand and description"
+          "description": "Footer brand and description",
+          "children": [
+            {
+              "id": "footerLogoImageControls",
+              "name": "Logo Image Controls",
+              "description": "Footer logo image size, position and effects"
+            },
+            {
+              "id": "footerLogoSvgControls",
+              "name": "Logo SVG Controls",
+              "description": "Footer logo SVG size, position and effects"
+            }
+          ]
         },
         {
           "id": "productLinks",
@@ -5757,6 +6127,313 @@
           "description": "Footer colors"
         }
       ]
+    },
+    {
+      "id": "2tplvqpo-5Ju5yplcxH",
+      "name": "ThreeMashProductPage",
+      "entry": "./src/components/ThreeMashProductPage/index.tsx",
+      "styles": "./src/components/ThreeMashProductPage/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "eyebrowText",
+          "displayName": "Eyebrow Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3MASH ÜRÜN",
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P16L",
+          "groupId": "content"
+        },
+        {
+          "name": "titleEmphasis",
+          "displayName": "Title Emphasis",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Dijital üretime güçlü başlangıç.",
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Description HTML",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Dijitale yeni geçen klinik ve lablar için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.",
+          "groupId": "content"
+        },
+        {
+          "name": "productImageUrl",
+          "displayName": "Product Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "media"
+        },
+        {
+          "name": "productImageAlt",
+          "displayName": "Product Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH P16L",
+          "groupId": "media"
+        },
+        {
+          "name": "imagePreset",
+          "displayName": "Image Preset",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "p16l",
+          "groupId": "media"
+        },
+        {
+          "name": "productImageWidth",
+          "displayName": "Layout - Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 82,
+          "groupId": "media"
+        },
+        {
+          "name": "productImageHeight",
+          "displayName": "Layout - Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 82,
+          "groupId": "media"
+        },
+        {
+          "name": "productImageXOffset",
+          "displayName": "Layout - X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "media"
+        },
+        {
+          "name": "productImageYOffset",
+          "displayName": "Layout - Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "media"
+        },
+        {
+          "name": "productImageOpacity",
+          "displayName": "Effects - Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "media"
+        },
+        {
+          "name": "productImageBrightness",
+          "displayName": "Effects - Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "media"
+        },
+        {
+          "name": "productImageContrast",
+          "displayName": "Effects - Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "media"
+        },
+        {
+          "name": "productImageSaturation",
+          "displayName": "Effects - Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "media"
+        },
+        {
+          "name": "spec1Label",
+          "displayName": "Spec 1 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Teknoloji",
+          "groupId": "specs"
+        },
+        {
+          "name": "spec1Value",
+          "displayName": "Spec 1 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "LCD · revize",
+          "groupId": "specs"
+        },
+        {
+          "name": "spec2Label",
+          "displayName": "Spec 2 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Dalga boyu",
+          "groupId": "specs"
+        },
+        {
+          "name": "spec2Value",
+          "displayName": "Spec 2 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "385 nm",
+          "groupId": "specs"
+        },
+        {
+          "name": "spec3Label",
+          "displayName": "Spec 3 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Rol",
+          "groupId": "specs"
+        },
+        {
+          "name": "spec3Value",
+          "displayName": "Spec 3 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ekosisteme giriş",
+          "groupId": "specs"
+        },
+        {
+          "name": "spec4Label",
+          "displayName": "Spec 4 Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Destek",
+          "groupId": "specs"
+        },
+        {
+          "name": "spec4Value",
+          "displayName": "Spec 4 Value",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kurulum + eğitim",
+          "groupId": "specs"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Primary Button Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Danışmanlık al",
+          "groupId": "buttons"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Primary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/",
+          "groupId": "buttons"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "Secondary Button Text",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ana sayfaya dön",
+          "groupId": "buttons"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "Secondary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/",
+          "groupId": "buttons"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#f7f7f2",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Sub Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#4d4d45",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8f8d84",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#c7ff1a",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#deded5",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content",
+          "description": "Product heading and description"
+        },
+        {
+          "id": "media",
+          "name": "Media",
+          "description": "Product image upload and controls"
+        },
+        {
+          "id": "specs",
+          "name": "Specs",
+          "description": "Product specification rows"
+        },
+        {
+          "id": "buttons",
+          "name": "Buttons",
+          "description": "Product page call to action links"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Product page colors"
+        }
+      ]
     }
   ],
   "customTypes": [
@@ -5769,6 +6446,19 @@
         "Cover": "cover",
         "Fill": "fill",
         "Scale down": "scale-down"
+      },
+      "isDynamic": false
+    },
+    {
+      "id": "F6cuRCkPSl",
+      "name": "P16LMediaMode",
+      "type": "enum",
+      "enumOptions": {
+        "Image 1": "image1",
+        "Image 2": "image2",
+        "Image 3": "image3",
+        "Image 4": "image4",
+        "Video": "video"
       },
       "isDynamic": false
     }

@@ -248,8 +248,10 @@ export function ThreeMashHeader(props: Props) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
+  const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const whyMenuRef = useRef<HTMLLIElement>(null);
   const showProductIcons = props.showProductIcons !== false;
   const showActionIcons = props.showActionIcons !== false;
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
@@ -287,6 +289,8 @@ export function ThreeMashHeader(props: Props) {
     "--tmh-line": props.lineColor || "#E6E6E0",
     "--tmh-panel": props.panelColor || "#FFFFFF",
     "--tmh-badge": props.badgeColor || "#E2492F",
+    "--tmh-why-card-glow": props.showWhyItemGlow === false ? "none" : "linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 10%, transparent), transparent 44%)",
+    "--tmh-why-card-hover-glow": props.showWhyItemGlow === false ? "none" : "linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 18%, transparent), transparent 48%)",
     "--tmh-logo-image-width": `${numberInRange(props.logoImageWidth, 32, 18, 96)}px`,
     "--tmh-logo-image-height": `${numberInRange(props.logoImageHeight, 32, 18, 96)}px`,
     "--tmh-logo-image-x": `${numberInRange(props.logoImageXOffset, 0, -24, 24)}px`,
@@ -332,8 +336,30 @@ export function ThreeMashHeader(props: Props) {
     return () => document.removeEventListener("mousedown", closeOnOutsideClick);
   }, []);
 
+  useEffect(() => {
+    if (activeMenu !== "why") return;
+
+    updateWhyMenuPosition();
+    window.addEventListener("resize", updateWhyMenuPosition);
+    return () => window.removeEventListener("resize", updateWhyMenuPosition);
+  }, [activeMenu]);
+
+  function updateWhyMenuPosition() {
+    const item = whyMenuRef.current;
+    if (!item || typeof window === "undefined") return;
+
+    const rect = item.getBoundingClientRect();
+    const panelWidth = Math.min(760, window.innerWidth - 32);
+    const desiredLeft = rect.left + rect.width / 2 - panelWidth / 2;
+    const clampedLeft = Math.min(window.innerWidth - panelWidth - 16, Math.max(16, desiredLeft));
+    setWhyMenuLeft(clampedLeft - rect.left);
+  }
+
   function openMenu(menu: ActiveMenu) {
     setActiveMenu(menu);
+    if (menu === "why") {
+      requestAnimationFrame(updateWhyMenuPosition);
+    }
   }
 
   function submitSearch(event: Event) {
@@ -410,6 +436,7 @@ export function ThreeMashHeader(props: Props) {
               </li>
 
               <li
+                ref={whyMenuRef}
                 className={activeMenu === "why" ? "is-open" : ""}
                 onMouseEnter={() => openMenu("why")}
                 onFocusIn={() => openMenu("why")}
@@ -418,7 +445,10 @@ export function ThreeMashHeader(props: Props) {
                   <span>{props.whyMenuText || ""}</span>
                   <CaretIcon />
                 </button>
-                <div className="tmh-mega tmh-flow-mega">
+                <div
+                  className="tmh-mega tmh-flow-mega"
+                  style={whyMenuLeft == null ? undefined : { "--tmh-flow-mega-left": `${whyMenuLeft}px`, "--tmh-flow-translate-x": "0px" } as any}
+                >
                   <div className="tmh-flow-intro">
                     <span className="tmh-micro">{props.whyMenuEyebrow || ""}</span>
                     <b>{props.whyMenuText || ""}</b>

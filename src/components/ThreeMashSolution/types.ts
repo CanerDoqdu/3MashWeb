@@ -1,6 +1,6 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage } from "@ikas/bp-storefront";
-import type { LogoImageFit } from "../../global-types";
+import type { IkasImage, IkasNavigationLink, IkasVideo } from "@ikas/bp-storefront";
+import type { LogoImageFit, P16lmediaMode } from "../../global-types";
 
 export interface Props {
   sectionAnchorId?: string;
@@ -22,7 +22,7 @@ export interface Props {
   solutionCard1Spec3Label?: string;
   solutionCard1Spec3Value?: string;
   solutionCard1CtaText?: string;
-  solutionCard1CtaHref?: string;
+  solutionCard1CtaHref?: IkasNavigationLink | null;
   solutionCard2Tag?: string;
   solutionCard2Title?: string;
   solutionCard2DescriptionHtml?: string;
@@ -36,7 +36,7 @@ export interface Props {
   solutionCard2Spec3Label?: string;
   solutionCard2Spec3Value?: string;
   solutionCard2CtaText?: string;
-  solutionCard2CtaHref?: string;
+  solutionCard2CtaHref?: IkasNavigationLink | null;
   solutionCard3Tag?: string;
   solutionCard3Title?: string;
   solutionCard3DescriptionHtml?: string;
@@ -50,7 +50,7 @@ export interface Props {
   solutionCard3Spec3Label?: string;
   solutionCard3Spec3Value?: string;
   solutionCard3CtaText?: string;
-  solutionCard3CtaHref?: string;
+  solutionCard3CtaHref?: IkasNavigationLink | null;
   carouselAriaLabel?: string;
   carouselDurationSeconds?: number;
   pauseOnHover?: boolean;
@@ -80,4 +80,21 @@ export interface Props {
   cardMediaStartColor?: string;
   cardMediaEndColor?: string;
   cardRadius?: number;
+  solutionCard2MediaMode?: P16lmediaMode;
+  solutionCard2ShowThumbnails?: boolean;
+  solutionCard2Image1Enabled?: boolean;
+  solutionCard2Image2Enabled?: boolean;
+  solutionCard2Image3Enabled?: boolean;
+  solutionCard2Image4Enabled?: boolean;
+  solutionCard2Image2Url?: IkasImage | null;
+  solutionCard2Image2Alt?: string;
+  solutionCard2Image3Url?: IkasImage | null;
+  solutionCard2Image3Alt?: string;
+  solutionCard2Image4Url?: IkasImage | null;
+  solutionCard2Image4Alt?: string;
+  solutionCard2VideoEnabled?: boolean;
+  solutionCard2VideoUpload?: IkasVideo | null;
+  solutionCard2VideoUrl?: string;
+  solutionCard2VideoPosterUrl?: IkasImage | null;
+  solutionCard2VideoLabel?: string;
 }

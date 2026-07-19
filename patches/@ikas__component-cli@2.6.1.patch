@@ -21,3 +21,20 @@ index 9f2f8ab..f76789d 100644
                  if (NODE_BUILTINS.has(specifier))
                      return undefined;
                  const root = packageRootOf(specifier);
+
+diff --git a/dist/utils/esm-transform.js b/dist/utils/esm-transform.js
+index 6e089a1..956fc82 100644
+--- a/dist/utils/esm-transform.js
++++ b/dist/utils/esm-transform.js
+@@ -173,7 +173,10 @@ export function transformEsmToWindowGlobals(code, options) {
+         return `/* stripped: ${match} */`;
+     });
+     // Strip any remaining bare `import "module"` side-effect imports
+-    transformed = transformed.replace(/import\s*["'][^"']+["']\s*;?/g, (match) => {
++    transformed = transformed.replace(/import\s*["']([^"']+)["']\s*;?/g, (match, moduleName) => {
++        if (chunkMapping && isChunkImport(moduleName)) {
++            return `/* stripped: ${match} */`;
++        }
+         console.warn(`[esm-transform] Side-effect import stripped: ${match}`);
+         return `/* stripped: ${match} */`;
+     });

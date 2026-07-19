@@ -9,3 +9,4 @@ export { ThreeMashTrust } from "./ThreeMashTrust/index";
 export { ThreeMashFaq } from "./ThreeMashFaq/index";
 export { ThreeMashFinal } from "./ThreeMashFinal/index";
 export { ThreeMashFooter } from "./ThreeMashFooter/index";
+export { ThreeMashProductPage } from "./ThreeMashProductPage/index";

@@ -213,4 +213,5 @@ export interface Props {
   why7Href?: string;
   showProductIcons?: boolean;
   showActionIcons?: boolean;
+  showWhyItemGlow?: boolean;
 }

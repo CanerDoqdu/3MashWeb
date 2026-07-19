@@ -214,12 +214,20 @@
 }
 
 .tmh-flow-mega {
+  left: var(--tmh-flow-mega-left, 50%);
   width: min(760px, calc(100vw - 32px));
   grid-template-columns: minmax(190px, 0.5fr) minmax(0, 1.5fr);
   align-items: stretch;
   gap: 8px;
   padding: 12px;
   overflow-x: hidden;
+  transform: translateX(var(--tmh-flow-translate-x, -50%)) translateY(8px);
+}
+
+.tmh-menu > li:hover .tmh-flow-mega,
+.tmh-menu > li:focus-within .tmh-flow-mega,
+.tmh-menu > li.is-open .tmh-flow-mega {
+  transform: translateX(var(--tmh-flow-translate-x, -50%)) translateY(0);
 }
 
 .tmh-products-mega {
@@ -403,7 +411,7 @@
 .tmh-flow-link:hover {
   border-color: color-mix(in srgb, var(--tmh-accent) 70%, var(--tmh-line));
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 18%, transparent), transparent 48%),
+    var(--tmh-why-card-hover-glow),
     #fff;
   transform: translateY(-1px);
 }
@@ -481,7 +489,7 @@
   border: 1px solid var(--tmh-line);
   border-radius: 11px;
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 10%, transparent), transparent 44%),
+    var(--tmh-why-card-glow),
     #fff;
   text-decoration: none;
   transition: border-color 0.13s ease, background 0.13s ease, transform 0.13s ease;
