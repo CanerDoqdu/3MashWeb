@@ -214,4 +214,27 @@ export interface Props {
   showProductIcons?: boolean;
   showActionIcons?: boolean;
   showWhyItemGlow?: boolean;
+  showProfileMenu?: boolean;
+  profileMenuTitle?: string;
+  profileMenuDescription?: string;
+  profilePrimaryText?: string;
+  profilePrimaryHref?: string;
+  profileSecondaryText?: string;
+  profileSecondaryHref?: string;
+  showStorePanel?: boolean;
+  storePanelTitle?: string;
+  storePanelDescription?: string;
+  storePanelButtonText?: string;
+  storePanelButtonHref?: string;
+  storePanelNote?: string;
+  announcementWordStyleEnabled?: boolean;
+  announcementStyledPhrase?: string;
+  announcementStyledPhraseColor?: string;
+  announcementStyledPhraseBold?: boolean;
+  announcementStyledPhraseItalic?: boolean;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

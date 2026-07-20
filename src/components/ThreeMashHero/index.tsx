@@ -28,6 +28,40 @@ function href(value?: string) {
   return value && value.trim() ? value : "#";
 }
 
+function inlineHtml(value?: string) {
+  return (value || "")
+    .trim()
+    .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+    .replace(/^<p[^>]*>/i, "")
+    .replace(/<\/p>$/i, "");
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function styleTextChunks(markup: string, props?: Props) {
+  const target = props?.styledPhrase?.trim();
+  if (props?.wordStyleEnabled === false || !target) return markup;
+
+  const matcher = new RegExp(escapeRegExp(target), "gi");
+  return markup
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (!part || part.startsWith("<")) return part;
+      return part.replace(matcher, (match) => `<span class="tmhero-word-style">${match}</span>`);
+    })
+    .join("");
+}
+
+function richText(value?: string, props?: Props) {
+  return { __html: styleTextChunks(inlineHtml(value), props) };
+}
+
+function RichInline({ value, className, wordStyle }: { value?: string; className?: string; wordStyle?: Props }) {
+  return <span className={className} dangerouslySetInnerHTML={richText(value, wordStyle)} />;
+}
+
 function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
   const target = href(targetHref);
   if (!target.startsWith("#") || target.length <= 1) return;
@@ -111,14 +145,14 @@ function formatPlain(value: number, locale?: string) {
   }
 }
 
-function StatBlock({ value, suffix, label }: { value?: string; suffix?: string; label?: string }) {
+function StatBlock({ value, suffix, label, wordStyle }: { value?: string; suffix?: string; label?: string; wordStyle: Props }) {
   return (
     <div className="tmhero-stat">
       <div className="tmhero-stat-value">
-        {value || ""}
-        {suffix ? <em>{suffix}</em> : null}
+        <span dangerouslySetInnerHTML={richText(value, wordStyle)} />
+        {suffix ? <em dangerouslySetInnerHTML={richText(suffix, wordStyle)} /> : null}
       </div>
-      <div className="tmhero-stat-label">{label || ""}</div>
+      <div className="tmhero-stat-label" dangerouslySetInnerHTML={richText(label, wordStyle)} />
     </div>
   );
 }
@@ -245,6 +279,10 @@ export function ThreeMashHero(props: Props) {
   const positive = props.positivePrefix || "";
   const formattedLoss = `${currency}${formatPlain(currentLoss, props.locale)}`;
   const titleUnderlineImage = imageSource(props.titleUnderlineImageUrl);
+  const showDesktopTitleUnderline = props.showTitleUnderline !== false;
+  const showTabletTitleUnderline = props.showTitleUnderlineTablet !== false;
+  const showMobileTitleUnderline = props.showTitleUnderlineMobile !== false;
+  const shouldRenderTitleUnderline = showDesktopTitleUnderline || showTabletTitleUnderline || showMobileTitleUnderline;
   const isAtTarget = rpt <= active.targetRepeatRate;
 
   const themeStyle = {
@@ -260,10 +298,24 @@ export function ThreeMashHero(props: Props) {
     "--tmhero-lab-accent": props.labAccentColor || "#7C4DFF",
     "--tmhero-lab-accent-text": props.labAccentTextColor || "#4F2FCF",
     "--tmhero-danger": props.dangerColor || "#E2492F",
+    "--tmhero-word-color": props.styledPhraseColor || "#C7F136",
+    "--tmhero-word-weight": props.styledPhraseBold ? "800" : "inherit",
+    "--tmhero-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmhero-title-underline-width": percentage(props.titleUnderlineImageWidth, 72, 10, 140),
     "--tmhero-title-underline-height": `${numberInRange(props.titleUnderlineImageHeight, 22, 4, 80)}px`,
     "--tmhero-title-underline-x": `${numberInRange(props.titleUnderlineImageXOffset, 0, -120, 120)}px`,
     "--tmhero-title-underline-y": `${numberInRange(props.titleUnderlineImageYOffset, 0, -80, 80)}px`,
+    "--tmhero-title-underline-desktop-display": showDesktopTitleUnderline ? "block" : "none",
+    "--tmhero-title-underline-tablet-display": showTabletTitleUnderline ? "block" : "none",
+    "--tmhero-title-underline-mobile-display": showMobileTitleUnderline ? "block" : "none",
+    "--tmhero-title-underline-tablet-width": percentage(props.titleUnderlineTabletWidth, 66, 10, 140),
+    "--tmhero-title-underline-tablet-height": `${numberInRange(props.titleUnderlineTabletHeight, 18, 4, 80)}px`,
+    "--tmhero-title-underline-tablet-x": `${numberInRange(props.titleUnderlineTabletXOffset, 0, -120, 120)}px`,
+    "--tmhero-title-underline-tablet-y": `${numberInRange(props.titleUnderlineTabletYOffset, 0, -80, 80)}px`,
+    "--tmhero-title-underline-mobile-width": percentage(props.titleUnderlineMobileWidth, 58, 10, 140),
+    "--tmhero-title-underline-mobile-height": `${numberInRange(props.titleUnderlineMobileHeight, 14, 4, 80)}px`,
+    "--tmhero-title-underline-mobile-x": `${numberInRange(props.titleUnderlineMobileXOffset, -6, -120, 120)}px`,
+    "--tmhero-title-underline-mobile-y": `${numberInRange(props.titleUnderlineMobileYOffset, 0, -80, 80)}px`,
     "--tmhero-title-underline-fit": imageFit(props.titleUnderlineImageFit, "fill"),
     "--tmhero-title-underline-opacity": numberInRange(props.titleUnderlineImageOpacity, 100, 0, 100) / 100,
     "--tmhero-title-underline-brightness": percentage(props.titleUnderlineImageBrightness, 100, 0, 220),
@@ -280,15 +332,15 @@ export function ThreeMashHero(props: Props) {
           <div className="tmhero-copy">
             <div className="tmhero-micro">
               <span className="tmhero-dot" />
-              {props.eyebrowText || ""}
+              <RichInline value={props.eyebrowText} wordStyle={props} />
             </div>
 
             <h1>
-              {props.titleBeforeAmount || ""} <span className="tmhero-money">{formattedLoss}</span>{" "}
-              {props.titleAfterAmount || ""}{" "}
+              <RichInline value={props.titleBeforeAmount} wordStyle={props} /> <span className="tmhero-money">{formattedLoss}</span>{" "}
+              <RichInline value={props.titleAfterAmount} wordStyle={props} />{" "}
               <span className="tmhero-em-wrap">
-                <span className="tmhero-em">{props.titleEmphasis || ""}</span>
-                {props.showTitleUnderline !== false && titleUnderlineImage ? (
+                <span className="tmhero-em" dangerouslySetInnerHTML={richText(props.titleEmphasis, props)} />
+                {shouldRenderTitleUnderline && titleUnderlineImage ? (
                   <img
                     className="tmhero-title-underline-image"
                     src={titleUnderlineImage}
@@ -300,40 +352,41 @@ export function ThreeMashHero(props: Props) {
             </h1>
 
             <p className="tmhero-subtitle">
-              {props.subtitleStart || ""} <b>{props.subtitleStrongOne || ""}</b> {props.subtitleMiddle || ""}{" "}
-              <b>{props.subtitleStrongTwo || ""}</b> {props.subtitleEnd || ""}
+              <RichInline value={props.subtitleStart} wordStyle={props} /> <b dangerouslySetInnerHTML={richText(props.subtitleStrongOne, props)} />{" "}
+              <RichInline value={props.subtitleMiddle} wordStyle={props} />{" "}
+              <b dangerouslySetInnerHTML={richText(props.subtitleStrongTwo, props)} /> <RichInline value={props.subtitleEnd} wordStyle={props} />
             </p>
 
             <div className="tmhero-cta">
               <a className="tmhero-btn tmhero-btn-accent" href={href(props.primaryButtonHref)} onClick={(event) => smoothAnchorClick(event, props.primaryButtonHref)}>
-                {props.primaryButtonText || ""}
+                <RichInline value={props.primaryButtonText} wordStyle={props} />
               </a>
               <a className="tmhero-btn tmhero-btn-line" href={href(props.secondaryButtonHref)}>
-                {props.secondaryButtonText || ""}
+                <RichInline value={props.secondaryButtonText} wordStyle={props} />
               </a>
-              <span>{props.hintText || ""}</span>
+              <span dangerouslySetInnerHTML={richText(props.hintText, props)} />
             </div>
           </div>
 
           <div className="tmhero-calculator-side" id={props.calculatorAnchorId || undefined}>
             <div className={`tmhero-calc${mode === "lab" ? " is-lab-mode" : ""}`}>
               <div className="tmhero-calc-head">
-                <span className="tmhero-micro">{props.calculatorEyebrow || ""}</span>
-                <span className="tmhero-est">{props.calculatorBadgeText || ""}</span>
+                <span className="tmhero-micro" dangerouslySetInnerHTML={richText(props.calculatorEyebrow, props)} />
+                <span className="tmhero-est" dangerouslySetInnerHTML={richText(props.calculatorBadgeText, props)} />
               </div>
 
               <div className="tmhero-segment">
                 <button className={mode === "clinic" ? "is-active" : ""} type="button" onClick={() => setMode("clinic")}>
-                  {props.clinicModeText || ""}
+                  <RichInline value={props.clinicModeText} wordStyle={props} />
                 </button>
                 <button className={mode === "lab" ? "is-active" : ""} type="button" onClick={() => setMode("lab")}>
-                  {props.labModeText || ""}
+                  <RichInline value={props.labModeText} wordStyle={props} />
                 </button>
               </div>
 
               <div className="tmhero-slider">
                 <div className="tmhero-slider-label">
-                  <span>{active.workLabel || ""}</span>
+                  <span dangerouslySetInnerHTML={richText(active.workLabel, props)} />
                   <b>{formatPlain(work, props.locale)}</b>
                 </div>
                 <input
@@ -350,7 +403,7 @@ export function ThreeMashHero(props: Props) {
 
               <div className="tmhero-slider">
                 <div className="tmhero-slider-label">
-                  <span>{active.rptLabel || ""}</span>
+                  <span dangerouslySetInnerHTML={richText(active.rptLabel, props)} />
                   <b>
                     {percent}
                     {rpt}
@@ -370,7 +423,7 @@ export function ThreeMashHero(props: Props) {
 
               <div className="tmhero-slider">
                 <div className="tmhero-slider-label">
-                  <span>{active.costLabel || ""}</span>
+                  <span dangerouslySetInnerHTML={richText(active.costLabel, props)} />
                   <b>
                     {currency}
                     {formatPlain(cost, props.locale)}
@@ -387,14 +440,14 @@ export function ThreeMashHero(props: Props) {
                   aria-label={active.costLabel || undefined}
                 />
                 <a className="tmhero-calc-link" href={href(active.costDetailHref)}>
-                  {active.costDetailText || ""}
+                  <RichInline value={active.costDetailText} wordStyle={props} />
                 </a>
               </div>
 
               <div className="tmhero-output">
                 <div className="tmhero-row">
                   <span>
-                    {props.currentLossLabel || ""} <i>{props.currentLossNote || ""}</i>
+                    <RichInline value={props.currentLossLabel} wordStyle={props} /> <i dangerouslySetInnerHTML={richText(props.currentLossNote, props)} />
                   </span>
                   <b className="tmhero-loss">
                     {negative}
@@ -404,7 +457,7 @@ export function ThreeMashHero(props: Props) {
                 </div>
                 <div className="tmhero-row">
                   <span>
-                    {props.targetLossLabel || ""} <i>{props.targetLossNote || ""}</i>
+                    <RichInline value={props.targetLossLabel} wordStyle={props} /> <i dangerouslySetInnerHTML={richText(props.targetLossNote, props)} />
                   </span>
                   <b>
                     {negative}
@@ -415,25 +468,25 @@ export function ThreeMashHero(props: Props) {
               </div>
 
               <div className="tmhero-total">
-                <div className="tmhero-micro">{props.savingsEyebrow || ""}</div>
+                <div className="tmhero-micro" dangerouslySetInnerHTML={richText(props.savingsEyebrow, props)} />
                 <div className={`tmhero-total-value${isAtTarget ? " is-message" : ""}`}>
-                  {isAtTarget ? props.alreadyTargetText || "" : `${positive}${currency}${formatPlain(savings, props.locale)}`}
+                  {isAtTarget ? <RichInline value={props.alreadyTargetText} wordStyle={props} /> : `${positive}${currency}${formatPlain(savings, props.locale)}`}
                 </div>
               </div>
 
               <div className="tmhero-fine">
-                {props.fineTextBeforeLink || ""} <a href={href(props.fineLinkHref)}>{props.fineLinkText || ""}</a>{" "}
-                {props.fineTextAfterLink || ""}
+                <RichInline value={props.fineTextBeforeLink} wordStyle={props} /> <a href={href(props.fineLinkHref)} dangerouslySetInnerHTML={richText(props.fineLinkText, props)} />{" "}
+                <RichInline value={props.fineTextAfterLink} wordStyle={props} />
               </div>
             </div>
           </div>
         </div>
 
         <div className="tmhero-stats">
-          <StatBlock value={props.stat1Value} suffix={props.stat1Suffix} label={props.stat1Label} />
-          <StatBlock value={props.stat2Value} suffix={props.stat2Suffix} label={props.stat2Label} />
-          <StatBlock value={props.stat3Value} suffix={props.stat3Suffix} label={props.stat3Label} />
-          <StatBlock value={props.stat4Value} suffix={props.stat4Suffix} label={props.stat4Label} />
+          <StatBlock value={props.stat1Value} suffix={props.stat1Suffix} label={props.stat1Label} wordStyle={props} />
+          <StatBlock value={props.stat2Value} suffix={props.stat2Suffix} label={props.stat2Label} wordStyle={props} />
+          <StatBlock value={props.stat3Value} suffix={props.stat3Suffix} label={props.stat3Label} wordStyle={props} />
+          <StatBlock value={props.stat4Value} suffix={props.stat4Suffix} label={props.stat4Label} wordStyle={props} />
         </div>
       </div>
     </section>

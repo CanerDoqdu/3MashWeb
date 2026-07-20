@@ -13,4 +13,9 @@ export interface Props {
   buttonBackgroundColor?: string;
   buttonTextColor?: string;
   buttonRadius?: number;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

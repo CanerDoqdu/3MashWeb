@@ -24,4 +24,9 @@ export interface Props {
   lineColor?: string;
   accentColor?: string;
   accentTextColor?: string;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

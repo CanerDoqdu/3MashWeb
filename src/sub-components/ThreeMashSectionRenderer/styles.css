@@ -14,6 +14,12 @@
   box-sizing: border-box;
 }
 
+.tmr-word-style {
+  color: var(--tmr-word-color);
+  font-weight: var(--tmr-word-weight);
+  font-style: var(--tmr-word-style);
+}
+
 .tmr-wrap {
   width: min(100%, 1240px);
   margin: 0 auto;
@@ -93,7 +99,7 @@
   overflow-wrap: anywhere;
 }
 
-.tmr-head h2 span {
+.tmr-head h2 .tmr-title-em {
   font-family: "Newsreader", serif;
   font-style: italic;
   font-weight: 500;
@@ -677,7 +683,7 @@
   color: #fff;
 }
 
-.tmr-dark .tmr-head h2 span {
+.tmr-dark .tmr-head h2 .tmr-title-em {
   color: var(--tmr-accent);
 }
 
@@ -885,33 +891,92 @@
   text-decoration: none;
 }
 
+.tmr-eco-map {
+  position: relative;
+  min-height: 390px;
+  margin-top: 54px;
+}
+
+.tmr-eco-diagram {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  z-index: 0;
+  width: min(100%, var(--tmr-eco-diagram-width));
+  height: var(--tmr-eco-diagram-height);
+  object-fit: var(--tmr-eco-diagram-fit);
+  opacity: var(--tmr-eco-diagram-opacity);
+  transform: translate(calc(-50% + var(--tmr-eco-diagram-x)), calc(-50% + var(--tmr-eco-diagram-y)));
+  filter:
+    brightness(var(--tmr-eco-diagram-brightness))
+    contrast(var(--tmr-eco-diagram-contrast))
+    saturate(var(--tmr-eco-diagram-saturation))
+    hue-rotate(var(--tmr-eco-diagram-hue))
+    invert(var(--tmr-eco-diagram-invert));
+  pointer-events: none;
+}
+
 .tmr-eco {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 46px;
+  position: relative;
+  z-index: 1;
+  min-height: 390px;
 }
 
 .tmr-eco a {
+  position: absolute;
+  width: min(260px, 22.2vw);
   min-width: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 18px;
   border: 1px solid var(--tmr-line);
   border-radius: var(--tmr-eco-item-radius, 16px);
-  min-height: 124px;
-  padding: 20px 14px;
-  background: var(--tmr-panel);
+  min-height: 98px;
+  padding: 18px 22px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--tmr-panel) 92%, transparent), var(--tmr-panel)),
+    var(--tmr-panel);
   color: var(--tmr-text);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   line-height: 1.35;
-  text-align: center;
+  text-align: left;
   text-decoration: none;
-  transition: border-color 0.16s ease, transform 0.16s ease;
+  box-shadow: 0 18px 42px rgba(14, 14, 12, 0.04);
+  transition: border-color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
   overflow-wrap: anywhere;
+}
+
+.tmr-eco-card-1 {
+  left: 0;
+  top: 38px;
+}
+
+.tmr-eco-card-2 {
+  left: 25.2%;
+  top: 38px;
+}
+
+.tmr-eco-card-3 {
+  right: 25.2%;
+  top: 38px;
+}
+
+.tmr-eco-card-4 {
+  right: 0;
+  top: 38px;
+}
+
+.tmr-eco-card-5 {
+  left: 14.3%;
+  bottom: 24px;
+}
+
+.tmr-eco-card-6 {
+  right: 14.3%;
+  bottom: 24px;
 }
 
 .tmr-eco-icon {
@@ -945,6 +1010,7 @@
 .tmr-eco a:hover {
   border-color: var(--tmr-text);
   transform: translateY(-3px);
+  box-shadow: 0 22px 54px rgba(14, 14, 12, 0.08);
 }
 
 .tmr-testimonials {
@@ -1238,7 +1304,7 @@
   letter-spacing: 0;
 }
 
-.tmr-final h2 span {
+.tmr-final h2 .tmr-title-em {
   color: var(--tmr-accent);
   font-family: "Newsreader", serif;
   font-style: italic;
@@ -1452,8 +1518,35 @@
     flex-basis: 100%;
   }
 
+  .tmr-eco-map {
+    min-height: auto;
+    margin-top: 36px;
+  }
+
+  .tmr-eco-diagram {
+    top: 50%;
+    width: min(760px, 100%);
+    height: 240px;
+    opacity: var(--tmr-eco-diagram-opacity);
+  }
+
   .tmr-eco {
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    min-height: auto;
+  }
+
+  .tmr-eco a,
+  .tmr-eco-card-1,
+  .tmr-eco-card-2,
+  .tmr-eco-card-3,
+  .tmr-eco-card-4,
+  .tmr-eco-card-5,
+  .tmr-eco-card-6 {
+    position: relative;
+    inset: auto;
+    width: auto;
   }
 
   .tmr-trusted-logos {
@@ -1499,6 +1592,31 @@
     max-height: 148px;
   }
 
+  .tmr-curing .tmr-product-media {
+    height: 218px;
+    padding: 42px 18px 18px;
+  }
+
+  .tmr-curing .tmr-tag {
+    top: 12px;
+    left: 20px;
+    z-index: 2;
+  }
+
+  .tmr-curing .tmr-product-img,
+  .tmr-curing .tmr-machine-phrozen,
+  .tmr-curing .tmr-machine-uw02 {
+    max-width: 76%;
+    max-height: 150px;
+    transform: translate(var(--tmr-curing-image-x), calc(var(--tmr-curing-image-y) + 8px));
+  }
+
+  .tmr-curing .tmr-machine-phrozen,
+  .tmr-curing .tmr-machine-uw02 {
+    max-width: 72%;
+    max-height: 144px;
+  }
+
   .tmr-machine-printer {
     max-height: 136px;
   }
@@ -1515,18 +1633,66 @@
     min-width: 0;
   }
 
+  .tmr-eco-map {
+    margin-top: 32px;
+  }
+
+  .tmr-eco-diagram {
+    width: 118%;
+    height: 190px;
+    opacity: var(--tmr-eco-diagram-opacity);
+  }
+
   .tmr-eco {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .tmr-eco a {
+    min-height: 100px;
+    padding: 18px;
+    font-size: 15px;
+  }
+
+  .tmr-eco-icon {
+    width: 54px;
+    height: 54px;
   }
 
   .tmr-trusted {
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
   }
 
   .tmr-trusted-logos {
-    grid-template-columns: repeat(2, minmax(118px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
     width: 100%;
+  }
+
+  .tmr-trusted-label {
+    width: 100%;
+    height: 28px;
+    flex-basis: auto;
+  }
+
+  .tmr-trusted-logo {
+    height: 58px;
+    border: 1px solid color-mix(in srgb, var(--tmr-line) 70%, transparent);
+    background: color-mix(in srgb, var(--tmr-panel) 86%, var(--tmr-bg));
+  }
+
+  .tmr-trusted-logos img {
+    width: 88%;
+    height: min(var(--tmr-trust-logo-height), 36px);
+    transform: scale(1.22);
+  }
+
+  .tmr-trusted-logo:hover img {
+    transform: scale(1.6);
   }
 
   .tmr-testimonial,

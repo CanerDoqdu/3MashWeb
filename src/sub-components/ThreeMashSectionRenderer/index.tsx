@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "preact/hooks";
-import { machineP16L, machineUW02, profileBerkan, profileGoksel, profileMehmet, resinBottle } from "../../assets/remaining-assets-data";
+import { machineP16L, profileBerkan, profileGoksel, profileMehmet, resinBottle } from "../../assets/remaining-assets-data";
+import crealityUW02 from "../../assets/creality-uw02-data";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import { p16lPrimaryImage, resinShowcaseVideo } from "../../assets/solution-p16l-media-data";
@@ -10,6 +11,7 @@ import trustLogo2 from "../../assets/trust-logo-2-data";
 import trustLogo3 from "../../assets/trust-logo-3-data";
 import trustLogo4 from "../../assets/trust-logo-4-data";
 import trustLogo5 from "../../assets/trust-logo-5-data";
+import ecosystemDiagramImage from "../../assets/ecosystem-diagram-data";
 
 const trustedLabelMarkup = `<span class="tmr-trusted-label"><span class="tmr-trusted-label-text">Güvenenler</span><img src="${trustLogo3}" alt="" aria-hidden="true"></span>`;
 const bundledTrustedLogos = `<div class="tmr-trusted-logos"><span class="tmr-trusted-logo"><img src="${trustLogo1}" alt="Güvenen marka 1"></span><span class="tmr-trusted-logo"><img src="${trustLogo2}" alt="Güvenen marka 2"></span><span class="tmr-trusted-logo"><img src="${trustLogo4}" alt="Güvenen marka 4"></span><span class="tmr-trusted-logo"><img src="${trustLogo5}" alt="Güvenen marka 5"></span></div>`;
@@ -37,7 +39,7 @@ export const defaultCuringHtml = `
     <div class="tmr-index"><span class="tmr-index-number">04</span><span class="tmr-index-text">Kritik Son Adım</span><span class="tmr-index-line"></span></div>
     <div class="tmr-head"><h2>Sadece yazıcı değil. Sonucu <span>kürleme</span> tamamlar.</h2><div class="tmr-side">Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:</div></div>
     <div class="tmr-why-grid"><article><div>SEBEP 01</div><h4>Mekanik dayanım</h4><p>Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.</p></article><article><div>SEBEP 02</div><h4>Ölçüsel doğruluk</h4><p>Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.</p></article><article><div>SEBEP 03</div><h4>Biyouyumluluk &amp; renk</h4><p>Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.</p></article></div>
-    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA · KÜRLEME</span><img class="tmr-product-img tmr-machine-phrozen" src="${phrozenWashCureKit}" alt="Phrozen Wash &amp; Cure Kit"></div><div class="tmr-product-body"><h3>Phrozen Wash &amp; Cure Kit</h3><p>8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.</p><div class="tmr-spec"><div><span>Yıkama hacmi</span><b>8 L</b></div><div><span>Kürleme</span><b>405 nm UV</b></div></div><a class="tmr-go" href="https://uk.phrozen3d.com/products/wash-cure-kit">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA · KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${machineUW02}" alt="Creality UW02 - Yıkama &amp; Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Creality UW02 - Yıkama &amp; Kürleme Cihazı</h3><p>Kürleme, polimer malzemelerin <b>sertleştirilme sürecidir</b>. 3D baskı tamamlandıktan sonra ürünün boyutsal kararlılığını ve yüzey dayanımını destekler.</p><div class="tmr-spec"><div><span>Görev</span><b>Yıkama + kürleme</b></div><div><span>Uyum</span><b>P16L + CRS</b></div></div><a class="tmr-go" href="https://3mash.com/yikama-kurleme-cihazlari">İncele <span>→</span></a></div></article></div>
+    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA · KÜRLEME</span><img class="tmr-product-img tmr-machine-phrozen" src="${phrozenWashCureKit}" alt="Phrozen Wash &amp; Cure Kit"></div><div class="tmr-product-body"><h3>Phrozen Wash &amp; Cure Kit</h3><p>8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.</p><div class="tmr-spec"><div><span>Yıkama hacmi</span><b>8 L</b></div><div><span>Kürleme</span><b>405 nm UV</b></div></div><a class="tmr-go" href="https://uk.phrozen3d.com/products/wash-cure-kit">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA · KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${crealityUW02}" alt="Creality UW02 - Yıkama &amp; Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Creality UW02 - Yıkama &amp; Kürleme Cihazı</h3><p>Kürleme, polimer malzemelerin <b>sertleştirilme sürecidir</b>. 3D baskı tamamlandıktan sonra ürünün boyutsal kararlılığını ve yüzey dayanımını destekler.</p><div class="tmr-spec"><div><span>Görev</span><b>Yıkama + kürleme</b></div><div><span>Uyum</span><b>P16L + CRS</b></div></div><a class="tmr-go" href="https://3mash.com/yikama-kurleme-cihazlari">İncele <span>→</span></a></div></article></div>
     <p class="tmr-readmore">Derine inmek isteyenlere, Mash Academy'den: <a href="https://3mash.com/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber">Overcure ve Undercure Nedir?</a> · <a href="https://3mash.com/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi">385nm mi 405nm mi?</a></p>
   </div>
 </section>`;
@@ -48,7 +50,7 @@ export const defaultEcosystemHtml = `<section id="ekosistem" class="tmr-section"
 
 export const defaultTrustHtml = `<section id="guven" class="tmr-section tmr-section-tight"><div class="tmr-wrap"><div class="tmr-index"><span class="tmr-index-number">06</span><span class="tmr-index-text">Referanslar</span><span class="tmr-index-line"></span></div><div class="tmr-head"><h2>Türkiye'nin en büyük lab'ları neden <span>bizimle üretiyor?</span></h2><div class="tmr-side">Kısa cevap hep aynı: tutarlılık. <b>580+</b> dental laboratuvar ve klinik bu sistemle üretiyor, çünkü sonuç <b>her seferinde</b> aynı çıkıyor.</div></div><div class="tmr-testimonials"><article class="tmr-testimonial tmr-featured"><div class="tmr-quote">“</div><p>Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileMehmet}" alt="Mehmet İşlek"><div><b>Mehmet İşlek</b><small>ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik</small></div></div></article><article class="tmr-testimonial"><div class="tmr-quote">“</div><p>Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileBerkan}" alt="Berkan Öztaş"><div><b>Berkan Öztaş</b><small>DENTEK · Genel Müd. Yard.</small></div></div></article><article class="tmr-testimonial"><div class="tmr-quote">“</div><p>Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileGoksel}" alt="Göksel Pişkin"><div><b>Göksel Pişkin</b><small>MIKRO LAB · Kurucu Ortak</small></div></div></article></div><div class="tmr-trusted">${trustedLabelMarkup}${bundledTrustedLogos}</div></div></section>`;
 
-export const defaultFaqHtml = `<section id="sss" class="tmr-section tmr-section-tight"><div class="tmr-wrap"><div class="tmr-index"><span class="tmr-index-number">07</span><span class="tmr-index-text">Sık Sorulanlar</span><span class="tmr-index-line"></span></div><div class="tmr-head"><h2>Kısa, net cevaplar.</h2><div class="tmr-side">Diş hekimlerinin ve laboratuvarların en çok sorduğu sorular — dolambaçsız yanıtlarla.</div></div><div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="3MASH-Maliyet-Detay.html">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem printer know-how'una sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div></div></section>`;
+export const defaultFaqHtml = `<section id="sss" class="tmr-section tmr-section-tight"><div class="tmr-wrap"><div class="tmr-index"><span class="tmr-index-number">07</span><span class="tmr-index-text">Sık Sorulanlar</span><span class="tmr-index-line"></span></div><div class="tmr-head"><h2>Kısa, net cevaplar.</h2><div class="tmr-side">En kritik kararları hızlı vermeniz için, klinik ve laboratuvarlardan gelen soruları net cevaplarla topladık.</div></div><div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="3MASH-Maliyet-Detay.html">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem printer know-how'una sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div></div></section>`;
 
 export const defaultFinalHtml = `<section class="tmr-final"><div class="tmr-wrap"><h2>Bu görünmez kaybı <span>birlikte azaltalım.</span></h2><p>Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b></p><div><a class="tmr-btn tmr-btn-lime" href="https://3mash.com/pages/iletisim">Uzmana danış — ücretsiz</a><a class="tmr-btn tmr-btn-invert" href="https://3mash.com/pages/mash-academy">Mash Academy'yi keşfet</a></div></div></section>`;
 
@@ -104,6 +106,20 @@ export interface ThreeMashSectionRenderProps {
   logoSvgSaturation?: number;
   logoSvgHue?: number;
   logoSvgInvert?: number;
+  showDiagram?: boolean;
+  diagramImageUrl?: unknown;
+  diagramImageAlt?: string;
+  diagramImageWidth?: number;
+  diagramImageHeight?: number;
+  diagramImageXOffset?: number;
+  diagramImageYOffset?: number;
+  diagramImageFit?: string;
+  diagramImageOpacity?: number;
+  diagramImageBrightness?: number;
+  diagramImageContrast?: number;
+  diagramImageSaturation?: number;
+  diagramImageHue?: number;
+  diagramImageInvert?: number;
   backgroundColor?: string;
   textColor?: string;
   subTextColor?: string;
@@ -143,6 +159,11 @@ export interface ThreeMashSectionRenderProps {
   solutionCard3VideoPosterUrl?: unknown;
   solutionCard3VideoLabel?: string;
   hoverVideoAutoplayEnabled?: boolean;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }
 
 function html(value?: string, fallback = "") {
@@ -151,7 +172,32 @@ function html(value?: string, fallback = "") {
 
 function value(value: unknown, fallback: string) {
   const trimmed = typeof value === "string" ? value.trim() : "";
-  return trimmed || fallback;
+  return inlineHtml(trimmed || fallback);
+}
+
+function inlineHtml(value: string) {
+  return value
+    .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+    .replace(/^<p[^>]*>/i, "")
+    .replace(/<\/p>$/i, "");
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function styleTextChunks(markup: string, props: ThreeMashSectionRenderProps) {
+  const target = props.styledPhrase?.trim();
+  if (props.wordStyleEnabled === false || !target) return markup;
+
+  const matcher = new RegExp(escapeRegExp(target), "gi");
+  return markup
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (!part || part.startsWith("<")) return part;
+      return part.replace(matcher, (match) => `<span class="tmr-word-style">${match}</span>`);
+    })
+    .join("");
 }
 
 function numberInRange(value: unknown, fallback: number, min: number, max: number) {
@@ -187,7 +233,7 @@ function escapeAttr(value: unknown) {
 }
 
 function heading(titleText: string, titleEmphasis = "") {
-  return `${titleText}${titleEmphasis ? ` <span>${titleEmphasis}</span>` : ""}`;
+  return `${titleText}${titleEmphasis ? ` <span class="tmr-title-em">${titleEmphasis}</span>` : ""}`;
 }
 
 function imageIdToUrl(value: string) {
@@ -427,6 +473,9 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-accent-text": props.accentTextColor || "#3D4D0E",
     "--tmr-accent-soft": props.accentSoftColor || "#F2F8DC",
     "--tmr-danger": props.dangerColor || "#E2492F",
+    "--tmr-word-color": props.styledPhraseColor || "#C7F136",
+    "--tmr-word-weight": props.styledPhraseBold ? "800" : "inherit",
+    "--tmr-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmr-solution-carousel-duration": `${numberInRange(raw(props, "carouselDurationSeconds"), 24, 4, 90)}s`,
     "--tmr-solution-edge-fade-width": `${numberInRange(raw(props, "edgeFadeWidth"), 44, 0, 120)}px`,
     "--tmr-solution-card-gap": `${numberInRange(raw(props, "cardGap"), 22, 8, 48)}px`,
@@ -481,6 +530,17 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-eco-icon-invert": percentage(raw(props, "iconImageInvert"), 0, 0, 100),
     "--tmr-eco-item-radius": `${numberInRange(raw(props, "itemRadius"), 16, 0, 32)}px`,
     "--tmr-eco-icon-box-radius": `${numberInRange(raw(props, "iconBoxRadius"), 14, 0, 32)}px`,
+    "--tmr-eco-diagram-width": `${numberInRange(raw(props, "diagramImageWidth"), 940, 260, 1180)}px`,
+    "--tmr-eco-diagram-height": `${numberInRange(raw(props, "diagramImageHeight"), 300, 120, 520)}px`,
+    "--tmr-eco-diagram-x": `${numberInRange(raw(props, "diagramImageXOffset"), 0, -160, 160)}px`,
+    "--tmr-eco-diagram-y": `${numberInRange(raw(props, "diagramImageYOffset"), 0, -120, 120)}px`,
+    "--tmr-eco-diagram-fit": imageFit(raw(props, "diagramImageFit")),
+    "--tmr-eco-diagram-opacity": percentage(raw(props, "diagramImageOpacity"), 100, 0, 100),
+    "--tmr-eco-diagram-brightness": percentage(raw(props, "diagramImageBrightness"), 100, 0, 220),
+    "--tmr-eco-diagram-contrast": percentage(raw(props, "diagramImageContrast"), 100, 0, 220),
+    "--tmr-eco-diagram-saturation": percentage(raw(props, "diagramImageSaturation"), 100, 0, 260),
+    "--tmr-eco-diagram-hue": `${numberInRange(raw(props, "diagramImageHue"), 0, -180, 180)}deg`,
+    "--tmr-eco-diagram-invert": percentage(raw(props, "diagramImageInvert"), 0, 0, 100),
     "--tmr-trust-avatar-width": `${numberInRange(raw(props, "profileImageWidth"), 58, 24, 120)}px`,
     "--tmr-trust-avatar-height": `${numberInRange(raw(props, "profileImageHeight"), 58, 24, 120)}px`,
     "--tmr-trust-avatar-x": `${numberInRange(raw(props, "profileImageXOffset"), 0, -40, 40)}px`,
@@ -559,7 +619,7 @@ const solutionContentHtml = `<div class="tmr-products tmr-products-slider" aria-
     </div>`;
 
 const curingContentHtml = `<div class="tmr-why-grid"><article><div>SEBEP 01</div><h4>Mekanik dayanım</h4><p>Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.</p></article><article><div>SEBEP 02</div><h4>Ölçüsel doğruluk</h4><p>Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.</p></article><article><div>SEBEP 03</div><h4>Biyouyumluluk &amp; renk</h4><p>Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.</p></article></div>
-    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA · KÜRLEME</span><img class="tmr-product-img tmr-machine-phrozen" src="${phrozenWashCureKit}" alt="Phrozen Wash &amp; Cure Kit"></div><div class="tmr-product-body"><h3>Phrozen Wash &amp; Cure Kit</h3><p>8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.</p><div class="tmr-spec"><div><span>Yıkama hacmi</span><b>8 L</b></div><div><span>Kürleme</span><b>405 nm UV</b></div></div><a class="tmr-go" href="https://uk.phrozen3d.com/products/wash-cure-kit">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA · KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${machineUW02}" alt="Creality UW02 - Yıkama &amp; Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Creality UW02 - Yıkama &amp; Kürleme Cihazı</h3><p>Kürleme, polimer malzemelerin <b>sertleştirilme sürecidir</b>. 3D baskı tamamlandıktan sonra ürünün boyutsal kararlılığını ve yüzey dayanımını destekler.</p><div class="tmr-spec"><div><span>Görev</span><b>Yıkama + kürleme</b></div><div><span>Uyum</span><b>P16L + CRS</b></div></div><a class="tmr-go" href="https://3mash.com/yikama-kurleme-cihazlari">İncele <span>→</span></a></div></article></div>
+    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA · KÜRLEME</span><img class="tmr-product-img tmr-machine-phrozen" src="${phrozenWashCureKit}" alt="Phrozen Wash &amp; Cure Kit"></div><div class="tmr-product-body"><h3>Phrozen Wash &amp; Cure Kit</h3><p>8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.</p><div class="tmr-spec"><div><span>Yıkama hacmi</span><b>8 L</b></div><div><span>Kürleme</span><b>405 nm UV</b></div></div><a class="tmr-go" href="https://uk.phrozen3d.com/products/wash-cure-kit">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA · KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${crealityUW02}" alt="Creality UW02 - Yıkama &amp; Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Creality UW02 - Yıkama &amp; Kürleme Cihazı</h3><p>Kürleme, polimer malzemelerin <b>sertleştirilme sürecidir</b>. 3D baskı tamamlandıktan sonra ürünün boyutsal kararlılığını ve yüzey dayanımını destekler.</p><div class="tmr-spec"><div><span>Görev</span><b>Yıkama + kürleme</b></div><div><span>Uyum</span><b>P16L + CRS</b></div></div><a class="tmr-go" href="https://3mash.com/yikama-kurleme-cihazlari">İncele <span>→</span></a></div></article></div>
     <p class="tmr-readmore">Derine inmek isteyenlere, Mash Academy'den: <a href="https://3mash.com/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber">Overcure ve Undercure Nedir?</a> · <a href="https://3mash.com/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi">385nm mi 405nm mi?</a></p>`;
 
 const ecosystemContentHtml = `<div class="tmr-eco"><a href="https://3mash.com/3d-yazicilar"><span class="tmr-eco-icon"><img src="${ecoPrinterIcon}" alt="" aria-hidden="true"></span><span>3D Yazıcılar</span></a><a href="https://3mash.com/dental-3d-yazici-recineleri"><span class="tmr-eco-icon"><img src="${ecoResinIcon}" alt="" aria-hidden="true"></span><span>Dental Reçineler</span></a><a href="https://3mash.com/yikama-kurleme-cihazlari"><span class="tmr-eco-icon"><img src="${ecoScannerIcon}" alt="" aria-hidden="true"></span><span>Yıkama &amp; Kürleme</span></a><a href="https://3mash.com/masasustu-tarayicilar"><span class="tmr-eco-icon"><img src="${ecoCuringIcon}" alt="" aria-hidden="true"></span><span>Masaüstü Tarayıcılar</span></a><a href="https://3mash.com/zirkon-bloklar"><span class="tmr-eco-icon"><img src="${ecoBlocksIcon}" alt="" aria-hidden="true"></span><span>Zirkon Bloklar</span></a><a href="https://3mash.com/dental-firinlar"><span class="tmr-eco-icon"><img src="${ecoOvenIcon}" alt="" aria-hidden="true"></span><span>Dental Fırınlar</span></a></div>`;
@@ -641,7 +701,7 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
   })}${productCard(props, "curingProduct2", {
     tag: "YIKAMA · KÜRLEME",
     tagClass: "tmr-lime-tag",
-    image: machineUW02,
+    image: crealityUW02,
     imageAlt: "Creality UW02 - Yıkama & Kürleme Cihazı",
     imageClass: "tmr-machine-uw02",
     title: "Creality UW02 - Yıkama & Kürleme Cihazı",
@@ -661,13 +721,16 @@ function ecosystemContent(props: ThreeMashSectionRenderProps) {
   const titles = ["3D Yazıcılar", "Dental Reçineler", "Yıkama &amp; Kürleme", "Masaüstü Tarayıcılar", "Zirkon Bloklar", "Dental Fırınlar"];
   const hrefs = ["https://3mash.com/3d-yazicilar", "https://3mash.com/dental-3d-yazici-recineleri", "https://3mash.com/yikama-kurleme-cihazlari", "https://3mash.com/masasustu-tarayicilar", "https://3mash.com/zirkon-bloklar", "https://3mash.com/dental-firinlar"];
   const showIcons = raw(props, "showIcons") !== false;
-  return `<div class="tmr-eco">${titles
+  const cards = titles
     .map((title, index) => {
       const number = index + 1;
       const icon = showIcons ? `<span class="tmr-eco-icon"><img src="${escapeAttr(imageSource(raw(props, `ecosystemItem${number}IconImageUrl`), icons[index]))}" alt="" aria-hidden="true"></span>` : "";
-      return `<a href="${escapeAttr(field(props, `ecosystemItem${number}Href`, hrefs[index]))}">${icon}<span>${field(props, `ecosystemItem${number}Title`, title)}</span></a>`;
+      return `<a class="tmr-eco-card tmr-eco-card-${number}" href="${escapeAttr(field(props, `ecosystemItem${number}Href`, hrefs[index]))}">${icon}<span>${field(props, `ecosystemItem${number}Title`, title)}</span></a>`;
     })
-    .join("")}</div>`;
+    .join("");
+  const diagramSrc = imageSource(raw(props, "diagramImageUrl"), ecosystemDiagramImage);
+  const diagram = raw(props, "showDiagram") === false || !diagramSrc ? "" : `<img class="tmr-eco-diagram" src="${escapeAttr(diagramSrc)}" alt="${escapeAttr(field(props, "diagramImageAlt", ""))}" aria-hidden="${field(props, "diagramImageAlt", "") ? "false" : "true"}">`;
+  return `<div class="tmr-eco-map">${diagram}<div class="tmr-eco">${cards}</div></div>`;
 }
 
 function trustedLogos(props: ThreeMashSectionRenderProps) {
@@ -779,7 +842,7 @@ export function renderFaqHtml(props: ThreeMashSectionRenderProps) {
     indexNumber: "07",
     indexText: "Sık Sorulanlar",
     titleText: "Kısa, net cevaplar.",
-    sideHtml: "Diş hekimlerinin ve laboratuvarların en çok sorduğu sorular — dolambaçsız yanıtlarla.",
+    sideHtml: "En kritik kararları hızlı vermeniz için, klinik ve laboratuvarlardan gelen soruları net cevaplarla topladık.",
     contentHtml: faqContent(props),
   });
 }
@@ -839,6 +902,7 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
 
 export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSectionRenderProps; fallback: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const renderedHtml = styleTextChunks(props.sectionHtml && props.sectionHtml.trim() ? props.sectionHtml : fallback, props);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -921,7 +985,7 @@ export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSe
 
   return (
     <div ref={rootRef} className="three-mash-remaining" style={threeMashThemeStyle(props)}>
-      <div dangerouslySetInnerHTML={html(props.sectionHtml, fallback)} />
+      <div dangerouslySetInnerHTML={html(renderedHtml)} />
     </div>
   );
 }

@@ -20,18 +20,67 @@ type FlowItem = {
 };
 
 type ActiveMenu = "products" | "why" | null;
+type ActiveAction = "profile" | "store" | null;
 
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
 
 function href(value?: string) {
-  return value && value.trim() ? value : "#";
+  const trimmed = value?.trim();
+  if (!trimmed) return "#";
+  if (trimmed.length > 1 && trimmed.startsWith("#")) return `/${trimmed}`;
+  return trimmed;
 }
 
 function text(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
   return trimmed || fallback;
+}
+
+function inlineHtml(value?: string) {
+  return (value || "")
+    .trim()
+    .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+    .replace(/^<p[^>]*>/i, "")
+    .replace(/<\/p>$/i, "");
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function styleTextChunks(markup: string, phrase?: string, enabled?: boolean, className = "tmh-word-style") {
+  const target = phrase?.trim();
+  if (!enabled || !target) return markup;
+
+  const matcher = new RegExp(escapeRegExp(target), "gi");
+  return markup
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (!part || part.startsWith("<")) return part;
+      return part.replace(matcher, (match) => `<span class="${className}">${match}</span>`);
+    })
+    .join("");
+}
+
+function richText(value?: string, props?: Props) {
+  const markup = inlineHtml(value);
+  if (!props) return { __html: markup };
+  return {
+    __html: styleTextChunks(markup, props.styledPhrase, props.wordStyleEnabled !== false),
+  };
+}
+
+function announcementRichText(value: string | undefined, props: Props) {
+  const markup = richText(value, props).__html;
+  return {
+    __html: styleTextChunks(markup, props.announcementStyledPhrase, props.announcementWordStyleEnabled !== false, "tmh-ann-word-style"),
+  };
+}
+
+function RichInline({ value, className, wordStyle }: { value?: string; className?: string; wordStyle?: Props }) {
+  return <span className={className} dangerouslySetInnerHTML={richText(value, wordStyle)} />;
 }
 
 function svgMarkup(value: unknown) {
@@ -195,33 +244,34 @@ function resolveActionIcon(image: unknown, svg: unknown, fallbackSvg: string, sh
   };
 }
 
-function ProductLink({ item }: { item: MenuItem }) {
+function ProductLink({ item, wordStyle }: { item: MenuItem; wordStyle: Props }) {
   const hasIcon = Boolean(imageSource(item.iconImageUrl) || svgMarkup(item.iconSvg));
 
   return (
     <a href={href(item.href)} className={`tmh-mega-link${hasIcon ? "" : " tmh-mega-link-no-icon"}`}>
       <InlineIcon image={item.iconImageUrl} svg={item.iconSvg} className="tmh-product-icon" />
       <span className="tmh-mega-link-copy">
-        <b>{item.title || ""}</b>
-        <span>{item.description || ""}</span>
+        <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
+        <span dangerouslySetInnerHTML={richText(item.description, wordStyle)} />
       </span>
     </a>
   );
 }
 
-function FlowLink({ item }: { item: FlowItem }) {
+function FlowLink({ item, wordStyle }: { item: FlowItem; wordStyle: Props }) {
   return (
     <a href={href(item.href)} className="tmh-flow-link">
-      <span className="tmh-flow-number">{item.number || ""}</span>
+      <span className="tmh-flow-number" dangerouslySetInnerHTML={richText(item.number, wordStyle)} />
       <span className="tmh-flow-copy">
-        <b>{item.title || ""}</b>
-        <span>{item.description || ""}</span>
+        <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
+        <span dangerouslySetInnerHTML={richText(item.description, wordStyle)} />
       </span>
     </a>
   );
 }
 
-function Logo({ logoText, logoHref, logoImageUrl, logoImageAlt, logoSvg }: Pick<Props, "logoText" | "logoHref" | "logoImageUrl" | "logoImageAlt" | "logoSvg">) {
+function Logo({ props }: { props: Props }) {
+  const { logoText, logoHref, logoImageUrl, logoImageAlt, logoSvg } = props;
   const logoSvgMarkup = svgMarkup(logoSvg);
 
   return (
@@ -231,7 +281,7 @@ function Logo({ logoText, logoHref, logoImageUrl, logoImageAlt, logoSvg }: Pick<
       ) : (
         <img src={imageSource(logoImageUrl, threeMashLogoImage)} alt={logoImageAlt || logoText} />
       )}
-      <span>{logoText || ""}</span>
+      <span dangerouslySetInnerHTML={richText(logoText, props)} />
     </a>
   );
 }
@@ -248,6 +298,7 @@ export function ThreeMashHeader(props: Props) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
+  const [activeAction, setActiveAction] = useState<ActiveAction>(null);
   const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLElement>(null);
@@ -283,6 +334,12 @@ export function ThreeMashHeader(props: Props) {
     "--tmh-bg": props.backgroundColor || "#FAFAF7",
     "--tmh-ann-bg": props.announcementBackgroundColor || "#0E0E0C",
     "--tmh-ann-text": props.announcementTextColor || "#CFCFC6",
+    "--tmh-word-color": props.styledPhraseColor || "#C7F136",
+    "--tmh-word-weight": props.styledPhraseBold ? "800" : "inherit",
+    "--tmh-word-style": props.styledPhraseItalic ? "italic" : "inherit",
+    "--tmh-ann-word-color": props.announcementStyledPhraseColor || "#C7F136",
+    "--tmh-ann-word-weight": props.announcementStyledPhraseBold ? "800" : "inherit",
+    "--tmh-ann-word-style": props.announcementStyledPhraseItalic ? "italic" : "inherit",
     "--tmh-accent": props.accentColor || "#C7F136",
     "--tmh-text": props.textColor || "#0E0E0C",
     "--tmh-muted": props.mutedTextColor || "#8F8F86",
@@ -329,6 +386,7 @@ export function ThreeMashHeader(props: Props) {
     function closeOnOutsideClick(event: MouseEvent) {
       if (!headerRef.current?.contains(event.target as Node)) {
         setActiveMenu(null);
+        setActiveAction(null);
       }
     }
 
@@ -357,9 +415,16 @@ export function ThreeMashHeader(props: Props) {
 
   function openMenu(menu: ActiveMenu) {
     setActiveMenu(menu);
+    setActiveAction(null);
     if (menu === "why") {
       requestAnimationFrame(updateWhyMenuPosition);
     }
+  }
+
+  function toggleAction(action: ActiveAction) {
+    setActiveMenu(null);
+    setIsSearchOpen(false);
+    setActiveAction((current) => (current === action ? null : action));
   }
 
   function submitSearch(event: Event) {
@@ -382,22 +447,16 @@ export function ThreeMashHeader(props: Props) {
       {props.showAnnouncement !== false && (
         <div className="tmh-announcement">
           <div className="tmh-announcement-inner">
-            <b>{props.announcementHighlightText || ""}</b>
-            <span>{props.announcementText || ""}</span>
-            <a href={href(props.announcementHref)}>{props.announcementCtaText || ""}</a>
+            <b dangerouslySetInnerHTML={announcementRichText(props.announcementHighlightText, props)} />
+            <span dangerouslySetInnerHTML={announcementRichText(props.announcementText, props)} />
+            <a href={href(props.announcementHref)} dangerouslySetInnerHTML={announcementRichText(props.announcementCtaText, props)} />
           </div>
         </div>
       )}
 
       <header className="tmh-header" ref={headerRef}>
         <div className="tmh-wrap tmh-nav">
-          <Logo
-            logoText={props.logoText}
-            logoHref={props.logoHref}
-            logoImageUrl={props.logoImageUrl}
-            logoImageAlt={props.logoImageAlt}
-            logoSvg={props.logoSvg}
-          />
+          <Logo props={props} />
 
           <nav className="tmh-desktop-nav" aria-label={props.mobileMenuLabel}>
             <ul className="tmh-menu">
@@ -407,29 +466,29 @@ export function ThreeMashHeader(props: Props) {
                 onFocusIn={() => openMenu("products")}
               >
                 <button className="tmh-menu-trigger" type="button">
-                  <span>{props.productsMenuText || ""}</span>
+                  <RichInline value={props.productsMenuText} wordStyle={props} />
                   <CaretIcon />
                 </button>
                 <div className="tmh-mega tmh-products-mega">
                   <a className="tmh-feature" href={href(props.productsFeatureHref)}>
-                    <span className="tmh-micro">{props.productsFeatureEyebrow || ""}</span>
-                    <b>{props.productsFeatureTitle || ""}</b>
+                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsFeatureEyebrow, props)} />
+                    <b dangerouslySetInnerHTML={richText(props.productsFeatureTitle, props)} />
                     <span className="tmh-feature-media">
                       <img src={imageSource(props.productsFeatureImageUrl, mashC4pFeatureImage)} alt={props.productsFeatureImageAlt || ""} />
                     </span>
-                    <span>{props.productsFeatureDescription || ""}</span>
-                    <em>{props.productsFeatureCtaText || ""}</em>
+                    <span dangerouslySetInnerHTML={richText(props.productsFeatureDescription, props)} />
+                    <em dangerouslySetInnerHTML={richText(props.productsFeatureCtaText, props)} />
                   </a>
                   <div className="tmh-mega-column">
-                    <span className="tmh-micro">{props.productsCol1Title || ""}</span>
+                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsCol1Title, props)} />
                     {productPrimary.map((item, index) => (
-                      <ProductLink item={item} key={index} />
+                      <ProductLink item={item} wordStyle={props} key={index} />
                     ))}
                   </div>
                   <div className="tmh-mega-column">
-                    <span className="tmh-micro">{props.productsCol2Title || ""}</span>
+                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsCol2Title, props)} />
                     {productSecondary.map((item, index) => (
-                      <ProductLink item={item} key={index} />
+                      <ProductLink item={item} wordStyle={props} key={index} />
                     ))}
                   </div>
                 </div>
@@ -442,7 +501,7 @@ export function ThreeMashHeader(props: Props) {
                 onFocusIn={() => openMenu("why")}
               >
                 <button className="tmh-menu-trigger" type="button">
-                  <span>{props.whyMenuText || ""}</span>
+                  <RichInline value={props.whyMenuText} wordStyle={props} />
                   <CaretIcon />
                 </button>
                 <div
@@ -450,26 +509,26 @@ export function ThreeMashHeader(props: Props) {
                   style={whyMenuLeft == null ? undefined : { "--tmh-flow-mega-left": `${whyMenuLeft}px`, "--tmh-flow-translate-x": "0px" } as any}
                 >
                   <div className="tmh-flow-intro">
-                    <span className="tmh-micro">{props.whyMenuEyebrow || ""}</span>
-                    <b>{props.whyMenuText || ""}</b>
-                    <p>{props.whyMenuDescription || ""}</p>
+                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.whyMenuEyebrow, props)} />
+                    <b dangerouslySetInnerHTML={richText(props.whyMenuText, props)} />
+                    <p dangerouslySetInnerHTML={richText(props.whyMenuDescription, props)} />
                   </div>
                   <div className="tmh-flow-grid">
                     {whyItems.map((item, index) => (
-                      <FlowLink item={item} key={index} />
+                      <FlowLink item={item} wordStyle={props} key={index} />
                     ))}
                   </div>
                 </div>
               </li>
 
               <li>
-                <a className="tmh-plain-link" href={href(props.referencesHref)} onMouseEnter={() => setActiveMenu(null)}>
-                  {props.referencesText || ""}
+                <a className="tmh-plain-link" href={href(props.referencesHref)} onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}>
+                  <RichInline value={props.referencesText} wordStyle={props} />
                 </a>
               </li>
               <li>
-                <a className="tmh-plain-link" href={href(props.academyHref)} onMouseEnter={() => setActiveMenu(null)}>
-                  {props.academyText || ""}
+                <a className="tmh-plain-link" href={href(props.academyHref)} onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}>
+                  <RichInline value={props.academyText} wordStyle={props} />
                 </a>
               </li>
             </ul>
@@ -498,33 +557,96 @@ export function ThreeMashHeader(props: Props) {
                 type={isSearchOpen ? "submit" : "button"}
                 aria-label={props.searchAriaLabel || ""}
                 onClick={() => {
-                  if (!isSearchOpen) setIsSearchOpen(true);
+                  if (!isSearchOpen) {
+                    setActiveAction(null);
+                    setIsSearchOpen(true);
+                  }
                 }}
               >
                 <InlineIcon image={searchIcon.image} svg={searchIcon.svg} className="tmh-action-svg" />
               </button>
             </form>
-            <a href={href(props.accountHref)} aria-label={props.accountAriaLabel || ""}>
-              <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
-            </a>
-            <a href={href(props.cartHref)} aria-label={props.cartAriaLabel || ""} className="tmh-cart">
-              <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
-            </a>
+            {props.showProfileMenu === false ? (
+              <a href={href(props.accountHref)} aria-label={props.accountAriaLabel || ""}>
+                <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
+              </a>
+            ) : (
+              <div className="tmh-action-wrap">
+                <button
+                  className="tmh-action-button"
+                  type="button"
+                  aria-label={props.accountAriaLabel || ""}
+                  aria-expanded={activeAction === "profile"}
+                  onClick={() => toggleAction("profile")}
+                >
+                  <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
+                </button>
+                <div className={`tmh-action-panel tmh-profile-panel${activeAction === "profile" ? " is-open" : ""}`}>
+                  <span className="tmh-action-panel-kicker">{props.accountAriaLabel || ""}</span>
+                  <b dangerouslySetInnerHTML={richText(props.profileMenuTitle, props)} />
+                  <p dangerouslySetInnerHTML={richText(props.profileMenuDescription, props)} />
+                  <a className="tmh-panel-primary" href={href(props.profilePrimaryHref || props.accountHref)} dangerouslySetInnerHTML={richText(props.profilePrimaryText, props)} />
+                  <a className="tmh-panel-secondary" href={href(props.profileSecondaryHref)} dangerouslySetInnerHTML={richText(props.profileSecondaryText, props)} />
+                </div>
+              </div>
+            )}
+            {props.showStorePanel === false ? (
+              <a href={href(props.cartHref)} aria-label={props.cartAriaLabel || ""} className="tmh-cart">
+                <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
+              </a>
+            ) : (
+              <div className="tmh-action-wrap">
+                <button
+                  className="tmh-action-button tmh-cart"
+                  type="button"
+                  aria-label={props.cartAriaLabel || ""}
+                  aria-expanded={activeAction === "store"}
+                  onClick={() => toggleAction("store")}
+                >
+                  <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
+                </button>
+                <div className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}>
+                  <span className="tmh-action-panel-kicker">{props.cartAriaLabel || ""}</span>
+                  <b dangerouslySetInnerHTML={richText(props.storePanelTitle, props)} />
+                  <p dangerouslySetInnerHTML={richText(props.storePanelDescription, props)} />
+                  <a className="tmh-panel-primary" href={href(props.storePanelButtonHref || props.cartHref)} dangerouslySetInnerHTML={richText(props.storePanelButtonText, props)} />
+                  <small dangerouslySetInnerHTML={richText(props.storePanelNote, props)} />
+                </div>
+              </div>
+            )}
           </div>
 
           <details className="tmh-mobile-menu">
-            <summary>{props.mobileMenuLabel || ""}</summary>
+            <summary dangerouslySetInnerHTML={richText(props.mobileMenuLabel, props)} />
             <div className="tmh-mobile-panel">
-              <a href={href(props.productsFeatureHref)}>{props.productsMenuText || ""}</a>
-              {productPrimary.concat(productSecondary).map((item, index) => (
-                <a href={href(item.href)} key={index}>{item.title || ""}</a>
-              ))}
-              <a href={href(props.why1Href)}>{props.whyMenuText || ""}</a>
-              {whyItems.map((item, index) => (
-                <a href={href(item.href)} key={index}>{item.title || ""}</a>
-              ))}
-              <a href={href(props.referencesHref)}>{props.referencesText || ""}</a>
-              <a href={href(props.academyHref)}>{props.academyText || ""}</a>
+              <div className="tmh-mobile-group">
+                <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.productsMenuText, props)} />
+                {productPrimary.concat(productSecondary).map((item, index) => (
+                  <a href={href(item.href)} className="tmh-mobile-product" key={index}>
+                      <InlineIcon image={item.iconImageUrl} svg={item.iconSvg} className="tmh-mobile-link-icon" />
+                      <span>
+                        <b dangerouslySetInnerHTML={richText(item.title, props)} />
+                      <small dangerouslySetInnerHTML={richText(item.description, props)} />
+                      </span>
+                    </a>
+                  ))}
+              </div>
+              <div className="tmh-mobile-group">
+                <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.whyMenuText, props)} />
+                {whyItems.map((item, index) => (
+                  <a href={href(item.href)} className="tmh-mobile-flow" key={index}>
+                    <span className="tmh-mobile-flow-number" dangerouslySetInnerHTML={richText(item.number, props)} />
+                    <span>
+                      <b dangerouslySetInnerHTML={richText(item.title, props)} />
+                      <small dangerouslySetInnerHTML={richText(item.description, props)} />
+                    </span>
+                  </a>
+                ))}
+              </div>
+              <div className="tmh-mobile-group tmh-mobile-group-inline">
+                <a href={href(props.referencesHref)} dangerouslySetInnerHTML={richText(props.referencesText, props)} />
+                <a href={href(props.academyHref)} dangerouslySetInnerHTML={richText(props.academyText, props)} />
+              </div>
             </div>
           </details>
         </div>

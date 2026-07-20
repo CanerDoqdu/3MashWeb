@@ -1,21 +1,24 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
-  sectionAnchorId?: string;
+  eyebrowText?: string;
   titleText?: string;
-  titleEmphasis?: string;
   descriptionHtml?: string;
+  card1Title?: string;
+  card1Text?: string;
+  card2Title?: string;
+  card2Text?: string;
+  card3Title?: string;
+  card3Text?: string;
   primaryButtonText?: string;
   primaryButtonHref?: string;
   secondaryButtonText?: string;
   secondaryButtonHref?: string;
   backgroundColor?: string;
   textColor?: string;
-  subTextColor?: string;
+  mutedTextColor?: string;
+  panelColor?: string;
   accentColor?: string;
-  primaryButtonBackgroundColor?: string;
-  primaryButtonTextColor?: string;
-  secondaryButtonTextColor?: string;
-  buttonRadius?: number;
+  lineColor?: string;
   wordStyleEnabled?: boolean;
   styledPhrase?: string;
   styledPhraseColor?: string;

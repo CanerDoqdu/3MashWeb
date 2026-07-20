@@ -6,6 +6,12 @@
   overflow: hidden;
 }
 
+.tmpp-word-style {
+  color: var(--tmpp-word-color);
+  font-weight: var(--tmpp-word-weight);
+  font-style: var(--tmpp-word-style);
+}
+
 .tmpp-wrap {
   width: min(1168px, calc(100% - 48px));
   min-height: 620px;

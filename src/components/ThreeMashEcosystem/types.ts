@@ -56,4 +56,23 @@ export interface Props {
   accentSoftColor?: string;
   itemRadius?: number;
   iconBoxRadius?: number;
+  showDiagram?: boolean;
+  diagramImageUrl?: IkasImage | null;
+  diagramImageAlt?: string;
+  diagramImageWidth?: number;
+  diagramImageHeight?: number;
+  diagramImageXOffset?: number;
+  diagramImageYOffset?: number;
+  diagramImageOpacity?: number;
+  diagramImageBrightness?: number;
+  diagramImageContrast?: number;
+  diagramImageSaturation?: number;
+  diagramImageHue?: number;
+  diagramImageInvert?: number;
+  diagramImageFit?: LogoImageFit;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

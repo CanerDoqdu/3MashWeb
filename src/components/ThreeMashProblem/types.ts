@@ -44,4 +44,9 @@ export interface Props {
   hairImageInvert?: number;
   showDigitalGlitch?: boolean;
   showBadValueCountUp?: boolean;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

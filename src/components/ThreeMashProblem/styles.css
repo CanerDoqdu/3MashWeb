@@ -15,6 +15,12 @@
   box-sizing: border-box;
 }
 
+.tmproblem-word-style {
+  color: var(--tmproblem-word-color);
+  font-weight: var(--tmproblem-word-weight);
+  font-style: var(--tmproblem-word-style);
+}
+
 .tmproblem-wrap {
   width: min(100%, 1240px);
   margin: 0 auto;
@@ -78,7 +84,7 @@
   overflow-wrap: anywhere;
 }
 
-.tmproblem-head h2 span {
+.tmproblem-head h2 .tmproblem-title-em {
   font-family: "Newsreader", serif;
   font-style: italic;
   font-weight: 500;

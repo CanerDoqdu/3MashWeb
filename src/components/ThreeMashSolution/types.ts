@@ -112,4 +112,9 @@ export interface Props {
   solutionCard1VideoPosterUrl?: IkasImage | null;
   solutionCard1VideoLabel?: string;
   hoverVideoAutoplayEnabled?: boolean;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

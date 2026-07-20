@@ -6,6 +6,36 @@ function href(value?: string) {
   return value && value.trim() ? value : "#";
 }
 
+function inlineHtml(value?: string) {
+  return (value || "")
+    .trim()
+    .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+    .replace(/^<p[^>]*>/i, "")
+    .replace(/<\/p>$/i, "");
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function styleTextChunks(markup: string, props?: Props) {
+  const target = props?.styledPhrase?.trim();
+  if (props?.wordStyleEnabled === false || !target) return markup;
+
+  const matcher = new RegExp(escapeRegExp(target), "gi");
+  return markup
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (!part || part.startsWith("<")) return part;
+      return part.replace(matcher, (match) => `<span class="tmpp-word-style">${match}</span>`);
+    })
+    .join("");
+}
+
+function richText(value?: string, props?: Props) {
+  return { __html: styleTextChunks(inlineHtml(value), props) };
+}
+
 function imageIdToUrl(value: string) {
   const trimmed = value.trim();
   if (trimmed.startsWith("theme-images/")) {
@@ -60,13 +90,13 @@ function presetImage(preset?: string) {
   return machineP16L;
 }
 
-function SpecRow({ label, value }: { label?: string; value?: string }) {
+function SpecRow({ label, value, wordStyle }: { label?: string; value?: string; wordStyle: Props }) {
   if (!label && !value) return null;
 
   return (
     <div className="tmpp-spec-row">
-      <span>{label || ""}</span>
-      <b>{value || ""}</b>
+      <span dangerouslySetInnerHTML={richText(label, wordStyle)} />
+      <b dangerouslySetInnerHTML={richText(value, wordStyle)} />
     </div>
   );
 }
@@ -82,6 +112,9 @@ export function ThreeMashProductPage(props: Props) {
     "--tmpp-panel": props.panelColor || "#ffffff",
     "--tmpp-accent": props.accentColor || "#c7ff1a",
     "--tmpp-line": props.lineColor || "#deded5",
+    "--tmpp-word-color": props.styledPhraseColor || "#C7F136",
+    "--tmpp-word-weight": props.styledPhraseBold ? "800" : "inherit",
+    "--tmpp-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmpp-image-width": `${numberInRange(props.productImageWidth, 82, 10, 140)}%`,
     "--tmpp-image-height": `${numberInRange(props.productImageHeight, 82, 10, 140)}%`,
     "--tmpp-image-x": `${numberInRange(props.productImageXOffset, 0, -120, 120)}px`,
@@ -98,22 +131,22 @@ export function ThreeMashProductPage(props: Props) {
         <div className="tmpp-copy">
           <div className="tmpp-kicker">
             <span />
-            {props.eyebrowText || ""}
+            <span dangerouslySetInnerHTML={richText(props.eyebrowText, props)} />
           </div>
           <h1>
-            {props.titleText || ""}
-            {props.titleEmphasis ? <em>{props.titleEmphasis}</em> : null}
+            <span dangerouslySetInnerHTML={richText(props.titleText, props)} />
+            {props.titleEmphasis ? <em dangerouslySetInnerHTML={richText(props.titleEmphasis, props)} /> : null}
           </h1>
           <div
             className="tmpp-description"
-            dangerouslySetInnerHTML={{ __html: props.descriptionHtml || "" }}
+            dangerouslySetInnerHTML={richText(props.descriptionHtml, props)}
           />
           <div className="tmpp-actions">
             <a className="tmpp-button tmpp-button-primary" href={href(props.primaryButtonHref)}>
-              {props.primaryButtonText || ""}
+              <span dangerouslySetInnerHTML={richText(props.primaryButtonText, props)} />
             </a>
             <a className="tmpp-button tmpp-button-secondary" href={href(props.secondaryButtonHref)}>
-              {props.secondaryButtonText || ""}
+              <span dangerouslySetInnerHTML={richText(props.secondaryButtonText, props)} />
             </a>
           </div>
         </div>
@@ -125,10 +158,10 @@ export function ThreeMashProductPage(props: Props) {
         </div>
 
         <div className="tmpp-specs">
-          <SpecRow label={props.spec1Label} value={props.spec1Value} />
-          <SpecRow label={props.spec2Label} value={props.spec2Value} />
-          <SpecRow label={props.spec3Label} value={props.spec3Value} />
-          <SpecRow label={props.spec4Label} value={props.spec4Value} />
+          <SpecRow label={props.spec1Label} value={props.spec1Value} wordStyle={props} />
+          <SpecRow label={props.spec2Label} value={props.spec2Value} wordStyle={props} />
+          <SpecRow label={props.spec3Label} value={props.spec3Value} wordStyle={props} />
+          <SpecRow label={props.spec4Label} value={props.spec4Value} wordStyle={props} />
         </div>
       </div>
     </section>

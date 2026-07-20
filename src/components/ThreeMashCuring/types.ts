@@ -74,4 +74,9 @@ export interface Props {
   productMediaEndColor?: string;
   reasonCardRadius?: number;
   productCardRadius?: number;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

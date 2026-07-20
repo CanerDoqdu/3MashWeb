@@ -1,15 +1,45 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Props } from "./types";
 
-function html(value?: string) {
-  return { __html: value || "" };
+function inlineHtml(value?: string) {
+  return (value || "")
+    .trim()
+    .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+    .replace(/^<p[^>]*>/i, "")
+    .replace(/<\/p>$/i, "");
 }
 
-function sideHtml(value?: string, enabled = true) {
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function styleTextChunks(markup: string, props?: Props) {
+  const target = props?.styledPhrase?.trim();
+  if (props?.wordStyleEnabled === false || !target) return markup;
+
+  const matcher = new RegExp(escapeRegExp(target), "gi");
+  return markup
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (!part || part.startsWith("<")) return part;
+      return part.replace(matcher, (match) => `<span class="tmproblem-word-style">${match}</span>`);
+    })
+    .join("");
+}
+
+function html(value?: string, props?: Props) {
+  return { __html: styleTextChunks(inlineHtml(value), props) };
+}
+
+function RichInline({ value, className, wordStyle }: { value?: string; className?: string; wordStyle?: Props }) {
+  return <span className={className} dangerouslySetInnerHTML={html(value, wordStyle)} />;
+}
+
+function sideHtml(value?: string, enabled = true, props?: Props) {
   const source = value || "";
-  if (!enabled) return html(source.replace(/<span class="tmproblem-glitch"[^>]*>(.*?)<\/span>/gi, "$1"));
-  if (source.includes("tmproblem-glitch")) return html(source);
-  return html(source.replace(/dijitalleşti/gi, (match) => `<span class="tmproblem-glitch">${match}</span>`));
+  if (!enabled) return html(source.replace(/<span class="tmproblem-glitch"[^>]*>(.*?)<\/span>/gi, "$1"), props);
+  if (source.includes("tmproblem-glitch")) return html(source, props);
+  return html(source.replace(/dijitalleşti/gi, (match) => `<span class="tmproblem-glitch">${match}</span>`), props);
 }
 
 function anchorId(value?: string) {
@@ -154,6 +184,9 @@ export function ThreeMashProblem(props: Props) {
     "--tmproblem-accent": props.accentColor || "#C7F136",
     "--tmproblem-accent-text": props.accentTextColor || "#3D4D0E",
     "--tmproblem-danger": props.dangerColor || "#E2492F",
+    "--tmproblem-word-color": props.styledPhraseColor || "#C7F136",
+    "--tmproblem-word-weight": props.styledPhraseBold ? "800" : "inherit",
+    "--tmproblem-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmproblem-hair-image-width": `${numberInRange(props.hairImageWidth, 58, 8, 140)}px`,
     "--tmproblem-hair-image-height": `${numberInRange(props.hairImageHeight, 58, 8, 140)}px`,
     "--tmproblem-hair-image-x": `${numberInRange(props.hairImageXOffset, 0, -80, 80)}px`,
@@ -166,46 +199,47 @@ export function ThreeMashProblem(props: Props) {
     "--tmproblem-hair-image-hue": `${numberInRange(props.hairImageHue, 0, -180, 180)}deg`,
     "--tmproblem-hair-image-invert": percentage(props.hairImageInvert, 0, 0, 100),
   } as any;
+  const hasRichBadValue = Boolean(props.badValue && /<[^>]+>/.test(props.badValue));
 
   return (
     <section ref={sectionRef} className="three-mash-problem" id={anchorId(props.sectionAnchorId)} style={themeStyle}>
       <div className="tmproblem-wrap">
         <div className="tmproblem-index">
-          <span className="tmproblem-index-number">{props.indexNumber || ""}</span>
-          <span className="tmproblem-index-text">{props.indexText || ""}</span>
+          <span className="tmproblem-index-number" dangerouslySetInnerHTML={html(props.indexNumber, props)} />
+          <span className="tmproblem-index-text" dangerouslySetInnerHTML={html(props.indexText, props)} />
           <span className="tmproblem-index-line" />
         </div>
 
         <div className="tmproblem-head">
           <h2>
-            {props.titleText || ""} <span>{props.titleEmphasis || ""}</span>
+            <RichInline value={props.titleText} wordStyle={props} /> <span className="tmproblem-title-em" dangerouslySetInnerHTML={html(props.titleEmphasis, props)} />
           </h2>
-          <div className="tmproblem-side" dangerouslySetInnerHTML={sideHtml(props.sideHtml, props.showDigitalGlitch !== false)} />
+          <div className="tmproblem-side" dangerouslySetInnerHTML={sideHtml(props.sideHtml, props.showDigitalGlitch !== false, props)} />
         </div>
 
         <div className="tmproblem-cards">
           <article className="tmproblem-card tmproblem-card-bad">
-            <div className="tmproblem-card-label">{props.badLabel || ""}</div>
-            <div className="tmproblem-card-value">{animatedBadValue}</div>
-            <div className="tmproblem-card-description" dangerouslySetInnerHTML={html(props.badDescriptionHtml)} />
+            <div className="tmproblem-card-label" dangerouslySetInnerHTML={html(props.badLabel, props)} />
+            <div className="tmproblem-card-value" dangerouslySetInnerHTML={html(hasRichBadValue ? props.badValue : animatedBadValue, props)} />
+            <div className="tmproblem-card-description" dangerouslySetInnerHTML={html(props.badDescriptionHtml, props)} />
           </article>
 
           <article className="tmproblem-card tmproblem-card-good">
-            <div className="tmproblem-card-label">{props.goodLabel || ""}</div>
-            <div className="tmproblem-card-value">{props.goodValue || ""}</div>
-            <div className="tmproblem-card-description" dangerouslySetInnerHTML={html(props.goodDescriptionHtml)} />
+            <div className="tmproblem-card-label" dangerouslySetInnerHTML={html(props.goodLabel, props)} />
+            <div className="tmproblem-card-value" dangerouslySetInnerHTML={html(props.goodValue, props)} />
+            <div className="tmproblem-card-description" dangerouslySetInnerHTML={html(props.goodDescriptionHtml, props)} />
           </article>
         </div>
 
         {props.showHairNote !== false ? (
           <div className="tmproblem-hair-note">
             {hairImage ? <img className="tmproblem-hair-image" src={hairImage} alt="" aria-hidden="true" /> : null}
-            <p dangerouslySetInnerHTML={html(props.hairNoteHtml)} />
+            <p dangerouslySetInnerHTML={html(props.hairNoteHtml, props)} />
           </div>
         ) : null}
 
         {props.showReference !== false ? (
-          <p className="tmproblem-reference" dangerouslySetInnerHTML={html(props.referenceHtml)} />
+          <p className="tmproblem-reference" dangerouslySetInnerHTML={html(props.referenceHtml, props)} />
         ) : null}
       </div>
     </section>

@@ -79,6 +79,7 @@ export interface Props {
   accentSoftColor?: string;
   accentTextColor?: string;
   dangerColor?: string;
+  /** Desktop-only underline visibility. */
   showTitleUnderline?: boolean;
   /** Upload image here; size, position and effects are controlled in the image controls group. */
   titleUnderlineImageUrl?: IkasImage | null;
@@ -112,4 +113,19 @@ export interface Props {
   labCostDetailHref?: string;
   clinicTargetRepeatRate?: number;
   labTargetRepeatRate?: number;
+  titleUnderlineTabletWidth?: number;
+  titleUnderlineTabletXOffset?: number;
+  titleUnderlineTabletHeight?: number;
+  titleUnderlineTabletYOffset?: number;
+  titleUnderlineMobileXOffset?: number;
+  titleUnderlineMobileWidth?: number;
+  titleUnderlineMobileHeight?: number;
+  titleUnderlineMobileYOffset?: number;
+  showTitleUnderlineTablet?: boolean;
+  showTitleUnderlineMobile?: boolean;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

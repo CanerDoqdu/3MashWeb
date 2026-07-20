@@ -72,4 +72,9 @@ export interface Props {
   /** Upload replacement trusted logo 5. If empty, bundled logo 5 is used. */
   trustedLogo5ImageUrl?: IkasImage | null;
   trustedLogo5ImageAlt?: string;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

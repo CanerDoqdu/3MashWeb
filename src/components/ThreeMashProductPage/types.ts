@@ -36,4 +36,9 @@ export interface Props {
   panelColor?: string;
   accentColor?: string;
   lineColor?: string;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

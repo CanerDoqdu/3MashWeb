@@ -64,4 +64,9 @@ export interface Props {
   logoSvgSaturation?: number;
   logoSvgHue?: number;
   logoSvgInvert?: number;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
 }

@@ -22,15 +22,15 @@
         {
           "name": "announcementHighlightText",
           "displayName": "Announcement Highlight Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Fırsatı kaçırmayın.",
+          "defaultValue": "⚡ Fırsatı kaçırmayın.",
           "groupId": "announcement"
         },
         {
           "name": "announcementText",
           "displayName": "Announcement Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
           "groupId": "announcement"
@@ -38,7 +38,7 @@
         {
           "name": "announcementCtaText",
           "displayName": "Announcement CTA Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hemen hesaplayın",
           "groupId": "announcement"
@@ -54,7 +54,7 @@
         {
           "name": "logoText",
           "displayName": "Logo Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": true,
           "defaultValue": "mash",
           "groupId": "brand"
@@ -70,7 +70,7 @@
         {
           "name": "productsMenuText",
           "displayName": "Products Menu Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Ürünler",
           "groupId": "products"
@@ -78,7 +78,7 @@
         {
           "name": "productsFeatureEyebrow",
           "displayName": "Products Feature Eyebrow",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "YENİ · DÜNYADA İLK",
           "groupId": "products"
@@ -86,7 +86,7 @@
         {
           "name": "productsFeatureTitle",
           "displayName": "Products Feature Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "MASH C4P Akıllı Kürleme Cihazı",
           "groupId": "products"
@@ -94,15 +94,15 @@
         {
           "name": "productsFeatureDescription",
           "displayName": "Products Feature Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Reçineye göre otomatik kürleme. Sonuç kalitesini kullanıcı hatasından çıkarır.",
-          "groupId": "products"
+          "groupId": "text-customization"
         },
         {
           "name": "productsFeatureCtaText",
           "displayName": "Products Feature CTA Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Keşfet",
           "groupId": "products"
@@ -118,7 +118,7 @@
         {
           "name": "productsCol1Title",
           "displayName": "Products Column 1 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Üretim",
           "groupId": "products"
@@ -126,7 +126,7 @@
         {
           "name": "product1Title",
           "displayName": "Product 1 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3D Yazıcılar",
           "groupId": "products"
@@ -134,10 +134,10 @@
         {
           "name": "product1Description",
           "displayName": "Product 1 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "P1D / P16L hassas baskı",
-          "groupId": "products"
+          "groupId": "text-customization"
         },
         {
           "name": "product1Href",
@@ -150,7 +150,7 @@
         {
           "name": "product2Title",
           "displayName": "Product 2 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama & Kürleme",
           "groupId": "products"
@@ -158,10 +158,10 @@
         {
           "name": "product2Description",
           "displayName": "Product 2 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama ve akıllı kürleme",
-          "groupId": "products"
+          "groupId": "text-customization"
         },
         {
           "name": "product2Href",
@@ -174,7 +174,7 @@
         {
           "name": "product3Title",
           "displayName": "Product 3 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Reçineler",
           "groupId": "products"
@@ -182,10 +182,10 @@
         {
           "name": "product3Description",
           "displayName": "Product 3 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental reçine seçenekleri",
-          "groupId": "products"
+          "groupId": "text-customization"
         },
         {
           "name": "product3Href",
@@ -198,7 +198,7 @@
         {
           "name": "productsCol2Title",
           "displayName": "Products Column 2 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Tamamlayıcı",
           "groupId": "products"
@@ -206,7 +206,7 @@
         {
           "name": "product4Title",
           "displayName": "Product 4 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Masaüstü Tarayıcılar",
           "groupId": "products"
@@ -214,10 +214,10 @@
         {
           "name": "product4Description",
           "displayName": "Product 4 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Lab için hassas tarama",
-          "groupId": "products"
+          "groupId": "text-customization"
         },
         {
           "name": "product4Href",
@@ -230,7 +230,7 @@
         {
           "name": "product5Title",
           "displayName": "Product 5 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Zirkon Bloklar & Titanyum",
           "groupId": "products"
@@ -238,10 +238,10 @@
         {
           "name": "product5Description",
           "displayName": "Product 5 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Freze sarfları",
-          "groupId": "products"
+          "groupId": "text-customization"
         },
         {
           "name": "product5Href",
@@ -254,7 +254,7 @@
         {
           "name": "product6Title",
           "displayName": "Product 6 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Fırınlar",
           "groupId": "products"
@@ -262,10 +262,10 @@
         {
           "name": "product6Description",
           "displayName": "Product 6 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sinterleme çözümleri",
-          "groupId": "products"
+          "groupId": "text-customization"
         },
         {
           "name": "product6Href",
@@ -278,7 +278,7 @@
         {
           "name": "whyMenuText",
           "displayName": "Why Menu Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Neden 3mash?",
           "groupId": "why"
@@ -286,7 +286,7 @@
         {
           "name": "why1Number",
           "displayName": "Why 1 Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "01",
           "groupId": "why"
@@ -294,7 +294,7 @@
         {
           "name": "why1Title",
           "displayName": "Why 1 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Gizli maliyetinizi görün",
           "groupId": "why"
@@ -302,10 +302,10 @@
         {
           "name": "why1Description",
           "displayName": "Why 1 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Tekrar işlerin yıllık kayba nasıl döndüğünü hesaplayın",
-          "groupId": "why"
+          "groupId": "text-customization"
         },
         {
           "name": "why1Href",
@@ -318,7 +318,7 @@
         {
           "name": "why2Number",
           "displayName": "Why 2 Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "02",
           "groupId": "why"
@@ -326,7 +326,7 @@
         {
           "name": "why2Title",
           "displayName": "Why 2 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hassasiyet farkını anlayın",
           "groupId": "why"
@@ -334,10 +334,10 @@
         {
           "name": "why2Description",
           "displayName": "Why 2 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İlk seferde oturmayan işlerin asıl sebebini görün",
-          "groupId": "why"
+          "groupId": "text-customization"
         },
         {
           "name": "why2Href",
@@ -350,7 +350,7 @@
         {
           "name": "why3Number",
           "displayName": "Why 3 Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "03",
           "groupId": "why"
@@ -358,7 +358,7 @@
         {
           "name": "why3Title",
           "displayName": "Why 3 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Uyumlu üretimi keşfedin",
           "groupId": "why"
@@ -366,10 +366,10 @@
         {
           "name": "why3Description",
           "displayName": "Why 3 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yazıcı, reçine ve parametre aynı sonuç için birlikte çalışır",
-          "groupId": "why"
+          "groupId": "text-customization"
         },
         {
           "name": "why3Href",
@@ -382,7 +382,7 @@
         {
           "name": "why4Number",
           "displayName": "Why 4 Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "04",
           "groupId": "why"
@@ -390,7 +390,7 @@
         {
           "name": "why4Title",
           "displayName": "Why 4 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kürlemenin etkisini görün",
           "groupId": "why"
@@ -398,10 +398,10 @@
         {
           "name": "why4Description",
           "displayName": "Why 4 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Doğru baskının son adımda neden kaybedilmemesi gerektiğini öğrenin",
-          "groupId": "why"
+          "groupId": "text-customization"
         },
         {
           "name": "why4Href",
@@ -414,7 +414,7 @@
         {
           "name": "referencesText",
           "displayName": "References Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Referanslar",
           "groupId": "links"
@@ -430,7 +430,7 @@
         {
           "name": "academyText",
           "displayName": "Academy Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Academy",
           "groupId": "links"
@@ -502,7 +502,7 @@
         {
           "name": "mobileMenuLabel",
           "displayName": "Mobile Menu Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Menü",
           "groupId": "links"
@@ -694,7 +694,7 @@
         {
           "name": "searchDrawerTitle",
           "displayName": "Search Drawer Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Arama",
           "groupId": "links"
@@ -734,7 +734,7 @@
         {
           "name": "whyMenuEyebrow",
           "displayName": "Why Menu Eyebrow",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "SAYFA AKIŞI",
           "groupId": "why"
@@ -742,10 +742,10 @@
         {
           "name": "whyMenuDescription",
           "displayName": "Why Menu Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kaybın nereden başladığını ve 3mash sisteminin bunu nasıl azalttığını adım adım görün.",
-          "groupId": "why"
+          "groupId": "text-customization"
         },
         {
           "name": "product1IconImageUrl",
@@ -1418,7 +1418,7 @@
         {
           "name": "why5Number",
           "displayName": "Why 5 Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "05",
           "groupId": "why"
@@ -1426,7 +1426,7 @@
         {
           "name": "why5Title",
           "displayName": "Why 5 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Tek çatıdaki akışı inceleyin",
           "groupId": "why"
@@ -1434,10 +1434,10 @@
         {
           "name": "why5Description",
           "displayName": "Why 5 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Cihazdan sarfa, eğitimden desteğe tüm ekosistemi görün",
-          "groupId": "why"
+          "groupId": "text-customization"
         },
         {
           "name": "why5Href",
@@ -1450,7 +1450,7 @@
         {
           "name": "why6Number",
           "displayName": "Why 6 Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "06",
           "groupId": "why"
@@ -1458,7 +1458,7 @@
         {
           "name": "why6Title",
           "displayName": "Why 6 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Gerçek kullanıcıları görün",
           "groupId": "why"
@@ -1466,10 +1466,10 @@
         {
           "name": "why6Description",
           "displayName": "Why 6 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Klinik ve laboratuvarların 3mash deneyimlerine bakın",
-          "groupId": "why"
+          "groupId": "text-customization"
         },
         {
           "name": "why6Href",
@@ -1482,7 +1482,7 @@
         {
           "name": "why7Number",
           "displayName": "Why 7 Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "07",
           "groupId": "why"
@@ -1490,7 +1490,7 @@
         {
           "name": "why7Title",
           "displayName": "Why 7 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Aklınızdaki soruları çözün",
           "groupId": "why"
@@ -1498,10 +1498,10 @@
         {
           "name": "why7Description",
           "displayName": "Why 7 Description",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın",
-          "groupId": "why"
+          "groupId": "text-customization"
         },
         {
           "name": "why7Href",
@@ -1534,13 +1534,204 @@
           "required": false,
           "defaultValue": true,
           "groupId": "why"
+        },
+        {
+          "name": "showProfileMenu",
+          "displayName": "Show Profile Menu",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileMenuTitle",
+          "displayName": "Profile Menu Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Hesabınız",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileMenuDescription",
+          "displayName": "Profile Menu Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Siparişlerinizi takip edin, hesap bilgilerinizi yönetin veya hızlıca giriş yapın.",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profilePrimaryText",
+          "displayName": "Profile Primary Button Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Giriş yap",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profilePrimaryHref",
+          "displayName": "Profile Primary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/login",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileSecondaryText",
+          "displayName": "Profile Secondary Link Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Hesap oluştur",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileSecondaryHref",
+          "displayName": "Profile Secondary Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/register",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "showStorePanel",
+          "displayName": "Show Store Panel",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelTitle",
+          "displayName": "Store Panel Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "3mash Store",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelDescription",
+          "displayName": "Store Panel Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürünleri, sarf malzemeleri ve sipariş akışını mağazada görüntüleyin.",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelButtonText",
+          "displayName": "Store Button Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Go to store",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelButtonHref",
+          "displayName": "Store Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelNote",
+          "displayName": "Store Panel Note",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Sepet ve mağaza işlemleri güvenli 3mash mağazasında devam eder.",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "announcementWordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "announcementWordStyle"
+        },
+        {
+          "name": "announcementStyledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "sessiz kaybını",
+          "groupId": "announcementWordStyle"
+        },
+        {
+          "name": "announcementStyledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "announcementWordStyle"
+        },
+        {
+          "name": "announcementStyledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "announcementWordStyle"
+        },
+        {
+          "name": "announcementStyledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "announcementWordStyle"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
         {
           "id": "announcement",
           "name": "Announcement",
-          "description": "Top black promotion bar"
+          "description": "Top black promotion bar",
+          "children": [
+            {
+              "id": "announcementWordStyle",
+              "name": "Announcement Word Style",
+              "description": "Demo single word color and emphasis"
+            }
+          ]
         },
         {
           "id": "brand",
@@ -1607,6 +1798,23 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Header colors"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        },
+        {
+          "id": "action-panels",
+          "name": "Action Panels",
+          "description": "Profile and store dropdown panels"
         }
       ]
     },
@@ -1620,7 +1828,7 @@
         {
           "name": "eyebrowText",
           "displayName": "Eyebrow Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "DENTAL ÜRETİMİN GÖRÜNMEZ FATURASI",
           "groupId": "content"
@@ -1628,7 +1836,7 @@
         {
           "name": "titleBeforeAmount",
           "displayName": "Title Before Amount",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kliniğiniz her yıl",
           "groupId": "content"
@@ -1636,7 +1844,7 @@
         {
           "name": "titleAfterAmount",
           "displayName": "Title After Amount",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "sessizce kaybediyor olabilir.",
           "groupId": "content"
@@ -1644,7 +1852,7 @@
         {
           "name": "titleEmphasis",
           "displayName": "Title Emphasis",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Farkında bile olmadan.",
           "groupId": "content"
@@ -1652,7 +1860,7 @@
         {
           "name": "subtitleStart",
           "displayName": "Subtitle Start",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bu para reklama gitmiyor, yeni cihaza da gitmiyor. Hastanın ağzına",
           "groupId": "content"
@@ -1660,7 +1868,7 @@
         {
           "name": "subtitleStrongOne",
           "displayName": "Subtitle Strong One",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "ilk seferde oturmayan işler",
           "groupId": "content"
@@ -1668,7 +1876,7 @@
         {
           "name": "subtitleMiddle",
           "displayName": "Subtitle Middle",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "yüzünden, sessizce üretim maliyetine dönüşüyor. Yandaki değerleri",
           "groupId": "content"
@@ -1676,7 +1884,7 @@
         {
           "name": "subtitleStrongTwo",
           "displayName": "Subtitle Strong Two",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "kendinize göre ayarlayın",
           "groupId": "content"
@@ -1684,7 +1892,7 @@
         {
           "name": "subtitleEnd",
           "displayName": "Subtitle End",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "— yukarıdaki rakam anında sizin kliniğinize göre güncellenir.",
           "groupId": "content"
@@ -1692,7 +1900,7 @@
         {
           "name": "primaryButtonText",
           "displayName": "Primary Button Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sebebini görün ↓",
           "groupId": "buttons"
@@ -1708,7 +1916,7 @@
         {
           "name": "secondaryButtonText",
           "displayName": "Secondary Button Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Ücretsiz danışmanlık",
           "groupId": "buttons"
@@ -1724,7 +1932,7 @@
         {
           "name": "hintText",
           "displayName": "Hint Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bağlayıcılık yok · 20 dk",
           "groupId": "buttons"
@@ -1740,7 +1948,7 @@
         {
           "name": "calculatorEyebrow",
           "displayName": "Calculator Eyebrow",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "TASARRUF HESAPLAYICI",
           "groupId": "calculatorGeneral"
@@ -1748,7 +1956,7 @@
         {
           "name": "calculatorBadgeText",
           "displayName": "Calculator Badge Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "TAHMİNİ",
           "groupId": "calculatorGeneral"
@@ -1756,7 +1964,7 @@
         {
           "name": "clinicModeText",
           "displayName": "Tab Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Klinik",
           "groupId": "clinicCalculator"
@@ -1764,7 +1972,7 @@
         {
           "name": "labModeText",
           "displayName": "Tab Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Laboratuvar",
           "groupId": "labCalculator"
@@ -1772,7 +1980,7 @@
         {
           "name": "clinicWorkLabel",
           "displayName": "Work Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Aylık restoratif vaka",
           "groupId": "clinicCalculator"
@@ -1780,7 +1988,7 @@
         {
           "name": "labWorkLabel",
           "displayName": "Work Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Aylık üretim adedi",
           "groupId": "labCalculator"
@@ -1788,7 +1996,7 @@
         {
           "name": "currentLossLabel",
           "displayName": "Current Loss Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Tahmini yıllık kayıp",
           "groupId": "calculatorOutput"
@@ -1796,7 +2004,7 @@
         {
           "name": "currentLossNote",
           "displayName": "Current Loss Note",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "· mevcut oranla",
           "groupId": "calculatorOutput"
@@ -1804,7 +2012,7 @@
         {
           "name": "targetLossLabel",
           "displayName": "Target Loss Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hedef oranla",
           "groupId": "calculatorOutput"
@@ -1812,7 +2020,7 @@
         {
           "name": "targetLossNote",
           "displayName": "Target Loss Note",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "· ≤%3, 3mash desteğiyle",
           "groupId": "calculatorOutput"
@@ -1820,7 +2028,7 @@
         {
           "name": "savingsEyebrow",
           "displayName": "Savings Eyebrow",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "YILLIK TASARRUF POTANSİYELİNİZ",
           "groupId": "calculatorOutput"
@@ -1828,7 +2036,7 @@
         {
           "name": "alreadyTargetText",
           "displayName": "Already Target Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Zaten hedef banttasınız 👏",
           "groupId": "calculatorOutput"
@@ -1836,7 +2044,7 @@
         {
           "name": "fineTextBeforeLink",
           "displayName": "Fine Text Before Link",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Basitleştirilmiş bir tahmindir; sonuçlar iş akışınıza göre değişir. Kesin analiz için",
           "groupId": "calculatorOutput"
@@ -1844,7 +2052,7 @@
         {
           "name": "fineLinkText",
           "displayName": "Fine Link Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "ücretsiz danışmanlık",
           "groupId": "calculatorOutput"
@@ -1860,7 +2068,7 @@
         {
           "name": "fineTextAfterLink",
           "displayName": "Fine Text After Link",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "alın.",
           "groupId": "calculatorOutput"
@@ -2052,7 +2260,7 @@
         {
           "name": "stat1Value",
           "displayName": "Stat 1 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "±20",
           "groupId": "stats"
@@ -2060,7 +2268,7 @@
         {
           "name": "stat1Suffix",
           "displayName": "Stat 1 Suffix",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "µm",
           "groupId": "stats"
@@ -2068,7 +2276,7 @@
         {
           "name": "stat1Label",
           "displayName": "Stat 1 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "her baskıda boyutsal hassasiyet — insan saç telinin yarısı",
           "groupId": "stats"
@@ -2076,7 +2284,7 @@
         {
           "name": "stat2Value",
           "displayName": "Stat 2 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "≤%3",
           "groupId": "stats"
@@ -2084,7 +2292,7 @@
         {
           "name": "stat2Suffix",
           "displayName": "Stat 2 Suffix",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "",
           "groupId": "stats"
@@ -2092,7 +2300,7 @@
         {
           "name": "stat2Label",
           "displayName": "Stat 2 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3mash müşterilerinde tekrarlanan iş oranı (%7–12'den)",
           "groupId": "stats"
@@ -2100,7 +2308,7 @@
         {
           "name": "stat3Value",
           "displayName": "Stat 3 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<6",
           "groupId": "stats"
@@ -2108,7 +2316,7 @@
         {
           "name": "stat3Suffix",
           "displayName": "Stat 3 Suffix",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "ay",
           "groupId": "stats"
@@ -2116,7 +2324,7 @@
         {
           "name": "stat3Label",
           "displayName": "Stat 3 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "yatırımın kendini geri ödeme potansiyeli",
           "groupId": "stats"
@@ -2124,7 +2332,7 @@
         {
           "name": "stat4Value",
           "displayName": "Stat 4 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "580",
           "groupId": "stats"
@@ -2132,7 +2340,7 @@
         {
           "name": "stat4Suffix",
           "displayName": "Stat 4 Suffix",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "+",
           "groupId": "stats"
@@ -2140,7 +2348,7 @@
         {
           "name": "stat4Label",
           "displayName": "Stat 4 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "dental lab & klinik bu sistemle üretiyor",
           "groupId": "stats"
@@ -2227,11 +2435,12 @@
         },
         {
           "name": "showTitleUnderline",
-          "displayName": "Show Title Underline",
+          "displayName": "Show Desktop Title Underline",
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": true,
-          "groupId": "content"
+          "groupId": "content",
+          "description": "Desktop-only underline visibility."
         },
         {
           "name": "titleUnderlineImageUrl",
@@ -2357,7 +2566,7 @@
         {
           "name": "clinicRptLabel",
           "displayName": "RPT Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mevcut tekrar oranınız (RPT)",
           "groupId": "clinicCalculator"
@@ -2389,7 +2598,7 @@
         {
           "name": "clinicCostLabel",
           "displayName": "Cost Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bir tekrarın size maliyeti",
           "groupId": "clinicCalculator"
@@ -2397,7 +2606,7 @@
         {
           "name": "clinicCostDetailText",
           "displayName": "Cost Detail Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →",
           "groupId": "clinicCalculator"
@@ -2413,7 +2622,7 @@
         {
           "name": "labRptLabel",
           "displayName": "RPT Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mevcut tekrar oranınız (RPT)",
           "groupId": "labCalculator"
@@ -2445,7 +2654,7 @@
         {
           "name": "labCostLabel",
           "displayName": "Cost Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bir tekrarın size maliyeti",
           "groupId": "labCalculator"
@@ -2453,7 +2662,7 @@
         {
           "name": "labCostDetailText",
           "displayName": "Cost Detail Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →",
           "groupId": "labCalculator"
@@ -2481,6 +2690,126 @@
           "required": false,
           "defaultValue": 3,
           "groupId": "labCalculator"
+        },
+        {
+          "name": "titleUnderlineTabletWidth",
+          "displayName": "Tablet Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 66,
+          "groupId": "titleUnderlineTabletControls"
+        },
+        {
+          "name": "titleUnderlineTabletXOffset",
+          "displayName": "Tablet X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "titleUnderlineTabletControls"
+        },
+        {
+          "name": "titleUnderlineTabletHeight",
+          "displayName": "Tablet Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 18,
+          "groupId": "titleUnderlineTabletControls"
+        },
+        {
+          "name": "titleUnderlineTabletYOffset",
+          "displayName": "Tablet Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "titleUnderlineTabletControls"
+        },
+        {
+          "name": "titleUnderlineMobileXOffset",
+          "displayName": "Mobile X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": -6,
+          "groupId": "titleUnderlineMobileControls"
+        },
+        {
+          "name": "titleUnderlineMobileWidth",
+          "displayName": "Mobile Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 58,
+          "groupId": "titleUnderlineMobileControls"
+        },
+        {
+          "name": "titleUnderlineMobileHeight",
+          "displayName": "Mobile Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 14,
+          "groupId": "titleUnderlineMobileControls"
+        },
+        {
+          "name": "titleUnderlineMobileYOffset",
+          "displayName": "Mobile Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "titleUnderlineMobileControls"
+        },
+        {
+          "name": "showTitleUnderlineTablet",
+          "displayName": "Show Tablet Title Underline",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "content"
+        },
+        {
+          "name": "showTitleUnderlineMobile",
+          "displayName": "Show Mobile Title Underline",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "content"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -2493,6 +2822,21 @@
               "id": "titleUnderlineImageControls",
               "name": "Title Underline Image Controls",
               "description": "Underline image size, position and effects"
+            },
+            {
+              "id": "titleUnderlineTabletControls",
+              "name": "Tablet Title Underline Layout",
+              "description": "Tablet-only underline size and position"
+            },
+            {
+              "id": "titleUnderlineMobileControls",
+              "name": "Mobile Title Underline Layout",
+              "description": "Mobile-only underline size and position"
+            },
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
             }
           ]
         },
@@ -2558,7 +2902,7 @@
         {
           "name": "indexNumber",
           "displayName": "Index Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "02",
           "groupId": "content"
@@ -2566,7 +2910,7 @@
         {
           "name": "indexText",
           "displayName": "Index Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sorunun Kaynağı",
           "groupId": "content"
@@ -2574,7 +2918,7 @@
         {
           "name": "titleText",
           "displayName": "Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kaybın görünmeyen sebebi:",
           "groupId": "content"
@@ -2582,7 +2926,7 @@
         {
           "name": "titleEmphasis",
           "displayName": "Title Emphasis",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "ölçüsel hassasiyet.",
           "groupId": "content"
@@ -2590,15 +2934,15 @@
         {
           "name": "sideHtml",
           "displayName": "Side Text HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Diş hekimliği dijitalleşti; herkes benzer cihazlara erişiyor. Asıl fark, ürettiğiniz işin <b>ilk seferde</b> oturup oturmadığı.",
-          "groupId": "content"
+          "groupId": "text-customization"
         },
         {
           "name": "badLabel",
           "displayName": "Bad Card Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Piyasada yaygın kurulum",
           "groupId": "cards"
@@ -2606,7 +2950,7 @@
         {
           "name": "badValue",
           "displayName": "Bad Card Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "250–500µm",
           "groupId": "cards"
@@ -2614,15 +2958,15 @@
         {
           "name": "badDescriptionHtml",
           "displayName": "Bad Card Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yanlış parametre, reçine uyumsuzluğu ve eksik kalibrasyonla sapma <b>güvenli sınırın 2–5 katına</b> çıkar. Tekrar oranı yükselir (bazı pratiklerde <b>%42'ye</b>) → yüksek hacimli bir işletmede yılda <b>−$126K'ya varan</b> kayıp.",
-          "groupId": "cards"
+          "groupId": "text-customization"
         },
         {
           "name": "goodLabel",
           "displayName": "Good Card Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3mash ekosistemiyle",
           "groupId": "cards"
@@ -2630,7 +2974,7 @@
         {
           "name": "goodValue",
           "displayName": "Good Card Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "±20µm",
           "groupId": "cards"
@@ -2638,10 +2982,10 @@
         {
           "name": "goodDescriptionHtml",
           "displayName": "Good Card Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yazıcı, reçine ve kürleme <b>birlikte kalibre</b> edildiğinde: her baskıda tekrar edilebilir hassasiyet → <b>≤%3 remake</b> → yılda <b>$72–162K'ya varan</b> tasarruf potansiyeli.",
-          "groupId": "cards"
+          "groupId": "text-customization"
         },
         {
           "name": "showHairNote",
@@ -2654,10 +2998,10 @@
         {
           "name": "hairNoteHtml",
           "displayName": "Hair Note HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<b>Ölçek için:</b> bir insan saç teli ~70 µm. Piyasadaki sapma saç telinin <b>5 katına</b> çıkabiliyor; biz saç telinin <b>yarısında</b> çalışıyoruz — ve bunu tek seferlik değil, <b>her baskıda</b> taahhüt ediyoruz.",
-          "groupId": "notes"
+          "groupId": "text-customization"
         },
         {
           "name": "showReference",
@@ -2670,10 +3014,10 @@
         {
           "name": "referenceHtml",
           "displayName": "Reference HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bilimsel dayanak: full-arch model doğruluğu sistemden sisteme <b>3–190 µm</b> arasında değişiyor (Etemad-Shahidi ve ark., <a href='https://doi.org/10.3390/jcm9103357' target='_blank' rel='noopener'>J Clin Med 2020</a>); SLA/DLP/PolyJet en doğru teknolojiler (Németh ve ark., <a href='https://doi.org/10.1016/j.jdent.2023.104532' target='_blank' rel='noopener'>J Dentistry 2023</a>). Tekrar oranı ve sebepleri: <a href='https://doi.org/10.1111/jopr.12995' target='_blank' rel='noopener'>McCracken ve ark., J Prosthodont 2019</a>.",
-          "groupId": "notes"
+          "groupId": "text-customization"
         },
         {
           "name": "backgroundColor",
@@ -2867,6 +3211,46 @@
           "required": false,
           "defaultValue": true,
           "groupId": "content"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -2896,6 +3280,18 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Problem section colors"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
         }
       ]
     },
@@ -2917,7 +3313,7 @@
         {
           "name": "indexNumber",
           "displayName": "Section Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "03",
           "groupId": "content"
@@ -2925,7 +3321,7 @@
         {
           "name": "indexText",
           "displayName": "Section Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Çözüm · Üretim Ekosistemi",
           "groupId": "content"
@@ -2933,7 +3329,7 @@
         {
           "name": "titleText",
           "displayName": "Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hassasiyet cihazdan çıkmaz;",
           "groupId": "content"
@@ -2941,7 +3337,7 @@
         {
           "name": "titleEmphasis",
           "displayName": "Italic Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "uyumdan çıkar.",
           "groupId": "content"
@@ -2949,15 +3345,15 @@
         {
           "name": "sideHtml",
           "displayName": "Side Text HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kuronun oturması üç şeyin senkronuna bağlı: <b>yazıcı, reçine, kürleme.</b> Biz üçünü birlikte kalibre edip know-how'ıyla teslim ediyoruz — elinizdeki başka marka cihaza bile.",
-          "groupId": "content"
+          "groupId": "text-customization"
         },
         {
           "name": "solutionCard1Tag",
           "displayName": "Card 1 Tag",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "PROFESYONEL",
           "groupId": "cards"
@@ -2965,7 +3361,7 @@
         {
           "name": "solutionCard1Title",
           "displayName": "Card 1 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "MASH P1D",
           "groupId": "cards"
@@ -2973,10 +3369,10 @@
         {
           "name": "solutionCard1DescriptionHtml",
           "displayName": "Card 1 Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Malzemeye göre tasarlanmış optik sistemle <b>profesyonel DLP</b> üretim. Yüksek hacimli lab ve kliniklerin motoru.",
-          "groupId": "cards"
+          "groupId": "text-customization"
         },
         {
           "name": "solutionCard1ImageUrl",
@@ -2998,7 +3394,7 @@
         {
           "name": "solutionCard1Spec1Label",
           "displayName": "Card 1 Spec 1 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Işık kaynağı",
           "groupId": "cards"
@@ -3006,7 +3402,7 @@
         {
           "name": "solutionCard1Spec1Value",
           "displayName": "Card 1 Spec 1 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "385 nm DLP",
           "groupId": "cards"
@@ -3014,7 +3410,7 @@
         {
           "name": "solutionCard1Spec2Label",
           "displayName": "Card 1 Spec 2 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hassasiyet",
           "groupId": "cards"
@@ -3022,7 +3418,7 @@
         {
           "name": "solutionCard1Spec2Value",
           "displayName": "Card 1 Spec 2 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "±20 µm",
           "groupId": "cards"
@@ -3030,7 +3426,7 @@
         {
           "name": "solutionCard1Spec3Label",
           "displayName": "Card 1 Spec 3 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Karakter",
           "groupId": "cards"
@@ -3038,7 +3434,7 @@
         {
           "name": "solutionCard1Spec3Value",
           "displayName": "Card 1 Spec 3 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Tekrar edilebilirlik",
           "groupId": "cards"
@@ -3046,7 +3442,7 @@
         {
           "name": "solutionCard1CtaText",
           "displayName": "Card 1 CTA Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İncele",
           "groupId": "cards"
@@ -3069,7 +3465,7 @@
         {
           "name": "solutionCard2Tag",
           "displayName": "Card 2 Tag",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "GİRİŞ SEGMENTİ",
           "groupId": "cards"
@@ -3077,7 +3473,7 @@
         {
           "name": "solutionCard2Title",
           "displayName": "Card 2 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "MASH P16L",
           "groupId": "cards"
@@ -3085,10 +3481,10 @@
         {
           "name": "solutionCard2DescriptionHtml",
           "displayName": "Card 2 Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dijitale yeni geçenler için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.",
-          "groupId": "cards"
+          "groupId": "text-customization"
         },
         {
           "name": "solutionCard2ImageUrl",
@@ -3110,7 +3506,7 @@
         {
           "name": "solutionCard2Spec1Label",
           "displayName": "Card 2 Spec 1 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Teknoloji",
           "groupId": "cards"
@@ -3118,7 +3514,7 @@
         {
           "name": "solutionCard2Spec1Value",
           "displayName": "Card 2 Spec 1 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "LCD · revize",
           "groupId": "cards"
@@ -3126,7 +3522,7 @@
         {
           "name": "solutionCard2Spec2Label",
           "displayName": "Card 2 Spec 2 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Rol",
           "groupId": "cards"
@@ -3134,7 +3530,7 @@
         {
           "name": "solutionCard2Spec2Value",
           "displayName": "Card 2 Spec 2 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Ekosisteme giriş",
           "groupId": "cards"
@@ -3142,7 +3538,7 @@
         {
           "name": "solutionCard2Spec3Label",
           "displayName": "Card 2 Spec 3 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Destek",
           "groupId": "cards"
@@ -3150,7 +3546,7 @@
         {
           "name": "solutionCard2Spec3Value",
           "displayName": "Card 2 Spec 3 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kurulum + eğitim",
           "groupId": "cards"
@@ -3158,7 +3554,7 @@
         {
           "name": "solutionCard2CtaText",
           "displayName": "Card 2 CTA Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İncele",
           "groupId": "cards"
@@ -3181,7 +3577,7 @@
         {
           "name": "solutionCard3Tag",
           "displayName": "Card 3 Tag",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "RESMİ DİSTRİBÜTÖR",
           "groupId": "cards"
@@ -3189,7 +3585,7 @@
         {
           "name": "solutionCard3Title",
           "displayName": "Card 3 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "CRS Reçineler",
           "groupId": "cards"
@@ -3197,10 +3593,10 @@
         {
           "name": "solutionCard3DescriptionHtml",
           "displayName": "Card 3 Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<b>CE Class IIa</b> biyouyumlu &amp; model reçineleri; cihazınızın parametreleriyle <b>birlikte kalibre edilmiş</b> teslim edilir.",
-          "groupId": "cards"
+          "groupId": "text-customization"
         },
         {
           "name": "solutionCard3ImageUrl",
@@ -3222,7 +3618,7 @@
         {
           "name": "solutionCard3Spec1Label",
           "displayName": "Card 3 Spec 1 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sertifika",
           "groupId": "cards"
@@ -3230,7 +3626,7 @@
         {
           "name": "solutionCard3Spec1Value",
           "displayName": "Card 3 Spec 1 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "CE Class IIa",
           "groupId": "cards"
@@ -3238,7 +3634,7 @@
         {
           "name": "solutionCard3Spec2Label",
           "displayName": "Card 3 Spec 2 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Uygulama",
           "groupId": "cards"
@@ -3246,7 +3642,7 @@
         {
           "name": "solutionCard3Spec2Value",
           "displayName": "Card 3 Spec 2 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Model · geçici · splint · guide",
           "groupId": "cards"
@@ -3254,7 +3650,7 @@
         {
           "name": "solutionCard3Spec3Label",
           "displayName": "Card 3 Spec 3 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Uyum",
           "groupId": "cards"
@@ -3262,7 +3658,7 @@
         {
           "name": "solutionCard3Spec3Value",
           "displayName": "Card 3 Spec 3 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Marka bağımsız",
           "groupId": "cards"
@@ -3270,7 +3666,7 @@
         {
           "name": "solutionCard3CtaText",
           "displayName": "Card 3 CTA Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İncele",
           "groupId": "cards"
@@ -3769,6 +4165,46 @@
           "required": false,
           "groupId": "cards",
           "defaultValue": true
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -3811,6 +4247,18 @@
           "id": "p1dMedia",
           "name": "P1D Media",
           "description": "MASH P1D kartı için video kontrolü"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
         }
       ]
     },
@@ -3832,7 +4280,7 @@
         {
           "name": "indexNumber",
           "displayName": "Section Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "04",
           "groupId": "content"
@@ -3840,7 +4288,7 @@
         {
           "name": "indexText",
           "displayName": "Section Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kritik Son Adım",
           "groupId": "content"
@@ -3848,7 +4296,7 @@
         {
           "name": "titleText",
           "displayName": "Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sadece yazıcı değil. Sonucu",
           "groupId": "content"
@@ -3856,7 +4304,7 @@
         {
           "name": "titleEmphasis",
           "displayName": "Italic Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "kürleme tamamlar.",
           "groupId": "content"
@@ -3864,15 +4312,15 @@
         {
           "name": "sideHtml",
           "displayName": "Side Text HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:",
-          "groupId": "content"
+          "groupId": "text-customization"
         },
         {
           "name": "reason1Eyebrow",
           "displayName": "Reason 1 Eyebrow",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "SEBEP 01",
           "groupId": "reasonCards"
@@ -3880,7 +4328,7 @@
         {
           "name": "reason1Title",
           "displayName": "Reason 1 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mekanik dayanım",
           "groupId": "reasonCards"
@@ -3888,15 +4336,15 @@
         {
           "name": "reason1DescriptionHtml",
           "displayName": "Reason 1 Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.",
-          "groupId": "reasonCards"
+          "groupId": "text-customization"
         },
         {
           "name": "reason2Eyebrow",
           "displayName": "Reason 2 Eyebrow",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "SEBEP 02",
           "groupId": "reasonCards"
@@ -3904,7 +4352,7 @@
         {
           "name": "reason2Title",
           "displayName": "Reason 2 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Ölçüsel doğruluk",
           "groupId": "reasonCards"
@@ -3912,15 +4360,15 @@
         {
           "name": "reason2DescriptionHtml",
           "displayName": "Reason 2 Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.",
-          "groupId": "reasonCards"
+          "groupId": "text-customization"
         },
         {
           "name": "reason3Eyebrow",
           "displayName": "Reason 3 Eyebrow",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "SEBEP 03",
           "groupId": "reasonCards"
@@ -3928,7 +4376,7 @@
         {
           "name": "reason3Title",
           "displayName": "Reason 3 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Biyouyumluluk & renk",
           "groupId": "reasonCards"
@@ -3936,15 +4384,15 @@
         {
           "name": "reason3DescriptionHtml",
           "displayName": "Reason 3 Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.",
-          "groupId": "reasonCards"
+          "groupId": "text-customization"
         },
         {
           "name": "curingProduct1Tag",
           "displayName": "Product 1 Tag",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "YIKAMA · KÜRLEME",
           "groupId": "productCards"
@@ -3952,7 +4400,7 @@
         {
           "name": "curingProduct1Title",
           "displayName": "Product 1 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Phrozen Wash & Cure Kit",
           "groupId": "productCards"
@@ -3960,10 +4408,10 @@
         {
           "name": "curingProduct1DescriptionHtml",
           "displayName": "Product 1 Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.",
-          "groupId": "productCards"
+          "groupId": "text-customization"
         },
         {
           "name": "curingProduct1ImageUrl",
@@ -3984,7 +4432,7 @@
         {
           "name": "curingProduct1Spec1Label",
           "displayName": "Product 1 Spec 1 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama hacmi",
           "groupId": "productCards"
@@ -3992,7 +4440,7 @@
         {
           "name": "curingProduct1Spec1Value",
           "displayName": "Product 1 Spec 1 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "8 L",
           "groupId": "productCards"
@@ -4000,7 +4448,7 @@
         {
           "name": "curingProduct1Spec2Label",
           "displayName": "Product 1 Spec 2 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kürleme",
           "groupId": "productCards"
@@ -4008,7 +4456,7 @@
         {
           "name": "curingProduct1Spec2Value",
           "displayName": "Product 1 Spec 2 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "405 nm UV",
           "groupId": "productCards"
@@ -4016,7 +4464,7 @@
         {
           "name": "curingProduct1CtaText",
           "displayName": "Product 1 CTA Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İncele",
           "groupId": "productCards"
@@ -4032,7 +4480,7 @@
         {
           "name": "curingProduct2Tag",
           "displayName": "Product 2 Tag",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "YIKAMA · KÜRLEME",
           "groupId": "productCards"
@@ -4040,7 +4488,7 @@
         {
           "name": "curingProduct2Title",
           "displayName": "Product 2 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Creality UW02",
           "groupId": "productCards"
@@ -4048,10 +4496,10 @@
         {
           "name": "curingProduct2DescriptionHtml",
           "displayName": "Product 2 Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Baskı sonrası yıkama ve kürleme adımlarını <b>tek kontrollü akışta</b> toplar. P16L ile tamamlayıcı başlangıç seti.",
-          "groupId": "productCards"
+          "groupId": "text-customization"
         },
         {
           "name": "curingProduct2ImageUrl",
@@ -4072,7 +4520,7 @@
         {
           "name": "curingProduct2Spec1Label",
           "displayName": "Product 2 Spec 1 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Görev",
           "groupId": "productCards"
@@ -4080,7 +4528,7 @@
         {
           "name": "curingProduct2Spec1Value",
           "displayName": "Product 2 Spec 1 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama + kürleme",
           "groupId": "productCards"
@@ -4088,7 +4536,7 @@
         {
           "name": "curingProduct2Spec2Label",
           "displayName": "Product 2 Spec 2 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Uyum",
           "groupId": "productCards"
@@ -4096,7 +4544,7 @@
         {
           "name": "curingProduct2Spec2Value",
           "displayName": "Product 2 Spec 2 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "P16L + CRS",
           "groupId": "productCards"
@@ -4104,7 +4552,7 @@
         {
           "name": "curingProduct2CtaText",
           "displayName": "Product 2 CTA Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İncele",
           "groupId": "productCards"
@@ -4209,7 +4657,7 @@
         {
           "name": "readMoreText",
           "displayName": "Read More Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Derine inmek isteyenlere, Mash Academy'den:",
           "groupId": "readMore"
@@ -4217,7 +4665,7 @@
         {
           "name": "readMoreLink1Text",
           "displayName": "Link 1 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Overcure ve Undercure Nedir?",
           "groupId": "readMore"
@@ -4233,7 +4681,7 @@
         {
           "name": "readMoreLink2Text",
           "displayName": "Link 2 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "385nm mi 405nm mi?",
           "groupId": "readMore"
@@ -4373,6 +4821,46 @@
           "required": false,
           "defaultValue": 20,
           "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -4405,6 +4893,18 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Section colors and card styling"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
         }
       ]
     },
@@ -4426,7 +4926,7 @@
         {
           "name": "eyebrowText",
           "displayName": "Eyebrow Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "YATIRIMIN GERİ DÖNÜŞÜ",
           "groupId": "content"
@@ -4434,7 +4934,7 @@
         {
           "name": "valueText",
           "displayName": "Value Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "&lt; 6 ay",
           "groupId": "content"
@@ -4442,15 +4942,15 @@
         {
           "name": "descriptionHtml",
           "displayName": "Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b>",
-          "groupId": "content"
+          "groupId": "text-customization"
         },
         {
           "name": "ctaText",
           "displayName": "CTA Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kliniğiniz için hesaplayalım →",
           "groupId": "content"
@@ -4518,6 +5018,46 @@
           "required": false,
           "defaultValue": 10,
           "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -4530,6 +5070,18 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "ROI colors and button styling"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
         }
       ]
     },
@@ -4551,7 +5103,7 @@
         {
           "name": "indexNumber",
           "displayName": "Section Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "05",
           "groupId": "content"
@@ -4559,7 +5111,7 @@
         {
           "name": "indexText",
           "displayName": "Section Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Uçtan Uca",
           "groupId": "content"
@@ -4567,7 +5119,7 @@
         {
           "name": "titleText",
           "displayName": "Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dijital akışın her parçası,",
           "groupId": "content"
@@ -4575,7 +5127,7 @@
         {
           "name": "titleEmphasis",
           "displayName": "Italic Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "tek çatı altında.",
           "groupId": "content"
@@ -4583,10 +5135,10 @@
         {
           "name": "sideHtml",
           "displayName": "Side Text HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Cihaz satıp gitmiyoruz: doğru ürün için <b>danışmanlık</b>, sürdürülebilirlik için <b>Academy eğitimleri</b>, satış sonrasında teknisyen + mühendis <b>teknik destek.</b>",
-          "groupId": "content"
+          "groupId": "text-customization"
         },
         {
           "name": "showIcons",
@@ -4607,7 +5159,7 @@
         {
           "name": "ecosystemItem1Title",
           "displayName": "Item 1 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3D Yazıcılar",
           "groupId": "items"
@@ -4631,7 +5183,7 @@
         {
           "name": "ecosystemItem2Title",
           "displayName": "Item 2 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Reçineler",
           "groupId": "items"
@@ -4655,7 +5207,7 @@
         {
           "name": "ecosystemItem3Title",
           "displayName": "Item 3 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama & Kürleme",
           "groupId": "items"
@@ -4679,7 +5231,7 @@
         {
           "name": "ecosystemItem4Title",
           "displayName": "Item 4 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Masaüstü Tarayıcılar",
           "groupId": "items"
@@ -4703,7 +5255,7 @@
         {
           "name": "ecosystemItem5Title",
           "displayName": "Item 5 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Zirkon Bloklar",
           "groupId": "items"
@@ -4727,7 +5279,7 @@
         {
           "name": "ecosystemItem6Title",
           "displayName": "Item 6 Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Fırınlar",
           "groupId": "items"
@@ -4916,6 +5468,158 @@
           "required": false,
           "defaultValue": 14,
           "groupId": "appearance"
+        },
+        {
+          "name": "showDiagram",
+          "displayName": "Show Diagram",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageUrl",
+          "displayName": "Diagram Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageAlt",
+          "displayName": "Diagram Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3mash ekosistem diagramı",
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageWidth",
+          "displayName": "Layout - Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 940,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageHeight",
+          "displayName": "Layout - Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 300,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageXOffset",
+          "displayName": "Layout - X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageYOffset",
+          "displayName": "Layout - Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageOpacity",
+          "displayName": "Effects - Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageBrightness",
+          "displayName": "Effects - Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageContrast",
+          "displayName": "Effects - Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageSaturation",
+          "displayName": "Effects - Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageHue",
+          "displayName": "Effects - Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageInvert",
+          "displayName": "Effects - Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "diagram"
+        },
+        {
+          "name": "diagramImageFit",
+          "displayName": "Layout - Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "diagram",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -4938,6 +5642,23 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Section colors and grid styling"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        },
+        {
+          "id": "diagram",
+          "name": "Diagram Image",
+          "description": "Center diagram image upload, layout and effects"
         }
       ]
     },
@@ -4959,7 +5680,7 @@
         {
           "name": "indexNumber",
           "displayName": "Section Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "06",
           "groupId": "content"
@@ -4967,7 +5688,7 @@
         {
           "name": "indexText",
           "displayName": "Section Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Referanslar",
           "groupId": "content"
@@ -4975,7 +5696,7 @@
         {
           "name": "titleText",
           "displayName": "Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Türkiye'nin en büyük lab'ları neden",
           "groupId": "content"
@@ -4983,7 +5704,7 @@
         {
           "name": "titleEmphasis",
           "displayName": "Italic Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "bizimle üretiyor?",
           "groupId": "content"
@@ -4991,18 +5712,18 @@
         {
           "name": "sideHtml",
           "displayName": "Side Text HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kısa cevap hep aynı: tutarlılık. <b>580+</b> dental laboratuvar ve klinik bu sistemle üretiyor, çünkü sonuç <b>her seferinde</b> aynı çıkıyor.",
-          "groupId": "content"
+          "groupId": "text-customization"
         },
         {
           "name": "testimonial1Text",
           "displayName": "Testimonial 1 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.",
-          "groupId": "testimonials"
+          "groupId": "text-customization"
         },
         {
           "name": "testimonial1ImageUrl",
@@ -5023,7 +5744,7 @@
         {
           "name": "testimonial1Name",
           "displayName": "Testimonial 1 Name",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mehmet İşlek",
           "groupId": "testimonials"
@@ -5031,7 +5752,7 @@
         {
           "name": "testimonial1Role",
           "displayName": "Testimonial 1 Role",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik",
           "groupId": "testimonials"
@@ -5039,10 +5760,10 @@
         {
           "name": "testimonial2Text",
           "displayName": "Testimonial 2 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.",
-          "groupId": "testimonials"
+          "groupId": "text-customization"
         },
         {
           "name": "testimonial2ImageUrl",
@@ -5063,7 +5784,7 @@
         {
           "name": "testimonial2Name",
           "displayName": "Testimonial 2 Name",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Berkan Öztaş",
           "groupId": "testimonials"
@@ -5071,7 +5792,7 @@
         {
           "name": "testimonial2Role",
           "displayName": "Testimonial 2 Role",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "DENTEK · Genel Müd. Yard.",
           "groupId": "testimonials"
@@ -5079,10 +5800,10 @@
         {
           "name": "testimonial3Text",
           "displayName": "Testimonial 3 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.",
-          "groupId": "testimonials"
+          "groupId": "text-customization"
         },
         {
           "name": "testimonial3ImageUrl",
@@ -5103,7 +5824,7 @@
         {
           "name": "testimonial3Name",
           "displayName": "Testimonial 3 Name",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Göksel Pişkin",
           "groupId": "testimonials"
@@ -5111,7 +5832,7 @@
         {
           "name": "testimonial3Role",
           "displayName": "Testimonial 3 Role",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "MIKRO LAB · Kurucu Ortak",
           "groupId": "testimonials"
@@ -5208,7 +5929,7 @@
         {
           "name": "trustedLabel",
           "displayName": "Trusted Logos Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Güvenenler",
           "groupId": "trustedLogos"
@@ -5436,6 +6157,46 @@
           "required": false,
           "defaultValue": "Güvenen marka 5",
           "groupId": "trustedLogos"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -5468,6 +6229,18 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Section colors and card styling"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
         }
       ]
     },
@@ -5489,7 +6262,7 @@
         {
           "name": "indexNumber",
           "displayName": "Section Number",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "07",
           "groupId": "content"
@@ -5497,7 +6270,7 @@
         {
           "name": "indexText",
           "displayName": "Section Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sık Sorulanlar",
           "groupId": "content"
@@ -5505,7 +6278,7 @@
         {
           "name": "titleText",
           "displayName": "Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kısa, net cevaplar.",
           "groupId": "content"
@@ -5513,7 +6286,7 @@
         {
           "name": "titleEmphasis",
           "displayName": "Italic Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "",
           "groupId": "content"
@@ -5521,15 +6294,15 @@
         {
           "name": "sideHtml",
           "displayName": "Side Text HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Diş hekimlerinin ve laboratuvarların en çok sorduğu sorular — dolambaçsız yanıtlarla.",
-          "groupId": "content"
+          "defaultValue": "En kritik kararları hızlı vermeniz için, klinik ve laboratuvarlardan gelen soruları net cevaplarla topladık.",
+          "groupId": "text-customization"
         },
         {
           "name": "faq1Question",
           "displayName": "FAQ 1 Question",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?",
           "groupId": "questions"
@@ -5537,15 +6310,15 @@
         {
           "name": "faq1AnswerHtml",
           "displayName": "FAQ 1 Answer HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.",
-          "groupId": "questions"
+          "groupId": "text-customization"
         },
         {
           "name": "faq2Question",
           "displayName": "FAQ 2 Question",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?",
           "groupId": "questions"
@@ -5553,15 +6326,15 @@
         {
           "name": "faq2AnswerHtml",
           "displayName": "FAQ 2 Answer HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"3MASH-Maliyet-Detay.html\">maliyet detay sayfamıza</a> bakabilirsiniz.",
-          "groupId": "questions"
+          "groupId": "text-customization"
         },
         {
           "name": "faq3Question",
           "displayName": "FAQ 3 Question",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3D baskıda kürleme (post-curing) neden kritik?",
           "groupId": "questions"
@@ -5569,15 +6342,15 @@
         {
           "name": "faq3AnswerHtml",
           "displayName": "FAQ 3 Answer HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.",
-          "groupId": "questions"
+          "groupId": "text-customization"
         },
         {
           "name": "faq4Question",
           "displayName": "FAQ 4 Question",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3mash yalnızca cihaz mı satıyor?",
           "groupId": "questions"
@@ -5585,15 +6358,15 @@
         {
           "name": "faq4AnswerHtml",
           "displayName": "FAQ 4 Answer HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.",
-          "groupId": "questions"
+          "groupId": "text-customization"
         },
         {
           "name": "faq5Question",
           "displayName": "FAQ 5 Question",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Elimdeki başka marka yazıcıyla çalışır mısınız?",
           "groupId": "questions"
@@ -5601,10 +6374,10 @@
         {
           "name": "faq5AnswerHtml",
           "displayName": "FAQ 5 Answer HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Evet. Hem reçine hem printer know-how'una sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.",
-          "groupId": "questions"
+          "groupId": "text-customization"
         },
         {
           "name": "openFirstFaq",
@@ -5669,6 +6442,46 @@
           "required": false,
           "defaultValue": "#3D4D0E",
           "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -5691,6 +6504,18 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "FAQ colors and spacing"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
         }
       ]
     },
@@ -5712,7 +6537,7 @@
         {
           "name": "titleText",
           "displayName": "Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bu görünmez kaybı",
           "groupId": "content"
@@ -5720,7 +6545,7 @@
         {
           "name": "titleEmphasis",
           "displayName": "Italic Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "birlikte azaltalım.",
           "groupId": "content"
@@ -5728,15 +6553,15 @@
         {
           "name": "descriptionHtml",
           "displayName": "Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b>",
-          "groupId": "content"
+          "groupId": "text-customization"
         },
         {
           "name": "primaryButtonText",
           "displayName": "Primary Button Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Uzmana danış — ücretsiz",
           "groupId": "buttons"
@@ -5752,7 +6577,7 @@
         {
           "name": "secondaryButtonText",
           "displayName": "Secondary Button Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mash Academy'yi keşfet",
           "groupId": "buttons"
@@ -5828,6 +6653,46 @@
           "required": false,
           "defaultValue": 10,
           "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -5845,6 +6710,18 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Final section colors and button styling"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
         }
       ]
     },
@@ -5858,7 +6735,7 @@
         {
           "name": "logoText",
           "displayName": "Logo Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "mash",
           "groupId": "brand"
@@ -5866,15 +6743,15 @@
         {
           "name": "descriptionText",
           "displayName": "Description Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.",
-          "groupId": "brand"
+          "groupId": "text-customization"
         },
         {
           "name": "productLink1Text",
           "displayName": "productLink1 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3D Yazıcılar",
           "groupId": "productLinks"
@@ -5890,7 +6767,7 @@
         {
           "name": "productLink2Text",
           "displayName": "productLink2 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Reçineler",
           "groupId": "productLinks"
@@ -5906,7 +6783,7 @@
         {
           "name": "productLink3Text",
           "displayName": "productLink3 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama & Kürleme",
           "groupId": "productLinks"
@@ -5922,7 +6799,7 @@
         {
           "name": "productLink4Text",
           "displayName": "productLink4 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Zirkon Bloklar",
           "groupId": "productLinks"
@@ -5938,7 +6815,7 @@
         {
           "name": "companyLink1Text",
           "displayName": "companyLink1 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hakkımızda",
           "groupId": "companyLinks"
@@ -5954,7 +6831,7 @@
         {
           "name": "companyLink2Text",
           "displayName": "companyLink2 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mash Academy",
           "groupId": "companyLinks"
@@ -5970,7 +6847,7 @@
         {
           "name": "companyLink3Text",
           "displayName": "companyLink3 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Blog",
           "groupId": "companyLinks"
@@ -5986,7 +6863,7 @@
         {
           "name": "companyLink4Text",
           "displayName": "companyLink4 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İletişim",
           "groupId": "companyLinks"
@@ -6002,7 +6879,7 @@
         {
           "name": "contactLink1Text",
           "displayName": "contactLink1 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "info@3mash.com",
           "groupId": "contactLinks"
@@ -6018,7 +6895,7 @@
         {
           "name": "contactLink2Text",
           "displayName": "contactLink2 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Antalya Teknokent, Konyaaltı",
           "groupId": "contactLinks"
@@ -6034,7 +6911,7 @@
         {
           "name": "contactLink3Text",
           "displayName": "contactLink3 Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "@3mashsocial",
           "groupId": "contactLinks"
@@ -6050,7 +6927,7 @@
         {
           "name": "copyrightText",
           "displayName": "Copyright Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "© 2026 3MASH Teknoloji A.Ş.",
           "groupId": "legal"
@@ -6058,10 +6935,10 @@
         {
           "name": "legalText",
           "displayName": "Legal Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "KVKK · İade & Garanti · Mesafeli Satış",
-          "groupId": "legal"
+          "groupId": "text-customization"
         },
         {
           "name": "backgroundColor",
@@ -6106,7 +6983,7 @@
         {
           "name": "productColumnTitle",
           "displayName": "Product Column Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Ürünler",
           "groupId": "productLinks"
@@ -6114,7 +6991,7 @@
         {
           "name": "companyColumnTitle",
           "displayName": "Company Column Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Şirket",
           "groupId": "companyLinks"
@@ -6122,7 +6999,7 @@
         {
           "name": "contactColumnTitle",
           "displayName": "Contact Column Title",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İletişim",
           "groupId": "contactLinks"
@@ -6327,6 +7204,46 @@
           "required": false,
           "defaultValue": 0,
           "groupId": "footerLogoSvgControls"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -6371,6 +7288,18 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Footer colors"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
         }
       ]
     },
@@ -6384,7 +7313,7 @@
         {
           "name": "eyebrowText",
           "displayName": "Eyebrow Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3MASH ÜRÜN",
           "groupId": "content"
@@ -6392,7 +7321,7 @@
         {
           "name": "titleText",
           "displayName": "Title Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "MASH P16L",
           "groupId": "content"
@@ -6400,7 +7329,7 @@
         {
           "name": "titleEmphasis",
           "displayName": "Title Emphasis",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dijital üretime güçlü başlangıç.",
           "groupId": "content"
@@ -6408,10 +7337,10 @@
         {
           "name": "descriptionHtml",
           "displayName": "Description HTML",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dijitale yeni geçen klinik ve lablar için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.",
-          "groupId": "content"
+          "groupId": "text-customization"
         },
         {
           "name": "productImageUrl",
@@ -6503,7 +7432,7 @@
         {
           "name": "spec1Label",
           "displayName": "Spec 1 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Teknoloji",
           "groupId": "specs"
@@ -6511,7 +7440,7 @@
         {
           "name": "spec1Value",
           "displayName": "Spec 1 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "LCD · revize",
           "groupId": "specs"
@@ -6519,7 +7448,7 @@
         {
           "name": "spec2Label",
           "displayName": "Spec 2 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dalga boyu",
           "groupId": "specs"
@@ -6527,7 +7456,7 @@
         {
           "name": "spec2Value",
           "displayName": "Spec 2 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "385 nm",
           "groupId": "specs"
@@ -6535,7 +7464,7 @@
         {
           "name": "spec3Label",
           "displayName": "Spec 3 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Rol",
           "groupId": "specs"
@@ -6543,7 +7472,7 @@
         {
           "name": "spec3Value",
           "displayName": "Spec 3 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Ekosisteme giriş",
           "groupId": "specs"
@@ -6551,7 +7480,7 @@
         {
           "name": "spec4Label",
           "displayName": "Spec 4 Label",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Destek",
           "groupId": "specs"
@@ -6559,7 +7488,7 @@
         {
           "name": "spec4Value",
           "displayName": "Spec 4 Value",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kurulum + eğitim",
           "groupId": "specs"
@@ -6567,7 +7496,7 @@
         {
           "name": "primaryButtonText",
           "displayName": "Primary Button Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Danışmanlık al",
           "groupId": "buttons"
@@ -6583,7 +7512,7 @@
         {
           "name": "secondaryButtonText",
           "displayName": "Secondary Button Text",
-          "type": "TEXT",
+          "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Ana sayfaya dön",
           "groupId": "buttons"
@@ -6651,6 +7580,46 @@
           "required": false,
           "defaultValue": "#deded5",
           "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
         }
       ],
       "propGroups": [
@@ -6678,6 +7647,248 @@
           "id": "appearance",
           "name": "Appearance",
           "description": "Product page colors"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-rOvTVWz53H",
+      "name": "ThreeMashAcademyPage",
+      "entry": "./src/components/ThreeMashAcademyPage/index.tsx",
+      "styles": "./src/components/ThreeMashAcademyPage/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "eyebrowText",
+          "displayName": "Eyebrow Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Mash Academy",
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Title Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dijital üretimi sadece cihazla değil, doğru bilgiyle kurun.",
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Klinik ve laboratuvar ekipleri için <b>baskı, reçine, kürleme ve parametre yönetimini</b> pratik eğitimlerle tek akışta topluyoruz.",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "card1Title",
+          "displayName": "Card 1 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Başlangıç kurulumu",
+          "groupId": "cards"
+        },
+        {
+          "name": "card1Text",
+          "displayName": "Card 1 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Cihaz seçimi, ilk kalibrasyon ve üretim standardınızı birlikte netleştiririz.",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "card2Title",
+          "displayName": "Card 2 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Parametre eğitimi",
+          "groupId": "cards"
+        },
+        {
+          "name": "card2Text",
+          "displayName": "Card 2 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Reçine, yazıcı ve kürleme ayarlarının aynı sonucu vermesi için ekibinizi eğitiriz.",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "card3Title",
+          "displayName": "Card 3 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Süreç desteği",
+          "groupId": "cards"
+        },
+        {
+          "name": "card3Text",
+          "displayName": "Card 3 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Üretim başladıktan sonra kalite kontrol, tekrar iş analizi ve teknik destek devam eder.",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Primary Button Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Eğitim planlayın",
+          "groupId": "buttons"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Primary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/pages/iletisim",
+          "groupId": "buttons"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "Secondary Button Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ana sayfaya dön",
+          "groupId": "buttons"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "Secondary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/",
+          "groupId": "buttons"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Background Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Muted Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#6F6F67",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Accent Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Line Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E3E3DA",
+          "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text-customization",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        },
+        {
+          "id": "cards",
+          "name": "Cards"
+        },
+        {
+          "id": "buttons",
+          "name": "Buttons"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
         }
       ]
     }
