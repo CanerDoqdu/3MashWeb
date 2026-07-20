@@ -28,6 +28,17 @@ function href(value?: string) {
   return value && value.trim() ? value : "#";
 }
 
+function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
+  const target = href(targetHref);
+  if (!target.startsWith("#") || target.length <= 1) return;
+
+  const section = document.querySelector(target);
+  if (!section) return;
+
+  event.preventDefault();
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function imageSource(value: unknown) {
   if (typeof value === "string" && value.trim()) {
     return imageIdToUrl(value);
@@ -294,7 +305,7 @@ export function ThreeMashHero(props: Props) {
             </p>
 
             <div className="tmhero-cta">
-              <a className="tmhero-btn tmhero-btn-accent" href={href(props.primaryButtonHref)}>
+              <a className="tmhero-btn tmhero-btn-accent" href={href(props.primaryButtonHref)} onClick={(event) => smoothAnchorClick(event, props.primaryButtonHref)}>
                 {props.primaryButtonText || ""}
               </a>
               <a className="tmhero-btn tmhero-btn-line" href={href(props.secondaryButtonHref)}>

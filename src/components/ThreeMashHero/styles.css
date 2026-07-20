@@ -176,14 +176,47 @@
 }
 
 .tmhero-btn-line {
+  position: relative;
+  overflow: hidden;
   background: transparent;
   border-color: color-mix(in srgb, var(--tmhero-line) 70%, var(--tmhero-text));
   color: var(--tmhero-text);
+  isolation: isolate;
+}
+
+.tmhero-btn-line::after {
+  content: "";
+  position: absolute;
+  top: -45%;
+  bottom: -45%;
+  left: -80%;
+  width: 42%;
+  background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.12) 20%, rgba(199, 241, 54, 0.42) 50%, rgba(255, 255, 255, 0.16) 78%, transparent 100%);
+  transform: translateX(0) skewX(-18deg);
+  animation: tmhero-consult-shine 1.15s ease-out 0.75s 1 both;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .tmhero-btn-line:hover {
   background: transparent;
   border-color: var(--tmhero-text);
+}
+
+@keyframes tmhero-consult-shine {
+  0% {
+    transform: translateX(0) skewX(-18deg);
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(430%) skewX(-18deg);
+    opacity: 0;
+  }
 }
 
 .tmhero-calc {
@@ -587,5 +620,12 @@
 
   .tmhero-stat:nth-child(2) {
     border-top: 1px solid var(--tmhero-line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tmhero-btn-line::after {
+    animation: none;
+    opacity: 0;
   }
 }

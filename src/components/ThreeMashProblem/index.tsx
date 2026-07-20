@@ -1,7 +1,15 @@
+import { useEffect, useRef, useState } from "preact/hooks";
 import { Props } from "./types";
 
 function html(value?: string) {
   return { __html: value || "" };
+}
+
+function sideHtml(value?: string, enabled = true) {
+  const source = value || "";
+  if (!enabled) return html(source.replace(/<span class="tmproblem-glitch"[^>]*>(.*?)<\/span>/gi, "$1"));
+  if (source.includes("tmproblem-glitch")) return html(source);
+  return html(source.replace(/dijitalleşti/gi, (match) => `<span class="tmproblem-glitch">${match}</span>`));
 }
 
 function anchorId(value?: string) {
@@ -60,8 +68,81 @@ function percentage(value: unknown, fallback: number, min: number, max: number) 
   return `${numberInRange(value, fallback, min, max)}%`;
 }
 
+function parseRangeValue(value?: string) {
+  const match = (value || "").match(/^\s*(\d+)\s*[–-]\s*(\d+)\s*(.*)$/);
+  if (!match) return null;
+  return {
+    min: Number(match[1]),
+    max: Number(match[2]),
+    suffix: match[3] || "",
+  };
+}
+
 export function ThreeMashProblem(props: Props) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const badRange = parseRangeValue(props.badValue);
+  const [animatedBadValue, setAnimatedBadValue] = useState(() => (badRange ? `0–0${badRange.suffix}` : props.badValue || ""));
   const hairImage = imageSource(props.hairImageUrl);
+
+  useEffect(() => {
+    const range = parseRangeValue(props.badValue);
+    if (!range || props.showBadValueCountUp === false) {
+      setAnimatedBadValue(props.badValue || "");
+      return undefined;
+    }
+
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
+    let frame = 0;
+    let started = false;
+    let observer: IntersectionObserver | undefined;
+
+    const animate = () => {
+      const duration = 820;
+      const start = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const currentMin = Math.round(range.min * eased);
+        const currentMax = Math.round(range.max * eased);
+        setAnimatedBadValue(`${currentMin}–${currentMax}${range.suffix}`);
+        if (progress < 1) frame = requestAnimationFrame(step);
+      };
+      frame = requestAnimationFrame(step);
+    };
+
+    const startAnimation = () => {
+      if (started) return;
+      started = true;
+      if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+        setAnimatedBadValue(props.badValue || "");
+        return;
+      }
+      setAnimatedBadValue(`0–0${range.suffix}`);
+      animate();
+    };
+
+    if ("IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          startAnimation();
+          observer?.disconnect();
+        },
+        { threshold: 0.34 },
+      );
+      observer.observe(section);
+    } else {
+      startAnimation();
+    }
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer?.disconnect();
+    };
+  }, [props.badValue, props.showBadValueCountUp]);
+
   const themeStyle = {
     "--tmproblem-bg": props.backgroundColor || "#FAFAF7",
     "--tmproblem-text": props.textColor || "#0E0E0C",
@@ -87,7 +168,7 @@ export function ThreeMashProblem(props: Props) {
   } as any;
 
   return (
-    <section className="three-mash-problem" id={anchorId(props.sectionAnchorId)} style={themeStyle}>
+    <section ref={sectionRef} className="three-mash-problem" id={anchorId(props.sectionAnchorId)} style={themeStyle}>
       <div className="tmproblem-wrap">
         <div className="tmproblem-index">
           <span className="tmproblem-index-number">{props.indexNumber || ""}</span>
@@ -99,13 +180,13 @@ export function ThreeMashProblem(props: Props) {
           <h2>
             {props.titleText || ""} <span>{props.titleEmphasis || ""}</span>
           </h2>
-          <div className="tmproblem-side" dangerouslySetInnerHTML={html(props.sideHtml)} />
+          <div className="tmproblem-side" dangerouslySetInnerHTML={sideHtml(props.sideHtml, props.showDigitalGlitch !== false)} />
         </div>
 
         <div className="tmproblem-cards">
           <article className="tmproblem-card tmproblem-card-bad">
             <div className="tmproblem-card-label">{props.badLabel || ""}</div>
-            <div className="tmproblem-card-value">{props.badValue || ""}</div>
+            <div className="tmproblem-card-value">{animatedBadValue}</div>
             <div className="tmproblem-card-description" dangerouslySetInnerHTML={html(props.badDescriptionHtml)} />
           </article>
 

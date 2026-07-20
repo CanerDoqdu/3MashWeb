@@ -1,6 +1,6 @@
 // This file is auto-generated — do not edit manually.
 import type { IkasImage, IkasNavigationLink, IkasVideo } from "@ikas/bp-storefront";
-import type { LogoImageFit, P16lmediaMode } from "../../global-types";
+import type { LogoImageFit, P16lmediaMode, P1dmediaMode, ResinmediaMode } from "../../global-types";
 
 export interface Props {
   sectionAnchorId?: string;
@@ -97,4 +97,19 @@ export interface Props {
   solutionCard2VideoUrl?: string;
   solutionCard2VideoPosterUrl?: IkasImage | null;
   solutionCard2VideoLabel?: string;
+  solutionCard3MediaMode?: ResinmediaMode;
+  solutionCard3ShowThumbnails?: boolean;
+  solutionCard3VideoEnabled?: boolean;
+  solutionCard3VideoUpload?: IkasVideo | null;
+  solutionCard3VideoUrl?: string;
+  solutionCard3VideoPosterUrl?: IkasImage | null;
+  solutionCard3VideoLabel?: string;
+  solutionCard1MediaMode?: P1dmediaMode;
+  solutionCard1ShowThumbnails?: boolean;
+  solutionCard1VideoEnabled?: boolean;
+  solutionCard1VideoUpload?: IkasVideo | null;
+  solutionCard1VideoUrl?: string;
+  solutionCard1VideoPosterUrl?: IkasImage | null;
+  solutionCard1VideoLabel?: string;
+  hoverVideoAutoplayEnabled?: boolean;
 }

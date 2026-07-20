@@ -42,4 +42,6 @@ export interface Props {
   hairImageSaturation?: number;
   hairImageHue?: number;
   hairImageInvert?: number;
+  showDigitalGlitch?: boolean;
+  showBadValueCountUp?: boolean;
 }

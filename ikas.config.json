@@ -296,7 +296,7 @@
           "displayName": "Why 1 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Görünmez yıllık kayıp",
+          "defaultValue": "Gizli maliyetinizi görün",
           "groupId": "why"
         },
         {
@@ -304,7 +304,7 @@
           "displayName": "Why 1 Description",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "'ya varan tekrar maliyetini hesaplayın",
+          "defaultValue": "Tekrar işlerin yıllık kayba nasıl döndüğünü hesaplayın",
           "groupId": "why"
         },
         {
@@ -328,7 +328,7 @@
           "displayName": "Why 2 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Sebep: ölçüsel hassasiyet",
+          "defaultValue": "Hassasiyet farkını anlayın",
           "groupId": "why"
         },
         {
@@ -336,7 +336,7 @@
           "displayName": "Why 2 Description",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "250–500µm sapma bandı vs ±20µm güvenli bölge",
+          "defaultValue": "İlk seferde oturmayan işlerin asıl sebebini görün",
           "groupId": "why"
         },
         {
@@ -360,7 +360,7 @@
           "displayName": "Why 3 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Çözüm: uyumlu ekosistem",
+          "defaultValue": "Uyumlu üretimi keşfedin",
           "groupId": "why"
         },
         {
@@ -368,7 +368,7 @@
           "displayName": "Why 3 Description",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Yazıcı + reçine + parametre bilgisi, birlikte kalibre",
+          "defaultValue": "Yazıcı, reçine ve parametre aynı sonuç için birlikte çalışır",
           "groupId": "why"
         },
         {
@@ -392,7 +392,7 @@
           "displayName": "Why 4 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Ve kürleme — son %20'lik fark",
+          "defaultValue": "Kürlemenin etkisini görün",
           "groupId": "why"
         },
         {
@@ -400,7 +400,7 @@
           "displayName": "Why 4 Description",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Doğru basılan iş, yanlış kürlenirse yine başarısız olur",
+          "defaultValue": "Doğru baskının son adımda neden kaybedilmemesi gerektiğini öğrenin",
           "groupId": "why"
         },
         {
@@ -736,7 +736,7 @@
           "displayName": "Why Menu Eyebrow",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "3MASH AKIŞI",
+          "defaultValue": "SAYFA AKIŞI",
           "groupId": "why"
         },
         {
@@ -744,7 +744,7 @@
           "displayName": "Why Menu Description",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Daha az tekrar, daha net iş akışı ve uyumlu dental üretim ekosistemi.",
+          "defaultValue": "Kaybın nereden başladığını ve 3mash sisteminin bunu nasıl azalttığını adım adım görün.",
           "groupId": "why"
         },
         {
@@ -1042,7 +1042,7 @@
           "displayName": "Brightness",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 100,
+          "defaultValue": 125,
           "groupId": "productsFeatureImageControls"
         },
         {
@@ -1050,7 +1050,7 @@
           "displayName": "Contrast",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 100,
+          "defaultValue": 115,
           "groupId": "productsFeatureImageControls"
         },
         {
@@ -1428,7 +1428,7 @@
           "displayName": "Why 5 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Uçtan uca ekosistem",
+          "defaultValue": "Tek çatıdaki akışı inceleyin",
           "groupId": "why"
         },
         {
@@ -1436,7 +1436,7 @@
           "displayName": "Why 5 Description",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Yazıcı, reçine, tarama, sarf ve eğitim tek çatı altında",
+          "defaultValue": "Cihazdan sarfa, eğitimden desteğe tüm ekosistemi görün",
           "groupId": "why"
         },
         {
@@ -1460,7 +1460,7 @@
           "displayName": "Why 6 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Referanslar",
+          "defaultValue": "Gerçek kullanıcıları görün",
           "groupId": "why"
         },
         {
@@ -1468,7 +1468,7 @@
           "displayName": "Why 6 Description",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Lab ve kliniklerin gerçek üretim deneyimleri",
+          "defaultValue": "Klinik ve laboratuvarların 3mash deneyimlerine bakın",
           "groupId": "why"
         },
         {
@@ -1492,7 +1492,7 @@
           "displayName": "Why 7 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Sık sorulanlar",
+          "defaultValue": "Aklınızdaki soruları çözün",
           "groupId": "why"
         },
         {
@@ -1500,7 +1500,7 @@
           "displayName": "Why 7 Description",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Hassasiyet, maliyet ve ekosistem sorularına net cevaplar",
+          "defaultValue": "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın",
           "groupId": "why"
         },
         {
@@ -2851,6 +2851,22 @@
           "required": false,
           "defaultValue": 0,
           "groupId": "hairImageControls"
+        },
+        {
+          "name": "showDigitalGlitch",
+          "displayName": "Show Digital Glitch",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "content"
+        },
+        {
+          "name": "showBadValueCountUp",
+          "displayName": "Show Value Count Up",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "content"
         }
       ],
       "propGroups": [
@@ -3606,7 +3622,7 @@
           "displayName": "Video Enabled",
           "type": "BOOLEAN",
           "required": false,
-          "defaultValue": true,
+          "defaultValue": false,
           "groupId": "p16lMedia"
         },
         {
@@ -3637,6 +3653,122 @@
           "required": false,
           "defaultValue": "Video",
           "groupId": "p16lMedia"
+        },
+        {
+          "name": "solutionCard3MediaMode",
+          "displayName": "Active Media",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "image1",
+          "groupId": "resinMedia",
+          "enumTypeId": "ugZaoUimpS"
+        },
+        {
+          "name": "solutionCard3ShowThumbnails",
+          "displayName": "Show Thumbnails",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "resinMedia"
+        },
+        {
+          "name": "solutionCard3VideoEnabled",
+          "displayName": "Video Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "resinMedia"
+        },
+        {
+          "name": "solutionCard3VideoUpload",
+          "displayName": "Video Upload",
+          "type": "VIDEO",
+          "required": false,
+          "groupId": "resinMedia"
+        },
+        {
+          "name": "solutionCard3VideoUrl",
+          "displayName": "Video URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "resinMedia"
+        },
+        {
+          "name": "solutionCard3VideoPosterUrl",
+          "displayName": "Video Poster Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "resinMedia"
+        },
+        {
+          "name": "solutionCard3VideoLabel",
+          "displayName": "Video Thumbnail Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Video",
+          "groupId": "resinMedia"
+        },
+        {
+          "name": "solutionCard1MediaMode",
+          "displayName": "Active Media",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "image1",
+          "groupId": "p1dMedia",
+          "enumTypeId": "P7zvseoz0m"
+        },
+        {
+          "name": "solutionCard1ShowThumbnails",
+          "displayName": "Show Thumbnails",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "p1dMedia"
+        },
+        {
+          "name": "solutionCard1VideoEnabled",
+          "displayName": "Video Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "p1dMedia"
+        },
+        {
+          "name": "solutionCard1VideoUpload",
+          "displayName": "Video Upload",
+          "type": "VIDEO",
+          "required": false,
+          "groupId": "p1dMedia"
+        },
+        {
+          "name": "solutionCard1VideoUrl",
+          "displayName": "Video URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "p1dMedia"
+        },
+        {
+          "name": "solutionCard1VideoPosterUrl",
+          "displayName": "Video Poster Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "p1dMedia"
+        },
+        {
+          "name": "solutionCard1VideoLabel",
+          "displayName": "Video Thumbnail Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Video",
+          "groupId": "p1dMedia"
+        },
+        {
+          "name": "hoverVideoAutoplayEnabled",
+          "displayName": "Hover Video Autoplay",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "cards",
+          "defaultValue": true
         }
       ],
       "propGroups": [
@@ -3669,6 +3801,16 @@
           "id": "p16lMedia",
           "name": "P16L Media",
           "description": "Giriş Segmenti kartı için çoklu görsel ve video kontrolü"
+        },
+        {
+          "id": "resinMedia",
+          "name": "Resin Media",
+          "description": "CRS Reçineler kartı için video kontrolü"
+        },
+        {
+          "id": "p1dMedia",
+          "name": "P1D Media",
+          "description": "MASH P1D kartı için video kontrolü"
         }
       ]
     },
@@ -3804,7 +3946,7 @@
           "displayName": "Product 1 Tag",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "385NM · LCD",
+          "defaultValue": "YIKAMA · KÜRLEME",
           "groupId": "productCards"
         },
         {
@@ -3812,7 +3954,7 @@
           "displayName": "Product 1 Title",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "MASH P16L – 385nm",
+          "defaultValue": "Phrozen Wash & Cure Kit",
           "groupId": "productCards"
         },
         {
@@ -3820,7 +3962,7 @@
           "displayName": "Product 1 Description HTML",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Dental üretim için 385nm ışık kaynağıyla <b>net detay</b> ve kontrollü yüzey kalitesi. Dijital akışa güçlü başlangıç.",
+          "defaultValue": "8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.",
           "groupId": "productCards"
         },
         {
@@ -3836,7 +3978,7 @@
           "displayName": "Product 1 Image Alt",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "MASH P16L – 385nm",
+          "defaultValue": "Phrozen Wash & Cure Kit",
           "groupId": "productCards"
         },
         {
@@ -3844,7 +3986,7 @@
           "displayName": "Product 1 Spec 1 Label",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Dalga boyu",
+          "defaultValue": "Yıkama hacmi",
           "groupId": "productCards"
         },
         {
@@ -3852,7 +3994,7 @@
           "displayName": "Product 1 Spec 1 Value",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "385 nm",
+          "defaultValue": "8 L",
           "groupId": "productCards"
         },
         {
@@ -3860,7 +4002,7 @@
           "displayName": "Product 1 Spec 2 Label",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Rol",
+          "defaultValue": "Kürleme",
           "groupId": "productCards"
         },
         {
@@ -3868,7 +4010,7 @@
           "displayName": "Product 1 Spec 2 Value",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Üretim yazıcısı",
+          "defaultValue": "405 nm UV",
           "groupId": "productCards"
         },
         {
@@ -3884,7 +4026,7 @@
           "displayName": "Product 1 CTA Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "defaultValue": "https://uk.phrozen3d.com/products/wash-cure-kit",
           "groupId": "productCards"
         },
         {
@@ -3980,7 +4122,7 @@
           "displayName": "Layout - Width",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 190,
+          "defaultValue": 205,
           "groupId": "productImageControls"
         },
         {
@@ -3988,7 +4130,7 @@
           "displayName": "Layout - Height",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 170,
+          "defaultValue": 190,
           "groupId": "productImageControls"
         },
         {
@@ -5072,27 +5214,11 @@
           "groupId": "trustedLogos"
         },
         {
-          "name": "trustedImageUrl",
-          "displayName": "Trusted Logos Image",
-          "type": "IMAGE",
-          "required": false,
-          "description": "Upload a replacement trusted logo strip. If empty, the bundled strip is used.",
-          "groupId": "trustedLogos"
-        },
-        {
-          "name": "trustedImageAlt",
-          "displayName": "Trusted Logos Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "DentLab, Dentek, Attelia, Tekka ve daha fazlası",
-          "groupId": "trustedLogos"
-        },
-        {
           "name": "trustedLogoHeight",
           "displayName": "Layout - Height",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 34,
+          "defaultValue": 58,
           "groupId": "trustedLogoControls"
         },
         {
@@ -5190,6 +5316,126 @@
           "required": false,
           "defaultValue": 20,
           "groupId": "appearance"
+        },
+        {
+          "name": "trustedLogo1Enabled",
+          "displayName": "Logo 1 Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo1ImageUrl",
+          "displayName": "Logo 1 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload replacement trusted logo 1. If empty, bundled logo 1 is used.",
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo1ImageAlt",
+          "displayName": "Logo 1 Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Güvenen marka 1",
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo2Enabled",
+          "displayName": "Logo 2 Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo2ImageUrl",
+          "displayName": "Logo 2 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload replacement trusted logo 2. If empty, bundled logo 2 is used.",
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo2ImageAlt",
+          "displayName": "Logo 2 Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Güvenen marka 2",
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo3Enabled",
+          "displayName": "Logo 3 Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo3ImageUrl",
+          "displayName": "Logo 3 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload replacement trusted logo 3. If empty, bundled logo 3 is used.",
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo3ImageAlt",
+          "displayName": "Logo 3 Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Güvenen marka 3",
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo4Enabled",
+          "displayName": "Logo 4 Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo4ImageUrl",
+          "displayName": "Logo 4 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload replacement trusted logo 4. If empty, bundled logo 4 is used.",
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo4ImageAlt",
+          "displayName": "Logo 4 Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Güvenen marka 4",
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo5Enabled",
+          "displayName": "Logo 5 Enabled",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo5ImageUrl",
+          "displayName": "Logo 5 Image",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Upload replacement trusted logo 5. If empty, bundled logo 5 is used.",
+          "groupId": "trustedLogos"
+        },
+        {
+          "name": "trustedLogo5ImageAlt",
+          "displayName": "Logo 5 Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Güvenen marka 5",
+          "groupId": "trustedLogos"
         }
       ],
       "propGroups": [
@@ -6458,6 +6704,26 @@
         "Image 2": "image2",
         "Image 3": "image3",
         "Image 4": "image4",
+        "Video": "video"
+      },
+      "isDynamic": false
+    },
+    {
+      "id": "ugZaoUimpS",
+      "name": "ResinmediaMode",
+      "type": "enum",
+      "enumOptions": {
+        "Image": "image1",
+        "Video": "video"
+      },
+      "isDynamic": false
+    },
+    {
+      "id": "P7zvseoz0m",
+      "name": "P1dmediaMode",
+      "type": "enum",
+      "enumOptions": {
+        "Image": "image1",
         "Video": "video"
       },
       "isDynamic": false

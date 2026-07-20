@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
+import mashC4pFeatureImage from "../../assets/mash-c4p-feature-data";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
-import vectorPrinterImage from "../../assets/vectorprinter-data";
 import { Props } from "./types";
 
 type MenuItem = {
@@ -270,13 +270,13 @@ export function ThreeMashHeader(props: Props) {
   ];
 
   const whyItems: FlowItem[] = [
-    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Görünmez yıllık kayıp"), description: text(props.why1Description, "$126K'ya varan tekrar maliyetini hesaplayın"), href: text(props.why1Href, "#hesap") },
-    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Sebep: ölçüsel hassasiyet"), description: text(props.why2Description, "250-500 µm sapma bandı vs ±20 µm güvenli bölge"), href: text(props.why2Href, "#sebep") },
-    { number: text(props.why3Number, "03"), title: text(props.why3Title, "Çözüm: uyumlu ekosistem"), description: text(props.why3Description, "Yazıcı + reçine + parametre bilgisi, birlikte kalibre"), href: text(props.why3Href, "#cozum") },
-    { number: text(props.why4Number, "04"), title: text(props.why4Title, "Ve kürleme - son %20'lik fark"), description: text(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"), href: text(props.why4Href, "#kurleme") },
-    { number: text(props.why5Number, "05"), title: text(props.why5Title, "Uçtan uca ekosistem"), description: text(props.why5Description, "Yazıcı, reçine, tarama, sarf ve eğitim tek çatı altında"), href: text(props.why5Href, "#ekosistem") },
-    { number: text(props.why6Number, "06"), title: text(props.why6Title, "Referanslar"), description: text(props.why6Description, "Lab ve kliniklerin gerçek üretim deneyimleri"), href: text(props.why6Href, "#guven") },
-    { number: text(props.why7Number, "07"), title: text(props.why7Title, "Sık sorulanlar"), description: text(props.why7Description, "Hassasiyet, maliyet ve ekosistem sorularına net cevaplar"), href: text(props.why7Href, "#sss") },
+    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Gizli maliyetinizi görün"), description: text(props.why1Description, "Tekrar işlerin yıllık kayba nasıl döndüğünü hesaplayın"), href: text(props.why1Href, "#hesap") },
+    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Hassasiyet farkını anlayın"), description: text(props.why2Description, "İlk seferde oturmayan işlerin asıl sebebini görün"), href: text(props.why2Href, "#sebep") },
+    { number: text(props.why3Number, "03"), title: text(props.why3Title, "Uyumlu üretimi keşfedin"), description: text(props.why3Description, "Yazıcı, reçine ve parametre aynı sonuç için birlikte çalışır"), href: text(props.why3Href, "#cozum") },
+    { number: text(props.why4Number, "04"), title: text(props.why4Title, "Kürlemenin etkisini görün"), description: text(props.why4Description, "Doğru baskının son adımda neden kaybedilmemesi gerektiğini öğrenin"), href: text(props.why4Href, "#kurleme") },
+    { number: text(props.why5Number, "05"), title: text(props.why5Title, "Tek çatıdaki akışı inceleyin"), description: text(props.why5Description, "Cihazdan sarfa, eğitimden desteğe tüm ekosistemi görün"), href: text(props.why5Href, "#ekosistem") },
+    { number: text(props.why6Number, "06"), title: text(props.why6Title, "Gerçek kullanıcıları görün"), description: text(props.why6Description, "Klinik ve laboratuvarların 3mash deneyimlerine bakın"), href: text(props.why6Href, "#guven") },
+    { number: text(props.why7Number, "07"), title: text(props.why7Title, "Aklınızdaki soruları çözün"), description: text(props.why7Description, "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın"), href: text(props.why7Href, "#sss") },
   ];
 
   const themeStyle = {
@@ -415,7 +415,7 @@ export function ThreeMashHeader(props: Props) {
                     <span className="tmh-micro">{props.productsFeatureEyebrow || ""}</span>
                     <b>{props.productsFeatureTitle || ""}</b>
                     <span className="tmh-feature-media">
-                      <img src={imageSource(props.productsFeatureImageUrl, vectorPrinterImage)} alt={props.productsFeatureImageAlt || ""} />
+                      <img src={imageSource(props.productsFeatureImageUrl, mashC4pFeatureImage)} alt={props.productsFeatureImageAlt || ""} />
                     </span>
                     <span>{props.productsFeatureDescription || ""}</span>
                     <em>{props.productsFeatureCtaText || ""}</em>

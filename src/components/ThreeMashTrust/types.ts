@@ -39,9 +39,6 @@ export interface Props {
   profileImageHue?: number;
   profileImageInvert?: number;
   trustedLabel?: string;
-  /** Upload a replacement trusted logo strip. If empty, the bundled strip is used. */
-  trustedImageUrl?: IkasImage | null;
-  trustedImageAlt?: string;
   trustedLogoHeight?: number;
   trustedLogoOpacity?: number;
   trustedLogoGrayscale?: number;
@@ -55,4 +52,24 @@ export interface Props {
   accentColor?: string;
   accentTextColor?: string;
   cardRadius?: number;
+  trustedLogo1Enabled?: boolean;
+  /** Upload replacement trusted logo 1. If empty, bundled logo 1 is used. */
+  trustedLogo1ImageUrl?: IkasImage | null;
+  trustedLogo1ImageAlt?: string;
+  trustedLogo2Enabled?: boolean;
+  /** Upload replacement trusted logo 2. If empty, bundled logo 2 is used. */
+  trustedLogo2ImageUrl?: IkasImage | null;
+  trustedLogo2ImageAlt?: string;
+  trustedLogo3Enabled?: boolean;
+  /** Upload replacement trusted logo 3. If empty, bundled logo 3 is used. */
+  trustedLogo3ImageUrl?: IkasImage | null;
+  trustedLogo3ImageAlt?: string;
+  trustedLogo4Enabled?: boolean;
+  /** Upload replacement trusted logo 4. If empty, bundled logo 4 is used. */
+  trustedLogo4ImageUrl?: IkasImage | null;
+  trustedLogo4ImageAlt?: string;
+  trustedLogo5Enabled?: boolean;
+  /** Upload replacement trusted logo 5. If empty, bundled logo 5 is used. */
+  trustedLogo5ImageUrl?: IkasImage | null;
+  trustedLogo5ImageAlt?: string;
 }
