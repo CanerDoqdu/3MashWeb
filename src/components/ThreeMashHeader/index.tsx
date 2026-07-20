@@ -33,9 +33,64 @@ function href(value?: string) {
   return trimmed;
 }
 
+function productRouteHref(value: string | undefined, fallback: string) {
+  const trimmed = value?.trim();
+  if (!trimmed) return fallback;
+  const normalized = trimmed
+    .toLowerCase()
+    .replace(/^https?:\/\/(?:www\.)?3mash\.com/i, "")
+    .replace(/\/$/, "");
+  const legacyRoutes: Record<string, string> = {
+    "/3d-yazicilar": "/urunler/3d-yazicilar",
+    "/dental-3d-yazici-recineleri": "/urunler/dental-recineler",
+    "/yikama-kurleme-cihazlari": "/urunler/yikama-kurleme",
+    "/masasustu-tarayicilar": "/urunler/masasustu-tarayicilar",
+    "/zirkon-bloklar": "/urunler/zirkon-bloklar",
+    "/dental-firinlar": "/urunler/dental-firinlar",
+  };
+  return legacyRoutes[normalized] || trimmed;
+}
+
+function c4pRouteHref(value: string | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed) return "/urunler/c4p";
+  const normalized = trimmed
+    .toLowerCase()
+    .replace(/^https?:\/\/(?:www\.)?3mash\.com/i, "")
+    .replace(/\/$/, "");
+  if (normalized === "/yikama-kurleme-cihazlari" || normalized === "/3d-yazicilar") return "/urunler/c4p";
+  return trimmed;
+}
+
+function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
+  const target = targetHref?.trim();
+  if (!target) return;
+
+  const hash = target.startsWith("#")
+    ? target
+    : target.startsWith("/#")
+      ? target.slice(1)
+      : "";
+  if (!hash || hash.length <= 1) return;
+
+  const section = document.querySelector(hash);
+  if (!section) return;
+
+  event.preventDefault();
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function text(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
   return trimmed || fallback;
+}
+
+function richTextValue(value: string | undefined, fallback: string) {
+  const visibleText = inlineHtml(value)
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .trim();
+  return visibleText ? value : fallback;
 }
 
 function inlineHtml(value?: string) {
@@ -260,7 +315,7 @@ function ProductLink({ item, wordStyle }: { item: MenuItem; wordStyle: Props }) 
 
 function FlowLink({ item, wordStyle }: { item: FlowItem; wordStyle: Props }) {
   return (
-    <a href={href(item.href)} className="tmh-flow-link">
+    <a href={href(item.href)} className="tmh-flow-link" onClick={(event) => smoothAnchorClick(event, item.href)}>
       <span className="tmh-flow-number" dangerouslySetInnerHTML={richText(item.number, wordStyle)} />
       <span className="tmh-flow-copy">
         <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
@@ -309,15 +364,15 @@ export function ThreeMashHeader(props: Props) {
   const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
   const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
   const productPrimary: MenuItem[] = [
-    { title: props.product1Title, description: props.product1Description, href: props.product1Href, ...resolveProductIcon(props.product1IconImageUrl, props.product1IconSvg, ecoPrinterIcon, ["printer", "M6 9V3h12v6"], showProductIcons) },
-    { title: props.product2Title, description: props.product2Description, href: props.product2Href, ...resolveProductIcon(props.product2IconImageUrl, props.product2IconSvg, ecoScannerIcon, ["washer", "circle cx=\"12\" cy=\"14\"", "M7 7h10"], showProductIcons) },
-    { title: props.product3Title, description: props.product3Description, href: props.product3Href, ...resolveProductIcon(props.product3IconImageUrl, props.product3IconSvg, ecoResinIcon, ["flask-conical", "M10 2v7.5"], showProductIcons) },
+    { title: props.product1Title, description: props.product1Description, href: productRouteHref(props.product1Href, "/urunler/3d-yazicilar"), ...resolveProductIcon(props.product1IconImageUrl, props.product1IconSvg, ecoPrinterIcon, ["printer", "M6 9V3h12v6"], showProductIcons) },
+    { title: props.product2Title, description: props.product2Description, href: productRouteHref(props.product2Href, "/urunler/yikama-kurleme"), ...resolveProductIcon(props.product2IconImageUrl, props.product2IconSvg, ecoScannerIcon, ["washer", "circle cx=\"12\" cy=\"14\"", "M7 7h10"], showProductIcons) },
+    { title: props.product3Title, description: props.product3Description, href: productRouteHref(props.product3Href, "/urunler/dental-recineler"), ...resolveProductIcon(props.product3IconImageUrl, props.product3IconSvg, ecoResinIcon, ["flask-conical", "M10 2v7.5"], showProductIcons) },
   ];
 
   const productSecondary: MenuItem[] = [
-    { title: props.product4Title, description: props.product4Description, href: props.product4Href, ...resolveProductIcon(props.product4IconImageUrl, props.product4IconSvg, ecoCuringIcon, ["scan-line", "M3 7V5a2 2"], showProductIcons) },
-    { title: props.product5Title, description: props.product5Description, href: props.product5Href, ...resolveProductIcon(props.product5IconImageUrl, props.product5IconSvg, ecoBlocksIcon, ["class=\"box\"", "M12 2 3 7l9 5"], showProductIcons) },
-    { title: props.product6Title, description: props.product6Description, href: props.product6Href, ...resolveProductIcon(props.product6IconImageUrl, props.product6IconSvg, ecoOvenIcon, ["flame", "a3.5 3.5"], showProductIcons) },
+    { title: props.product4Title, description: props.product4Description, href: productRouteHref(props.product4Href, "/urunler/masasustu-tarayicilar"), ...resolveProductIcon(props.product4IconImageUrl, props.product4IconSvg, ecoCuringIcon, ["scan-line", "M3 7V5a2 2"], showProductIcons) },
+    { title: props.product5Title, description: props.product5Description, href: productRouteHref(props.product5Href, "/urunler/zirkon-bloklar"), ...resolveProductIcon(props.product5IconImageUrl, props.product5IconSvg, ecoBlocksIcon, ["class=\"box\"", "M12 2 3 7l9 5"], showProductIcons) },
+    { title: props.product6Title, description: props.product6Description, href: productRouteHref(props.product6Href, "/urunler/dental-firinlar"), ...resolveProductIcon(props.product6IconImageUrl, props.product6IconSvg, ecoOvenIcon, ["flame", "a3.5 3.5"], showProductIcons) },
   ];
 
   const whyItems: FlowItem[] = [
@@ -328,6 +383,15 @@ export function ThreeMashHeader(props: Props) {
     { number: text(props.why5Number, "05"), title: text(props.why5Title, "Tek çatıdaki akışı inceleyin"), description: text(props.why5Description, "Cihazdan sarfa, eğitimden desteğe tüm ekosistemi görün"), href: text(props.why5Href, "#ekosistem") },
     { number: text(props.why6Number, "06"), title: text(props.why6Title, "Gerçek kullanıcıları görün"), description: text(props.why6Description, "Klinik ve laboratuvarların 3mash deneyimlerine bakın"), href: text(props.why6Href, "#guven") },
     { number: text(props.why7Number, "07"), title: text(props.why7Title, "Aklınızdaki soruları çözün"), description: text(props.why7Description, "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın"), href: text(props.why7Href, "#sss") },
+  ];
+
+  const profileLinks = [
+    { label: richTextValue(props.profileLink1Text, "Siparişlerim"), link: text(props.profileLink1Href, "https://3mash.com/account/orders") },
+    { label: richTextValue(props.profileLink2Text, "Adreslerim"), link: text(props.profileLink2Href, "https://3mash.com/account/addresses") },
+    { label: richTextValue(props.profileLink3Text, "Destek talebi"), link: text(props.profileLink3Href, "https://3mash.com/pages/iletisim") },
+    { label: richTextValue(props.profileLink4Text, "Teknik destek"), link: text(props.profileLink4Href, "https://3mash.com/pages/iletisim") },
+    { label: richTextValue(props.profileLink5Text, "Mash Academy"), link: text(props.profileLink5Href, "/mash-academy") },
+    { label: richTextValue(props.profileLink6Text, "Çıkış yap"), link: text(props.profileLink6Href, "https://3mash.com/account/logout") },
   ];
 
   const themeStyle = {
@@ -395,6 +459,43 @@ export function ThreeMashHeader(props: Props) {
   }, []);
 
   useEffect(() => {
+    function smoothSamePageAnchor(event: MouseEvent) {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const target = event.target as Element | null;
+      const anchor = target?.closest?.("a[href]") as HTMLAnchorElement | null;
+      const rawHref = anchor?.getAttribute("href")?.trim();
+      if (!anchor || !rawHref || anchor.target) return;
+
+      let hash = "";
+      if (rawHref.startsWith("#")) {
+        hash = rawHref;
+      } else {
+        try {
+          const url = new URL(rawHref, window.location.href);
+          if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) return;
+          hash = url.hash;
+        } catch {
+          return;
+        }
+      }
+
+      if (!hash || hash.length <= 1) return;
+      const section = document.querySelector(hash);
+      if (!section) return;
+
+      event.preventDefault();
+      setActiveMenu(null);
+      setActiveAction(null);
+      window.history.pushState(null, "", hash);
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    document.addEventListener("click", smoothSamePageAnchor);
+    return () => document.removeEventListener("click", smoothSamePageAnchor);
+  }, []);
+
+  useEffect(() => {
     if (activeMenu !== "why") return;
 
     updateWhyMenuPosition();
@@ -425,6 +526,12 @@ export function ThreeMashHeader(props: Props) {
     setActiveMenu(null);
     setIsSearchOpen(false);
     setActiveAction((current) => (current === action ? null : action));
+  }
+
+  function openActionPanel(action: ActiveAction) {
+    setActiveMenu(null);
+    setIsSearchOpen(false);
+    setActiveAction(action);
   }
 
   function submitSearch(event: Event) {
@@ -470,7 +577,7 @@ export function ThreeMashHeader(props: Props) {
                   <CaretIcon />
                 </button>
                 <div className="tmh-mega tmh-products-mega">
-                  <a className="tmh-feature" href={href(props.productsFeatureHref)}>
+                  <a className="tmh-feature" href={href(c4pRouteHref(props.productsFeatureHref))}>
                     <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsFeatureEyebrow, props)} />
                     <b dangerouslySetInnerHTML={richText(props.productsFeatureTitle, props)} />
                     <span className="tmh-feature-media">
@@ -571,22 +678,29 @@ export function ThreeMashHeader(props: Props) {
                 <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
-              <div className="tmh-action-wrap">
+              <div
+                className="tmh-action-wrap"
+                onMouseEnter={() => openActionPanel("profile")}
+                onFocus={() => openActionPanel("profile")}
+              >
                 <button
                   className="tmh-action-button"
                   type="button"
                   aria-label={props.accountAriaLabel || ""}
                   aria-expanded={activeAction === "profile"}
-                  onClick={() => toggleAction("profile")}
+                  onClick={() => openActionPanel("profile")}
                 >
                   <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
                 </button>
                 <div className={`tmh-action-panel tmh-profile-panel${activeAction === "profile" ? " is-open" : ""}`}>
-                  <span className="tmh-action-panel-kicker">{props.accountAriaLabel || ""}</span>
-                  <b dangerouslySetInnerHTML={richText(props.profileMenuTitle, props)} />
-                  <p dangerouslySetInnerHTML={richText(props.profileMenuDescription, props)} />
-                  <a className="tmh-panel-primary" href={href(props.profilePrimaryHref || props.accountHref)} dangerouslySetInnerHTML={richText(props.profilePrimaryText, props)} />
-                  <a className="tmh-panel-secondary" href={href(props.profileSecondaryHref)} dangerouslySetInnerHTML={richText(props.profileSecondaryText, props)} />
+                  <span className="tmh-action-panel-kicker">{text(props.accountAriaLabel, "HESABIM")}</span>
+                  <b dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuTitle, "Hesabım"), props)} />
+                  <p dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuDescription, "Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın."), props)} />
+                  <div className="tmh-panel-links">
+                    {profileLinks.map((item) => (
+                      <a href={href(item.link)} dangerouslySetInnerHTML={richText(item.label, props)} />
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -595,22 +709,29 @@ export function ThreeMashHeader(props: Props) {
                 <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
-              <div className="tmh-action-wrap">
+              <div
+                className="tmh-action-wrap"
+                onMouseEnter={() => openActionPanel("store")}
+                onFocus={() => openActionPanel("store")}
+              >
                 <button
                   className="tmh-action-button tmh-cart"
                   type="button"
                   aria-label={props.cartAriaLabel || ""}
                   aria-expanded={activeAction === "store"}
-                  onClick={() => toggleAction("store")}
+                  onClick={() => openActionPanel("store")}
                 >
                   <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
                 </button>
                 <div className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}>
-                  <span className="tmh-action-panel-kicker">{props.cartAriaLabel || ""}</span>
-                  <b dangerouslySetInnerHTML={richText(props.storePanelTitle, props)} />
-                  <p dangerouslySetInnerHTML={richText(props.storePanelDescription, props)} />
-                  <a className="tmh-panel-primary" href={href(props.storePanelButtonHref || props.cartHref)} dangerouslySetInnerHTML={richText(props.storePanelButtonText, props)} />
-                  <small dangerouslySetInnerHTML={richText(props.storePanelNote, props)} />
+                  <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, "SEPETİM")}</span>
+                  <div className="tmh-cart-empty-card">
+                    <a
+                      className="tmh-cart-market-button"
+                      href={href(props.storePanelButtonHref || props.cartHref)}
+                      dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git"), props)}
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -634,7 +755,7 @@ export function ThreeMashHeader(props: Props) {
               <div className="tmh-mobile-group">
                 <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.whyMenuText, props)} />
                 {whyItems.map((item, index) => (
-                  <a href={href(item.href)} className="tmh-mobile-flow" key={index}>
+                  <a href={href(item.href)} className="tmh-mobile-flow" key={index} onClick={(event) => smoothAnchorClick(event, item.href)}>
                     <span className="tmh-mobile-flow-number" dangerouslySetInnerHTML={richText(item.number, props)} />
                     <span>
                       <b dangerouslySetInnerHTML={richText(item.title, props)} />

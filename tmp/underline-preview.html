@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+      body {
+        margin: 0;
+        background: #fafaf7;
+        color: #0e0e0c;
+        font-family: Inter, system-ui, sans-serif;
+      }
+      .preview {
+        width: 960px;
+        padding: 26px 34px 40px;
+        background:
+          radial-gradient(180px 150px at 93% 68%, rgba(226, 73, 47, 0.35), transparent 68%),
+          radial-gradient(300px 180px at 92% 45%, rgba(14, 14, 12, 0.06), transparent 64%),
+          #fafaf7;
+        overflow: hidden;
+      }
+      h1 {
+        max-width: 840px;
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 64px;
+        line-height: 1.04;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+      .em-wrap {
+        position: relative;
+        display: inline-block;
+        padding-bottom: 12px;
+      }
+      .em {
+        font-family: "Newsreader", serif;
+        font-style: italic;
+        font-weight: 500;
+      }
+      .underline {
+        position: absolute;
+        left: 25%;
+        bottom: -5px;
+        width: 72%;
+        height: 22px;
+        display: block;
+        object-fit: fill;
+        pointer-events: none;
+      }
+      p {
+        max-width: 620px;
+        margin: 22px 0 0;
+        color: #55554e;
+        font-size: 17.5px;
+        line-height: 1.7;
+      }
+      b {
+        color: #0e0e0c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview">
+      <h1>
+        Kaybediyor olabilir.
+        <span class="em-wrap"><span class="em">Farkında bile olmadan.</span><img class="underline" src="../src/assets/title-underline.png" alt="" /></span>
+      </h1>
+      <p>
+        Bu para reklama gitmiyor, yeni cihaza da gitmiyor. Hastanın ağzına
+        <b>ilk seferde oturmayan işler</b> yüzünden, sessizce üretim maliyetine dönüşüyor.
+      </p>
+    </div>
+  </body>
+</html>

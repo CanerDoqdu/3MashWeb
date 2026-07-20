@@ -1,0 +1,8 @@
+@import "../ThreeMashHeader/styles.css";
+@import "../ThreeMashFooter/styles.css";
+
+.three-mash-empty-product-page {
+  width: 100%;
+  min-height: 52vh;
+  background: #fafaf7;
+}

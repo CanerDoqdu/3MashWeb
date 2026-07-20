@@ -18,4 +18,5 @@ export interface Props {
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
+  showBackgroundGlow?: boolean;
 }

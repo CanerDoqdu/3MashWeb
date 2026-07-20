@@ -128,4 +128,6 @@ export interface Props {
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
+  primaryButtonTextColor?: string;
+  secondaryButtonTextColor?: string;
 }

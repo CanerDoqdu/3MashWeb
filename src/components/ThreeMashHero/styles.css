@@ -140,7 +140,7 @@
   margin-top: 36px;
 }
 
-.tmhero-cta span {
+.tmhero-cta > span {
   color: var(--tmhero-muted);
   font-size: 13px;
 }
@@ -173,7 +173,7 @@
 .tmhero-btn-accent {
   background: var(--tmhero-accent);
   border-color: var(--tmhero-accent);
-  color: var(--tmhero-text);
+  color: var(--tmhero-primary-button-text);
 }
 
 .tmhero-btn-accent:hover {
@@ -186,7 +186,7 @@
   overflow: hidden;
   background: transparent;
   border-color: color-mix(in srgb, var(--tmhero-line) 70%, var(--tmhero-text));
-  color: var(--tmhero-text);
+  color: var(--tmhero-secondary-button-text);
   isolation: isolate;
 }
 

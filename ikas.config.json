@@ -112,7 +112,7 @@
           "displayName": "Products Feature Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/yikama-kurleme-cihazlari",
+          "defaultValue": "/urunler/c4p",
           "groupId": "products"
         },
         {
@@ -144,7 +144,7 @@
           "displayName": "Product 1 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "defaultValue": "/urunler/3d-yazicilar",
           "groupId": "products"
         },
         {
@@ -168,7 +168,7 @@
           "displayName": "Product 2 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/yikama-kurleme-cihazlari",
+          "defaultValue": "/urunler/yikama-kurleme",
           "groupId": "products"
         },
         {
@@ -192,7 +192,7 @@
           "displayName": "Product 3 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/dental-3d-yazici-recineleri",
+          "defaultValue": "/urunler/dental-recineler",
           "groupId": "products"
         },
         {
@@ -224,7 +224,7 @@
           "displayName": "Product 4 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/masasustu-tarayicilar",
+          "defaultValue": "/urunler/masasustu-tarayicilar",
           "groupId": "products"
         },
         {
@@ -248,7 +248,7 @@
           "displayName": "Product 5 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/zirkon-bloklar",
+          "defaultValue": "/urunler/zirkon-bloklar",
           "groupId": "products"
         },
         {
@@ -272,7 +272,7 @@
           "displayName": "Product 6 Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/dental-firinlar",
+          "defaultValue": "/urunler/dental-firinlar",
           "groupId": "products"
         },
         {
@@ -440,7 +440,7 @@
           "displayName": "Academy Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/pages/mash-academy",
+          "defaultValue": "/mash-academy",
           "groupId": "links"
         },
         {
@@ -1620,7 +1620,7 @@
           "displayName": "Store Button Text",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Go to store",
+          "defaultValue": "Markete git",
           "groupId": "action-panels"
         },
         {
@@ -1718,6 +1718,142 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "profileLink1Text",
+          "displayName": "Profile Link 1 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Siparişlerim",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink2Text",
+          "displayName": "Profile Link 2 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Adreslerim",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink2Href",
+          "displayName": "Profile Link 2 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/addresses",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink3Text",
+          "displayName": "Profile Link 3 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Destek talebi",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink3Href",
+          "displayName": "Profile Link 3 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/pages/iletisim",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeItemCountText",
+          "displayName": "Cart Count Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Sepetinizde ürün yok",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeEmptyTitle",
+          "displayName": "Cart Empty Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Sepetiniz şu an boş",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeEmptyDescription",
+          "displayName": "Cart Empty Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dental üretim akışınız için yazıcı, reçine ve kürleme çözümlerini inceleyin.",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeSecondaryButtonText",
+          "displayName": "Cart Secondary Button Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürünleri incele",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeSecondaryButtonHref",
+          "displayName": "Cart Secondary Button URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink1Href",
+          "displayName": "Profile Link 1 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/orders",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink4Text",
+          "displayName": "Profile Link 4 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "Teknik destek"
+        },
+        {
+          "name": "profileLink4Href",
+          "displayName": "Profile Link 4 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "https://3mash.com/pages/iletisim"
+        },
+        {
+          "name": "profileLink5Text",
+          "displayName": "Profile Link 5 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "Mash Academy"
+        },
+        {
+          "name": "profileLink5Href",
+          "displayName": "Profile Link 5 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "/mash-academy"
+        },
+        {
+          "name": "profileLink6Text",
+          "displayName": "Profile Link 6 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "Çıkış yap"
+        },
+        {
+          "name": "profileLink6Href",
+          "displayName": "Profile Link 6 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "https://3mash.com/account/logout"
         }
       ],
       "propGroups": [
@@ -2810,6 +2946,22 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "primaryButtonTextColor",
+          "displayName": "Primary Button Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "buttons",
+          "defaultValue": "#0E0E0C"
+        },
+        {
+          "name": "secondaryButtonTextColor",
+          "displayName": "Secondary Button Text Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "buttons",
+          "defaultValue": "#0E0E0C"
         }
       ],
       "propGroups": [
@@ -3251,6 +3403,30 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "showBackgroundGlow",
+          "displayName": "Show Background Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": true
+        },
+        {
+          "name": "backgroundGlowColor",
+          "displayName": "Background Glow Color",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": "#C7F136"
+        },
+        {
+          "name": "backgroundGlowOpacity",
+          "displayName": "Background Glow Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": 18
         }
       ],
       "propGroups": [
@@ -4205,6 +4381,14 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "showBackgroundGlow",
+          "displayName": "Show Background Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": true
         }
       ],
       "propGroups": [
@@ -4861,6 +5045,14 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "showBackgroundGlow",
+          "displayName": "Show Background Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": true
         }
       ],
       "propGroups": [
@@ -5058,6 +5250,14 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "showBackgroundGlow",
+          "displayName": "Show Background Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": true
         }
       ],
       "propGroups": [
@@ -5620,6 +5820,14 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "showBackgroundGlow",
+          "displayName": "Show Background Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": true
         }
       ],
       "propGroups": [
@@ -6197,6 +6405,14 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "showBackgroundGlow",
+          "displayName": "Show Background Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": true
         }
       ],
       "propGroups": [
@@ -6482,6 +6698,14 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "showBackgroundGlow",
+          "displayName": "Show Background Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": true
         }
       ],
       "propGroups": [
@@ -6587,7 +6811,7 @@
           "displayName": "Secondary Button Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/pages/mash-academy",
+          "defaultValue": "/mash-academy",
           "groupId": "buttons"
         },
         {
@@ -6693,6 +6917,14 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "showBackgroundGlow",
+          "displayName": "Show Background Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance",
+          "defaultValue": true
         }
       ],
       "propGroups": [
@@ -6761,7 +6993,7 @@
           "displayName": "productLink1 URL",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "defaultValue": "/urunler/3d-yazicilar",
           "groupId": "productLinks"
         },
         {
@@ -6777,7 +7009,7 @@
           "displayName": "productLink2 URL",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/dental-3d-yazici-recineleri",
+          "defaultValue": "/urunler/dental-recineler",
           "groupId": "productLinks"
         },
         {
@@ -6793,7 +7025,7 @@
           "displayName": "productLink3 URL",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/yikama-kurleme-cihazlari",
+          "defaultValue": "/urunler/yikama-kurleme",
           "groupId": "productLinks"
         },
         {
@@ -6809,7 +7041,7 @@
           "displayName": "productLink4 URL",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/zirkon-bloklar",
+          "defaultValue": "/urunler/zirkon-bloklar",
           "groupId": "productLinks"
         },
         {
@@ -6841,7 +7073,7 @@
           "displayName": "companyLink2 URL",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/pages/mash-academy",
+          "defaultValue": "/mash-academy",
           "groupId": "companyLinks"
         },
         {
@@ -7891,6 +8123,62 @@
           "name": "Appearance"
         }
       ]
+    },
+    {
+      "id": "2tplvqpo-uObfuR2eqG",
+      "name": "ThreeMashC4ppage",
+      "entry": "./src/components/ThreeMashC4ppage/index.tsx",
+      "styles": "./src/components/ThreeMashC4ppage/styles.css",
+      "type": "section",
+      "props": []
+    },
+    {
+      "id": "2tplvqpo-yxaj3pvvSH",
+      "name": "ThreeMashThreeDprintersPage",
+      "entry": "./src/components/ThreeMashThreeDprintersPage/index.tsx",
+      "styles": "./src/components/ThreeMashThreeDprintersPage/styles.css",
+      "type": "section",
+      "props": []
+    },
+    {
+      "id": "2tplvqpo-MxJHbC7ndN",
+      "name": "ThreeMashWashCurePage",
+      "entry": "./src/components/ThreeMashWashCurePage/index.tsx",
+      "styles": "./src/components/ThreeMashWashCurePage/styles.css",
+      "type": "section",
+      "props": []
+    },
+    {
+      "id": "2tplvqpo-ycIcUXsTfj",
+      "name": "ThreeMashDentalResinsPage",
+      "entry": "./src/components/ThreeMashDentalResinsPage/index.tsx",
+      "styles": "./src/components/ThreeMashDentalResinsPage/styles.css",
+      "type": "section",
+      "props": []
+    },
+    {
+      "id": "2tplvqpo-FgYwWqRWsi",
+      "name": "ThreeMashDesktopScannersPage",
+      "entry": "./src/components/ThreeMashDesktopScannersPage/index.tsx",
+      "styles": "./src/components/ThreeMashDesktopScannersPage/styles.css",
+      "type": "section",
+      "props": []
+    },
+    {
+      "id": "2tplvqpo-1umsKNRARV",
+      "name": "ThreeMashZirconBlocksPage",
+      "entry": "./src/components/ThreeMashZirconBlocksPage/index.tsx",
+      "styles": "./src/components/ThreeMashZirconBlocksPage/styles.css",
+      "type": "section",
+      "props": []
+    },
+    {
+      "id": "2tplvqpo-Zty6YbwKIP",
+      "name": "ThreeMashDentalOvensPage",
+      "entry": "./src/components/ThreeMashDentalOvensPage/index.tsx",
+      "styles": "./src/components/ThreeMashDentalOvensPage/styles.css",
+      "type": "section",
+      "props": []
     }
   ],
   "customTypes": [

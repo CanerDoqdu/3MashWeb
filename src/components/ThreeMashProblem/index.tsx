@@ -184,6 +184,8 @@ export function ThreeMashProblem(props: Props) {
     "--tmproblem-accent": props.accentColor || "#C7F136",
     "--tmproblem-accent-text": props.accentTextColor || "#3D4D0E",
     "--tmproblem-danger": props.dangerColor || "#E2492F",
+    "--tmproblem-bg-glow-color": props.backgroundGlowColor || props.accentColor || "#C7F136",
+    "--tmproblem-bg-glow-opacity": props.showBackgroundGlow === false ? 0 : numberInRange(props.backgroundGlowOpacity, 18, 0, 100) / 100,
     "--tmproblem-word-color": props.styledPhraseColor || "#C7F136",
     "--tmproblem-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmproblem-word-style": props.styledPhraseItalic ? "italic" : "inherit",

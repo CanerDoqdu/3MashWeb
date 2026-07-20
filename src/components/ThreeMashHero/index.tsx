@@ -64,12 +64,14 @@ function RichInline({ value, className, wordStyle }: { value?: string; className
 
 function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
   const target = href(targetHref);
-  if (!target.startsWith("#") || target.length <= 1) return;
+  const hash = target.startsWith("#") ? target : target.startsWith("/#") ? target.slice(1) : "";
+  if (!hash || hash.length <= 1) return;
 
-  const section = document.querySelector(target);
+  const section = document.querySelector(hash);
   if (!section) return;
 
   event.preventDefault();
+  window.history.pushState(null, "", hash);
   section.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -295,6 +297,8 @@ export function ThreeMashHero(props: Props) {
     "--tmhero-accent": props.accentColor || "#C7F136",
     "--tmhero-accent-soft": props.accentSoftColor || "#F2F8DC",
     "--tmhero-accent-text": props.accentTextColor || "#3D4D0E",
+    "--tmhero-primary-button-text": props.primaryButtonTextColor || "#0E0E0C",
+    "--tmhero-secondary-button-text": props.secondaryButtonTextColor || "#0E0E0C",
     "--tmhero-lab-accent": props.labAccentColor || "#7C4DFF",
     "--tmhero-lab-accent-text": props.labAccentTextColor || "#4F2FCF",
     "--tmhero-danger": props.dangerColor || "#E2492F",

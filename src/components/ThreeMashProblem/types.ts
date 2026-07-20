@@ -49,4 +49,7 @@ export interface Props {
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
+  showBackgroundGlow?: boolean;
+  backgroundGlowColor?: string;
+  backgroundGlowOpacity?: number;
 }

@@ -237,4 +237,21 @@ export interface Props {
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
+  profileLink1Text?: string;
+  profileLink2Text?: string;
+  profileLink2Href?: string;
+  profileLink3Text?: string;
+  profileLink3Href?: string;
+  storeItemCountText?: string;
+  storeEmptyTitle?: string;
+  storeEmptyDescription?: string;
+  storeSecondaryButtonText?: string;
+  storeSecondaryButtonHref?: string;
+  profileLink1Href?: string;
+  profileLink4Text?: string;
+  profileLink4Href?: string;
+  profileLink5Text?: string;
+  profileLink5Href?: string;
+  profileLink6Text?: string;
+  profileLink6Href?: string;
 }
