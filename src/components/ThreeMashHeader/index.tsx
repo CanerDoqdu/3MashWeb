@@ -32,6 +32,12 @@ type ActiveMenu = "products" | "why" | null;
 type ActiveAction = "profile" | "store" | null;
 type HeaderDropdownKey = "products" | "why" | "profile" | "store";
 
+const headerLogoComponentId = "2tplvqpo-headerLogo";
+const headerDesktopMenuComponentId = "2tplvqpo-headerDesktopMenu";
+const headerMenuItemComponentIds = new Set(["2tplvqpo-headerProductsMenu", "2tplvqpo-headerWhyMenu", "2tplvqpo-headerPlainLinks"]);
+const headerActionsComponentId = "2tplvqpo-headerActions";
+const headerMobileMenuComponentId = "2tplvqpo-headerMobileMenu";
+
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
@@ -859,12 +865,40 @@ export function HeaderMobileMenuPart(props: Partial<Props>) {
 export function HeaderNavbarPart(props: Partial<Props> & { components?: any[] }) {
   const resolvedProps = withHeaderDefaults(props);
   const components = Array.isArray(props.components) ? props.components : [];
+  const logoComponents = components.filter((component) => component?.codeComponentId === headerLogoComponentId);
+  const menuItemComponents = components.filter((component) => headerMenuItemComponentIds.has(component?.codeComponentId));
+  const legacyDesktopMenuComponents = components.filter((component) => component?.codeComponentId === headerDesktopMenuComponentId);
+  const actionComponents = components.filter((component) => component?.codeComponentId === headerActionsComponentId);
+  const mobileMenuComponents = components.filter((component) => component?.codeComponentId === headerMobileMenuComponentId);
+  const groupedComponentIds = new Set([
+    headerLogoComponentId,
+    headerDesktopMenuComponentId,
+    headerActionsComponentId,
+    headerMobileMenuComponentId,
+    ...headerMenuItemComponentIds,
+  ]);
+  const otherComponents = components.filter((component) => !groupedComponentIds.has(component?.codeComponentId));
+
   return (
     <div className="three-mash-header" style={getHeaderThemeStyle(resolvedProps)}>
       <header className="tmh-header">
         <div className="tmh-wrap tmh-nav">
           {components.length > 0 ? (
-            <IkasComponentRenderer id="navbar-components" components={components} parentProps={resolvedProps} />
+            <>
+              {logoComponents.length > 0 ? <IkasComponentRenderer id="navbar-logo-components" components={logoComponents} parentProps={resolvedProps} /> : null}
+              {legacyDesktopMenuComponents.length > 0 ? (
+                <IkasComponentRenderer id="navbar-desktop-menu-legacy" components={legacyDesktopMenuComponents} parentProps={resolvedProps} />
+              ) : menuItemComponents.length > 0 ? (
+                <nav className="tmh-desktop-nav" aria-label={resolvedProps.mobileMenuLabel}>
+                  <ul className="tmh-menu">
+                    <IkasComponentRenderer id="navbar-menu-item-components" components={menuItemComponents} parentProps={resolvedProps} />
+                  </ul>
+                </nav>
+              ) : null}
+              {actionComponents.length > 0 ? <IkasComponentRenderer id="navbar-action-components" components={actionComponents} parentProps={resolvedProps} /> : null}
+              {mobileMenuComponents.length > 0 ? <IkasComponentRenderer id="navbar-mobile-menu-components" components={mobileMenuComponents} parentProps={resolvedProps} /> : null}
+              {otherComponents.length > 0 ? <IkasComponentRenderer id="navbar-other-components" components={otherComponents} parentProps={resolvedProps} /> : null}
+            </>
           ) : (
             <>
               <HeaderNavbarLogoPart {...resolvedProps} />
