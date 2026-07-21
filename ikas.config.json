@@ -46,7 +46,7 @@
                 "id": "default-header-desktop-menu",
                 "codeComponentId": "2tplvqpo-headerDesktopMenu",
                 "propValues": {
-                  "components": {
+                  "desktopMenuComponents": {
                     "components": [
                       {
                         "id": "default-header-products-menu",
@@ -719,37 +719,6 @@
       "styles": "./src/components/ThreeMashHeader/styles.css",
       "props": [
         {
-          "name": "components",
-          "displayName": "Menü Bileşenleri",
-          "type": "COMPONENT_LIST",
-          "required": false,
-          "groupId": "structure",
-          "filteredComponentIds": [
-            "2tplvqpo-headerProductsMenu",
-            "2tplvqpo-headerWhyMenu",
-            "2tplvqpo-headerPlainLinks"
-          ],
-          "defaultValue": {
-            "components": [
-              {
-                "id": "default-header-products-menu",
-                "codeComponentId": "2tplvqpo-headerProductsMenu",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-why-menu",
-                "codeComponentId": "2tplvqpo-headerWhyMenu",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-plain-links",
-                "codeComponentId": "2tplvqpo-headerPlainLinks",
-                "propValues": {}
-              }
-            ]
-          }
-        },
-        {
           "name": "backgroundColor",
           "displayName": "Arka Plan Rengi",
           "type": "COLOR",
@@ -804,6 +773,37 @@
           "required": false,
           "defaultValue": "#E2492F",
           "groupId": "appearance"
+        },
+        {
+          "name": "desktopMenuComponents",
+          "displayName": "Masaüstü Menü Bileşenleri",
+          "type": "COMPONENT_LIST",
+          "required": false,
+          "defaultValue": {
+            "components": [
+              {
+                "id": "default-header-products-menu",
+                "codeComponentId": "2tplvqpo-headerProductsMenu",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-why-menu",
+                "codeComponentId": "2tplvqpo-headerWhyMenu",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-plain-links",
+                "codeComponentId": "2tplvqpo-headerPlainLinks",
+                "propValues": {}
+              }
+            ]
+          },
+          "groupId": "structure",
+          "filteredComponentIds": [
+            "2tplvqpo-headerProductsMenu",
+            "2tplvqpo-headerWhyMenu",
+            "2tplvqpo-headerPlainLinks"
+          ]
         }
       ],
       "propGroups": [

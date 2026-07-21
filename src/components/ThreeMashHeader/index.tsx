@@ -682,9 +682,13 @@ export function HeaderPlainLinksPart(props: Partial<Props>) {
   );
 }
 
-export function HeaderDesktopMenuPart(props: Partial<Props> & { components?: any[] }) {
+export function HeaderDesktopMenuPart(props: Partial<Props> & { components?: any[]; desktopMenuComponents?: any[] }) {
   const resolvedProps = withHeaderDefaults(props);
-  const components = Array.isArray(props.components) ? props.components : [];
+  const components = Array.isArray(props.desktopMenuComponents)
+    ? props.desktopMenuComponents
+    : Array.isArray(props.components)
+      ? props.components
+      : [];
   return (
     <nav className="tmh-desktop-nav" aria-label={resolvedProps.mobileMenuLabel}>
       <ul className="tmh-menu">

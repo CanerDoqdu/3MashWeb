@@ -1,6 +1,5 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
-  components?: any;
   backgroundColor?: string;
   accentColor?: string;
   textColor?: string;
@@ -8,4 +7,5 @@ export interface Props {
   lineColor?: string;
   panelColor?: string;
   badgeColor?: string;
+  desktopMenuComponents?: any;
 }
