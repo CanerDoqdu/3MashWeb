@@ -7,6 +7,8 @@ import type { Props as GeneratedProps } from "./types";
 
 type Props = GeneratedProps & {
   components?: any[];
+  announcementComponents?: any[];
+  navbarComponents?: any[];
   logoText?: string;
   [key: string]: any;
 };
@@ -1256,12 +1258,22 @@ function HeaderAnnouncementFallback(props: Props) {
 
 export function ThreeMashHeader(props: Props) {
   const resolvedProps = withHeaderDefaults(props);
-  const components = Array.isArray(resolvedProps.components) ? resolvedProps.components : [];
+  const announcementComponents = Array.isArray(resolvedProps.announcementComponents) ? resolvedProps.announcementComponents : [];
+  const navbarComponents = Array.isArray(resolvedProps.navbarComponents) ? resolvedProps.navbarComponents : [];
+  const legacyComponents = Array.isArray(resolvedProps.components) ? resolvedProps.components : [];
+  const usesComponentListCategories = props.announcementComponents !== undefined || props.navbarComponents !== undefined;
 
   return (
     <section className="three-mash-header" style={getHeaderThemeStyle(resolvedProps)}>
-      {components.length > 0 ? (
-        <IkasComponentRenderer id="header-components" components={components} parentProps={resolvedProps} />
+      {usesComponentListCategories ? (
+        <>
+          {announcementComponents.length > 0 ? (
+            <IkasComponentRenderer id="header-announcement-components" components={announcementComponents} parentProps={resolvedProps} />
+          ) : null}
+          {navbarComponents.length > 0 ? <HeaderNavbarPart {...resolvedProps} components={navbarComponents} /> : null}
+        </>
+      ) : legacyComponents.length > 0 ? (
+        <IkasComponentRenderer id="header-components-legacy" components={legacyComponents} parentProps={resolvedProps} />
       ) : (
         <>
           <HeaderAnnouncementFallback {...resolvedProps} />

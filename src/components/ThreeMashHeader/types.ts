@@ -1,4 +1,5 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
-  components?: any;
+  announcementComponents?: any;
+  navbarComponents?: any;
 }

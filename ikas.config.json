@@ -12,74 +12,80 @@
       "type": "section",
       "props": [
         {
-          "name": "components",
-          "displayName": "Üst Bölüm Bileşenleri",
+          "name": "announcementComponents",
+          "displayName": "Duyuru",
           "type": "COMPONENT_LIST",
           "required": false,
-          "filteredComponentIds": [
-            "2tplvqpo-headerAnnouncement",
-            "2tplvqpo-headerNavbar"
-          ],
           "defaultValue": {
             "components": [
               {
                 "id": "default-header-announcement",
                 "codeComponentId": "2tplvqpo-headerAnnouncement",
                 "propValues": {}
+              }
+            ]
+          },
+          "groupId": "structure",
+          "filteredComponentIds": [
+            "2tplvqpo-headerAnnouncement"
+          ]
+        },
+        {
+          "name": "navbarComponents",
+          "displayName": "Navbar Bileşenleri",
+          "type": "COMPONENT_LIST",
+          "required": false,
+          "defaultValue": {
+            "components": [
+              {
+                "id": "default-header-logo",
+                "codeComponentId": "2tplvqpo-headerLogo",
+                "propValues": {}
               },
               {
-                "id": "default-header-navbar",
-                "codeComponentId": "2tplvqpo-headerNavbar",
+                "id": "default-header-desktop-menu",
+                "codeComponentId": "2tplvqpo-headerDesktopMenu",
                 "propValues": {
                   "components": {
                     "components": [
                       {
-                        "id": "default-header-logo",
-                        "codeComponentId": "2tplvqpo-headerLogo",
+                        "id": "default-header-products-menu",
+                        "codeComponentId": "2tplvqpo-headerProductsMenu",
                         "propValues": {}
                       },
                       {
-                        "id": "default-header-desktop-menu",
-                        "codeComponentId": "2tplvqpo-headerDesktopMenu",
-                        "propValues": {
-                          "components": {
-                            "components": [
-                              {
-                                "id": "default-header-products-menu",
-                                "codeComponentId": "2tplvqpo-headerProductsMenu",
-                                "propValues": {}
-                              },
-                              {
-                                "id": "default-header-why-menu",
-                                "codeComponentId": "2tplvqpo-headerWhyMenu",
-                                "propValues": {}
-                              },
-                              {
-                                "id": "default-header-plain-links",
-                                "codeComponentId": "2tplvqpo-headerPlainLinks",
-                                "propValues": {}
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      {
-                        "id": "default-header-actions",
-                        "codeComponentId": "2tplvqpo-headerActions",
+                        "id": "default-header-why-menu",
+                        "codeComponentId": "2tplvqpo-headerWhyMenu",
                         "propValues": {}
                       },
                       {
-                        "id": "default-header-mobile-menu",
-                        "codeComponentId": "2tplvqpo-headerMobileMenu",
+                        "id": "default-header-plain-links",
+                        "codeComponentId": "2tplvqpo-headerPlainLinks",
                         "propValues": {}
                       }
                     ]
                   }
                 }
+              },
+              {
+                "id": "default-header-actions",
+                "codeComponentId": "2tplvqpo-headerActions",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-mobile-menu",
+                "codeComponentId": "2tplvqpo-headerMobileMenu",
+                "propValues": {}
               }
             ]
           },
-          "groupId": "structure"
+          "groupId": "structure",
+          "filteredComponentIds": [
+            "2tplvqpo-headerLogo",
+            "2tplvqpo-headerDesktopMenu",
+            "2tplvqpo-headerActions",
+            "2tplvqpo-headerMobileMenu"
+          ]
         }
       ],
       "propGroups": [
