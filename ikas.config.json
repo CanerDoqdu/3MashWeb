@@ -234,7 +234,9 @@
           "groupId": "structure",
           "filteredComponentIds": [
             "2tplvqpo-headerLogo",
-            "2tplvqpo-headerDesktopMenu",
+            "2tplvqpo-headerProductsMenu",
+            "2tplvqpo-headerWhyMenu",
+            "2tplvqpo-headerPlainLinks",
             "2tplvqpo-headerActions",
             "2tplvqpo-headerMobileMenu"
           ],
@@ -246,29 +248,19 @@
                 "propValues": {}
               },
               {
-                "id": "default-header-desktop-menu",
-                "codeComponentId": "2tplvqpo-headerDesktopMenu",
-                "propValues": {
-                  "components": {
-                    "components": [
-                      {
-                        "id": "default-header-products-menu",
-                        "codeComponentId": "2tplvqpo-headerProductsMenu",
-                        "propValues": {}
-                      },
-                      {
-                        "id": "default-header-why-menu",
-                        "codeComponentId": "2tplvqpo-headerWhyMenu",
-                        "propValues": {}
-                      },
-                      {
-                        "id": "default-header-plain-links",
-                        "codeComponentId": "2tplvqpo-headerPlainLinks",
-                        "propValues": {}
-                      }
-                    ]
-                  }
-                }
+                "id": "default-header-products-menu",
+                "codeComponentId": "2tplvqpo-headerProductsMenu",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-why-menu",
+                "codeComponentId": "2tplvqpo-headerWhyMenu",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-plain-links",
+                "codeComponentId": "2tplvqpo-headerPlainLinks",
+                "propValues": {}
               },
               {
                 "id": "default-header-actions",
