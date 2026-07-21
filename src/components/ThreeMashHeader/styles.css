@@ -14,17 +14,6 @@
   box-sizing: border-box;
 }
 
-.three-mash-header li,
-.three-mash-header summary {
-  list-style: none;
-}
-
-.three-mash-header li::marker,
-.three-mash-header summary::marker {
-  content: "";
-  font-size: 0;
-}
-
 .tmh-wrap {
   width: min(100%, 1240px);
   margin: 0 auto;
@@ -164,7 +153,7 @@
   list-style: none;
 }
 
-.tmh-menu li {
+.tmh-menu > li {
   position: relative;
   display: flex;
   align-items: stretch;
@@ -208,7 +197,6 @@
 
 .tmh-mega {
   position: absolute;
-  z-index: 260;
   left: 50%;
   top: 100%;
   transform: translateX(-50%) translateY(8px);
@@ -229,7 +217,9 @@
   transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
 }
 
-.tmh-menu li.is-open .tmh-mega {
+.tmh-menu > li:hover .tmh-mega,
+.tmh-menu > li:focus-within .tmh-mega,
+.tmh-menu > li.is-open .tmh-mega {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -247,7 +237,9 @@
   transform: translateX(var(--tmh-flow-translate-x, -50%)) translateY(8px);
 }
 
-.tmh-menu li.is-open .tmh-flow-mega {
+.tmh-menu > li:hover .tmh-flow-mega,
+.tmh-menu > li:focus-within .tmh-flow-mega,
+.tmh-menu > li.is-open .tmh-flow-mega {
   transform: translateX(var(--tmh-flow-translate-x, -50%)) translateY(0);
 }
 
@@ -261,7 +253,9 @@
   transform: translateY(8px);
 }
 
-.tmh-menu li.is-open .tmh-products-mega {
+.tmh-menu > li:hover .tmh-products-mega,
+.tmh-menu > li:focus-within .tmh-products-mega,
+.tmh-menu > li.is-open .tmh-products-mega {
   transform: translateY(0);
 }
 
@@ -842,74 +836,29 @@
 }
 
 .tmh-cart-empty-card {
-  min-height: 0;
+  min-height: 236px;
   margin-top: 12px;
   border: 1px solid color-mix(in srgb, var(--tmh-line) 88%, transparent);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--tmh-panel) 96%, var(--tmh-bg));
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--tmh-panel) 94%, var(--tmh-bg));
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  padding: 14px;
-  text-align: left;
-}
-
-.tmh-store-card-head {
-  display: grid;
-  grid-template-columns: 38px minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-}
-
-.tmh-store-visual {
-  width: 38px;
-  height: 38px;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--tmh-line) 82%, var(--tmh-text));
-  border-radius: 10px;
-  background: var(--tmh-panel);
-  color: var(--tmh-text);
-}
-
-.tmh-store-visual svg {
-  width: 21px;
-  height: 21px;
-  display: block;
-}
-
-.tmh-action-panel .tmh-store-card-title {
-  margin-top: 1px;
-  font-size: 15px;
-  line-height: 1.15;
-  text-align: left;
-}
-
-.tmh-action-panel .tmh-store-card-description {
-  max-width: none;
-  margin: 5px 0 0;
-  color: var(--tmh-muted);
-  font-size: 12.5px;
-  line-height: 1.42;
-  text-align: left;
+  padding: 18px;
 }
 
 .tmh-cart-market-button {
-  width: 100%;
-  min-height: 40px;
-  margin-top: 14px;
-  border-radius: 9px;
-  border: 1px solid var(--tmh-text);
-  background: var(--tmh-text);
+  min-width: 148px;
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid var(--tmh-line);
+  background: var(--tmh-panel);
   color: var(--tmh-text);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 12px 20px;
-  color: #fff;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
   line-height: 1.2;
   text-align: center;
@@ -918,8 +867,8 @@
 }
 
 .tmh-cart-market-button:hover {
-  border-color: color-mix(in srgb, var(--tmh-text) 82%, #fff);
-  background: color-mix(in srgb, var(--tmh-text) 82%, #fff);
+  border-color: color-mix(in srgb, var(--tmh-accent) 70%, var(--tmh-line));
+  background: color-mix(in srgb, var(--tmh-accent) 10%, var(--tmh-panel));
 }
 
 .tmh-action-panel small {
