@@ -13,7 +13,7 @@
       "props": [
         {
           "name": "components",
-          "displayName": "Bileşenler",
+          "displayName": "Üst Bölüm Bileşenleri",
           "type": "COMPONENT_LIST",
           "required": false,
           "filteredComponentIds": [
@@ -78,7 +78,8 @@
                 }
               }
             ]
-          }
+          },
+          "groupId": "structure"
         }
       ],
       "propGroups": [
@@ -203,20 +204,20 @@
       "propGroups": [
         {
           "id": "announcement",
-          "name": "Announcement",
-          "description": "Top black promotion bar",
+          "name": "Duyuru",
+          "description": "Duyuru metinleri ve bağlantısı",
           "children": [
             {
               "id": "announcementWordStyle",
-              "name": "Announcement Word Style",
-              "description": "Demo single word color and emphasis"
+              "name": "Duyuru Kelime Stili",
+              "description": "Duyuru içindeki seçili ifadeyi biçimlendirin"
             }
           ]
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Header colors"
+          "name": "Görünüm",
+          "description": "Duyuru renkleri"
         }
       ],
       "type": "component"
@@ -232,7 +233,7 @@
           "displayName": "Navbar Bileşenleri",
           "type": "COMPONENT_LIST",
           "required": false,
-          "groupId": "navbarComponents",
+          "groupId": "structure",
           "filteredComponentIds": [
             "2tplvqpo-headerLogo",
             "2tplvqpo-headerDesktopMenu",
@@ -349,8 +350,8 @@
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Header colors"
+          "name": "Görünüm",
+          "description": "Navbar renkleri"
         }
       ],
       "type": "component"
@@ -670,35 +671,35 @@
       "propGroups": [
         {
           "id": "brand",
-          "name": "Brand",
-          "description": "Logo and homepage link",
+          "name": "Logo",
+          "description": "Logo içeriği ve ana sayfa bağlantısı",
           "children": [
             {
               "id": "logoImageControls",
-              "name": "Logo Image Controls",
-              "description": "Image size, position and effects"
+              "name": "Logo Görsel Ayarları",
+              "description": "Görsel boyutu, konumu ve efektleri"
             },
             {
               "id": "logoSvgControls",
-              "name": "Logo SVG Controls",
-              "description": "SVG size, position and effects"
+              "name": "Logo SVG Ayarları",
+              "description": "SVG boyutu, konumu ve efektleri"
             }
           ]
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Header colors"
+          "name": "Görünüm",
+          "description": "Logo alanı renkleri"
         },
         {
           "id": "text-customization",
-          "name": "Text Customization",
-          "description": "Rich text fields for bold, italic and inline formatting",
+          "name": "Metin Özelleştirme",
+          "description": "Logo metni biçimlendirmesi",
           "children": [
             {
               "id": "wordStyle",
-              "name": "Word Style",
-              "description": "Style a matching word or phrase inside this section"
+              "name": "Kelime Stili",
+              "description": "Seçili kelime veya ifadeyi biçimlendirin"
             }
           ]
         }
@@ -716,7 +717,7 @@
           "displayName": "Menü Bileşenleri",
           "type": "COMPONENT_LIST",
           "required": false,
-          "groupId": "desktopMenuComponents",
+          "groupId": "structure",
           "filteredComponentIds": [
             "2tplvqpo-headerProductsMenu",
             "2tplvqpo-headerWhyMenu",
@@ -807,8 +808,8 @@
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Header colors"
+          "name": "Görünüm",
+          "description": "Masaüstü menü renkleri"
         }
       ],
       "type": "component"
@@ -1505,40 +1506,40 @@
       "propGroups": [
         {
           "id": "products",
-          "name": "Products Menu",
-          "description": "Product mega menu content",
+          "name": "Ürün Menüsü",
+          "description": "Mega menü içeriği ve ürün bağlantıları",
           "children": [
             {
               "id": "productsFeatureImageControls",
-              "name": "Products Feature Image Controls",
-              "description": "Feature image size, position and effects"
+              "name": "Öne Çıkan Görsel",
+              "description": "Görsel boyutu, konumu ve efektleri"
             },
             {
               "id": "productIconImageControls",
-              "name": "Product Icon Image Controls",
-              "description": "Shared controls for product icon images"
+              "name": "Ürün İkon Görselleri",
+              "description": "Ürün ikon görsellerinin ortak ayarları"
             },
             {
               "id": "productIconSvgControls",
-              "name": "Product Icon SVG Controls",
-              "description": "Shared controls for product icon SVGs"
+              "name": "Ürün İkon SVG Ayarları",
+              "description": "Ürün SVG ikonlarının ortak ayarları"
             }
           ]
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Header colors"
+          "name": "Görünüm",
+          "description": "Ürün menüsü renkleri"
         },
         {
           "id": "text-customization",
-          "name": "Text Customization",
-          "description": "Rich text fields for bold, italic and inline formatting",
+          "name": "Metin Özelleştirme",
+          "description": "Ürün menüsü zengin metin alanları",
           "children": [
             {
               "id": "wordStyle",
-              "name": "Word Style",
-              "description": "Style a matching word or phrase inside this section"
+              "name": "Kelime Stili",
+              "description": "Seçili kelime veya ifadeyi biçimlendirin"
             }
           ]
         }
@@ -1907,23 +1908,23 @@
       "propGroups": [
         {
           "id": "why",
-          "name": "Why Menu",
-          "description": "Problem and solution mega menu content"
+          "name": "Neden Menüsü",
+          "description": "Problem ve çözüm menüsü içeriği"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Header colors"
+          "name": "Görünüm",
+          "description": "Neden menüsü renkleri"
         },
         {
           "id": "text-customization",
-          "name": "Text Customization",
-          "description": "Rich text fields for bold, italic and inline formatting",
+          "name": "Metin Özelleştirme",
+          "description": "Neden menüsü zengin metin alanları",
           "children": [
             {
               "id": "wordStyle",
-              "name": "Word Style",
-              "description": "Style a matching word or phrase inside this section"
+              "name": "Kelime Stili",
+              "description": "Seçili kelime veya ifadeyi biçimlendirin"
             }
           ]
         }
@@ -2068,24 +2069,24 @@
       "propGroups": [
         {
           "id": "links",
-          "name": "Links",
-          "description": "Header links and icon labels",
+          "name": "Ana Linkler",
+          "description": "Referanslar ve Academy bağlantıları",
           "children": []
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Header colors"
+          "name": "Görünüm",
+          "description": "Ana link renkleri"
         },
         {
           "id": "text-customization",
-          "name": "Text Customization",
-          "description": "Rich text fields for bold, italic and inline formatting",
+          "name": "Metin Özelleştirme",
+          "description": "Ana link zengin metin alanları",
           "children": [
             {
               "id": "wordStyle",
-              "name": "Word Style",
-              "description": "Style a matching word or phrase inside this section"
+              "name": "Kelime Stili",
+              "description": "Seçili kelime veya ifadeyi biçimlendirin"
             }
           ]
         }
@@ -2759,42 +2760,42 @@
       "propGroups": [
         {
           "id": "links",
-          "name": "Links",
-          "description": "Header links and icon labels",
+          "name": "İkonlar ve Bağlantılar",
+          "description": "Arama, hesap ve sepet aksiyonları",
           "children": [
             {
               "id": "actionIconImageControls",
-              "name": "Action Icon Image Controls",
-              "description": "Shared controls for header action icon images"
+              "name": "Aksiyon İkon Görselleri",
+              "description": "İkon görsellerinin ortak ayarları"
             },
             {
               "id": "actionIconSvgControls",
-              "name": "Action Icon SVG Controls",
-              "description": "Shared controls for header action icon SVGs"
+              "name": "Aksiyon İkon SVG Ayarları",
+              "description": "SVG ikonlarının ortak ayarları"
             }
           ]
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Header colors"
+          "name": "Görünüm",
+          "description": "Aksiyon alanı renkleri"
         },
         {
           "id": "text-customization",
-          "name": "Text Customization",
-          "description": "Rich text fields for bold, italic and inline formatting",
+          "name": "Metin Özelleştirme",
+          "description": "Aksiyon zengin metin alanları",
           "children": [
             {
               "id": "wordStyle",
-              "name": "Word Style",
-              "description": "Style a matching word or phrase inside this section"
+              "name": "Kelime Stili",
+              "description": "Seçili kelime veya ifadeyi biçimlendirin"
             }
           ]
         },
         {
           "id": "action-panels",
-          "name": "Action Panels",
-          "description": "Profile and store dropdown panels"
+          "name": "Hesap ve Sepet Panelleri",
+          "description": "Açılır hesap ve sepet paneli içeriği"
         }
       ],
       "type": "component"
@@ -3787,51 +3788,51 @@
       "propGroups": [
         {
           "id": "products",
-          "name": "Products Menu",
-          "description": "Product mega menu content",
+          "name": "Ürün Menüsü",
+          "description": "Mobil ürün menüsü içeriği",
           "children": [
             {
               "id": "productsFeatureImageControls",
-              "name": "Products Feature Image Controls",
-              "description": "Feature image size, position and effects"
+              "name": "Öne Çıkan Görsel",
+              "description": "Görsel boyutu, konumu ve efektleri"
             },
             {
               "id": "productIconImageControls",
-              "name": "Product Icon Image Controls",
-              "description": "Shared controls for product icon images"
+              "name": "Ürün İkon Görselleri",
+              "description": "Ürün ikon görsellerinin ortak ayarları"
             },
             {
               "id": "productIconSvgControls",
-              "name": "Product Icon SVG Controls",
-              "description": "Shared controls for product icon SVGs"
+              "name": "Ürün İkon SVG Ayarları",
+              "description": "Ürün SVG ikonlarının ortak ayarları"
             }
           ]
         },
         {
           "id": "why",
-          "name": "Why Menu",
-          "description": "Problem and solution mega menu content"
+          "name": "Neden Menüsü",
+          "description": "Mobil neden menüsü içeriği"
         },
         {
           "id": "links",
-          "name": "Links",
-          "description": "Header links and icon labels",
+          "name": "Ana Linkler",
+          "description": "Mobil menü bağlantıları",
           "children": []
         },
         {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Header colors"
+          "name": "Görünüm",
+          "description": "Mobil menü renkleri"
         },
         {
           "id": "text-customization",
-          "name": "Text Customization",
-          "description": "Rich text fields for bold, italic and inline formatting",
+          "name": "Metin Özelleştirme",
+          "description": "Mobil menü zengin metin alanları",
           "children": [
             {
               "id": "wordStyle",
-              "name": "Word Style",
-              "description": "Style a matching word or phrase inside this section"
+              "name": "Kelime Stili",
+              "description": "Seçili kelime veya ifadeyi biçimlendirin"
             }
           ]
         }
@@ -8853,7 +8854,7 @@
           "displayName": "Footer Kolonları",
           "type": "COMPONENT_LIST",
           "required": false,
-          "groupId": "footerColumns",
+          "groupId": "structure",
           "filteredComponentIds": [
             "2tplvqpo-footerBrand",
             "2tplvqpo-footerProductLinks",
@@ -9087,7 +9088,7 @@
           "displayName": "Telif ve Yasal Satır",
           "type": "COMPONENT_LIST",
           "required": false,
-          "groupId": "footerLegalRow",
+          "groupId": "structure",
           "filteredComponentIds": [
             "2tplvqpo-footerLegalBar"
           ],
@@ -9114,7 +9115,7 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
-          "groupId": "footerAppearance"
+          "groupId": "appearance"
         },
         {
           "name": "textColor",
@@ -9122,7 +9123,7 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FFFFFF",
-          "groupId": "footerAppearance"
+          "groupId": "appearance"
         },
         {
           "name": "mutedTextColor",
@@ -9130,7 +9131,7 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8B8B80",
-          "groupId": "footerAppearance"
+          "groupId": "appearance"
         },
         {
           "name": "lineColor",
@@ -9138,7 +9139,7 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#26261F",
-          "groupId": "footerAppearance"
+          "groupId": "appearance"
         },
         {
           "name": "accentColor",
@@ -9146,68 +9147,19 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
-          "groupId": "footerAppearance"
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
         {
-          "id": "brand",
-          "name": "Brand",
-          "description": "Footer brand and description",
-          "children": [
-            {
-              "id": "footerLogoImageControls",
-              "name": "Logo Image Controls",
-              "description": "Footer logo image size, position and effects"
-            },
-            {
-              "id": "footerLogoSvgControls",
-              "name": "Logo SVG Controls",
-              "description": "Footer logo SVG size, position and effects"
-            }
-          ]
-        },
-        {
-          "id": "productLinks",
-          "name": "Product Links",
-          "description": "Footer product column links"
-        },
-        {
-          "id": "companyLinks",
-          "name": "Company Links",
-          "description": "Footer company column links"
-        },
-        {
-          "id": "contactLinks",
-          "name": "Contact Links",
-          "description": "Footer contact column links"
-        },
-        {
-          "id": "socialLinks",
-          "name": "Social Links",
-          "description": "Footer social icon links"
-        },
-        {
-          "id": "legal",
-          "name": "Legal Bar",
-          "description": "Footer bottom legal text"
-        },
-        {
           "id": "appearance",
-          "name": "Appearance",
-          "description": "Footer colors"
+          "name": "Görünüm",
+          "description": "Alt bölüm ortak renkleri"
         },
         {
-          "id": "text-customization",
-          "name": "Text Customization",
-          "description": "Rich text fields for bold, italic and inline formatting",
-          "children": [
-            {
-              "id": "wordStyle",
-              "name": "Word Style",
-              "description": "Style a matching word or phrase inside this section"
-            }
-          ]
+          "id": "structure",
+          "name": "Yapı",
+          "description": "Alt bölüm bileşen listeleri"
         }
       ]
     },
@@ -9224,7 +9176,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "mash",
-          "groupId": "footerBrand"
+          "groupId": "brand"
         },
         {
           "name": "descriptionText",
@@ -9232,7 +9184,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.",
-          "groupId": "footerBrand"
+          "groupId": "brand"
         },
         {
           "name": "logoHref",
@@ -9240,7 +9192,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/",
-          "groupId": "footerBrand"
+          "groupId": "brand"
         },
         {
           "name": "logoImageUrl",
@@ -9248,7 +9200,7 @@
           "type": "IMAGE",
           "required": false,
           "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown.",
-          "groupId": "footerBrand"
+          "groupId": "brand"
         },
         {
           "name": "logoImageAlt",
@@ -9256,7 +9208,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "3mash",
-          "groupId": "footerBrand"
+          "groupId": "brand"
         },
         {
           "name": "logoSvg",
@@ -9264,7 +9216,7 @@
           "type": "SVG",
           "required": false,
           "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown.",
-          "groupId": "footerBrand"
+          "groupId": "brand"
         },
         {
           "name": "logoImageWidth",
@@ -9272,7 +9224,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 32,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoImageHeight",
@@ -9280,7 +9232,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 32,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoImageXOffset",
@@ -9288,7 +9240,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 0,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoImageYOffset",
@@ -9296,7 +9248,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 0,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoImageFit",
@@ -9304,7 +9256,7 @@
           "type": "ENUM",
           "required": false,
           "defaultValue": "contain",
-          "groupId": "footerBrand",
+          "groupId": "footerLogoImageControls",
           "enumTypeId": "czO3k2QK5J"
         },
         {
@@ -9313,7 +9265,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoImageBrightness",
@@ -9321,7 +9273,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoImageContrast",
@@ -9329,7 +9281,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoImageSaturation",
@@ -9337,7 +9289,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoImageHue",
@@ -9345,7 +9297,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 0,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoImageInvert",
@@ -9353,7 +9305,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 0,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoImageControls"
         },
         {
           "name": "logoSvgWidth",
@@ -9361,7 +9313,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 32,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         },
         {
           "name": "logoSvgHeight",
@@ -9369,7 +9321,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 32,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         },
         {
           "name": "logoSvgXOffset",
@@ -9377,7 +9329,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 0,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         },
         {
           "name": "logoSvgYOffset",
@@ -9385,7 +9337,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 0,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         },
         {
           "name": "logoSvgOpacity",
@@ -9393,7 +9345,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         },
         {
           "name": "logoSvgBrightness",
@@ -9401,7 +9353,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         },
         {
           "name": "logoSvgContrast",
@@ -9409,7 +9361,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         },
         {
           "name": "logoSvgSaturation",
@@ -9417,7 +9369,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 100,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         },
         {
           "name": "logoSvgHue",
@@ -9425,7 +9377,7 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 0,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         },
         {
           "name": "logoSvgInvert",
@@ -9433,36 +9385,24 @@
           "type": "NUMBER",
           "required": false,
           "defaultValue": 0,
-          "groupId": "footerBrand"
+          "groupId": "footerLogoSvgControls"
         }
       ],
       "propGroups": [
         {
           "id": "brand",
-          "name": "Brand",
-          "description": "Footer brand and description",
+          "name": "Marka Alanı",
+          "description": "Logo ve marka açıklaması",
           "children": [
             {
               "id": "footerLogoImageControls",
-              "name": "Logo Image Controls",
-              "description": "Footer logo image size, position and effects"
+              "name": "Logo Görsel Ayarları",
+              "description": "Görsel boyutu, konumu ve efektleri"
             },
             {
               "id": "footerLogoSvgControls",
-              "name": "Logo SVG Controls",
-              "description": "Footer logo SVG size, position and effects"
-            }
-          ]
-        },
-        {
-          "id": "text-customization",
-          "name": "Text Customization",
-          "description": "Rich text fields for bold, italic and inline formatting",
-          "children": [
-            {
-              "id": "wordStyle",
-              "name": "Word Style",
-              "description": "Style a matching word or phrase inside this section"
+              "name": "Logo SVG Ayarları",
+              "description": "SVG boyutu, konumu ve efektleri"
             }
           ]
         }
@@ -9481,7 +9421,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Ürünler",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink1Text",
@@ -9489,7 +9429,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3D Yazıcılar",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink1Href",
@@ -9497,7 +9437,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/urunler/3d-yazicilar",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink2Text",
@@ -9505,7 +9445,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Reçineler",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink2Href",
@@ -9513,7 +9453,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/urunler/dental-recineler",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink3Text",
@@ -9521,7 +9461,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama & Kürleme",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink3Href",
@@ -9529,7 +9469,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/urunler/yikama-kurleme",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink4Text",
@@ -9537,7 +9477,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Masaüstü Tarayıcılar",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink4Href",
@@ -9545,7 +9485,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/urunler/masasustu-tarayicilar",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink5Text",
@@ -9553,7 +9493,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Zirkon Bloklar",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink5Href",
@@ -9561,7 +9501,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/urunler/zirkon-bloklar",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink6Text",
@@ -9569,7 +9509,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Fırınlar",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         },
         {
           "name": "productLink6Href",
@@ -9577,14 +9517,14 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/urunler/dental-firinlar",
-          "groupId": "footerProductLinks"
+          "groupId": "productLinks"
         }
       ],
       "propGroups": [
         {
           "id": "productLinks",
-          "name": "Product Links",
-          "description": "Footer product column links"
+          "name": "Ürün Linkleri",
+          "description": "Ürün kolonu başlığı ve bağlantıları"
         }
       ]
     },
@@ -9601,7 +9541,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Şirket",
-          "groupId": "footerCompanyLinks"
+          "groupId": "companyLinks"
         },
         {
           "name": "companyLink1Text",
@@ -9609,7 +9549,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hakkımızda",
-          "groupId": "footerCompanyLinks"
+          "groupId": "companyLinks"
         },
         {
           "name": "companyLink1Href",
@@ -9617,7 +9557,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://3mash.com/pages/about-us",
-          "groupId": "footerCompanyLinks"
+          "groupId": "companyLinks"
         },
         {
           "name": "companyLink2Text",
@@ -9625,7 +9565,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mash Academy",
-          "groupId": "footerCompanyLinks"
+          "groupId": "companyLinks"
         },
         {
           "name": "companyLink2Href",
@@ -9633,7 +9573,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/mash-academy",
-          "groupId": "footerCompanyLinks"
+          "groupId": "companyLinks"
         },
         {
           "name": "companyLink3Text",
@@ -9641,7 +9581,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Blog",
-          "groupId": "footerCompanyLinks"
+          "groupId": "companyLinks"
         },
         {
           "name": "companyLink3Href",
@@ -9649,14 +9589,14 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://3mash.com/blog",
-          "groupId": "footerCompanyLinks"
+          "groupId": "companyLinks"
         }
       ],
       "propGroups": [
         {
           "id": "companyLinks",
-          "name": "Company Links",
-          "description": "Footer company column links"
+          "name": "Şirket Linkleri",
+          "description": "Şirket kolonu başlığı ve bağlantıları"
         }
       ]
     },
@@ -9669,7 +9609,7 @@
       "props": [
         {
           "name": "components",
-          "displayName": "Bileşenler",
+          "displayName": "Sosyal Medya Bileşenleri",
           "type": "COMPONENT_LIST",
           "required": false,
           "filteredComponentIds": [
@@ -9712,7 +9652,7 @@
               }
             ]
           },
-          "groupId": "footerContactComponents"
+          "groupId": "structure"
         },
         {
           "name": "contactColumnTitle",
@@ -9720,7 +9660,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İletişim",
-          "groupId": "footerContactLinks"
+          "groupId": "contactLinks"
         },
         {
           "name": "contactLink1Text",
@@ -9728,7 +9668,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "info@3mash.com",
-          "groupId": "footerContactLinks"
+          "groupId": "contactLinks"
         },
         {
           "name": "contactLink1Href",
@@ -9736,7 +9676,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "mailto:info@3mash.com",
-          "groupId": "footerContactLinks"
+          "groupId": "contactLinks"
         },
         {
           "name": "contactLink2Text",
@@ -9744,7 +9684,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Antalya Teknokent, Konyaaltı",
-          "groupId": "footerContactLinks"
+          "groupId": "contactLinks"
         },
         {
           "name": "contactLink2Href",
@@ -9752,7 +9692,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "#",
-          "groupId": "footerContactLinks"
+          "groupId": "contactLinks"
         },
         {
           "name": "contactLink3Text",
@@ -9760,7 +9700,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "@3mashsocial",
-          "groupId": "footerContactLinks"
+          "groupId": "contactLinks"
         },
         {
           "name": "contactLink3Href",
@@ -9768,14 +9708,19 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://instagram.com/3mashsocial",
-          "groupId": "footerContactLinks"
+          "groupId": "contactLinks"
         }
       ],
       "propGroups": [
         {
           "id": "contactLinks",
-          "name": "Contact Links",
-          "description": "Footer contact column links"
+          "name": "İletişim",
+          "description": "İletişim başlığı ve bağlantıları"
+        },
+        {
+          "id": "structure",
+          "name": "Yapı",
+          "description": "İletişim alanı alt bileşenleri"
         }
       ]
     },
@@ -9792,7 +9737,7 @@
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": true,
-          "groupId": "footerSocialLinks"
+          "groupId": "socialLinks"
         },
         {
           "name": "facebookHref",
@@ -9800,7 +9745,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "",
-          "groupId": "footerSocialLinks"
+          "groupId": "socialLinks"
         },
         {
           "name": "facebookLabel",
@@ -9808,7 +9753,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Facebook",
-          "groupId": "footerSocialLinks"
+          "groupId": "socialLinks"
         },
         {
           "name": "instagramHref",
@@ -9816,7 +9761,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://instagram.com/3mashsocial",
-          "groupId": "footerSocialLinks"
+          "groupId": "socialLinks"
         },
         {
           "name": "instagramLabel",
@@ -9824,7 +9769,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Instagram",
-          "groupId": "footerSocialLinks"
+          "groupId": "socialLinks"
         },
         {
           "name": "youtubeHref",
@@ -9832,7 +9777,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "",
-          "groupId": "footerSocialLinks"
+          "groupId": "socialLinks"
         },
         {
           "name": "youtubeLabel",
@@ -9840,7 +9785,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "YouTube",
-          "groupId": "footerSocialLinks"
+          "groupId": "socialLinks"
         },
         {
           "name": "linkedinHref",
@@ -9848,7 +9793,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "",
-          "groupId": "footerSocialLinks"
+          "groupId": "socialLinks"
         },
         {
           "name": "linkedinLabel",
@@ -9856,14 +9801,14 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "LinkedIn",
-          "groupId": "footerSocialLinks"
+          "groupId": "socialLinks"
         }
       ],
       "propGroups": [
         {
           "id": "socialLinks",
-          "name": "Social Links",
-          "description": "Footer social icon links"
+          "name": "Sosyal Medya",
+          "description": "Sosyal medya bağlantıları ve etiketleri"
         }
       ]
     },
@@ -9880,7 +9825,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.",
-          "groupId": "footerLegal"
+          "groupId": "legal"
         },
         {
           "name": "legalText",
@@ -9888,26 +9833,14 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "KVKK · İade & Garanti · Mesafeli Satış",
-          "groupId": "footerLegal"
+          "groupId": "legal"
         }
       ],
       "propGroups": [
         {
           "id": "legal",
-          "name": "Legal Bar",
-          "description": "Footer bottom legal text"
-        },
-        {
-          "id": "text-customization",
-          "name": "Text Customization",
-          "description": "Rich text fields for bold, italic and inline formatting",
-          "children": [
-            {
-              "id": "wordStyle",
-              "name": "Word Style",
-              "description": "Style a matching word or phrase inside this section"
-            }
-          ]
+          "name": "Telif ve Yasal Metin",
+          "description": "Alt bölümün telif ve yasal satırı"
         }
       ]
     },
