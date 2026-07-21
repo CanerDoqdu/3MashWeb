@@ -14,6 +14,17 @@
   box-sizing: border-box;
 }
 
+.three-mash-header li,
+.three-mash-header summary {
+  list-style: none;
+}
+
+.three-mash-header li::marker,
+.three-mash-header summary::marker {
+  content: "";
+  font-size: 0;
+}
+
 .tmh-wrap {
   width: min(100%, 1240px);
   margin: 0 auto;

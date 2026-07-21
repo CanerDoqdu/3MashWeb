@@ -21,7 +21,47 @@
               {
                 "id": "default-header-announcement",
                 "codeComponentId": "2tplvqpo-headerAnnouncement",
-                "propValues": {}
+                "propValues": {
+                  "showAnnouncement": {
+                    "value": true
+                  },
+                  "announcementHighlightText": {
+                    "value": "⚡ Fırsatı kaçırmayın."
+                  },
+                  "announcementText": {
+                    "value": "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim."
+                  },
+                  "announcementCtaText": {
+                    "value": "Hemen hesaplayın"
+                  },
+                  "announcementHref": {
+                    "value": "#hesap"
+                  },
+                  "announcementBackgroundColor": {
+                    "value": "#0E0E0C"
+                  },
+                  "announcementTextColor": {
+                    "value": "#CFCFC6"
+                  },
+                  "accentColor": {
+                    "value": "#C7F136"
+                  },
+                  "announcementWordStyleEnabled": {
+                    "value": false
+                  },
+                  "announcementStyledPhrase": {
+                    "value": "sessiz kaybını"
+                  },
+                  "announcementStyledPhraseColor": {
+                    "value": "#C7F136"
+                  },
+                  "announcementStyledPhraseBold": {
+                    "value": false
+                  },
+                  "announcementStyledPhraseItalic": {
+                    "value": false
+                  }
+                }
               }
             ]
           },
@@ -31,66 +71,1118 @@
           ]
         },
         {
-          "name": "navbarLeftComponents",
-          "displayName": "Navbar Sol Taraf",
+          "name": "navbarComponents",
+          "displayName": "Navbar",
           "type": "COMPONENT_LIST",
           "required": false,
-          "defaultValue": {
-            "components": [
-              {
-                "id": "default-header-logo",
-                "codeComponentId": "2tplvqpo-headerLogo",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-products-menu",
-                "codeComponentId": "2tplvqpo-headerProductsMenu",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-why-menu",
-                "codeComponentId": "2tplvqpo-headerWhyMenu",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-plain-links",
-                "codeComponentId": "2tplvqpo-headerPlainLinks",
-                "propValues": {}
-              }
-            ]
-          },
           "groupId": "structure",
           "filteredComponentIds": [
             "2tplvqpo-headerLogo",
             "2tplvqpo-headerProductsMenu",
             "2tplvqpo-headerWhyMenu",
-            "2tplvqpo-headerPlainLinks"
-          ]
-        },
-        {
-          "name": "navbarRightComponents",
-          "displayName": "Navbar Sağ Taraf",
-          "type": "COMPONENT_LIST",
-          "required": false,
+            "2tplvqpo-headerPlainLinks",
+            "2tplvqpo-headerActions",
+            "2tplvqpo-headerMobileMenu"
+          ],
           "defaultValue": {
             "components": [
               {
+                "id": "default-header-logo",
+                "codeComponentId": "2tplvqpo-headerLogo",
+                "propValues": {
+                  "logoText": {
+                    "value": "mash"
+                  },
+                  "logoHref": {
+                    "value": "#"
+                  },
+                  "backgroundColor": {
+                    "value": "#FAFAF7"
+                  },
+                  "accentColor": {
+                    "value": "#C7F136"
+                  },
+                  "textColor": {
+                    "value": "#0E0E0C"
+                  },
+                  "mutedTextColor": {
+                    "value": "#8F8F86"
+                  },
+                  "lineColor": {
+                    "value": "#E6E6E0"
+                  },
+                  "panelColor": {
+                    "value": "#FFFFFF"
+                  },
+                  "badgeColor": {
+                    "value": "#E2492F"
+                  },
+                  "logoImageAlt": {
+                    "value": "3mash"
+                  },
+                  "logoImageWidth": {
+                    "value": 32
+                  },
+                  "logoImageHeight": {
+                    "value": 32
+                  },
+                  "logoImageXOffset": {
+                    "value": 0
+                  },
+                  "logoImageYOffset": {
+                    "value": 0
+                  },
+                  "logoImageFit": {
+                    "value": "contain"
+                  },
+                  "logoImageOpacity": {
+                    "value": 100
+                  },
+                  "logoImageBrightness": {
+                    "value": 100
+                  },
+                  "logoImageContrast": {
+                    "value": 100
+                  },
+                  "logoImageSaturation": {
+                    "value": 100
+                  },
+                  "logoImageHue": {
+                    "value": 0
+                  },
+                  "logoImageInvert": {
+                    "value": 0
+                  },
+                  "logoSvgWidth": {
+                    "value": 32
+                  },
+                  "logoSvgHeight": {
+                    "value": 32
+                  },
+                  "logoSvgXOffset": {
+                    "value": 0
+                  },
+                  "logoSvgYOffset": {
+                    "value": 0
+                  },
+                  "logoSvgOpacity": {
+                    "value": 100
+                  },
+                  "logoSvgBrightness": {
+                    "value": 100
+                  },
+                  "logoSvgContrast": {
+                    "value": 100
+                  },
+                  "logoSvgSaturation": {
+                    "value": 100
+                  },
+                  "logoSvgHue": {
+                    "value": 0
+                  },
+                  "logoSvgInvert": {
+                    "value": 0
+                  },
+                  "wordStyleEnabled": {
+                    "value": false
+                  },
+                  "styledPhrase": {
+                    "value": ""
+                  },
+                  "styledPhraseColor": {
+                    "value": "#C7F136"
+                  },
+                  "styledPhraseBold": {
+                    "value": false
+                  },
+                  "styledPhraseItalic": {
+                    "value": false
+                  }
+                }
+              },
+              {
+                "id": "default-header-products-menu",
+                "codeComponentId": "2tplvqpo-headerProductsMenu",
+                "propValues": {
+                  "productsMenuText": {
+                    "value": "Ürünler"
+                  },
+                  "productsFeatureEyebrow": {
+                    "value": "YENİ · DÜNYADA İLK"
+                  },
+                  "productsFeatureTitle": {
+                    "value": "MASH C4P Akıllı Kürleme Cihazı"
+                  },
+                  "productsFeatureDescription": {
+                    "value": "Reçineye göre otomatik kürleme. Sonuç kalitesini kullanıcı hatasından çıkarır."
+                  },
+                  "productsFeatureCtaText": {
+                    "value": "Keşfet"
+                  },
+                  "productsFeatureHref": {
+                    "value": "/urunler/c4p"
+                  },
+                  "productsCol1Title": {
+                    "value": "Üretim"
+                  },
+                  "product1Title": {
+                    "value": "3D Yazıcılar"
+                  },
+                  "product1Description": {
+                    "value": "P1D / P16L hassas baskı"
+                  },
+                  "product1Href": {
+                    "value": "/urunler/3d-yazicilar"
+                  },
+                  "product2Title": {
+                    "value": "Yıkama & Kürleme"
+                  },
+                  "product2Description": {
+                    "value": "Yıkama ve akıllı kürleme"
+                  },
+                  "product2Href": {
+                    "value": "/urunler/yikama-kurleme"
+                  },
+                  "product3Title": {
+                    "value": "Dental Reçineler"
+                  },
+                  "product3Description": {
+                    "value": "Dental reçine seçenekleri"
+                  },
+                  "product3Href": {
+                    "value": "/urunler/dental-recineler"
+                  },
+                  "productsCol2Title": {
+                    "value": "Tamamlayıcı"
+                  },
+                  "product4Title": {
+                    "value": "Masaüstü Tarayıcılar"
+                  },
+                  "product4Description": {
+                    "value": "Lab için hassas tarama"
+                  },
+                  "product4Href": {
+                    "value": "/urunler/masasustu-tarayicilar"
+                  },
+                  "product5Title": {
+                    "value": "Zirkon Bloklar & Titanyum"
+                  },
+                  "product5Description": {
+                    "value": "Freze sarfları"
+                  },
+                  "product5Href": {
+                    "value": "/urunler/zirkon-bloklar"
+                  },
+                  "product6Title": {
+                    "value": "Dental Fırınlar"
+                  },
+                  "product6Description": {
+                    "value": "Sinterleme çözümleri"
+                  },
+                  "product6Href": {
+                    "value": "/urunler/dental-firinlar"
+                  },
+                  "backgroundColor": {
+                    "value": "#FAFAF7"
+                  },
+                  "accentColor": {
+                    "value": "#C7F136"
+                  },
+                  "textColor": {
+                    "value": "#0E0E0C"
+                  },
+                  "mutedTextColor": {
+                    "value": "#8F8F86"
+                  },
+                  "lineColor": {
+                    "value": "#E6E6E0"
+                  },
+                  "panelColor": {
+                    "value": "#FFFFFF"
+                  },
+                  "badgeColor": {
+                    "value": "#E2492F"
+                  },
+                  "productsFeatureImageAlt": {
+                    "value": "MASH C4P Akıllı Kürleme Cihazı"
+                  },
+                  "productsFeatureImageWidth": {
+                    "value": 152
+                  },
+                  "productsFeatureImageHeight": {
+                    "value": 122
+                  },
+                  "productsFeatureImageXOffset": {
+                    "value": 0
+                  },
+                  "productsFeatureImageYOffset": {
+                    "value": 0
+                  },
+                  "productsFeatureImageFit": {
+                    "value": "contain"
+                  },
+                  "productsFeatureImageOpacity": {
+                    "value": 100
+                  },
+                  "productsFeatureImageBrightness": {
+                    "value": 125
+                  },
+                  "productsFeatureImageContrast": {
+                    "value": 115
+                  },
+                  "productsFeatureImageSaturation": {
+                    "value": 100
+                  },
+                  "productsFeatureImageHue": {
+                    "value": 0
+                  },
+                  "productsFeatureImageInvert": {
+                    "value": 0
+                  },
+                  "productIconImageWidth": {
+                    "value": 34
+                  },
+                  "productIconImageHeight": {
+                    "value": 34
+                  },
+                  "productIconImageXOffset": {
+                    "value": 0
+                  },
+                  "productIconImageYOffset": {
+                    "value": 0
+                  },
+                  "productIconImageFit": {
+                    "value": "contain"
+                  },
+                  "productIconImageOpacity": {
+                    "value": 100
+                  },
+                  "productIconImageBrightness": {
+                    "value": 100
+                  },
+                  "productIconImageContrast": {
+                    "value": 100
+                  },
+                  "productIconImageSaturation": {
+                    "value": 100
+                  },
+                  "productIconImageHue": {
+                    "value": 0
+                  },
+                  "productIconImageInvert": {
+                    "value": 0
+                  },
+                  "productIconSvgWidth": {
+                    "value": 21
+                  },
+                  "productIconSvgHeight": {
+                    "value": 21
+                  },
+                  "productIconSvgXOffset": {
+                    "value": 0
+                  },
+                  "productIconSvgYOffset": {
+                    "value": 0
+                  },
+                  "productIconSvgOpacity": {
+                    "value": 100
+                  },
+                  "productIconSvgBrightness": {
+                    "value": 100
+                  },
+                  "productIconSvgContrast": {
+                    "value": 100
+                  },
+                  "productIconSvgSaturation": {
+                    "value": 100
+                  },
+                  "productIconSvgHue": {
+                    "value": 0
+                  },
+                  "productIconSvgInvert": {
+                    "value": 0
+                  },
+                  "showProductIcons": {
+                    "value": true
+                  },
+                  "wordStyleEnabled": {
+                    "value": false
+                  },
+                  "styledPhrase": {
+                    "value": ""
+                  },
+                  "styledPhraseColor": {
+                    "value": "#C7F136"
+                  },
+                  "styledPhraseBold": {
+                    "value": false
+                  },
+                  "styledPhraseItalic": {
+                    "value": false
+                  }
+                }
+              },
+              {
+                "id": "default-header-why-menu",
+                "codeComponentId": "2tplvqpo-headerWhyMenu",
+                "propValues": {
+                  "whyMenuText": {
+                    "value": "Neden 3mash?"
+                  },
+                  "why1Number": {
+                    "value": "01"
+                  },
+                  "why1Title": {
+                    "value": "Gizli maliyetinizi görün"
+                  },
+                  "why1Description": {
+                    "value": "Tekrar işlerin yıllık kayba nasıl döndüğünü hesaplayın"
+                  },
+                  "why1Href": {
+                    "value": "#hesap"
+                  },
+                  "why2Number": {
+                    "value": "02"
+                  },
+                  "why2Title": {
+                    "value": "Hassasiyet farkını anlayın"
+                  },
+                  "why2Description": {
+                    "value": "İlk seferde oturmayan işlerin asıl sebebini görün"
+                  },
+                  "why2Href": {
+                    "value": "#sebep"
+                  },
+                  "why3Number": {
+                    "value": "03"
+                  },
+                  "why3Title": {
+                    "value": "Uyumlu üretimi keşfedin"
+                  },
+                  "why3Description": {
+                    "value": "Yazıcı, reçine ve parametre aynı sonuç için birlikte çalışır"
+                  },
+                  "why3Href": {
+                    "value": "#cozum"
+                  },
+                  "why4Number": {
+                    "value": "04"
+                  },
+                  "why4Title": {
+                    "value": "Kürlemenin etkisini görün"
+                  },
+                  "why4Description": {
+                    "value": "Doğru baskının son adımda neden kaybedilmemesi gerektiğini öğrenin"
+                  },
+                  "why4Href": {
+                    "value": "#kurleme"
+                  },
+                  "backgroundColor": {
+                    "value": "#FAFAF7"
+                  },
+                  "accentColor": {
+                    "value": "#C7F136"
+                  },
+                  "textColor": {
+                    "value": "#0E0E0C"
+                  },
+                  "mutedTextColor": {
+                    "value": "#8F8F86"
+                  },
+                  "lineColor": {
+                    "value": "#E6E6E0"
+                  },
+                  "panelColor": {
+                    "value": "#FFFFFF"
+                  },
+                  "badgeColor": {
+                    "value": "#E2492F"
+                  },
+                  "whyMenuEyebrow": {
+                    "value": "SAYFA AKIŞI"
+                  },
+                  "whyMenuDescription": {
+                    "value": "Kaybın nereden başladığını ve 3mash sisteminin bunu nasıl azalttığını adım adım görün."
+                  },
+                  "why5Number": {
+                    "value": "05"
+                  },
+                  "why5Title": {
+                    "value": "Tek çatıdaki akışı inceleyin"
+                  },
+                  "why5Description": {
+                    "value": "Cihazdan sarfa, eğitimden desteğe tüm ekosistemi görün"
+                  },
+                  "why5Href": {
+                    "value": "#ekosistem"
+                  },
+                  "why6Number": {
+                    "value": "06"
+                  },
+                  "why6Title": {
+                    "value": "Gerçek kullanıcıları görün"
+                  },
+                  "why6Description": {
+                    "value": "Klinik ve laboratuvarların 3mash deneyimlerine bakın"
+                  },
+                  "why6Href": {
+                    "value": "#guven"
+                  },
+                  "why7Number": {
+                    "value": "07"
+                  },
+                  "why7Title": {
+                    "value": "Aklınızdaki soruları çözün"
+                  },
+                  "why7Description": {
+                    "value": "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın"
+                  },
+                  "why7Href": {
+                    "value": "#sss"
+                  },
+                  "showWhyItemGlow": {
+                    "value": true
+                  },
+                  "wordStyleEnabled": {
+                    "value": false
+                  },
+                  "styledPhrase": {
+                    "value": ""
+                  },
+                  "styledPhraseColor": {
+                    "value": "#C7F136"
+                  },
+                  "styledPhraseBold": {
+                    "value": false
+                  },
+                  "styledPhraseItalic": {
+                    "value": false
+                  }
+                }
+              },
+              {
+                "id": "default-header-plain-links",
+                "codeComponentId": "2tplvqpo-headerPlainLinks",
+                "propValues": {
+                  "referencesText": {
+                    "value": "Referanslar"
+                  },
+                  "referencesHref": {
+                    "value": "#guven"
+                  },
+                  "academyText": {
+                    "value": "Academy"
+                  },
+                  "academyHref": {
+                    "value": "/mash-academy"
+                  },
+                  "backgroundColor": {
+                    "value": "#FAFAF7"
+                  },
+                  "accentColor": {
+                    "value": "#C7F136"
+                  },
+                  "textColor": {
+                    "value": "#0E0E0C"
+                  },
+                  "mutedTextColor": {
+                    "value": "#8F8F86"
+                  },
+                  "lineColor": {
+                    "value": "#E6E6E0"
+                  },
+                  "panelColor": {
+                    "value": "#FFFFFF"
+                  },
+                  "badgeColor": {
+                    "value": "#E2492F"
+                  },
+                  "wordStyleEnabled": {
+                    "value": false
+                  },
+                  "styledPhrase": {
+                    "value": ""
+                  },
+                  "styledPhraseColor": {
+                    "value": "#C7F136"
+                  },
+                  "styledPhraseBold": {
+                    "value": false
+                  },
+                  "styledPhraseItalic": {
+                    "value": false
+                  }
+                }
+              },
+              {
                 "id": "default-header-actions",
                 "codeComponentId": "2tplvqpo-headerActions",
-                "propValues": {}
+                "propValues": {
+                  "searchHref": {
+                    "value": "#"
+                  },
+                  "searchAriaLabel": {
+                    "value": "Ara"
+                  },
+                  "accountHref": {
+                    "value": "https://3mash.com/account/login"
+                  },
+                  "accountAriaLabel": {
+                    "value": "Hesabım"
+                  },
+                  "cartHref": {
+                    "value": "https://3mash.com/"
+                  },
+                  "cartAriaLabel": {
+                    "value": "Sepet"
+                  },
+                  "cartCount": {
+                    "value": ""
+                  },
+                  "backgroundColor": {
+                    "value": "#FAFAF7"
+                  },
+                  "accentColor": {
+                    "value": "#C7F136"
+                  },
+                  "textColor": {
+                    "value": "#0E0E0C"
+                  },
+                  "mutedTextColor": {
+                    "value": "#8F8F86"
+                  },
+                  "lineColor": {
+                    "value": "#E6E6E0"
+                  },
+                  "panelColor": {
+                    "value": "#FFFFFF"
+                  },
+                  "badgeColor": {
+                    "value": "#E2492F"
+                  },
+                  "searchDrawerTitle": {
+                    "value": "Arama"
+                  },
+                  "searchPlaceholder": {
+                    "value": "Ürün, kategori veya içerik ara"
+                  },
+                  "searchCloseLabel": {
+                    "value": "Kapat"
+                  },
+                  "searchSubmitLabel": {
+                    "value": "Ara"
+                  },
+                  "searchQueryParam": {
+                    "value": "q"
+                  },
+                  "actionIconImageWidth": {
+                    "value": 22
+                  },
+                  "actionIconImageHeight": {
+                    "value": 22
+                  },
+                  "actionIconImageXOffset": {
+                    "value": 0
+                  },
+                  "actionIconImageYOffset": {
+                    "value": 0
+                  },
+                  "actionIconImageFit": {
+                    "value": "contain"
+                  },
+                  "actionIconImageOpacity": {
+                    "value": 100
+                  },
+                  "actionIconImageBrightness": {
+                    "value": 100
+                  },
+                  "actionIconImageContrast": {
+                    "value": 100
+                  },
+                  "actionIconImageSaturation": {
+                    "value": 100
+                  },
+                  "actionIconImageHue": {
+                    "value": 0
+                  },
+                  "actionIconImageInvert": {
+                    "value": 0
+                  },
+                  "actionIconSvgWidth": {
+                    "value": 22
+                  },
+                  "actionIconSvgHeight": {
+                    "value": 22
+                  },
+                  "actionIconSvgXOffset": {
+                    "value": 0
+                  },
+                  "actionIconSvgYOffset": {
+                    "value": 0
+                  },
+                  "actionIconSvgOpacity": {
+                    "value": 100
+                  },
+                  "actionIconSvgBrightness": {
+                    "value": 100
+                  },
+                  "actionIconSvgContrast": {
+                    "value": 100
+                  },
+                  "actionIconSvgSaturation": {
+                    "value": 100
+                  },
+                  "actionIconSvgHue": {
+                    "value": 0
+                  },
+                  "actionIconSvgInvert": {
+                    "value": 0
+                  },
+                  "showActionIcons": {
+                    "value": true
+                  },
+                  "showProfileMenu": {
+                    "value": true
+                  },
+                  "profileMenuTitle": {
+                    "value": "Hesabınız"
+                  },
+                  "profileMenuDescription": {
+                    "value": "Siparişlerinizi takip edin, hesap bilgilerinizi yönetin veya hızlıca giriş yapın."
+                  },
+                  "profilePrimaryText": {
+                    "value": "Giriş yap"
+                  },
+                  "profilePrimaryHref": {
+                    "value": "https://3mash.com/account/login"
+                  },
+                  "profileSecondaryText": {
+                    "value": "Hesap oluştur"
+                  },
+                  "profileSecondaryHref": {
+                    "value": "https://3mash.com/account/register"
+                  },
+                  "showStorePanel": {
+                    "value": true
+                  },
+                  "storePanelTitle": {
+                    "value": "3mash Store"
+                  },
+                  "storePanelDescription": {
+                    "value": "Ürünleri, sarf malzemeleri ve sipariş akışını mağazada görüntüleyin."
+                  },
+                  "storePanelButtonText": {
+                    "value": "Markete git"
+                  },
+                  "storePanelButtonHref": {
+                    "value": "https://3mash.com/"
+                  },
+                  "storePanelNote": {
+                    "value": "Sepet ve mağaza işlemleri güvenli 3mash mağazasında devam eder."
+                  },
+                  "wordStyleEnabled": {
+                    "value": false
+                  },
+                  "styledPhrase": {
+                    "value": ""
+                  },
+                  "styledPhraseColor": {
+                    "value": "#C7F136"
+                  },
+                  "styledPhraseBold": {
+                    "value": false
+                  },
+                  "styledPhraseItalic": {
+                    "value": false
+                  },
+                  "profileLink1Text": {
+                    "value": "Siparişlerim"
+                  },
+                  "profileLink2Text": {
+                    "value": "Adreslerim"
+                  },
+                  "profileLink2Href": {
+                    "value": "https://3mash.com/account/addresses"
+                  },
+                  "profileLink3Text": {
+                    "value": "Destek talebi"
+                  },
+                  "profileLink3Href": {
+                    "value": "https://3mash.com/pages/iletisim"
+                  },
+                  "storeItemCountText": {
+                    "value": "Sepetinizde ürün yok"
+                  },
+                  "storeEmptyTitle": {
+                    "value": "Sepetiniz şu an boş"
+                  },
+                  "storeEmptyDescription": {
+                    "value": "Dental üretim akışınız için yazıcı, reçine ve kürleme çözümlerini inceleyin."
+                  },
+                  "storeSecondaryButtonText": {
+                    "value": "Ürünleri incele"
+                  },
+                  "storeSecondaryButtonHref": {
+                    "value": "https://3mash.com/3d-yazicilar"
+                  },
+                  "profileLink1Href": {
+                    "value": "https://3mash.com/account/orders"
+                  },
+                  "profileLink4Text": {
+                    "value": "Teknik destek"
+                  },
+                  "profileLink4Href": {
+                    "value": "https://3mash.com/pages/iletisim"
+                  },
+                  "profileLink5Text": {
+                    "value": "Mash Academy"
+                  },
+                  "profileLink5Href": {
+                    "value": "/mash-academy"
+                  },
+                  "profileLink6Text": {
+                    "value": "Çıkış yap"
+                  },
+                  "profileLink6Href": {
+                    "value": "https://3mash.com/account/logout"
+                  }
+                }
               },
               {
                 "id": "default-header-mobile-menu",
                 "codeComponentId": "2tplvqpo-headerMobileMenu",
-                "propValues": {}
+                "propValues": {
+                  "productsMenuText": {
+                    "value": "Ürünler"
+                  },
+                  "productsFeatureEyebrow": {
+                    "value": "YENİ · DÜNYADA İLK"
+                  },
+                  "productsFeatureTitle": {
+                    "value": "MASH C4P Akıllı Kürleme Cihazı"
+                  },
+                  "productsFeatureDescription": {
+                    "value": "Reçineye göre otomatik kürleme. Sonuç kalitesini kullanıcı hatasından çıkarır."
+                  },
+                  "productsFeatureCtaText": {
+                    "value": "Keşfet"
+                  },
+                  "productsFeatureHref": {
+                    "value": "/urunler/c4p"
+                  },
+                  "productsCol1Title": {
+                    "value": "Üretim"
+                  },
+                  "product1Title": {
+                    "value": "3D Yazıcılar"
+                  },
+                  "product1Description": {
+                    "value": "P1D / P16L hassas baskı"
+                  },
+                  "product1Href": {
+                    "value": "/urunler/3d-yazicilar"
+                  },
+                  "product2Title": {
+                    "value": "Yıkama & Kürleme"
+                  },
+                  "product2Description": {
+                    "value": "Yıkama ve akıllı kürleme"
+                  },
+                  "product2Href": {
+                    "value": "/urunler/yikama-kurleme"
+                  },
+                  "product3Title": {
+                    "value": "Dental Reçineler"
+                  },
+                  "product3Description": {
+                    "value": "Dental reçine seçenekleri"
+                  },
+                  "product3Href": {
+                    "value": "/urunler/dental-recineler"
+                  },
+                  "productsCol2Title": {
+                    "value": "Tamamlayıcı"
+                  },
+                  "product4Title": {
+                    "value": "Masaüstü Tarayıcılar"
+                  },
+                  "product4Description": {
+                    "value": "Lab için hassas tarama"
+                  },
+                  "product4Href": {
+                    "value": "/urunler/masasustu-tarayicilar"
+                  },
+                  "product5Title": {
+                    "value": "Zirkon Bloklar & Titanyum"
+                  },
+                  "product5Description": {
+                    "value": "Freze sarfları"
+                  },
+                  "product5Href": {
+                    "value": "/urunler/zirkon-bloklar"
+                  },
+                  "product6Title": {
+                    "value": "Dental Fırınlar"
+                  },
+                  "product6Description": {
+                    "value": "Sinterleme çözümleri"
+                  },
+                  "product6Href": {
+                    "value": "/urunler/dental-firinlar"
+                  },
+                  "whyMenuText": {
+                    "value": "Neden 3mash?"
+                  },
+                  "why1Number": {
+                    "value": "01"
+                  },
+                  "why1Title": {
+                    "value": "Gizli maliyetinizi görün"
+                  },
+                  "why1Description": {
+                    "value": "Tekrar işlerin yıllık kayba nasıl döndüğünü hesaplayın"
+                  },
+                  "why1Href": {
+                    "value": "#hesap"
+                  },
+                  "why2Number": {
+                    "value": "02"
+                  },
+                  "why2Title": {
+                    "value": "Hassasiyet farkını anlayın"
+                  },
+                  "why2Description": {
+                    "value": "İlk seferde oturmayan işlerin asıl sebebini görün"
+                  },
+                  "why2Href": {
+                    "value": "#sebep"
+                  },
+                  "why3Number": {
+                    "value": "03"
+                  },
+                  "why3Title": {
+                    "value": "Uyumlu üretimi keşfedin"
+                  },
+                  "why3Description": {
+                    "value": "Yazıcı, reçine ve parametre aynı sonuç için birlikte çalışır"
+                  },
+                  "why3Href": {
+                    "value": "#cozum"
+                  },
+                  "why4Number": {
+                    "value": "04"
+                  },
+                  "why4Title": {
+                    "value": "Kürlemenin etkisini görün"
+                  },
+                  "why4Description": {
+                    "value": "Doğru baskının son adımda neden kaybedilmemesi gerektiğini öğrenin"
+                  },
+                  "why4Href": {
+                    "value": "#kurleme"
+                  },
+                  "referencesText": {
+                    "value": "Referanslar"
+                  },
+                  "referencesHref": {
+                    "value": "#guven"
+                  },
+                  "academyText": {
+                    "value": "Academy"
+                  },
+                  "academyHref": {
+                    "value": "/mash-academy"
+                  },
+                  "mobileMenuLabel": {
+                    "value": "Menü"
+                  },
+                  "backgroundColor": {
+                    "value": "#FAFAF7"
+                  },
+                  "accentColor": {
+                    "value": "#C7F136"
+                  },
+                  "textColor": {
+                    "value": "#0E0E0C"
+                  },
+                  "mutedTextColor": {
+                    "value": "#8F8F86"
+                  },
+                  "lineColor": {
+                    "value": "#E6E6E0"
+                  },
+                  "panelColor": {
+                    "value": "#FFFFFF"
+                  },
+                  "badgeColor": {
+                    "value": "#E2492F"
+                  },
+                  "productsFeatureImageAlt": {
+                    "value": "MASH C4P Akıllı Kürleme Cihazı"
+                  },
+                  "whyMenuEyebrow": {
+                    "value": "SAYFA AKIŞI"
+                  },
+                  "whyMenuDescription": {
+                    "value": "Kaybın nereden başladığını ve 3mash sisteminin bunu nasıl azalttığını adım adım görün."
+                  },
+                  "productsFeatureImageWidth": {
+                    "value": 152
+                  },
+                  "productsFeatureImageHeight": {
+                    "value": 122
+                  },
+                  "productsFeatureImageXOffset": {
+                    "value": 0
+                  },
+                  "productsFeatureImageYOffset": {
+                    "value": 0
+                  },
+                  "productsFeatureImageFit": {
+                    "value": "contain"
+                  },
+                  "productsFeatureImageOpacity": {
+                    "value": 100
+                  },
+                  "productsFeatureImageBrightness": {
+                    "value": 125
+                  },
+                  "productsFeatureImageContrast": {
+                    "value": 115
+                  },
+                  "productsFeatureImageSaturation": {
+                    "value": 100
+                  },
+                  "productsFeatureImageHue": {
+                    "value": 0
+                  },
+                  "productsFeatureImageInvert": {
+                    "value": 0
+                  },
+                  "productIconImageWidth": {
+                    "value": 34
+                  },
+                  "productIconImageHeight": {
+                    "value": 34
+                  },
+                  "productIconImageXOffset": {
+                    "value": 0
+                  },
+                  "productIconImageYOffset": {
+                    "value": 0
+                  },
+                  "productIconImageFit": {
+                    "value": "contain"
+                  },
+                  "productIconImageOpacity": {
+                    "value": 100
+                  },
+                  "productIconImageBrightness": {
+                    "value": 100
+                  },
+                  "productIconImageContrast": {
+                    "value": 100
+                  },
+                  "productIconImageSaturation": {
+                    "value": 100
+                  },
+                  "productIconImageHue": {
+                    "value": 0
+                  },
+                  "productIconImageInvert": {
+                    "value": 0
+                  },
+                  "productIconSvgWidth": {
+                    "value": 21
+                  },
+                  "productIconSvgHeight": {
+                    "value": 21
+                  },
+                  "productIconSvgXOffset": {
+                    "value": 0
+                  },
+                  "productIconSvgYOffset": {
+                    "value": 0
+                  },
+                  "productIconSvgOpacity": {
+                    "value": 100
+                  },
+                  "productIconSvgBrightness": {
+                    "value": 100
+                  },
+                  "productIconSvgContrast": {
+                    "value": 100
+                  },
+                  "productIconSvgSaturation": {
+                    "value": 100
+                  },
+                  "productIconSvgHue": {
+                    "value": 0
+                  },
+                  "productIconSvgInvert": {
+                    "value": 0
+                  },
+                  "why5Number": {
+                    "value": "05"
+                  },
+                  "why5Title": {
+                    "value": "Tek çatıdaki akışı inceleyin"
+                  },
+                  "why5Description": {
+                    "value": "Cihazdan sarfa, eğitimden desteğe tüm ekosistemi görün"
+                  },
+                  "why5Href": {
+                    "value": "#ekosistem"
+                  },
+                  "why6Number": {
+                    "value": "06"
+                  },
+                  "why6Title": {
+                    "value": "Gerçek kullanıcıları görün"
+                  },
+                  "why6Description": {
+                    "value": "Klinik ve laboratuvarların 3mash deneyimlerine bakın"
+                  },
+                  "why6Href": {
+                    "value": "#guven"
+                  },
+                  "why7Number": {
+                    "value": "07"
+                  },
+                  "why7Title": {
+                    "value": "Aklınızdaki soruları çözün"
+                  },
+                  "why7Description": {
+                    "value": "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın"
+                  },
+                  "why7Href": {
+                    "value": "#sss"
+                  },
+                  "showProductIcons": {
+                    "value": true
+                  },
+                  "showWhyItemGlow": {
+                    "value": true
+                  },
+                  "wordStyleEnabled": {
+                    "value": false
+                  },
+                  "styledPhrase": {
+                    "value": ""
+                  },
+                  "styledPhraseColor": {
+                    "value": "#C7F136"
+                  },
+                  "styledPhraseBold": {
+                    "value": false
+                  },
+                  "styledPhraseItalic": {
+                    "value": false
+                  }
+                }
               }
             ]
-          },
-          "groupId": "structure",
-          "filteredComponentIds": [
-            "2tplvqpo-headerActions",
-            "2tplvqpo-headerMobileMenu"
-          ]
+          }
         }
       ],
       "propGroups": [
@@ -6002,7 +7094,7 @@
           "displayName": "Video Enabled",
           "type": "BOOLEAN",
           "required": false,
-          "defaultValue": false,
+          "defaultValue": true,
           "groupId": "p16lMedia"
         },
         {
@@ -8963,43 +10055,6 @@
                   },
                   "contactLink3Href": {
                     "value": "https://instagram.com/3mashsocial"
-                  },
-                  "components": {
-                    "components": [
-                      {
-                        "id": "default-footer-social-links",
-                        "codeComponentId": "2tplvqpo-footerSocialLinks",
-                        "propValues": {
-                          "showSocialIcons": {
-                            "value": true
-                          },
-                          "facebookHref": {
-                            "value": ""
-                          },
-                          "facebookLabel": {
-                            "value": "Facebook"
-                          },
-                          "instagramHref": {
-                            "value": "https://instagram.com/3mashsocial"
-                          },
-                          "instagramLabel": {
-                            "value": "Instagram"
-                          },
-                          "youtubeHref": {
-                            "value": ""
-                          },
-                          "youtubeLabel": {
-                            "value": "YouTube"
-                          },
-                          "linkedinHref": {
-                            "value": ""
-                          },
-                          "linkedinLabel": {
-                            "value": "LinkedIn"
-                          }
-                        }
-                      }
-                    ]
                   }
                 }
               }
@@ -9530,53 +10585,6 @@
       "styles": "./src/components/ThreeMashFooter/styles.css",
       "type": "component",
       "props": [
-        {
-          "name": "components",
-          "displayName": "Sosyal Medya Bileşenleri",
-          "type": "COMPONENT_LIST",
-          "required": false,
-          "filteredComponentIds": [
-            "2tplvqpo-footerSocialLinks"
-          ],
-          "defaultValue": {
-            "components": [
-              {
-                "id": "default-footer-social-links",
-                "codeComponentId": "2tplvqpo-footerSocialLinks",
-                "propValues": {
-                  "showSocialIcons": {
-                    "value": true
-                  },
-                  "facebookHref": {
-                    "value": ""
-                  },
-                  "facebookLabel": {
-                    "value": "Facebook"
-                  },
-                  "instagramHref": {
-                    "value": "https://instagram.com/3mashsocial"
-                  },
-                  "instagramLabel": {
-                    "value": "Instagram"
-                  },
-                  "youtubeHref": {
-                    "value": ""
-                  },
-                  "youtubeLabel": {
-                    "value": "YouTube"
-                  },
-                  "linkedinHref": {
-                    "value": ""
-                  },
-                  "linkedinLabel": {
-                    "value": "LinkedIn"
-                  }
-                }
-              }
-            ]
-          },
-          "groupId": "structure"
-        },
         {
           "name": "contactColumnTitle",
           "displayName": "İletişim Başlığı",

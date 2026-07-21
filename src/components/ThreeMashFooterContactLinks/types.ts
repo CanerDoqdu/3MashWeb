@@ -1,6 +1,5 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
-  components?: any;
   contactColumnTitle?: string;
   contactLink1Text?: string;
   contactLink1Href?: string;

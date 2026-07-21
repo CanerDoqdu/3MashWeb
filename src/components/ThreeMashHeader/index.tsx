@@ -9,8 +9,6 @@ type Props = GeneratedProps & {
   components?: any[];
   announcementComponents?: any[];
   navbarComponents?: any[];
-  navbarLeftComponents?: any[];
-  navbarRightComponents?: any[];
   logoText?: string;
   [key: string]: any;
 };
@@ -39,6 +37,15 @@ const headerDesktopMenuComponentId = "2tplvqpo-headerDesktopMenu";
 const headerMenuItemComponentIds = new Set(["2tplvqpo-headerProductsMenu", "2tplvqpo-headerWhyMenu", "2tplvqpo-headerPlainLinks"]);
 const headerActionsComponentId = "2tplvqpo-headerActions";
 const headerMobileMenuComponentId = "2tplvqpo-headerMobileMenu";
+
+function componentInstanceProps(component: any) {
+  const propValues = component?.propValues || {};
+  const props: Record<string, unknown> = {};
+  for (const [key, entry] of Object.entries(propValues)) {
+    props[key] = entry && typeof entry === "object" && "value" in entry ? (entry as { value: unknown }).value : entry;
+  }
+  return props;
+}
 
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
@@ -860,18 +867,14 @@ export function HeaderMobileMenuPart(props: Partial<Props>) {
   );
 }
 
-export function HeaderNavbarPart(props: Partial<Props> & { components?: any[]; leftComponents?: any[]; rightComponents?: any[] }) {
+export function HeaderNavbarPart(props: Partial<Props> & { components?: any[] }) {
   const resolvedProps = withHeaderDefaults(props);
-  const hasSplitComponents = props.leftComponents !== undefined || props.rightComponents !== undefined;
-  const leftComponents = hasSplitComponents ? (Array.isArray(props.leftComponents) ? props.leftComponents : []) : Array.isArray(props.components) ? props.components : [];
-  const rightComponents = hasSplitComponents ? (Array.isArray(props.rightComponents) ? props.rightComponents : []) : [];
-  const components = leftComponents.concat(rightComponents);
-  const logoComponents = leftComponents.filter((component) => component?.codeComponentId === headerLogoComponentId);
-  const menuItemComponents = leftComponents.filter((component) => headerMenuItemComponentIds.has(component?.codeComponentId));
-  const legacyDesktopMenuComponents = leftComponents.filter((component) => component?.codeComponentId === headerDesktopMenuComponentId);
-  const rightSourceComponents = hasSplitComponents ? rightComponents : components;
-  const actionComponents = rightSourceComponents.filter((component) => component?.codeComponentId === headerActionsComponentId);
-  const mobileMenuComponents = rightSourceComponents.filter((component) => component?.codeComponentId === headerMobileMenuComponentId);
+  const components = Array.isArray(props.components) ? props.components : [];
+  const logoComponents = components.filter((component) => component?.codeComponentId === headerLogoComponentId);
+  const menuItemComponents = components.filter((component) => headerMenuItemComponentIds.has(component?.codeComponentId));
+  const legacyDesktopMenuComponents = components.filter((component) => component?.codeComponentId === headerDesktopMenuComponentId);
+  const actionComponents = components.filter((component) => component?.codeComponentId === headerActionsComponentId);
+  const mobileMenuComponents = components.filter((component) => component?.codeComponentId === headerMobileMenuComponentId);
   const groupedComponentIds = new Set([
     headerLogoComponentId,
     headerDesktopMenuComponentId,
@@ -879,8 +882,8 @@ export function HeaderNavbarPart(props: Partial<Props> & { components?: any[]; l
     headerMobileMenuComponentId,
     ...headerMenuItemComponentIds,
   ]);
-  const leftOtherComponents = leftComponents.filter((component) => !groupedComponentIds.has(component?.codeComponentId));
-  const rightOtherComponents = hasSplitComponents ? rightComponents.filter((component) => !groupedComponentIds.has(component?.codeComponentId)) : [];
+  const otherComponents = components.filter((component) => !groupedComponentIds.has(component?.codeComponentId));
+  const childProps = (component: any) => withHeaderDefaults({ ...resolvedProps, ...componentInstanceProps(component) });
 
   return (
     <div className="three-mash-header" style={getHeaderThemeStyle(resolvedProps)}>
@@ -888,20 +891,30 @@ export function HeaderNavbarPart(props: Partial<Props> & { components?: any[]; l
         <div className="tmh-wrap tmh-nav">
           {components.length > 0 ? (
             <>
-              {logoComponents.length > 0 ? <IkasComponentRenderer id="navbar-logo-components" components={logoComponents} parentProps={resolvedProps} /> : null}
+              {logoComponents.map((component) => (
+                <HeaderNavbarLogoPart key={component?.id || component?.codeComponentId} {...childProps(component)} />
+              ))}
               {legacyDesktopMenuComponents.length > 0 ? (
-                <IkasComponentRenderer id="navbar-desktop-menu-legacy" components={legacyDesktopMenuComponents} parentProps={resolvedProps} />
+                legacyDesktopMenuComponents.map((component) => <HeaderDesktopMenuPart key={component?.id || component?.codeComponentId} {...childProps(component)} />)
               ) : menuItemComponents.length > 0 ? (
                 <nav className="tmh-desktop-nav" aria-label={resolvedProps.mobileMenuLabel}>
                   <ul className="tmh-menu">
-                    <IkasComponentRenderer id="navbar-menu-item-components" components={menuItemComponents} parentProps={resolvedProps} />
+                    {menuItemComponents.map((component) => {
+                      const props = childProps(component);
+                      if (component?.codeComponentId === "2tplvqpo-headerProductsMenu") return <HeaderProductsMenuPart key={component?.id || component?.codeComponentId} {...props} />;
+                      if (component?.codeComponentId === "2tplvqpo-headerWhyMenu") return <HeaderWhyMenuPart key={component?.id || component?.codeComponentId} {...props} />;
+                      return <HeaderPlainLinksPart key={component?.id || component?.codeComponentId} {...props} />;
+                    })}
                   </ul>
                 </nav>
               ) : null}
-              {leftOtherComponents.length > 0 ? <IkasComponentRenderer id="navbar-left-other-components" components={leftOtherComponents} parentProps={resolvedProps} /> : null}
-              {actionComponents.length > 0 ? <IkasComponentRenderer id="navbar-action-components" components={actionComponents} parentProps={resolvedProps} /> : null}
-              {mobileMenuComponents.length > 0 ? <IkasComponentRenderer id="navbar-mobile-menu-components" components={mobileMenuComponents} parentProps={resolvedProps} /> : null}
-              {rightOtherComponents.length > 0 ? <IkasComponentRenderer id="navbar-right-other-components" components={rightOtherComponents} parentProps={resolvedProps} /> : null}
+              {actionComponents.map((component) => (
+                <HeaderActionsPart key={component?.id || component?.codeComponentId} {...childProps(component)} />
+              ))}
+              {mobileMenuComponents.map((component) => (
+                <HeaderMobileMenuPart key={component?.id || component?.codeComponentId} {...childProps(component)} />
+              ))}
+              {otherComponents.length > 0 ? <IkasComponentRenderer id="navbar-other-components" components={otherComponents} parentProps={resolvedProps} /> : null}
             </>
           ) : (
             <>
@@ -1301,15 +1314,9 @@ function HeaderAnnouncementFallback(props: Props) {
 export function ThreeMashHeader(props: Props) {
   const resolvedProps = withHeaderDefaults(props);
   const announcementComponents = Array.isArray(resolvedProps.announcementComponents) ? resolvedProps.announcementComponents : [];
-  const navbarLeftComponents = Array.isArray(resolvedProps.navbarLeftComponents) ? resolvedProps.navbarLeftComponents : [];
-  const navbarRightComponents = Array.isArray(resolvedProps.navbarRightComponents) ? resolvedProps.navbarRightComponents : [];
-  const legacyNavbarComponents = Array.isArray(resolvedProps.navbarComponents) ? resolvedProps.navbarComponents : [];
+  const navbarComponents = Array.isArray(resolvedProps.navbarComponents) ? resolvedProps.navbarComponents : [];
   const legacyComponents = Array.isArray(resolvedProps.components) ? resolvedProps.components : [];
-  const usesComponentListCategories =
-    props.announcementComponents !== undefined ||
-    props.navbarLeftComponents !== undefined ||
-    props.navbarRightComponents !== undefined ||
-    props.navbarComponents !== undefined;
+  const usesComponentListCategories = props.announcementComponents !== undefined || props.navbarComponents !== undefined;
 
   return (
     <section className="three-mash-header" style={getHeaderThemeStyle(resolvedProps)}>
@@ -1318,11 +1325,7 @@ export function ThreeMashHeader(props: Props) {
           {announcementComponents.length > 0 ? (
             <IkasComponentRenderer id="header-announcement-components" components={announcementComponents} parentProps={resolvedProps} />
           ) : null}
-          {navbarLeftComponents.length > 0 || navbarRightComponents.length > 0 ? (
-            <HeaderNavbarPart {...resolvedProps} leftComponents={navbarLeftComponents} rightComponents={navbarRightComponents} />
-          ) : legacyNavbarComponents.length > 0 ? (
-            <HeaderNavbarPart {...resolvedProps} components={legacyNavbarComponents} />
-          ) : null}
+          {navbarComponents.length > 0 ? <HeaderNavbarPart {...resolvedProps} components={navbarComponents} /> : null}
         </>
       ) : legacyComponents.length > 0 ? (
         <IkasComponentRenderer id="header-components-legacy" components={legacyComponents} parentProps={resolvedProps} />
