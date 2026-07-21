@@ -1,10 +1,11 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
   components?: any;
-  bottomComponents?: any;
   backgroundColor?: string;
+  accentColor?: string;
   textColor?: string;
   mutedTextColor?: string;
   lineColor?: string;
-  accentColor?: string;
+  panelColor?: string;
+  badgeColor?: string;
 }

@@ -22,6 +22,56 @@ index 9f2f8ab..f76789d 100644
                      return undefined;
                  const root = packageRootOf(specifier);
 
+diff --git a/dist/commands/build.js b/dist/commands/build.js
+index 8d52e95..5f03bda 100644
+--- a/dist/commands/build.js
++++ b/dist/commands/build.js
+@@ -65,7 +65,8 @@ export async function buildComponents(options) {
+             const metadata = {
+                 id: component.id,
+                 name: component.name,
+-                props: component.props
++                props: component.props,
++                ...(component.type ? { type: component.type } : {})
+             };
+             fs.writeFileSync(path.join(componentOutDir, "metadata.json"), JSON.stringify(metadata, null, 2));
+             spinner.succeed(chalk.green(`${component.name} built successfully`));
+@@ -86,7 +87,7 @@ export async function buildComponents(options) {
+             id: c.id,
+             name: c.name,
+             props: c.props,
+-            ...(c.type && c.type !== "component" ? { type: c.type } : {}),
++            ...(c.type ? { type: c.type } : {}),
+         }))
+     };
+     fs.writeFileSync(path.join(outputPath, "manifest.json"), JSON.stringify(manifest, null, 2));
+
+diff --git a/dist/commands/publish.js b/dist/commands/publish.js
+index 0bc6877..7d4f5f1 100644
+--- a/dist/commands/publish.js
++++ b/dist/commands/publish.js
+@@ -173,6 +173,9 @@ export async function publishComponents(options) {
+             typeId: prop.typeId,
+             enumTypeId: prop.enumTypeId,
+             ...(prop.privateVarMap ? { privateVarMap: prop.privateVarMap } : {}),
++            ...(prop.filteredComponentIds
++                ? { filteredComponentIds: prop.filteredComponentIds }
++                : {}),
+         }));
+         // Build prop group hierarchy if groups are defined
+         const propGroups = component.propGroups && component.propGroups.length > 0
+@@ -200,9 +203,7 @@ export async function publishComponents(options) {
+             canvasClientJs,
+             sourceType: "external",
+             lastCompiledAt: Date.now(),
+-            ...(component.type && component.type !== "component"
+-                ? { componentType: component.type }
+-                : {}),
++            ...(component.type ? { componentType: component.type } : {}),
+             ...(component.isHeader ? { isHeader: true } : {}),
+             ...(component.isFooter ? { isFooter: true } : {}),
+             ...(propGroups ? { propGroups } : {}),
+
 diff --git a/dist/utils/esm-transform.js b/dist/utils/esm-transform.js
 index 6e089a1..956fc82 100644
 --- a/dist/utils/esm-transform.js

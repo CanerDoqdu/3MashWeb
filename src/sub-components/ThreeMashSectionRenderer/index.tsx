@@ -54,7 +54,7 @@ export const defaultFaqHtml = `<section id="sss" class="tmr-section tmr-section-
 
 export const defaultFinalHtml = `<section class="tmr-final"><div class="tmr-wrap"><h2>Bu görünmez kaybı <span>birlikte azaltalım.</span></h2><p>Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b></p><div><a class="tmr-btn tmr-btn-lime" href="https://3mash.com/pages/iletisim">Uzmana danış — ücretsiz</a><a class="tmr-btn tmr-btn-invert" href="/mash-academy">Mash Academy'yi keşfet</a></div></div></section>`;
 
-export const defaultFooterHtml = `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="/"><img src="${threeMashLogoImage}" alt="3MASH"><b>mash</b></a><p>Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.</p></div><div><h6>Ürünler</h6><a href="/urunler/3d-yazicilar">3D Yazıcılar</a><a href="/urunler/dental-recineler">Dental Reçineler</a><a href="/urunler/yikama-kurleme">Yıkama &amp; Kürleme</a><a href="/urunler/zirkon-bloklar">Zirkon Bloklar</a></div><div><h6>Şirket</h6><a href="https://3mash.com/pages/about-us">Hakkımızda</a><a href="/mash-academy">Mash Academy</a><a href="https://3mash.com/blog">Blog</a><a href="https://3mash.com/pages/iletisim">İletişim</a></div><div><h6>İletişim</h6><a href="mailto:info@3mash.com">info@3mash.com</a><a href="#">Antalya Teknokent, Konyaaltı</a><a href="https://instagram.com/3mashsocial">@3mashsocial</a></div></div><div class="tmr-base"><span>© 2026 3MASH Teknoloji A.Ş.</span><span>KVKK · İade &amp; Garanti · Mesafeli Satış</span></div></div></footer>`;
+export const defaultFooterHtml = `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="/"><img src="${threeMashLogoImage}" alt="3MASH"><b>mash</b></a><p>Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.</p></div><div class="tmr-footer-link-col" data-tmr-footer-sync="products"><h6>Ürünler</h6><a href="/urunler/3d-yazicilar">3D Yazıcılar</a><a href="/urunler/dental-recineler">Dental Reçineler</a><a href="/urunler/yikama-kurleme">Yıkama &amp; Kürleme</a><a href="/urunler/masasustu-tarayicilar">Masaüstü Tarayıcılar</a><a href="/urunler/zirkon-bloklar">Zirkon Bloklar</a><a href="/urunler/dental-firinlar">Dental Fırınlar</a></div><div class="tmr-footer-link-col"><h6>Şirket</h6><a href="https://3mash.com/pages/about-us">Hakkımızda</a><a href="/mash-academy">Mash Academy</a><a href="https://3mash.com/blog">Blog</a></div><div class="tmr-footer-link-col"><h6>İletişim</h6><a href="mailto:info@3mash.com">info@3mash.com</a><a href="#">Antalya Teknokent, Konyaaltı</a><a href="https://instagram.com/3mashsocial">@3mashsocial</a><div class="tmr-footer-social"><span class="tmr-footer-social-icon" aria-label="Facebook" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H13c-1.1 0-2 .9-2 2v2H8.8v3H11v5h3v-5h2.2l.5-3H14v-1.5c0-.3.2-.5.5-.5h2V8z"></path></svg></span><a href="https://instagram.com/3mashsocial" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle></svg></a><span class="tmr-footer-social-icon" aria-label="YouTube" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5c.2-1.4 1-2.2 2.4-2.4C8.2 6 10.1 6 12 6s3.8 0 5.1.1c1.4.2 2.2 1 2.4 2.4.1.9.2 2.1.2 3.5s-.1 2.6-.2 3.5c-.2 1.4-1 2.2-2.4 2.4-1.3.1-3.2.1-5.1.1s-3.8 0-5.1-.1c-1.4-.2-2.2-1-2.4-2.4-.1-.9-.2-2.1-.2-3.5s.1-2.6.2-3.5z"></path><path d="m10.5 9.5 4 2.5-4 2.5z"></path></svg></span><span class="tmr-footer-social-icon" aria-label="LinkedIn" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 10v8"></path><path d="M6.5 6.5v.1"></path><path d="M10.5 18v-8"></path><path d="M10.5 13.5c0-2.1 1.2-3.5 3.1-3.5s3 1.3 3 3.7V18"></path></svg></span></div></div></div><div class="tmr-base"><span>© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.</span><div class="tmr-base-meta"><span>KVKK · İade &amp; Garanti · Mesafeli Satış</span></div></div></div></footer>`;
 
 export interface ThreeMashSectionRenderProps {
   sectionHtml?: string;
@@ -81,6 +81,15 @@ export interface ThreeMashSectionRenderProps {
   contactColumnHtml?: string;
   copyrightText?: string;
   legalText?: string;
+  showSocialIcons?: boolean;
+  instagramHref?: string;
+  instagramLabel?: string;
+  linkedinHref?: string;
+  linkedinLabel?: string;
+  youtubeHref?: string;
+  youtubeLabel?: string;
+  facebookHref?: string;
+  facebookLabel?: string;
   logoHref?: string;
   logoImageUrl?: unknown;
   logoImageAlt?: string;
@@ -879,6 +888,62 @@ export function renderFinalHtml(props: ThreeMashSectionRenderProps) {
   return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(value(props.titleText, "Bu görünmez kaybı"), value(props.titleEmphasis, "birlikte azaltalım."))}</h2><p>${value(props.descriptionHtml, "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b>")}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(value(props.primaryButtonHref, "https://3mash.com/pages/iletisim"))}">${value(props.primaryButtonText, "Uzmana danış — ücretsiz")}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(value(props.secondaryButtonHref, "/mash-academy"))}">${value(props.secondaryButtonText, "Mash Academy'yi keşfet")}</a></div></div></section>`;
 }
 
+function socialIcon(name: string) {
+  const icons: Record<string, string> = {
+    instagram: `<rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle>`,
+    linkedin: `<path d="M6.5 10v8"></path><path d="M6.5 6.5v.1"></path><path d="M10.5 18v-8"></path><path d="M10.5 13.5c0-2.1 1.2-3.5 3.1-3.5s3 1.3 3 3.7V18"></path>`,
+    youtube: `<path d="M4.5 8.5c.2-1.4 1-2.2 2.4-2.4C8.2 6 10.1 6 12 6s3.8 0 5.1.1c1.4.2 2.2 1 2.4 2.4.1.9.2 2.1.2 3.5s-.1 2.6-.2 3.5c-.2 1.4-1 2.2-2.4 2.4-1.3.1-3.2.1-5.1.1s-3.8 0-5.1-.1c-1.4-.2-2.2-1-2.4-2.4-.1-.9-.2-2.1-.2-3.5s.1-2.6.2-3.5z"></path><path d="m10.5 9.5 4 2.5-4 2.5z"></path>`,
+    facebook: `<path d="M14.5 8H13c-1.1 0-2 .9-2 2v2H8.8v3H11v5h3v-5h2.2l.5-3H14v-1.5c0-.3.2-.5.5-.5h2V8z"></path>`,
+  };
+  return `<svg viewBox="0 0 24 24" aria-hidden="true">${icons[name] || ""}</svg>`;
+}
+
+function socialHref(props: ThreeMashSectionRenderProps, key: string, fallback = "") {
+  const source = raw(props, key);
+  return typeof source === "string" && source.trim() ? source.trim() : fallback;
+}
+
+function socialLabel(props: ThreeMashSectionRenderProps, key: string, fallback: string) {
+  const source = raw(props, key);
+  return typeof source === "string" && source.trim() ? inlineHtml(source.trim()) : fallback;
+}
+
+function footerSocialLinks(props: ThreeMashSectionRenderProps) {
+  if (raw(props, "showSocialIcons") === false) return "";
+
+  const links = [
+    ["facebook", "facebookHref", "facebookLabel", "", "Facebook"],
+    ["instagram", "instagramHref", "instagramLabel", "https://instagram.com/3mashsocial", "Instagram"],
+    ["youtube", "youtubeHref", "youtubeLabel", "", "YouTube"],
+    ["linkedin", "linkedinHref", "linkedinLabel", "", "LinkedIn"],
+  ]
+    .map(([icon, hrefKey, labelKey, fallbackHref, fallbackLabel]) => {
+      const href = socialHref(props, hrefKey, fallbackHref);
+      const label = escapeAttr(socialLabel(props, labelKey, fallbackLabel));
+      if (!href) return `<span class="tmr-footer-social-icon" aria-label="${label}" role="img">${socialIcon(icon)}</span>`;
+      return `<a href="${escapeAttr(href)}" aria-label="${label}" target="_blank" rel="noopener noreferrer">${socialIcon(icon)}</a>`;
+    })
+    .join("");
+
+  return links ? `<div class="tmr-footer-social">${links}</div>` : "";
+}
+
+function footerCopyrightText(props: ThreeMashSectionRenderProps) {
+  const fallback = "© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.";
+  const current = value(props.copyrightText, fallback);
+  if (/all\s+rights\s+(reserved|preserved)/i.test(current)) return fallback;
+  if (/3MASH\s+Teknoloji\s+A\.Ş\./i.test(current) && !/Tüm\s+hakları\s+saklıdır/i.test(current)) {
+    return current.replace(/3MASH\s+Teknoloji\s+A\.Ş\./i, "3MASH Teknoloji A.Ş. Tüm hakları saklıdır.");
+  }
+  return current;
+}
+
+function normalizeFooterLegalText(markup: string) {
+  return markup
+    .replace(/All\s+rights\s+(reserved|preserved)\.?/gi, "Tüm hakları saklıdır.")
+    .replace(/(©\s*2026\s*3MASH\s+Teknoloji\s+A\.Ş\.)(?!\s*Tüm\s+hakları\s+saklıdır)/gi, "$1 Tüm hakları saklıdır.");
+}
+
 export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
   const logoSvg = svgMarkup(raw(props, "logoSvg"));
   const logoImage = imageSource(raw(props, "logoImageUrl"), threeMashLogoImage);
@@ -903,7 +968,9 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
       ["3D Yazıcılar", "/urunler/3d-yazicilar"],
       ["Dental Reçineler", "/urunler/dental-recineler"],
       ["Yıkama &amp; Kürleme", "/urunler/yikama-kurleme"],
+      ["Masaüstü Tarayıcılar", "/urunler/masasustu-tarayicilar"],
       ["Zirkon Bloklar", "/urunler/zirkon-bloklar"],
+      ["Dental Fırınlar", "/urunler/dental-firinlar"],
     ]),
   );
   const company = value(
@@ -912,28 +979,62 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
       ["Hakkımızda", "https://3mash.com/pages/about-us"],
       ["Mash Academy", "/mash-academy"],
       ["Blog", "https://3mash.com/blog"],
-      ["İletişim", "https://3mash.com/pages/iletisim"],
     ]),
   );
+  const socialLinks = footerSocialLinks(props);
   const contact = value(
     undefined,
     linkList("contact", field(props, "contactColumnTitle", "İletişim"), [
       ["info@3mash.com", "mailto:info@3mash.com"],
       ["Antalya Teknokent, Konyaaltı", "#"],
       ["@3mashsocial", "https://instagram.com/3mashsocial"],
-    ]),
+    ]) + socialLinks,
   );
-  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="${escapeAttr(field(props, "logoHref", "/"))}">${logoVisual}<b>${value(props.logoText, "mash")}</b></a><p>${value(props.descriptionText, "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.")}</p></div><div>${products}</div><div>${company}</div><div>${contact}</div></div><div class="tmr-base"><span>${value(props.copyrightText, "© 2026 3MASH Teknoloji A.Ş.")}</span><span>${value(props.legalText, "KVKK · İade &amp; Garanti · Mesafeli Satış")}</span></div></div></footer>`;
+  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="${escapeAttr(field(props, "logoHref", "/"))}">${logoVisual}<b>${value(props.logoText, "mash")}</b></a><p>${value(props.descriptionText, "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.")}</p></div><div class="tmr-footer-link-col" data-tmr-footer-sync="products">${products}</div><div class="tmr-footer-link-col">${company}</div><div class="tmr-footer-link-col">${contact}</div></div><div class="tmr-base"><span>${footerCopyrightText(props)}</span><div class="tmr-base-meta"><span>${value(props.legalText, "KVKK · İade &amp; Garanti · Mesafeli Satış")}</span></div></div></div></footer>`;
 }
 
 export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSectionRenderProps; fallback: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const renderedHtml = styleTextChunks(props.sectionHtml && props.sectionHtml.trim() ? props.sectionHtml : fallback, props);
+  const renderedHtml = normalizeFooterLegalText(styleTextChunks(props.sectionHtml && props.sectionHtml.trim() ? props.sectionHtml : fallback, props));
   const rootClassName = `three-mash-remaining${/\btmr-(trust|faq)-section\b/.test(renderedHtml) ? " tmr-section-separator-visible" : ""}`;
 
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return undefined;
+
+    const syncFooterCategoryLists = () => {
+      root.querySelectorAll<HTMLElement>("[data-tmr-footer-sync]").forEach((column) => {
+        const sourceName = column.dataset.tmrFooterSync;
+        if (!sourceName) return;
+
+        const sourceLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(`a[data-tmr-category-source="${sourceName}"]`));
+        if (!sourceLinks.length) return;
+
+        const title = column.querySelector("h6")?.cloneNode(true);
+        const seen = new Set<string>();
+        const links = sourceLinks
+          .map((link) => {
+            const label = link.querySelector("b")?.textContent?.trim() || link.textContent?.trim() || "";
+            const linkHref = link.getAttribute("href")?.trim() || "";
+            const key = `${label}|${linkHref}`;
+            if (!label || !linkHref || seen.has(key)) return null;
+            seen.add(key);
+
+            const item = document.createElement("a");
+            item.setAttribute("href", linkHref);
+            item.textContent = label;
+            return item;
+          })
+          .filter((item): item is HTMLAnchorElement => Boolean(item));
+
+        if (!links.length) return;
+        const signature = links.map((item) => `${item.textContent || ""}|${item.getAttribute("href") || ""}`).join("||");
+        if (column.dataset.tmrFooterSyncSignature === signature) return;
+        column.dataset.tmrFooterSyncSignature = signature;
+
+        column.replaceChildren(...(title ? [title] : []), ...links);
+      });
+    };
 
     const activateMedia = (trigger: HTMLElement) => {
       const stage = trigger.closest(".tmr-product-media-interactive");
@@ -997,12 +1098,17 @@ export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSe
       activateMedia(videoTrigger);
     };
 
+    syncFooterCategoryLists();
+    const syncObserver = typeof MutationObserver === "undefined" ? null : new MutationObserver(syncFooterCategoryLists);
+    syncObserver?.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["href", "data-tmr-category-source"] });
+
     root.addEventListener("click", handleClick);
     root.querySelectorAll(".tmr-product-media-solutionCard2, .tmr-product-media-solutionCard3").forEach((stage) => {
       stage.addEventListener("pointerenter", handlePointerEnter as EventListener);
     });
 
     return () => {
+      syncObserver?.disconnect();
       root.removeEventListener("click", handleClick);
       root.querySelectorAll(".tmr-product-media-solutionCard2, .tmr-product-media-solutionCard3").forEach((stage) => {
         stage.removeEventListener("pointerenter", handlePointerEnter as EventListener);

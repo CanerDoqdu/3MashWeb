@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@ikas/component-cli@2.6.1':
-    hash: e647a853075a5f6542ceb79e1ef3dcf7117499d38250ee7040556ba5c813b1c5
+    hash: 17f94bf1de42cbcc946cd83a80820f22d7ccdfa558ce1387d277f5c42f9a1aca
     path: patches/@ikas__component-cli@2.6.1.patch
 
 importers:
@@ -25,7 +25,7 @@ importers:
         version: 2.6.1
       '@ikas/component-cli':
         specifier: ^2.6.1
-        version: 2.6.1(patch_hash=e647a853075a5f6542ceb79e1ef3dcf7117499d38250ee7040556ba5c813b1c5)
+        version: 2.6.1(patch_hash=17f94bf1de42cbcc946cd83a80820f22d7ccdfa558ce1387d277f5c42f9a1aca)
       '@preact/preset-vite':
         specifier: ^2.10.3
         version: 2.10.5(@babel/core@7.29.7)(preact@10.29.7)(rollup@4.62.2)(vite@5.4.21)
@@ -1810,7 +1810,7 @@ snapshots:
       - '@cfworker/json-schema'
       - supports-color
 
-  '@ikas/component-cli@2.6.1(patch_hash=e647a853075a5f6542ceb79e1ef3dcf7117499d38250ee7040556ba5c813b1c5)':
+  '@ikas/component-cli@2.6.1(patch_hash=17f94bf1de42cbcc946cd83a80820f22d7ccdfa558ce1387d277f5c42f9a1aca)':
     dependencies:
       chalk: 5.6.2
       chokidar: 3.6.0

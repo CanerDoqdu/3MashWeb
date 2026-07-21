@@ -461,6 +461,9 @@
   display: flex;
   margin-top: 84px;
   border-top: 1px solid var(--tmhero-line);
+  background: color-mix(in srgb, var(--tmhero-accent-soft) 64%, var(--tmhero-bg));
+  box-shadow: 0 0 0 100vmax color-mix(in srgb, var(--tmhero-accent-soft) 64%, var(--tmhero-bg));
+  clip-path: inset(0 -100vmax);
 }
 
 .tmhero-stat {

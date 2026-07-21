@@ -6,10 +6,94 @@
   "components": [
     {
       "id": "2tplvqpo-xzdCWg2Gdm",
-      "name": "ThreeMashHeader",
+      "name": "Üst Bölüm",
       "entry": "./src/components/ThreeMashHeader/index.tsx",
       "styles": "./src/components/ThreeMashHeader/styles.css",
       "type": "section",
+      "props": [
+        {
+          "name": "components",
+          "displayName": "Bileşenler",
+          "type": "COMPONENT_LIST",
+          "required": false,
+          "filteredComponentIds": [
+            "2tplvqpo-headerAnnouncement",
+            "2tplvqpo-headerNavbar"
+          ],
+          "defaultValue": {
+            "components": [
+              {
+                "id": "default-header-announcement",
+                "codeComponentId": "2tplvqpo-headerAnnouncement",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-navbar",
+                "codeComponentId": "2tplvqpo-headerNavbar",
+                "propValues": {
+                  "components": {
+                    "components": [
+                      {
+                        "id": "default-header-logo",
+                        "codeComponentId": "2tplvqpo-headerLogo",
+                        "propValues": {}
+                      },
+                      {
+                        "id": "default-header-desktop-menu",
+                        "codeComponentId": "2tplvqpo-headerDesktopMenu",
+                        "propValues": {
+                          "components": {
+                            "components": [
+                              {
+                                "id": "default-header-products-menu",
+                                "codeComponentId": "2tplvqpo-headerProductsMenu",
+                                "propValues": {}
+                              },
+                              {
+                                "id": "default-header-why-menu",
+                                "codeComponentId": "2tplvqpo-headerWhyMenu",
+                                "propValues": {}
+                              },
+                              {
+                                "id": "default-header-plain-links",
+                                "codeComponentId": "2tplvqpo-headerPlainLinks",
+                                "propValues": {}
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "id": "default-header-actions",
+                        "codeComponentId": "2tplvqpo-headerActions",
+                        "propValues": {}
+                      },
+                      {
+                        "id": "default-header-mobile-menu",
+                        "codeComponentId": "2tplvqpo-headerMobileMenu",
+                        "propValues": {}
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "structure",
+          "name": "Yapı",
+          "description": "Üst bölüm alt bileşenleri"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-headerAnnouncement",
+      "name": "📣 Duyuru",
+      "entry": "./src/components/ThreeMashHeaderAnnouncement/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
       "props": [
         {
           "name": "showAnnouncement",
@@ -52,6 +136,232 @@
           "groupId": "announcement"
         },
         {
+          "name": "announcementBackgroundColor",
+          "displayName": "Announcement Background",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "announcementTextColor",
+          "displayName": "Announcement Text Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#CFCFC6",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Tema Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "announcementWordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "announcementWordStyle"
+        },
+        {
+          "name": "announcementStyledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "sessiz kaybını",
+          "groupId": "announcementWordStyle"
+        },
+        {
+          "name": "announcementStyledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "announcementWordStyle"
+        },
+        {
+          "name": "announcementStyledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "announcementWordStyle"
+        },
+        {
+          "name": "announcementStyledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "announcementWordStyle"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "announcement",
+          "name": "Announcement",
+          "description": "Top black promotion bar",
+          "children": [
+            {
+              "id": "announcementWordStyle",
+              "name": "Announcement Word Style",
+              "description": "Demo single word color and emphasis"
+            }
+          ]
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Header colors"
+        }
+      ],
+      "type": "component"
+    },
+    {
+      "id": "2tplvqpo-headerNavbar",
+      "name": "🧭 Navbar",
+      "entry": "./src/components/ThreeMashHeaderNavbar/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
+      "props": [
+        {
+          "name": "components",
+          "displayName": "Navbar Bileşenleri",
+          "type": "COMPONENT_LIST",
+          "required": false,
+          "groupId": "navbarComponents",
+          "filteredComponentIds": [
+            "2tplvqpo-headerLogo",
+            "2tplvqpo-headerDesktopMenu",
+            "2tplvqpo-headerActions",
+            "2tplvqpo-headerMobileMenu"
+          ],
+          "defaultValue": {
+            "components": [
+              {
+                "id": "default-header-logo",
+                "codeComponentId": "2tplvqpo-headerLogo",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-desktop-menu",
+                "codeComponentId": "2tplvqpo-headerDesktopMenu",
+                "propValues": {
+                  "components": {
+                    "components": [
+                      {
+                        "id": "default-header-products-menu",
+                        "codeComponentId": "2tplvqpo-headerProductsMenu",
+                        "propValues": {}
+                      },
+                      {
+                        "id": "default-header-why-menu",
+                        "codeComponentId": "2tplvqpo-headerWhyMenu",
+                        "propValues": {}
+                      },
+                      {
+                        "id": "default-header-plain-links",
+                        "codeComponentId": "2tplvqpo-headerPlainLinks",
+                        "propValues": {}
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "default-header-actions",
+                "codeComponentId": "2tplvqpo-headerActions",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-mobile-menu",
+                "codeComponentId": "2tplvqpo-headerMobileMenu",
+                "propValues": {}
+              }
+            ]
+          }
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Tema Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Soluk Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeColor",
+          "displayName": "Badge Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "structure",
+          "name": "Yapı",
+          "description": "Navbar alt bileşenleri"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Header colors"
+        }
+      ],
+      "type": "component"
+    },
+    {
+      "id": "2tplvqpo-headerLogo",
+      "name": "🖼️ Logo",
+      "entry": "./src/components/ThreeMashHeaderLogo/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
+      "props": [
+        {
           "name": "logoText",
           "displayName": "Logo Text",
           "type": "RICH_TEXT",
@@ -67,6 +377,2434 @@
           "defaultValue": "#",
           "groupId": "brand"
         },
+        {
+          "name": "logoImageUrl",
+          "displayName": "Logo Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "brand",
+          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown."
+        },
+        {
+          "name": "logoImageAlt",
+          "displayName": "Logo Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3mash",
+          "groupId": "brand"
+        },
+        {
+          "name": "logoSvg",
+          "displayName": "Logo SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "brand",
+          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown."
+        },
+        {
+          "name": "logoImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "logoImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "logoImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoImageControls"
+        },
+        {
+          "name": "logoSvgWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "logoSvgInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "logoSvgControls"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Tema Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Soluk Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeColor",
+          "displayName": "Badge Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "brand",
+          "name": "Brand",
+          "description": "Logo and homepage link",
+          "children": [
+            {
+              "id": "logoImageControls",
+              "name": "Logo Image Controls",
+              "description": "Image size, position and effects"
+            },
+            {
+              "id": "logoSvgControls",
+              "name": "Logo SVG Controls",
+              "description": "SVG size, position and effects"
+            }
+          ]
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Header colors"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        }
+      ],
+      "type": "component"
+    },
+    {
+      "id": "2tplvqpo-headerDesktopMenu",
+      "name": "🖥️ Masaüstü Menü",
+      "entry": "./src/components/ThreeMashHeaderDesktopMenu/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
+      "props": [
+        {
+          "name": "components",
+          "displayName": "Menü Bileşenleri",
+          "type": "COMPONENT_LIST",
+          "required": false,
+          "groupId": "desktopMenuComponents",
+          "filteredComponentIds": [
+            "2tplvqpo-headerProductsMenu",
+            "2tplvqpo-headerWhyMenu",
+            "2tplvqpo-headerPlainLinks"
+          ],
+          "defaultValue": {
+            "components": [
+              {
+                "id": "default-header-products-menu",
+                "codeComponentId": "2tplvqpo-headerProductsMenu",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-why-menu",
+                "codeComponentId": "2tplvqpo-headerWhyMenu",
+                "propValues": {}
+              },
+              {
+                "id": "default-header-plain-links",
+                "codeComponentId": "2tplvqpo-headerPlainLinks",
+                "propValues": {}
+              }
+            ]
+          }
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Tema Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Soluk Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeColor",
+          "displayName": "Badge Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "structure",
+          "name": "Yapı",
+          "description": "Masaüstü menü alt bileşenleri"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Header colors"
+        }
+      ],
+      "type": "component"
+    },
+    {
+      "id": "2tplvqpo-headerProductsMenu",
+      "name": "📦 Ürün Menüsü",
+      "entry": "./src/components/ThreeMashHeaderProductsMenu/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
+      "props": [
+        {
+          "name": "productsMenuText",
+          "displayName": "Products Menu Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürünler",
+          "groupId": "products"
+        },
+        {
+          "name": "productsFeatureEyebrow",
+          "displayName": "Products Feature Eyebrow",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "YENİ · DÜNYADA İLK",
+          "groupId": "products"
+        },
+        {
+          "name": "productsFeatureTitle",
+          "displayName": "Products Feature Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "MASH C4P Akıllı Kürleme Cihazı",
+          "groupId": "products"
+        },
+        {
+          "name": "productsFeatureDescription",
+          "displayName": "Products Feature Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Reçineye göre otomatik kürleme. Sonuç kalitesini kullanıcı hatasından çıkarır.",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "productsFeatureCtaText",
+          "displayName": "Products Feature CTA Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Keşfet",
+          "groupId": "products"
+        },
+        {
+          "name": "productsFeatureHref",
+          "displayName": "Products Feature Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/c4p",
+          "groupId": "products"
+        },
+        {
+          "name": "productsCol1Title",
+          "displayName": "Products Column 1 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Üretim",
+          "groupId": "products"
+        },
+        {
+          "name": "product1Title",
+          "displayName": "Product 1 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "3D Yazıcılar",
+          "groupId": "products"
+        },
+        {
+          "name": "product1Description",
+          "displayName": "Product 1 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "P1D / P16L hassas baskı",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "product1Href",
+          "displayName": "Product 1 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/3d-yazicilar",
+          "groupId": "products"
+        },
+        {
+          "name": "product2Title",
+          "displayName": "Product 2 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Yıkama & Kürleme",
+          "groupId": "products"
+        },
+        {
+          "name": "product2Description",
+          "displayName": "Product 2 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Yıkama ve akıllı kürleme",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "product2Href",
+          "displayName": "Product 2 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/yikama-kurleme",
+          "groupId": "products"
+        },
+        {
+          "name": "product3Title",
+          "displayName": "Product 3 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dental Reçineler",
+          "groupId": "products"
+        },
+        {
+          "name": "product3Description",
+          "displayName": "Product 3 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dental reçine seçenekleri",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "product3Href",
+          "displayName": "Product 3 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/dental-recineler",
+          "groupId": "products"
+        },
+        {
+          "name": "productsCol2Title",
+          "displayName": "Products Column 2 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Tamamlayıcı",
+          "groupId": "products"
+        },
+        {
+          "name": "product4Title",
+          "displayName": "Product 4 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Masaüstü Tarayıcılar",
+          "groupId": "products"
+        },
+        {
+          "name": "product4Description",
+          "displayName": "Product 4 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Lab için hassas tarama",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "product4Href",
+          "displayName": "Product 4 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/masasustu-tarayicilar",
+          "groupId": "products"
+        },
+        {
+          "name": "product5Title",
+          "displayName": "Product 5 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Zirkon Bloklar & Titanyum",
+          "groupId": "products"
+        },
+        {
+          "name": "product5Description",
+          "displayName": "Product 5 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Freze sarfları",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "product5Href",
+          "displayName": "Product 5 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/zirkon-bloklar",
+          "groupId": "products"
+        },
+        {
+          "name": "product6Title",
+          "displayName": "Product 6 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dental Fırınlar",
+          "groupId": "products"
+        },
+        {
+          "name": "product6Description",
+          "displayName": "Product 6 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Sinterleme çözümleri",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "product6Href",
+          "displayName": "Product 6 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/dental-firinlar",
+          "groupId": "products"
+        },
+        {
+          "name": "productsFeatureImageUrl",
+          "displayName": "Products Feature Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Upload image here; size, position and effects are controlled in the related controls group."
+        },
+        {
+          "name": "productsFeatureImageAlt",
+          "displayName": "Products Feature Image Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH C4P Akıllı Kürleme Cihazı",
+          "groupId": "products"
+        },
+        {
+          "name": "product1IconSvg",
+          "displayName": "Product 1 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product2IconSvg",
+          "displayName": "Product 2 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product3IconSvg",
+          "displayName": "Product 3 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product4IconSvg",
+          "displayName": "Product 4 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product5IconSvg",
+          "displayName": "Product 5 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product6IconSvg",
+          "displayName": "Product 6 Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product1IconImageUrl",
+          "displayName": "Product 1 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product2IconImageUrl",
+          "displayName": "Product 2 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product3IconImageUrl",
+          "displayName": "Product 3 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product4IconImageUrl",
+          "displayName": "Product 4 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product5IconImageUrl",
+          "displayName": "Product 5 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "product6IconImageUrl",
+          "displayName": "Product 6 Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "products",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "productsFeatureImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 152,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 122,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "productsFeatureImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "productsFeatureImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 125,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 115,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productsFeatureImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productsFeatureImageControls"
+        },
+        {
+          "name": "productIconImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 34,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 34,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "productIconImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "productIconImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconImageControls"
+        },
+        {
+          "name": "productIconSvgWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 21,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 21,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "productIconSvgInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productIconSvgControls"
+        },
+        {
+          "name": "showProductIcons",
+          "displayName": "Show Product Icons",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "products"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Tema Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Soluk Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeColor",
+          "displayName": "Badge Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "products",
+          "name": "Products Menu",
+          "description": "Product mega menu content",
+          "children": [
+            {
+              "id": "productsFeatureImageControls",
+              "name": "Products Feature Image Controls",
+              "description": "Feature image size, position and effects"
+            },
+            {
+              "id": "productIconImageControls",
+              "name": "Product Icon Image Controls",
+              "description": "Shared controls for product icon images"
+            },
+            {
+              "id": "productIconSvgControls",
+              "name": "Product Icon SVG Controls",
+              "description": "Shared controls for product icon SVGs"
+            }
+          ]
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Header colors"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        }
+      ],
+      "type": "component"
+    },
+    {
+      "id": "2tplvqpo-headerWhyMenu",
+      "name": "💡 Neden Menüsü",
+      "entry": "./src/components/ThreeMashHeaderWhyMenu/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
+      "props": [
+        {
+          "name": "whyMenuText",
+          "displayName": "Why Menu Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Neden 3mash?",
+          "groupId": "why"
+        },
+        {
+          "name": "why1Number",
+          "displayName": "Why 1 Number",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "01",
+          "groupId": "why"
+        },
+        {
+          "name": "why1Title",
+          "displayName": "Why 1 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Gizli maliyetinizi görün",
+          "groupId": "why"
+        },
+        {
+          "name": "why1Description",
+          "displayName": "Why 1 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Tekrar işlerin yıllık kayba nasıl döndüğünü hesaplayın",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "why1Href",
+          "displayName": "Why 1 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#hesap",
+          "groupId": "why"
+        },
+        {
+          "name": "why2Number",
+          "displayName": "Why 2 Number",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "02",
+          "groupId": "why"
+        },
+        {
+          "name": "why2Title",
+          "displayName": "Why 2 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Hassasiyet farkını anlayın",
+          "groupId": "why"
+        },
+        {
+          "name": "why2Description",
+          "displayName": "Why 2 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "İlk seferde oturmayan işlerin asıl sebebini görün",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "why2Href",
+          "displayName": "Why 2 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#sebep",
+          "groupId": "why"
+        },
+        {
+          "name": "why3Number",
+          "displayName": "Why 3 Number",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "03",
+          "groupId": "why"
+        },
+        {
+          "name": "why3Title",
+          "displayName": "Why 3 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Uyumlu üretimi keşfedin",
+          "groupId": "why"
+        },
+        {
+          "name": "why3Description",
+          "displayName": "Why 3 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Yazıcı, reçine ve parametre aynı sonuç için birlikte çalışır",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "why3Href",
+          "displayName": "Why 3 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#cozum",
+          "groupId": "why"
+        },
+        {
+          "name": "why4Number",
+          "displayName": "Why 4 Number",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "04",
+          "groupId": "why"
+        },
+        {
+          "name": "why4Title",
+          "displayName": "Why 4 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Kürlemenin etkisini görün",
+          "groupId": "why"
+        },
+        {
+          "name": "why4Description",
+          "displayName": "Why 4 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Doğru baskının son adımda neden kaybedilmemesi gerektiğini öğrenin",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "why4Href",
+          "displayName": "Why 4 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#kurleme",
+          "groupId": "why"
+        },
+        {
+          "name": "whyMenuEyebrow",
+          "displayName": "Why Menu Eyebrow",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "SAYFA AKIŞI",
+          "groupId": "why"
+        },
+        {
+          "name": "whyMenuDescription",
+          "displayName": "Why Menu Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Kaybın nereden başladığını ve 3mash sisteminin bunu nasıl azalttığını adım adım görün.",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "why5Number",
+          "displayName": "Why 5 Number",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "05",
+          "groupId": "why"
+        },
+        {
+          "name": "why5Title",
+          "displayName": "Why 5 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Tek çatıdaki akışı inceleyin",
+          "groupId": "why"
+        },
+        {
+          "name": "why5Description",
+          "displayName": "Why 5 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Cihazdan sarfa, eğitimden desteğe tüm ekosistemi görün",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "why5Href",
+          "displayName": "Why 5 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#ekosistem",
+          "groupId": "why"
+        },
+        {
+          "name": "why6Number",
+          "displayName": "Why 6 Number",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "06",
+          "groupId": "why"
+        },
+        {
+          "name": "why6Title",
+          "displayName": "Why 6 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Gerçek kullanıcıları görün",
+          "groupId": "why"
+        },
+        {
+          "name": "why6Description",
+          "displayName": "Why 6 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Klinik ve laboratuvarların 3mash deneyimlerine bakın",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "why6Href",
+          "displayName": "Why 6 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#guven",
+          "groupId": "why"
+        },
+        {
+          "name": "why7Number",
+          "displayName": "Why 7 Number",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "07",
+          "groupId": "why"
+        },
+        {
+          "name": "why7Title",
+          "displayName": "Why 7 Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Aklınızdaki soruları çözün",
+          "groupId": "why"
+        },
+        {
+          "name": "why7Description",
+          "displayName": "Why 7 Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın",
+          "groupId": "text-customization"
+        },
+        {
+          "name": "why7Href",
+          "displayName": "Why 7 Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#sss",
+          "groupId": "why"
+        },
+        {
+          "name": "showWhyItemGlow",
+          "displayName": "Show Why Item Glow",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "why"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Tema Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Soluk Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeColor",
+          "displayName": "Badge Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "why",
+          "name": "Why Menu",
+          "description": "Problem and solution mega menu content"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Header colors"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        }
+      ],
+      "type": "component"
+    },
+    {
+      "id": "2tplvqpo-headerPlainLinks",
+      "name": "🔗 Ana Linkler",
+      "entry": "./src/components/ThreeMashHeaderPlainLinks/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
+      "props": [
+        {
+          "name": "referencesText",
+          "displayName": "References Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Referanslar",
+          "groupId": "links"
+        },
+        {
+          "name": "referencesHref",
+          "displayName": "References Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#guven",
+          "groupId": "links"
+        },
+        {
+          "name": "academyText",
+          "displayName": "Academy Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Academy",
+          "groupId": "links"
+        },
+        {
+          "name": "academyHref",
+          "displayName": "Academy Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/mash-academy",
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Tema Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Soluk Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeColor",
+          "displayName": "Badge Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "links",
+          "name": "Links",
+          "description": "Header links and icon labels",
+          "children": []
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Header colors"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        }
+      ],
+      "type": "component"
+    },
+    {
+      "id": "2tplvqpo-headerActions",
+      "name": "⚡ Aksiyonlar",
+      "entry": "./src/components/ThreeMashHeaderActions/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
+      "props": [
+        {
+          "name": "searchHref",
+          "displayName": "Search Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#",
+          "groupId": "links"
+        },
+        {
+          "name": "searchAriaLabel",
+          "displayName": "Search Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ara",
+          "groupId": "links"
+        },
+        {
+          "name": "accountHref",
+          "displayName": "Account Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/login",
+          "groupId": "links"
+        },
+        {
+          "name": "accountAriaLabel",
+          "displayName": "Account Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hesabım",
+          "groupId": "links"
+        },
+        {
+          "name": "cartHref",
+          "displayName": "Cart Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/",
+          "groupId": "links"
+        },
+        {
+          "name": "cartAriaLabel",
+          "displayName": "Cart Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sepet",
+          "groupId": "links"
+        },
+        {
+          "name": "cartCount",
+          "displayName": "Cart Count",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "links"
+        },
+        {
+          "name": "searchIconSvg",
+          "displayName": "Search Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "accountIconSvg",
+          "displayName": "Account Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "cartIconSvg",
+          "displayName": "Cart Icon SVG",
+          "type": "SVG",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "searchDrawerTitle",
+          "displayName": "Search Drawer Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Arama",
+          "groupId": "links"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Search Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürün, kategori veya içerik ara",
+          "groupId": "links"
+        },
+        {
+          "name": "searchCloseLabel",
+          "displayName": "Search Close Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kapat",
+          "groupId": "links"
+        },
+        {
+          "name": "searchSubmitLabel",
+          "displayName": "Search Submit Label",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ara",
+          "groupId": "links"
+        },
+        {
+          "name": "searchQueryParam",
+          "displayName": "Search Query Param",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "q",
+          "groupId": "links"
+        },
+        {
+          "name": "searchIconImageUrl",
+          "displayName": "Search Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "accountIconImageUrl",
+          "displayName": "Account Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "cartIconImageUrl",
+          "displayName": "Cart Icon Image",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "links",
+          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
+        },
+        {
+          "name": "actionIconImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "actionIconImageControls",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "actionIconImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconImageControls"
+        },
+        {
+          "name": "actionIconSvgWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "actionIconSvgInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "actionIconSvgControls"
+        },
+        {
+          "name": "showActionIcons",
+          "displayName": "Show Navbar Icons",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "links"
+        },
+        {
+          "name": "showProfileMenu",
+          "displayName": "Show Profile Menu",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileMenuTitle",
+          "displayName": "Profile Menu Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Hesabınız",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileMenuDescription",
+          "displayName": "Profile Menu Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Siparişlerinizi takip edin, hesap bilgilerinizi yönetin veya hızlıca giriş yapın.",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profilePrimaryText",
+          "displayName": "Profile Primary Button Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Giriş yap",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profilePrimaryHref",
+          "displayName": "Profile Primary Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/login",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileSecondaryText",
+          "displayName": "Profile Secondary Link Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Hesap oluştur",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileSecondaryHref",
+          "displayName": "Profile Secondary Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/register",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "showStorePanel",
+          "displayName": "Show Store Panel",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelTitle",
+          "displayName": "Store Panel Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "3mash Store",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelDescription",
+          "displayName": "Store Panel Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürünleri, sarf malzemeleri ve sipariş akışını mağazada görüntüleyin.",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelButtonText",
+          "displayName": "Store Button Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Markete git",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelButtonHref",
+          "displayName": "Store Button Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storePanelNote",
+          "displayName": "Store Panel Note",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Sepet ve mağaza işlemleri güvenli 3mash mağazasında devam eder.",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink1Text",
+          "displayName": "Profile Link 1 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Siparişlerim",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink2Text",
+          "displayName": "Profile Link 2 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Adreslerim",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink2Href",
+          "displayName": "Profile Link 2 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/addresses",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink3Text",
+          "displayName": "Profile Link 3 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Destek talebi",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink3Href",
+          "displayName": "Profile Link 3 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/pages/iletisim",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeItemCountText",
+          "displayName": "Cart Count Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Sepetinizde ürün yok",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeEmptyTitle",
+          "displayName": "Cart Empty Title",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Sepetiniz şu an boş",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeEmptyDescription",
+          "displayName": "Cart Empty Description",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dental üretim akışınız için yazıcı, reçine ve kürleme çözümlerini inceleyin.",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeSecondaryButtonText",
+          "displayName": "Cart Secondary Button Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürünleri incele",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "storeSecondaryButtonHref",
+          "displayName": "Cart Secondary Button URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink1Href",
+          "displayName": "Profile Link 1 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/account/orders",
+          "groupId": "action-panels"
+        },
+        {
+          "name": "profileLink4Text",
+          "displayName": "Profile Link 4 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "Teknik destek"
+        },
+        {
+          "name": "profileLink4Href",
+          "displayName": "Profile Link 4 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "https://3mash.com/pages/iletisim"
+        },
+        {
+          "name": "profileLink5Text",
+          "displayName": "Profile Link 5 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "Mash Academy"
+        },
+        {
+          "name": "profileLink5Href",
+          "displayName": "Profile Link 5 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "/mash-academy"
+        },
+        {
+          "name": "profileLink6Text",
+          "displayName": "Profile Link 6 Text",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "Çıkış yap"
+        },
+        {
+          "name": "profileLink6Href",
+          "displayName": "Profile Link 6 URL",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "action-panels",
+          "defaultValue": "https://3mash.com/account/logout"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Tema Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Soluk Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeColor",
+          "displayName": "Badge Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
+        },
+        {
+          "name": "wordStyleEnabled",
+          "displayName": "Enable Word Style",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhrase",
+          "displayName": "Styled Word Or Phrase",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseColor",
+          "displayName": "Styled Word Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseBold",
+          "displayName": "Make Styled Word Bold",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        },
+        {
+          "name": "styledPhraseItalic",
+          "displayName": "Make Styled Word Italic",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "wordStyle"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "links",
+          "name": "Links",
+          "description": "Header links and icon labels",
+          "children": [
+            {
+              "id": "actionIconImageControls",
+              "name": "Action Icon Image Controls",
+              "description": "Shared controls for header action icon images"
+            },
+            {
+              "id": "actionIconSvgControls",
+              "name": "Action Icon SVG Controls",
+              "description": "Shared controls for header action icon SVGs"
+            }
+          ]
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance",
+          "description": "Header colors"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        },
+        {
+          "id": "action-panels",
+          "name": "Action Panels",
+          "description": "Profile and store dropdown panels"
+        }
+      ],
+      "type": "component"
+    },
+    {
+      "id": "2tplvqpo-headerMobileMenu",
+      "name": "📱 Mobil Menü",
+      "entry": "./src/components/ThreeMashHeaderMobileMenu/index.tsx",
+      "styles": "./src/components/ThreeMashHeader/styles.css",
+      "props": [
         {
           "name": "productsMenuText",
           "displayName": "Products Menu Text",
@@ -444,164 +3182,12 @@
           "groupId": "links"
         },
         {
-          "name": "searchHref",
-          "displayName": "Search Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "#",
-          "groupId": "links"
-        },
-        {
-          "name": "searchAriaLabel",
-          "displayName": "Search Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Ara",
-          "groupId": "links"
-        },
-        {
-          "name": "accountHref",
-          "displayName": "Account Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/account/login",
-          "groupId": "links"
-        },
-        {
-          "name": "accountAriaLabel",
-          "displayName": "Account Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Hesabım",
-          "groupId": "links"
-        },
-        {
-          "name": "cartHref",
-          "displayName": "Cart Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/",
-          "groupId": "links"
-        },
-        {
-          "name": "cartAriaLabel",
-          "displayName": "Cart Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Sepet",
-          "groupId": "links"
-        },
-        {
-          "name": "cartCount",
-          "displayName": "Cart Count",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "links"
-        },
-        {
           "name": "mobileMenuLabel",
           "displayName": "Mobile Menu Label",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Menü",
           "groupId": "links"
-        },
-        {
-          "name": "backgroundColor",
-          "displayName": "Background Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#FAFAF7",
-          "groupId": "appearance"
-        },
-        {
-          "name": "announcementBackgroundColor",
-          "displayName": "Announcement Background",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#0E0E0C",
-          "groupId": "appearance"
-        },
-        {
-          "name": "announcementTextColor",
-          "displayName": "Announcement Text Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#CFCFC6",
-          "groupId": "appearance"
-        },
-        {
-          "name": "accentColor",
-          "displayName": "Accent Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#C7F136",
-          "groupId": "appearance"
-        },
-        {
-          "name": "textColor",
-          "displayName": "Text Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#0E0E0C",
-          "groupId": "appearance"
-        },
-        {
-          "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#8F8F86",
-          "groupId": "appearance"
-        },
-        {
-          "name": "lineColor",
-          "displayName": "Line Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#E6E6E0",
-          "groupId": "appearance"
-        },
-        {
-          "name": "panelColor",
-          "displayName": "Panel Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#FFFFFF",
-          "groupId": "appearance"
-        },
-        {
-          "name": "badgeColor",
-          "displayName": "Badge Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#E2492F",
-          "groupId": "appearance"
-        },
-        {
-          "name": "logoImageUrl",
-          "displayName": "Logo Image",
-          "type": "IMAGE",
-          "required": false,
-          "groupId": "brand",
-          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown."
-        },
-        {
-          "name": "logoImageAlt",
-          "displayName": "Logo Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "3mash",
-          "groupId": "brand"
-        },
-        {
-          "name": "logoSvg",
-          "displayName": "Logo SVG",
-          "type": "SVG",
-          "required": false,
-          "groupId": "brand",
-          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown."
         },
         {
           "name": "productsFeatureImageUrl",
@@ -668,70 +3254,6 @@
           "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
         },
         {
-          "name": "searchIconSvg",
-          "displayName": "Search Icon SVG",
-          "type": "SVG",
-          "required": false,
-          "groupId": "links",
-          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
-        },
-        {
-          "name": "accountIconSvg",
-          "displayName": "Account Icon SVG",
-          "type": "SVG",
-          "required": false,
-          "groupId": "links",
-          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
-        },
-        {
-          "name": "cartIconSvg",
-          "displayName": "Cart Icon SVG",
-          "type": "SVG",
-          "required": false,
-          "groupId": "links",
-          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
-        },
-        {
-          "name": "searchDrawerTitle",
-          "displayName": "Search Drawer Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Arama",
-          "groupId": "links"
-        },
-        {
-          "name": "searchPlaceholder",
-          "displayName": "Search Placeholder",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Ürün, kategori veya içerik ara",
-          "groupId": "links"
-        },
-        {
-          "name": "searchCloseLabel",
-          "displayName": "Search Close Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Kapat",
-          "groupId": "links"
-        },
-        {
-          "name": "searchSubmitLabel",
-          "displayName": "Search Submit Label",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Ara",
-          "groupId": "links"
-        },
-        {
-          "name": "searchQueryParam",
-          "displayName": "Search Query Param",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "q",
-          "groupId": "links"
-        },
-        {
           "name": "whyMenuEyebrow",
           "displayName": "Why Menu Eyebrow",
           "type": "RICH_TEXT",
@@ -794,199 +3316,6 @@
           "required": false,
           "groupId": "products",
           "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
-        },
-        {
-          "name": "searchIconImageUrl",
-          "displayName": "Search Icon Image",
-          "type": "IMAGE",
-          "required": false,
-          "groupId": "links",
-          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
-        },
-        {
-          "name": "accountIconImageUrl",
-          "displayName": "Account Icon Image",
-          "type": "IMAGE",
-          "required": false,
-          "groupId": "links",
-          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
-        },
-        {
-          "name": "cartIconImageUrl",
-          "displayName": "Cart Icon Image",
-          "type": "IMAGE",
-          "required": false,
-          "groupId": "links",
-          "description": "Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown."
-        },
-        {
-          "name": "logoImageWidth",
-          "displayName": "Width",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 32,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoImageHeight",
-          "displayName": "Height",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 32,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoImageXOffset",
-          "displayName": "X Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoImageYOffset",
-          "displayName": "Y Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoImageFit",
-          "displayName": "Fit",
-          "type": "ENUM",
-          "required": false,
-          "defaultValue": "contain",
-          "groupId": "logoImageControls",
-          "enumTypeId": "czO3k2QK5J"
-        },
-        {
-          "name": "logoImageOpacity",
-          "displayName": "Opacity",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoImageBrightness",
-          "displayName": "Brightness",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoImageContrast",
-          "displayName": "Contrast",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoImageSaturation",
-          "displayName": "Saturation",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoImageHue",
-          "displayName": "Hue",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoImageInvert",
-          "displayName": "Invert",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "logoImageControls"
-        },
-        {
-          "name": "logoSvgWidth",
-          "displayName": "Width",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 32,
-          "groupId": "logoSvgControls"
-        },
-        {
-          "name": "logoSvgHeight",
-          "displayName": "Height",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 32,
-          "groupId": "logoSvgControls"
-        },
-        {
-          "name": "logoSvgXOffset",
-          "displayName": "X Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "logoSvgControls"
-        },
-        {
-          "name": "logoSvgYOffset",
-          "displayName": "Y Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "logoSvgControls"
-        },
-        {
-          "name": "logoSvgOpacity",
-          "displayName": "Opacity",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "logoSvgControls"
-        },
-        {
-          "name": "logoSvgBrightness",
-          "displayName": "Brightness",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "logoSvgControls"
-        },
-        {
-          "name": "logoSvgContrast",
-          "displayName": "Contrast",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "logoSvgControls"
-        },
-        {
-          "name": "logoSvgSaturation",
-          "displayName": "Saturation",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "logoSvgControls"
-        },
-        {
-          "name": "logoSvgHue",
-          "displayName": "Hue",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "logoSvgControls"
-        },
-        {
-          "name": "logoSvgInvert",
-          "displayName": "Invert",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "logoSvgControls"
         },
         {
           "name": "productsFeatureImageWidth",
@@ -1247,175 +3576,6 @@
           "groupId": "productIconSvgControls"
         },
         {
-          "name": "actionIconImageWidth",
-          "displayName": "Width",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 22,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconImageHeight",
-          "displayName": "Height",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 22,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconImageXOffset",
-          "displayName": "X Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconImageYOffset",
-          "displayName": "Y Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconImageFit",
-          "displayName": "Fit",
-          "type": "ENUM",
-          "required": false,
-          "defaultValue": "contain",
-          "groupId": "actionIconImageControls",
-          "enumTypeId": "czO3k2QK5J"
-        },
-        {
-          "name": "actionIconImageOpacity",
-          "displayName": "Opacity",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconImageBrightness",
-          "displayName": "Brightness",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconImageContrast",
-          "displayName": "Contrast",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconImageSaturation",
-          "displayName": "Saturation",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconImageHue",
-          "displayName": "Hue",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconImageInvert",
-          "displayName": "Invert",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "actionIconImageControls"
-        },
-        {
-          "name": "actionIconSvgWidth",
-          "displayName": "Width",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 22,
-          "groupId": "actionIconSvgControls"
-        },
-        {
-          "name": "actionIconSvgHeight",
-          "displayName": "Height",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 22,
-          "groupId": "actionIconSvgControls"
-        },
-        {
-          "name": "actionIconSvgXOffset",
-          "displayName": "X Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "actionIconSvgControls"
-        },
-        {
-          "name": "actionIconSvgYOffset",
-          "displayName": "Y Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "actionIconSvgControls"
-        },
-        {
-          "name": "actionIconSvgOpacity",
-          "displayName": "Opacity",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "actionIconSvgControls"
-        },
-        {
-          "name": "actionIconSvgBrightness",
-          "displayName": "Brightness",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "actionIconSvgControls"
-        },
-        {
-          "name": "actionIconSvgContrast",
-          "displayName": "Contrast",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "actionIconSvgControls"
-        },
-        {
-          "name": "actionIconSvgSaturation",
-          "displayName": "Saturation",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "actionIconSvgControls"
-        },
-        {
-          "name": "actionIconSvgHue",
-          "displayName": "Hue",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "actionIconSvgControls"
-        },
-        {
-          "name": "actionIconSvgInvert",
-          "displayName": "Invert",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "actionIconSvgControls"
-        },
-        {
           "name": "why5Number",
           "displayName": "Why 5 Number",
           "type": "RICH_TEXT",
@@ -1520,14 +3680,6 @@
           "groupId": "products"
         },
         {
-          "name": "showActionIcons",
-          "displayName": "Show Navbar Icons",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "links"
-        },
-        {
           "name": "showWhyItemGlow",
           "displayName": "Show Why Item Glow",
           "type": "BOOLEAN",
@@ -1536,148 +3688,60 @@
           "groupId": "why"
         },
         {
-          "name": "showProfileMenu",
-          "displayName": "Show Profile Menu",
-          "type": "BOOLEAN",
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
           "required": false,
-          "defaultValue": true,
-          "groupId": "action-panels"
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
         },
         {
-          "name": "profileMenuTitle",
-          "displayName": "Profile Menu Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Hesabınız",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profileMenuDescription",
-          "displayName": "Profile Menu Description",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Siparişlerinizi takip edin, hesap bilgilerinizi yönetin veya hızlıca giriş yapın.",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profilePrimaryText",
-          "displayName": "Profile Primary Button Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Giriş yap",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profilePrimaryHref",
-          "displayName": "Profile Primary Button Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/account/login",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profileSecondaryText",
-          "displayName": "Profile Secondary Link Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Hesap oluştur",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profileSecondaryHref",
-          "displayName": "Profile Secondary Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/account/register",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "showStorePanel",
-          "displayName": "Show Store Panel",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storePanelTitle",
-          "displayName": "Store Panel Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "3mash Store",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storePanelDescription",
-          "displayName": "Store Panel Description",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Ürünleri, sarf malzemeleri ve sipariş akışını mağazada görüntüleyin.",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storePanelButtonText",
-          "displayName": "Store Button Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Markete git",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storePanelButtonHref",
-          "displayName": "Store Button Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storePanelNote",
-          "displayName": "Store Panel Note",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Sepet ve mağaza işlemleri güvenli 3mash mağazasında devam eder.",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "announcementWordStyleEnabled",
-          "displayName": "Enable Word Style",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": false,
-          "groupId": "announcementWordStyle"
-        },
-        {
-          "name": "announcementStyledPhrase",
-          "displayName": "Styled Word Or Phrase",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "sessiz kaybını",
-          "groupId": "announcementWordStyle"
-        },
-        {
-          "name": "announcementStyledPhraseColor",
-          "displayName": "Styled Word Color",
+          "name": "accentColor",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
-          "groupId": "announcementWordStyle"
+          "groupId": "appearance"
         },
         {
-          "name": "announcementStyledPhraseBold",
-          "displayName": "Make Styled Word Bold",
-          "type": "BOOLEAN",
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
           "required": false,
-          "defaultValue": false,
-          "groupId": "announcementWordStyle"
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
         },
         {
-          "name": "announcementStyledPhraseItalic",
-          "displayName": "Make Styled Word Italic",
-          "type": "BOOLEAN",
+          "name": "mutedTextColor",
+          "displayName": "Soluk Metin Rengi",
+          "type": "COLOR",
           "required": false,
-          "defaultValue": false,
-          "groupId": "announcementWordStyle"
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "badgeColor",
+          "displayName": "Badge Color",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E2492F",
+          "groupId": "appearance"
         },
         {
           "name": "wordStyleEnabled",
@@ -1718,174 +3782,9 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
-        },
-        {
-          "name": "profileLink1Text",
-          "displayName": "Profile Link 1 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Siparişlerim",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profileLink2Text",
-          "displayName": "Profile Link 2 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Adreslerim",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profileLink2Href",
-          "displayName": "Profile Link 2 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/account/addresses",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profileLink3Text",
-          "displayName": "Profile Link 3 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Destek talebi",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profileLink3Href",
-          "displayName": "Profile Link 3 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/pages/iletisim",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storeItemCountText",
-          "displayName": "Cart Count Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Sepetinizde ürün yok",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storeEmptyTitle",
-          "displayName": "Cart Empty Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Sepetiniz şu an boş",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storeEmptyDescription",
-          "displayName": "Cart Empty Description",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Dental üretim akışınız için yazıcı, reçine ve kürleme çözümlerini inceleyin.",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storeSecondaryButtonText",
-          "displayName": "Cart Secondary Button Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Ürünleri incele",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "storeSecondaryButtonHref",
-          "displayName": "Cart Secondary Button URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/3d-yazicilar",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profileLink1Href",
-          "displayName": "Profile Link 1 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/account/orders",
-          "groupId": "action-panels"
-        },
-        {
-          "name": "profileLink4Text",
-          "displayName": "Profile Link 4 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "groupId": "action-panels",
-          "defaultValue": "Teknik destek"
-        },
-        {
-          "name": "profileLink4Href",
-          "displayName": "Profile Link 4 URL",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "action-panels",
-          "defaultValue": "https://3mash.com/pages/iletisim"
-        },
-        {
-          "name": "profileLink5Text",
-          "displayName": "Profile Link 5 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "groupId": "action-panels",
-          "defaultValue": "Mash Academy"
-        },
-        {
-          "name": "profileLink5Href",
-          "displayName": "Profile Link 5 URL",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "action-panels",
-          "defaultValue": "/mash-academy"
-        },
-        {
-          "name": "profileLink6Text",
-          "displayName": "Profile Link 6 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "groupId": "action-panels",
-          "defaultValue": "Çıkış yap"
-        },
-        {
-          "name": "profileLink6Href",
-          "displayName": "Profile Link 6 URL",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "action-panels",
-          "defaultValue": "https://3mash.com/account/logout"
         }
       ],
       "propGroups": [
-        {
-          "id": "announcement",
-          "name": "Announcement",
-          "description": "Top black promotion bar",
-          "children": [
-            {
-              "id": "announcementWordStyle",
-              "name": "Announcement Word Style",
-              "description": "Demo single word color and emphasis"
-            }
-          ]
-        },
-        {
-          "id": "brand",
-          "name": "Brand",
-          "description": "Logo and homepage link",
-          "children": [
-            {
-              "id": "logoImageControls",
-              "name": "Logo Image Controls",
-              "description": "Image size, position and effects"
-            },
-            {
-              "id": "logoSvgControls",
-              "name": "Logo SVG Controls",
-              "description": "SVG size, position and effects"
-            }
-          ]
-        },
         {
           "id": "products",
           "name": "Products Menu",
@@ -1917,18 +3816,7 @@
           "id": "links",
           "name": "Links",
           "description": "Header links and icon labels",
-          "children": [
-            {
-              "id": "actionIconImageControls",
-              "name": "Action Icon Image Controls",
-              "description": "Shared controls for header action icon images"
-            },
-            {
-              "id": "actionIconSvgControls",
-              "name": "Action Icon SVG Controls",
-              "description": "Shared controls for header action icon SVGs"
-            }
-          ]
+          "children": []
         },
         {
           "id": "appearance",
@@ -1946,17 +3834,13 @@
               "description": "Style a matching word or phrase inside this section"
             }
           ]
-        },
-        {
-          "id": "action-panels",
-          "name": "Action Panels",
-          "description": "Profile and store dropdown panels"
         }
-      ]
+      ],
+      "type": "component"
     },
     {
       "id": "2tplvqpo-7WBRoaV98X",
-      "name": "ThreeMashHero",
+      "name": "Ana Karşılama",
       "entry": "./src/components/ThreeMashHero/index.tsx",
       "styles": "./src/components/ThreeMashHero/styles.css",
       "type": "section",
@@ -2491,7 +4375,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FAFAF7",
@@ -2499,7 +4383,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -2507,7 +4391,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8F8F86",
@@ -2523,7 +4407,7 @@
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#E6E6E0",
@@ -2539,7 +4423,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -3038,7 +4922,7 @@
     },
     {
       "id": "2tplvqpo-c1vlDpXArJ",
-      "name": "ThreeMashProblem",
+      "name": "Problem Alanı",
       "entry": "./src/components/ThreeMashProblem/index.tsx",
       "styles": "./src/components/ThreeMashProblem/styles.css",
       "type": "section",
@@ -3168,12 +5052,12 @@
           "displayName": "Reference HTML",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Bilimsel dayanak: full-arch model doğruluğu sistemden sisteme <b>3–190 µm</b> arasında değişiyor (Etemad-Shahidi ve ark., <a href='https://doi.org/10.3390/jcm9103357' target='_blank' rel='noopener'>J Clin Med 2020</a>); SLA/DLP/PolyJet en doğru teknolojiler (Németh ve ark., <a href='https://doi.org/10.1016/j.jdent.2023.104532' target='_blank' rel='noopener'>J Dentistry 2023</a>). Tekrar oranı ve sebepleri: <a href='https://doi.org/10.1111/jopr.12995' target='_blank' rel='noopener'>McCracken ve ark., J Prosthodont 2019</a>.",
+          "defaultValue": "Bilimsel dayanak (APA 7): Full-arch dental model doğruluğu teknoloji ve sisteme göre değişir; sistematik derlemede ortalama hata aralığı <b>3.3–579 µm</b> olarak raporlanmıştır (Etemad-Shahidi et al., 2020). Ağ meta-analizinde SLA, DLP ve PolyJet teknolojileri full-arch dental model üretiminde en doğru seçenekler olarak bildirilmiştir (Németh et al., 2023). Klinik kron tekrar oranı yaklaşık <b>%4</b>; en sık nedenler proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıklardır (McCracken et al., 2019). <br><br><b>Kaynaklar:</b> Etemad-Shahidi, Y., Qallandar, O. B., Evenden, J., Alifui-Segbaya, F., & Ahmed, K. E. (2020). <i>Accuracy of 3-dimensionally printed full-arch dental models: A systematic review</i>. Journal of Clinical Medicine, 9(10), 3357. <a href='https://doi.org/10.3390/jcm9103357' target='_blank' rel='noopener'>https://doi.org/10.3390/jcm9103357</a> · Németh, A., Vitai, V., Czumbel, M. L., Szabó, B., Varga, G., Kerémi, B., Hegyi, P., Hermann, P., & Borbély, J. (2023). <i>Clear guidance to select the most accurate technologies for 3D printing dental models: A network meta-analysis</i>. Journal of Dentistry, 134, 104532. <a href='https://doi.org/10.1016/j.jdent.2023.104532' target='_blank' rel='noopener'>https://doi.org/10.1016/j.jdent.2023.104532</a> · McCracken, M. S., Litaker, M. S., Gordan, V. V., Karr, T., Sowell, E., & Gilbert, G. H. (2019). <i>Remake rates for single-unit crowns in clinical practice: Findings from The National Dental Practice-Based Research Network</i>. Journal of Prosthodontics, 28(2), 122–130. <a href='https://doi.org/10.1111/jopr.12995' target='_blank' rel='noopener'>https://doi.org/10.1111/jopr.12995</a>.",
           "groupId": "text-customization"
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FAFAF7",
@@ -3181,7 +5065,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -3197,7 +5081,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8F8F86",
@@ -3205,7 +5089,7 @@
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#E6E6E0",
@@ -3229,7 +5113,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -3473,7 +5357,7 @@
     },
     {
       "id": "2tplvqpo-wLCLjthGwD",
-      "name": "ThreeMashSolution",
+      "name": "Çözüm Bölümü",
       "entry": "./src/components/ThreeMashSolution/index.tsx",
       "styles": "./src/components/ThreeMashSolution/styles.css",
       "type": "section",
@@ -3993,7 +5877,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FAFAF7",
@@ -4001,7 +5885,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -4017,7 +5901,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8F8F86",
@@ -4025,7 +5909,7 @@
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#E6E6E0",
@@ -4041,7 +5925,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -4448,7 +6332,7 @@
     },
     {
       "id": "2tplvqpo-WhqzboWYcS",
-      "name": "ThreeMashCuring",
+      "name": "Yıkama ve Kürleme",
       "entry": "./src/components/ThreeMashCuring/index.tsx",
       "styles": "./src/components/ThreeMashCuring/styles.css",
       "type": "section",
@@ -4880,7 +6764,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -4888,7 +6772,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FFFFFF",
@@ -4904,7 +6788,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8B8B80",
@@ -4912,7 +6796,7 @@
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#26261F",
@@ -4936,7 +6820,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -5102,7 +6986,7 @@
     },
     {
       "id": "2tplvqpo-0WoA6MXRW2",
-      "name": "ThreeMashRoi",
+      "name": "Yatırım Getirisi",
       "entry": "./src/components/ThreeMashRoi/index.tsx",
       "styles": "./src/components/ThreeMashRoi/styles.css",
       "type": "section",
@@ -5157,7 +7041,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -5165,7 +7049,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -5287,7 +7171,7 @@
     },
     {
       "id": "2tplvqpo-2qoDMjwV3E",
-      "name": "ThreeMashEcosystem",
+      "name": "Ekosistem",
       "entry": "./src/components/ThreeMashEcosystem/index.tsx",
       "styles": "./src/components/ThreeMashEcosystem/styles.css",
       "type": "section",
@@ -5583,7 +7467,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FAFAF7",
@@ -5591,7 +7475,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -5607,7 +7491,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8F8F86",
@@ -5615,7 +7499,7 @@
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#E6E6E0",
@@ -5631,7 +7515,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -5872,7 +7756,7 @@
     },
     {
       "id": "2tplvqpo-x3HXPCBvou",
-      "name": "ThreeMashTrust",
+      "name": "Güven Bölümü",
       "entry": "./src/components/ThreeMashTrust/index.tsx",
       "styles": "./src/components/ThreeMashTrust/styles.css",
       "type": "section",
@@ -6168,7 +8052,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FAFAF7",
@@ -6176,7 +8060,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -6192,7 +8076,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8F8F86",
@@ -6200,7 +8084,7 @@
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#E6E6E0",
@@ -6224,7 +8108,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -6462,7 +8346,7 @@
     },
     {
       "id": "2tplvqpo-7BxBDv5SsA",
-      "name": "ThreeMashFaq",
+      "name": "Sık Sorulan Sorular",
       "entry": "./src/components/ThreeMashFaq/index.tsx",
       "styles": "./src/components/ThreeMashFaq/styles.css",
       "type": "section",
@@ -6605,7 +8489,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FAFAF7",
@@ -6613,7 +8497,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -6629,7 +8513,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8F8F86",
@@ -6637,7 +8521,7 @@
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#E6E6E0",
@@ -6645,7 +8529,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -6745,7 +8629,7 @@
     },
     {
       "id": "2tplvqpo-dfwE8beD9V",
-      "name": "ThreeMashFinal",
+      "name": "Son Çağrı",
       "entry": "./src/components/ThreeMashFinal/index.tsx",
       "styles": "./src/components/ThreeMashFinal/styles.css",
       "type": "section",
@@ -6816,7 +8700,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -6824,7 +8708,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FFFFFF",
@@ -6840,7 +8724,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -6959,523 +8843,310 @@
     },
     {
       "id": "2tplvqpo-ZLcKfjubsQ",
-      "name": "ThreeMashFooter",
+      "name": "Alt Bölüm",
       "entry": "./src/components/ThreeMashFooter/index.tsx",
       "styles": "./src/components/ThreeMashFooter/styles.css",
       "type": "section",
       "props": [
         {
-          "name": "logoText",
-          "displayName": "Logo Text",
-          "type": "RICH_TEXT",
+          "name": "components",
+          "displayName": "Footer Kolonları",
+          "type": "COMPONENT_LIST",
           "required": false,
-          "defaultValue": "mash",
-          "groupId": "brand"
+          "groupId": "footerColumns",
+          "filteredComponentIds": [
+            "2tplvqpo-footerBrand",
+            "2tplvqpo-footerProductLinks",
+            "2tplvqpo-footerCompanyLinks",
+            "2tplvqpo-footerContactLinks"
+          ],
+          "defaultValue": {
+            "components": [
+              {
+                "id": "default-footer-brand",
+                "codeComponentId": "2tplvqpo-footerBrand",
+                "propValues": {
+                  "logoText": {
+                    "value": "mash"
+                  },
+                  "descriptionText": {
+                    "value": "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte."
+                  },
+                  "logoHref": {
+                    "value": "/"
+                  },
+                  "logoImageAlt": {
+                    "value": "3mash"
+                  },
+                  "logoImageWidth": {
+                    "value": 32
+                  },
+                  "logoImageHeight": {
+                    "value": 32
+                  },
+                  "logoImageXOffset": {
+                    "value": 0
+                  },
+                  "logoImageYOffset": {
+                    "value": 0
+                  },
+                  "logoImageFit": {
+                    "value": "contain"
+                  },
+                  "logoImageOpacity": {
+                    "value": 100
+                  },
+                  "logoImageBrightness": {
+                    "value": 100
+                  },
+                  "logoImageContrast": {
+                    "value": 100
+                  },
+                  "logoImageSaturation": {
+                    "value": 100
+                  },
+                  "logoImageHue": {
+                    "value": 0
+                  },
+                  "logoImageInvert": {
+                    "value": 0
+                  },
+                  "logoSvgWidth": {
+                    "value": 32
+                  },
+                  "logoSvgHeight": {
+                    "value": 32
+                  },
+                  "logoSvgXOffset": {
+                    "value": 0
+                  },
+                  "logoSvgYOffset": {
+                    "value": 0
+                  },
+                  "logoSvgOpacity": {
+                    "value": 100
+                  },
+                  "logoSvgBrightness": {
+                    "value": 100
+                  },
+                  "logoSvgContrast": {
+                    "value": 100
+                  },
+                  "logoSvgSaturation": {
+                    "value": 100
+                  },
+                  "logoSvgHue": {
+                    "value": 0
+                  },
+                  "logoSvgInvert": {
+                    "value": 0
+                  }
+                }
+              },
+              {
+                "id": "default-footer-products",
+                "codeComponentId": "2tplvqpo-footerProductLinks",
+                "propValues": {
+                  "productColumnTitle": {
+                    "value": "Ürünler"
+                  },
+                  "productLink1Text": {
+                    "value": "3D Yazıcılar"
+                  },
+                  "productLink1Href": {
+                    "value": "/urunler/3d-yazicilar"
+                  },
+                  "productLink2Text": {
+                    "value": "Dental Reçineler"
+                  },
+                  "productLink2Href": {
+                    "value": "/urunler/dental-recineler"
+                  },
+                  "productLink3Text": {
+                    "value": "Yıkama & Kürleme"
+                  },
+                  "productLink3Href": {
+                    "value": "/urunler/yikama-kurleme"
+                  },
+                  "productLink4Text": {
+                    "value": "Masaüstü Tarayıcılar"
+                  },
+                  "productLink4Href": {
+                    "value": "/urunler/masasustu-tarayicilar"
+                  },
+                  "productLink5Text": {
+                    "value": "Zirkon Bloklar"
+                  },
+                  "productLink5Href": {
+                    "value": "/urunler/zirkon-bloklar"
+                  },
+                  "productLink6Text": {
+                    "value": "Dental Fırınlar"
+                  },
+                  "productLink6Href": {
+                    "value": "/urunler/dental-firinlar"
+                  }
+                }
+              },
+              {
+                "id": "default-footer-company",
+                "codeComponentId": "2tplvqpo-footerCompanyLinks",
+                "propValues": {
+                  "companyColumnTitle": {
+                    "value": "Şirket"
+                  },
+                  "companyLink1Text": {
+                    "value": "Hakkımızda"
+                  },
+                  "companyLink1Href": {
+                    "value": "https://3mash.com/pages/about-us"
+                  },
+                  "companyLink2Text": {
+                    "value": "Mash Academy"
+                  },
+                  "companyLink2Href": {
+                    "value": "/mash-academy"
+                  },
+                  "companyLink3Text": {
+                    "value": "Blog"
+                  },
+                  "companyLink3Href": {
+                    "value": "https://3mash.com/blog"
+                  }
+                }
+              },
+              {
+                "id": "default-footer-contact",
+                "codeComponentId": "2tplvqpo-footerContactLinks",
+                "propValues": {
+                  "contactColumnTitle": {
+                    "value": "İletişim"
+                  },
+                  "contactLink1Text": {
+                    "value": "info@3mash.com"
+                  },
+                  "contactLink1Href": {
+                    "value": "mailto:info@3mash.com"
+                  },
+                  "contactLink2Text": {
+                    "value": "Antalya Teknokent, Konyaaltı"
+                  },
+                  "contactLink2Href": {
+                    "value": "#"
+                  },
+                  "contactLink3Text": {
+                    "value": "@3mashsocial"
+                  },
+                  "contactLink3Href": {
+                    "value": "https://instagram.com/3mashsocial"
+                  },
+                  "components": {
+                    "components": [
+                      {
+                        "id": "default-footer-social-links",
+                        "codeComponentId": "2tplvqpo-footerSocialLinks",
+                        "propValues": {
+                          "showSocialIcons": {
+                            "value": true
+                          },
+                          "facebookHref": {
+                            "value": ""
+                          },
+                          "facebookLabel": {
+                            "value": "Facebook"
+                          },
+                          "instagramHref": {
+                            "value": "https://instagram.com/3mashsocial"
+                          },
+                          "instagramLabel": {
+                            "value": "Instagram"
+                          },
+                          "youtubeHref": {
+                            "value": ""
+                          },
+                          "youtubeLabel": {
+                            "value": "YouTube"
+                          },
+                          "linkedinHref": {
+                            "value": ""
+                          },
+                          "linkedinLabel": {
+                            "value": "LinkedIn"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
         },
         {
-          "name": "descriptionText",
-          "displayName": "Description Text",
-          "type": "RICH_TEXT",
+          "name": "bottomComponents",
+          "displayName": "Telif ve Yasal Satır",
+          "type": "COMPONENT_LIST",
           "required": false,
-          "defaultValue": "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.",
-          "groupId": "text-customization"
-        },
-        {
-          "name": "productLink1Text",
-          "displayName": "productLink1 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "3D Yazıcılar",
-          "groupId": "productLinks"
-        },
-        {
-          "name": "productLink1Href",
-          "displayName": "productLink1 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/urunler/3d-yazicilar",
-          "groupId": "productLinks"
-        },
-        {
-          "name": "productLink2Text",
-          "displayName": "productLink2 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Dental Reçineler",
-          "groupId": "productLinks"
-        },
-        {
-          "name": "productLink2Href",
-          "displayName": "productLink2 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/urunler/dental-recineler",
-          "groupId": "productLinks"
-        },
-        {
-          "name": "productLink3Text",
-          "displayName": "productLink3 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Yıkama & Kürleme",
-          "groupId": "productLinks"
-        },
-        {
-          "name": "productLink3Href",
-          "displayName": "productLink3 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/urunler/yikama-kurleme",
-          "groupId": "productLinks"
-        },
-        {
-          "name": "productLink4Text",
-          "displayName": "productLink4 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Zirkon Bloklar",
-          "groupId": "productLinks"
-        },
-        {
-          "name": "productLink4Href",
-          "displayName": "productLink4 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/urunler/zirkon-bloklar",
-          "groupId": "productLinks"
-        },
-        {
-          "name": "companyLink1Text",
-          "displayName": "companyLink1 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Hakkımızda",
-          "groupId": "companyLinks"
-        },
-        {
-          "name": "companyLink1Href",
-          "displayName": "companyLink1 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/pages/about-us",
-          "groupId": "companyLinks"
-        },
-        {
-          "name": "companyLink2Text",
-          "displayName": "companyLink2 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Mash Academy",
-          "groupId": "companyLinks"
-        },
-        {
-          "name": "companyLink2Href",
-          "displayName": "companyLink2 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/mash-academy",
-          "groupId": "companyLinks"
-        },
-        {
-          "name": "companyLink3Text",
-          "displayName": "companyLink3 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Blog",
-          "groupId": "companyLinks"
-        },
-        {
-          "name": "companyLink3Href",
-          "displayName": "companyLink3 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/blog",
-          "groupId": "companyLinks"
-        },
-        {
-          "name": "companyLink4Text",
-          "displayName": "companyLink4 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "İletişim",
-          "groupId": "companyLinks"
-        },
-        {
-          "name": "companyLink4Href",
-          "displayName": "companyLink4 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://3mash.com/pages/iletisim",
-          "groupId": "companyLinks"
-        },
-        {
-          "name": "contactLink1Text",
-          "displayName": "contactLink1 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "info@3mash.com",
-          "groupId": "contactLinks"
-        },
-        {
-          "name": "contactLink1Href",
-          "displayName": "contactLink1 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "mailto:info@3mash.com",
-          "groupId": "contactLinks"
-        },
-        {
-          "name": "contactLink2Text",
-          "displayName": "contactLink2 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Antalya Teknokent, Konyaaltı",
-          "groupId": "contactLinks"
-        },
-        {
-          "name": "contactLink2Href",
-          "displayName": "contactLink2 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "#",
-          "groupId": "contactLinks"
-        },
-        {
-          "name": "contactLink3Text",
-          "displayName": "contactLink3 Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "@3mashsocial",
-          "groupId": "contactLinks"
-        },
-        {
-          "name": "contactLink3Href",
-          "displayName": "contactLink3 URL",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "https://instagram.com/3mashsocial",
-          "groupId": "contactLinks"
-        },
-        {
-          "name": "copyrightText",
-          "displayName": "Copyright Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "© 2026 3MASH Teknoloji A.Ş.",
-          "groupId": "legal"
-        },
-        {
-          "name": "legalText",
-          "displayName": "Legal Text",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "KVKK · İade & Garanti · Mesafeli Satış",
-          "groupId": "text-customization"
+          "groupId": "footerLegalRow",
+          "filteredComponentIds": [
+            "2tplvqpo-footerLegalBar"
+          ],
+          "defaultValue": {
+            "components": [
+              {
+                "id": "default-footer-legal-bar",
+                "codeComponentId": "2tplvqpo-footerLegalBar",
+                "propValues": {
+                  "copyrightText": {
+                    "value": "© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır."
+                  },
+                  "legalText": {
+                    "value": "KVKK · İade & Garanti · Mesafeli Satış"
+                  }
+                }
+              }
+            ]
+          }
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
-          "groupId": "appearance"
+          "groupId": "footerAppearance"
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FFFFFF",
-          "groupId": "appearance"
+          "groupId": "footerAppearance"
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8B8B80",
-          "groupId": "appearance"
+          "groupId": "footerAppearance"
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#26261F",
-          "groupId": "appearance"
+          "groupId": "footerAppearance"
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
-          "groupId": "appearance"
-        },
-        {
-          "name": "productColumnTitle",
-          "displayName": "Product Column Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Ürünler",
-          "groupId": "productLinks"
-        },
-        {
-          "name": "companyColumnTitle",
-          "displayName": "Company Column Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Şirket",
-          "groupId": "companyLinks"
-        },
-        {
-          "name": "contactColumnTitle",
-          "displayName": "Contact Column Title",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "İletişim",
-          "groupId": "contactLinks"
-        },
-        {
-          "name": "logoHref",
-          "displayName": "Logo Link",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "/",
-          "groupId": "brand"
-        },
-        {
-          "name": "logoImageUrl",
-          "displayName": "Logo Image",
-          "type": "IMAGE",
-          "required": false,
-          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown.",
-          "groupId": "brand"
-        },
-        {
-          "name": "logoImageAlt",
-          "displayName": "Logo Image Alt",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "3mash",
-          "groupId": "brand"
-        },
-        {
-          "name": "logoSvg",
-          "displayName": "Logo SVG",
-          "type": "SVG",
-          "required": false,
-          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown.",
-          "groupId": "brand"
-        },
-        {
-          "name": "logoImageWidth",
-          "displayName": "Width",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 32,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoImageHeight",
-          "displayName": "Height",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 32,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoImageXOffset",
-          "displayName": "X Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoImageYOffset",
-          "displayName": "Y Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoImageFit",
-          "displayName": "Fit",
-          "type": "ENUM",
-          "required": false,
-          "defaultValue": "contain",
-          "groupId": "footerLogoImageControls",
-          "enumTypeId": "czO3k2QK5J"
-        },
-        {
-          "name": "logoImageOpacity",
-          "displayName": "Opacity",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoImageBrightness",
-          "displayName": "Brightness",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoImageContrast",
-          "displayName": "Contrast",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoImageSaturation",
-          "displayName": "Saturation",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoImageHue",
-          "displayName": "Hue",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoImageInvert",
-          "displayName": "Invert",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "footerLogoImageControls"
-        },
-        {
-          "name": "logoSvgWidth",
-          "displayName": "Width",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 32,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "logoSvgHeight",
-          "displayName": "Height",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 32,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "logoSvgXOffset",
-          "displayName": "X Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "logoSvgYOffset",
-          "displayName": "Y Offset",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "logoSvgOpacity",
-          "displayName": "Opacity",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "logoSvgBrightness",
-          "displayName": "Brightness",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "logoSvgContrast",
-          "displayName": "Contrast",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "logoSvgSaturation",
-          "displayName": "Saturation",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 100,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "logoSvgHue",
-          "displayName": "Hue",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "logoSvgInvert",
-          "displayName": "Invert",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "footerLogoSvgControls"
-        },
-        {
-          "name": "wordStyleEnabled",
-          "displayName": "Enable Word Style",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": false,
-          "groupId": "wordStyle"
-        },
-        {
-          "name": "styledPhrase",
-          "displayName": "Styled Word Or Phrase",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "wordStyle"
-        },
-        {
-          "name": "styledPhraseColor",
-          "displayName": "Styled Word Color",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#C7F136",
-          "groupId": "wordStyle"
-        },
-        {
-          "name": "styledPhraseBold",
-          "displayName": "Make Styled Word Bold",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": false,
-          "groupId": "wordStyle"
-        },
-        {
-          "name": "styledPhraseItalic",
-          "displayName": "Make Styled Word Italic",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": false,
-          "groupId": "wordStyle"
+          "groupId": "footerAppearance"
         }
       ],
       "propGroups": [
@@ -7512,6 +9183,11 @@
           "description": "Footer contact column links"
         },
         {
+          "id": "socialLinks",
+          "name": "Social Links",
+          "description": "Footer social icon links"
+        },
+        {
           "id": "legal",
           "name": "Legal Bar",
           "description": "Footer bottom legal text"
@@ -7536,8 +9212,708 @@
       ]
     },
     {
+      "id": "2tplvqpo-footerBrand",
+      "name": "🏷️ Marka Alanı",
+      "entry": "./src/components/ThreeMashFooterBrand/index.tsx",
+      "styles": "./src/components/ThreeMashFooter/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "logoText",
+          "displayName": "Logo Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "mash",
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Marka Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.",
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoHref",
+          "displayName": "Logo Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/",
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageUrl",
+          "displayName": "Logo Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown.",
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageAlt",
+          "displayName": "Logo Alt Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3mash",
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvg",
+          "displayName": "Logo SVG",
+          "type": "SVG",
+          "required": false,
+          "description": "Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown.",
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageFit",
+          "displayName": "Fit",
+          "type": "ENUM",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "footerBrand",
+          "enumTypeId": "czO3k2QK5J"
+        },
+        {
+          "name": "logoImageOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoImageInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgWidth",
+          "displayName": "Width",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgHeight",
+          "displayName": "Height",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgXOffset",
+          "displayName": "X Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgYOffset",
+          "displayName": "Y Offset",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgOpacity",
+          "displayName": "Opacity",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgBrightness",
+          "displayName": "Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgContrast",
+          "displayName": "Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgSaturation",
+          "displayName": "Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgHue",
+          "displayName": "Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerBrand"
+        },
+        {
+          "name": "logoSvgInvert",
+          "displayName": "Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "footerBrand"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "brand",
+          "name": "Brand",
+          "description": "Footer brand and description",
+          "children": [
+            {
+              "id": "footerLogoImageControls",
+              "name": "Logo Image Controls",
+              "description": "Footer logo image size, position and effects"
+            },
+            {
+              "id": "footerLogoSvgControls",
+              "name": "Logo SVG Controls",
+              "description": "Footer logo SVG size, position and effects"
+            }
+          ]
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-footerProductLinks",
+      "name": "📦 Ürün Linkleri",
+      "entry": "./src/components/ThreeMashFooterProductLinks/index.tsx",
+      "styles": "./src/components/ThreeMashFooter/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "productColumnTitle",
+          "displayName": "Ürün Kolonu Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürünler",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink1Text",
+          "displayName": "Ürün 1 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "3D Yazıcılar",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink1Href",
+          "displayName": "Ürün 1 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/3d-yazicilar",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink2Text",
+          "displayName": "Ürün 2 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dental Reçineler",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink2Href",
+          "displayName": "Ürün 2 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/dental-recineler",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink3Text",
+          "displayName": "Ürün 3 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Yıkama & Kürleme",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink3Href",
+          "displayName": "Ürün 3 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/yikama-kurleme",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink4Text",
+          "displayName": "Ürün 4 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Masaüstü Tarayıcılar",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink4Href",
+          "displayName": "Ürün 4 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/masasustu-tarayicilar",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink5Text",
+          "displayName": "Ürün 5 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Zirkon Bloklar",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink5Href",
+          "displayName": "Ürün 5 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/zirkon-bloklar",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink6Text",
+          "displayName": "Ürün 6 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dental Fırınlar",
+          "groupId": "footerProductLinks"
+        },
+        {
+          "name": "productLink6Href",
+          "displayName": "Ürün 6 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/urunler/dental-firinlar",
+          "groupId": "footerProductLinks"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "productLinks",
+          "name": "Product Links",
+          "description": "Footer product column links"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-footerCompanyLinks",
+      "name": "🏢 Şirket Linkleri",
+      "entry": "./src/components/ThreeMashFooterCompanyLinks/index.tsx",
+      "styles": "./src/components/ThreeMashFooter/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "companyColumnTitle",
+          "displayName": "Şirket Kolonu Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Şirket",
+          "groupId": "footerCompanyLinks"
+        },
+        {
+          "name": "companyLink1Text",
+          "displayName": "Şirket Link 1 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Hakkımızda",
+          "groupId": "footerCompanyLinks"
+        },
+        {
+          "name": "companyLink1Href",
+          "displayName": "Şirket Link 1 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/pages/about-us",
+          "groupId": "footerCompanyLinks"
+        },
+        {
+          "name": "companyLink2Text",
+          "displayName": "Şirket Link 2 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Mash Academy",
+          "groupId": "footerCompanyLinks"
+        },
+        {
+          "name": "companyLink2Href",
+          "displayName": "Şirket Link 2 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/mash-academy",
+          "groupId": "footerCompanyLinks"
+        },
+        {
+          "name": "companyLink3Text",
+          "displayName": "Şirket Link 3 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Blog",
+          "groupId": "footerCompanyLinks"
+        },
+        {
+          "name": "companyLink3Href",
+          "displayName": "Şirket Link 3 URL",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/blog",
+          "groupId": "footerCompanyLinks"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "companyLinks",
+          "name": "Company Links",
+          "description": "Footer company column links"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-footerContactLinks",
+      "name": "📞 İletişim",
+      "entry": "./src/components/ThreeMashFooterContactLinks/index.tsx",
+      "styles": "./src/components/ThreeMashFooter/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "components",
+          "displayName": "Bileşenler",
+          "type": "COMPONENT_LIST",
+          "required": false,
+          "filteredComponentIds": [
+            "2tplvqpo-footerSocialLinks"
+          ],
+          "defaultValue": {
+            "components": [
+              {
+                "id": "default-footer-social-links",
+                "codeComponentId": "2tplvqpo-footerSocialLinks",
+                "propValues": {
+                  "showSocialIcons": {
+                    "value": true
+                  },
+                  "facebookHref": {
+                    "value": ""
+                  },
+                  "facebookLabel": {
+                    "value": "Facebook"
+                  },
+                  "instagramHref": {
+                    "value": "https://instagram.com/3mashsocial"
+                  },
+                  "instagramLabel": {
+                    "value": "Instagram"
+                  },
+                  "youtubeHref": {
+                    "value": ""
+                  },
+                  "youtubeLabel": {
+                    "value": "YouTube"
+                  },
+                  "linkedinHref": {
+                    "value": ""
+                  },
+                  "linkedinLabel": {
+                    "value": "LinkedIn"
+                  }
+                }
+              }
+            ]
+          },
+          "groupId": "footerContactComponents"
+        },
+        {
+          "name": "contactColumnTitle",
+          "displayName": "İletişim Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "İletişim",
+          "groupId": "footerContactLinks"
+        },
+        {
+          "name": "contactLink1Text",
+          "displayName": "İletişim 1 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "info@3mash.com",
+          "groupId": "footerContactLinks"
+        },
+        {
+          "name": "contactLink1Href",
+          "displayName": "İletişim 1 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "mailto:info@3mash.com",
+          "groupId": "footerContactLinks"
+        },
+        {
+          "name": "contactLink2Text",
+          "displayName": "İletişim 2 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Antalya Teknokent, Konyaaltı",
+          "groupId": "footerContactLinks"
+        },
+        {
+          "name": "contactLink2Href",
+          "displayName": "İletişim 2 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#",
+          "groupId": "footerContactLinks"
+        },
+        {
+          "name": "contactLink3Text",
+          "displayName": "İletişim 3 Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "@3mashsocial",
+          "groupId": "footerContactLinks"
+        },
+        {
+          "name": "contactLink3Href",
+          "displayName": "İletişim 3 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://instagram.com/3mashsocial",
+          "groupId": "footerContactLinks"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "contactLinks",
+          "name": "Contact Links",
+          "description": "Footer contact column links"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-footerSocialLinks",
+      "name": "🌐 Sosyal Medya",
+      "entry": "./src/components/ThreeMashFooterSocialLinks/index.tsx",
+      "styles": "./src/components/ThreeMashFooter/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "showSocialIcons",
+          "displayName": "Sosyal İkonları Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "footerSocialLinks"
+        },
+        {
+          "name": "facebookHref",
+          "displayName": "Facebook Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "footerSocialLinks"
+        },
+        {
+          "name": "facebookLabel",
+          "displayName": "Facebook Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Facebook",
+          "groupId": "footerSocialLinks"
+        },
+        {
+          "name": "instagramHref",
+          "displayName": "Instagram Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://instagram.com/3mashsocial",
+          "groupId": "footerSocialLinks"
+        },
+        {
+          "name": "instagramLabel",
+          "displayName": "Instagram Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Instagram",
+          "groupId": "footerSocialLinks"
+        },
+        {
+          "name": "youtubeHref",
+          "displayName": "YouTube Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "footerSocialLinks"
+        },
+        {
+          "name": "youtubeLabel",
+          "displayName": "YouTube Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "YouTube",
+          "groupId": "footerSocialLinks"
+        },
+        {
+          "name": "linkedinHref",
+          "displayName": "LinkedIn Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "footerSocialLinks"
+        },
+        {
+          "name": "linkedinLabel",
+          "displayName": "LinkedIn Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "LinkedIn",
+          "groupId": "footerSocialLinks"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "socialLinks",
+          "name": "Social Links",
+          "description": "Footer social icon links"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-footerLegalBar",
+      "name": "⚖️ Yasal Bar",
+      "entry": "./src/components/ThreeMashFooterLegalBar/index.tsx",
+      "styles": "./src/components/ThreeMashFooter/styles.css",
+      "type": "component",
+      "props": [
+        {
+          "name": "copyrightText",
+          "displayName": "Telif Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.",
+          "groupId": "footerLegal"
+        },
+        {
+          "name": "legalText",
+          "displayName": "Yasal Link Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "KVKK · İade & Garanti · Mesafeli Satış",
+          "groupId": "footerLegal"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "legal",
+          "name": "Legal Bar",
+          "description": "Footer bottom legal text"
+        },
+        {
+          "id": "text-customization",
+          "name": "Text Customization",
+          "description": "Rich text fields for bold, italic and inline formatting",
+          "children": [
+            {
+              "id": "wordStyle",
+              "name": "Word Style",
+              "description": "Style a matching word or phrase inside this section"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "2tplvqpo-5Ju5yplcxH",
-      "name": "ThreeMashProductPage",
+      "name": "Ürün Sayfası",
       "entry": "./src/components/ThreeMashProductPage/index.tsx",
       "styles": "./src/components/ThreeMashProductPage/styles.css",
       "type": "section",
@@ -7759,7 +10135,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#f7f7f2",
@@ -7767,7 +10143,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#050505",
@@ -7783,7 +10159,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#8f8d84",
@@ -7799,7 +10175,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#c7ff1a",
@@ -7807,7 +10183,7 @@
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#deded5",
@@ -7896,7 +10272,7 @@
     },
     {
       "id": "2tplvqpo-rOvTVWz53H",
-      "name": "ThreeMashAcademyPage",
+      "name": "Akademi Sayfası",
       "entry": "./src/components/ThreeMashAcademyPage/index.tsx",
       "styles": "./src/components/ThreeMashAcademyPage/styles.css",
       "type": "section",
@@ -8007,7 +10383,7 @@
         },
         {
           "name": "backgroundColor",
-          "displayName": "Background Color",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FAFAF7",
@@ -8015,7 +10391,7 @@
         },
         {
           "name": "textColor",
-          "displayName": "Text Color",
+          "displayName": "Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -8023,7 +10399,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Muted Text Color",
+          "displayName": "Soluk Metin Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#6F6F67",
@@ -8039,7 +10415,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Accent Color",
+          "displayName": "Tema Vurgu Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -8047,7 +10423,7 @@
         },
         {
           "name": "lineColor",
-          "displayName": "Line Color",
+          "displayName": "Çizgi Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#E3E3DA",
@@ -8126,7 +10502,7 @@
     },
     {
       "id": "2tplvqpo-uObfuR2eqG",
-      "name": "ThreeMashC4ppage",
+      "name": "C4P Sayfası",
       "entry": "./src/components/ThreeMashC4ppage/index.tsx",
       "styles": "./src/components/ThreeMashC4ppage/styles.css",
       "type": "section",
@@ -8134,7 +10510,7 @@
     },
     {
       "id": "2tplvqpo-yxaj3pvvSH",
-      "name": "ThreeMashThreeDprintersPage",
+      "name": "3D Yazıcılar Sayfası",
       "entry": "./src/components/ThreeMashThreeDprintersPage/index.tsx",
       "styles": "./src/components/ThreeMashThreeDprintersPage/styles.css",
       "type": "section",
@@ -8142,7 +10518,7 @@
     },
     {
       "id": "2tplvqpo-MxJHbC7ndN",
-      "name": "ThreeMashWashCurePage",
+      "name": "Yıkama Kürleme Sayfası",
       "entry": "./src/components/ThreeMashWashCurePage/index.tsx",
       "styles": "./src/components/ThreeMashWashCurePage/styles.css",
       "type": "section",
@@ -8150,7 +10526,7 @@
     },
     {
       "id": "2tplvqpo-ycIcUXsTfj",
-      "name": "ThreeMashDentalResinsPage",
+      "name": "Dental Reçineler Sayfası",
       "entry": "./src/components/ThreeMashDentalResinsPage/index.tsx",
       "styles": "./src/components/ThreeMashDentalResinsPage/styles.css",
       "type": "section",
@@ -8158,7 +10534,7 @@
     },
     {
       "id": "2tplvqpo-FgYwWqRWsi",
-      "name": "ThreeMashDesktopScannersPage",
+      "name": "Masaüstü Tarayıcılar Sayfası",
       "entry": "./src/components/ThreeMashDesktopScannersPage/index.tsx",
       "styles": "./src/components/ThreeMashDesktopScannersPage/styles.css",
       "type": "section",
@@ -8166,7 +10542,7 @@
     },
     {
       "id": "2tplvqpo-1umsKNRARV",
-      "name": "ThreeMashZirconBlocksPage",
+      "name": "Zirkon Bloklar Sayfası",
       "entry": "./src/components/ThreeMashZirconBlocksPage/index.tsx",
       "styles": "./src/components/ThreeMashZirconBlocksPage/styles.css",
       "type": "section",
@@ -8174,7 +10550,7 @@
     },
     {
       "id": "2tplvqpo-Zty6YbwKIP",
-      "name": "ThreeMashDentalOvensPage",
+      "name": "Dental Fırınlar Sayfası",
       "entry": "./src/components/ThreeMashDentalOvensPage/index.tsx",
       "styles": "./src/components/ThreeMashDentalOvensPage/styles.css",
       "type": "section",

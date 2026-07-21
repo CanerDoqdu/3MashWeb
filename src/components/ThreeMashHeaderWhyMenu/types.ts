@@ -1,0 +1,47 @@
+// This file is auto-generated — do not edit manually.
+export interface Props {
+  whyMenuText?: string;
+  why1Number?: string;
+  why1Title?: string;
+  why1Description?: string;
+  why1Href?: string;
+  why2Number?: string;
+  why2Title?: string;
+  why2Description?: string;
+  why2Href?: string;
+  why3Number?: string;
+  why3Title?: string;
+  why3Description?: string;
+  why3Href?: string;
+  why4Number?: string;
+  why4Title?: string;
+  why4Description?: string;
+  why4Href?: string;
+  whyMenuEyebrow?: string;
+  whyMenuDescription?: string;
+  why5Number?: string;
+  why5Title?: string;
+  why5Description?: string;
+  why5Href?: string;
+  why6Number?: string;
+  why6Title?: string;
+  why6Description?: string;
+  why6Href?: string;
+  why7Number?: string;
+  why7Title?: string;
+  why7Description?: string;
+  why7Href?: string;
+  showWhyItemGlow?: boolean;
+  backgroundColor?: string;
+  accentColor?: string;
+  textColor?: string;
+  mutedTextColor?: string;
+  lineColor?: string;
+  panelColor?: string;
+  badgeColor?: string;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
+}

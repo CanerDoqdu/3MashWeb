@@ -1,8 +1,15 @@
+import { IkasComponentRenderer } from "@ikas/bp-storefront";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import mashC4pFeatureImage from "../../assets/mash-c4p-feature-data";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
-import { Props } from "./types";
+import type { Props as GeneratedProps } from "./types";
+
+type Props = GeneratedProps & {
+  components?: any[];
+  logoText?: string;
+  [key: string]: any;
+};
 
 type MenuItem = {
   title?: string;
@@ -21,10 +28,69 @@ type FlowItem = {
 
 type ActiveMenu = "products" | "why" | null;
 type ActiveAction = "profile" | "store" | null;
+type HeaderDropdownKey = "products" | "why" | "profile" | "store";
 
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
+const headerDropdownEventName = "three-mash-header-dropdown-open";
+const headerDefaultProps: Partial<Props> = {
+  logoText: "mash",
+  logoHref: "#",
+  productsMenuText: "Ürünler",
+  productsFeatureEyebrow: "YENİ · DÜNYADA İLK",
+  productsFeatureTitle: "MASH C4P Akıllı Kürleme Cihazı",
+  productsFeatureDescription: "Reçineye göre otomatik kürleme. Sonuç kalitesini kullanıcı hatasından çıkarır.",
+  productsFeatureCtaText: "Keşfet",
+  productsFeatureHref: "/urunler/c4p",
+  productsCol1Title: "Üretim",
+  product1Title: "3D Yazıcılar",
+  product1Description: "P1D / P16L hassas baskı",
+  product1Href: "/urunler/3d-yazicilar",
+  product2Title: "Yıkama & Kürleme",
+  product2Description: "Yıkama ve akıllı kürleme",
+  product2Href: "/urunler/yikama-kurleme",
+  product3Title: "Dental Reçineler",
+  product3Description: "Dental reçine seçenekleri",
+  product3Href: "/urunler/dental-recineler",
+  productsCol2Title: "Tamamlayıcı",
+  product4Title: "Masaüstü Tarayıcılar",
+  product4Description: "Lab için hassas tarama",
+  product4Href: "/urunler/masasustu-tarayicilar",
+  product5Title: "Zirkon Bloklar & Titanyum",
+  product5Description: "Freze sarfları",
+  product5Href: "/urunler/zirkon-bloklar",
+  product6Title: "Dental Fırınlar",
+  product6Description: "Sinterleme çözümleri",
+  product6Href: "/urunler/dental-firinlar",
+  whyMenuText: "Neden 3mash?",
+  whyMenuEyebrow: "SAYFA AKIŞI",
+  whyMenuDescription: "Kaybın nereden başladığını ve 3mash sisteminin bunu nasıl azalttığını adım adım görün.",
+  referencesText: "Referanslar",
+  referencesHref: "#guven",
+  academyText: "Academy",
+  academyHref: "/mash-academy",
+  searchAriaLabel: "Ara",
+  accountAriaLabel: "Hesabım",
+  cartAriaLabel: "Sepet",
+  searchPlaceholder: "Ürün, kategori veya içerik ara",
+  mobileMenuLabel: "Menü",
+};
+
+function withHeaderDefaults<T extends Partial<Props>>(props: T): Props & T {
+  const resolved: Record<string, unknown> = { ...headerDefaultProps };
+  for (const [key, value] of Object.entries(props)) {
+    if (value == null) continue;
+    if (typeof value === "string" && value.trim() === "") continue;
+    resolved[key] = value;
+  }
+  return resolved as Props & T;
+}
+
+function emitHeaderDropdownOpen(dropdown: HeaderDropdownKey) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent(headerDropdownEventName, { detail: dropdown }));
+}
 
 function href(value?: string) {
   const trimmed = value?.trim();
@@ -303,7 +369,7 @@ function ProductLink({ item, wordStyle }: { item: MenuItem; wordStyle: Props }) 
   const hasIcon = Boolean(imageSource(item.iconImageUrl) || svgMarkup(item.iconSvg));
 
   return (
-    <a href={href(item.href)} className={`tmh-mega-link${hasIcon ? "" : " tmh-mega-link-no-icon"}`}>
+    <a href={href(item.href)} className={`tmh-mega-link${hasIcon ? "" : " tmh-mega-link-no-icon"}`} data-tmr-category-source="products">
       <InlineIcon image={item.iconImageUrl} svg={item.iconSvg} className="tmh-product-icon" />
       <span className="tmh-mega-link-copy">
         <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
@@ -349,33 +415,26 @@ function CaretIcon() {
   );
 }
 
-export function ThreeMashHeader(props: Props) {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
-  const [activeAction, setActiveAction] = useState<ActiveAction>(null);
-  const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
-  const whyMenuRef = useRef<HTMLLIElement>(null);
+function productPrimaryItems(props: Partial<Props>) {
   const showProductIcons = props.showProductIcons !== false;
-  const showActionIcons = props.showActionIcons !== false;
-  const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
-  const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
-  const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
-  const productPrimary: MenuItem[] = [
+  return [
     { title: props.product1Title, description: props.product1Description, href: productRouteHref(props.product1Href, "/urunler/3d-yazicilar"), ...resolveProductIcon(props.product1IconImageUrl, props.product1IconSvg, ecoPrinterIcon, ["printer", "M6 9V3h12v6"], showProductIcons) },
     { title: props.product2Title, description: props.product2Description, href: productRouteHref(props.product2Href, "/urunler/yikama-kurleme"), ...resolveProductIcon(props.product2IconImageUrl, props.product2IconSvg, ecoScannerIcon, ["washer", "circle cx=\"12\" cy=\"14\"", "M7 7h10"], showProductIcons) },
     { title: props.product3Title, description: props.product3Description, href: productRouteHref(props.product3Href, "/urunler/dental-recineler"), ...resolveProductIcon(props.product3IconImageUrl, props.product3IconSvg, ecoResinIcon, ["flask-conical", "M10 2v7.5"], showProductIcons) },
   ];
+}
 
-  const productSecondary: MenuItem[] = [
+function productSecondaryItems(props: Partial<Props>) {
+  const showProductIcons = props.showProductIcons !== false;
+  return [
     { title: props.product4Title, description: props.product4Description, href: productRouteHref(props.product4Href, "/urunler/masasustu-tarayicilar"), ...resolveProductIcon(props.product4IconImageUrl, props.product4IconSvg, ecoCuringIcon, ["scan-line", "M3 7V5a2 2"], showProductIcons) },
     { title: props.product5Title, description: props.product5Description, href: productRouteHref(props.product5Href, "/urunler/zirkon-bloklar"), ...resolveProductIcon(props.product5IconImageUrl, props.product5IconSvg, ecoBlocksIcon, ["class=\"box\"", "M12 2 3 7l9 5"], showProductIcons) },
     { title: props.product6Title, description: props.product6Description, href: productRouteHref(props.product6Href, "/urunler/dental-firinlar"), ...resolveProductIcon(props.product6IconImageUrl, props.product6IconSvg, ecoOvenIcon, ["flame", "a3.5 3.5"], showProductIcons) },
   ];
+}
 
-  const whyItems: FlowItem[] = [
+function whyMenuItems(props: Partial<Props>) {
+  return [
     { number: text(props.why1Number, "01"), title: text(props.why1Title, "Gizli maliyetinizi görün"), description: text(props.why1Description, "Tekrar işlerin yıllık kayba nasıl döndüğünü hesaplayın"), href: text(props.why1Href, "#hesap") },
     { number: text(props.why2Number, "02"), title: text(props.why2Title, "Hassasiyet farkını anlayın"), description: text(props.why2Description, "İlk seferde oturmayan işlerin asıl sebebini görün"), href: text(props.why2Href, "#sebep") },
     { number: text(props.why3Number, "03"), title: text(props.why3Title, "Uyumlu üretimi keşfedin"), description: text(props.why3Description, "Yazıcı, reçine ve parametre aynı sonuç için birlikte çalışır"), href: text(props.why3Href, "#cozum") },
@@ -384,17 +443,438 @@ export function ThreeMashHeader(props: Props) {
     { number: text(props.why6Number, "06"), title: text(props.why6Title, "Gerçek kullanıcıları görün"), description: text(props.why6Description, "Klinik ve laboratuvarların 3mash deneyimlerine bakın"), href: text(props.why6Href, "#guven") },
     { number: text(props.why7Number, "07"), title: text(props.why7Title, "Aklınızdaki soruları çözün"), description: text(props.why7Description, "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın"), href: text(props.why7Href, "#sss") },
   ];
+}
 
+function ProductsMegaMenu({ props, primaryItems, secondaryItems }: { props: Partial<Props>; primaryItems: MenuItem[]; secondaryItems: MenuItem[] }) {
+  const wordStyle = props as Props;
+
+  return (
+    <div className="tmh-mega tmh-products-mega">
+      <a className="tmh-feature" href={href(c4pRouteHref(props.productsFeatureHref))}>
+        <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsFeatureEyebrow, wordStyle)} />
+        <b dangerouslySetInnerHTML={richText(props.productsFeatureTitle, wordStyle)} />
+        <span className="tmh-feature-media">
+          <img src={imageSource(props.productsFeatureImageUrl, mashC4pFeatureImage)} alt={props.productsFeatureImageAlt || ""} />
+        </span>
+        <span dangerouslySetInnerHTML={richText(props.productsFeatureDescription, wordStyle)} />
+        <em dangerouslySetInnerHTML={richText(props.productsFeatureCtaText, wordStyle)} />
+      </a>
+      <div className="tmh-mega-column">
+        <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsCol1Title, wordStyle)} />
+        {primaryItems.map((item, index) => (
+          <ProductLink item={item} wordStyle={wordStyle} key={index} />
+        ))}
+      </div>
+      <div className="tmh-mega-column">
+        <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsCol2Title, wordStyle)} />
+        {secondaryItems.map((item, index) => (
+          <ProductLink item={item} wordStyle={wordStyle} key={index} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function WhyMegaMenu({ props, items, menuLeft }: { props: Partial<Props>; items: FlowItem[]; menuLeft: number | null }) {
+  const wordStyle = props as Props;
+
+  return (
+    <div
+      className="tmh-mega tmh-flow-mega"
+      style={menuLeft == null ? undefined : ({ "--tmh-flow-mega-left": `${menuLeft}px`, "--tmh-flow-translate-x": "0px" } as any)}
+    >
+      <div className="tmh-flow-intro">
+        <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.whyMenuEyebrow, wordStyle)} />
+        <b dangerouslySetInnerHTML={richText(props.whyMenuText, wordStyle)} />
+        <p dangerouslySetInnerHTML={richText(props.whyMenuDescription, wordStyle)} />
+      </div>
+      <div className="tmh-flow-grid">
+        {items.map((item, index) => (
+          <FlowLink item={item} wordStyle={wordStyle} key={index} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MobileHeaderMenu({ props, productItems, whyItems }: { props: Partial<Props>; productItems: MenuItem[]; whyItems: FlowItem[] }) {
+  const wordStyle = props as Props;
+
+  return (
+    <details className="tmh-mobile-menu">
+      <summary dangerouslySetInnerHTML={richText(props.mobileMenuLabel, wordStyle)} />
+      <div className="tmh-mobile-panel">
+        <div className="tmh-mobile-group">
+          <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.productsMenuText, wordStyle)} />
+          {productItems.map((item, index) => (
+            <a href={href(item.href)} className="tmh-mobile-product" key={index}>
+              <InlineIcon image={item.iconImageUrl} svg={item.iconSvg} className="tmh-mobile-link-icon" />
+              <span>
+                <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
+                <small dangerouslySetInnerHTML={richText(item.description, wordStyle)} />
+              </span>
+            </a>
+          ))}
+        </div>
+        <div className="tmh-mobile-group">
+          <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.whyMenuText, wordStyle)} />
+          {whyItems.map((item, index) => (
+            <a href={href(item.href)} className="tmh-mobile-flow" key={index} onClick={(event) => smoothAnchorClick(event, item.href)}>
+              <span className="tmh-mobile-flow-number" dangerouslySetInnerHTML={richText(item.number, wordStyle)} />
+              <span>
+                <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
+                <small dangerouslySetInnerHTML={richText(item.description, wordStyle)} />
+              </span>
+            </a>
+          ))}
+        </div>
+        <div className="tmh-mobile-group tmh-mobile-group-inline">
+          <a href={href(props.referencesHref)} dangerouslySetInnerHTML={richText(props.referencesText, wordStyle)} />
+          <a href={href(props.academyHref)} dangerouslySetInnerHTML={richText(props.academyText, wordStyle)} />
+        </div>
+      </div>
+    </details>
+  );
+}
+
+export function HeaderAnnouncementPart(props: Partial<Props>) {
+  const resolvedProps = withHeaderDefaults(props);
+  if (resolvedProps.showAnnouncement === false) return null;
+  return (
+    <div style={{ ...getHeaderThemeStyle(resolvedProps), display: "contents" }}>
+      <HeaderAnnouncementFallback {...resolvedProps} />
+    </div>
+  );
+}
+
+export function HeaderNavbarLogoPart(props: Partial<Props>) {
+  const resolvedProps = withHeaderDefaults(props);
+  return (
+    <span style={{ ...getHeaderThemeStyle(resolvedProps), display: "contents" }}>
+      <Logo props={resolvedProps} />
+    </span>
+  );
+}
+
+export function HeaderProductsMenuPart(props: Partial<Props>) {
+  const resolvedProps = withHeaderDefaults(props);
+  const [isOpen, setIsOpen] = useState(false);
+  const primaryItems = productPrimaryItems(resolvedProps);
+  const secondaryItems = productSecondaryItems(resolvedProps);
+
+  function openMenu() {
+    emitHeaderDropdownOpen("products");
+    setIsOpen(true);
+  }
+
+  function toggleMenu() {
+    setIsOpen((current) => {
+      if (current) return false;
+      emitHeaderDropdownOpen("products");
+      return true;
+    });
+  }
+
+  useEffect(() => {
+    function closeWhenAnotherDropdownOpens(event: Event) {
+      if ((event as CustomEvent<HeaderDropdownKey>).detail !== "products") setIsOpen(false);
+    }
+
+    window.addEventListener(headerDropdownEventName, closeWhenAnotherDropdownOpens);
+    return () => window.removeEventListener(headerDropdownEventName, closeWhenAnotherDropdownOpens);
+  }, []);
+
+  return (
+    <li
+      className={isOpen ? "is-open" : ""}
+      onMouseEnter={openMenu}
+      onFocusIn={openMenu}
+      style={getHeaderThemeStyle(resolvedProps)}
+    >
+      <button className="tmh-menu-trigger" type="button" onClick={toggleMenu}>
+        <RichInline value={resolvedProps.productsMenuText} wordStyle={resolvedProps} />
+        <CaretIcon />
+      </button>
+      <ProductsMegaMenu props={resolvedProps} primaryItems={primaryItems} secondaryItems={secondaryItems} />
+    </li>
+  );
+}
+
+export function HeaderWhyMenuPart(props: Partial<Props>) {
+  const resolvedProps = withHeaderDefaults(props);
+  const [isOpen, setIsOpen] = useState(false);
+  const [menuLeft, setMenuLeft] = useState<number | null>(null);
+  const menuRef = useRef<HTMLLIElement>(null);
+  const items = whyMenuItems(resolvedProps);
+
+  function openMenu() {
+    emitHeaderDropdownOpen("why");
+    setIsOpen(true);
+    requestAnimationFrame(updateMenuPosition);
+  }
+
+  function toggleMenu() {
+    setIsOpen((current) => {
+      if (current) return false;
+      emitHeaderDropdownOpen("why");
+      requestAnimationFrame(updateMenuPosition);
+      return true;
+    });
+  }
+
+  function updateMenuPosition() {
+    const item = menuRef.current;
+    if (!item || typeof window === "undefined") return;
+    const rect = item.getBoundingClientRect();
+    const panelWidth = Math.min(760, window.innerWidth - 32);
+    const desiredLeft = rect.left + rect.width / 2 - panelWidth / 2;
+    const clampedLeft = Math.min(window.innerWidth - panelWidth - 16, Math.max(16, desiredLeft));
+    setMenuLeft(clampedLeft - rect.left);
+  }
+
+  useEffect(() => {
+    function closeWhenAnotherDropdownOpens(event: Event) {
+      if ((event as CustomEvent<HeaderDropdownKey>).detail !== "why") setIsOpen(false);
+    }
+
+    window.addEventListener(headerDropdownEventName, closeWhenAnotherDropdownOpens);
+    window.addEventListener("resize", updateMenuPosition);
+    return () => {
+      window.removeEventListener(headerDropdownEventName, closeWhenAnotherDropdownOpens);
+      window.removeEventListener("resize", updateMenuPosition);
+    };
+  }, []);
+
+  return (
+    <li
+      ref={menuRef}
+      className={isOpen ? "is-open" : ""}
+      onMouseEnter={openMenu}
+      onFocusIn={openMenu}
+      style={getHeaderThemeStyle(resolvedProps)}
+    >
+      <button className="tmh-menu-trigger" type="button" onClick={toggleMenu}>
+        <RichInline value={resolvedProps.whyMenuText} wordStyle={resolvedProps} />
+        <CaretIcon />
+      </button>
+      <WhyMegaMenu props={resolvedProps} items={items} menuLeft={menuLeft} />
+    </li>
+  );
+}
+
+export function HeaderPlainLinksPart(props: Partial<Props>) {
+  const resolvedProps = withHeaderDefaults(props);
+  return (
+    <>
+      <li>
+        <a className="tmh-plain-link" href={href(resolvedProps.referencesHref)}>
+          <RichInline value={resolvedProps.referencesText} wordStyle={resolvedProps} />
+        </a>
+      </li>
+      <li>
+        <a className="tmh-plain-link" href={href(resolvedProps.academyHref)}>
+          <RichInline value={resolvedProps.academyText} wordStyle={resolvedProps} />
+        </a>
+      </li>
+    </>
+  );
+}
+
+export function HeaderDesktopMenuPart(props: Partial<Props> & { components?: any[] }) {
+  const resolvedProps = withHeaderDefaults(props);
+  const components = Array.isArray(props.components) ? props.components : [];
+  return (
+    <nav className="tmh-desktop-nav" aria-label={resolvedProps.mobileMenuLabel}>
+      <ul className="tmh-menu">
+        {components.length > 0 ? (
+          <IkasComponentRenderer id="desktop-menu-components" components={components} parentProps={resolvedProps} />
+        ) : (
+          <>
+            <HeaderProductsMenuPart {...resolvedProps} />
+            <HeaderWhyMenuPart {...resolvedProps} />
+            <HeaderPlainLinksPart {...resolvedProps} />
+          </>
+        )}
+      </ul>
+    </nav>
+  );
+}
+
+export function HeaderActionsPart(props: Partial<Props>) {
+  const resolvedProps = withHeaderDefaults(props);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeAction, setActiveAction] = useState<ActiveAction>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const showActionIcons = resolvedProps.showActionIcons !== false;
+  const searchIcon = resolveActionIcon(resolvedProps.searchIconImageUrl, resolvedProps.searchIconSvg, defaultSearchSvg, showActionIcons);
+  const accountIcon = resolveActionIcon(resolvedProps.accountIconImageUrl, resolvedProps.accountIconSvg, defaultAccountSvg, showActionIcons);
+  const cartIcon = resolveActionIcon(resolvedProps.cartIconImageUrl, resolvedProps.cartIconSvg, defaultCartSvg, showActionIcons);
   const profileLinks = [
-    { label: richTextValue(props.profileLink1Text, "Siparişlerim"), link: text(props.profileLink1Href, "https://3mash.com/account/orders") },
-    { label: richTextValue(props.profileLink2Text, "Adreslerim"), link: text(props.profileLink2Href, "https://3mash.com/account/addresses") },
-    { label: richTextValue(props.profileLink3Text, "Destek talebi"), link: text(props.profileLink3Href, "https://3mash.com/pages/iletisim") },
-    { label: richTextValue(props.profileLink4Text, "Teknik destek"), link: text(props.profileLink4Href, "https://3mash.com/pages/iletisim") },
-    { label: richTextValue(props.profileLink5Text, "Mash Academy"), link: text(props.profileLink5Href, "/mash-academy") },
-    { label: richTextValue(props.profileLink6Text, "Çıkış yap"), link: text(props.profileLink6Href, "https://3mash.com/account/logout") },
+    { label: richTextValue(resolvedProps.profileLink1Text, "Siparişlerim"), link: text(resolvedProps.profileLink1Href, "https://3mash.com/account/orders") },
+    { label: richTextValue(resolvedProps.profileLink2Text, "Adreslerim"), link: text(resolvedProps.profileLink2Href, "https://3mash.com/account/addresses") },
+    { label: richTextValue(resolvedProps.profileLink3Text, "Destek talebi"), link: text(resolvedProps.profileLink3Href, "https://3mash.com/pages/iletisim") },
+    { label: richTextValue(resolvedProps.profileLink4Text, "Teknik destek"), link: text(resolvedProps.profileLink4Href, "https://3mash.com/pages/iletisim") },
+    { label: richTextValue(resolvedProps.profileLink5Text, "Mash Academy"), link: text(resolvedProps.profileLink5Href, "/mash-academy") },
+    { label: richTextValue(resolvedProps.profileLink6Text, "Çıkış yap"), link: text(resolvedProps.profileLink6Href, "https://3mash.com/account/logout") },
   ];
 
-  const themeStyle = {
+  useEffect(() => {
+    if (isSearchOpen) searchInputRef.current?.focus();
+  }, [isSearchOpen]);
+
+  useEffect(() => {
+    function closeWhenMenuDropdownOpens(event: Event) {
+      const dropdown = (event as CustomEvent<HeaderDropdownKey>).detail;
+      if (dropdown !== "profile" && dropdown !== "store") setActiveAction(null);
+    }
+
+    window.addEventListener(headerDropdownEventName, closeWhenMenuDropdownOpens);
+    return () => window.removeEventListener(headerDropdownEventName, closeWhenMenuDropdownOpens);
+  }, []);
+
+  function openActionPanel(action: ActiveAction) {
+    if (action) emitHeaderDropdownOpen(action);
+    setIsSearchOpen(false);
+    setActiveAction((current) => (action === "profile" && current === "profile" ? null : action));
+  }
+
+  function submitSearch(event: Event) {
+    event.preventDefault();
+    const query = searchQuery.trim();
+    if (!query) return;
+    const target = href(resolvedProps.searchHref);
+    const param = resolvedProps.searchQueryParam || "q";
+    try {
+      const url = new URL(target, window.location.origin);
+      url.searchParams.set(param, query);
+      window.location.href = url.toString();
+    } catch {
+      window.location.href = `${target}${target.includes("?") ? "&" : "?"}${encodeURIComponent(param)}=${encodeURIComponent(query)}`;
+    }
+  }
+
+  return (
+    <div className={`tmh-actions${isSearchOpen ? " is-search-open" : ""}`} style={getHeaderThemeStyle(resolvedProps)}>
+      <form className="tmh-inline-search" onSubmit={submitSearch}>
+        {isSearchOpen && (
+          <input
+            ref={searchInputRef}
+            className="tmh-inline-search-input"
+            value={searchQuery}
+            placeholder={resolvedProps.searchPlaceholder || ""}
+            aria-label={resolvedProps.searchPlaceholder || ""}
+            onInput={(event) => setSearchQuery((event.currentTarget as HTMLInputElement).value)}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                setIsSearchOpen(false);
+                setSearchQuery("");
+              }
+            }}
+          />
+        )}
+        <button
+          className="tmh-icon-button"
+          type={isSearchOpen ? "submit" : "button"}
+          aria-label={resolvedProps.searchAriaLabel || ""}
+          onClick={() => {
+            if (!isSearchOpen) {
+              setActiveAction(null);
+              setIsSearchOpen(true);
+            }
+          }}
+        >
+          <InlineIcon image={searchIcon.image} svg={searchIcon.svg} className="tmh-action-svg" />
+        </button>
+      </form>
+      {resolvedProps.showProfileMenu === false ? (
+        <a href={href(resolvedProps.accountHref)} aria-label={resolvedProps.accountAriaLabel || ""}>
+          <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
+        </a>
+      ) : (
+        <div className="tmh-action-wrap">
+          <button className="tmh-action-button" type="button" aria-label={resolvedProps.accountAriaLabel || ""} aria-expanded={activeAction === "profile"} onClick={() => openActionPanel("profile")}>
+            <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
+          </button>
+          <div className={`tmh-action-panel tmh-profile-panel${activeAction === "profile" ? " is-open" : ""}`}>
+            <span className="tmh-action-panel-kicker">{text(resolvedProps.accountAriaLabel, "HESABIM")}</span>
+            <b dangerouslySetInnerHTML={richText(richTextValue(resolvedProps.profileMenuTitle, "Hesabım"), resolvedProps)} />
+            <p dangerouslySetInnerHTML={richText(richTextValue(resolvedProps.profileMenuDescription, "Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın."), resolvedProps)} />
+            <div className="tmh-panel-links">
+              {profileLinks.map((item) => (
+                <a href={href(item.link)} dangerouslySetInnerHTML={richText(item.label, resolvedProps)} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {resolvedProps.showStorePanel === false ? (
+        <a href={href(resolvedProps.cartHref)} aria-label={resolvedProps.cartAriaLabel || ""} className="tmh-cart">
+          <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
+        </a>
+      ) : (
+        <div className="tmh-action-wrap" onMouseEnter={() => openActionPanel("store")} onFocus={() => openActionPanel("store")}>
+          <button className="tmh-action-button tmh-cart" type="button" aria-label={resolvedProps.cartAriaLabel || ""} aria-expanded={activeAction === "store"} onClick={() => openActionPanel("store")}>
+            <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
+          </button>
+          <div className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}>
+            <span className="tmh-action-panel-kicker">{text(resolvedProps.cartAriaLabel, "SEPETİM")}</span>
+            <div className="tmh-cart-empty-card">
+              <div className="tmh-store-card-head">
+                <span className="tmh-store-visual" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M7 8h10l-.7 10.1a1.9 1.9 0 0 1-1.9 1.8H9.6a1.9 1.9 0 0 1-1.9-1.8L7 8Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                    <path d="M10 8V6.8a2 2 0 0 1 4 0V8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                </span>
+                <div>
+                  <b className="tmh-store-card-title" dangerouslySetInnerHTML={richText(richTextValue(resolvedProps.storePanelTitle, "3mash Store"), resolvedProps)} />
+                  <p className="tmh-store-card-description" dangerouslySetInnerHTML={richText(richTextValue(resolvedProps.storePanelDescription, "Sepet ve mağaza işlemleri güvenli 3mash mağazasında devam eder."), resolvedProps)} />
+                </div>
+              </div>
+              <a className="tmh-cart-market-button" href={href(resolvedProps.storePanelButtonHref || resolvedProps.cartHref)} dangerouslySetInnerHTML={richText(richTextValue(resolvedProps.storePanelButtonText, "Markete git"), resolvedProps)} />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function HeaderMobileMenuPart(props: Partial<Props>) {
+  const resolvedProps = withHeaderDefaults(props);
+  return (
+    <div style={{ ...getHeaderThemeStyle(resolvedProps), display: "contents" }}>
+      <MobileHeaderMenu props={resolvedProps} productItems={productPrimaryItems(resolvedProps).concat(productSecondaryItems(resolvedProps))} whyItems={whyMenuItems(resolvedProps)} />
+    </div>
+  );
+}
+
+export function HeaderNavbarPart(props: Partial<Props> & { components?: any[] }) {
+  const resolvedProps = withHeaderDefaults(props);
+  const components = Array.isArray(props.components) ? props.components : [];
+  return (
+    <div className="three-mash-header" style={getHeaderThemeStyle(resolvedProps)}>
+      <header className="tmh-header">
+        <div className="tmh-wrap tmh-nav">
+          {components.length > 0 ? (
+            <IkasComponentRenderer id="navbar-components" components={components} parentProps={resolvedProps} />
+          ) : (
+            <>
+              <HeaderNavbarLogoPart {...resolvedProps} />
+              <HeaderDesktopMenuPart {...resolvedProps} />
+              <HeaderActionsPart {...resolvedProps} />
+              <HeaderMobileMenuPart {...resolvedProps} />
+            </>
+          )}
+        </div>
+      </header>
+    </div>
+  );
+}
+
+function getHeaderThemeStyle(props: Props) {
+  return {
     "--tmh-bg": props.backgroundColor || "#FAFAF7",
     "--tmh-ann-bg": props.announcementBackgroundColor || "#0E0E0C",
     "--tmh-ann-text": props.announcementTextColor || "#CFCFC6",
@@ -439,6 +919,53 @@ export function ThreeMashHeader(props: Props) {
     ...imageControlVars("tmh-action-icon-image", props, "actionIconImage", 22, 22, 36),
     ...svgControlVars("tmh-action-icon-svg", props, "actionIconSvg", 22, 22, 36),
   };
+}
+
+function HeaderNavigation(props: Props) {
+  props = withHeaderDefaults(props);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
+  const [activeAction, setActiveAction] = useState<ActiveAction>(null);
+  const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const whyMenuRef = useRef<HTMLLIElement>(null);
+  const showProductIcons = props.showProductIcons !== false;
+  const showActionIcons = props.showActionIcons !== false;
+  const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
+  const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
+  const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
+  const productPrimary: MenuItem[] = [
+    { title: props.product1Title, description: props.product1Description, href: productRouteHref(props.product1Href, "/urunler/3d-yazicilar"), ...resolveProductIcon(props.product1IconImageUrl, props.product1IconSvg, ecoPrinterIcon, ["printer", "M6 9V3h12v6"], showProductIcons) },
+    { title: props.product2Title, description: props.product2Description, href: productRouteHref(props.product2Href, "/urunler/yikama-kurleme"), ...resolveProductIcon(props.product2IconImageUrl, props.product2IconSvg, ecoScannerIcon, ["washer", "circle cx=\"12\" cy=\"14\"", "M7 7h10"], showProductIcons) },
+    { title: props.product3Title, description: props.product3Description, href: productRouteHref(props.product3Href, "/urunler/dental-recineler"), ...resolveProductIcon(props.product3IconImageUrl, props.product3IconSvg, ecoResinIcon, ["flask-conical", "M10 2v7.5"], showProductIcons) },
+  ];
+
+  const productSecondary: MenuItem[] = [
+    { title: props.product4Title, description: props.product4Description, href: productRouteHref(props.product4Href, "/urunler/masasustu-tarayicilar"), ...resolveProductIcon(props.product4IconImageUrl, props.product4IconSvg, ecoCuringIcon, ["scan-line", "M3 7V5a2 2"], showProductIcons) },
+    { title: props.product5Title, description: props.product5Description, href: productRouteHref(props.product5Href, "/urunler/zirkon-bloklar"), ...resolveProductIcon(props.product5IconImageUrl, props.product5IconSvg, ecoBlocksIcon, ["class=\"box\"", "M12 2 3 7l9 5"], showProductIcons) },
+    { title: props.product6Title, description: props.product6Description, href: productRouteHref(props.product6Href, "/urunler/dental-firinlar"), ...resolveProductIcon(props.product6IconImageUrl, props.product6IconSvg, ecoOvenIcon, ["flame", "a3.5 3.5"], showProductIcons) },
+  ];
+
+  const whyItems: FlowItem[] = [
+    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Gizli maliyetinizi görün"), description: text(props.why1Description, "Tekrar işlerin yıllık kayba nasıl döndüğünü hesaplayın"), href: text(props.why1Href, "#hesap") },
+    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Hassasiyet farkını anlayın"), description: text(props.why2Description, "İlk seferde oturmayan işlerin asıl sebebini görün"), href: text(props.why2Href, "#sebep") },
+    { number: text(props.why3Number, "03"), title: text(props.why3Title, "Uyumlu üretimi keşfedin"), description: text(props.why3Description, "Yazıcı, reçine ve parametre aynı sonuç için birlikte çalışır"), href: text(props.why3Href, "#cozum") },
+    { number: text(props.why4Number, "04"), title: text(props.why4Title, "Kürlemenin etkisini görün"), description: text(props.why4Description, "Doğru baskının son adımda neden kaybedilmemesi gerektiğini öğrenin"), href: text(props.why4Href, "#kurleme") },
+    { number: text(props.why5Number, "05"), title: text(props.why5Title, "Tek çatıdaki akışı inceleyin"), description: text(props.why5Description, "Cihazdan sarfa, eğitimden desteğe tüm ekosistemi görün"), href: text(props.why5Href, "#ekosistem") },
+    { number: text(props.why6Number, "06"), title: text(props.why6Title, "Gerçek kullanıcıları görün"), description: text(props.why6Description, "Klinik ve laboratuvarların 3mash deneyimlerine bakın"), href: text(props.why6Href, "#guven") },
+    { number: text(props.why7Number, "07"), title: text(props.why7Title, "Aklınızdaki soruları çözün"), description: text(props.why7Description, "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın"), href: text(props.why7Href, "#sss") },
+  ];
+
+  const profileLinks = [
+    { label: richTextValue(props.profileLink1Text, "Siparişlerim"), link: text(props.profileLink1Href, "https://3mash.com/account/orders") },
+    { label: richTextValue(props.profileLink2Text, "Adreslerim"), link: text(props.profileLink2Href, "https://3mash.com/account/addresses") },
+    { label: richTextValue(props.profileLink3Text, "Destek talebi"), link: text(props.profileLink3Href, "https://3mash.com/pages/iletisim") },
+    { label: richTextValue(props.profileLink4Text, "Teknik destek"), link: text(props.profileLink4Href, "https://3mash.com/pages/iletisim") },
+    { label: richTextValue(props.profileLink5Text, "Mash Academy"), link: text(props.profileLink5Href, "/mash-academy") },
+    { label: richTextValue(props.profileLink6Text, "Çıkış yap"), link: text(props.profileLink6Href, "https://3mash.com/account/logout") },
+  ];
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -522,6 +1049,15 @@ export function ThreeMashHeader(props: Props) {
     }
   }
 
+  function toggleMenu(menu: ActiveMenu) {
+    setActiveAction(null);
+    setActiveMenu((current) => {
+      if (current === menu) return null;
+      if (menu === "why") requestAnimationFrame(updateWhyMenuPosition);
+      return menu;
+    });
+  }
+
   function toggleAction(action: ActiveAction) {
     setActiveMenu(null);
     setIsSearchOpen(false);
@@ -550,18 +1086,7 @@ export function ThreeMashHeader(props: Props) {
   }
 
   return (
-    <section className="three-mash-header" style={themeStyle}>
-      {props.showAnnouncement !== false && (
-        <div className="tmh-announcement">
-          <div className="tmh-announcement-inner">
-            <b dangerouslySetInnerHTML={announcementRichText(props.announcementHighlightText, props)} />
-            <span dangerouslySetInnerHTML={announcementRichText(props.announcementText, props)} />
-            <a href={href(props.announcementHref)} dangerouslySetInnerHTML={announcementRichText(props.announcementCtaText, props)} />
-          </div>
-        </div>
-      )}
-
-      <header className="tmh-header" ref={headerRef}>
+    <header className="tmh-header" ref={headerRef}>
         <div className="tmh-wrap tmh-nav">
           <Logo props={props} />
 
@@ -572,33 +1097,11 @@ export function ThreeMashHeader(props: Props) {
                 onMouseEnter={() => openMenu("products")}
                 onFocusIn={() => openMenu("products")}
               >
-                <button className="tmh-menu-trigger" type="button">
+                <button className="tmh-menu-trigger" type="button" onClick={() => toggleMenu("products")}>
                   <RichInline value={props.productsMenuText} wordStyle={props} />
                   <CaretIcon />
                 </button>
-                <div className="tmh-mega tmh-products-mega">
-                  <a className="tmh-feature" href={href(c4pRouteHref(props.productsFeatureHref))}>
-                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsFeatureEyebrow, props)} />
-                    <b dangerouslySetInnerHTML={richText(props.productsFeatureTitle, props)} />
-                    <span className="tmh-feature-media">
-                      <img src={imageSource(props.productsFeatureImageUrl, mashC4pFeatureImage)} alt={props.productsFeatureImageAlt || ""} />
-                    </span>
-                    <span dangerouslySetInnerHTML={richText(props.productsFeatureDescription, props)} />
-                    <em dangerouslySetInnerHTML={richText(props.productsFeatureCtaText, props)} />
-                  </a>
-                  <div className="tmh-mega-column">
-                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsCol1Title, props)} />
-                    {productPrimary.map((item, index) => (
-                      <ProductLink item={item} wordStyle={props} key={index} />
-                    ))}
-                  </div>
-                  <div className="tmh-mega-column">
-                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsCol2Title, props)} />
-                    {productSecondary.map((item, index) => (
-                      <ProductLink item={item} wordStyle={props} key={index} />
-                    ))}
-                  </div>
-                </div>
+                <ProductsMegaMenu props={props} primaryItems={productPrimary} secondaryItems={productSecondary} />
               </li>
 
               <li
@@ -607,25 +1110,11 @@ export function ThreeMashHeader(props: Props) {
                 onMouseEnter={() => openMenu("why")}
                 onFocusIn={() => openMenu("why")}
               >
-                <button className="tmh-menu-trigger" type="button">
+                <button className="tmh-menu-trigger" type="button" onClick={() => toggleMenu("why")}>
                   <RichInline value={props.whyMenuText} wordStyle={props} />
                   <CaretIcon />
                 </button>
-                <div
-                  className="tmh-mega tmh-flow-mega"
-                  style={whyMenuLeft == null ? undefined : { "--tmh-flow-mega-left": `${whyMenuLeft}px`, "--tmh-flow-translate-x": "0px" } as any}
-                >
-                  <div className="tmh-flow-intro">
-                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.whyMenuEyebrow, props)} />
-                    <b dangerouslySetInnerHTML={richText(props.whyMenuText, props)} />
-                    <p dangerouslySetInnerHTML={richText(props.whyMenuDescription, props)} />
-                  </div>
-                  <div className="tmh-flow-grid">
-                    {whyItems.map((item, index) => (
-                      <FlowLink item={item} wordStyle={props} key={index} />
-                    ))}
-                  </div>
-                </div>
+                <WhyMegaMenu props={props} items={whyItems} menuLeft={whyMenuLeft} />
               </li>
 
               <li>
@@ -678,17 +1167,13 @@ export function ThreeMashHeader(props: Props) {
                 <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
-              <div
-                className="tmh-action-wrap"
-                onMouseEnter={() => openActionPanel("profile")}
-                onFocus={() => openActionPanel("profile")}
-              >
+              <div className="tmh-action-wrap">
                 <button
                   className="tmh-action-button"
                   type="button"
                   aria-label={props.accountAriaLabel || ""}
                   aria-expanded={activeAction === "profile"}
-                  onClick={() => openActionPanel("profile")}
+                  onClick={() => toggleAction("profile")}
                 >
                   <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
                 </button>
@@ -726,6 +1211,18 @@ export function ThreeMashHeader(props: Props) {
                 <div className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}>
                   <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, "SEPETİM")}</span>
                   <div className="tmh-cart-empty-card">
+                    <div className="tmh-store-card-head">
+                      <span className="tmh-store-visual" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M7 8h10l-.7 10.1a1.9 1.9 0 0 1-1.9 1.8H9.6a1.9 1.9 0 0 1-1.9-1.8L7 8Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                          <path d="M10 8V6.8a2 2 0 0 1 4 0V8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                        </svg>
+                      </span>
+                      <div>
+                        <b className="tmh-store-card-title" dangerouslySetInnerHTML={richText(richTextValue(props.storePanelTitle, "3mash Store"), props)} />
+                        <p className="tmh-store-card-description" dangerouslySetInnerHTML={richText(richTextValue(props.storePanelDescription, "Sepet ve mağaza işlemleri güvenli 3mash mağazasında devam eder."), props)} />
+                      </div>
+                    </div>
                     <a
                       className="tmh-cart-market-button"
                       href={href(props.storePanelButtonHref || props.cartHref)}
@@ -737,42 +1234,40 @@ export function ThreeMashHeader(props: Props) {
             )}
           </div>
 
-          <details className="tmh-mobile-menu">
-            <summary dangerouslySetInnerHTML={richText(props.mobileMenuLabel, props)} />
-            <div className="tmh-mobile-panel">
-              <div className="tmh-mobile-group">
-                <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.productsMenuText, props)} />
-                {productPrimary.concat(productSecondary).map((item, index) => (
-                  <a href={href(item.href)} className="tmh-mobile-product" key={index}>
-                      <InlineIcon image={item.iconImageUrl} svg={item.iconSvg} className="tmh-mobile-link-icon" />
-                      <span>
-                        <b dangerouslySetInnerHTML={richText(item.title, props)} />
-                      <small dangerouslySetInnerHTML={richText(item.description, props)} />
-                      </span>
-                    </a>
-                  ))}
-              </div>
-              <div className="tmh-mobile-group">
-                <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.whyMenuText, props)} />
-                {whyItems.map((item, index) => (
-                  <a href={href(item.href)} className="tmh-mobile-flow" key={index} onClick={(event) => smoothAnchorClick(event, item.href)}>
-                    <span className="tmh-mobile-flow-number" dangerouslySetInnerHTML={richText(item.number, props)} />
-                    <span>
-                      <b dangerouslySetInnerHTML={richText(item.title, props)} />
-                      <small dangerouslySetInnerHTML={richText(item.description, props)} />
-                    </span>
-                  </a>
-                ))}
-              </div>
-              <div className="tmh-mobile-group tmh-mobile-group-inline">
-                <a href={href(props.referencesHref)} dangerouslySetInnerHTML={richText(props.referencesText, props)} />
-                <a href={href(props.academyHref)} dangerouslySetInnerHTML={richText(props.academyText, props)} />
-              </div>
-            </div>
-          </details>
+          <MobileHeaderMenu props={props} productItems={productPrimary.concat(productSecondary)} whyItems={whyItems} />
         </div>
-      </header>
+    </header>
+  );
+}
 
+function HeaderAnnouncementFallback(props: Props) {
+  if (props.showAnnouncement === false) return null;
+
+  return (
+    <div className="tmh-announcement">
+      <div className="tmh-announcement-inner">
+        <b dangerouslySetInnerHTML={announcementRichText(props.announcementHighlightText, props)} />
+        <span dangerouslySetInnerHTML={announcementRichText(props.announcementText, props)} />
+        <a href={href(props.announcementHref)} dangerouslySetInnerHTML={announcementRichText(props.announcementCtaText, props)} />
+      </div>
+    </div>
+  );
+}
+
+export function ThreeMashHeader(props: Props) {
+  const resolvedProps = withHeaderDefaults(props);
+  const components = Array.isArray(resolvedProps.components) ? resolvedProps.components : [];
+
+  return (
+    <section className="three-mash-header" style={getHeaderThemeStyle(resolvedProps)}>
+      {components.length > 0 ? (
+        <IkasComponentRenderer id="header-components" components={components} parentProps={resolvedProps} />
+      ) : (
+        <>
+          <HeaderAnnouncementFallback {...resolvedProps} />
+          <HeaderNavigation {...resolvedProps} />
+        </>
+      )}
     </section>
   );
 }
