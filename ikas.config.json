@@ -31,8 +31,8 @@
           ]
         },
         {
-          "name": "navbarComponents",
-          "displayName": "Navbar Bileşenleri",
+          "name": "navbarLeftComponents",
+          "displayName": "Navbar Sol Taraf",
           "type": "COMPONENT_LIST",
           "required": false,
           "defaultValue": {
@@ -56,7 +56,24 @@
                 "id": "default-header-plain-links",
                 "codeComponentId": "2tplvqpo-headerPlainLinks",
                 "propValues": {}
-              },
+              }
+            ]
+          },
+          "groupId": "structure",
+          "filteredComponentIds": [
+            "2tplvqpo-headerLogo",
+            "2tplvqpo-headerProductsMenu",
+            "2tplvqpo-headerWhyMenu",
+            "2tplvqpo-headerPlainLinks"
+          ]
+        },
+        {
+          "name": "navbarRightComponents",
+          "displayName": "Navbar Sağ Taraf",
+          "type": "COMPONENT_LIST",
+          "required": false,
+          "defaultValue": {
+            "components": [
               {
                 "id": "default-header-actions",
                 "codeComponentId": "2tplvqpo-headerActions",
@@ -71,10 +88,6 @@
           },
           "groupId": "structure",
           "filteredComponentIds": [
-            "2tplvqpo-headerLogo",
-            "2tplvqpo-headerProductsMenu",
-            "2tplvqpo-headerWhyMenu",
-            "2tplvqpo-headerPlainLinks",
             "2tplvqpo-headerActions",
             "2tplvqpo-headerMobileMenu"
           ]
@@ -226,55 +239,6 @@
       "entry": "./src/components/ThreeMashHeaderNavbar/index.tsx",
       "styles": "./src/components/ThreeMashHeader/styles.css",
       "props": [
-        {
-          "name": "components",
-          "displayName": "Navbar Bileşenleri",
-          "type": "COMPONENT_LIST",
-          "required": false,
-          "groupId": "structure",
-          "filteredComponentIds": [
-            "2tplvqpo-headerLogo",
-            "2tplvqpo-headerProductsMenu",
-            "2tplvqpo-headerWhyMenu",
-            "2tplvqpo-headerPlainLinks",
-            "2tplvqpo-headerActions",
-            "2tplvqpo-headerMobileMenu"
-          ],
-          "defaultValue": {
-            "components": [
-              {
-                "id": "default-header-logo",
-                "codeComponentId": "2tplvqpo-headerLogo",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-products-menu",
-                "codeComponentId": "2tplvqpo-headerProductsMenu",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-why-menu",
-                "codeComponentId": "2tplvqpo-headerWhyMenu",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-plain-links",
-                "codeComponentId": "2tplvqpo-headerPlainLinks",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-actions",
-                "codeComponentId": "2tplvqpo-headerActions",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-mobile-menu",
-                "codeComponentId": "2tplvqpo-headerMobileMenu",
-                "propValues": {}
-              }
-            ]
-          }
-        },
         {
           "name": "backgroundColor",
           "displayName": "Arka Plan Rengi",
@@ -757,37 +721,6 @@
           "required": false,
           "defaultValue": "#E2492F",
           "groupId": "appearance"
-        },
-        {
-          "name": "components",
-          "displayName": "Menü Bileşenleri",
-          "type": "COMPONENT_LIST",
-          "required": false,
-          "defaultValue": {
-            "components": [
-              {
-                "id": "default-header-products-menu",
-                "codeComponentId": "2tplvqpo-headerProductsMenu",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-why-menu",
-                "codeComponentId": "2tplvqpo-headerWhyMenu",
-                "propValues": {}
-              },
-              {
-                "id": "default-header-plain-links",
-                "codeComponentId": "2tplvqpo-headerPlainLinks",
-                "propValues": {}
-              }
-            ]
-          },
-          "groupId": "structure",
-          "filteredComponentIds": [
-            "2tplvqpo-headerProductsMenu",
-            "2tplvqpo-headerWhyMenu",
-            "2tplvqpo-headerPlainLinks"
-          ]
         }
       ],
       "propGroups": [

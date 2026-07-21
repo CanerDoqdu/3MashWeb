@@ -7,5 +7,4 @@ export interface Props {
   lineColor?: string;
   panelColor?: string;
   badgeColor?: string;
-  components?: any;
 }

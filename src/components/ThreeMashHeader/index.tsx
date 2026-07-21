@@ -9,6 +9,8 @@ type Props = GeneratedProps & {
   components?: any[];
   announcementComponents?: any[];
   navbarComponents?: any[];
+  navbarLeftComponents?: any[];
+  navbarRightComponents?: any[];
   logoText?: string;
   [key: string]: any;
 };
@@ -688,13 +690,9 @@ export function HeaderPlainLinksPart(props: Partial<Props>) {
   );
 }
 
-export function HeaderDesktopMenuPart(props: Partial<Props> & { components?: any[]; desktopMenuComponents?: any[] }) {
+export function HeaderDesktopMenuPart(props: Partial<Props> & { components?: any[] }) {
   const resolvedProps = withHeaderDefaults(props);
-  const components = Array.isArray(props.desktopMenuComponents)
-    ? props.desktopMenuComponents
-    : Array.isArray(props.components)
-      ? props.components
-      : [];
+  const components = Array.isArray(props.components) ? props.components : [];
   return (
     <nav className="tmh-desktop-nav" aria-label={resolvedProps.mobileMenuLabel}>
       <ul className="tmh-menu">
@@ -862,14 +860,18 @@ export function HeaderMobileMenuPart(props: Partial<Props>) {
   );
 }
 
-export function HeaderNavbarPart(props: Partial<Props> & { components?: any[] }) {
+export function HeaderNavbarPart(props: Partial<Props> & { components?: any[]; leftComponents?: any[]; rightComponents?: any[] }) {
   const resolvedProps = withHeaderDefaults(props);
-  const components = Array.isArray(props.components) ? props.components : [];
-  const logoComponents = components.filter((component) => component?.codeComponentId === headerLogoComponentId);
-  const menuItemComponents = components.filter((component) => headerMenuItemComponentIds.has(component?.codeComponentId));
-  const legacyDesktopMenuComponents = components.filter((component) => component?.codeComponentId === headerDesktopMenuComponentId);
-  const actionComponents = components.filter((component) => component?.codeComponentId === headerActionsComponentId);
-  const mobileMenuComponents = components.filter((component) => component?.codeComponentId === headerMobileMenuComponentId);
+  const hasSplitComponents = props.leftComponents !== undefined || props.rightComponents !== undefined;
+  const leftComponents = hasSplitComponents ? (Array.isArray(props.leftComponents) ? props.leftComponents : []) : Array.isArray(props.components) ? props.components : [];
+  const rightComponents = hasSplitComponents ? (Array.isArray(props.rightComponents) ? props.rightComponents : []) : [];
+  const components = leftComponents.concat(rightComponents);
+  const logoComponents = leftComponents.filter((component) => component?.codeComponentId === headerLogoComponentId);
+  const menuItemComponents = leftComponents.filter((component) => headerMenuItemComponentIds.has(component?.codeComponentId));
+  const legacyDesktopMenuComponents = leftComponents.filter((component) => component?.codeComponentId === headerDesktopMenuComponentId);
+  const rightSourceComponents = hasSplitComponents ? rightComponents : components;
+  const actionComponents = rightSourceComponents.filter((component) => component?.codeComponentId === headerActionsComponentId);
+  const mobileMenuComponents = rightSourceComponents.filter((component) => component?.codeComponentId === headerMobileMenuComponentId);
   const groupedComponentIds = new Set([
     headerLogoComponentId,
     headerDesktopMenuComponentId,
@@ -877,7 +879,8 @@ export function HeaderNavbarPart(props: Partial<Props> & { components?: any[] })
     headerMobileMenuComponentId,
     ...headerMenuItemComponentIds,
   ]);
-  const otherComponents = components.filter((component) => !groupedComponentIds.has(component?.codeComponentId));
+  const leftOtherComponents = leftComponents.filter((component) => !groupedComponentIds.has(component?.codeComponentId));
+  const rightOtherComponents = hasSplitComponents ? rightComponents.filter((component) => !groupedComponentIds.has(component?.codeComponentId)) : [];
 
   return (
     <div className="three-mash-header" style={getHeaderThemeStyle(resolvedProps)}>
@@ -895,9 +898,10 @@ export function HeaderNavbarPart(props: Partial<Props> & { components?: any[] })
                   </ul>
                 </nav>
               ) : null}
+              {leftOtherComponents.length > 0 ? <IkasComponentRenderer id="navbar-left-other-components" components={leftOtherComponents} parentProps={resolvedProps} /> : null}
               {actionComponents.length > 0 ? <IkasComponentRenderer id="navbar-action-components" components={actionComponents} parentProps={resolvedProps} /> : null}
               {mobileMenuComponents.length > 0 ? <IkasComponentRenderer id="navbar-mobile-menu-components" components={mobileMenuComponents} parentProps={resolvedProps} /> : null}
-              {otherComponents.length > 0 ? <IkasComponentRenderer id="navbar-other-components" components={otherComponents} parentProps={resolvedProps} /> : null}
+              {rightOtherComponents.length > 0 ? <IkasComponentRenderer id="navbar-right-other-components" components={rightOtherComponents} parentProps={resolvedProps} /> : null}
             </>
           ) : (
             <>
@@ -1297,9 +1301,15 @@ function HeaderAnnouncementFallback(props: Props) {
 export function ThreeMashHeader(props: Props) {
   const resolvedProps = withHeaderDefaults(props);
   const announcementComponents = Array.isArray(resolvedProps.announcementComponents) ? resolvedProps.announcementComponents : [];
-  const navbarComponents = Array.isArray(resolvedProps.navbarComponents) ? resolvedProps.navbarComponents : [];
+  const navbarLeftComponents = Array.isArray(resolvedProps.navbarLeftComponents) ? resolvedProps.navbarLeftComponents : [];
+  const navbarRightComponents = Array.isArray(resolvedProps.navbarRightComponents) ? resolvedProps.navbarRightComponents : [];
+  const legacyNavbarComponents = Array.isArray(resolvedProps.navbarComponents) ? resolvedProps.navbarComponents : [];
   const legacyComponents = Array.isArray(resolvedProps.components) ? resolvedProps.components : [];
-  const usesComponentListCategories = props.announcementComponents !== undefined || props.navbarComponents !== undefined;
+  const usesComponentListCategories =
+    props.announcementComponents !== undefined ||
+    props.navbarLeftComponents !== undefined ||
+    props.navbarRightComponents !== undefined ||
+    props.navbarComponents !== undefined;
 
   return (
     <section className="three-mash-header" style={getHeaderThemeStyle(resolvedProps)}>
@@ -1308,7 +1318,11 @@ export function ThreeMashHeader(props: Props) {
           {announcementComponents.length > 0 ? (
             <IkasComponentRenderer id="header-announcement-components" components={announcementComponents} parentProps={resolvedProps} />
           ) : null}
-          {navbarComponents.length > 0 ? <HeaderNavbarPart {...resolvedProps} components={navbarComponents} /> : null}
+          {navbarLeftComponents.length > 0 || navbarRightComponents.length > 0 ? (
+            <HeaderNavbarPart {...resolvedProps} leftComponents={navbarLeftComponents} rightComponents={navbarRightComponents} />
+          ) : legacyNavbarComponents.length > 0 ? (
+            <HeaderNavbarPart {...resolvedProps} components={legacyNavbarComponents} />
+          ) : null}
         </>
       ) : legacyComponents.length > 0 ? (
         <IkasComponentRenderer id="header-components-legacy" components={legacyComponents} parentProps={resolvedProps} />
