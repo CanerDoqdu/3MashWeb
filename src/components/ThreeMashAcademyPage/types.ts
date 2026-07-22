@@ -1,4 +1,6 @@
 // This file is auto-generated — do not edit manually.
+import type { IkasImage } from "@ikas/bp-storefront";
+
 export interface Props {
   eyebrowText?: string;
   titleText?: string;
@@ -24,4 +26,37 @@ export interface Props {
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
+  quoteAuthorText?: string;
+  introTitleText?: string;
+  /** Canlı Mash Academy sayfasındaki sağ büyük görsel. */
+  introImageUrl?: IkasImage | null;
+  introImageAlt?: string;
+  showIntroImage?: boolean;
+  event1ImageUrl?: IkasImage | null;
+  event1ImageAlt?: string;
+  event1Date?: string;
+  event2ImageUrl?: IkasImage | null;
+  event2ImageAlt?: string;
+  event2Date?: string;
+  showPastSection?: boolean;
+  showEventCards?: boolean;
+  quoteTextColor?: string;
+  quoteAuthorColor?: string;
+  headingColor?: string;
+  introBackgroundColor?: string;
+  introTextColor?: string;
+  cardTitleColor?: string;
+  eventDateColor?: string;
+  eventImageBackgroundColor?: string;
+  readMoreColor?: string;
+  maxContentWidth?: number;
+  quoteWidthPercent?: number;
+  quoteMinWidth?: number;
+  quotePadding?: number;
+  sectionGap?: number;
+  introImageWidthVw?: number;
+  introImageMaxWidth?: number;
+  introImageMinHeight?: number;
+  eventCardsGap?: number;
+  eventImageRatio?: string;
 }

@@ -1,56 +1,16 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage, IkasNavigationLink, IkasVideo } from "@ikas/bp-storefront";
-import type { LogoImageFit, P16lmediaMode, P1dmediaMode, ResinmediaMode } from "../../global-types";
+import type { IkasProductList } from "@ikas/bp-storefront";
+import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
+  /** Bind this to All Products or the current product list/category. Section 3 only renders live ikas products; old static demo products are not used. */
+  productList: IkasProductList;
   sectionAnchorId?: string;
   indexNumber?: string;
   indexText?: string;
   titleText?: string;
   titleEmphasis?: string;
   sideHtml?: string;
-  solutionCard1Tag?: string;
-  solutionCard1Title?: string;
-  solutionCard1DescriptionHtml?: string;
-  /** Upload a replacement product image. If empty, the bundled product image is used. */
-  solutionCard1ImageUrl?: IkasImage | null;
-  solutionCard1ImageAlt?: string;
-  solutionCard1Spec1Label?: string;
-  solutionCard1Spec1Value?: string;
-  solutionCard1Spec2Label?: string;
-  solutionCard1Spec2Value?: string;
-  solutionCard1Spec3Label?: string;
-  solutionCard1Spec3Value?: string;
-  solutionCard1CtaText?: string;
-  solutionCard1CtaHref?: IkasNavigationLink | null;
-  solutionCard2Tag?: string;
-  solutionCard2Title?: string;
-  solutionCard2DescriptionHtml?: string;
-  /** Upload a replacement product image. If empty, the bundled product image is used. */
-  solutionCard2ImageUrl?: IkasImage | null;
-  solutionCard2ImageAlt?: string;
-  solutionCard2Spec1Label?: string;
-  solutionCard2Spec1Value?: string;
-  solutionCard2Spec2Label?: string;
-  solutionCard2Spec2Value?: string;
-  solutionCard2Spec3Label?: string;
-  solutionCard2Spec3Value?: string;
-  solutionCard2CtaText?: string;
-  solutionCard2CtaHref?: IkasNavigationLink | null;
-  solutionCard3Tag?: string;
-  solutionCard3Title?: string;
-  solutionCard3DescriptionHtml?: string;
-  /** Upload a replacement product image. If empty, the bundled product image is used. */
-  solutionCard3ImageUrl?: IkasImage | null;
-  solutionCard3ImageAlt?: string;
-  solutionCard3Spec1Label?: string;
-  solutionCard3Spec1Value?: string;
-  solutionCard3Spec2Label?: string;
-  solutionCard3Spec2Value?: string;
-  solutionCard3Spec3Label?: string;
-  solutionCard3Spec3Value?: string;
-  solutionCard3CtaText?: string;
-  solutionCard3CtaHref?: IkasNavigationLink | null;
   carouselAriaLabel?: string;
   carouselDurationSeconds?: number;
   pauseOnHover?: boolean;
@@ -80,37 +40,6 @@ export interface Props {
   cardMediaStartColor?: string;
   cardMediaEndColor?: string;
   cardRadius?: number;
-  solutionCard2MediaMode?: P16lmediaMode;
-  solutionCard2ShowThumbnails?: boolean;
-  solutionCard2Image1Enabled?: boolean;
-  solutionCard2Image2Enabled?: boolean;
-  solutionCard2Image3Enabled?: boolean;
-  solutionCard2Image4Enabled?: boolean;
-  solutionCard2Image2Url?: IkasImage | null;
-  solutionCard2Image2Alt?: string;
-  solutionCard2Image3Url?: IkasImage | null;
-  solutionCard2Image3Alt?: string;
-  solutionCard2Image4Url?: IkasImage | null;
-  solutionCard2Image4Alt?: string;
-  solutionCard2VideoEnabled?: boolean;
-  solutionCard2VideoUpload?: IkasVideo | null;
-  solutionCard2VideoUrl?: string;
-  solutionCard2VideoPosterUrl?: IkasImage | null;
-  solutionCard2VideoLabel?: string;
-  solutionCard3MediaMode?: ResinmediaMode;
-  solutionCard3ShowThumbnails?: boolean;
-  solutionCard3VideoEnabled?: boolean;
-  solutionCard3VideoUpload?: IkasVideo | null;
-  solutionCard3VideoUrl?: string;
-  solutionCard3VideoPosterUrl?: IkasImage | null;
-  solutionCard3VideoLabel?: string;
-  solutionCard1MediaMode?: P1dmediaMode;
-  solutionCard1ShowThumbnails?: boolean;
-  solutionCard1VideoEnabled?: boolean;
-  solutionCard1VideoUpload?: IkasVideo | null;
-  solutionCard1VideoUrl?: string;
-  solutionCard1VideoPosterUrl?: IkasImage | null;
-  solutionCard1VideoLabel?: string;
   hoverVideoAutoplayEnabled?: boolean;
   wordStyleEnabled?: boolean;
   styledPhrase?: string;

@@ -366,6 +366,26 @@
   gap: var(--tmr-solution-card-gap);
 }
 
+.tmr-solution .tmr-products-slider.tmr-products-live {
+  display: block !important;
+  grid-template-columns: none !important;
+  overflow: hidden !important;
+}
+
+.tmr-solution .tmr-products-slider.tmr-products-live .tmr-products-track {
+  width: 100% !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: var(--tmr-solution-card-gap);
+  animation: tmr-products-slide var(--tmr-solution-carousel-duration) infinite;
+  will-change: transform;
+}
+
+.tmr-solution .tmr-products-slider.tmr-products-live .tmr-products-track > .tmr-product {
+  flex: 0 0 calc((100% - (var(--tmr-solution-card-gap) * 2)) / 3) !important;
+  min-width: 0;
+}
+
 .tmr-products-setup {
   margin-top: 48px;
   border: 1px dashed var(--tmr-line);

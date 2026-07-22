@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage } from "@ikas/bp-storefront";
+import type { IkasProductList, IkasImage } from "@ikas/bp-storefront";
 import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
@@ -11,6 +11,10 @@ export interface Props {
   logoText: string;
   logoHref?: string;
   productsMenuText?: string;
+  /** Tiny bottom-right link text in the Products mega menu. */
+  allProductsText?: string;
+  /** Tiny bottom-right link URL in the Products mega menu. */
+  allProductsHref?: string;
   productsFeatureEyebrow?: string;
   productsFeatureTitle?: string;
   productsFeatureDescription?: string;
@@ -58,6 +62,8 @@ export interface Props {
   academyText?: string;
   academyHref?: string;
   searchHref?: string;
+  /** Navbar arama önerileri için All Products olarak bağlayın. */
+  searchProductList?: IkasProductList;
   searchAriaLabel?: string;
   accountHref?: string;
   accountAriaLabel?: string;

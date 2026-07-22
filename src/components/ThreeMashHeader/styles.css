@@ -6,7 +6,7 @@
   margin: 0;
   background: var(--tmh-bg);
   color: var(--tmh-text);
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--tm-theme-font-body, "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
 }
 
 .three-mash-header,
@@ -132,7 +132,7 @@
 .tmh-logo span {
   min-width: 0;
   overflow-wrap: anywhere;
-  font-family: "Baloo 2", "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-logo, "Baloo 2", "Space Grotesk", sans-serif);
   color: var(--tmh-text);
   font-weight: 800;
   font-size: 25px;
@@ -228,11 +228,11 @@
 
 .tmh-flow-mega {
   left: var(--tmh-flow-mega-left, 50%);
-  width: min(760px, calc(100vw - 32px));
-  grid-template-columns: minmax(190px, 0.5fr) minmax(0, 1.5fr);
-  align-items: stretch;
-  gap: 8px;
-  padding: 12px;
+  width: min(660px, calc(100vw - 32px));
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 0;
+  padding: 26px;
   overflow-x: hidden;
   transform: translateX(var(--tmh-flow-translate-x, -50%)) translateY(8px);
 }
@@ -245,6 +245,7 @@
 
 .tmh-products-mega {
   left: 0;
+  position: absolute;
   width: min(940px, calc(100vw - 32px));
   grid-template-columns: minmax(230px, 0.88fr) minmax(210px, 1fr) minmax(210px, 1fr);
   align-items: stretch;
@@ -312,7 +313,7 @@
 }
 
 .tmh-feature b {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 15.5px;
   line-height: 1.35;
   overflow-wrap: anywhere;
@@ -336,7 +337,7 @@
 .tmh-micro {
   display: block;
   color: var(--tmh-muted);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0;
@@ -378,7 +379,7 @@
   display: block;
   margin-top: 32px;
   color: #fff;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 18px;
   line-height: 1.25;
   overflow-wrap: anywhere;
@@ -394,9 +395,24 @@
 
 .tmh-flow-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 7px;
+  grid-template-columns: 1fr;
+  gap: 0;
   align-content: start;
+}
+
+.tmh-products-all-link {
+  position: absolute;
+  top: 20px;
+  right: 18px;
+  color: var(--tmh-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.tmh-products-all-link:hover {
+  color: var(--tmh-text);
 }
 
 .tmh-mega-column {
@@ -429,25 +445,21 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
-.tmh-mega-link:hover,
-.tmh-flow-link:hover {
+.tmh-mega-link:hover {
   background: color-mix(in srgb, var(--tmh-line) 55%, transparent);
 }
 
 .tmh-flow-link:hover {
-  border-color: color-mix(in srgb, var(--tmh-accent) 70%, var(--tmh-line));
-  background:
-    var(--tmh-why-card-hover-glow),
-    #fff;
-  transform: translateY(-1px);
+  background: #f1f1ec;
 }
 
 .tmh-product-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 11px;
-  background: var(--tmh-accent);
-  color: var(--tmh-text);
+  width: 54px;
+  height: 54px;
+  border: 1px solid color-mix(in srgb, var(--tmh-accent) 12%, var(--tmh-line));
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--tmh-accent) 5%, var(--tmh-panel));
+  color: color-mix(in srgb, var(--tmh-text) 42%, var(--tmh-muted));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -458,11 +470,11 @@
   height: min(var(--tmh-product-icon-svg-height), 48px);
   display: block;
   transform: translate(var(--tmh-product-icon-svg-x), var(--tmh-product-icon-svg-y));
-  opacity: var(--tmh-product-icon-svg-opacity);
+  opacity: calc(var(--tmh-product-icon-svg-opacity) * 0.58);
   filter:
-    brightness(var(--tmh-product-icon-svg-brightness))
-    contrast(var(--tmh-product-icon-svg-contrast))
-    saturate(var(--tmh-product-icon-svg-saturation))
+    brightness(calc(var(--tmh-product-icon-svg-brightness) * 1.08))
+    contrast(calc(var(--tmh-product-icon-svg-contrast) * 0.68))
+    saturate(calc(var(--tmh-product-icon-svg-saturation) * 0.52))
     hue-rotate(var(--tmh-product-icon-svg-hue))
     invert(var(--tmh-product-icon-svg-invert));
 }
@@ -473,11 +485,11 @@
   display: block;
   object-fit: var(--tmh-product-icon-image-fit);
   transform: translate(var(--tmh-product-icon-image-x), var(--tmh-product-icon-image-y));
-  opacity: var(--tmh-product-icon-image-opacity);
+  opacity: calc(var(--tmh-product-icon-image-opacity) * 0.58);
   filter:
-    brightness(var(--tmh-product-icon-image-brightness))
-    contrast(var(--tmh-product-icon-image-contrast))
-    saturate(var(--tmh-product-icon-image-saturation))
+    brightness(calc(var(--tmh-product-icon-image-brightness) * 1.08))
+    contrast(calc(var(--tmh-product-icon-image-contrast) * 0.68))
+    saturate(calc(var(--tmh-product-icon-image-saturation) * 0.52))
     hue-rotate(var(--tmh-product-icon-image-hue))
     invert(var(--tmh-product-icon-image-invert));
 }
@@ -506,60 +518,70 @@
 
 .tmh-flow-link {
   min-width: 0;
-  display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
-  gap: 9px;
-  align-items: center;
-  min-height: 62px;
-  padding: 8px 10px;
-  border: 1px solid var(--tmh-line);
-  border-radius: 11px;
-  background:
-    var(--tmh-why-card-glow),
-    #fff;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  min-height: 0;
+  padding: 12px 10px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
   text-decoration: none;
-  transition: border-color 0.13s ease, background 0.13s ease, transform 0.13s ease;
-}
-
-.tmh-flow-link:nth-child(7) {
-  grid-column: 1 / -1;
-  min-height: 58px;
+  transition: background 0.13s ease;
 }
 
 .tmh-flow-number {
-  width: 32px;
-  height: 32px;
+  min-width: 30px;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
   border-radius: 8px;
   background: var(--tmh-accent);
-  color: color-mix(in srgb, var(--tmh-text) 70%, var(--tmh-accent));
+  color: var(--tmh-accent-text);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 1;
 }
 
 .tmh-flow-copy {
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+  display: block;
 }
 
 .tmh-flow-copy b {
+  display: block;
   color: var(--tmh-text);
-  font-size: 12.3px;
+  font-size: 14.5px;
   font-weight: 700;
-  line-height: 1.18;
+  line-height: 1.25;
   overflow-wrap: anywhere;
 }
 
 .tmh-flow-copy span {
+  display: block;
+  margin-top: 2px;
   color: var(--tmh-muted);
-  font-size: 10.8px;
-  line-height: 1.28;
+  font-size: 12.5px;
+  line-height: 1.5;
   overflow-wrap: anywhere;
+}
+
+.tmh-mobile-flow-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--tmh-accent);
+  color: var(--tmh-accent-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
+  font-weight: 700;
+  font-size: 12px;
 }
 
 .tmh-actions {
@@ -572,6 +594,7 @@
 }
 
 .tmh-inline-search {
+  position: relative;
   min-width: 0;
   margin: 0;
   display: flex;
@@ -612,6 +635,99 @@
 
 .tmh-inline-search-input::placeholder {
   color: color-mix(in srgb, var(--tmh-muted) 78%, var(--tmh-bg));
+}
+
+.tmh-search-suggestions {
+  position: absolute;
+  z-index: 120;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(360px, calc(100vw - 28px));
+  display: grid;
+  gap: 4px;
+  padding: 7px;
+  border: 1px solid color-mix(in srgb, var(--tmh-line) 84%, var(--tmh-text));
+  border-radius: 14px;
+  background: var(--tmh-panel);
+  box-shadow: 0 22px 58px rgba(14, 14, 12, 0.16);
+}
+
+.tmh-search-suggestion {
+  min-width: 0;
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  border-radius: 10px;
+  padding: 7px 9px 7px 7px;
+  color: var(--tmh-text);
+  text-decoration: none;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.tmh-search-suggestion:hover {
+  background: color-mix(in srgb, var(--tmh-accent) 16%, var(--tmh-bg));
+  transform: translateY(-1px);
+}
+
+.tmh-search-suggestion-media {
+  width: 54px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--tmh-line);
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 50% 40%, #fff 0 38%, transparent 39%),
+    color-mix(in srgb, var(--tmh-bg) 84%, var(--tmh-panel));
+}
+
+.tmh-search-suggestion-media img,
+.tmh-search-suggestion-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 4px;
+}
+
+.tmh-search-suggestion-media > span {
+  color: color-mix(in srgb, var(--tmh-text) 38%, transparent);
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.tmh-search-suggestion-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.tmh-search-suggestion-copy b {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--tmh-text);
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tmh-search-suggestion-copy small {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--tmh-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tmh-actions > a,
@@ -691,7 +807,7 @@
 .tmh-action-panel-kicker {
   display: block;
   color: var(--tmh-muted);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 10.5px;
   font-weight: 800;
   line-height: 1.2;
@@ -702,7 +818,7 @@
   display: block;
   margin-top: 8px;
   color: var(--tmh-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 19px;
   line-height: 1.12;
 }
@@ -936,7 +1052,7 @@
   border: 1px solid var(--tmh-line);
   border-radius: 9px;
   padding: 9px 12px;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 13px;
   font-weight: 700;
   color: var(--tmh-text);
@@ -996,7 +1112,7 @@
   display: block;
   padding: 0 4px 3px;
   color: var(--tmh-muted);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0;
@@ -1031,7 +1147,7 @@
 }
 
 .tmh-mobile-flow-number {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 12px;
   font-weight: 800;
 }
@@ -1164,6 +1280,12 @@
   .tmh-actions.is-search-open .tmh-inline-search {
     flex: 1 1 auto;
     padding-left: 11px;
+  }
+
+  .tmh-actions.is-search-open .tmh-search-suggestions {
+    left: 0;
+    right: auto;
+    width: 100%;
   }
 
   .tmh-actions.is-search-open .tmh-inline-search-input {

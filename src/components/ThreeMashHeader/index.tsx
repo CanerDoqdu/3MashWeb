@@ -1,4 +1,14 @@
 import { useEffect, useRef, useState } from "preact/hooks";
+import {
+  createMediaSrcset,
+  getDefaultSrc,
+  getProductHref,
+  getProductVariantMainImage,
+  getSelectedProductVariant,
+  searchProductList as updateProductSearchList,
+  type IkasProduct,
+  type IkasProductVariant,
+} from "@ikas/bp-storefront";
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import mashC4pFeatureImage from "../../assets/mash-c4p-feature-data";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
@@ -22,6 +32,11 @@ type FlowItem = {
 type ActiveMenu = "products" | "why" | null;
 type ActiveAction = "profile" | "store" | null;
 
+type SearchSuggestion = {
+  product: IkasProduct;
+  score: number;
+};
+
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
@@ -33,33 +48,135 @@ function href(value?: string) {
   return trimmed;
 }
 
+function searchPageHref(value?: string) {
+  const trimmed = value?.trim();
+  if (!trimmed || trimmed === "#") return "/search";
+  return href(trimmed);
+}
+
+function storePageHref(value?: string, fallback?: string) {
+  const trimmed = value?.trim();
+  if (!trimmed || trimmed === "/") return "/search";
+  return href(trimmed || fallback || "/search");
+}
+
+function routeAliasKey(value: string) {
+  return value
+    .trim()
+    .toLocaleLowerCase("tr-TR")
+    .replace(/^https?:\/\/(?:www\.)?3mash\.com/i, "")
+    .split(/[?#]/)[0]
+    .replace(/\/+/g, "/")
+    .replace(/\/$/, "");
+}
+
+function routeTextKey(value: string) {
+  return routeAliasKey(value)
+    .replace(/^\//, "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+const productCategoryRoutes: Record<string, string> = {
+  "3d-yazicilar": "/3d-yazicilar",
+  "3d-yazici": "/3d-yazicilar",
+  "dental-3d-yazici-recineleri": "/dental-3d-yazici-recineleri",
+  "dental-recineler": "/dental-3d-yazici-recineleri",
+  "recineler": "/dental-3d-yazici-recineleri",
+  "yikama-kurleme-cihazlari": "/yikama-kurleme-cihazlari",
+  "yikama-kurleme": "/yikama-kurleme-cihazlari",
+  "masasustu-tarayicilar": "/masasustu-tarayicilar",
+  "masaustu-tarayicilar": "/masasustu-tarayicilar",
+  "tarayicilar": "/masasustu-tarayicilar",
+  "zirkon-bloklar": "/zirkon-bloklar",
+  "zirkon-bloklar-titanyum": "/zirkon-bloklar",
+  "dental-firinlar": "/dental-firinlar",
+  "firinlar": "/dental-firinlar",
+  "3d-yazici-yedek-parcalari": "/3d-yazici-yedek-parcalari",
+  "yedek-parcalar": "/3d-yazici-yedek-parcalari",
+  "sistemler": "/sistemler",
+  "titanyum-diskler": "/titanyum-diskler",
+  "tum-urunler": "/tum-urunler",
+  "urunler": "/tum-urunler",
+  "products": "/tum-urunler",
+  "collections-all": "/tum-urunler",
+};
+
 function productRouteHref(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
   if (!trimmed) return fallback;
-  const normalized = trimmed
-    .toLowerCase()
-    .replace(/^https?:\/\/(?:www\.)?3mash\.com/i, "")
-    .replace(/\/$/, "");
-  const legacyRoutes: Record<string, string> = {
-    "/3d-yazicilar": "/urunler/3d-yazicilar",
-    "/dental-3d-yazici-recineleri": "/urunler/dental-recineler",
-    "/yikama-kurleme-cihazlari": "/urunler/yikama-kurleme",
-    "/masasustu-tarayicilar": "/urunler/masasustu-tarayicilar",
-    "/zirkon-bloklar": "/urunler/zirkon-bloklar",
-    "/dental-firinlar": "/urunler/dental-firinlar",
-  };
-  return legacyRoutes[normalized] || trimmed;
+  const normalized = routeAliasKey(trimmed);
+  const slug = routeTextKey(normalized);
+  const nestedSlug = slug.replace(/^urunler-/, "");
+  return productCategoryRoutes[slug] || productCategoryRoutes[nestedSlug] || trimmed;
 }
 
 function c4pRouteHref(value: string | undefined) {
   const trimmed = value?.trim();
-  if (!trimmed) return "/urunler/c4p";
+  if (!trimmed) return "/mash";
   const normalized = trimmed
     .toLowerCase()
     .replace(/^https?:\/\/(?:www\.)?3mash\.com/i, "")
     .replace(/\/$/, "");
-  if (normalized === "/yikama-kurleme-cihazlari" || normalized === "/3d-yazicilar") return "/urunler/c4p";
+  if (normalized === "/urunler/c4p") return "/mash";
   return trimmed;
+}
+
+function searchKey(value: string | undefined) {
+  return (value || "")
+    .toLocaleLowerCase("tr-TR")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function safeSearchVariant(product: IkasProduct): IkasProductVariant | null {
+  try {
+    return getSelectedProductVariant(product) || product.variants?.[0] || null;
+  } catch {
+    return product.variants?.[0] || null;
+  }
+}
+
+function productSearchText(product: IkasProduct) {
+  const categoryNames = product.categories?.map((category) => category.name).join(" ") || "";
+  const variantSkus = product.variants?.map((variant) => variant.sku).filter(Boolean).join(" ") || "";
+  return searchKey(`${product.name} ${product.brand?.name || ""} ${categoryNames} ${variantSkus}`);
+}
+
+function fuzzyScore(candidate: string, query: string) {
+  if (!candidate || !query) return Number.POSITIVE_INFINITY;
+  if (candidate === query) return 0;
+  if (candidate.startsWith(query)) return 2;
+
+  const wordStartIndex = candidate.split(" ").findIndex((word) => word.startsWith(query));
+  if (wordStartIndex >= 0) return 8 + wordStartIndex;
+
+  const containsIndex = candidate.indexOf(query);
+  if (containsIndex >= 0) return 20 + containsIndex;
+
+  let queryIndex = 0;
+  for (let index = 0; index < candidate.length && queryIndex < query.length; index += 1) {
+    if (candidate[index] === query[queryIndex]) queryIndex += 1;
+  }
+  return queryIndex === query.length ? 70 + candidate.length : Number.POSITIVE_INFINITY;
+}
+
+function searchSuggestions(products: IkasProduct[], query: string): SearchSuggestion[] {
+  const normalizedQuery = searchKey(query);
+  if (!normalizedQuery) return [];
+
+  return products
+    .map((product) => ({ product, score: fuzzyScore(productSearchText(product), normalizedQuery) }))
+    .filter((item) => Number.isFinite(item.score))
+    .sort((a, b) => a.score - b.score || a.product.name.length - b.product.name.length)
+    .slice(0, 5);
 }
 
 function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
@@ -83,6 +200,77 @@ function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
 function text(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
   return trimmed || fallback;
+}
+
+const legacyThemeCategoryNames = new Set([
+  "clothing",
+  "bags",
+  "accessories",
+  "hats & caps",
+  "laptop sleeves",
+]);
+
+function normalizedCategoryText(value: string | null | undefined) {
+  return (value || "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function directNodeText(element: Element) {
+  return Array.from(element.childNodes)
+    .filter((node) => node.nodeType === Node.TEXT_NODE)
+    .map((node) => node.textContent || "")
+    .join(" ");
+}
+
+function isLegacyThemeCategoryText(value: string | null | undefined) {
+  return legacyThemeCategoryNames.has(normalizedCategoryText(value));
+}
+
+function legacyThemeCategoryRow(element: Element, root: Element) {
+  let current: Element | null = element;
+  let fallback: HTMLElement | null = element instanceof HTMLElement ? element : null;
+
+  while (current && current !== root) {
+    if (!(current instanceof HTMLElement)) {
+      current = current.parentElement;
+      continue;
+    }
+
+    if (current.closest(".three-mash-header")) return null;
+
+    const directText = directNodeText(current);
+    const fullText = current.textContent || "";
+    const isDirectMatch = isLegacyThemeCategoryText(directText);
+    const isCompactFullMatch = isLegacyThemeCategoryText(fullText);
+    const rowLike = current.matches("a, button, li, [role='button'], [class*='category'], [class*='menu'], [class*='item'], [class*='row']");
+
+    if ((isDirectMatch || isCompactFullMatch) && rowLike) return current;
+    if (isDirectMatch && !fallback) fallback = current;
+
+    current = current.parentElement;
+  }
+
+  return fallback;
+}
+
+function hideLegacyThemeCategories() {
+  const roots = Array.from(
+    document.querySelectorAll<HTMLElement>(".category-products-main, .search-wrapper, .mobile-menu, [class*='category-products']")
+  );
+  const scanRoots = Array.from(new Set<HTMLElement>([...roots, document.body]));
+
+  scanRoots.forEach((root) => {
+    [root, ...Array.from(root.querySelectorAll<HTMLElement>("*"))].forEach((element) => {
+      if (element.dataset.tmhLegacyCategoryHidden === "true") return;
+      if (!isLegacyThemeCategoryText(directNodeText(element)) && !isLegacyThemeCategoryText(element.textContent)) return;
+
+      const row = legacyThemeCategoryRow(element, root);
+      if (!row || row.dataset.tmhLegacyCategoryHidden === "true") return;
+
+      row.dataset.tmhLegacyCategoryHidden = "true";
+      row.setAttribute("aria-hidden", "true");
+      row.style.display = "none";
+    });
+  });
 }
 
 function richTextValue(value: string | undefined, fallback: string) {
@@ -205,6 +393,12 @@ function percentage(value: unknown, fallback: number, min: number, max: number) 
   return `${numberInRange(value, fallback, min, max)}%`;
 }
 
+function themeToken(value: string | undefined, defaultValue: string, tokenName: string) {
+  const trimmed = value?.trim();
+  if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase()) return trimmed;
+  return `var(${tokenName}, ${defaultValue})`;
+}
+
 function imageControlVars(cssPrefix: string, props: Props, propPrefix: string, width: number, height: number, max: number) {
   const source = props as unknown as Record<string, unknown>;
   return {
@@ -313,6 +507,33 @@ function ProductLink({ item, wordStyle }: { item: MenuItem; wordStyle: Props }) 
   );
 }
 
+function SearchSuggestionLink({ product }: { product: IkasProduct }) {
+  const variant = safeSearchVariant(product);
+  const media = variant ? getProductVariantMainImage(variant) : undefined;
+  const image = media?.image;
+  const meta = product.brand?.name || product.categories?.[0]?.name || "";
+
+  return (
+    <a className="tmh-search-suggestion" href={getProductHref(product)}>
+      <span className="tmh-search-suggestion-media">
+        {image ? (
+          media?.isVideo ? (
+            <video src={getDefaultSrc(image)} muted playsInline />
+          ) : (
+            <img src={getDefaultSrc(image)} srcSet={createMediaSrcset(image)} alt={image.altText || product.name} loading="lazy" decoding="async" />
+          )
+        ) : (
+          <span aria-hidden="true">{product.name.slice(0, 1)}</span>
+        )}
+      </span>
+      <span className="tmh-search-suggestion-copy">
+        <b>{product.name}</b>
+        {meta ? <small>{meta}</small> : null}
+      </span>
+    </a>
+  );
+}
+
 function FlowLink({ item, wordStyle }: { item: FlowItem; wordStyle: Props }) {
   return (
     <a href={href(item.href)} className="tmh-flow-link" onClick={(event) => smoothAnchorClick(event, item.href)}>
@@ -356,6 +577,7 @@ export function ThreeMashHeader(props: Props) {
   const [activeAction, setActiveAction] = useState<ActiveAction>(null);
   const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const committedSuggestionSearchRef = useRef("");
   const headerRef = useRef<HTMLElement>(null);
   const whyMenuRef = useRef<HTMLLIElement>(null);
   const showProductIcons = props.showProductIcons !== false;
@@ -363,53 +585,53 @@ export function ThreeMashHeader(props: Props) {
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
   const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
   const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
+  const searchSuggestionItems = searchSuggestions(props.searchProductList?.data || [], searchQuery);
+  const hasSearchSuggestions = isSearchOpen && searchQuery.trim().length > 0 && searchSuggestionItems.length > 0;
   const productPrimary: MenuItem[] = [
-    { title: props.product1Title, description: props.product1Description, href: productRouteHref(props.product1Href, "/urunler/3d-yazicilar"), ...resolveProductIcon(props.product1IconImageUrl, props.product1IconSvg, ecoPrinterIcon, ["printer", "M6 9V3h12v6"], showProductIcons) },
-    { title: props.product2Title, description: props.product2Description, href: productRouteHref(props.product2Href, "/urunler/yikama-kurleme"), ...resolveProductIcon(props.product2IconImageUrl, props.product2IconSvg, ecoScannerIcon, ["washer", "circle cx=\"12\" cy=\"14\"", "M7 7h10"], showProductIcons) },
-    { title: props.product3Title, description: props.product3Description, href: productRouteHref(props.product3Href, "/urunler/dental-recineler"), ...resolveProductIcon(props.product3IconImageUrl, props.product3IconSvg, ecoResinIcon, ["flask-conical", "M10 2v7.5"], showProductIcons) },
+    { title: props.product1Title, description: props.product1Description, href: productRouteHref(props.product1Href, "/3d-yazicilar"), ...resolveProductIcon(props.product1IconImageUrl, props.product1IconSvg, ecoPrinterIcon, ["printer", "M6 9V3h12v6"], showProductIcons) },
+    { title: props.product2Title, description: props.product2Description, href: productRouteHref(props.product2Href, "/yikama-kurleme-cihazlari"), ...resolveProductIcon(props.product2IconImageUrl, props.product2IconSvg, ecoScannerIcon, ["washer", "circle cx=\"12\" cy=\"14\"", "M7 7h10"], showProductIcons) },
+    { title: props.product3Title, description: props.product3Description, href: productRouteHref(props.product3Href, "/dental-3d-yazici-recineleri"), ...resolveProductIcon(props.product3IconImageUrl, props.product3IconSvg, ecoResinIcon, ["flask-conical", "M10 2v7.5"], showProductIcons) },
   ];
 
   const productSecondary: MenuItem[] = [
-    { title: props.product4Title, description: props.product4Description, href: productRouteHref(props.product4Href, "/urunler/masasustu-tarayicilar"), ...resolveProductIcon(props.product4IconImageUrl, props.product4IconSvg, ecoCuringIcon, ["scan-line", "M3 7V5a2 2"], showProductIcons) },
-    { title: props.product5Title, description: props.product5Description, href: productRouteHref(props.product5Href, "/urunler/zirkon-bloklar"), ...resolveProductIcon(props.product5IconImageUrl, props.product5IconSvg, ecoBlocksIcon, ["class=\"box\"", "M12 2 3 7l9 5"], showProductIcons) },
-    { title: props.product6Title, description: props.product6Description, href: productRouteHref(props.product6Href, "/urunler/dental-firinlar"), ...resolveProductIcon(props.product6IconImageUrl, props.product6IconSvg, ecoOvenIcon, ["flame", "a3.5 3.5"], showProductIcons) },
+    { title: props.product4Title, description: props.product4Description, href: productRouteHref(props.product4Href, "/masasustu-tarayicilar"), ...resolveProductIcon(props.product4IconImageUrl, props.product4IconSvg, ecoCuringIcon, ["scan-line", "M3 7V5a2 2"], showProductIcons) },
+    { title: props.product5Title, description: props.product5Description, href: productRouteHref(props.product5Href, "/zirkon-bloklar"), ...resolveProductIcon(props.product5IconImageUrl, props.product5IconSvg, ecoBlocksIcon, ["class=\"box\"", "M12 2 3 7l9 5"], showProductIcons) },
+    { title: props.product6Title, description: props.product6Description, href: productRouteHref(props.product6Href, "/dental-firinlar"), ...resolveProductIcon(props.product6IconImageUrl, props.product6IconSvg, ecoOvenIcon, ["flame", "a3.5 3.5"], showProductIcons) },
   ];
 
   const whyItems: FlowItem[] = [
-    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Gizli maliyetinizi görün"), description: text(props.why1Description, "Tekrar işlerin yıllık kayba nasıl döndüğünü hesaplayın"), href: text(props.why1Href, "#hesap") },
-    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Hassasiyet farkını anlayın"), description: text(props.why2Description, "İlk seferde oturmayan işlerin asıl sebebini görün"), href: text(props.why2Href, "#sebep") },
-    { number: text(props.why3Number, "03"), title: text(props.why3Title, "Uyumlu üretimi keşfedin"), description: text(props.why3Description, "Yazıcı, reçine ve parametre aynı sonuç için birlikte çalışır"), href: text(props.why3Href, "#cozum") },
-    { number: text(props.why4Number, "04"), title: text(props.why4Title, "Kürlemenin etkisini görün"), description: text(props.why4Description, "Doğru baskının son adımda neden kaybedilmemesi gerektiğini öğrenin"), href: text(props.why4Href, "#kurleme") },
-    { number: text(props.why5Number, "05"), title: text(props.why5Title, "Tek çatıdaki akışı inceleyin"), description: text(props.why5Description, "Cihazdan sarfa, eğitimden desteğe tüm ekosistemi görün"), href: text(props.why5Href, "#ekosistem") },
-    { number: text(props.why6Number, "06"), title: text(props.why6Title, "Gerçek kullanıcıları görün"), description: text(props.why6Description, "Klinik ve laboratuvarların 3mash deneyimlerine bakın"), href: text(props.why6Href, "#guven") },
-    { number: text(props.why7Number, "07"), title: text(props.why7Title, "Aklınızdaki soruları çözün"), description: text(props.why7Description, "Maliyet, hassasiyet ve süreç hakkında net cevaplar alın"), href: text(props.why7Href, "#sss") },
+    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Yılda $126K'ya varan görünmez kayıp"), description: text(props.why1Description, "Tekrarlanan işlerin kliniğinize gerçek maliyeti"), href: text(props.why1Href, "#sorun") },
+    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Sebep: ölçüsel hassasiyet"), description: text(props.why2Description, "250–500µm sapma bandı vs ±20µm güvenli bölge"), href: text(props.why2Href, "#sebep") },
+    { number: text(props.why3Number, "03"), title: text(props.why3Title, "Çözüm: uyumlu ekosistem"), description: text(props.why3Description, "Yazıcı + reçine + parametre bilgisi, birlikte kalibre"), href: text(props.why3Href, "#cozum") },
+    { number: text(props.why4Number, "04"), title: text(props.why4Title, "Ve kürleme — son %20'lik fark"), description: text(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"), href: text(props.why4Href, "#kurleme") },
   ];
 
   const profileLinks = [
-    { label: richTextValue(props.profileLink1Text, "Siparişlerim"), link: text(props.profileLink1Href, "https://3mash.com/account/orders") },
-    { label: richTextValue(props.profileLink2Text, "Adreslerim"), link: text(props.profileLink2Href, "https://3mash.com/account/addresses") },
-    { label: richTextValue(props.profileLink3Text, "Destek talebi"), link: text(props.profileLink3Href, "https://3mash.com/pages/iletisim") },
-    { label: richTextValue(props.profileLink4Text, "Teknik destek"), link: text(props.profileLink4Href, "https://3mash.com/pages/iletisim") },
-    { label: richTextValue(props.profileLink5Text, "Mash Academy"), link: text(props.profileLink5Href, "/mash-academy") },
-    { label: richTextValue(props.profileLink6Text, "Çıkış yap"), link: text(props.profileLink6Href, "https://3mash.com/account/logout") },
+    { label: richTextValue(props.profileLink1Text, "Siparişlerim"), link: text(props.profileLink1Href, "/account/orders") },
+    { label: richTextValue(props.profileLink2Text, "Adreslerim"), link: text(props.profileLink2Href, "/account/addresses") },
+    { label: richTextValue(props.profileLink3Text, "Destek talebi"), link: text(props.profileLink3Href, "/pages/iletisim") },
+    { label: richTextValue(props.profileLink4Text, "Teknik destek"), link: text(props.profileLink4Href, "/pages/iletisim") },
+    { label: richTextValue(props.profileLink5Text, "Mash Academy"), link: text(props.profileLink5Href, "/pages/mash-academy") },
+    { label: richTextValue(props.profileLink6Text, "Çıkış yap"), link: text(props.profileLink6Href, "/account/logout") },
   ];
 
   const themeStyle = {
-    "--tmh-bg": props.backgroundColor || "#FAFAF7",
-    "--tmh-ann-bg": props.announcementBackgroundColor || "#0E0E0C",
-    "--tmh-ann-text": props.announcementTextColor || "#CFCFC6",
-    "--tmh-word-color": props.styledPhraseColor || "#C7F136",
+    "--tmh-bg": themeToken(props.backgroundColor, "#FAFAF7", "--tm-theme-bg"),
+    "--tmh-ann-bg": themeToken(props.announcementBackgroundColor, "#0E0E0C", "--tm-theme-announcement-bg"),
+    "--tmh-ann-text": themeToken(props.announcementTextColor, "#CFCFC6", "--tm-theme-announcement-text"),
+    "--tmh-word-color": themeToken(props.styledPhraseColor, "#C7F136", "--tm-theme-accent"),
     "--tmh-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmh-word-style": props.styledPhraseItalic ? "italic" : "inherit",
-    "--tmh-ann-word-color": props.announcementStyledPhraseColor || "#C7F136",
+    "--tmh-ann-word-color": themeToken(props.announcementStyledPhraseColor, "#C7F136", "--tm-theme-accent"),
     "--tmh-ann-word-weight": props.announcementStyledPhraseBold ? "800" : "inherit",
     "--tmh-ann-word-style": props.announcementStyledPhraseItalic ? "italic" : "inherit",
-    "--tmh-accent": props.accentColor || "#C7F136",
-    "--tmh-text": props.textColor || "#0E0E0C",
-    "--tmh-muted": props.mutedTextColor || "#8F8F86",
-    "--tmh-line": props.lineColor || "#E6E6E0",
-    "--tmh-panel": props.panelColor || "#FFFFFF",
-    "--tmh-badge": props.badgeColor || "#E2492F",
+    "--tmh-accent": themeToken(props.accentColor, "#C7F136", "--tm-theme-accent"),
+    "--tmh-accent-text": "var(--tm-theme-accent-text, #3D4D0E)",
+    "--tmh-text": themeToken(props.textColor, "#0E0E0C", "--tm-theme-text"),
+    "--tmh-muted": themeToken(props.mutedTextColor, "#8F8F86", "--tm-theme-muted"),
+    "--tmh-line": themeToken(props.lineColor, "#E6E6E0", "--tm-theme-line"),
+    "--tmh-panel": themeToken(props.panelColor, "#FFFFFF", "--tm-theme-panel"),
+    "--tmh-badge": themeToken(props.badgeColor, "#E2492F", "--tm-theme-danger"),
     "--tmh-why-card-glow": props.showWhyItemGlow === false ? "none" : "linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 10%, transparent), transparent 44%)",
     "--tmh-why-card-hover-glow": props.showWhyItemGlow === false ? "none" : "linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 18%, transparent), transparent 48%)",
     "--tmh-logo-image-width": `${numberInRange(props.logoImageWidth, 32, 18, 96)}px`,
@@ -445,6 +667,22 @@ export function ThreeMashHeader(props: Props) {
       searchInputRef.current?.focus();
     }
   }, [isSearchOpen]);
+
+  useEffect(() => {
+    const productList = props.searchProductList;
+    if (!productList) return;
+
+    const query = searchQuery.trim();
+    if (!isSearchOpen && committedSuggestionSearchRef.current === query) return;
+    if (query === committedSuggestionSearchRef.current) return;
+
+    const timeout = window.setTimeout(() => {
+      committedSuggestionSearchRef.current = query;
+      updateProductSearchList(productList, query);
+    }, 180);
+
+    return () => window.clearTimeout(timeout);
+  }, [props.searchProductList, searchQuery, isSearchOpen]);
 
   useEffect(() => {
     function closeOnOutsideClick(event: MouseEvent) {
@@ -496,6 +734,26 @@ export function ThreeMashHeader(props: Props) {
   }, []);
 
   useEffect(() => {
+    let frame = 0;
+    const scheduleCleanup = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        hideLegacyThemeCategories();
+      });
+    };
+
+    scheduleCleanup();
+    const observer = typeof MutationObserver === "undefined" ? null : new MutationObserver(scheduleCleanup);
+    observer?.observe(document.body, { childList: true, subtree: true, characterData: true });
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      observer?.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
     if (activeMenu !== "why") return;
 
     updateWhyMenuPosition();
@@ -528,17 +786,11 @@ export function ThreeMashHeader(props: Props) {
     setActiveAction((current) => (current === action ? null : action));
   }
 
-  function openActionPanel(action: ActiveAction) {
-    setActiveMenu(null);
-    setIsSearchOpen(false);
-    setActiveAction(action);
-  }
-
   function submitSearch(event: Event) {
     event.preventDefault();
     const query = searchQuery.trim();
     if (!query) return;
-    const target = href(props.searchHref);
+    const target = searchPageHref(props.searchHref);
     const param = props.searchQueryParam || "q";
     try {
       const url = new URL(target, window.location.origin);
@@ -598,6 +850,9 @@ export function ThreeMashHeader(props: Props) {
                       <ProductLink item={item} wordStyle={props} key={index} />
                     ))}
                   </div>
+                  <a className="tmh-products-all-link" href={href(productRouteHref(props.allProductsHref, "/tum-urunler"))}>
+                    {props.allProductsText || "Tümü"}
+                  </a>
                 </div>
               </li>
 
@@ -615,11 +870,6 @@ export function ThreeMashHeader(props: Props) {
                   className="tmh-mega tmh-flow-mega"
                   style={whyMenuLeft == null ? undefined : { "--tmh-flow-mega-left": `${whyMenuLeft}px`, "--tmh-flow-translate-x": "0px" } as any}
                 >
-                  <div className="tmh-flow-intro">
-                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.whyMenuEyebrow, props)} />
-                    <b dangerouslySetInnerHTML={richText(props.whyMenuText, props)} />
-                    <p dangerouslySetInnerHTML={richText(props.whyMenuDescription, props)} />
-                  </div>
                   <div className="tmh-flow-grid">
                     {whyItems.map((item, index) => (
                       <FlowLink item={item} wordStyle={props} key={index} />
@@ -672,23 +922,26 @@ export function ThreeMashHeader(props: Props) {
               >
                 <InlineIcon image={searchIcon.image} svg={searchIcon.svg} className="tmh-action-svg" />
               </button>
+              {hasSearchSuggestions ? (
+                <div className="tmh-search-suggestions" role="listbox">
+                  {searchSuggestionItems.map((item) => (
+                    <SearchSuggestionLink product={item.product} key={item.product.id} />
+                  ))}
+                </div>
+              ) : null}
             </form>
             {props.showProfileMenu === false ? (
               <a href={href(props.accountHref)} aria-label={props.accountAriaLabel || ""}>
                 <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
-              <div
-                className="tmh-action-wrap"
-                onMouseEnter={() => openActionPanel("profile")}
-                onFocus={() => openActionPanel("profile")}
-              >
+              <div className="tmh-action-wrap">
                 <button
                   className="tmh-action-button"
                   type="button"
                   aria-label={props.accountAriaLabel || ""}
                   aria-expanded={activeAction === "profile"}
-                  onClick={() => openActionPanel("profile")}
+                  onClick={() => toggleAction("profile")}
                 >
                   <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
                 </button>
@@ -709,17 +962,13 @@ export function ThreeMashHeader(props: Props) {
                 <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
-              <div
-                className="tmh-action-wrap"
-                onMouseEnter={() => openActionPanel("store")}
-                onFocus={() => openActionPanel("store")}
-              >
+              <div className="tmh-action-wrap">
                 <button
                   className="tmh-action-button tmh-cart"
                   type="button"
                   aria-label={props.cartAriaLabel || ""}
                   aria-expanded={activeAction === "store"}
-                  onClick={() => openActionPanel("store")}
+                  onClick={() => toggleAction("store")}
                 >
                   <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
                 </button>
@@ -728,7 +977,7 @@ export function ThreeMashHeader(props: Props) {
                   <div className="tmh-cart-empty-card">
                     <a
                       className="tmh-cart-market-button"
-                      href={href(props.storePanelButtonHref || props.cartHref)}
+                      href={storePageHref(props.storePanelButtonHref, props.cartHref)}
                       dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git"), props)}
                     />
                   </div>

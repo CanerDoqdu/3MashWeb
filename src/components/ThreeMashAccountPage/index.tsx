@@ -1,0 +1,107 @@
+import { useState } from "preact/hooks";
+import { customerLogin, customerStore, Router, type IkasImage } from "@ikas/bp-storefront";
+import { Props } from "./types";
+
+const defaultAuthImage = "https://cdn.myikas.com/images/theme-images/a6f9541f-702d-431d-9744-9d4f494c94af/image_1080.webp";
+const logoImageIds = ["4a6af8e2-cb7c-4cc8-ba17-13656d4b8670", "b87e4343-0ef5-4084-b8b0-1b60abeb1012", "de819199-332c-407c-82de-917418b2c2e1"];
+
+function text(value: string | undefined, fallback: string) {
+  return value?.trim() || fallback;
+}
+
+function href(value: string | undefined, fallback: string) {
+  const next = value?.trim();
+  return next && next !== "#" ? next : fallback;
+}
+
+function imageIdToUrl(value: string) {
+  const trimmed = value.trim();
+  if (trimmed.includes("a6f9541f-702d-431d-9744-9d4f494c94af")) return defaultAuthImage;
+  if (trimmed.startsWith("theme-images/")) return `https://cdn.myikas.com/images/${trimmed}/image_3840.webp`;
+  return trimmed;
+}
+
+function withAuthFallback(value: string) {
+  return logoImageIds.some((id) => value.includes(id)) ? defaultAuthImage : value;
+}
+
+function imageSource(value: IkasImage | string | null | undefined, fallback: string) {
+  if (typeof value === "string" && value.trim()) return withAuthFallback(imageIdToUrl(value));
+  if (value && typeof value === "object") {
+    const image = value as { id?: unknown; url?: unknown; src?: unknown; imageUrl?: unknown; image?: { url?: unknown; src?: unknown }; file?: { url?: unknown; src?: unknown } };
+    if (typeof image.url === "string") return withAuthFallback(imageIdToUrl(image.url));
+    if (typeof image.src === "string") return withAuthFallback(imageIdToUrl(image.src));
+    if (typeof image.imageUrl === "string") return withAuthFallback(imageIdToUrl(image.imageUrl));
+    if (typeof image.id === "string") return withAuthFallback(imageIdToUrl(image.id));
+    if (typeof image.image?.url === "string") return withAuthFallback(imageIdToUrl(image.image.url));
+    if (typeof image.image?.src === "string") return withAuthFallback(imageIdToUrl(image.image.src));
+    if (typeof image.file?.url === "string") return withAuthFallback(imageIdToUrl(image.file.url));
+    if (typeof image.file?.src === "string") return withAuthFallback(imageIdToUrl(image.file.src));
+  }
+  return fallback;
+}
+
+export function ThreeMashAccountPage(props: Props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function submit(event: Event) {
+    event.preventDefault();
+    if (status === "loading") return;
+
+    setStatus("loading");
+    const result = await customerLogin(customerStore, email, password);
+    if (result.isSuccess) {
+      setStatus("success");
+      setTimeout(() => Router.navigate("/account"), 350);
+      return;
+    }
+    setStatus("error");
+  }
+
+  const image = imageSource(props.backgroundImageUrl, defaultAuthImage);
+
+  return (
+    <section className="three-mash-auth-page tma-login-page">
+      <div className="tma-auth-panel">
+        <form className="tma-auth-form" onSubmit={submit}>
+          <div className="tma-auth-tabs">
+            <span className="is-active">{text(props.loginTabText, "Üye Girişi")}</span>
+            <a href={href(props.registerTabHref, "/account/register")}>{text(props.registerTabText, "Üye Ol")}</a>
+          </div>
+
+          <label className="tma-auth-field">
+            <span>* {text(props.emailLabel, "Email")}</span>
+            <input name="email" type="email" autoComplete="email" value={email} required onInput={(event) => setEmail((event.currentTarget as HTMLInputElement).value)} />
+          </label>
+
+          <label className="tma-auth-field">
+            <span>* {text(props.passwordLabel, "Şifre")}</span>
+            <input name="password" type="password" autoComplete="current-password" value={password} required onInput={(event) => setPassword((event.currentTarget as HTMLInputElement).value)} />
+          </label>
+
+          <button className="tma-auth-submit" type="submit" disabled={status === "loading"}>
+            {status === "loading" ? text(props.loadingText, "Giriş yapılıyor...") : text(props.submitButtonText, "Üye Girişi")}
+          </button>
+
+          <a className="tma-auth-underlink" href={href(props.forgotPasswordHref, "/account/forgot-password")}>
+            {text(props.forgotPasswordText, "Parolamı Unuttum")}
+          </a>
+
+          {status !== "idle" && (
+            <p className={`tma-auth-status is-${status}`}>
+              {status === "success" ? text(props.successMessage, "Giriş başarılı. Hesabınıza yönlendiriliyorsunuz.") : status === "error" ? text(props.errorMessage, "Email veya şifre hatalı. Lütfen bilgilerinizi kontrol edin.") : text(props.loadingText, "Giriş yapılıyor...")}
+            </p>
+          )}
+        </form>
+      </div>
+
+      <div className="tma-auth-image" aria-hidden="true">
+        <img src={image} alt="" />
+      </div>
+    </section>
+  );
+}
+
+export default ThreeMashAccountPage;

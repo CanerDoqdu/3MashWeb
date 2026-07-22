@@ -2,7 +2,8 @@ import { renderSolutionHtml, ThreeMashStaticSection } from "../../sub-components
 import { Props } from "./types";
 
 export function ThreeMashSolution(props: Props) {
-  return <ThreeMashStaticSection props={props} fallback={renderSolutionHtml(props)} />;
+  const dynamicProps = { ...props, sectionHtml: undefined, contentHtml: undefined };
+  return <ThreeMashStaticSection props={dynamicProps} fallback={renderSolutionHtml(dynamicProps)} />;
 }
 
 export default ThreeMashSolution;

@@ -1,0 +1,67 @@
+// This file is auto-generated — do not edit manually.
+import type { IkasImage } from "@ikas/bp-storefront";
+
+export interface Props {
+  eyebrowText?: string;
+  titleText?: string;
+  subtitleText?: string;
+  loginTabText?: string;
+  loginTabHref?: string;
+  registerTabText?: string;
+  nameLabel?: string;
+  namePlaceholder?: string;
+  surnameLabel?: string;
+  surnamePlaceholder?: string;
+  emailLabel?: string;
+  emailPlaceholder?: string;
+  phoneLabel?: string;
+  phonePlaceholder?: string;
+  passwordLabel?: string;
+  passwordPlaceholder?: string;
+  passwordConfirmLabel?: string;
+  passwordConfirmPlaceholder?: string;
+  termsText?: string;
+  termsHref?: string;
+  marketingText?: string;
+  submitButtonText?: string;
+  loginPromptText?: string;
+  loginButtonText?: string;
+  loginButtonHref?: string;
+  accountLinksTitle?: string;
+  accountLink1Text?: string;
+  accountLink1Href?: string;
+  accountLink2Text?: string;
+  accountLink2Href?: string;
+  accountLink3Text?: string;
+  accountLink3Href?: string;
+  supportTitle?: string;
+  supportDescription?: string;
+  supportEmailText?: string;
+  supportEmailHref?: string;
+  supportAddressText?: string;
+  showSupportPanel?: boolean;
+  backgroundColor?: string;
+  panelColor?: string;
+  textColor?: string;
+  mutedTextColor?: string;
+  lineColor?: string;
+  accentColor?: string;
+  buttonTextColor?: string;
+  maxWidth?: number;
+  sectionPaddingTop?: number;
+  sectionPaddingBottom?: number;
+  compactForm?: boolean;
+  wordStyleEnabled?: boolean;
+  styledPhrase?: string;
+  styledPhraseColor?: string;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
+  loadingText?: string;
+  successMessage?: string;
+  errorMessage?: string;
+  passwordMismatchMessage?: string;
+  /** Canlı 3mash login/register ekranındaki sağ görsel. */
+  backgroundImageUrl?: IkasImage | null;
+  marketingHref?: string;
+  kvkkHref?: string;
+}

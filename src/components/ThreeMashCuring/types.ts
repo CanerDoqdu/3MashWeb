@@ -1,8 +1,12 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage } from "@ikas/bp-storefront";
+import type { IkasProduct, IkasImage } from "@ikas/bp-storefront";
 import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
+  /** Select a specific ikas product for the first Section 4 product card. If empty, the manual/static card stays visible. */
+  curingProduct1Product?: IkasProduct | null;
+  /** Select a specific ikas product for the second Section 4 product card. If empty, the manual/static card stays visible. */
+  curingProduct2Product?: IkasProduct | null;
   sectionAnchorId?: string;
   indexNumber?: string;
   indexText?: string;

@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage } from "@ikas/bp-storefront";
+import type { IkasCategoryList, IkasNavigationLinkList, IkasImage } from "@ikas/bp-storefront";
 import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
@@ -37,6 +37,16 @@ export interface Props {
   productColumnTitle?: string;
   companyColumnTitle?: string;
   contactColumnTitle?: string;
+  /** Bind to All Categories or selected categories. When set, the footer Products column reads live ikas categories. */
+  productCategoryList?: IkasCategoryList;
+  /** Optional editor-managed links for the footer Products column. Used when Product Footer Categories is empty. */
+  productFooterLinks?: IkasNavigationLinkList;
+  /** Maximum number of live ikas categories shown in the footer Products column. */
+  footerCategoryLimit?: number;
+  /** Optional editor-managed links for the footer Company column. */
+  companyFooterLinks?: IkasNavigationLinkList;
+  /** Optional editor-managed links for the footer Contact column. */
+  contactFooterLinks?: IkasNavigationLinkList;
   logoHref?: string;
   /** Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown. */
   logoImageUrl?: IkasImage | null;

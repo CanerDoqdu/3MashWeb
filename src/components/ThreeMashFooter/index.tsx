@@ -2,7 +2,8 @@ import { renderFooterHtml, ThreeMashStaticSection } from "../../sub-components/T
 import { Props } from "./types";
 
 export function ThreeMashFooter(props: Props) {
-  return <ThreeMashStaticSection props={props} fallback={renderFooterHtml(props)} />;
+  const liveFooterProps = { ...props, sectionHtml: "" };
+  return <ThreeMashStaticSection props={liveFooterProps} fallback={renderFooterHtml(liveFooterProps)} />;
 }
 
 export default ThreeMashFooter;

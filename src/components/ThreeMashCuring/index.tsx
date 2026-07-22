@@ -2,7 +2,8 @@ import { renderCuringHtml, ThreeMashStaticSection } from "../../sub-components/T
 import { Props } from "./types";
 
 export function ThreeMashCuring(props: Props) {
-  return <ThreeMashStaticSection props={props} fallback={renderCuringHtml(props)} />;
+  const dynamicProps = { ...props, sectionHtml: undefined, contentHtml: undefined };
+  return <ThreeMashStaticSection props={dynamicProps} fallback={renderCuringHtml(dynamicProps)} />;
 }
 
 export default ThreeMashCuring;

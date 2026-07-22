@@ -1,0 +1,310 @@
+.three-mash-account-info-page {
+  width: 100%;
+  min-height: calc(100vh - 78px);
+  background: var(--tmai-bg);
+  color: var(--tmai-text);
+  padding: 0;
+  font-family: Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.tmai-shell {
+  width: 100%;
+  min-height: inherit;
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(320px, 32.5vw) minmax(0, 1fr);
+  gap: 0;
+  align-items: stretch;
+}
+
+.tmai-sidebar {
+  min-height: inherit;
+  padding: 78px clamp(44px, 5vw, 118px);
+  background: var(--tmai-sidebar);
+}
+
+.tmai-user {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 42px;
+}
+
+.tmai-user strong {
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.tmai-user a {
+  width: max-content;
+  color: #ef3838;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.tmai-user a::before {
+  content: "↪";
+  margin-right: 6px;
+  font-weight: 700;
+}
+
+.tmai-menu {
+  display: grid;
+  gap: 10px;
+}
+
+.tmai-menu h2 {
+  margin: 32px 0 6px;
+  color: var(--tmai-text);
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.tmai-menu h2:first-child {
+  margin-top: 0;
+}
+
+.tmai-menu a {
+  width: max-content;
+  color: var(--tmai-muted);
+  font-size: 14px;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.tmai-menu a:hover,
+.tmai-menu a.is-active {
+  color: var(--tmai-text);
+}
+
+.tmai-main {
+  min-height: inherit;
+  padding: 92px clamp(72px, 11vw, 184px);
+  background: #fff;
+}
+
+.tmai-form {
+  width: min(100%, 700px);
+}
+
+.tmai-form h1 {
+  margin: 0 0 42px;
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.tmai-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 34px 24px;
+}
+
+.tmai-field {
+  display: grid;
+  gap: 11px;
+}
+
+.tmai-field span {
+  color: #747783;
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.tmai-field span.is-required::first-letter {
+  color: #ef3838;
+}
+
+.tmai-field input {
+  width: 100%;
+  height: 36px;
+  border: 0;
+  border-bottom: 1px solid var(--tmai-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--tmai-text);
+  padding: 0 10px 10px 0;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.tmai-field input:focus {
+  border-color: var(--tmai-text);
+}
+
+.tmai-phone-input {
+  display: grid;
+  grid-template-columns: 56px 54px minmax(0, 1fr);
+  align-items: center;
+  min-height: 36px;
+  border-bottom: 1px solid var(--tmai-line);
+}
+
+.tmai-phone-country {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 14px;
+  align-items: center;
+  gap: 4px;
+  width: 48px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.tmai-phone-country img {
+  display: block;
+  width: 28px;
+  height: 19px;
+  object-fit: cover;
+}
+
+.tmai-phone-country span {
+  color: var(--tmai-text);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.tmai-phone-country select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.tmai-phone-input b {
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tmai-phone-input input {
+  height: 35px;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.tmai-phone-input:focus-within {
+  border-bottom-color: var(--tmai-text);
+}
+
+.tmai-field input:disabled {
+  background: #e7eaee;
+  border-bottom-color: #e7eaee;
+  color: #060606;
+  opacity: 1;
+  padding-left: 10px;
+}
+
+.tmai-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 338px);
+  min-height: 48px;
+  margin: 40px 0 0;
+  border: 0;
+  border-radius: 999px;
+  background: #000;
+  color: var(--tmai-button-text);
+  font: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tmai-submit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.tmai-status {
+  width: min(100%, 520px);
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tmai-status.is-success {
+  background: color-mix(in srgb, var(--tmai-accent) 34%, #fff);
+  color: #152000;
+}
+
+.tmai-status.is-error {
+  background: #fff1ee;
+  color: #9a1d12;
+}
+
+.tmai-login-required {
+  width: min(100%, 620px);
+  margin: 0 auto;
+  padding: 72px 24px;
+  text-align: center;
+}
+
+.tmai-login-required h1 {
+  margin: 0 0 14px;
+  font-size: clamp(30px, 5vw, 54px);
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.tmai-login-required p {
+  margin: 0 auto 26px;
+  color: var(--tmai-muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.tmai-login-required a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (max-width: 980px) {
+  .three-mash-account-info-page {
+    padding-inline: 0;
+  }
+
+  .tmai-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .tmai-sidebar,
+  .tmai-main {
+    min-height: auto;
+    padding: 34px 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .tmai-fields {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .tmai-submit {
+    width: 100%;
+  }
+}

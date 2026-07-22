@@ -1,0 +1,116 @@
+.three-mash-blog-detail {
+  min-height: 100vh;
+  padding: 64px 20px 84px;
+  background: var(--tm-blog-detail-bg);
+  color: var(--tm-blog-detail-text);
+}
+
+.tm-blog-detail-wrap {
+  width: min(920px, 100%);
+  margin: 0 auto;
+}
+
+.tm-blog-detail-back {
+  display: inline-flex;
+  margin-bottom: 32px;
+  border-bottom: 2px solid var(--tm-blog-detail-accent);
+  color: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.tm-blog-detail-head {
+  display: grid;
+  gap: 18px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--tm-blog-detail-line);
+}
+
+.tm-blog-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--tm-blog-detail-muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.tm-blog-detail-head h1 {
+  margin: 0;
+  font-size: clamp(42px, 7vw, 82px);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+.tm-blog-detail-head p {
+  margin: 0;
+  max-width: 760px;
+  color: var(--tm-blog-detail-muted);
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+.tm-blog-detail-media {
+  margin-top: 28px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #ecefe7;
+}
+
+.tm-blog-detail-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.tm-blog-detail-content {
+  padding-top: 34px;
+  color: var(--tm-blog-detail-text);
+  font-size: 18px;
+  line-height: 1.72;
+}
+
+.tm-blog-detail-content :where(h2, h3, h4) {
+  margin: 1.8em 0 0.65em;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.tm-blog-detail-content p {
+  margin: 0 0 1.1em;
+}
+
+.tm-blog-detail-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.tm-blog-detail-content a {
+  color: inherit;
+  text-decoration-color: var(--tm-blog-detail-accent);
+  text-decoration-thickness: 2px;
+}
+
+.tm-blog-detail-setup {
+  display: grid;
+  min-height: 220px;
+  place-items: center;
+  padding: 28px;
+  border: 1px dashed var(--tm-blog-detail-line);
+  border-radius: 8px;
+  color: var(--tm-blog-detail-muted);
+  text-align: center;
+}
+
+@media (max-width: 680px) {
+  .three-mash-blog-detail {
+    padding: 48px 14px 64px;
+  }
+
+  .tm-blog-detail-content {
+    font-size: 16px;
+  }
+}

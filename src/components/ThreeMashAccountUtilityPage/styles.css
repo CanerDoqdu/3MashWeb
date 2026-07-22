@@ -1,0 +1,333 @@
+.tmau-page,
+.tmau-auth {
+  width: 100%;
+  min-height: calc(100vh - 78px);
+  background: #fff;
+  color: #000;
+  font-family: Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.tmau-shell {
+  width: min(100%, 1510px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 330px minmax(0, 1fr);
+}
+
+.tmau-sidebar {
+  min-height: 720px;
+  padding: 78px 58px;
+  background: #f7f7f5;
+}
+
+.tmau-user {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 42px;
+}
+
+.tmau-user strong {
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.tmau-user a {
+  width: max-content;
+  color: #ef3838;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.tmau-user a::before {
+  content: "↪";
+  margin-right: 6px;
+  font-weight: 700;
+}
+
+.tmau-menu {
+  display: grid;
+  gap: 10px;
+}
+
+.tmau-menu h2 {
+  margin: 32px 0 6px;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.tmau-menu h2:first-child {
+  margin-top: 0;
+}
+
+.tmau-menu a {
+  width: max-content;
+  color: #9a9ca7;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.tmau-menu a:hover {
+  color: #000;
+}
+
+.tmau-main {
+  padding: 92px min(12vw, 184px);
+}
+
+.tmau-main h1 {
+  margin: 0 0 32px;
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.tmau-list {
+  display: grid;
+  gap: 14px;
+}
+
+.tmau-card {
+  width: min(100%, 680px);
+  padding: 20px 0;
+  border-bottom: 1px solid #e6e6e1;
+}
+
+.tmau-card h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.tmau-card p {
+  margin: 0 0 8px;
+  color: #666a74;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.tmau-card small {
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tmau-empty {
+  margin: 0;
+  color: #7c7f89;
+  font-size: 15px;
+}
+
+.tmau-products {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.tmau-product {
+  color: #000;
+  text-decoration: none;
+}
+
+.tmau-product-media {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  margin: 0 0 12px;
+  background: #f7f7f5;
+  overflow: hidden;
+}
+
+.tmau-product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 16px;
+}
+
+.tmau-product strong {
+  display: block;
+  min-height: 42px;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.tmau-product small {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.tmau-login-required {
+  width: min(100%, 620px);
+  margin: 0 auto;
+  padding: 90px 24px;
+  text-align: center;
+}
+
+.tmau-login-required h1 {
+  margin: 0 0 12px;
+  font-size: 34px;
+}
+
+.tmau-login-required p {
+  margin: 0 0 24px;
+  color: #686b77;
+}
+
+.tmau-login-required a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 47px;
+  padding: 0 34px;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tmau-auth {
+  display: grid;
+  grid-template-columns: 34% 66%;
+}
+
+.tmau-auth-panel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 88px 54px 64px;
+}
+
+.tmau-auth-form {
+  width: min(100%, 406px);
+}
+
+.tmau-auth-tabs {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  margin: 0 0 36px;
+}
+
+.tmau-auth-tabs a {
+  color: #000;
+  font-size: 25px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.tmau-auth-form h1 {
+  margin: 0 0 34px;
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.tmau-auth-field {
+  display: grid;
+  gap: 13px;
+  margin: 0 0 19px;
+}
+
+.tmau-auth-field span {
+  color: #686b77;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tmau-auth-field span::first-letter {
+  color: #e83636;
+}
+
+.tmau-auth-field input {
+  width: 100%;
+  height: 36px;
+  border: 0;
+  border-bottom: 1px solid #d6d7dc;
+  background: transparent;
+  color: #000;
+  padding: 0 0 10px;
+  font: inherit;
+  outline: none;
+}
+
+.tmau-auth-submit {
+  width: 100%;
+  min-height: 47px;
+  margin: 31px 0 0;
+  border: 0;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tmau-auth-image {
+  min-height: inherit;
+  overflow: hidden;
+}
+
+.tmau-auth-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.tmau-status {
+  margin: 18px 0 0;
+  padding: 11px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tmau-status.is-success {
+  background: #eefbd1;
+  color: #182700;
+}
+
+.tmau-status.is-error,
+.tmau-status.is-mismatch {
+  background: #fff1ee;
+  color: #9a1d12;
+}
+
+@media (max-width: 980px) {
+  .tmau-shell,
+  .tmau-auth {
+    grid-template-columns: 1fr;
+  }
+
+  .tmau-sidebar,
+  .tmau-main,
+  .tmau-auth-panel {
+    min-height: auto;
+    padding: 34px 22px;
+  }
+
+  .tmau-auth-image {
+    min-height: 360px;
+    order: -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .tmau-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .tmau-products {
+    grid-template-columns: 1fr;
+  }
+}

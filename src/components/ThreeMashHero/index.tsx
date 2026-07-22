@@ -134,6 +134,12 @@ function percentage(value: unknown, fallback: number, min: number, max: number) 
   return `${numberInRange(value, fallback, min, max)}%`;
 }
 
+function themeToken(value: string | undefined, defaultValue: string, tokenName: string) {
+  const trimmed = value?.trim();
+  if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase()) return trimmed;
+  return `var(${tokenName}, ${defaultValue})`;
+}
+
 function rangeProgress(value: number, min: number, max: number) {
   if (max <= min) return 0;
   return clamp(((value - min) / (max - min)) * 100, 0, 100);
@@ -288,21 +294,21 @@ export function ThreeMashHero(props: Props) {
   const isAtTarget = rpt <= active.targetRepeatRate;
 
   const themeStyle = {
-    "--tmhero-bg": props.backgroundColor || "#FAFAF7",
-    "--tmhero-text": props.textColor || "#0E0E0C",
-    "--tmhero-muted": props.mutedTextColor || "#8F8F86",
-    "--tmhero-sub": props.subTextColor || "#55554E",
-    "--tmhero-line": props.lineColor || "#E6E6E0",
-    "--tmhero-panel": props.panelColor || "#FFFFFF",
-    "--tmhero-accent": props.accentColor || "#C7F136",
-    "--tmhero-accent-soft": props.accentSoftColor || "#F2F8DC",
-    "--tmhero-accent-text": props.accentTextColor || "#3D4D0E",
-    "--tmhero-primary-button-text": props.primaryButtonTextColor || "#0E0E0C",
-    "--tmhero-secondary-button-text": props.secondaryButtonTextColor || "#0E0E0C",
+    "--tmhero-bg": themeToken(props.backgroundColor, "#FAFAF7", "--tm-theme-bg"),
+    "--tmhero-text": themeToken(props.textColor, "#0E0E0C", "--tm-theme-text"),
+    "--tmhero-muted": themeToken(props.mutedTextColor, "#8F8F86", "--tm-theme-muted"),
+    "--tmhero-sub": themeToken(props.subTextColor, "#55554E", "--tm-theme-sub"),
+    "--tmhero-line": themeToken(props.lineColor, "#E6E6E0", "--tm-theme-line"),
+    "--tmhero-panel": themeToken(props.panelColor, "#FFFFFF", "--tm-theme-panel"),
+    "--tmhero-accent": themeToken(props.accentColor, "#C7F136", "--tm-theme-accent"),
+    "--tmhero-accent-soft": themeToken(props.accentSoftColor, "#F2F8DC", "--tm-theme-accent-soft"),
+    "--tmhero-accent-text": themeToken(props.accentTextColor, "#3D4D0E", "--tm-theme-accent-text"),
+    "--tmhero-primary-button-text": themeToken(props.primaryButtonTextColor, "#0E0E0C", "--tm-theme-text"),
+    "--tmhero-secondary-button-text": themeToken(props.secondaryButtonTextColor, "#0E0E0C", "--tm-theme-text"),
     "--tmhero-lab-accent": props.labAccentColor || "#7C4DFF",
     "--tmhero-lab-accent-text": props.labAccentTextColor || "#4F2FCF",
-    "--tmhero-danger": props.dangerColor || "#E2492F",
-    "--tmhero-word-color": props.styledPhraseColor || "#C7F136",
+    "--tmhero-danger": themeToken(props.dangerColor, "#E2492F", "--tm-theme-danger"),
+    "--tmhero-word-color": themeToken(props.styledPhraseColor, "#C7F136", "--tm-theme-accent"),
     "--tmhero-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmhero-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmhero-title-underline-width": percentage(props.titleUnderlineImageWidth, 72, 10, 140),

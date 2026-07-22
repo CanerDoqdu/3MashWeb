@@ -98,6 +98,12 @@ function percentage(value: unknown, fallback: number, min: number, max: number) 
   return `${numberInRange(value, fallback, min, max)}%`;
 }
 
+function themeToken(value: string | undefined, defaultValue: string, tokenName: string) {
+  const trimmed = value?.trim();
+  if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase()) return trimmed;
+  return `var(${tokenName}, ${defaultValue})`;
+}
+
 function parseRangeValue(value?: string) {
   const match = (value || "").match(/^\s*(\d+)\s*[–-]\s*(\d+)\s*(.*)$/);
   if (!match) return null;
@@ -174,19 +180,19 @@ export function ThreeMashProblem(props: Props) {
   }, [props.badValue, props.showBadValueCountUp]);
 
   const themeStyle = {
-    "--tmproblem-bg": props.backgroundColor || "#FAFAF7",
-    "--tmproblem-text": props.textColor || "#0E0E0C",
-    "--tmproblem-sub": props.subTextColor || "#55554E",
-    "--tmproblem-muted": props.mutedTextColor || "#8F8F86",
-    "--tmproblem-line": props.lineColor || "#E6E6E0",
-    "--tmproblem-line-strong": props.lineStrongColor || "#D4D4CC",
-    "--tmproblem-panel": props.panelColor || "#FFFFFF",
-    "--tmproblem-accent": props.accentColor || "#C7F136",
-    "--tmproblem-accent-text": props.accentTextColor || "#3D4D0E",
-    "--tmproblem-danger": props.dangerColor || "#E2492F",
-    "--tmproblem-bg-glow-color": props.backgroundGlowColor || props.accentColor || "#C7F136",
+    "--tmproblem-bg": themeToken(props.backgroundColor, "#FAFAF7", "--tm-theme-bg"),
+    "--tmproblem-text": themeToken(props.textColor, "#0E0E0C", "--tm-theme-text"),
+    "--tmproblem-sub": themeToken(props.subTextColor, "#55554E", "--tm-theme-sub"),
+    "--tmproblem-muted": themeToken(props.mutedTextColor, "#8F8F86", "--tm-theme-muted"),
+    "--tmproblem-line": themeToken(props.lineColor, "#E6E6E0", "--tm-theme-line"),
+    "--tmproblem-line-strong": themeToken(props.lineStrongColor, "#D4D4CC", "--tm-theme-line-strong"),
+    "--tmproblem-panel": themeToken(props.panelColor, "#FFFFFF", "--tm-theme-panel"),
+    "--tmproblem-accent": themeToken(props.accentColor, "#C7F136", "--tm-theme-accent"),
+    "--tmproblem-accent-text": themeToken(props.accentTextColor, "#3D4D0E", "--tm-theme-accent-text"),
+    "--tmproblem-danger": themeToken(props.dangerColor, "#E2492F", "--tm-theme-danger"),
+    "--tmproblem-bg-glow-color": themeToken(props.backgroundGlowColor || props.accentColor, "#C7F136", "--tm-theme-accent"),
     "--tmproblem-bg-glow-opacity": props.showBackgroundGlow === false ? 0 : numberInRange(props.backgroundGlowOpacity, 18, 0, 100) / 100,
-    "--tmproblem-word-color": props.styledPhraseColor || "#C7F136",
+    "--tmproblem-word-color": themeToken(props.styledPhraseColor, "#C7F136", "--tm-theme-accent"),
     "--tmproblem-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmproblem-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmproblem-hair-image-width": `${numberInRange(props.hairImageWidth, 58, 8, 140)}px`,

@@ -1,0 +1,234 @@
+.three-mash-contact-page {
+  width: 100%;
+  padding: 40px 16px 80px;
+  background: var(--tm-contact-bg);
+  color: var(--tm-contact-text);
+  font-family: Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.three-mash-contact-page *,
+.three-mash-contact-page *::before,
+.three-mash-contact-page *::after {
+  box-sizing: border-box;
+}
+
+.tm-contact-shell {
+  width: min(100%, 760px);
+  margin: 0 auto;
+}
+
+.tm-contact-heading {
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+  padding: 0 0 38px;
+  text-align: center;
+}
+
+.tm-contact-heading h1 {
+  margin: 0;
+  color: var(--tm-contact-text);
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+}
+
+.tm-contact-heading p {
+  width: 100%;
+  margin: 0;
+  color: var(--tm-contact-text);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.tm-contact-form {
+  display: grid;
+  gap: 16px;
+}
+
+.tm-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.tm-contact-field {
+  display: grid;
+  gap: 6px;
+}
+
+.tm-contact-field > span {
+  color: var(--tm-contact-muted);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.tm-contact-field > span.is-required::first-letter {
+  color: #dc2626;
+}
+
+.tm-contact-field input,
+.tm-contact-field textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--tm-contact-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--tm-contact-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+}
+
+.tm-contact-field input {
+  height: 38px;
+  padding: 0 0 9px;
+}
+
+.tm-contact-field textarea {
+  min-height: 128px;
+  resize: vertical;
+  padding: 8px 0;
+}
+
+.tm-contact-field input:focus,
+.tm-contact-field textarea:focus {
+  border-bottom-color: var(--tm-contact-text);
+}
+
+.tm-contact-phone {
+  display: grid;
+  grid-template-columns: 56px 54px minmax(0, 1fr);
+  align-items: center;
+  min-height: 38px;
+  border-bottom: 1px solid var(--tm-contact-line);
+}
+
+.tm-contact-country {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 14px;
+  align-items: center;
+  gap: 4px;
+  width: 48px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.tm-contact-country img {
+  display: block;
+  width: 28px;
+  height: 19px;
+  object-fit: cover;
+}
+
+.tm-contact-country span {
+  display: grid;
+  place-items: center;
+  color: var(--tm-contact-text);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.tm-contact-country select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.tm-contact-phone b {
+  color: var(--tm-contact-text);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tm-contact-phone input {
+  height: 37px;
+  border-bottom: 0;
+  padding: 0 0 0 6px;
+}
+
+.tm-contact-phone:focus-within {
+  border-bottom-color: var(--tm-contact-text);
+}
+
+.tm-contact-message {
+  margin-top: 2px;
+}
+
+.tm-contact-consent {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  color: var(--tm-contact-text);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.tm-contact-consent input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border-radius: 0;
+  accent-color: #000;
+}
+
+.tm-contact-consent a {
+  color: #0047b2;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.tm-contact-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 100px;
+  background: var(--tm-contact-button-bg);
+  color: var(--tm-contact-button-text);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tm-contact-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.tm-contact-status {
+  margin: 0;
+  color: var(--tm-contact-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .three-mash-contact-page {
+    padding: 32px 16px 64px;
+  }
+
+  .tm-contact-heading p {
+    font-size: 14px;
+  }
+
+  .tm-contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
