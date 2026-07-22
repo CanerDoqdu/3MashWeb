@@ -9,7 +9,7 @@
     var(--tmhero-bg);
   color: var(--tmhero-text);
   border-bottom: 1px solid var(--tmhero-line);
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--tm-theme-font-body, "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
   overflow: hidden;
 }
 
@@ -52,7 +52,7 @@
   gap: 10px;
   align-items: center;
   color: var(--tmhero-muted);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0;
@@ -72,7 +72,7 @@
   max-width: 840px;
   margin: 22px 0 0;
   color: var(--tmhero-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 64px;
   line-height: 1.04;
   font-weight: 600;
@@ -88,7 +88,7 @@
 }
 
 .tmhero-em {
-  font-family: "Newsreader", serif;
+  font-family: var(--tm-theme-font-serif, "Newsreader", serif);
   font-style: italic;
   font-weight: 500;
 }
@@ -199,7 +199,7 @@
   width: 42%;
   background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.12) 20%, rgba(199, 241, 54, 0.42) 50%, rgba(255, 255, 255, 0.16) 78%, transparent 100%);
   transform: translateX(0) skewX(-18deg);
-  animation: tmhero-consult-shine 1.15s ease-out 0.75s 1 both;
+  animation: tmhero-consult-shine 15s ease-out 0.75s infinite both;
   pointer-events: none;
   z-index: -1;
 }
@@ -215,8 +215,13 @@
     opacity: 0;
   }
 
-  18% {
+  1.4% {
     opacity: 1;
+  }
+
+  7.7% {
+    transform: translateX(430%) skewX(-18deg);
+    opacity: 0;
   }
 
   100% {
@@ -248,7 +253,7 @@
   border-radius: 6px;
   padding: 3px 9px;
   color: var(--tmhero-muted);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0;
@@ -268,7 +273,7 @@
   padding: 10px;
   background: var(--tmhero-panel);
   color: var(--tmhero-sub);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
@@ -305,7 +310,7 @@
 .tmhero-slider-label b {
   flex: 0 0 auto;
   color: var(--tmhero-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 15px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -401,7 +406,7 @@
 .tmhero-row b {
   flex: 0 0 auto;
   color: var(--tmhero-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 16px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -424,7 +429,7 @@
 .tmhero-total-value {
   margin-top: 4px;
   color: var(--tmhero-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 31px;
   font-weight: 700;
   line-height: 1.12;
@@ -480,7 +485,7 @@
 
 .tmhero-stat-value {
   color: var(--tmhero-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 34px;
   line-height: 1;
   font-weight: 700;

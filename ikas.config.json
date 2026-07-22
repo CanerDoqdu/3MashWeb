@@ -7543,6 +7543,15 @@
       "type": "section",
       "props": [
         {
+          "name": "templatePreset",
+          "displayName": "Template Preset",
+          "description": "Hazır ürün sayfası teması. Değerler: printer, p16l, p1d, resin, curing, scanner, blocks, oven, custom.",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "printer",
+          "groupId": "content"
+        },
+        {
           "name": "eyebrowText",
           "displayName": "Eyebrow Text",
           "type": "RICH_TEXT",

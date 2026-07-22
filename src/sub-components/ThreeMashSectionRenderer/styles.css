@@ -5,7 +5,7 @@
   margin: 0;
   background: var(--tmr-bg);
   color: var(--tmr-text);
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--tm-theme-font-body, "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
   overflow: hidden;
 }
 
@@ -101,6 +101,11 @@
   --tmr-section-beam-w: 760px;
   --tmr-section-beam-opacity: 0;
   --tmr-section-beam-angle: 7deg;
+}
+
+.tmr-solution::before,
+.tmr-solution::after {
+  display: none;
 }
 
 .tmr-dark {
@@ -209,7 +214,7 @@
   padding: 4px 10px;
   background: var(--tmr-accent);
   color: var(--tmr-accent-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 12px;
   font-weight: 700;
   line-height: 1.35;
@@ -218,7 +223,7 @@
 .tmr-index-text {
   min-width: 0;
   color: var(--tmr-muted);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0;
@@ -253,7 +258,7 @@
 }
 
 .tmr-head h2 .tmr-title-em {
-  font-family: "Newsreader", serif;
+  font-family: var(--tm-theme-font-serif, "Newsreader", serif);
   font-style: italic;
   font-weight: 500;
 }
@@ -357,6 +362,39 @@
   transform: translateY(-4px);
 }
 
+.tmr-solution .tmr-products-live {
+  gap: var(--tmr-solution-card-gap);
+}
+
+.tmr-products-setup {
+  margin-top: 48px;
+  border: 1px dashed var(--tmr-line);
+  border-radius: 18px;
+  padding: 34px 28px;
+  background: var(--tmr-panel);
+  color: var(--tmr-sub);
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.tmr-products-setup b {
+  color: var(--tmr-text);
+  font-weight: 700;
+}
+
+.tmr-live-product-link {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tmr-live-product {
+  min-height: 520px;
+}
+
 @keyframes tmr-products-slide {
   0%,
   20.8% {
@@ -422,6 +460,29 @@
   max-height: 168px;
   object-fit: contain;
   filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.2));
+}
+
+.tmr-live-product-img {
+  width: var(--tmr-solution-image-width);
+  height: var(--tmr-solution-image-height);
+  max-width: 90%;
+  max-height: 190px;
+  object-fit: var(--tmr-solution-image-fit);
+}
+
+.tmr-product-fallback {
+  width: 86px;
+  height: 86px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tmr-panel);
+  color: var(--tmr-text);
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
+  font-size: 34px;
+  font-weight: 700;
+  box-shadow: 0 18px 30px rgba(14, 14, 12, 0.08);
 }
 
 .tmr-machine-p16l {
@@ -493,33 +554,33 @@
 }
 
 .tmr-solution .tmr-product-media-p16l .tmr-machine-p16l {
-  width: min(calc(var(--tmr-solution-image-width) + 66px), 96%);
-  height: min(calc(var(--tmr-solution-image-height) + 56px), 196px);
-  max-width: 96%;
-  max-height: 196px;
+  width: min(calc(var(--tmr-solution-image-width) + 92px), 98%);
+  height: min(calc(var(--tmr-solution-image-height) + 74px), 208px);
+  max-width: 98%;
+  max-height: 208px;
 }
 
 .tmr-solution .tmr-product-media-p16l .tmr-p16l-main {
-  transform: scale(1.28);
+  transform: scale(1.36);
 }
 
 .tmr-solution .tmr-product-media-solutionCard1 .tmr-media-main {
-  height: min(calc(var(--tmr-solution-image-height) + 48px), 204px);
-  max-height: 204px;
+  height: min(calc(var(--tmr-solution-image-height) + 64px), 210px);
+  max-height: 210px;
 }
 
 .tmr-solution .tmr-product-media-solutionCard1 .tmr-machine-printer {
-  height: min(calc(var(--tmr-solution-image-height) + 48px), 204px);
-  max-height: 204px;
-  width: min(calc(var(--tmr-solution-image-width) + 42px), 96%);
-  max-width: 96%;
+  height: min(calc(var(--tmr-solution-image-height) + 64px), 210px);
+  max-height: 210px;
+  width: min(calc(var(--tmr-solution-image-width) + 68px), 98%);
+  max-width: 98%;
 }
 
 .tmr-solution .tmr-product-video {
   display: block;
   border-radius: 10px;
-  background: transparent;
-  transition: width 260ms ease, height 260ms ease, max-width 260ms ease, max-height 260ms ease, border-radius 260ms ease, transform 260ms ease, filter 260ms ease;
+  background: linear-gradient(160deg, var(--tmr-solution-media-start), var(--tmr-solution-media-end));
+  transition: width 260ms ease, height 260ms ease, max-width 260ms ease, max-height 260ms ease, border-radius 260ms ease, opacity 180ms ease-out, transform 260ms ease, filter 260ms ease;
 }
 
 .tmr-product-media-p16l {
@@ -574,10 +635,16 @@
   height: 100%;
 }
 
+.tmr-solution .tmr-product-media-p16l.is-video-active .tmr-media-main,
+.tmr-solution .tmr-product-media-solutionCard1.is-video-active .tmr-media-main {
+  transition: width 260ms ease, height 260ms ease, transform 260ms ease;
+}
+
 .tmr-solution .tmr-product-media-p16l.is-video-active .tmr-p16l-main {
   width: 100%;
   height: 100%;
   transform: none;
+  transition: width 260ms ease, height 260ms ease, transform 260ms ease;
 }
 
 .tmr-solution .tmr-product-media-interactive.is-video-active .tmr-product-video {
@@ -596,13 +663,30 @@
     invert(var(--tmr-solution-image-invert));
 }
 
-.tmr-solution .tmr-product-media-p16l.is-video-active .tmr-product-video {
-  background: #111;
-  border-radius: 0;
+.tmr-solution .tmr-product-media-p16l.is-video-active .tmr-product-video,
+.tmr-solution .tmr-product-media-solutionCard1.is-video-active .tmr-product-video {
+  width: 122%;
+  height: 122%;
+  max-width: none;
+  max-height: none;
+  background: linear-gradient(160deg, var(--tmr-solution-media-start), var(--tmr-solution-media-end));
+  mix-blend-mode: multiply;
   object-fit: cover;
+  transform: none;
+  transform-origin: center;
+  transition: opacity 180ms ease-out;
 }
 
-.tmr-solution .tmr-product-media-solutionCard1.is-video-active .tmr-product-video,
+.tmr-solution .tmr-product-media-solutionCard1.is-video-active .tmr-product-video {
+  transform: translateY(4px);
+}
+
+.tmr-solution .tmr-product-media-p16l.is-video-active.is-video-ending .tmr-product-video,
+.tmr-solution .tmr-product-media-solutionCard1.is-video-active.is-video-ending .tmr-product-video {
+  opacity: 0;
+  transition-timing-function: ease-out;
+}
+
 .tmr-solution .tmr-product-media-solutionCard3.is-video-active .tmr-product-video {
   background: transparent;
   mix-blend-mode: multiply;
@@ -736,7 +820,7 @@
   padding: 6px 11px;
   background: #fff;
   color: var(--tmr-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0;
@@ -772,6 +856,19 @@
   overflow-wrap: anywhere;
 }
 
+.tmr-live-product .tmr-product-body p {
+  min-height: 68px;
+  flex: 0 0 auto;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tmr-live-spec {
+  margin-top: auto;
+}
+
 .tmr-spec {
   margin-top: 16px;
   border-top: 1px solid var(--tmr-line);
@@ -796,7 +893,7 @@
 .tmr-spec b {
   flex: 0 0 auto;
   color: var(--tmr-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-weight: 600;
   text-align: right;
 }
@@ -949,7 +1046,7 @@
 
 .tmr-why-grid div {
   color: var(--tmr-accent);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 13px;
   font-weight: 700;
 }
@@ -957,7 +1054,7 @@
 .tmr-why-grid h4 {
   margin: 12px 0 0;
   color: #fff;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 18px;
   font-weight: 600;
 }
@@ -1016,7 +1113,7 @@
 
 .tmr-roi-num {
   color: var(--tmr-roi-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-weight: 700;
   line-height: 0.95;
 }
@@ -1163,11 +1260,11 @@
   min-height: 98px;
   padding: 18px 22px;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--tmr-panel) 92%, transparent), var(--tmr-panel)),
+    linear-gradient(135deg, color-mix(in srgb, var(--tmr-panel) 96%, var(--tmr-bg)), color-mix(in srgb, var(--tmr-panel) 88%, var(--tmr-bg))),
     var(--tmr-panel);
-  color: var(--tmr-text);
-  font-size: 16px;
-  font-weight: 700;
+  color: color-mix(in srgb, var(--tmr-text) 62%, var(--tmr-muted));
+  font-size: 15px;
+  font-weight: 600;
   line-height: 1.35;
   text-align: left;
   text-decoration: none;
@@ -1227,16 +1324,16 @@
 }
 
 .tmr-eco-icon {
-  width: 58px;
-  height: 58px;
+  width: 54px;
+  height: 54px;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--tmr-accent) 58%, var(--tmr-line));
+  border: 1px solid color-mix(in srgb, var(--tmr-accent) 22%, var(--tmr-line));
   border-radius: var(--tmr-eco-icon-box-radius, 14px);
-  background: var(--tmr-accent-soft);
-  color: var(--tmr-text);
+  background: color-mix(in srgb, var(--tmr-accent-soft) 42%, var(--tmr-panel));
+  color: color-mix(in srgb, var(--tmr-text) 58%, var(--tmr-muted));
 }
 
 .tmr-eco-icon img {
@@ -1244,20 +1341,21 @@
   height: var(--tmr-eco-icon-height);
   display: block;
   object-fit: var(--tmr-eco-icon-fit);
-  opacity: var(--tmr-eco-icon-opacity);
+  opacity: calc(var(--tmr-eco-icon-opacity) * 0.76);
   transform: translate(var(--tmr-eco-icon-x), var(--tmr-eco-icon-y));
   filter:
-    brightness(var(--tmr-eco-icon-brightness))
-    contrast(var(--tmr-eco-icon-contrast))
-    saturate(var(--tmr-eco-icon-saturation))
+    brightness(calc(var(--tmr-eco-icon-brightness) * 1.04))
+    contrast(calc(var(--tmr-eco-icon-contrast) * 0.84))
+    saturate(calc(var(--tmr-eco-icon-saturation) * 0.72))
     hue-rotate(var(--tmr-eco-icon-hue))
     invert(var(--tmr-eco-icon-invert));
 }
 
 .tmr-eco a:hover {
-  border-color: var(--tmr-text);
+  border-color: color-mix(in srgb, var(--tmr-accent) 34%, var(--tmr-line));
+  color: color-mix(in srgb, var(--tmr-text) 76%, var(--tmr-muted));
   transform: translateY(-3px);
-  box-shadow: 0 22px 54px rgba(14, 14, 12, 0.08);
+  box-shadow: 0 18px 42px rgba(14, 14, 12, 0.055);
 }
 
 .tmr-testimonials {
@@ -1285,7 +1383,7 @@
 .tmr-quote {
   height: 26px;
   color: var(--tmr-accent);
-  font-family: "Newsreader", serif;
+  font-family: var(--tm-theme-font-serif, "Newsreader", serif);
   font-size: 60px;
   font-style: italic;
   line-height: 0.6;
@@ -1302,7 +1400,7 @@
 
 .tmr-featured p {
   color: #e6e6de;
-  font-family: "Newsreader", serif;
+  font-family: var(--tm-theme-font-serif, "Newsreader", serif);
   font-size: 22px;
   font-style: italic;
   line-height: 1.5;
@@ -1350,7 +1448,7 @@
   align-items: center;
   justify-content: center;
   color: var(--tmr-accent-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 16px;
   font-weight: 700;
 }
@@ -1372,7 +1470,7 @@
 .tmr-who b {
   display: block;
   color: var(--tmr-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 15px;
   font-weight: 600;
 }
@@ -1410,7 +1508,7 @@
   align-items: center;
   justify-content: flex-start;
   color: var(--tmr-muted);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0;
@@ -1500,7 +1598,7 @@
   gap: 20px;
   padding: 22px 4px;
   color: var(--tmr-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 19px;
   font-weight: 600;
   line-height: 1.35;
@@ -1572,7 +1670,7 @@
 
 .tmr-final h2 .tmr-title-em {
   color: var(--tmr-accent);
-  font-family: "Newsreader", serif;
+  font-family: var(--tm-theme-font-serif, "Newsreader", serif);
   font-style: italic;
   font-weight: 500;
 }
@@ -1669,7 +1767,7 @@
 
 .tmr-footer-logo b {
   color: var(--tmr-footer-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 22px;
 }
 
@@ -1683,7 +1781,7 @@
 .tmr-footer h6 {
   margin: 0 0 16px;
   color: var(--tmr-footer-text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 13px;
   letter-spacing: 0;
   text-transform: uppercase;

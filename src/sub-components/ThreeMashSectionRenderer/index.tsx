@@ -1,9 +1,24 @@
 import { useEffect, useRef } from "preact/hooks";
-import { machineP16L, profileBerkan, profileGoksel, profileMehmet, resinBottle } from "../../assets/remaining-assets-data";
+import {
+  createMediaSrcset,
+  getDefaultSrc,
+  getProductHref,
+  getProductVariantFormattedFinalPrice,
+  getProductVariantFormattedSellPrice,
+  getProductVariantMainImage,
+  getSelectedProductVariant,
+  hasProductVariantDiscount,
+  type IkasProduct,
+  type IkasProductList,
+  type IkasProductVariant,
+} from "@ikas/bp-storefront";
+import { profileBerkan, profileGoksel, profileMehmet, resinBottle } from "../../assets/remaining-assets-data";
 import crealityUW02 from "../../assets/creality-uw02-data";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import { p16lPrimaryImage, resinShowcaseVideo } from "../../assets/solution-p16l-media-data";
+import { p16lShowcaseVideo } from "../../assets/p16l-showcase-video-data";
+import { p1dShowcaseVideo } from "../../assets/p1d-showcase-video-data";
 import phrozenWashCureKit from "../../assets/phrozen-wash-cure-kit-data";
 import p1dSectionCardImage from "../../assets/p1d-section-card-data";
 import trustLogo1 from "../../assets/trust-logo-1-data";
@@ -13,12 +28,14 @@ import trustLogo4 from "../../assets/trust-logo-4-data";
 import trustLogo5 from "../../assets/trust-logo-5-data";
 import ecosystemDiagramImage from "../../assets/ecosystem-diagram-data";
 
+const solutionCardVideosEnabled = false;
+
 const trustedLabelMarkup = `<span class="tmr-trusted-label"><span class="tmr-trusted-label-text">Güvenenler</span><img src="${trustLogo3}" alt="" aria-hidden="true"></span>`;
 const bundledTrustedLogos = `<div class="tmr-trusted-logos"><span class="tmr-trusted-logo"><img src="${trustLogo1}" alt="Güvenen marka 1"></span><span class="tmr-trusted-logo"><img src="${trustLogo2}" alt="Güvenen marka 2"></span><span class="tmr-trusted-logo"><img src="${trustLogo4}" alt="Güvenen marka 4"></span><span class="tmr-trusted-logo"><img src="${trustLogo5}" alt="Güvenen marka 5"></span></div>`;
 
 export const solutionProductCards = `
-      <article class="tmr-product"><div class="tmr-product-media tmr-product-media-interactive tmr-product-media-solutionCard1"><span class="tmr-tag">PROFESYONEL</span><div class="tmr-media-main"><img class="tmr-product-img tmr-machine-printer" src="${p1dSectionCardImage}" alt="MASH P1D"></div></div><div class="tmr-product-body"><h3>MASH P1D</h3><p>Malzemeye göre tasarlanmış optik sistemle <b>profesyonel DLP</b> üretim. Yüksek hacimli lab ve kliniklerin motoru.</p><div class="tmr-spec"><div><span>Işık kaynağı</span><b>385 nm DLP</b></div><div><span>Hassasiyet</span><b>±20 µm</b></div><div><span>Karakter</span><b>Tekrar edilebilirlik</b></div></div><a class="tmr-go" href="/pages/mash-p1d">İncele <span>→</span></a></div></article>
-      <article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">GİRİŞ SEGMENTİ</span><img class="tmr-product-img tmr-machine-p16l" src="${machineP16L}" alt="MASH P16L"></div><div class="tmr-product-body"><h3>MASH P16L</h3><p>Dijitale yeni geçenler için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.</p><div class="tmr-spec"><div><span>Teknoloji</span><b>LCD · revize</b></div><div><span>Rol</span><b>Ekosisteme giriş</b></div><div><span>Destek</span><b>Kurulum + eğitim</b></div></div><a class="tmr-go" href="/pages/mash-p16l">İncele <span>→</span></a></div></article>
+      <article class="tmr-product">${p1dInteractiveMediaMarkup("PROFESYONEL", p1dSectionCardImage, "MASH P1D")}<div class="tmr-product-body"><h3>MASH P1D</h3><p>Malzemeye göre tasarlanmış optik sistemle <b>profesyonel DLP</b> üretim. Yüksek hacimli lab ve kliniklerin motoru.</p><div class="tmr-spec"><div><span>Işık kaynağı</span><b>385 nm DLP</b></div><div><span>Hassasiyet</span><b>±20 µm</b></div><div><span>Karakter</span><b>Tekrar edilebilirlik</b></div></div><a class="tmr-go" href="/pages/mash-p1d">İncele <span>→</span></a></div></article>
+      <article class="tmr-product">${p16lInteractiveMediaMarkup("GİRİŞ SEGMENTİ", p16lPrimaryImage, "MASH P16L")}<div class="tmr-product-body"><h3>MASH P16L</h3><p>Dijitale yeni geçenler için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.</p><div class="tmr-spec"><div><span>Teknoloji</span><b>LCD · revize</b></div><div><span>Rol</span><b>Ekosisteme giriş</b></div><div><span>Destek</span><b>Kurulum + eğitim</b></div></div><a class="tmr-go" href="/pages/mash-p16l">İncele <span>→</span></a></div></article>
       <article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">RESMİ DİSTRİBÜTÖR</span><img class="tmr-product-img tmr-resin-bottle" src="${resinBottle}" alt="CRS Reçineler"></div><div class="tmr-product-body"><h3>CRS Reçineler</h3><p><b>CE Class IIa</b> biyouyumlu &amp; model reçineleri; cihazınızın parametreleriyle <b>birlikte kalibre edilmiş</b> teslim edilir.</p><div class="tmr-spec"><div><span>Sertifika</span><b>CE Class IIa</b></div><div><span>Uygulama</span><b>Model · geçici · splint · guide</b></div><div><span>Uyum</span><b>Marka bağımsız</b></div></div><a class="tmr-go" href="/pages/crs-recineler">İncele <span>→</span></a></div></article>`;
 
 export const defaultSolutionHtml = `
@@ -52,11 +69,12 @@ export const defaultTrustHtml = `<section id="guven" class="tmr-section tmr-sect
 
 export const defaultFaqHtml = `<section id="sss" class="tmr-section tmr-section-tight"><div class="tmr-wrap"><div class="tmr-index"><span class="tmr-index-number">07</span><span class="tmr-index-text">Sık Sorulanlar</span><span class="tmr-index-line"></span></div><div class="tmr-head"><h2>Kısa, net cevaplar.</h2><div class="tmr-side">En kritik kararları hızlı vermeniz için, klinik ve laboratuvarlardan gelen soruları net cevaplarla topladık.</div></div><div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="3MASH-Maliyet-Detay.html">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem printer know-how'una sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div></div></section>`;
 
-export const defaultFinalHtml = `<section class="tmr-final"><div class="tmr-wrap"><h2>Bu görünmez kaybı <span>birlikte azaltalım.</span></h2><p>Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b></p><div><a class="tmr-btn tmr-btn-lime" href="https://3mash.com/pages/iletisim">Uzmana danış — ücretsiz</a><a class="tmr-btn tmr-btn-invert" href="/mash-academy">Mash Academy'yi keşfet</a></div></div></section>`;
+export const defaultFinalHtml = `<section class="tmr-final"><div class="tmr-wrap"><h2>Bu görünmez kaybı <span>birlikte azaltalım.</span></h2><p>Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b></p><div><a class="tmr-btn tmr-btn-lime" href="https://3mash.com/pages/iletisim">Uzmana danış — ücretsiz</a><a class="tmr-btn tmr-btn-invert" href="/pages/mash-academy">Mash Academy'yi keşfet</a></div></div></section>`;
 
-export const defaultFooterHtml = `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="/"><img src="${threeMashLogoImage}" alt="3MASH"><b>mash</b></a><p>Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.</p></div><div class="tmr-footer-link-col" data-tmr-footer-sync="products"><h6>Ürünler</h6><a href="/urunler/3d-yazicilar">3D Yazıcılar</a><a href="/urunler/dental-recineler">Dental Reçineler</a><a href="/urunler/yikama-kurleme">Yıkama &amp; Kürleme</a><a href="/urunler/masasustu-tarayicilar">Masaüstü Tarayıcılar</a><a href="/urunler/zirkon-bloklar">Zirkon Bloklar</a><a href="/urunler/dental-firinlar">Dental Fırınlar</a></div><div class="tmr-footer-link-col"><h6>Şirket</h6><a href="https://3mash.com/pages/about-us">Hakkımızda</a><a href="/mash-academy">Mash Academy</a><a href="https://3mash.com/blog">Blog</a></div><div class="tmr-footer-link-col"><h6>İletişim</h6><a href="mailto:info@3mash.com">info@3mash.com</a><a href="#">Antalya Teknokent, Konyaaltı</a><a href="https://instagram.com/3mashsocial">@3mashsocial</a><div class="tmr-footer-social"><span class="tmr-footer-social-icon" aria-label="Facebook" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H13c-1.1 0-2 .9-2 2v2H8.8v3H11v5h3v-5h2.2l.5-3H14v-1.5c0-.3.2-.5.5-.5h2V8z"></path></svg></span><a href="https://instagram.com/3mashsocial" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle></svg></a><span class="tmr-footer-social-icon" aria-label="YouTube" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5c.2-1.4 1-2.2 2.4-2.4C8.2 6 10.1 6 12 6s3.8 0 5.1.1c1.4.2 2.2 1 2.4 2.4.1.9.2 2.1.2 3.5s-.1 2.6-.2 3.5c-.2 1.4-1 2.2-2.4 2.4-1.3.1-3.2.1-5.1.1s-3.8 0-5.1-.1c-1.4-.2-2.2-1-2.4-2.4-.1-.9-.2-2.1-.2-3.5s.1-2.6.2-3.5z"></path><path d="m10.5 9.5 4 2.5-4 2.5z"></path></svg></span><span class="tmr-footer-social-icon" aria-label="LinkedIn" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 10v8"></path><path d="M6.5 6.5v.1"></path><path d="M10.5 18v-8"></path><path d="M10.5 13.5c0-2.1 1.2-3.5 3.1-3.5s3 1.3 3 3.7V18"></path></svg></span></div></div></div><div class="tmr-base"><span>© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.</span><div class="tmr-base-meta"><span>KVKK · İade &amp; Garanti · Mesafeli Satış</span></div></div></div></footer>`;
+export const defaultFooterHtml = `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="/"><img src="${threeMashLogoImage}" alt="3MASH"><b>mash</b></a><p>Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.</p></div><div class="tmr-footer-link-col" data-tmr-footer-sync="products"><h6>Ürünler</h6><a href="/3d-yazicilar">3D Yazıcılar</a><a href="/dental-3d-yazici-recineleri">Dental Reçineler</a><a href="/yikama-kurleme-cihazlari">Yıkama &amp; Kürleme</a><a href="/masasustu-tarayicilar">Masaüstü Tarayıcılar</a><a href="/zirkon-bloklar">Zirkon Bloklar</a><a href="/dental-firinlar">Dental Fırınlar</a></div><div class="tmr-footer-link-col"><h6>Şirket</h6><a href="https://3mash.com/pages/about-us">Hakkımızda</a><a href="/pages/mash-academy">Mash Academy</a><a href="https://3mash.com/blog">Blog</a></div><div class="tmr-footer-link-col"><h6>İletişim</h6><a href="mailto:info@3mash.com">info@3mash.com</a><a href="#">Antalya Teknokent, Konyaaltı</a><a href="https://instagram.com/3mashsocial">@3mashsocial</a><div class="tmr-footer-social"><span class="tmr-footer-social-icon" aria-label="Facebook" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H13c-1.1 0-2 .9-2 2v2H8.8v3H11v5h3v-5h2.2l.5-3H14v-1.5c0-.3.2-.5.5-.5h2V8z"></path></svg></span><a href="https://instagram.com/3mashsocial" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle></svg></a><span class="tmr-footer-social-icon" aria-label="YouTube" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5c.2-1.4 1-2.2 2.4-2.4C8.2 6 10.1 6 12 6s3.8 0 5.1.1c1.4.2 2.2 1 2.4 2.4.1.9.2 2.1.2 3.5s-.1 2.6-.2 3.5c-.2 1.4-1 2.2-2.4 2.4-1.3.1-3.2.1-5.1.1s-3.8 0-5.1-.1c-1.4-.2-2.2-1-2.4-2.4-.1-.9-.2-2.1-.2-3.5s.1-2.6.2-3.5z"></path><path d="m10.5 9.5 4 2.5-4 2.5z"></path></svg></span><span class="tmr-footer-social-icon" aria-label="LinkedIn" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 10v8"></path><path d="M6.5 6.5v.1"></path><path d="M10.5 18v-8"></path><path d="M10.5 13.5c0-2.1 1.2-3.5 3.1-3.5s3 1.3 3 3.7V18"></path></svg></span></div></div></div><div class="tmr-base"><span>© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.</span><div class="tmr-base-meta"><span>KVKK · İade &amp; Garanti · Mesafeli Satış</span></div></div></div></footer>`;
 
 export interface ThreeMashSectionRenderProps {
+  productList?: IkasProductList;
   sectionHtml?: string;
   sectionAnchorId?: string;
   indexNumber?: string;
@@ -242,6 +260,10 @@ function escapeAttr(value: unknown) {
   return String(value ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+function escapeHtml(value: unknown) {
+  return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 function heading(titleText: string, titleEmphasis = "") {
   return `${titleText}${titleEmphasis ? ` <span class="tmr-title-em">${titleEmphasis}</span>` : ""}`;
 }
@@ -252,6 +274,46 @@ function imageIdToUrl(value: string) {
     return `https://cdn.myikas.com/images/${trimmed}/image_3840.webp`;
   }
   return trimmed;
+}
+
+function selectedVariant(product: IkasProduct): IkasProductVariant | null {
+  try {
+    return getSelectedProductVariant(product) || product.variants?.[0] || null;
+  } catch {
+    return product.variants?.[0] || null;
+  }
+}
+
+function plainText(source: unknown) {
+  if (typeof source !== "string") return "";
+  return source.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function truncateText(source: string, maxLength: number) {
+  if (source.length <= maxLength) return source;
+  const trimmed = source.slice(0, maxLength).trim();
+  const lastSpace = trimmed.lastIndexOf(" ");
+  return `${(lastSpace > 80 ? trimmed.slice(0, lastSpace) : trimmed).trim()}...`;
+}
+
+function liveProductCard(product: IkasProduct) {
+  const variant = selectedVariant(product);
+  const media = variant ? getProductVariantMainImage(variant) : undefined;
+  const image = media?.image;
+  const categoryName = product.categories?.[0]?.name || product.brand?.name || "3MASH";
+  const rawDescription = (product as { shortDescription?: unknown; description?: unknown }).shortDescription || (product as { description?: unknown }).description;
+  const description = truncateText(plainText(rawDescription), 145);
+  const finalPrice = variant ? getProductVariantFormattedFinalPrice(variant) : "";
+  const sellPrice = variant && hasProductVariantDiscount(variant) ? getProductVariantFormattedSellPrice(variant) : "";
+  const href = getProductHref(product);
+
+  const mediaMarkup = image
+    ? media?.isVideo
+      ? `<video class="tmr-product-video" src="${escapeAttr(getDefaultSrc(image))}" muted playsinline loop preload="metadata"></video>`
+      : `<img class="tmr-product-img tmr-live-product-img" src="${escapeAttr(getDefaultSrc(image))}" srcset="${escapeAttr(createMediaSrcset(image))}" alt="${escapeAttr(image.altText || product.name)}" loading="lazy" decoding="async">`
+    : `<div class="tmr-product-fallback" aria-hidden="true">${escapeHtml(product.name.slice(0, 1))}</div>`;
+
+  return `<article class="tmr-product tmr-live-product"><a class="tmr-live-product-link" href="${escapeAttr(href)}"><div class="tmr-product-media"><span class="tmr-tag">${escapeHtml(categoryName)}</span>${mediaMarkup}</div><div class="tmr-product-body"><h3>${escapeHtml(product.name)}</h3>${description ? `<p>${escapeHtml(description)}</p>` : ""}<div class="tmr-spec tmr-live-spec">${finalPrice ? `<div><span>Fiyat</span><b>${escapeHtml(finalPrice)}</b></div>` : ""}${sellPrice ? `<div><span>Liste</span><b>${escapeHtml(sellPrice)}</b></div>` : ""}</div><em class="tmr-go">İncele <span>→</span></em></div></a></article>`;
 }
 
 function imageSource(source: unknown, fallback: string) {
@@ -317,12 +379,12 @@ function productPageHref(source: unknown, fallback: string) {
     .replace(/^https?:\/\/(?:www\.)?3mash\.com/i, "")
     .replace(/\/$/, "");
   const routes: Record<string, string> = {
-    "/3d-yazicilar": "/urunler/3d-yazicilar",
-    "/dental-3d-yazici-recineleri": "/urunler/dental-recineler",
-    "/yikama-kurleme-cihazlari": "/urunler/yikama-kurleme",
-    "/masasustu-tarayicilar": "/urunler/masasustu-tarayicilar",
-    "/zirkon-bloklar": "/urunler/zirkon-bloklar",
-    "/dental-firinlar": "/urunler/dental-firinlar",
+    "/urunler/3d-yazicilar": "/3d-yazicilar",
+    "/urunler/dental-recineler": "/dental-3d-yazici-recineleri",
+    "/urunler/yikama-kurleme": "/yikama-kurleme-cihazlari",
+    "/urunler/masasustu-tarayicilar": "/masasustu-tarayicilar",
+    "/urunler/zirkon-bloklar": "/zirkon-bloklar",
+    "/urunler/dental-firinlar": "/dental-firinlar",
   };
   return routes[normalized] || current;
 }
@@ -364,6 +426,12 @@ function field(props: ThreeMashSectionRenderProps, key: string, fallback: string
   return value(raw(props, key), fallback);
 }
 
+function themeTokenValue(source: unknown, defaultValue: string, tokenName: string) {
+  const trimmed = typeof source === "string" ? source.trim() : "";
+  if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase()) return trimmed;
+  return `var(${tokenName}, ${defaultValue})`;
+}
+
 function specs(props: ThreeMashSectionRenderProps, prefix: string, count: number, defaults: Array<[string, string]>) {
   return defaults
     .slice(0, count)
@@ -382,6 +450,42 @@ function videoMediaMarkup(src: string, poster: string) {
   return `<video class="tmr-product-video" src="${escapeAttr(src)}" poster="${escapeAttr(poster)}" muted autoplay loop playsinline preload="metadata"></video><button class="tmr-video-toggle" type="button" aria-label="Video duraklat" data-tmr-video-toggle="true"><span class="tmr-video-pause" aria-hidden="true"></span><span class="tmr-video-play" aria-hidden="true"></span></button>`;
 }
 
+function p1dInteractiveMediaMarkup(tag: string, imageSrc: string, alt: string) {
+  const safeImage = escapeAttr(imageSrc);
+  const safeAlt = escapeAttr(alt || "MASH P1D");
+  const safeTag = inlineHtml(tag || "PROFESYONEL");
+  const safeVideo = escapeAttr(p1dShowcaseVideo);
+
+  return `<div class="tmr-product-media tmr-product-media-interactive tmr-product-media-solutionCard1"><span class="tmr-tag">${safeTag}</span><div class="tmr-media-main"><img class="tmr-product-img tmr-machine-printer" src="${safeImage}" alt="${safeAlt}"></div><div class="tmr-media-thumbs"><button class="tmr-media-thumb is-active" type="button" aria-label="${safeAlt}" data-tmr-product-media="true" data-tmr-media-type="image" data-tmr-media-src="${safeImage}" data-tmr-media-alt="${safeAlt}" data-tmr-media-image-class="tmr-machine-printer"><img src="${safeImage}" alt="${safeAlt}"></button><button class="tmr-media-thumb tmr-media-thumb-video" type="button" aria-label="Video" data-tmr-product-media="true" data-tmr-media-type="video" data-tmr-media-src="${safeVideo}" data-tmr-media-poster="${safeImage}"><video src="${safeVideo}" poster="${safeImage}" muted playsinline preload="metadata"></video><b>Video</b></button></div></div>`;
+}
+
+function p16lInteractiveMediaMarkup(tag: string, imageSrc: string, alt: string) {
+  const safeImage = escapeAttr(imageSrc);
+  const safeAlt = escapeAttr(alt || "MASH P16L");
+  const safeTag = inlineHtml(tag || "GİRİŞ SEGMENTİ");
+  const safeVideo = escapeAttr(p16lShowcaseVideo);
+
+  return `<div class="tmr-product-media tmr-product-media-interactive tmr-product-media-solutionCard2 tmr-product-media-p16l"><span class="tmr-tag">${safeTag}</span><div class="tmr-media-main tmr-p16l-main"><img class="tmr-product-img tmr-machine-p16l" src="${safeImage}" alt="${safeAlt}"></div><div class="tmr-media-thumbs"><button class="tmr-media-thumb is-active" type="button" aria-label="${safeAlt}" data-tmr-product-media="true" data-tmr-media-type="image" data-tmr-media-src="${safeImage}" data-tmr-media-alt="${safeAlt}" data-tmr-media-image-class="tmr-machine-p16l"><img src="${safeImage}" alt="${safeAlt}"></button><button class="tmr-media-thumb tmr-media-thumb-video" type="button" aria-label="Video" data-tmr-product-media="true" data-tmr-media-type="video" data-tmr-media-src="${safeVideo}" data-tmr-media-poster="${safeImage}"><video src="${safeVideo}" poster="${safeImage}" muted playsinline preload="metadata"></video><b>Video</b></button></div></div>`;
+}
+
+function enhanceLegacySolutionMedia(markup: string) {
+  let enhanced = markup;
+
+  if (enhanced.includes("tmr-machine-printer") && !enhanced.includes("data-tmr-media-src")) {
+    enhanced = enhanced.replace(
+      /<div class="tmr-product-media tmr-product-media-interactive tmr-product-media-solutionCard1"><span class="tmr-tag">([^<]*)<\/span><div class="tmr-media-main"><img class="tmr-product-img tmr-machine-printer" src="([^"]*)" alt="([^"]*)"><\/div><\/div>/g,
+      (_match, tag: string, src: string, alt: string) => p1dInteractiveMediaMarkup(tag, src, alt),
+    );
+  }
+
+  if (!enhanced.includes("tmr-machine-p16l") || enhanced.includes("tmr-product-media-solutionCard2")) return enhanced;
+
+  return enhanced.replace(
+    /<div class="tmr-product-media"><span class="tmr-tag">([^<]*)<\/span><img class="tmr-product-img tmr-machine-p16l" src="([^"]*)" alt="([^"]*)"><\/div>/g,
+    (_match, tag: string, src: string, alt: string) => p16lInteractiveMediaMarkup(tag, src, alt),
+  );
+}
+
 function interactiveMedia(
   props: ThreeMashSectionRenderProps,
   prefix: string,
@@ -389,10 +493,11 @@ function interactiveMedia(
   images: Array<{ id: string; src: string; alt: string }>,
   bundledVideo: string,
   defaultMode = "image1",
+  forceBundledVideo = false,
 ) {
   const videoUrl = value(raw(props, `${prefix}VideoUrl`), "");
   const videoSrc = mediaSource(raw(props, `${prefix}VideoUpload`), videoUrl || bundledVideo);
-  const videoEnabled = raw(props, `${prefix}VideoEnabled`) !== false && Boolean(videoSrc);
+  const videoEnabled = solutionCardVideosEnabled && Boolean(videoSrc) && (raw(props, `${prefix}VideoEnabled`) !== false || (forceBundledVideo && Boolean(bundledVideo)));
   const activeMode = value(raw(props, `${prefix}MediaMode`), defaultMode);
   const activeImage = images.find((item) => item.id === activeMode) || images[0];
   const showVideo = activeMode === "video" && videoEnabled;
@@ -442,7 +547,7 @@ function p16lMedia(props: ThreeMashSectionRenderProps, defaults: { image: string
     },
   ].filter((item) => item.enabled && item.src);
 
-  return interactiveMedia(props, "solutionCard2", defaults, images, "");
+  return interactiveMedia(props, "solutionCard2", defaults, images, p16lShowcaseVideo, "image1", true);
 }
 
 function resinMedia(props: ThreeMashSectionRenderProps, defaults: { image: string; imageAlt: string; imageClass: string; tag: string; tagClass?: string }) {
@@ -454,7 +559,7 @@ function resinMedia(props: ThreeMashSectionRenderProps, defaults: { image: strin
 function p1dMedia(props: ThreeMashSectionRenderProps, defaults: { image: string; imageAlt: string; imageClass: string; tag: string; tagClass?: string }) {
   const image = imageSource(raw(props, "solutionCard1ImageUrl"), defaults.image);
   const alt = field(props, "solutionCard1ImageAlt", defaults.imageAlt);
-  return interactiveMedia(props, "solutionCard1", defaults, image ? [{ id: "image1", src: image, alt }] : [], "");
+  return interactiveMedia(props, "solutionCard1", defaults, image ? [{ id: "image1", src: image, alt }] : [], p1dShowcaseVideo, "image1", true);
 }
 
 function productCard(
@@ -489,19 +594,19 @@ function productCard(
 
 export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
   return {
-    "--tmr-bg": props.backgroundColor || "#FAFAF7",
-    "--tmr-text": props.textColor || "#0E0E0C",
-    "--tmr-sub": props.subTextColor || "#55554E",
-    "--tmr-muted": props.mutedTextColor || "#8F8F86",
-    "--tmr-line": props.lineColor || "#E6E6E0",
-    "--tmr-panel": props.panelColor || "#FFFFFF",
-    "--tmr-dark": props.darkColor || "#0E0E0C",
-    "--tmr-accent": props.accentColor || "#C7F136",
+    "--tmr-bg": themeTokenValue(props.backgroundColor, "#FAFAF7", "--tm-theme-bg"),
+    "--tmr-text": themeTokenValue(props.textColor, "#0E0E0C", "--tm-theme-text"),
+    "--tmr-sub": themeTokenValue(props.subTextColor, "#55554E", "--tm-theme-sub"),
+    "--tmr-muted": themeTokenValue(props.mutedTextColor, "#8F8F86", "--tm-theme-muted"),
+    "--tmr-line": themeTokenValue(props.lineColor, "#E6E6E0", "--tm-theme-line"),
+    "--tmr-panel": themeTokenValue(props.panelColor, "#FFFFFF", "--tm-theme-panel"),
+    "--tmr-dark": themeTokenValue(props.darkColor, "#0E0E0C", "--tm-theme-dark"),
+    "--tmr-accent": themeTokenValue(props.accentColor, "#C7F136", "--tm-theme-accent"),
     "--tmr-background-glow-factor": raw(props, "showBackgroundGlow") === false ? 0 : 1,
-    "--tmr-accent-text": props.accentTextColor || "#3D4D0E",
-    "--tmr-accent-soft": props.accentSoftColor || "#F2F8DC",
-    "--tmr-danger": props.dangerColor || "#E2492F",
-    "--tmr-word-color": props.styledPhraseColor || "#C7F136",
+    "--tmr-accent-text": themeTokenValue(props.accentTextColor, "#3D4D0E", "--tm-theme-accent-text"),
+    "--tmr-accent-soft": themeTokenValue(props.accentSoftColor, "#F2F8DC", "--tm-theme-accent-soft"),
+    "--tmr-danger": themeTokenValue(props.dangerColor, "#E2492F", "--tm-theme-danger"),
+    "--tmr-word-color": themeTokenValue(props.styledPhraseColor, "#C7F136", "--tm-theme-accent"),
     "--tmr-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmr-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmr-solution-carousel-duration": `${numberInRange(raw(props, "carouselDurationSeconds"), 24, 4, 90)}s`,
@@ -521,7 +626,7 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-solution-image-saturation": percentage(raw(props, "productImageSaturation"), 100, 0, 260),
     "--tmr-solution-image-hue": `${numberInRange(raw(props, "productImageHue"), 0, -180, 180)}deg`,
     "--tmr-solution-image-invert": percentage(raw(props, "productImageInvert"), 0, 0, 100),
-    "--tmr-curing-background": value(raw(props, "backgroundColor"), "#0E0E0C"),
+    "--tmr-curing-background": themeTokenValue(raw(props, "backgroundColor"), "#0E0E0C", "--tm-theme-dark"),
     "--tmr-curing-reason-bg": value(raw(props, "reasonCardBackgroundColor"), "#161612"),
     "--tmr-curing-product-media-start": value(raw(props, "productMediaStartColor"), "#1D1D17"),
     "--tmr-curing-product-media-end": value(raw(props, "productMediaEndColor"), "#14140F"),
@@ -538,10 +643,10 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-curing-image-saturation": percentage(raw(props, "productImageSaturation"), 100, 0, 260),
     "--tmr-curing-image-hue": `${numberInRange(raw(props, "productImageHue"), 0, -180, 180)}deg`,
     "--tmr-curing-image-invert": percentage(raw(props, "productImageInvert"), 0, 0, 100),
-    "--tmr-roi-bg": value(raw(props, "backgroundColor"), "#C7F136"),
-    "--tmr-roi-text": value(raw(props, "textColor"), "#0E0E0C"),
-    "--tmr-roi-sub": value(raw(props, "subTextColor"), "#2C3A09"),
-    "--tmr-roi-eyebrow": value(raw(props, "accentTextColor"), "#3D4D0E"),
+    "--tmr-roi-bg": themeTokenValue(raw(props, "backgroundColor"), "#C7F136", "--tm-theme-accent"),
+    "--tmr-roi-text": themeTokenValue(raw(props, "textColor"), "#0E0E0C", "--tm-theme-text"),
+    "--tmr-roi-sub": themeTokenValue(raw(props, "subTextColor"), "#2C3A09", "--tm-theme-accent-text"),
+    "--tmr-roi-eyebrow": themeTokenValue(raw(props, "accentTextColor"), "#3D4D0E", "--tm-theme-accent-text"),
     "--tmr-roi-button-bg": value(raw(props, "buttonBackgroundColor"), "#0E0E0C"),
     "--tmr-roi-button-text": value(raw(props, "buttonTextColor"), "#FFFFFF"),
     "--tmr-roi-button-radius": `${numberInRange(raw(props, "buttonRadius"), 10, 0, 32)}px`,
@@ -584,14 +689,14 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-trust-logo-opacity": percentage(raw(props, "trustedLogoOpacity"), 75, 0, 100),
     "--tmr-trust-logo-grayscale": percentage(raw(props, "trustedLogoGrayscale"), 100, 0, 100),
     "--tmr-trust-card-radius": `${numberInRange(raw(props, "cardRadius"), 20, 0, 36)}px`,
-    "--tmr-final-bg": value(raw(props, "backgroundColor"), "#0E0E0C"),
+    "--tmr-final-bg": themeTokenValue(raw(props, "backgroundColor"), "#0E0E0C", "--tm-theme-dark"),
     "--tmr-final-text": value(raw(props, "textColor"), "#FFFFFF"),
     "--tmr-final-sub": value(raw(props, "subTextColor"), "#A5A59A"),
-    "--tmr-final-primary-bg": value(raw(props, "primaryButtonBackgroundColor"), "#C7F136"),
-    "--tmr-final-primary-text": value(raw(props, "primaryButtonTextColor"), "#0E0E0C"),
+    "--tmr-final-primary-bg": themeTokenValue(raw(props, "primaryButtonBackgroundColor"), "#C7F136", "--tm-theme-accent"),
+    "--tmr-final-primary-text": themeTokenValue(raw(props, "primaryButtonTextColor"), "#0E0E0C", "--tm-theme-text"),
     "--tmr-final-secondary-text": value(raw(props, "secondaryButtonTextColor"), "#FFFFFF"),
     "--tmr-final-button-radius": `${numberInRange(raw(props, "buttonRadius"), 10, 0, 32)}px`,
-    "--tmr-footer-bg": value(raw(props, "backgroundColor"), "#0E0E0C"),
+    "--tmr-footer-bg": themeTokenValue(raw(props, "backgroundColor"), "#0E0E0C", "--tm-theme-dark"),
     "--tmr-footer-text": value(raw(props, "textColor"), "#FFFFFF"),
     "--tmr-footer-muted": value(raw(props, "mutedTextColor"), "#8B8B80"),
     "--tmr-footer-line": value(raw(props, "lineColor"), "#26261F"),
@@ -695,9 +800,14 @@ function solutionCards(props: ThreeMashSectionRenderProps) {
 }
 
 function solutionContent(props: ThreeMashSectionRenderProps) {
-  const cards = solutionCards(props);
-  const noPause = raw(props, "pauseOnHover") === false ? " tmr-products-no-pause" : "";
-  return `<div class="tmr-products tmr-products-slider${noPause}" aria-label="${escapeAttr(field(props, "carouselAriaLabel", "Çözüm ürünleri"))}"><div class="tmr-products-track">${cards}${cards}${cards}</div></div>`;
+  const liveProducts = props.productList?.data?.slice(0, 6) || [];
+  if (liveProducts.length > 0) {
+    const cards = liveProducts.map(liveProductCard).join("");
+    const noPause = raw(props, "pauseOnHover") === false ? " tmr-products-no-pause" : "";
+    return `<div class="tmr-products tmr-products-slider tmr-products-live${noPause}" aria-label="${escapeAttr(field(props, "carouselAriaLabel", "Çözüm ürünleri"))}"><div class="tmr-products-track">${cards}${cards}${cards}</div></div>`;
+  }
+
+  return `<div class="tmr-products-setup">Bu bölümün ikas ürünlerini göstermesi için editörde <b>Product List</b> alanını All Products veya ilgili kategori/list olarak bağlayın.</div>`;
 }
 
 function curingReasons(props: ThreeMashSectionRenderProps) {
@@ -885,7 +995,7 @@ export function renderRoiHtml(props: ThreeMashSectionRenderProps) {
 }
 
 export function renderFinalHtml(props: ThreeMashSectionRenderProps) {
-  return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(value(props.titleText, "Bu görünmez kaybı"), value(props.titleEmphasis, "birlikte azaltalım."))}</h2><p>${value(props.descriptionHtml, "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b>")}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(value(props.primaryButtonHref, "https://3mash.com/pages/iletisim"))}">${value(props.primaryButtonText, "Uzmana danış — ücretsiz")}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(value(props.secondaryButtonHref, "/mash-academy"))}">${value(props.secondaryButtonText, "Mash Academy'yi keşfet")}</a></div></div></section>`;
+  return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(value(props.titleText, "Bu görünmez kaybı"), value(props.titleEmphasis, "birlikte azaltalım."))}</h2><p>${value(props.descriptionHtml, "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b>")}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(value(props.primaryButtonHref, "https://3mash.com/pages/iletisim"))}">${value(props.primaryButtonText, "Uzmana danış — ücretsiz")}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(value(props.secondaryButtonHref, "/pages/mash-academy"))}">${value(props.secondaryButtonText, "Mash Academy'yi keşfet")}</a></div></div></section>`;
 }
 
 function socialIcon(name: string) {
@@ -965,19 +1075,19 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
   const products = value(
     undefined,
     linkList("product", field(props, "productColumnTitle", "Ürünler"), [
-      ["3D Yazıcılar", "/urunler/3d-yazicilar"],
-      ["Dental Reçineler", "/urunler/dental-recineler"],
-      ["Yıkama &amp; Kürleme", "/urunler/yikama-kurleme"],
-      ["Masaüstü Tarayıcılar", "/urunler/masasustu-tarayicilar"],
-      ["Zirkon Bloklar", "/urunler/zirkon-bloklar"],
-      ["Dental Fırınlar", "/urunler/dental-firinlar"],
+      ["3D Yazıcılar", "/3d-yazicilar"],
+      ["Dental Reçineler", "/dental-3d-yazici-recineleri"],
+      ["Yıkama &amp; Kürleme", "/yikama-kurleme-cihazlari"],
+      ["Masaüstü Tarayıcılar", "/masasustu-tarayicilar"],
+      ["Zirkon Bloklar", "/zirkon-bloklar"],
+      ["Dental Fırınlar", "/dental-firinlar"],
     ]),
   );
   const company = value(
     undefined,
     linkList("company", field(props, "companyColumnTitle", "Şirket"), [
       ["Hakkımızda", "https://3mash.com/pages/about-us"],
-      ["Mash Academy", "/mash-academy"],
+      ["Mash Academy", "/pages/mash-academy"],
       ["Blog", "https://3mash.com/blog"],
     ]),
   );
@@ -995,7 +1105,8 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
 
 export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSectionRenderProps; fallback: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const renderedHtml = normalizeFooterLegalText(styleTextChunks(props.sectionHtml && props.sectionHtml.trim() ? props.sectionHtml : fallback, props));
+  const baseHtml = props.sectionHtml && props.sectionHtml.trim() ? props.sectionHtml : fallback;
+  const renderedHtml = normalizeFooterLegalText(styleTextChunks(enhanceLegacySolutionMedia(baseHtml), props));
   const rootClassName = `three-mash-remaining${/\btmr-(trust|faq)-section\b/.test(renderedHtml) ? " tmr-section-separator-visible" : ""}`;
 
   useEffect(() => {
@@ -1036,6 +1147,34 @@ export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSe
       });
     };
 
+    const syncSolutionVideoFade = (stage: Element | null) => {
+      if (!stage?.classList.contains("tmr-product-media-p16l") && !stage?.classList.contains("tmr-product-media-solutionCard1")) return;
+
+      const video = stage.querySelector(".tmr-product-video") as HTMLVideoElement | null;
+      if (!video || video.dataset.tmrSolutionFadeBound === "true") return;
+
+      video.dataset.tmrSolutionFadeBound = "true";
+      const syncEndingState = () => {
+        if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+
+        const remaining = video.duration - video.currentTime;
+        if (remaining > 0 && remaining <= 0.42) {
+          if (stage.classList.contains("is-video-ending")) return;
+          stage.classList.add("is-video-ending");
+          window.setTimeout(() => {
+            const imageTrigger = stage.querySelector('[data-tmr-product-media][data-tmr-media-type="image"]') as HTMLElement | null;
+            if (!imageTrigger || !stage.classList.contains("is-video-ending")) return;
+            activateMedia(imageTrigger);
+          }, 190);
+          return;
+        }
+      };
+
+      video.addEventListener("timeupdate", syncEndingState);
+      video.addEventListener("loadedmetadata", syncEndingState);
+      video.addEventListener("seeked", syncEndingState);
+    };
+
     const activateMedia = (trigger: HTMLElement) => {
       const stage = trigger.closest(".tmr-product-media-interactive");
       const main = stage?.querySelector(".tmr-media-main");
@@ -1049,9 +1188,13 @@ export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSe
 
       stage.classList.toggle("is-video-active", type === "video");
       stage.classList.remove("is-video-paused");
+      stage.classList.remove("is-video-ending");
       main.innerHTML = markup;
       stage.querySelectorAll(".tmr-media-thumb").forEach((item) => item.classList.remove("is-active"));
       trigger.classList.add("is-active");
+      if (type === "video") {
+        syncSolutionVideoFade(stage);
+      }
     };
 
     const handleClick = (event: MouseEvent) => {
@@ -1090,7 +1233,7 @@ export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSe
       if (raw(props, "hoverVideoAutoplayEnabled") === false) return;
 
       const stage = event.currentTarget as HTMLElement | null;
-      if (!stage?.classList.contains("tmr-product-media-solutionCard2") && !stage?.classList.contains("tmr-product-media-solutionCard3")) return;
+      if (!stage?.classList.contains("tmr-product-media-solutionCard1") && !stage?.classList.contains("tmr-product-media-solutionCard2") && !stage?.classList.contains("tmr-product-media-solutionCard3")) return;
 
       const videoTrigger = stage.querySelector('[data-tmr-product-media][data-tmr-media-type="video"]') as HTMLElement | null;
       if (!videoTrigger || videoTrigger.classList.contains("is-active")) return;
@@ -1103,14 +1246,15 @@ export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSe
     syncObserver?.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["href", "data-tmr-category-source"] });
 
     root.addEventListener("click", handleClick);
-    root.querySelectorAll(".tmr-product-media-solutionCard2, .tmr-product-media-solutionCard3").forEach((stage) => {
+    root.querySelectorAll(".tmr-product-media-solutionCard1, .tmr-product-media-solutionCard2, .tmr-product-media-solutionCard3").forEach((stage) => {
       stage.addEventListener("pointerenter", handlePointerEnter as EventListener);
+      syncSolutionVideoFade(stage);
     });
 
     return () => {
       syncObserver?.disconnect();
       root.removeEventListener("click", handleClick);
-      root.querySelectorAll(".tmr-product-media-solutionCard2, .tmr-product-media-solutionCard3").forEach((stage) => {
+      root.querySelectorAll(".tmr-product-media-solutionCard1, .tmr-product-media-solutionCard2, .tmr-product-media-solutionCard3").forEach((stage) => {
         stage.removeEventListener("pointerenter", handlePointerEnter as EventListener);
       });
     };

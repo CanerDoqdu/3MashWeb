@@ -2,6 +2,8 @@
 import type { IkasImage } from "@ikas/bp-storefront";
 
 export interface Props {
+  /** Hazır ürün sayfası teması. Değerler: printer, p16l, p1d, resin, curing, scanner, blocks, oven, custom. */
+  templatePreset?: string;
   eyebrowText?: string;
   titleText?: string;
   titleEmphasis?: string;
