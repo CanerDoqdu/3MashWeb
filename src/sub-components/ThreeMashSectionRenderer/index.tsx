@@ -7,7 +7,6 @@ import {
   getProductVariantFormattedFinalPrice,
   getProductVariantFormattedSellPrice,
   getProductVariantMainImage,
-  getSelectedProductVariant,
   hasProductVariantDiscount,
   type IkasCategory,
   type IkasCategoryList,
@@ -30,6 +29,7 @@ import ecosystemDiagramImage from "../../assets/ecosystem-diagram-data";
 
 const trustedLabelMarkup = `<span class="tmr-trusted-label"><span class="tmr-trusted-label-text">Güvenenler</span><img src="${trustLogo3}" alt="" aria-hidden="true"></span>`;
 const bundledTrustedLogos = `<div class="tmr-trusted-logos"><span class="tmr-trusted-logo"><img src="${trustLogo1}" alt="Güvenen marka 1"></span><span class="tmr-trusted-logo"><img src="${trustLogo2}" alt="Güvenen marka 2"></span><span class="tmr-trusted-logo"><img src="${trustLogo4}" alt="Güvenen marka 4"></span><span class="tmr-trusted-logo"><img src="${trustLogo5}" alt="Güvenen marka 5"></span></div>`;
+const footerMapsHref = "https://www.google.com/maps/search/?api=1&query=Antalya%20Teknokent%2C%20Konyaalt%C4%B1";
 
 const solutionSetupHtml = `<div class="tmr-products-setup">Bu bölüm ikas canlı ürün datasına bağlıdır. Editörde <b>Product List</b> alanını All Products veya yeni ürünlerin bulunduğu liste/kategori olarak yeniden bağlayın.</div>`;
 
@@ -73,9 +73,9 @@ export const defaultTrustHtml = `<section id="guven" class="tmr-section tmr-sect
 
 export const defaultFaqHtml = `<section id="sss" class="tmr-section tmr-section-tight"><div class="tmr-wrap"><div class="tmr-index"><span class="tmr-index-number">07</span><span class="tmr-index-text">Sık Sorulanlar</span><span class="tmr-index-line"></span></div><div class="tmr-head"><h2>Kısa, net cevaplar.</h2><div class="tmr-side">En kritik kararları hızlı vermeniz için, klinik ve laboratuvarlardan gelen soruları net cevaplarla topladık.</div></div><div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="3MASH-Maliyet-Detay.html">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem printer know-how'una sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div></div></section>`;
 
-export const defaultFinalHtml = `<section class="tmr-final"><div class="tmr-wrap"><h2>Bu görünmez kaybı <span>birlikte azaltalım.</span></h2><p>Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b></p><div><a class="tmr-btn tmr-btn-lime" href="/pages/iletisim">Uzmana danış — ücretsiz</a><a class="tmr-btn tmr-btn-invert" href="/pages/mash-academy">Mash Academy'yi keşfet</a></div></div></section>`;
+export const defaultFinalHtml = `<section class="tmr-final"><div class="tmr-wrap"><h2>Bu görünmez kaybı <span>birlikte azaltalım.</span></h2><p>Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b></p><div><a class="tmr-btn tmr-btn-lime" href="/pages/iletisim">Uzmana danış — ücretsiz</a><a class="tmr-btn tmr-btn-invert" href="/academy">Mash Academy'yi keşfet</a></div></div></section>`;
 
-export const defaultFooterHtml = `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="/"><img src="${threeMashLogoImage}" alt="3MASH"><b>mash</b></a><p>Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.</p></div><div class="tmr-footer-link-col" data-tmr-footer-sync="products"><h6>Ürünler</h6><a href="/3d-yazicilar">3D Yazıcılar</a><a href="/dental-3d-yazici-recineleri">Dental Reçineler</a><a href="/yikama-kurleme-cihazlari">Yıkama &amp; Kürleme</a><a href="/masasustu-tarayicilar">Masaüstü Tarayıcılar</a><a href="/zirkon-bloklar">Zirkon Bloklar</a><a href="/dental-firinlar">Dental Fırınlar</a></div><div class="tmr-footer-link-col"><h6>Şirket</h6><a href="/pages/about-us">Hakkımızda</a><a href="/pages/mash-academy">Mash Academy</a><a href="/blog">Blog</a></div><div class="tmr-footer-link-col"><h6>İletişim</h6><a href="mailto:info@3mash.com">info@3mash.com</a><a href="#">Antalya Teknokent, Konyaaltı</a><div class="tmr-footer-social"><span class="tmr-footer-social-icon" aria-label="Facebook" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H13c-1.1 0-2 .9-2 2v2H8.8v3H11v5h3v-5h2.2l.5-3H14v-1.5c0-.3.2-.5.5-.5h2V8z"></path></svg></span><a href="https://instagram.com/3mashsocial" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle></svg></a><span class="tmr-footer-social-icon" aria-label="YouTube" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5c.2-1.4 1-2.2 2.4-2.4C8.2 6 10.1 6 12 6s3.8 0 5.1.1c1.4.2 2.2 1 2.4 2.4.1.9.2 2.1.2 3.5s-.1 2.6-.2 3.5c-.2 1.4-1 2.2-2.4 2.4-1.3.1-3.2.1-5.1.1s-3.8 0-5.1-.1c-1.4-.2-2.2-1-2.4-2.4-.1-.9-.2-2.1-.2-3.5s.1-2.6.2-3.5z"></path><path d="m10.5 9.5 4 2.5-4 2.5z"></path></svg></span><span class="tmr-footer-social-icon" aria-label="LinkedIn" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 10v8"></path><path d="M6.5 6.5v.1"></path><path d="M10.5 18v-8"></path><path d="M10.5 13.5c0-2.1 1.2-3.5 3.1-3.5s3 1.3 3 3.7V18"></path></svg></span></div></div></div><div class="tmr-base"><span>© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.</span><div class="tmr-base-meta"><span>KVKK · İade &amp; Garanti · Mesafeli Satış</span></div></div></div></footer>`;
+export const defaultFooterHtml = `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="/"><img src="${threeMashLogoImage}" alt="3MASH"><b>mash</b></a><p>Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.</p></div><div class="tmr-footer-link-col" data-tmr-footer-sync="products"><h6>Ürünler</h6><a href="/3d-yazicilar">3D Yazıcılar</a><a href="/dental-3d-yazici-recineleri">Dental Reçineler</a><a href="/yikama-kurleme-cihazlari">Yıkama &amp; Kürleme</a><a href="/masasustu-tarayicilar">Masaüstü Tarayıcılar</a><a href="/zirkon-bloklar">Zirkon Bloklar</a><a href="/dental-firinlar">Dental Fırınlar</a></div><div class="tmr-footer-link-col"><h6>Şirket</h6><a href="/pages/about-us">Hakkımızda</a><a href="/academy">Mash Academy</a><a href="/blog">Blog</a></div><div class="tmr-footer-link-col"><h6>İletişim</h6><a href="mailto:info@3mash.com">info@3mash.com</a><a href="${footerMapsHref}" target="_blank" rel="noopener noreferrer">Antalya Teknokent, Konyaaltı</a><div class="tmr-footer-social"><a href="https://www.facebook.com/3mashsocial/" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H13c-1.1 0-2 .9-2 2v2H8.8v3H11v5h3v-5h2.2l.5-3H14v-1.5c0-.3.2-.5.5-.5h2V8z"></path></svg></a><a href="https://instagram.com/3mashsocial" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle></svg></a><a href="https://www.youtube.com/@3mashsocial" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5c.2-1.4 1-2.2 2.4-2.4C8.2 6 10.1 6 12 6s3.8 0 5.1.1c1.4.2 2.2 1 2.4 2.4.1.9.2 2.1.2 3.5s-.1 2.6-.2 3.5c-.2 1.4-1 2.2-2.4 2.4-1.3.1-3.2.1-5.1.1s-3.8 0-5.1-.1c-1.4-.2-2.2-1-2.4-2.4-.1-.9-.2-2.1-.2-3.5s.1-2.6.2-3.5z"></path><path d="m10.5 9.5 4 2.5-4 2.5z"></path></svg></a><a href="https://www.linkedin.com/company/3mash" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 10v8"></path><path d="M6.5 6.5v.1"></path><path d="M10.5 18v-8"></path><path d="M10.5 13.5c0-2.1 1.2-3.5 3.1-3.5s3 1.3 3 3.7V18"></path></svg></a></div>${footerPaymentBadges()}</div></div><div class="tmr-base"><span>© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.</span><div class="tmr-base-meta"><span>KVKK · İade &amp; Garanti · Mesafeli Satış</span></div></div></div></footer>`;
 
 export interface ThreeMashSectionRenderProps {
   productList?: IkasProductList;
@@ -261,11 +261,17 @@ function imageIdToUrl(value: string) {
 }
 
 function selectedVariant(product: IkasProduct): IkasProductVariant | null {
-  try {
-    return getSelectedProductVariant(product) || product.variants?.[0] || null;
-  } catch {
-    return product.variants?.[0] || null;
+  const variants = product.variants || [];
+  const selectedValueIds = new Set((product.selectedVariantValues || []).map((value) => value.id));
+
+  if (selectedValueIds.size > 0) {
+    const selected = variants.find(
+      (variant) => variant.isActive !== false && variant.variantValues.every((value) => selectedValueIds.has(value.id)),
+    );
+    if (selected) return selected;
   }
+
+  return variants.find((variant) => variant.isActive !== false) || variants[0] || null;
 }
 
 function plainText(source: unknown) {
@@ -412,6 +418,41 @@ type ProductCardDefaults = {
 
 function isIkasProduct(source: unknown): source is IkasProduct {
   return Boolean(source && typeof source === "object" && typeof (source as { name?: unknown }).name === "string");
+}
+
+function selectedProductId(source: unknown) {
+  if (typeof source === "string") return source;
+  if (!source || typeof source !== "object") return "";
+  const item = source as {
+    productId?: unknown;
+    id?: unknown;
+    product?: { id?: unknown };
+    value?: { productId?: unknown; id?: unknown; product?: { id?: unknown } };
+  };
+  const productId = item.productId || item.product?.id || item.value?.productId || item.value?.product?.id || item.value?.id || item.id;
+  return typeof productId === "string" ? productId : "";
+}
+
+function uniqueProducts(products: IkasProduct[]) {
+  const seen = new Set<string>();
+  return products.filter((product) => {
+    if (!product.id || seen.has(product.id)) return false;
+    seen.add(product.id);
+    return true;
+  });
+}
+
+function solutionProducts(productList: IkasProductList | undefined) {
+  const data = (productList?.data || []).filter(isIkasProduct);
+  const selectedIds = (productList?.productListPropValue?.productIds || []).map(selectedProductId).filter(Boolean);
+
+  if (!selectedIds.length) return uniqueProducts(data).slice(0, 6);
+
+  const productsById = new Map(data.map((product) => [product.id, product]));
+  const orderedProducts = selectedIds.map((id) => productsById.get(id)).filter((product): product is IkasProduct => Boolean(product));
+  const normalizedProducts = orderedProducts.length > 0 ? orderedProducts : data;
+
+  return uniqueProducts(normalizedProducts).slice(0, 6);
 }
 
 function productCardDefaultsFromProduct(product: IkasProduct, defaults: ProductCardDefaults): ProductCardDefaults {
@@ -630,11 +671,14 @@ const trustContentHtml = `<div class="tmr-testimonials"><article class="tmr-test
 const faqContentHtml = `<div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="3MASH-Maliyet-Detay.html">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem printer know-how'una sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div>`;
 
 function solutionContent(props: ThreeMashSectionRenderProps) {
-  const liveProducts = props.productList?.data?.slice(0, 6) || [];
+  const liveProducts = solutionProducts(props.productList);
   if (liveProducts.length > 0) {
     const cards = liveProducts.map(liveProductCard).join("");
     const noPause = raw(props, "pauseOnHover") === false ? " tmr-products-no-pause" : "";
-    return `<div class="tmr-products tmr-products-slider tmr-products-live${noPause}" aria-label="${escapeAttr(field(props, "carouselAriaLabel", "Çözüm ürünleri"))}"><div class="tmr-products-track">${cards}${cards}${cards}</div></div>`;
+    const single = liveProducts.length === 1 ? " tmr-products-single" : "";
+    const cloneCards = cards.replace(/<article\b/g, '<article aria-hidden="true"');
+    const trackCards = liveProducts.length === 1 ? cards : `${cards}${cloneCards}${cloneCards}`;
+    return `<div class="tmr-products tmr-products-slider tmr-products-live${single}${noPause}" data-tmr-products-original-count="${liveProducts.length}" aria-label="${escapeAttr(field(props, "carouselAriaLabel", "Çözüm ürünleri"))}"><div class="tmr-products-track">${trackCards}</div></div>`;
   }
 
   return solutionSetupHtml;
@@ -825,7 +869,7 @@ export function renderRoiHtml(props: ThreeMashSectionRenderProps) {
 }
 
 export function renderFinalHtml(props: ThreeMashSectionRenderProps) {
-  return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(value(props.titleText, "Bu görünmez kaybı"), value(props.titleEmphasis, "birlikte azaltalım."))}</h2><p>${value(props.descriptionHtml, "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b>")}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(value(props.primaryButtonHref, "/pages/iletisim"))}">${value(props.primaryButtonText, "Uzmana danış — ücretsiz")}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(value(props.secondaryButtonHref, "/pages/mash-academy"))}">${value(props.secondaryButtonText, "Mash Academy'yi keşfet")}</a></div></div></section>`;
+  return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(value(props.titleText, "Bu görünmez kaybı"), value(props.titleEmphasis, "birlikte azaltalım."))}</h2><p>${value(props.descriptionHtml, "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b>")}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(value(props.primaryButtonHref, "/pages/iletisim"))}">${value(props.primaryButtonText, "Uzmana danış — ücretsiz")}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(value(props.secondaryButtonHref, "/academy"))}">${value(props.secondaryButtonText, "Mash Academy'yi keşfet")}</a></div></div></section>`;
 }
 
 function socialIcon(name: string) {
@@ -852,10 +896,10 @@ function footerSocialLinks(props: ThreeMashSectionRenderProps) {
   if (raw(props, "showSocialIcons") === false) return "";
 
   const links = [
-    ["facebook", "facebookHref", "facebookLabel", "", "Facebook"],
+    ["facebook", "facebookHref", "facebookLabel", "https://www.facebook.com/3mashsocial/", "Facebook"],
     ["instagram", "instagramHref", "instagramLabel", "https://instagram.com/3mashsocial", "Instagram"],
-    ["youtube", "youtubeHref", "youtubeLabel", "", "YouTube"],
-    ["linkedin", "linkedinHref", "linkedinLabel", "", "LinkedIn"],
+    ["youtube", "youtubeHref", "youtubeLabel", "https://www.youtube.com/@3mashsocial", "YouTube"],
+    ["linkedin", "linkedinHref", "linkedinLabel", "https://www.linkedin.com/company/3mash", "LinkedIn"],
   ]
     .map(([icon, hrefKey, labelKey, fallbackHref, fallbackLabel]) => {
       const href = socialHref(props, hrefKey, fallbackHref);
@@ -866,6 +910,10 @@ function footerSocialLinks(props: ThreeMashSectionRenderProps) {
     .join("");
 
   return links ? `<div class="tmr-footer-social">${links}</div>` : "";
+}
+
+function footerPaymentBadges() {
+  return `<div class="tmr-footer-payments" aria-label="Ödeme yöntemleri"><span class="tmr-payment-badge tmr-payment-visa" aria-label="Visa" role="img">VISA</span><span class="tmr-payment-badge tmr-payment-maestro" aria-label="Maestro" role="img"><span></span><span></span></span><span class="tmr-payment-badge tmr-payment-mastercard" aria-label="Mastercard" role="img"><span></span><span></span></span></div>`;
 }
 
 function footerCopyrightText(props: ThreeMashSectionRenderProps) {
@@ -884,8 +932,32 @@ function normalizeFooterLegalText(markup: string) {
     .replace(/(©\s*2026\s*3MASH\s+Teknoloji\s+A\.Ş\.)(?!\s*Tüm\s+hakları\s+saklıdır)/gi, "$1 Tüm hakları saklıdır.");
 }
 
+function normalizeFooterMapsLinks(markup: string) {
+  return markup.replace(
+    /<a\b([^>]*)href=(["'])#\2([^>]*)>([\s\S]*?)<\/a>/g,
+    (match, before, quote, after, label) =>
+      isFooterMapsLabel(label) ? `<a${before}href=${quote}${footerMapsHref}${quote}${after} target="_blank" rel="noopener noreferrer">${label}</a>` : match,
+  );
+}
+
 function footerLinkKey(href: string) {
   return href.trim().replace(/\/+$/, "") || "/";
+}
+
+function isExternalHref(href: string) {
+  return /^https?:\/\//i.test(href);
+}
+
+function externalLinkAttrs(href: string) {
+  return isExternalHref(href) ? ' target="_blank" rel="noopener noreferrer"' : "";
+}
+
+function isFooterMapsLabel(label: unknown) {
+  return plainText(label).toLocaleLowerCase("tr-TR") === "antalya teknokent, konyaaltı";
+}
+
+function footerHrefForLabel(label: unknown, href: string) {
+  return isFooterMapsLabel(label) ? footerMapsHref : href;
 }
 
 function internalSiteHref(href: string) {
@@ -915,7 +987,11 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
   function navLinkList(list: IkasNavigationLinkList | undefined, title: string) {
     const seen = new Set<string>();
     const links = (list?.links || [])
-      .map((link) => ({ ...link, href: link?.href ? internalSiteHref(link.href) : "" }))
+      .map((link) => {
+        const label = link?.label || "";
+        const href = link?.href ? internalSiteHref(link.href) : "";
+        return { ...link, href: footerHrefForLabel(label, href) };
+      })
       .filter((link) => {
         if (!link?.label || !link.href) return false;
         const key = footerLinkKey(link.href);
@@ -925,7 +1001,7 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
       });
     if (!links.length) return "";
     return `<h6>${title}</h6>${links
-      .map((link) => `<a href="${escapeAttr(link.href)}"${link.openInNewTab ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(link.label)}</a>`)
+      .map((link) => `<a href="${escapeAttr(link.href)}"${link.openInNewTab ? ' target="_blank" rel="noopener noreferrer"' : externalLinkAttrs(link.href)}>${escapeHtml(link.label)}</a>`)
       .join("")}`;
   }
 
@@ -954,11 +1030,15 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
       .map(([text, link], index) => {
         const number = index + 1;
         const rawHref = raw(props, `${prefix}Link${number}Href`);
-        const resolvedHref = internalSiteHref(prefix === "product" ? productPageHref(rawHref, link) : field(props, `${prefix}Link${number}Href`, link));
+        const label = field(props, `${prefix}Link${number}Text`, text);
+        const resolvedHref = footerHrefForLabel(
+          label,
+          internalSiteHref(prefix === "product" ? productPageHref(rawHref, link) : field(props, `${prefix}Link${number}Href`, link)),
+        );
         const key = footerLinkKey(resolvedHref);
         if (seen.has(key)) return "";
         seen.add(key);
-        return `<a href="${escapeAttr(resolvedHref)}">${field(props, `${prefix}Link${number}Text`, text)}</a>`;
+        return `<a href="${escapeAttr(resolvedHref)}"${externalLinkAttrs(resolvedHref)}>${label}</a>`;
       })
       .join("")}`;
   }
@@ -981,18 +1061,21 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
     navLinkList(props.companyFooterLinks, field(props, "companyColumnTitle", "Şirket")) ||
       linkList("company", field(props, "companyColumnTitle", "Şirket"), [
         ["Hakkımızda", "/pages/about-us"],
-        ["Mash Academy", "/pages/mash-academy"],
+        ["Mash Academy", "/academy"],
         ["Blog", "/blog"],
       ]),
   );
   const socialLinks = footerSocialLinks(props);
+  const paymentBadges = footerPaymentBadges();
   const contact = value(
     undefined,
     (navLinkList(props.contactFooterLinks, field(props, "contactColumnTitle", "İletişim")) ||
       linkList("contact", field(props, "contactColumnTitle", "İletişim"), [
         ["info@3mash.com", "mailto:info@3mash.com"],
-        ["Antalya Teknokent, Konyaaltı", "#"],
-      ])) + socialLinks,
+        ["Antalya Teknokent, Konyaaltı", footerMapsHref],
+      ])) +
+      socialLinks +
+      paymentBadges,
   );
   return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="${escapeAttr(field(props, "logoHref", "/"))}">${logoVisual}<b>${value(props.logoText, "mash")}</b></a><p>${value(props.descriptionText, "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.")}</p></div><div class="tmr-footer-link-col" data-tmr-footer-sync="products">${products}</div><div class="tmr-footer-link-col">${company}</div><div class="tmr-footer-link-col">${contact}</div></div><div class="tmr-base"><span>${footerCopyrightText(props)}</span><div class="tmr-base-meta"><span>${value(props.legalText, "KVKK · İade &amp; Garanti · Mesafeli Satış")}</span></div></div></div></footer>`;
 }
@@ -1000,31 +1083,78 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
 export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSectionRenderProps; fallback: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const baseHtml = props.sectionHtml && props.sectionHtml.trim() ? props.sectionHtml : fallback;
-  const renderedHtml = normalizeFooterLegalText(styleTextChunks(baseHtml, props));
+  const renderedHtml = normalizeFooterMapsLinks(normalizeFooterLegalText(styleTextChunks(baseHtml, props)));
   const rootClassName = `three-mash-remaining${/\btmr-(trust|faq)-section\b/.test(renderedHtml) ? " tmr-section-separator-visible" : ""}`;
 
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return undefined;
+    const productSliderCleanups: Array<() => void> = [];
+
+    const setupProductSliderLoop = (slider: HTMLElement, track: HTMLElement) => {
+      const rawOriginalCount = Number(slider.dataset.tmrProductsOriginalCount);
+      const trackCards = Array.from(track.children).filter((child): child is HTMLElement => child instanceof HTMLElement && child.classList.contains("tmr-product"));
+      const originalCount = Number.isFinite(rawOriginalCount) && rawOriginalCount > 0 ? rawOriginalCount : trackCards.length % 3 === 0 ? trackCards.length / 3 : trackCards.length;
+      if (originalCount <= 1) return;
+
+      const measureLoopDistance = () => {
+        const firstCloneCard = trackCards[originalCount];
+        if (!firstCloneCard) return;
+
+        const distance = firstCloneCard.offsetLeft;
+        if (distance <= 0) return;
+
+        track.style.setProperty("--tmr-products-loop-distance", `${distance}px`);
+        track.style.setProperty("--tmr-products-loop-distance-negative", `${distance * -1}px`);
+        slider.classList.add("tmr-products-loop-ready");
+      };
+      const scheduleMeasure = () => window.requestAnimationFrame(measureLoopDistance);
+
+      scheduleMeasure();
+      track.querySelectorAll<HTMLImageElement>("img").forEach((image) => {
+        if (image.complete) return;
+        image.addEventListener("load", scheduleMeasure, { once: true });
+        productSliderCleanups.push(() => image.removeEventListener("load", scheduleMeasure));
+      });
+
+      if (typeof ResizeObserver !== "undefined") {
+        const observer = new ResizeObserver(scheduleMeasure);
+        observer.observe(slider);
+        observer.observe(track);
+        productSliderCleanups.push(() => observer.disconnect());
+        return;
+      }
+
+      window.addEventListener("resize", scheduleMeasure);
+      productSliderCleanups.push(() => window.removeEventListener("resize", scheduleMeasure));
+    };
 
     const normalizeProductSliders = () => {
       root.querySelectorAll<HTMLElement>(".tmr-products-live").forEach((slider) => {
         slider.classList.add("tmr-products-slider");
         const existingTrack = Array.from(slider.children).find((child): child is HTMLElement => child instanceof HTMLElement && child.classList.contains("tmr-products-track"));
-        if (existingTrack) return;
+        if (existingTrack) {
+          setupProductSliderLoop(slider, existingTrack);
+          return;
+        }
 
         const cards = Array.from(slider.children).filter((child): child is HTMLElement => child instanceof HTMLElement && child.classList.contains("tmr-product"));
         if (!cards.length) return;
 
-        const duplicateSets = cards.map((card) => [card.cloneNode(true), card.cloneNode(true)]);
+        slider.dataset.tmrProductsOriginalCount = String(cards.length);
+        const firstDuplicateSet = cards.map((card) => card.cloneNode(true) as HTMLElement);
+        const secondDuplicateSet = cards.map((card) => card.cloneNode(true) as HTMLElement);
         const track = document.createElement("div");
         track.className = "tmr-products-track";
         cards.forEach((card) => track.appendChild(card));
-        duplicateSets.forEach(([firstClone, secondClone]) => {
-          track.appendChild(firstClone);
-          track.appendChild(secondClone);
+        [firstDuplicateSet, secondDuplicateSet].forEach((duplicateSet) => {
+          duplicateSet.forEach((clone) => {
+            clone.setAttribute("aria-hidden", "true");
+            track.appendChild(clone);
+          });
         });
         slider.replaceChildren(track);
+        setupProductSliderLoop(slider, track);
       });
     };
 
@@ -1069,6 +1199,7 @@ export function ThreeMashStaticSection({ props, fallback }: { props: ThreeMashSe
 
     return () => {
       syncObserver?.disconnect();
+      productSliderCleanups.forEach((cleanup) => cleanup());
     };
   }, [props.sectionHtml, fallback]);
 

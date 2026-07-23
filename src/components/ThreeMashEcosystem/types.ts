@@ -10,27 +10,27 @@ export interface Props {
   titleEmphasis?: string;
   sideHtml?: string;
   showIcons?: boolean;
-  /** Upload a replacement icon image. If empty, the bundled icon is used. */
+  /** Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır. */
   ecosystemItem1IconImageUrl?: IkasImage | null;
   ecosystemItem1Title?: string;
   ecosystemItem1Href?: string;
-  /** Upload a replacement icon image. If empty, the bundled icon is used. */
+  /** Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır. */
   ecosystemItem2IconImageUrl?: IkasImage | null;
   ecosystemItem2Title?: string;
   ecosystemItem2Href?: string;
-  /** Upload a replacement icon image. If empty, the bundled icon is used. */
+  /** Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır. */
   ecosystemItem3IconImageUrl?: IkasImage | null;
   ecosystemItem3Title?: string;
   ecosystemItem3Href?: string;
-  /** Upload a replacement icon image. If empty, the bundled icon is used. */
+  /** Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır. */
   ecosystemItem4IconImageUrl?: IkasImage | null;
   ecosystemItem4Title?: string;
   ecosystemItem4Href?: string;
-  /** Upload a replacement icon image. If empty, the bundled icon is used. */
+  /** Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır. */
   ecosystemItem5IconImageUrl?: IkasImage | null;
   ecosystemItem5Title?: string;
   ecosystemItem5Href?: string;
-  /** Upload a replacement icon image. If empty, the bundled icon is used. */
+  /** Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır. */
   ecosystemItem6IconImageUrl?: IkasImage | null;
   ecosystemItem6Title?: string;
   ecosystemItem6Href?: string;

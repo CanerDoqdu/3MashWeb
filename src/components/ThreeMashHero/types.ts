@@ -81,7 +81,7 @@ export interface Props {
   dangerColor?: string;
   /** Desktop-only underline visibility. */
   showTitleUnderline?: boolean;
-  /** Upload image here; size, position and effects are controlled in the image controls group. */
+  /** Görseli buradan yükleyin; boyut, konum ve efektler görsel kontrol grubundan yönetilir. */
   titleUnderlineImageUrl?: IkasImage | null;
   titleUnderlineImageAlt?: string;
   titleUnderlineImageWidth?: number;

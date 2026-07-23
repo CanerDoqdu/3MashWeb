@@ -10,19 +10,19 @@ export interface Props {
   titleEmphasis?: string;
   sideHtml?: string;
   testimonial1Text?: string;
-  /** Upload a replacement profile photo. If empty, the bundled profile photo is used. */
+  /** Yedek profil fotoğrafı yükleyin. Boşsa paketli profil fotoğrafı kullanılır. */
   testimonial1ImageUrl?: IkasImage | null;
   testimonial1ImageAlt?: string;
   testimonial1Name?: string;
   testimonial1Role?: string;
   testimonial2Text?: string;
-  /** Upload a replacement profile photo. If empty, the bundled profile photo is used. */
+  /** Yedek profil fotoğrafı yükleyin. Boşsa paketli profil fotoğrafı kullanılır. */
   testimonial2ImageUrl?: IkasImage | null;
   testimonial2ImageAlt?: string;
   testimonial2Name?: string;
   testimonial2Role?: string;
   testimonial3Text?: string;
-  /** Upload a replacement profile photo. If empty, the bundled profile photo is used. */
+  /** Yedek profil fotoğrafı yükleyin. Boşsa paketli profil fotoğrafı kullanılır. */
   testimonial3ImageUrl?: IkasImage | null;
   testimonial3ImageAlt?: string;
   testimonial3Name?: string;
@@ -53,23 +53,23 @@ export interface Props {
   accentTextColor?: string;
   cardRadius?: number;
   trustedLogo1Enabled?: boolean;
-  /** Upload replacement trusted logo 1. If empty, bundled logo 1 is used. */
+  /** Yedek güvenilen marka logosu 1 yükleyin. Boşsa paketli logo 1 kullanılır. */
   trustedLogo1ImageUrl?: IkasImage | null;
   trustedLogo1ImageAlt?: string;
   trustedLogo2Enabled?: boolean;
-  /** Upload replacement trusted logo 2. If empty, bundled logo 2 is used. */
+  /** Yedek güvenilen marka logosu 2 yükleyin. Boşsa paketli logo 2 kullanılır. */
   trustedLogo2ImageUrl?: IkasImage | null;
   trustedLogo2ImageAlt?: string;
   trustedLogo3Enabled?: boolean;
-  /** Upload replacement trusted logo 3. If empty, bundled logo 3 is used. */
+  /** Yedek güvenilen marka logosu 3 yükleyin. Boşsa paketli logo 3 kullanılır. */
   trustedLogo3ImageUrl?: IkasImage | null;
   trustedLogo3ImageAlt?: string;
   trustedLogo4Enabled?: boolean;
-  /** Upload replacement trusted logo 4. If empty, bundled logo 4 is used. */
+  /** Yedek güvenilen marka logosu 4 yükleyin. Boşsa paketli logo 4 kullanılır. */
   trustedLogo4ImageUrl?: IkasImage | null;
   trustedLogo4ImageAlt?: string;
   trustedLogo5Enabled?: boolean;
-  /** Upload replacement trusted logo 5. If empty, bundled logo 5 is used. */
+  /** Yedek güvenilen marka logosu 5 yükleyin. Boşsa paketli logo 5 kullanılır. */
   trustedLogo5ImageUrl?: IkasImage | null;
   trustedLogo5ImageAlt?: string;
   wordStyleEnabled?: boolean;

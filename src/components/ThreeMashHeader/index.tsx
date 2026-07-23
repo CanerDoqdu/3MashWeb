@@ -1,17 +1,26 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
+  cartStore,
   createMediaSrcset,
+  customerStore,
+  getCart,
   getDefaultSrc,
+  getOrderLineItemFormattedFinalPriceWithQuantity,
   getProductHref,
   getProductVariantMainImage,
   getSelectedProductVariant,
+  initCustomerStore,
   searchProductList as updateProductSearchList,
+  waitForCartStoreInit,
+  type IkasCart,
+  type IkasOrderLineItem,
   type IkasProduct,
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import mashC4pFeatureImage from "../../assets/mash-c4p-feature-data";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
+import { orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
 import { Props } from "./types";
 
 type MenuItem = {
@@ -37,14 +46,48 @@ type SearchSuggestion = {
   score: number;
 };
 
+function cartImageUrl(item: IkasOrderLineItem) {
+  return orderLineImageUrl(item, 180);
+}
+
+function handleOrderLineImageError(event: Event, candidates: string[]) {
+  const image = event.currentTarget as HTMLImageElement;
+  const nextIndex = Number(image.dataset.imageIndex || 0) + 1;
+  const next = candidates[nextIndex];
+
+  if (next) {
+    image.dataset.imageIndex = String(nextIndex);
+    image.src = next;
+    return;
+  }
+
+  image.style.display = "none";
+  image.removeAttribute("src");
+}
+
+function cartProductHref(item: IkasOrderLineItem) {
+  const slug = item.variant?.slug?.trim();
+  return slug ? `/${slug.replace(/^\/+/, "")}` : "#";
+}
+
+function cartItemTitle(item: IkasOrderLineItem) {
+  return item.variant?.name || "Ürün";
+}
+
+function cartItemVariantText(item: IkasOrderLineItem) {
+  return item.variant?.variantValues?.map((value) => value.variantValueName).filter(Boolean).join(" / ") || item.variant?.sku || "";
+}
+
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
+const academyPageHref = "/2tplvqpo-rOvTVWz53H";
+const referencesSectionHref = "#guven";
+const legacyAcademyRouteKeys = new Set(["academy", "mash-academy", "pages-mash-academy", "2tplvqpo-rovtvwz53h"]);
 
 function href(value?: string) {
   const trimmed = value?.trim();
   if (!trimmed) return "#";
-  if (trimmed.length > 1 && trimmed.startsWith("#")) return `/${trimmed}`;
   return trimmed;
 }
 
@@ -80,6 +123,23 @@ function routeTextKey(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function internalSiteHref(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  if (/^(mailto:|tel:|#)/i.test(trimmed)) return trimmed;
+
+  try {
+    const url = new URL(trimmed);
+    if (url.hostname === "3mash.com" || url.hostname === "www.3mash.com") {
+      return `${url.pathname}${url.search}${url.hash}` || "/";
+    }
+  } catch {
+    // Relative route, keep as-is.
+  }
+
+  return trimmed;
+}
+
 const productCategoryRoutes: Record<string, string> = {
   "3d-yazicilar": "/3d-yazicilar",
   "3d-yazici": "/3d-yazicilar",
@@ -107,11 +167,33 @@ const productCategoryRoutes: Record<string, string> = {
 
 function productRouteHref(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
-  if (!trimmed) return fallback;
+  if (!trimmed || trimmed === "#") return fallback;
   const normalized = routeAliasKey(trimmed);
   const slug = routeTextKey(normalized);
   const nestedSlug = slug.replace(/^urunler-/, "");
-  return productCategoryRoutes[slug] || productCategoryRoutes[nestedSlug] || trimmed;
+  return productCategoryRoutes[slug] || productCategoryRoutes[nestedSlug] || internalSiteHref(trimmed);
+}
+
+function academyPageTarget(value: string | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed || trimmed === "#") return academyPageHref;
+  const internal = internalSiteHref(trimmed);
+  const slug = routeTextKey(internal);
+  return legacyAcademyRouteKeys.has(slug) ? academyPageHref : href(internal);
+}
+
+function referencesSectionTarget(value: string | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed || trimmed === "#") return referencesSectionHref;
+  const internal = internalSiteHref(trimmed);
+  const slug = routeTextKey(internal);
+  return slug === "guven" || slug.includes("referans") || slug.includes("reference") ? referencesSectionHref : href(internal);
+}
+
+function searchCategoryHref(searchHref: string | undefined, firstCategoryHref: string | undefined) {
+  const configuredSearchHref = searchHref?.trim();
+  const configuredFirstCategoryHref = firstCategoryHref?.trim();
+  return productRouteHref(configuredSearchHref && configuredSearchHref !== "#" ? configuredSearchHref : configuredFirstCategoryHref, "/3d-yazicilar");
 }
 
 function c4pRouteHref(value: string | undefined) {
@@ -190,11 +272,19 @@ function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
       : "";
   if (!hash || hash.length <= 1) return;
 
-  const section = document.querySelector(hash);
-  if (!section) return;
+  const sectionId = decodeURIComponent(hash.slice(1));
+  const section = document.getElementById(sectionId) || document.querySelector(hash);
+  if (!section) {
+    event.preventDefault();
+    event.stopPropagation();
+    window.location.href = `/${hash}`;
+    return;
+  }
 
   event.preventDefault();
-  section.scrollIntoView({ behavior: "smooth", block: "start" });
+  event.stopPropagation();
+  setTimeout(() => section.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+  window.history.pushState(null, "", hash);
 }
 
 function text(value: string | undefined, fallback: string) {
@@ -575,6 +665,8 @@ export function ThreeMashHeader(props: Props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
   const [activeAction, setActiveAction] = useState<ActiveAction>(null);
+  const [cart, setCart] = useState<IkasCart | null>(cartStore.cart);
+  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(customerStore.customer));
   const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const committedSuggestionSearchRef = useRef("");
@@ -585,8 +677,12 @@ export function ThreeMashHeader(props: Props) {
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
   const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
   const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
+  const searchTargetHref = href(searchCategoryHref(props.searchHref, props.product1Href));
   const searchSuggestionItems = searchSuggestions(props.searchProductList?.data || [], searchQuery);
   const hasSearchSuggestions = isSearchOpen && searchQuery.trim().length > 0 && searchSuggestionItems.length > 0;
+  const cartItems = isLoggedIn ? cart?.orderLineItems?.filter((item) => !item.deleted) || [] : [];
+  const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
+  const visibleCartItems = cartItems.slice(0, 4);
   const productPrimary: MenuItem[] = [
     { title: props.product1Title, description: props.product1Description, href: productRouteHref(props.product1Href, "/3d-yazicilar"), ...resolveProductIcon(props.product1IconImageUrl, props.product1IconSvg, ecoPrinterIcon, ["printer", "M6 9V3h12v6"], showProductIcons) },
     { title: props.product2Title, description: props.product2Description, href: productRouteHref(props.product2Href, "/yikama-kurleme-cihazlari"), ...resolveProductIcon(props.product2IconImageUrl, props.product2IconSvg, ecoScannerIcon, ["washer", "circle cx=\"12\" cy=\"14\"", "M7 7h10"], showProductIcons) },
@@ -609,9 +705,7 @@ export function ThreeMashHeader(props: Props) {
   const profileLinks = [
     { label: richTextValue(props.profileLink1Text, "Siparişlerim"), link: text(props.profileLink1Href, "/account/orders") },
     { label: richTextValue(props.profileLink2Text, "Adreslerim"), link: text(props.profileLink2Href, "/account/addresses") },
-    { label: richTextValue(props.profileLink3Text, "Destek talebi"), link: text(props.profileLink3Href, "/pages/iletisim") },
-    { label: richTextValue(props.profileLink4Text, "Teknik destek"), link: text(props.profileLink4Href, "/pages/iletisim") },
-    { label: richTextValue(props.profileLink5Text, "Mash Academy"), link: text(props.profileLink5Href, "/pages/mash-academy") },
+    { label: richTextValue(props.profileLink5Text, "Mash Academy"), link: academyPageTarget(props.profileLink5Href) },
     { label: richTextValue(props.profileLink6Text, "Çıkış yap"), link: text(props.profileLink6Href, "/account/logout") },
   ];
 
@@ -669,6 +763,28 @@ export function ThreeMashHeader(props: Props) {
   }, [isSearchOpen]);
 
   useEffect(() => {
+    let mounted = true;
+    const refreshCartState = () => {
+      if (!mounted) return;
+      setIsLoggedIn(Boolean(customerStore.customer));
+      setCart(cartStore.cart);
+    };
+
+    Promise.all([initCustomerStore(customerStore), waitForCartStoreInit(cartStore)])
+      .then(() => getCart())
+      .finally(refreshCartState);
+
+    window.addEventListener("focus", refreshCartState);
+    window.addEventListener("ikas:open-cart-sidebar", refreshCartState as EventListener);
+
+    return () => {
+      mounted = false;
+      window.removeEventListener("focus", refreshCartState);
+      window.removeEventListener("ikas:open-cart-sidebar", refreshCartState as EventListener);
+    };
+  }, []);
+
+  useEffect(() => {
     const productList = props.searchProductList;
     if (!productList) return;
 
@@ -719,14 +835,16 @@ export function ThreeMashHeader(props: Props) {
       }
 
       if (!hash || hash.length <= 1) return;
-      const section = document.querySelector(hash);
+      const sectionId = decodeURIComponent(hash.slice(1));
+      const section = document.getElementById(sectionId) || document.querySelector(hash);
       if (!section) return;
 
       event.preventDefault();
+      event.stopPropagation();
       setActiveMenu(null);
       setActiveAction(null);
       window.history.pushState(null, "", hash);
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => section.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
     }
 
     document.addEventListener("click", smoothSamePageAnchor);
@@ -879,12 +997,17 @@ export function ThreeMashHeader(props: Props) {
               </li>
 
               <li>
-                <a className="tmh-plain-link" href={href(props.referencesHref)} onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}>
+                <a
+                  className="tmh-plain-link"
+                  href={referencesSectionTarget(props.referencesHref)}
+                  onClick={(event) => smoothAnchorClick(event, referencesSectionTarget(props.referencesHref))}
+                  onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}
+                >
                   <RichInline value={props.referencesText} wordStyle={props} />
                 </a>
               </li>
               <li>
-                <a className="tmh-plain-link" href={href(props.academyHref)} onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}>
+                <a className="tmh-plain-link" href={academyPageTarget(props.academyHref)} onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}>
                   <RichInline value={props.academyText} wordStyle={props} />
                 </a>
               </li>
@@ -909,19 +1032,18 @@ export function ThreeMashHeader(props: Props) {
                   }}
                 />
               )}
-              <button
+              <a
                 className="tmh-icon-button"
-                type={isSearchOpen ? "submit" : "button"}
+                href={searchTargetHref}
                 aria-label={props.searchAriaLabel || ""}
                 onClick={() => {
-                  if (!isSearchOpen) {
-                    setActiveAction(null);
-                    setIsSearchOpen(true);
-                  }
+                  setActiveMenu(null);
+                  setActiveAction(null);
+                  setIsSearchOpen(false);
                 }}
               >
                 <InlineIcon image={searchIcon.image} svg={searchIcon.svg} className="tmh-action-svg" />
-              </button>
+              </a>
               {hasSearchSuggestions ? (
                 <div className="tmh-search-suggestions" role="listbox">
                   {searchSuggestionItems.map((item) => (
@@ -971,16 +1093,45 @@ export function ThreeMashHeader(props: Props) {
                   onClick={() => toggleAction("store")}
                 >
                   <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
+                  {cartItemCount > 0 ? <span className="tmh-cart-badge">{cartItemCount}</span> : null}
                 </button>
                 <div className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}>
                   <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, "SEPETİM")}</span>
-                  <div className="tmh-cart-empty-card">
-                    <a
-                      className="tmh-cart-market-button"
-                      href={storePageHref(props.storePanelButtonHref, props.cartHref)}
-                      dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git"), props)}
-                    />
-                  </div>
+                  {isLoggedIn && cartItems.length > 0 ? (
+                    <div className="tmh-cart-live">
+                      <div className="tmh-cart-count">{cartItemCount} ürün sepetinizde</div>
+                      <div className="tmh-cart-live-list">
+                        {visibleCartItems.map((item) => {
+                          const imageCandidates = orderLineImageUrlCandidates(item, 180);
+                          const image = imageCandidates[0] || cartImageUrl(item);
+                          const variant = cartItemVariantText(item);
+                          return (
+                            <a className="tmh-cart-live-item" href={cartProductHref(item)} key={item.id}>
+                              <span className="tmh-cart-live-image">
+                                <span>{cartItemTitle(item).slice(0, 1)}</span>
+                                {image ? <img src={image} alt={cartItemTitle(item)} loading="lazy" decoding="async" data-image-index="0" onError={(event) => handleOrderLineImageError(event, imageCandidates)} /> : null}
+                              </span>
+                              <span className="tmh-cart-live-copy">
+                                <b>{cartItemTitle(item)}</b>
+                                {variant ? <small>{variant}</small> : null}
+                                <em>Adet {item.quantity}</em>
+                              </span>
+                              <strong>{getOrderLineItemFormattedFinalPriceWithQuantity(item)}</strong>
+                            </a>
+                          );
+                        })}
+                      </div>
+                      <a className="tmh-cart-market-button tmh-cart-go-button" href="/cart">Sepete git</a>
+                    </div>
+                  ) : (
+                    <div className="tmh-cart-empty-card">
+                      <a
+                        className="tmh-cart-market-button"
+                        href={storePageHref(props.storePanelButtonHref, props.cartHref)}
+                        dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git"), props)}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -1014,8 +1165,12 @@ export function ThreeMashHeader(props: Props) {
                 ))}
               </div>
               <div className="tmh-mobile-group tmh-mobile-group-inline">
-                <a href={href(props.referencesHref)} dangerouslySetInnerHTML={richText(props.referencesText, props)} />
-                <a href={href(props.academyHref)} dangerouslySetInnerHTML={richText(props.academyText, props)} />
+                <a
+                  href={referencesSectionTarget(props.referencesHref)}
+                  onClick={(event) => smoothAnchorClick(event, referencesSectionTarget(props.referencesHref))}
+                  dangerouslySetInnerHTML={richText(props.referencesText, props)}
+                />
+                <a href={academyPageTarget(props.academyHref)} dangerouslySetInnerHTML={richText(props.academyText, props)} />
               </div>
             </div>
           </details>

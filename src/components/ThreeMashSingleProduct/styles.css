@@ -738,8 +738,7 @@
   }
 
   .three-mash-single-product .tmpdl-gallery {
-    position: sticky;
-    top: 24px;
+    position: static;
     justify-self: center;
     width: min(640px, 100%);
   }

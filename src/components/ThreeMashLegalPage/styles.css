@@ -1,0 +1,237 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap");
+
+.three-mash-legal-page {
+  width: 100%;
+  padding: var(--tmlp-pt) 16px var(--tmlp-pb);
+  background: var(--tmlp-bg);
+  color: var(--tmlp-text);
+  font-family: Poppins, var(--tm-theme-font-body, system-ui, sans-serif);
+}
+
+.three-mash-legal-page *,
+.three-mash-legal-page *::before,
+.three-mash-legal-page *::after {
+  box-sizing: border-box;
+}
+
+.tmlp-shell {
+  width: min(100%, var(--tmlp-max));
+  margin: 0 auto;
+}
+
+.tmlp-shell h1 {
+  margin: 0 0 28px;
+  color: var(--tmlp-text);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.tmlp-content {
+  color: var(--tmlp-text);
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.tmlp-content > :first-child {
+  margin-top: 0;
+}
+
+.tmlp-content h1,
+.tmlp-content h2,
+.tmlp-content h3,
+.tmlp-content h4,
+.tmlp-content h5 {
+  margin: 0 0 14px;
+  color: var(--tmlp-text);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.tmlp-content h2 {
+  font-size: 24px;
+  text-transform: none;
+}
+
+.tmlp-content h5 {
+  font-size: 20px;
+}
+
+.tmlp-content p {
+  margin: 0 0 12pt;
+}
+
+.tmlp-content a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tmlp-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.tmlp-content td,
+.tmlp-content th {
+  border: 1px solid #dedede;
+  padding: 10px 12px;
+  vertical-align: top;
+}
+
+.three-mash-legal-page.is-kvkk {
+  padding-inline: 0;
+}
+
+.three-mash-legal-page.is-kvkk .tmlp-shell {
+  padding: 16px;
+}
+
+.three-mash-legal-page.is-kvkk .tmlp-content {
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.three-mash-legal-page.is-kvkk .tmlp-content p {
+  margin: 0;
+}
+
+.three-mash-legal-page.is-kvkk .tmlp-content h5 {
+  margin: 0;
+  font-size: 0.83em;
+  font-weight: bolder;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.three-mash-legal-page.is-kvkk .tmlp-content b,
+.three-mash-legal-page.is-kvkk .tmlp-content strong {
+  font-weight: bolder;
+}
+
+.three-mash-legal-page.is-mesafeli {
+  padding: 0;
+}
+
+.three-mash-legal-page.is-mesafeli .tmlp-shell {
+  width: 100%;
+  max-width: var(--tmlp-max);
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+.three-mash-legal-page.is-mesafeli .tmlp-content {
+  color: #000000;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.three-mash-legal-page.is-mesafeli .tmlp-content h1,
+.three-mash-legal-page.is-mesafeli .tmlp-content h2,
+.three-mash-legal-page.is-mesafeli .tmlp-content h3,
+.three-mash-legal-page.is-mesafeli .tmlp-content h4,
+.three-mash-legal-page.is-mesafeli .tmlp-content h5,
+.three-mash-legal-page.is-mesafeli .tmlp-content p {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.three-mash-legal-page.is-mesafeli .tmlp-content h2 {
+  font-size: 1.5em;
+  font-weight: bolder;
+  text-transform: none;
+}
+
+.three-mash-legal-page.is-mesafeli .tmlp-content b,
+.three-mash-legal-page.is-mesafeli .tmlp-content strong {
+  font-weight: bolder;
+}
+
+.three-mash-legal-page.is-mesafeli .tmlp-content span {
+  font-family: inherit;
+}
+
+.three-mash-legal-page.is-uyelik .tmlp-shell,
+.three-mash-legal-page.is-ticari .tmlp-shell {
+  width: min(100%, var(--tmlp-max));
+  margin: 0 auto;
+}
+
+.three-mash-legal-page.is-uyelik {
+  padding-inline: 44px;
+}
+
+.three-mash-legal-page.is-uyelik .tmlp-shell > h1 {
+  display: none;
+}
+
+.three-mash-legal-page.is-ticari .tmlp-shell > h1 {
+  display: block;
+  margin: 0 0 38px;
+  color: #000000;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: left;
+  text-transform: none;
+}
+
+.three-mash-legal-page.is-uyelik .tmlp-content,
+.three-mash-legal-page.is-ticari .tmlp-content {
+  font-size: 16px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+.three-mash-legal-page.is-uyelik .tmlp-content h2,
+.three-mash-legal-page.is-ticari .tmlp-content h2 {
+  margin: 0 0 38px;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.three-mash-legal-page.is-uyelik .tmlp-content p,
+.three-mash-legal-page.is-ticari .tmlp-content p {
+  margin: 0 0 14px;
+}
+
+.three-mash-legal-page.is-uyelik .tmlp-content b,
+.three-mash-legal-page.is-uyelik .tmlp-content strong,
+.three-mash-legal-page.is-ticari .tmlp-content b,
+.three-mash-legal-page.is-ticari .tmlp-content strong {
+  font-weight: 800;
+}
+
+.three-mash-legal-page.is-uyelik .tmlp-content span,
+.three-mash-legal-page.is-ticari .tmlp-content span {
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+@media (max-width: 720px) {
+  .three-mash-legal-page {
+    padding-inline: 16px;
+  }
+
+  .three-mash-legal-page.is-uyelik {
+    padding-inline: 22px;
+  }
+
+  .tmlp-content {
+    font-size: 14px;
+  }
+
+  .three-mash-legal-page.is-kvkk .tmlp-content {
+    font-size: 16px;
+  }
+}

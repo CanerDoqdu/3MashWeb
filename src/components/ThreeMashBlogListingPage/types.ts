@@ -2,9 +2,9 @@
 import type { IkasBlogList, IkasBlogCategoryList } from "@ikas/bp-storefront";
 
 export interface Props {
-  /** Bind to All Blogs or the desired blog category/list. New ikas blog posts appear automatically here. */
+  /** Tüm bloglara ya da istenen blog kategorisi/listesine bağlayın. Yeni ikas blog yazıları burada otomatik görünür. */
   blogList: IkasBlogList;
-  /** Optional dynamic blog category chips. */
+  /** İsteğe bağlı dinamik blog kategori etiketleri. */
   blogCategoryList?: IkasBlogCategoryList;
   eyebrowText?: string;
   titleText?: string;

@@ -81,6 +81,33 @@ function themeToken(value: string | undefined, defaultValue: string, tokenName: 
   return `var(${tokenName}, ${defaultValue})`;
 }
 
+function searchKey(value: string | undefined) {
+  return (value || "")
+    .toLocaleLowerCase("tr-TR")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i")
+    .replace(/ç/g, "c")
+    .replace(/ğ/g, "g")
+    .replace(/ö/g, "o")
+    .replace(/ş/g, "s")
+    .replace(/ü/g, "u")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function productSearchText(product: IkasProduct) {
+  const categoryNames = product.categories?.map((category) => category.name).filter(Boolean).join(" ") || "";
+  const variantSkus = product.variants?.map((variant) => variant.sku).filter(Boolean).join(" ") || "";
+  return searchKey(`${product.name} ${product.brand?.name || ""} ${categoryNames} ${variantSkus}`);
+}
+
+function filterProducts(products: IkasProduct[], query: string) {
+  const key = searchKey(query);
+  if (!key) return products;
+  return products.filter((product) => productSearchText(product).includes(key));
+}
+
 function ProductCard({ product, props, isCategoryPage = false }: { product: IkasProduct; props: Props; isCategoryPage?: boolean }) {
   const variant = safeVariant(product);
   const media = variant ? getProductVariantMainImage(variant) : undefined;
@@ -151,6 +178,7 @@ export function ThreeMashProductsPage(props: Props) {
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const committedSearchRef = useRef(productList?.searchKeyword || "");
   const appliedUrlSearchRef = useRef(false);
+  const unfilteredProductsRef = useRef<IkasProduct[]>(products);
   const sortControlRef = useRef<HTMLLabelElement>(null);
   const sortOptions = productList ? getProductListSortOptions(productList) : [];
   const selectedSort = sortOptions.find((option) => option.isSelected)?.value || "";
@@ -160,7 +188,13 @@ export function ThreeMashProductsPage(props: Props) {
   const categoryLinks = listingLinks.filter((link) => link.group === "Kategori");
   const brandLinks = listingLinks.filter((link) => link.group === "Marka");
   const isCategoryProductsPage = normalizedText(props.eyebrowText) === "ürün kategorisi";
-  const showListControls = !isCategoryProductsPage;
+  const showSearchControl = props.showSearch !== false;
+  const showSortControl = !isCategoryProductsPage && props.showSort !== false && sortOptions.length > 0;
+  const showListControls = showSearchControl || showSortControl;
+  const showNavigationControls = !isCategoryProductsPage && props.showNavigation !== false;
+  const trimmedSearch = searchValue.trim();
+  const fallbackProducts = unfilteredProductsRef.current.length > 0 ? unfilteredProductsRef.current : products;
+  const displayedProducts = trimmedSearch ? filterProducts(products.length > 0 ? products : fallbackProducts, trimmedSearch) : products;
 
   const style = {
     "--tm-products-bg": themeToken(props.backgroundColor, "#f6f7f3", "--tm-theme-bg"),
@@ -172,7 +206,13 @@ export function ThreeMashProductsPage(props: Props) {
   } as any;
 
   useEffect(() => {
-    if (!productList || isCategoryProductsPage || typeof window === "undefined" || appliedUrlSearchRef.current) return;
+    if (!trimmedSearch && products.length > 0) {
+      unfilteredProductsRef.current = products;
+    }
+  }, [products, trimmedSearch]);
+
+  useEffect(() => {
+    if (!productList || typeof window === "undefined" || appliedUrlSearchRef.current) return;
     const param = props.searchQueryParam || "q";
     const query = new URLSearchParams(window.location.search).get(param)?.trim() || "";
     appliedUrlSearchRef.current = true;
@@ -183,19 +223,19 @@ export function ThreeMashProductsPage(props: Props) {
     if (query && productList.searchKeyword !== query) {
       searchProductList(productList, query);
     }
-  }, [productList, props.searchQueryParam, isCategoryProductsPage]);
+  }, [productList, props.searchQueryParam]);
 
   useEffect(() => {
-    if (!productList || isCategoryProductsPage) return;
+    if (!productList) return;
     const nextSearch = productList.searchKeyword || "";
-    if (searchValue === committedSearchRef.current && nextSearch !== searchValue) {
+    if (searchValue === committedSearchRef.current && searchKey(nextSearch) !== searchKey(searchValue)) {
       setSearchValue(nextSearch);
       committedSearchRef.current = nextSearch;
     }
-  }, [productList?.searchKeyword, searchValue, isCategoryProductsPage]);
+  }, [productList?.searchKeyword, searchValue]);
 
   useEffect(() => {
-    if (!productList || isCategoryProductsPage) return;
+    if (!productList) return;
     const nextSearch = searchValue.trim();
     if (nextSearch === committedSearchRef.current) return;
 
@@ -205,16 +245,7 @@ export function ThreeMashProductsPage(props: Props) {
     }, 240);
 
     return () => window.clearTimeout(timeout);
-  }, [productList, searchValue, isCategoryProductsPage]);
-
-  useEffect(() => {
-    if (!productList || !isCategoryProductsPage) return;
-    if (searchValue) setSearchValue("");
-    if (productList.searchKeyword) {
-      committedSearchRef.current = "";
-      searchProductList(productList, "");
-    }
-  }, [productList, productList?.searchKeyword, searchValue, isCategoryProductsPage]);
+  }, [productList, searchValue]);
 
   useEffect(() => {
     if (!sortMenuOpen || typeof document === "undefined") return;
@@ -280,7 +311,7 @@ export function ThreeMashProductsPage(props: Props) {
           <>
             {showListControls ? (
               <div className="tm-products-toolbar">
-                {props.showSearch !== false ? (
+                {showSearchControl ? (
                   <label className="tm-products-search">
                     <span>{props.searchLabel || "Arama"}</span>
                     <div className="tm-products-search-control">
@@ -303,7 +334,7 @@ export function ThreeMashProductsPage(props: Props) {
                   <span />
                 )}
 
-                {props.showSort !== false && sortOptions.length > 0 ? (
+                {showSortControl ? (
                   <label className="tm-products-sort" ref={sortControlRef}>
                     <span>{props.sortLabel || "Sırala"}</span>
                     <button
@@ -339,7 +370,7 @@ export function ThreeMashProductsPage(props: Props) {
               </div>
             ) : null}
 
-            {showListControls && props.showNavigation !== false ? (
+            {showNavigationControls ? (
               <div className="tm-products-nav-shell">
                 <div className="tm-products-nav-tabs" aria-label="Liste türü">
                   <span className={currentGroup === "Kategori" ? "is-active" : ""}>Kategoriler</span>
@@ -360,9 +391,9 @@ export function ThreeMashProductsPage(props: Props) {
               </div>
             ) : null}
 
-            {products.length > 0 ? (
+            {displayedProducts.length > 0 ? (
               <div className="tm-products-grid">
-                {products.map((product) => (
+                {displayedProducts.map((product) => (
                   <ProductCard product={product} props={props} isCategoryPage={isCategoryProductsPage} key={product.id} />
                 ))}
               </div>
@@ -371,7 +402,9 @@ export function ThreeMashProductsPage(props: Props) {
                 <h2>{props.emptyTitle || "Ürün bulunamadı"}</h2>
                 <p>
                   {props.emptyMessage ||
-                    (isCategoryProductsPage
+                    (trimmedSearch
+                      ? "Aramanızla eşleşen aktif ürün bulunamadı."
+                      : isCategoryProductsPage
                       ? "Bu kategoriye bağlı aktif ürün yok."
                       : "Bu listeye bağlı aktif ürün yok veya filtreler sonucu ürün kalmadı.")}
                 </p>

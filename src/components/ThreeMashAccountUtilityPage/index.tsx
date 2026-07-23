@@ -21,9 +21,10 @@ import {
   type IkasOrder,
   type IkasProduct,
 } from "@ikas/bp-storefront";
+import forgotPasswordBgImage from "../../assets/forgot-password-bg-data";
 import { Props } from "./types";
 
-const defaultAuthImage = "https://cdn.myikas.com/images/theme-images/4a6af8e2-cb7c-4cc8-ba17-13656d4b8670/image_3840.webp";
+const defaultAuthImage = forgotPasswordBgImage;
 
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
@@ -105,20 +106,21 @@ function AccountSidebar({ customer, props }: { customer: IkasCustomer | null; pr
 function AuthShell({ props, active, children }: { props: Props; active: "forgot" | "recover"; children: preact.ComponentChildren }) {
   const image = imageSource(props.backgroundImageUrl, defaultAuthImage);
   return (
-    <section className="tmau-auth">
+    <section className={`tmau-auth is-${active}`}>
       <div className="tmau-auth-panel">
         <div className="tmau-auth-form">
-          <div className="tmau-auth-tabs">
-            <a href={href(props.loginHref, "/account/login")}>Üye Girişi</a>
-            <a href={href(props.registerHref, "/account/register")}>Üye Ol</a>
-          </div>
+          {active === "recover" && (
+            <div className="tmau-auth-tabs">
+              <a href={href(props.loginHref, "/account/login")}>Üye Girişi</a>
+              <a href={href(props.registerHref, "/account/register")}>Üye Ol</a>
+            </div>
+          )}
           <h1>{active === "forgot" ? text(props.titleText, "Parolamı Unuttum") : text(props.titleText, "Şifremi Kurtar")}</h1>
+          {active === "forgot" && <p className="tmau-auth-copy">Lütfen üye olurken kullandığınız email adresinizi giriniz. Şifreniz email adresinize gönderilecektir.</p>}
           {children}
         </div>
       </div>
-      <div className="tmau-auth-image" aria-hidden="true">
-        <img src={image} alt="" />
-      </div>
+      <div className="tmau-auth-image" style={{ backgroundImage: `url(${image})` }} aria-hidden="true" />
     </section>
   );
 }
@@ -139,7 +141,7 @@ function ForgotPasswordView({ props }: { props: Props }) {
     <AuthShell props={props} active="forgot">
       <form onSubmit={submit}>
         <label className="tmau-auth-field">
-          <span>* Email</span>
+          <span><b>* </b>Email</span>
           <input type="email" value={email} required autoComplete="email" onInput={(event) => setEmail((event.currentTarget as HTMLInputElement).value)} />
         </label>
         <button className="tmau-auth-submit" type="submit" disabled={status === "loading"}>
@@ -147,6 +149,7 @@ function ForgotPasswordView({ props }: { props: Props }) {
         </button>
         {status !== "idle" && <p className={`tmau-status is-${status}`}>{status === "success" ? "Şifre yenileme bağlantısı email adresinize gönderildi." : status === "error" ? "İşlem tamamlanamadı. Email adresini kontrol edin." : "Gönderiliyor..."}</p>}
       </form>
+      <a className="tmau-auth-login-link" href={href(props.loginHref, "/account/login")}>Üye Girişi</a>
     </AuthShell>
   );
 }

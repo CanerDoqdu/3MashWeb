@@ -3,9 +3,9 @@ import type { IkasProduct, IkasImage } from "@ikas/bp-storefront";
 import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
-  /** Select a specific ikas product for the first Section 4 product card. If empty, the manual/static card stays visible. */
+  /** İlk Bölüm 4 ürün kartı için belirli bir ikas ürünü seçin. Boşsa manuel/sabit kart görünür kalır. */
   curingProduct1Product?: IkasProduct | null;
-  /** Select a specific ikas product for the second Section 4 product card. If empty, the manual/static card stays visible. */
+  /** İkinci Bölüm 4 ürün kartı için belirli bir ikas ürünü seçin. Boşsa manuel/sabit kart görünür kalır. */
   curingProduct2Product?: IkasProduct | null;
   sectionAnchorId?: string;
   indexNumber?: string;
@@ -25,7 +25,7 @@ export interface Props {
   curingProduct1Tag?: string;
   curingProduct1Title?: string;
   curingProduct1DescriptionHtml?: string;
-  /** Upload a replacement product image. If empty, the bundled product image is used. */
+  /** Yedek ürün görseli yükleyin. Boşsa paketli ürün görseli kullanılır. */
   curingProduct1ImageUrl?: IkasImage | null;
   curingProduct1ImageAlt?: string;
   curingProduct1Spec1Label?: string;
@@ -37,7 +37,7 @@ export interface Props {
   curingProduct2Tag?: string;
   curingProduct2Title?: string;
   curingProduct2DescriptionHtml?: string;
-  /** Upload a replacement product image. If empty, the bundled product image is used. */
+  /** Yedek ürün görseli yükleyin. Boşsa paketli ürün görseli kullanılır. */
   curingProduct2ImageUrl?: IkasImage | null;
   curingProduct2ImageAlt?: string;
   curingProduct2Spec1Label?: string;

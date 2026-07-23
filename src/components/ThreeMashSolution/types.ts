@@ -3,7 +3,7 @@ import type { IkasProductList } from "@ikas/bp-storefront";
 import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
-  /** Bind this to All Products or the current product list/category. Section 3 only renders live ikas products; old static demo products are not used. */
+  /** Bunu Tüm Ürünler ya da geçerli ürün listesi/kategoriye bağlayın. Bölüm 3 yalnızca canlı ikas ürünlerini gösterir; eski statik demo ürünleri kullanılmaz. */
   productList: IkasProductList;
   sectionAnchorId?: string;
   indexNumber?: string;

@@ -758,6 +758,24 @@
   cursor: pointer;
 }
 
+.tmh-cart-badge {
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tmh-badge);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+}
+
 .tmh-action-wrap {
   position: relative;
   width: 24px;
@@ -961,6 +979,98 @@
   align-items: center;
   justify-content: center;
   padding: 18px;
+}
+
+.tmh-cart-live {
+  margin-top: 12px;
+}
+
+.tmh-cart-live-list {
+  display: grid;
+  gap: 0;
+  max-height: 330px;
+  overflow: auto;
+  border-top: 1px solid color-mix(in srgb, var(--tmh-line) 86%, transparent);
+}
+
+.tmh-cart-live-item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--tmh-line) 86%, transparent);
+  color: var(--tmh-text);
+  text-decoration: none;
+}
+
+.tmh-cart-live-image {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--tmh-line);
+  background: #fff;
+  overflow: hidden;
+}
+
+.tmh-cart-live-image img {
+  grid-area: 1 / 1;
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+  background: #fff;
+}
+
+.tmh-cart-live-image span {
+  grid-area: 1 / 1;
+  color: var(--tmh-muted);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.tmh-cart-live-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.tmh-cart-live-copy b {
+  margin: 0;
+  color: var(--tmh-text);
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tmh-cart-live-copy small,
+.tmh-cart-live-copy em {
+  margin: 0;
+  color: var(--tmh-muted);
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tmh-cart-live-item strong {
+  color: var(--tmh-text);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tmh-cart-go-button {
+  width: 100%;
+  margin-top: 12px;
+  background: #000;
+  border-color: #000;
+  color: #fff;
 }
 
 .tmh-cart-market-button {

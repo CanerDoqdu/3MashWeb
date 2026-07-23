@@ -28,6 +28,13 @@ function inlineHtml(value?: string) {
   return { __html: value || "" };
 }
 
+type PlainObject = Record<string, unknown>;
+type ProductMediaItem = NonNullable<IkasProductVariant["images"]>[number];
+
+function isPlainObject(value: unknown): value is PlainObject {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value));
+}
+
 function selectedVariant(product: IkasProduct): IkasProductVariant | null {
   try {
     return getSelectedProductVariant(product) || product.variants?.[0] || null;
@@ -80,6 +87,193 @@ function stringValue(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function normalizedKey(value: unknown) {
+  return stringValue(value)
+    .toLocaleLowerCase("tr")
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ı/g, "i")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
+function imageValue(value: unknown): string {
+  if (typeof value === "string") return value.trim();
+  if (!isPlainObject(value)) return "";
+
+  const candidates = [
+    value.url,
+    value.src,
+    value.imageUrl,
+    value.thumbnailUrl,
+    value.value,
+    value.id,
+    isPlainObject(value.image) ? value.image.url || value.image.src || value.image.id : "",
+    isPlainObject(value.file) ? value.file.url || value.file.src || value.file.id : "",
+  ];
+
+  const found = candidates.find((candidate) => typeof candidate === "string" && candidate.trim());
+  return typeof found === "string" ? found.trim() : "";
+}
+
+function customValuePayload(value: unknown): unknown {
+  if (!isPlainObject(value)) return value;
+
+  const nested =
+    value.value ??
+    value.text ??
+    value.html ??
+    value.richText ??
+    value.content ??
+    value.url ??
+    value.src ??
+    value.imageUrl ??
+    value.file ??
+    value.image;
+
+  return nested === undefined ? value : nested;
+}
+
+function customField(product: IkasProduct, keys: string[]) {
+  const wanted = new Set(keys.map(normalizedKey));
+  const source = product as unknown as PlainObject;
+
+  for (const key of keys) {
+    if (source[key] !== undefined) return customValuePayload(source[key]);
+  }
+
+  const containers = [
+    source.customFields,
+    source.customFieldValues,
+    source.productCustomFields,
+    source.attributes,
+    source.productAttributes,
+    source.metafields,
+    source.metaFields,
+  ];
+
+  for (const container of containers) {
+    if (Array.isArray(container)) {
+      for (const item of container) {
+        if (!isPlainObject(item)) continue;
+        const aliases = [
+          item.key,
+          item.code,
+          item.name,
+          item.slug,
+          item.handle,
+          item.fieldName,
+          item.title,
+          isPlainObject(item.customField) ? item.customField.key || item.customField.code || item.customField.name : "",
+          isPlainObject(item.field) ? item.field.key || item.field.code || item.field.name : "",
+        ];
+        if (aliases.some((alias) => wanted.has(normalizedKey(alias)))) return customValuePayload(item);
+      }
+      continue;
+    }
+
+    if (isPlainObject(container)) {
+      for (const [key, value] of Object.entries(container)) {
+        if (wanted.has(normalizedKey(key))) return customValuePayload(value);
+      }
+    }
+  }
+
+  return undefined;
+}
+
+function customText(product: IkasProduct, keys: string[]) {
+  const value = customField(product, keys);
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (typeof value === "string") return value.trim();
+  if (isPlainObject(value)) {
+    const nested = value.text ?? value.value ?? value.html ?? value.content ?? value.name ?? value.title;
+    return typeof nested === "string" ? nested.trim() : "";
+  }
+  return "";
+}
+
+function customImage(product: IkasProduct, keys: string[]) {
+  const value = customField(product, keys);
+  if (Array.isArray(value)) return imageValue(value[0]);
+  return imageValue(value);
+}
+
+function customUrl(product: IkasProduct, keys: string[]) {
+  return customText(product, keys) || customImage(product, keys);
+}
+
+function isMeaningfulHtml(value: string) {
+  return plainText(value).length > 0 || /<(img|iframe|video|table|ul|ol)\b/i.test(value);
+}
+
+function parseJsonArray(value: string) {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function youtubeEmbed(value: string) {
+  const raw = value.trim();
+  if (!raw) return "";
+  if (raw.includes("embed/")) return raw;
+  const match = raw.match(/(?:v=|youtu\.be\/|shorts\/)([A-Za-z0-9_-]+)/);
+  return match ? `https://www.youtube.com/embed/${match[1]}` : raw;
+}
+
+function productFeatureItems(product: IkasProduct) {
+  const listSource = customField(product, ["product_features", "features", "ozellikler", "one_cikan_ozellikler"]);
+  const list = Array.isArray(listSource) ? listSource : parseJsonArray(customText(product, ["product_features", "features", "ozellikler"]));
+  const fromList = list
+    .map((item) => {
+      const data = isPlainObject(item) ? item : {};
+      const title = stringValue(data.title || data.baslik || data.name);
+      const text = stringValue(data.text || data.description || data.aciklama || data.content);
+      const image = imageValue(data.image || data.gorsel || data.icon || data.ikon);
+      return { title, text, image };
+    })
+    .filter((item) => item.title || item.text || item.image);
+
+  if (fromList.length) return fromList;
+
+  return Array.from({ length: 8 }, (_, index) => {
+    const number = index + 1;
+    return {
+      title: customText(product, [`feature_${number}_title`, `ozellik_${number}_baslik`, `feature${number}Title`]),
+      text: customText(product, [`feature_${number}_text`, `feature_${number}_description`, `ozellik_${number}_metin`, `feature${number}Text`]),
+      image: customImage(product, [`feature_${number}_image`, `feature_${number}_icon`, `ozellik_${number}_gorsel`, `feature${number}Image`]),
+    };
+  }).filter((item) => item.title || item.text || item.image);
+}
+
+function productSpecItems(product: IkasProduct) {
+  return Array.from({ length: 12 }, (_, index) => {
+    const number = index + 1;
+    return {
+      label: customText(product, [`spec_${number}_label`, `technical_spec_${number}_label`, `teknik_${number}_etiket`]),
+      value: customText(product, [`spec_${number}_value`, `technical_spec_${number}_value`, `teknik_${number}_deger`]),
+      description: customText(product, [`spec_${number}_description`, `technical_spec_${number}_description`, `teknik_${number}_aciklama`]),
+    };
+  }).filter((item) => item.label || item.value || item.description);
+}
+
+function productFaqItems(product: IkasProduct) {
+  return Array.from({ length: 8 }, (_, index) => {
+    const number = index + 1;
+    return {
+      question: customText(product, [`faq_${number}_question`, `question_${number}`, `question${number}`, `soru_${number}`]),
+      answer: customText(product, [`faq_${number}_answer`, `answer_${number}_html`, `answer${number}Html`, `cevap_${number}`]),
+    };
+  }).filter((item) => item.question && item.answer);
+}
+
 function categoryName(category: unknown) {
   const data = category as { name?: unknown; title?: unknown } | undefined;
   return stringValue(data?.name) || stringValue(data?.title);
@@ -117,7 +311,7 @@ function ProductDetailHeader() {
           <a href="/zirkon-bloklar">Zirkon Bloklar</a>
           <a href="/masasustu-tarayicilar">Masaüstü Tarayıcılar</a>
           <a href="/dental-firinlar">Dental Fırınlar</a>
-          <a href="/pages/mash-academy">Mash Academy</a>
+          <a href="/2tplvqpo-rOvTVWz53H">Mash Academy</a>
         </nav>
       </div>
     </header>
@@ -140,6 +334,208 @@ function ProductDetailFooter() {
         <span>© 2026 3Mash</span>
       </div>
     </footer>
+  );
+}
+
+function ProductContentSection({
+  eyebrow,
+  title,
+  html,
+  image,
+  imageAlt,
+  reverse = false,
+}: {
+  eyebrow?: string;
+  title?: string;
+  html?: string;
+  image?: string;
+  imageAlt?: string;
+  reverse?: boolean;
+}) {
+  if (!eyebrow && !title && !isMeaningfulHtml(html || "") && !image) return null;
+
+  return (
+    <section className={`tmpdl-content-section${reverse ? " is-reverse" : ""}`}>
+      <div className="tmpdl-content-copy">
+        {eyebrow ? <span>{eyebrow}</span> : null}
+        {title ? <h2>{title}</h2> : null}
+        {html && isMeaningfulHtml(html) ? <div className="tmpdl-rich" dangerouslySetInnerHTML={inlineHtml(html)} /> : null}
+      </div>
+      {image ? (
+        <div className="tmpdl-content-media">
+          <img src={image} alt={imageAlt || title || ""} loading="lazy" decoding="async" />
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function ProductFeaturesSection({ product }: { product: IkasProduct }) {
+  const features = productFeatureItems(product);
+  const title = customText(product, ["features_title", "product_features_title", "one_cikanlar_baslik"]) || "Öne Çıkan Özellikler";
+  const eyebrow = customText(product, ["features_eyebrow", "one_cikanlar_etiket"]);
+
+  if (!features.length) return null;
+
+  return (
+    <section className="tmpdl-template-section tmpdl-features-section">
+      <div className="tmpdl-section-head">
+        {eyebrow ? <span>{eyebrow}</span> : null}
+        <h2>{title}</h2>
+      </div>
+      <div className="tmpdl-feature-grid">
+        {features.map((feature, index) => (
+          <article key={`${feature.title || "feature"}-${index}`}>
+            {feature.image ? <img src={feature.image} alt="" loading="lazy" decoding="async" /> : null}
+            {feature.title ? <h3>{feature.title}</h3> : null}
+            {feature.text ? <p>{feature.text}</p> : null}
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProductSpecsSection({ product }: { product: IkasProduct }) {
+  const title = customText(product, ["technical_specs_title", "teknik_ozellikler_baslik"]) || "Teknik Özellikler";
+  const intro = customText(product, ["technical_specs_intro", "teknik_ozellikler_aciklama"]);
+  const html = customText(product, ["technical_specs_html", "teknik_ozellikler_html"]);
+  const rows = productSpecItems(product);
+
+  if (!isMeaningfulHtml(html) && !rows.length) return null;
+
+  return (
+    <section className="tmpdl-template-section tmpdl-specs-section">
+      <div className="tmpdl-section-head">
+        <span>Teknik Detaylar</span>
+        <h2>{title}</h2>
+        {intro ? <p>{intro}</p> : null}
+      </div>
+      {isMeaningfulHtml(html) ? (
+        <div className="tmpdl-rich tmpdl-specs-html" dangerouslySetInnerHTML={inlineHtml(html)} />
+      ) : (
+        <div className="tmpdl-specs-table">
+          {rows.map((row, index) => (
+            <div key={`${row.label || "spec"}-${index}`}>
+              <span>{row.label}</span>
+              <b>{row.value}</b>
+              {row.description ? <em>{row.description}</em> : null}
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ProductVideoSection({ product, fallbackMedia }: { product: IkasProduct; fallbackMedia?: ProductMediaItem }) {
+  const videoUrl = customUrl(product, ["product_video_url", "video_url", "tanitim_video_url"]);
+  const title = customText(product, ["product_video_title", "video_title", "video_baslik"]) || "Ürün Videosu";
+  const description = customText(product, ["product_video_text", "video_description", "video_aciklama"]);
+  const poster = customImage(product, ["product_video_poster", "video_poster", "poster_image"]);
+  const fallbackUrl = fallbackMedia?.image ? getDefaultSrc(fallbackMedia.image) : "";
+  const url = videoUrl || fallbackUrl;
+
+  if (!url) return null;
+
+  const embedUrl = youtubeEmbed(url);
+  const isEmbed = /^https?:\/\/[^"]*(youtube\.com|youtu\.be|vimeo\.com)/i.test(embedUrl) || embedUrl.includes("embed/");
+
+  return (
+    <section className="tmpdl-template-section tmpdl-video-section">
+      <div className="tmpdl-section-head">
+        <span>Video</span>
+        <h2>{title}</h2>
+        {description ? <p>{description}</p> : null}
+      </div>
+      {isEmbed ? (
+        <iframe src={embedUrl} title={title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+      ) : (
+        <video src={url} poster={poster || undefined} controls playsInline />
+      )}
+    </section>
+  );
+}
+
+function ProductDocumentsSection({ product }: { product: IkasProduct }) {
+  const brochure = customUrl(product, ["product_brochure", "katalog_dosyasi", "brochure_url", "catalog_file"]);
+  const safety = customUrl(product, ["safety_document", "guvenlik_dokumani", "msds_file"]);
+
+  if (!brochure && !safety) return null;
+
+  return (
+    <section className="tmpdl-template-section tmpdl-documents-section">
+      <div className="tmpdl-section-head">
+        <span>Dokümanlar</span>
+        <h2>Ürün Dokümanları</h2>
+      </div>
+      <div className="tmpdl-doc-links">
+        {brochure ? (
+          <a href={brochure} target="_blank" rel="noopener noreferrer">
+            Katalog
+          </a>
+        ) : null}
+        {safety ? (
+          <a href={safety} target="_blank" rel="noopener noreferrer">
+            Güvenlik Dokümanı
+          </a>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+function ProductFaqSection({ product }: { product: IkasProduct }) {
+  const title = customText(product, ["product_faq_title", "faq_title", "sss_baslik"]) || "Sıkça Sorulan Sorular";
+  const html = customText(product, ["product_faq_html", "faq_html", "sss_html"]);
+  const items = productFaqItems(product);
+
+  if (!isMeaningfulHtml(html) && !items.length) return null;
+
+  return (
+    <section className="tmpdl-template-section tmpdl-faq-section">
+      <div className="tmpdl-section-head">
+        <span>SSS</span>
+        <h2>{title}</h2>
+      </div>
+      {isMeaningfulHtml(html) ? (
+        <div className="tmpdl-rich" dangerouslySetInnerHTML={inlineHtml(html)} />
+      ) : (
+        <div className="tmpdl-faq-list">
+          {items.map((item, index) => (
+            <details key={`${item.question}-${index}`} open={index === 0}>
+              <summary>{item.question}</summary>
+              <div dangerouslySetInnerHTML={inlineHtml(item.answer)} />
+            </details>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ProductTemplateSections({ product, videoMedia }: { product: IkasProduct; videoMedia?: ProductMediaItem }) {
+  const introTitle = customText(product, ["product_intro_title", "tanitim_basligi"]);
+  const introText = customText(product, ["product_intro_text", "product_intro_html", "tanitim_aciklamasi"]);
+  const introImage = customImage(product, ["product_intro_image", "tanitim_gorseli"]);
+  const storyTitle = customText(product, ["product_story_title", "hikaye_basligi"]);
+  const storyText = customText(product, ["product_story_text", "product_story_html", "hikaye_metni"]);
+  const storyImage = customImage(product, ["product_story_image", "hikaye_gorseli"]);
+  const usageTitle = customText(product, ["usage_title", "application_title", "kullanim_alanlari_baslik"]);
+  const usageText = customText(product, ["usage_html", "application_html", "kullanim_alanlari_html"]);
+  const usageImage = customImage(product, ["usage_image", "application_image", "kullanim_alanlari_gorsel"]);
+
+  return (
+    <div className="tmpdl-template-sections">
+      <ProductContentSection eyebrow="Kısa Tanıtım" title={introTitle} html={introText} image={introImage} imageAlt={introTitle} />
+      <ProductContentSection eyebrow="Ürün Hikayesi" title={storyTitle} html={storyText} image={storyImage} imageAlt={storyTitle} reverse />
+      <ProductFeaturesSection product={product} />
+      <ProductSpecsSection product={product} />
+      <ProductContentSection eyebrow="Kullanım Alanları" title={usageTitle} html={usageText} image={usageImage} imageAlt={usageTitle} />
+      <ProductVideoSection product={product} fallbackMedia={videoMedia} />
+      <ProductDocumentsSection product={product} />
+      <ProductFaqSection product={product} />
+    </div>
   );
 }
 
@@ -351,36 +747,7 @@ export function ThreeMashProductDetailLive(props: Props) {
                 </div>
               </div>
 
-              <div className="tmpdl-data-map">
-                <h2>Bu Şablonda ikas Alanları</h2>
-                <div>
-                  <span>Ürün başlığı</span>
-                  <b>ikas ürün adı</b>
-                </div>
-                <div>
-                  <span>Fiyat</span>
-                  <b>ikas varyant fiyatı / aktif TL fiyat listesi</b>
-                </div>
-                <div>
-                  <span>Görsel galeri</span>
-                  <b>ikas ürün görselleri ve video medyaları</b>
-                </div>
-                <div>
-                  <span>Ürün açıklaması</span>
-                  <b>ikas ürün açıklaması alanı</b>
-                </div>
-                <div>
-                  <span>Video</span>
-                  <b>ürün medyasına video eklenirse galeride ve aşağıdaki video alanında görünür</b>
-                </div>
-              </div>
-
-              {videoMedia?.image ? (
-                <section className="tmpdl-video-section">
-                  <h2>Ürün Videosu</h2>
-                  <video src={getDefaultSrc(videoMedia.image)} controls playsInline />
-                </section>
-              ) : null}
+              <ProductTemplateSections product={product} videoMedia={videoMedia} />
 
               <div className="tmpdl-fixed-buy">
                 <button type="button" disabled={!isInStock || isAdding} onClick={handleAddToCart}>

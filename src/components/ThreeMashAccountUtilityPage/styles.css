@@ -12,10 +12,12 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 330px minmax(0, 1fr);
+  align-items: stretch;
+  min-height: calc(100vh - 78px);
 }
 
 .tmau-sidebar {
-  min-height: 720px;
+  min-height: calc(100vh - 78px);
   padding: 78px 58px;
   background: #f7f7f5;
 }
@@ -273,6 +275,9 @@
 .tmau-auth-image {
   min-height: inherit;
   overflow: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .tmau-auth-image img {
@@ -280,6 +285,86 @@
   height: 100%;
   display: block;
   object-fit: cover;
+}
+
+.tmau-auth.is-forgot {
+  grid-template-columns: 30.625% 69.375%;
+}
+
+.tmau-auth.is-forgot .tmau-auth-panel {
+  display: block;
+  padding: 88px 24px 64px;
+}
+
+.tmau-auth.is-forgot .tmau-auth-form {
+  width: 100%;
+  max-width: 449px;
+}
+
+.tmau-auth.is-forgot .tmau-auth-form h1 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+.tmau-auth-copy {
+  max-width: none;
+  margin: 0;
+  padding-top: 1rem;
+  padding-bottom: 2.5rem;
+  color: #000;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+
+.tmau-auth-field span b {
+  color: #e83636;
+}
+
+.tmau-auth.is-forgot .tmau-auth-field {
+  gap: 0;
+  margin: 0 0 1rem;
+}
+
+.tmau-auth.is-forgot .tmau-auth-field span {
+  margin: 0 0 0.25rem;
+}
+
+.tmau-auth.is-forgot .tmau-auth-field input {
+  height: 36px;
+  padding: 0;
+}
+
+.tmau-auth.is-forgot .tmau-auth-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  min-height: 48px;
+  margin: 2rem 0 0;
+  border-radius: 100px;
+  padding: 0 1.25rem;
+  font-size: inherit;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+
+.tmau-auth-login-link {
+  display: inline-flex;
+  padding: 8px 0;
+  margin: 0;
+  color: #000;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.tmau-auth.is-forgot .tmau-auth-image img {
+  object-position: center center;
 }
 
 .tmau-status {
@@ -317,6 +402,14 @@
   .tmau-auth-image {
     min-height: 360px;
     order: -1;
+  }
+
+  .tmau-auth.is-forgot .tmau-auth-panel {
+    padding: 34px 22px;
+  }
+
+  .tmau-auth.is-forgot .tmau-auth-image {
+    order: 0;
   }
 }
 

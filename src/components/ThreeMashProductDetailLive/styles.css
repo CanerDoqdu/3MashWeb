@@ -475,54 +475,267 @@
   height: auto;
 }
 
-.tmpdl-data-map {
-  display: none;
-  width: min(980px, 100%);
+.tmpdl-template-sections {
+  display: grid;
+  gap: 0;
+  background: #fff;
+}
+
+.tmpdl-template-section,
+.tmpdl-content-section {
+  width: min(1224px, calc(100% - 36px));
   margin: 0 auto;
+  padding: 58px 0;
+  border-top: 1px solid #ededed;
+}
+
+.tmpdl-content-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  gap: 54px;
+  align-items: center;
+}
+
+.tmpdl-content-section.is-reverse {
+  grid-template-columns: minmax(360px, 1.08fr) minmax(0, 0.92fr);
+}
+
+.tmpdl-content-section.is-reverse .tmpdl-content-copy {
+  order: 2;
+}
+
+.tmpdl-content-section.is-reverse .tmpdl-content-media {
+  order: 1;
+}
+
+.tmpdl-content-copy > span,
+.tmpdl-section-head > span {
+  display: block;
+  margin-bottom: 12px;
+  color: #767676;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.tmpdl-content-copy h2,
+.tmpdl-section-head h2 {
+  margin: 0;
+  color: #000;
+  font-size: 34px;
+  font-weight: 850;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.tmpdl-rich {
+  margin-top: 22px;
+  color: #242424;
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+.tmpdl-rich :first-child {
+  margin-top: 0;
+}
+
+.tmpdl-rich :last-child {
+  margin-bottom: 0;
+}
+
+.tmpdl-rich img,
+.tmpdl-rich video {
+  max-width: 100%;
+  height: auto;
+}
+
+.tmpdl-rich table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tmpdl-rich td,
+.tmpdl-rich th {
+  padding: 14px 0;
+  border-bottom: 1px solid #e8e8e8;
+  text-align: left;
+}
+
+.tmpdl-content-media {
+  display: grid;
+  min-height: 420px;
+  place-items: center;
+  background: #f8f8f8;
+}
+
+.tmpdl-content-media img {
+  display: block;
+  width: min(86%, 560px);
+  max-height: 520px;
+  object-fit: contain;
+}
+
+.tmpdl-section-head {
+  width: min(760px, 100%);
+  margin-bottom: 28px;
+}
+
+.tmpdl-section-head p {
+  margin: 14px 0 0;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.tmpdl-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.tmpdl-feature-grid article {
+  min-height: 184px;
   padding: 22px;
   background: #f7f7f7;
-  color: #222;
 }
 
-.tmpdl-data-map h2 {
-  margin: 0 0 16px;
-  font-size: 20px;
+.tmpdl-feature-grid img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 22px;
+  object-fit: contain;
 }
 
-.tmpdl-data-map div {
+.tmpdl-feature-grid h3 {
+  margin: 0;
+  color: #000;
+  font-size: 17px;
+  line-height: 1.24;
+}
+
+.tmpdl-feature-grid p {
+  margin: 10px 0 0;
+  color: #555;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.tmpdl-specs-section {
+  width: min(1080px, calc(100% - 36px));
+}
+
+.tmpdl-specs-table {
+  border-top: 1px solid #dfdfdf;
+}
+
+.tmpdl-specs-table div {
   display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
-  gap: 14px;
-  padding: 10px 0;
-  border-top: 1px solid #e3e3e3;
-  font-size: 13px;
+  grid-template-columns: minmax(180px, 0.35fr) minmax(0, 0.65fr);
+  gap: 18px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.tmpdl-data-map span {
+.tmpdl-specs-table span {
   color: #777;
+  font-size: 13px;
+  font-weight: 750;
+  text-transform: uppercase;
 }
 
-.tmpdl-data-map b {
-  font-weight: 600;
+.tmpdl-specs-table b {
+  color: #000;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.tmpdl-specs-table em {
+  grid-column: 2;
+  color: #666;
+  font-size: 13px;
+  font-style: normal;
+  line-height: 1.55;
 }
 
 .tmpdl-video-section {
   width: min(1120px, 100%);
-  margin: 0 auto;
-  padding: 30px 0;
 }
 
-.tmpdl-video-section h2 {
-  margin: 0 0 18px;
-  color: #000;
-  font-size: 32px;
-}
-
-.tmpdl-video-section video {
+.tmpdl-video-section video,
+.tmpdl-video-section iframe {
   display: block;
   width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
   max-height: 720px;
   background: #000;
+}
+
+.tmpdl-doc-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tmpdl-doc-links a {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+  border-radius: 999px;
+  padding: 0 20px;
+  color: #000;
+  font-size: 13px;
+  font-weight: 850;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.tmpdl-faq-list {
+  display: grid;
+  gap: 10px;
+}
+
+.tmpdl-faq-list details {
+  background: #f7f7f7;
+}
+
+.tmpdl-faq-list summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+  padding: 0 18px;
+  color: #000;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+
+.tmpdl-faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.tmpdl-faq-list summary::after {
+  content: "+";
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.tmpdl-faq-list details[open] summary::after {
+  content: "-";
+}
+
+.tmpdl-faq-list details > div {
+  padding: 0 18px 18px;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.65;
 }
 
 .tmpdl-fixed-buy {
@@ -598,6 +811,45 @@
   .tmpdl-thumbs {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+
+  .tmpdl-template-section,
+  .tmpdl-content-section {
+    width: calc(100% - 28px);
+    padding: 42px 0;
+  }
+
+  .tmpdl-content-section,
+  .tmpdl-content-section.is-reverse {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .tmpdl-content-section.is-reverse .tmpdl-content-copy,
+  .tmpdl-content-section.is-reverse .tmpdl-content-media {
+    order: initial;
+  }
+
+  .tmpdl-content-copy h2,
+  .tmpdl-section-head h2 {
+    font-size: 28px;
+  }
+
+  .tmpdl-content-media {
+    min-height: 280px;
+  }
+
+  .tmpdl-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tmpdl-specs-table div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .tmpdl-specs-table em {
+    grid-column: auto;
+  }
 }
 
 @media (max-width: 640px) {
@@ -645,6 +897,14 @@
 
   .tmpdl-info h1 {
     font-size: 28px;
+  }
+
+  .tmpdl-feature-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tmpdl-feature-grid article {
+    min-height: 0;
   }
 
   .tmpdl-fixed-buy {

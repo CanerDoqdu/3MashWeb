@@ -239,6 +239,7 @@
 
 .tm-products-search {
   width: 100%;
+  text-transform: none;
 }
 
 .tm-products-search-control {

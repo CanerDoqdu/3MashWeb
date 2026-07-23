@@ -1,0 +1,127 @@
+.three-mash-faq-page {
+  width: 100%;
+  padding: 1px 0;
+  background: var(--tmfaq-bg);
+  color: var(--tmfaq-text);
+  font-family: Poppins, var(--tm-theme-font-body, system-ui, sans-serif);
+}
+
+.three-mash-faq-page *,
+.three-mash-faq-page *::before,
+.three-mash-faq-page *::after {
+  box-sizing: border-box;
+}
+
+.tmfaq-shell {
+  width: min(100%, var(--tmfaq-max));
+  margin: 0 auto;
+  padding: 0;
+}
+
+.tmfaq-shell > h1 {
+  margin: 0 0 44px;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 300;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.tmfaq-section + .tmfaq-section {
+  margin-top: 32px;
+}
+
+.tmfaq-section {
+  margin-bottom: 32px;
+  margin-top: 32px;
+}
+
+.tmfaq-section h2 {
+  align-items: center;
+  color: var(--tmfaq-text);
+  display: flex;
+  font-size: 1.875rem;
+  font-weight: 300;
+  line-height: 1.2;
+  justify-content: center;
+  letter-spacing: 0.05em;
+  margin: 0;
+  text-align: center;
+}
+
+.tmfaq-list {
+  display: grid;
+  gap: 0;
+  margin: 24px auto 0;
+  padding: 0 16px;
+  width: 50%;
+}
+
+.tmfaq-item {
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.tmfaq-row {
+  align-items: center;
+  background: var(--tmfaq-panel);
+  border-radius: 38px;
+  color: var(--tmfaq-text);
+  display: flex;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.35;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+}
+
+.tmfaq-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  margin-right: 16px;
+}
+
+.tmfaq-icon svg {
+  display: block;
+  fill: currentColor;
+  height: 20px;
+  width: 20px;
+}
+
+.tmfaq-row > span:last-child {
+  letter-spacing: 0.025em;
+}
+
+@media (max-width: 640px) {
+  .three-mash-faq-page {
+    padding: 1px 0;
+  }
+
+  .tmfaq-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .tmfaq-list {
+    width: 100%;
+  }
+
+  .tmfaq-row {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .tmfaq-list {
+    width: 75%;
+  }
+}
+
+@media (max-width: 767px) {
+  .tmfaq-list {
+    width: 100%;
+  }
+}

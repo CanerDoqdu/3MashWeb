@@ -373,17 +373,32 @@
 }
 
 .tmr-solution .tmr-products-slider.tmr-products-live .tmr-products-track {
+  --tmr-products-loop-distance: 0px;
+  --tmr-products-loop-distance-negative: 0px;
   width: 100% !important;
   display: flex !important;
   flex-wrap: nowrap !important;
   gap: var(--tmr-solution-card-gap);
-  animation: tmr-products-slide var(--tmr-solution-carousel-duration) infinite;
+  animation: none;
+  transform: translateX(0);
   will-change: transform;
+}
+
+.tmr-solution .tmr-products-slider.tmr-products-live.tmr-products-loop-ready .tmr-products-track {
+  animation: tmr-products-marquee var(--tmr-solution-carousel-duration) linear infinite;
 }
 
 .tmr-solution .tmr-products-slider.tmr-products-live .tmr-products-track > .tmr-product {
   flex: 0 0 calc((100% - (var(--tmr-solution-card-gap) * 2)) / 3) !important;
   min-width: 0;
+}
+
+.tmr-solution .tmr-products-slider.tmr-products-live.tmr-products-single .tmr-products-track {
+  animation: none !important;
+}
+
+.tmr-solution .tmr-products-slider.tmr-products-live.tmr-products-single .tmr-products-track > .tmr-product {
+  flex-basis: calc((100% - (var(--tmr-solution-card-gap) * 2)) / 3) !important;
 }
 
 .tmr-products-setup {
@@ -482,6 +497,16 @@
   filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.2));
 }
 
+@keyframes tmr-products-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(var(--tmr-products-loop-distance-negative));
+  }
+}
+
 .tmr-live-product-img {
   width: var(--tmr-solution-image-width);
   height: var(--tmr-solution-image-height);
@@ -533,6 +558,12 @@
 .tmr-solution .tmr-products-slider::after {
   width: var(--tmr-solution-edge-fade-width);
   animation-duration: var(--tmr-solution-carousel-duration);
+}
+
+.tmr-solution .tmr-products-slider.tmr-products-live::before,
+.tmr-solution .tmr-products-slider.tmr-products-live::after {
+  opacity: 1;
+  animation: none;
 }
 
 .tmr-solution .tmr-products-track {
@@ -1849,6 +1880,65 @@
 
 .tmr-footer-link-col .tmr-footer-social {
   margin-top: 12px;
+}
+
+.tmr-footer-payments {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.tmr-payment-badge {
+  width: 34px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: 0 0 auto;
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.tmr-payment-visa {
+  color: #2a3aa0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0;
+}
+
+.tmr-payment-maestro span,
+.tmr-payment-mastercard span {
+  width: 14px;
+  height: 14px;
+  display: block;
+  border-radius: 999px;
+}
+
+.tmr-payment-maestro span:first-child {
+  background: #e60012;
+}
+
+.tmr-payment-maestro span:last-child {
+  margin-left: -6px;
+  background: #0099df;
+  mix-blend-mode: normal;
+}
+
+.tmr-payment-mastercard span:first-child {
+  background: #eb001b;
+}
+
+.tmr-payment-mastercard span:last-child {
+  margin-left: -6px;
+  background: #f79e1b;
+  mix-blend-mode: normal;
 }
 
 .tmr-footer-social a,

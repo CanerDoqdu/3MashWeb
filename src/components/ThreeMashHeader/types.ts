@@ -11,9 +11,9 @@ export interface Props {
   logoText: string;
   logoHref?: string;
   productsMenuText?: string;
-  /** Tiny bottom-right link text in the Products mega menu. */
+  /** Ürünler mega menüsündeki sağ alt küçük bağlantı metni. */
   allProductsText?: string;
-  /** Tiny bottom-right link URL in the Products mega menu. */
+  /** Ürünler mega menüsündeki sağ alt küçük bağlantı adresi. */
   allProductsHref?: string;
   productsFeatureEyebrow?: string;
   productsFeatureTitle?: string;
@@ -62,7 +62,7 @@ export interface Props {
   academyText?: string;
   academyHref?: string;
   searchHref?: string;
-  /** Navbar arama önerileri için All Products olarak bağlayın. */
+  /** üst menü arama önerileri için Tüm Ürünler olarak bağlayın. */
   searchProductList?: IkasProductList;
   searchAriaLabel?: string;
   accountHref?: string;
@@ -80,31 +80,31 @@ export interface Props {
   lineColor?: string;
   panelColor?: string;
   badgeColor?: string;
-  /** Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown. */
+  /** Logo görseli veya Logo SVG kullanın. İkisi de girilirse Logo SVG gösterilir. */
   logoImageUrl?: IkasImage | null;
   logoImageAlt?: string;
-  /** Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown. */
+  /** Logo görseli veya Logo SVG kullanın. İkisi de girilirse Logo SVG gösterilir. */
   logoSvg?: string;
-  /** Upload image here; size, position and effects are controlled in the related controls group. */
+  /** Görseli buradan yükleyin; boyut, konum ve efektler ilgili kontrol grubundan yönetilir. */
   productsFeatureImageUrl?: IkasImage | null;
   productsFeatureImageAlt?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product1IconSvg?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product2IconSvg?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product3IconSvg?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product4IconSvg?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product5IconSvg?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product6IconSvg?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   searchIconSvg?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   accountIconSvg?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   cartIconSvg?: string;
   searchDrawerTitle?: string;
   searchPlaceholder?: string;
@@ -113,23 +113,23 @@ export interface Props {
   searchQueryParam?: string;
   whyMenuEyebrow?: string;
   whyMenuDescription?: string;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product1IconImageUrl?: IkasImage | null;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product2IconImageUrl?: IkasImage | null;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product3IconImageUrl?: IkasImage | null;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product4IconImageUrl?: IkasImage | null;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product5IconImageUrl?: IkasImage | null;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   product6IconImageUrl?: IkasImage | null;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   searchIconImageUrl?: IkasImage | null;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   accountIconImageUrl?: IkasImage | null;
-  /** Use either Icon Image or Icon SVG. If both are uploaded, Icon Image is shown. */
+  /** İkon görseli veya ikon SVG kullanın. İkisi de girilirse ikon görseli gösterilir. */
   cartIconImageUrl?: IkasImage | null;
   logoImageWidth?: number;
   logoImageHeight?: number;

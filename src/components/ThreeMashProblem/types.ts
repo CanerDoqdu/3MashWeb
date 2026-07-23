@@ -29,7 +29,7 @@ export interface Props {
   accentColor?: string;
   accentTextColor?: string;
   dangerColor?: string;
-  /** Upload image here; size, position and effects are controlled in the image controls group. */
+  /** Görseli buradan yükleyin; boyut, konum ve efektler görsel kontrol grubundan yönetilir. */
   hairImageUrl?: IkasImage | null;
   hairImageWidth?: number;
   hairImageHeight?: number;

@@ -1,0 +1,39 @@
+// This file is auto-generated — do not edit manually.
+export interface Props {
+  showPageTitle?: boolean;
+  titleText?: string;
+  resinSectionTitle?: string;
+  resinQuestion1?: string;
+  resinAnswer1?: string;
+  resinQuestion2?: string;
+  resinAnswer2?: string;
+  resinQuestion3?: string;
+  resinAnswer3?: string;
+  resinQuestion4?: string;
+  resinAnswer4?: string;
+  resinQuestion5?: string;
+  resinAnswer5?: string;
+  resinQuestion6?: string;
+  resinAnswer6?: string;
+  resinQuestion7?: string;
+  resinAnswer7?: string;
+  resinQuestion8?: string;
+  resinAnswer8?: string;
+  resinQuestion9?: string;
+  resinAnswer9?: string;
+  resinQuestion10?: string;
+  resinAnswer10?: string;
+  printerSectionTitle?: string;
+  printerQuestion1?: string;
+  printerAnswer1?: string;
+  printerQuestion2?: string;
+  printerAnswer2?: string;
+  printerQuestion3?: string;
+  printerAnswer3?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  mutedTextColor?: string;
+  panelColor?: string;
+  lineColor?: string;
+  maxWidth?: number;
+}

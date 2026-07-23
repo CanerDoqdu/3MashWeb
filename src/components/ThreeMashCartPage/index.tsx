@@ -7,16 +7,18 @@ import {
   getCheckoutUrlFromCartStore,
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getOrderLineItemFormattedFinalUnitPrice,
-  hasCart,
   initCustomerStore,
   removeItem,
-  Router,
   waitForCartStoreInit,
   type IkasCart,
   type IkasCustomer,
   type IkasOrderLineItem,
 } from "@ikas/bp-storefront";
+import { orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
 import type { Props } from "./types";
+
+const categoryProductsPageHref = "/dental-3d-yazici-recineleri";
+const legacyContinueShoppingHrefs = new Set(["/2tplvqpo-category-products-page", "/tum-urunler", "/search", "/cart"]);
 
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
@@ -27,14 +29,37 @@ function href(value: string | undefined, fallback: string) {
   return next && next !== "#" ? next : fallback;
 }
 
+function continueShoppingTarget(value: string | undefined) {
+  const next = href(value, categoryProductsPageHref);
+  return legacyContinueShoppingHrefs.has(next) ? categoryProductsPageHref : next;
+}
+
 function money(value: number | null | undefined, cart: IkasCart | null) {
   const symbol = cart?.currencySymbol || cart?.currencyCode || "";
   return `${symbol} ${Number(value || 0).toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`.trim();
 }
 
+function cartItemCount(items: IkasOrderLineItem[]) {
+  return items.reduce((total, item) => total + Number(item.quantity || 0), 0);
+}
+
 function imageUrl(item: IkasOrderLineItem) {
-  const id = item.variant?.mainImageId;
-  return id ? `https://cdn.myikas.com/images/${id}/image_360.webp` : "";
+  return orderLineImageUrl(item, 360);
+}
+
+function handleOrderLineImageError(event: Event, candidates: string[]) {
+  const image = event.currentTarget as HTMLImageElement;
+  const nextIndex = Number(image.dataset.imageIndex || 0) + 1;
+  const next = candidates[nextIndex];
+
+  if (next) {
+    image.dataset.imageIndex = String(nextIndex);
+    image.src = next;
+    return;
+  }
+
+  image.style.display = "none";
+  image.removeAttribute("src");
 }
 
 function productHref(item: IkasOrderLineItem) {
@@ -50,65 +75,65 @@ function variantText(item: IkasOrderLineItem) {
   return item.variant?.variantValues?.map((value) => value.variantValueName).filter(Boolean).join(" / ") || item.variant?.sku || "";
 }
 
+function checkoutUrlFromCart(cart: IkasCart | null) {
+  const cartId = cart?.id?.trim();
+  return cartId ? `/checkout?id=${encodeURIComponent(cartId)}&step=info` : "/checkout";
+}
+
 function EmptyCart({ props, count, isLoggedIn }: { props: Props; count: number; isLoggedIn: boolean }) {
-  const buttonHref = isLoggedIn ? href(props.emptyButtonHref, "/tum-urunler") : href(props.loginHref, "/account/login");
-
-  function navigate() {
-    if (!isLoggedIn) {
-      Router.navigateToPage("LOGIN");
-      return;
-    }
-
-    window.location.href = buttonHref;
-  }
+  const buttonHref = isLoggedIn ? continueShoppingTarget(props.emptyButtonHref) : href(props.loginHref, "/account/login");
 
   return (
     <div className="tmcart-wrap">
       <h1>{text(props.titleText, "Sepetim")} ( {count} )</h1>
       <div className="tmcart-empty">
-        <div className="tmcart-empty-icon" aria-hidden="true">
-          <span className="tmcart-empty-handle" />
-          <span className="tmcart-empty-basket" />
-          <span className="tmcart-empty-wheel tmcart-empty-wheel-left" />
-          <span className="tmcart-empty-wheel tmcart-empty-wheel-right" />
-        </div>
+        <svg className="tmcart-empty-icon" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" aria-hidden="true" focusable="false">
+          <path d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z" />
+        </svg>
       </div>
-      {!isLoggedIn ? <p className="tmcart-login-note">{text(props.loginRequiredText, "Sepetinizi görüntülemek için hesabınıza giriş yapın.")}</p> : null}
-      <button className="tmcart-empty-button" type="button" onClick={navigate}>
+      <a className="tmcart-empty-button" href={buttonHref}>
         {text(props.emptyButtonText, "ALIŞVERİŞE BAŞLA")}
-      </button>
+      </a>
     </div>
   );
 }
 
 function CartLine({ item, props, onChanged }: { item: IkasOrderLineItem; props: Props; onChanged: () => void }) {
   const [isUpdating, setIsUpdating] = useState(false);
-  const image = imageUrl(item);
+  const imageCandidates = orderLineImageUrlCandidates(item, 360);
+  const image = imageCandidates[0] || imageUrl(item);
   const detail = variantText(item);
 
   async function updateQuantity(quantity: number) {
     if (isUpdating) return;
     setIsUpdating(true);
-    await changeItemQuantity(item, quantity);
-    await getCart();
-    setIsUpdating(false);
-    onChanged();
+    try {
+      await changeItemQuantity(item, quantity);
+      await getCart();
+      onChanged();
+    } finally {
+      setIsUpdating(false);
+    }
   }
 
   async function remove(event: Event) {
     event.preventDefault();
     if (isUpdating) return;
     setIsUpdating(true);
-    await removeItem(item);
-    await getCart();
-    setIsUpdating(false);
-    onChanged();
+    try {
+      await removeItem(item);
+      await getCart();
+      onChanged();
+    } finally {
+      setIsUpdating(false);
+    }
   }
 
   return (
     <article className="tmcart-item">
       <a className="tmcart-item-media" href={productHref(item)}>
-        {image ? <img src={image} alt={itemTitle(item)} loading="lazy" decoding="async" /> : <span>{itemTitle(item).slice(0, 1)}</span>}
+        <span>{itemTitle(item).slice(0, 1)}</span>
+        {image ? <img src={image} alt={itemTitle(item)} loading="lazy" decoding="async" data-image-index="0" onError={(event) => handleOrderLineImageError(event, imageCandidates)} /> : null}
       </a>
       <div className="tmcart-item-copy">
         <a href={productHref(item)}>{itemTitle(item)}</a>
@@ -131,6 +156,7 @@ function CartLine({ item, props, onChanged }: { item: IkasOrderLineItem; props: 
 export function ThreeMashCartPage(props: Props) {
   const [customer, setCustomer] = useState<IkasCustomer | null>(customerStore.customer);
   const [cart, setCartState] = useState<IkasCart | null>(cartStore.cart);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   function refreshState() {
     setCustomer(customerStore.customer);
@@ -152,7 +178,8 @@ export function ThreeMashCartPage(props: Props) {
   }, []);
 
   const items = cart?.orderLineItems?.filter((item) => !item.deleted) || [];
-  const hasItems = Boolean(customer) && hasCart(cartStore) && items.length > 0;
+  const itemCount = cartItemCount(items);
+  const hasItems = Boolean(customer) && items.length > 0;
 
   const style = {
     "--tmcart-bg": text(props.backgroundColor, "#ffffff"),
@@ -163,19 +190,27 @@ export function ThreeMashCartPage(props: Props) {
     "--tmcart-button-text": text(props.buttonTextColor, "#ffffff"),
   } as any;
 
-  function checkout() {
-    const checkoutUrl = getCheckoutUrlFromCartStore(cartStore);
-    if (checkoutUrl) {
+  async function checkout() {
+    if (isCheckingOut) return;
+    setIsCheckingOut(true);
+
+    try {
+      await waitForCartStoreInit(cartStore);
+      await getCart();
+      refreshState();
+
+      const currentCart = cartStore.cart || cart;
+      const checkoutUrl = getCheckoutUrlFromCartStore(cartStore) || checkoutUrlFromCart(currentCart);
       window.location.href = checkoutUrl;
-      return;
+    } finally {
+      setIsCheckingOut(false);
     }
-    Router.navigate("/checkout");
   }
 
   if (!hasItems) {
     return (
       <section className="three-mash-cart-page" style={style}>
-        <EmptyCart props={props} count={items.length} isLoggedIn={Boolean(customer)} />
+        <EmptyCart props={props} count={customer ? items.length : 0} isLoggedIn={Boolean(customer)} />
       </section>
     );
   }
@@ -183,17 +218,29 @@ export function ThreeMashCartPage(props: Props) {
   return (
     <section className="three-mash-cart-page" style={style}>
       <div className="tmcart-wrap">
-        <h1>{text(props.titleText, "Sepetim")} ( {items.length} )</h1>
+        <h1>{text(props.titleText, "Sepetim")} ( {itemCount} )</h1>
         <div className="tmcart-shell">
           <div className="tmcart-list">
             {items.map((item) => <CartLine item={item} props={props} onChanged={refreshState} key={item.id} />)}
           </div>
 
           <aside className="tmcart-summary">
-            <span>{text(props.subtotalText, "Ara Toplam")}</span>
-            <strong>{money(cart?.totalFinalPrice, cart)}</strong>
-            <button type="button" onClick={checkout}>{text(props.checkoutButtonText, "SATIN AL")}</button>
-            <a href={href(props.continueShoppingHref, "/tum-urunler")}>{text(props.continueShoppingText, "Alışverişe devam et")}</a>
+            <h2>Sipariş Özeti</h2>
+            <div className="tmcart-summary-row">
+              <span>{text(props.subtotalText, "Ara Toplam")}</span>
+              <strong>{money(cart?.totalFinalPrice, cart)}</strong>
+            </div>
+            <div className="tmcart-summary-row tmcart-summary-total">
+              <span>Toplam</span>
+              <strong>{money(cart?.totalFinalPrice, cart)}</strong>
+            </div>
+            <button type="button" onClick={checkout} disabled={isCheckingOut}>
+              <span>{text(props.checkoutButtonText, "ALIŞVERİŞİ TAMAMLA")}</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" />
+              </svg>
+            </button>
+            <a href={continueShoppingTarget(props.continueShoppingHref)}>{text(props.continueShoppingText, "Alışverişe devam et")}</a>
           </aside>
         </div>
       </div>

@@ -37,21 +37,21 @@ export interface Props {
   productColumnTitle?: string;
   companyColumnTitle?: string;
   contactColumnTitle?: string;
-  /** Bind to All Categories or selected categories. When set, the footer Products column reads live ikas categories. */
+  /** Tüm Kategoriler ya da seçili kategorilere bağlayın. Ayarlandığında alt bilgi Ürünler sütunu canlı ikas kategorilerini okur. */
   productCategoryList?: IkasCategoryList;
-  /** Optional editor-managed links for the footer Products column. Used when Product Footer Categories is empty. */
+  /** Alt bilgi Ürünler sütunu için editörden yönetilen isteğe bağlı bağlantılar. Ürün alt bilgi kategorileri boş olduğunda kullanılır. */
   productFooterLinks?: IkasNavigationLinkList;
-  /** Maximum number of live ikas categories shown in the footer Products column. */
+  /** Alt bilgi Ürünler sütununda gösterilecek maksimum canlı ikas kategori sayısı. */
   footerCategoryLimit?: number;
-  /** Optional editor-managed links for the footer Company column. */
+  /** Alt bilgi Şirket sütunu için editörden yönetilen isteğe bağlı bağlantılar. */
   companyFooterLinks?: IkasNavigationLinkList;
-  /** Optional editor-managed links for the footer Contact column. */
+  /** Alt bilgi İletişim sütunu için editörden yönetilen isteğe bağlı bağlantılar. */
   contactFooterLinks?: IkasNavigationLinkList;
   logoHref?: string;
-  /** Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown. */
+  /** Logo görseli veya Logo SVG kullanın. İkisi de girilirse Logo SVG gösterilir. */
   logoImageUrl?: IkasImage | null;
   logoImageAlt?: string;
-  /** Use either Logo Image or Logo SVG. If both are uploaded, Logo SVG is shown. */
+  /** Logo görseli veya Logo SVG kullanın. İkisi de girilirse Logo SVG gösterilir. */
   logoSvg?: string;
   logoImageWidth?: number;
   logoImageHeight?: number;
