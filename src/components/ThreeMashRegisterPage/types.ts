@@ -21,6 +21,7 @@ export interface Props {
   passwordConfirmLabel?: string;
   passwordConfirmPlaceholder?: string;
   termsText?: string;
+  /** Üyelik sözleşmesi için yayın routeu: /pages/uyelik-sozlesmesi. */
   termsHref?: string;
   marketingText?: string;
   submitButtonText?: string;
@@ -62,6 +63,8 @@ export interface Props {
   passwordMismatchMessage?: string;
   /** Canlı 3mash login/register ekranındaki sağ görsel. */
   backgroundImageUrl?: IkasImage | null;
+  /** Ticari elektronik ileti onayı için yayın routeu: /pages/ticari-elektronik-ileti. */
   marketingHref?: string;
+  /** KVKK sayfası için yayın routeu: /pages/kvkk. */
   kvkkHref?: string;
 }

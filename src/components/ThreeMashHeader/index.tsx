@@ -81,8 +81,10 @@ function cartItemVariantText(item: IkasOrderLineItem) {
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
-const academyPageHref = "/2tplvqpo-rOvTVWz53H";
-const referencesSectionHref = "#guven";
+const academyPageHref = "/pages/mash-academy";
+const defaultReferencesHomeHref = "/";
+const defaultReferencesSectionId = "guven";
+const pendingReferencesScrollKey = "tmh-pending-references-scroll";
 const legacyAcademyRouteKeys = new Set(["academy", "mash-academy", "pages-mash-academy", "2tplvqpo-rovtvwz53h"]);
 
 function href(value?: string) {
@@ -91,16 +93,26 @@ function href(value?: string) {
   return trimmed;
 }
 
-function searchPageHref(value?: string) {
+function headerRouteHref(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
-  if (!trimmed || trimmed === "#") return "/search";
-  return href(trimmed);
+  if (!trimmed || trimmed === "#") return fallback;
+  const internal = internalSiteHref(trimmed);
+  const normalized = routeAliasKey(internal || trimmed);
+  const slug = routeTextKey(internal || trimmed);
+
+  if (normalized === "/" && fallback === "/cart") return "/cart";
+  if (slug === "account-login" || slug === "login" || slug === "hesabim" || slug === "account") return "/account/login";
+  if (slug === "cart" || slug === "sepet") return "/cart";
+  if (slug === "search" || slug === "arama") return "/search";
+  return internal || fallback;
+}
+
+function searchPageHref(value?: string) {
+  return headerRouteHref(value, "/search");
 }
 
 function storePageHref(value?: string, fallback?: string) {
-  const trimmed = value?.trim();
-  if (!trimmed || trimmed === "/") return "/search";
-  return href(trimmed || fallback || "/search");
+  return headerRouteHref(value || fallback, "/cart");
 }
 
 function routeAliasKey(value: string) {
@@ -182,12 +194,70 @@ function academyPageTarget(value: string | undefined) {
   return legacyAcademyRouteKeys.has(slug) ? academyPageHref : href(internal);
 }
 
-function referencesSectionTarget(value: string | undefined) {
+function cleanSectionId(value: string | undefined, fallback: string) {
+  return (value || fallback).trim().replace(/^#+/, "") || fallback;
+}
+
+function sectionHash(sectionId: string | undefined, fallback: string) {
+  return `#${encodeURIComponent(cleanSectionId(sectionId, fallback))}`;
+}
+
+function homeRouteTarget(value: string | undefined) {
   const trimmed = value?.trim();
-  if (!trimmed || trimmed === "#") return referencesSectionHref;
+  if (!trimmed || trimmed === "#" || trimmed.startsWith("#")) return defaultReferencesHomeHref;
   const internal = internalSiteHref(trimmed);
-  const slug = routeTextKey(internal);
-  return slug === "guven" || slug.includes("referans") || slug.includes("reference") ? referencesSectionHref : href(internal);
+  const withoutHash = internal.split("#")[0] || defaultReferencesHomeHref;
+  return withoutHash;
+}
+
+function referencesSectionTarget(homeHref?: string, sectionId?: string) {
+  const homeTarget = homeRouteTarget(homeHref);
+  return `${homeTarget}${sectionHash(sectionId, defaultReferencesSectionId)}`;
+}
+
+function savePendingReferencesScroll(sectionId: string) {
+  try {
+    localStorage.setItem(pendingReferencesScrollKey, sectionId);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function consumePendingReferencesScroll() {
+  try {
+    const sectionId = localStorage.getItem(pendingReferencesScrollKey);
+    if (sectionId) localStorage.removeItem(pendingReferencesScrollKey);
+    return sectionId || "";
+  } catch {
+    return "";
+  }
+}
+
+function referencesClickTarget(homeHref: string | undefined, sectionId: string | undefined) {
+  const targetId = cleanSectionId(sectionId, defaultReferencesSectionId);
+  return {
+    homeTarget: homeRouteTarget(homeHref),
+    hash: sectionHash(targetId, defaultReferencesSectionId),
+    targetId,
+  };
+}
+
+function handleReferencesClick(event: MouseEvent, homeHref: string | undefined, sectionId: string | undefined) {
+  const { homeTarget, hash, targetId } = referencesClickTarget(homeHref, sectionId);
+  const section = document.getElementById(targetId) || document.querySelector(hash);
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.pushState(null, "", hash);
+    return;
+  }
+
+  const stored = savePendingReferencesScroll(targetId);
+  window.location.href = stored ? homeTarget : `${homeTarget}${hash}`;
 }
 
 function searchCategoryHref(searchHref: string | undefined, firstCategoryHref: string | undefined) {
@@ -198,12 +268,12 @@ function searchCategoryHref(searchHref: string | undefined, firstCategoryHref: s
 
 function c4pRouteHref(value: string | undefined) {
   const trimmed = value?.trim();
-  if (!trimmed) return "/mash";
+  if (!trimmed) return "/yikama-kurleme-cihazlari";
   const normalized = trimmed
     .toLowerCase()
     .replace(/^https?:\/\/(?:www\.)?3mash\.com/i, "")
     .replace(/\/$/, "");
-  if (normalized === "/urunler/c4p") return "/mash";
+  if (normalized === "/mash" || normalized === "/urunler/c4p") return "/yikama-kurleme-cihazlari";
   return trimmed;
 }
 
@@ -259,32 +329,6 @@ function searchSuggestions(products: IkasProduct[], query: string): SearchSugges
     .filter((item) => Number.isFinite(item.score))
     .sort((a, b) => a.score - b.score || a.product.name.length - b.product.name.length)
     .slice(0, 5);
-}
-
-function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
-  const target = targetHref?.trim();
-  if (!target) return;
-
-  const hash = target.startsWith("#")
-    ? target
-    : target.startsWith("/#")
-      ? target.slice(1)
-      : "";
-  if (!hash || hash.length <= 1) return;
-
-  const sectionId = decodeURIComponent(hash.slice(1));
-  const section = document.getElementById(sectionId) || document.querySelector(hash);
-  if (!section) {
-    event.preventDefault();
-    event.stopPropagation();
-    window.location.href = `/${hash}`;
-    return;
-  }
-
-  event.preventDefault();
-  event.stopPropagation();
-  setTimeout(() => section.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
-  window.history.pushState(null, "", hash);
 }
 
 function text(value: string | undefined, fallback: string) {
@@ -626,7 +670,7 @@ function SearchSuggestionLink({ product }: { product: IkasProduct }) {
 
 function FlowLink({ item, wordStyle }: { item: FlowItem; wordStyle: Props }) {
   return (
-    <a href={href(item.href)} className="tmh-flow-link" onClick={(event) => smoothAnchorClick(event, item.href)}>
+    <a href={href(item.href)} className="tmh-flow-link">
       <span className="tmh-flow-number" dangerouslySetInnerHTML={richText(item.number, wordStyle)} />
       <span className="tmh-flow-copy">
         <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
@@ -641,7 +685,7 @@ function Logo({ props }: { props: Props }) {
   const logoSvgMarkup = svgMarkup(logoSvg);
 
   return (
-    <a className="tmh-logo" href={href(logoHref)} aria-label={logoText}>
+    <a className="tmh-logo" href={headerRouteHref(logoHref, "/")} aria-label={logoText}>
       {logoSvgMarkup ? (
         <span className="tmh-logo-svg" dangerouslySetInnerHTML={{ __html: logoSvgMarkup }} />
       ) : (
@@ -678,6 +722,7 @@ export function ThreeMashHeader(props: Props) {
   const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
   const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
   const searchTargetHref = href(searchCategoryHref(props.searchHref, props.product1Href));
+  const referencesTargetHref = referencesSectionTarget(props.referencesHomeHref, props.referencesSectionId);
   const searchSuggestionItems = searchSuggestions(props.searchProductList?.data || [], searchQuery);
   const hasSearchSuggestions = isSearchOpen && searchQuery.trim().length > 0 && searchSuggestionItems.length > 0;
   const cartItems = isLoggedIn ? cart?.orderLineItems?.filter((item) => !item.deleted) || [] : [];
@@ -761,6 +806,38 @@ export function ThreeMashHeader(props: Props) {
       searchInputRef.current?.focus();
     }
   }, [isSearchOpen]);
+
+  useEffect(() => {
+    const pendingSectionId = consumePendingReferencesScroll();
+    const pendingHash = pendingSectionId ? sectionHash(pendingSectionId, defaultReferencesSectionId) : window.location.hash;
+    if (!pendingHash || pendingHash.length <= 1) return;
+    let frame = 0;
+    let attempts = 0;
+
+    const scrollToPendingSection = () => {
+      const sectionId = decodeURIComponent(pendingHash.slice(1));
+      const section = document.getElementById(sectionId) || document.querySelector(pendingHash);
+      if (!section) {
+        attempts += 1;
+        if (attempts < 90) {
+          frame = window.requestAnimationFrame(scrollToPendingSection);
+        }
+        return;
+      }
+
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (pendingSectionId) window.history.replaceState(null, "", pendingHash);
+    };
+
+    const timeout = window.setTimeout(() => {
+      frame = window.requestAnimationFrame(scrollToPendingSection);
+    }, 120);
+
+    return () => {
+      window.clearTimeout(timeout);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -999,8 +1076,8 @@ export function ThreeMashHeader(props: Props) {
               <li>
                 <a
                   className="tmh-plain-link"
-                  href={referencesSectionTarget(props.referencesHref)}
-                  onClick={(event) => smoothAnchorClick(event, referencesSectionTarget(props.referencesHref))}
+                  href={referencesTargetHref}
+                  onClick={(event) => handleReferencesClick(event, props.referencesHomeHref, props.referencesSectionId)}
                   onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}
                 >
                   <RichInline value={props.referencesText} wordStyle={props} />
@@ -1053,7 +1130,7 @@ export function ThreeMashHeader(props: Props) {
               ) : null}
             </form>
             {props.showProfileMenu === false ? (
-              <a href={href(props.accountHref)} aria-label={props.accountAriaLabel || ""}>
+              <a href={headerRouteHref(props.accountHref, "/account/login")} aria-label={props.accountAriaLabel || ""}>
                 <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
@@ -1080,7 +1157,7 @@ export function ThreeMashHeader(props: Props) {
               </div>
             )}
             {props.showStorePanel === false ? (
-              <a href={href(props.cartHref)} aria-label={props.cartAriaLabel || ""} className="tmh-cart">
+              <a href={headerRouteHref(props.cartHref, "/cart")} aria-label={props.cartAriaLabel || ""} className="tmh-cart">
                 <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
@@ -1155,7 +1232,7 @@ export function ThreeMashHeader(props: Props) {
               <div className="tmh-mobile-group">
                 <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.whyMenuText, props)} />
                 {whyItems.map((item, index) => (
-                  <a href={href(item.href)} className="tmh-mobile-flow" key={index} onClick={(event) => smoothAnchorClick(event, item.href)}>
+                  <a href={href(item.href)} className="tmh-mobile-flow" key={index}>
                     <span className="tmh-mobile-flow-number" dangerouslySetInnerHTML={richText(item.number, props)} />
                     <span>
                       <b dangerouslySetInnerHTML={richText(item.title, props)} />
@@ -1166,8 +1243,8 @@ export function ThreeMashHeader(props: Props) {
               </div>
               <div className="tmh-mobile-group tmh-mobile-group-inline">
                 <a
-                  href={referencesSectionTarget(props.referencesHref)}
-                  onClick={(event) => smoothAnchorClick(event, referencesSectionTarget(props.referencesHref))}
+                  href={referencesTargetHref}
+                  onClick={(event) => handleReferencesClick(event, props.referencesHomeHref, props.referencesSectionId)}
                   dangerouslySetInnerHTML={richText(props.referencesText, props)}
                 />
                 <a href={academyPageTarget(props.academyHref)} dangerouslySetInnerHTML={richText(props.academyText, props)} />

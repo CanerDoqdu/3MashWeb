@@ -22,6 +22,7 @@ import {
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
+import { ThreeMashFooter } from "../ThreeMashFooter";
 import { Props } from "./types";
 
 function inlineHtml(value?: string) {
@@ -311,29 +312,10 @@ function ProductDetailHeader() {
           <a href="/zirkon-bloklar">Zirkon Bloklar</a>
           <a href="/masasustu-tarayicilar">Masaüstü Tarayıcılar</a>
           <a href="/dental-firinlar">Dental Fırınlar</a>
-          <a href="/2tplvqpo-rOvTVWz53H">Mash Academy</a>
+          <a href="/pages/mash-academy">Mash Academy</a>
         </nav>
       </div>
     </header>
-  );
-}
-
-function ProductDetailFooter() {
-  return (
-    <footer className="tmpdl-site-footer">
-      <div className="tmpdl-site-footer-inner">
-        <a className="tmpdl-footer-logo" href="/" aria-label="3mash store">
-          <img src={threeMashLogoImage} alt="3mash store" />
-        </a>
-        <nav aria-label="Footer menü">
-          <a href="/tum-urunler">Tüm Ürünler</a>
-          <a href="/pages/about-us">Hakkımızda</a>
-          <a href="/pages/iletisim">İletişim</a>
-          <a href="/blog">Blog</a>
-        </nav>
-        <span>© 2026 3Mash</span>
-      </div>
-    </footer>
   );
 }
 
@@ -758,7 +740,7 @@ export function ThreeMashProductDetailLive(props: Props) {
           )}
         </div>
       </section>
-      <ProductDetailFooter />
+      <ThreeMashFooter />
     </>
   );
 }

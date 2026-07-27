@@ -64,8 +64,9 @@
           "displayName": "Logo Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#",
-          "groupId": "brand"
+          "defaultValue": "/",
+          "groupId": "brand",
+          "description": "Logo tıklanınca gidilecek anasayfa routeu."
         },
         {
           "name": "productsMenuText",
@@ -128,8 +129,9 @@
           "displayName": "Öne Çıkan Ürün Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/mash",
-          "groupId": "products"
+          "defaultValue": "/yikama-kurleme-cihazlari",
+          "groupId": "products",
+          "description": "C4P kartının gideceği çalışan ürün/kategori routeu."
         },
         {
           "name": "productsCol1Title",
@@ -141,75 +143,84 @@
         },
         {
           "name": "product1Title",
-          "displayName": "Ürün 1 Başlığı",
+          "displayName": "Ürün Kartı 1 Başlık",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3D Yazıcılar",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Ürünler menüsünde sol sütundaki ilk kategori başlığı."
         },
         {
           "name": "product1Description",
-          "displayName": "Ürün 1 Açıklaması",
+          "displayName": "Ürün Kartı 1 Açıklama",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "P1D / P16L hassas baskı",
-          "groupId": "text-customization"
+          "groupId": "text-customization",
+          "description": "3D Yazıcılar kartı alt açıklaması."
         },
         {
           "name": "product1Href",
-          "displayName": "Ürün 1 Bağlantısı",
+          "displayName": "Ürün Kartı 1 Bağlantı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/3d-yazicilar",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "3D Yazıcılar kategori routeu."
         },
         {
           "name": "product2Title",
-          "displayName": "Ürün 2 Başlığı",
+          "displayName": "Ürün Kartı 2 Başlık",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama & Kürleme",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Ürünler menüsünde sol sütundaki ikinci kategori başlığı."
         },
         {
           "name": "product2Description",
-          "displayName": "Ürün 2 Açıklaması",
+          "displayName": "Ürün Kartı 2 Açıklama",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama ve akıllı kürleme",
-          "groupId": "text-customization"
+          "groupId": "text-customization",
+          "description": "Yıkama & Kürleme kartı alt açıklaması."
         },
         {
           "name": "product2Href",
-          "displayName": "Ürün 2 Bağlantısı",
+          "displayName": "Ürün Kartı 2 Bağlantı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/yikama-kurleme-cihazlari",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Yıkama & Kürleme kategori routeu."
         },
         {
           "name": "product3Title",
-          "displayName": "Ürün 3 Başlığı",
+          "displayName": "Ürün Kartı 3 Başlık",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Reçineler",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Ürünler menüsünde sol sütundaki üçüncü kategori başlığı."
         },
         {
           "name": "product3Description",
-          "displayName": "Ürün 3 Açıklaması",
+          "displayName": "Ürün Kartı 3 Açıklama",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental reçine seçenekleri",
-          "groupId": "text-customization"
+          "groupId": "text-customization",
+          "description": "Dental Reçineler kartı alt açıklaması."
         },
         {
           "name": "product3Href",
-          "displayName": "Ürün 3 Bağlantısı",
+          "displayName": "Ürün Kartı 3 Bağlantı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/dental-3d-yazici-recineleri",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Dental Reçineler kategori routeu."
         },
         {
           "name": "productsCol2Title",
@@ -221,75 +232,84 @@
         },
         {
           "name": "product4Title",
-          "displayName": "Ürün 4 Başlığı",
+          "displayName": "Ürün Kartı 4 Başlık",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Masaüstü Tarayıcılar",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Ürünler menüsünde sağ sütundaki ilk kategori başlığı."
         },
         {
           "name": "product4Description",
-          "displayName": "Ürün 4 Açıklaması",
+          "displayName": "Ürün Kartı 4 Açıklama",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Lab için hassas tarama",
-          "groupId": "text-customization"
+          "groupId": "text-customization",
+          "description": "Masaüstü Tarayıcılar kartı alt açıklaması."
         },
         {
           "name": "product4Href",
-          "displayName": "Ürün 4 Bağlantısı",
+          "displayName": "Ürün Kartı 4 Bağlantı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/masasustu-tarayicilar",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Masaüstü Tarayıcılar kategori routeu."
         },
         {
           "name": "product5Title",
-          "displayName": "Ürün 5 Başlığı",
+          "displayName": "Ürün Kartı 5 Başlık",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Zirkon Bloklar",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Ürünler menüsünde sağ sütundaki ikinci kategori başlığı."
         },
         {
           "name": "product5Description",
-          "displayName": "Ürün 5 Açıklaması",
+          "displayName": "Ürün Kartı 5 Açıklama",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Freze sarfları",
-          "groupId": "text-customization"
+          "groupId": "text-customization",
+          "description": "Zirkon Bloklar kartı alt açıklaması."
         },
         {
           "name": "product5Href",
-          "displayName": "Ürün 5 Bağlantısı",
+          "displayName": "Ürün Kartı 5 Bağlantı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/zirkon-bloklar",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Zirkon Bloklar kategori routeu."
         },
         {
           "name": "product6Title",
-          "displayName": "Ürün 6 Başlığı",
+          "displayName": "Ürün Kartı 6 Başlık",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Fırınlar",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Ürünler menüsünde sağ sütundaki üçüncü kategori başlığı."
         },
         {
           "name": "product6Description",
-          "displayName": "Ürün 6 Açıklaması",
+          "displayName": "Ürün Kartı 6 Açıklama",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sinterleme çözümleri",
-          "groupId": "text-customization"
+          "groupId": "text-customization",
+          "description": "Dental Fırınlar kartı alt açıklaması."
         },
         {
           "name": "product6Href",
-          "displayName": "Ürün 6 Bağlantısı",
+          "displayName": "Ürün Kartı 6 Bağlantı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/dental-firinlar",
-          "groupId": "products"
+          "groupId": "products",
+          "description": "Dental Fırınlar kategori routeu."
         },
         {
           "name": "whyMenuText",
@@ -440,8 +460,9 @@
           "displayName": "Referanslar Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#guven",
-          "groupId": "links"
+          "defaultValue": "/#guven",
+          "groupId": "links",
+          "description": "Referanslar menü linki. Başka sayfadan doğal olarak anasayfaya gider ve #guven hashini taşır."
         },
         {
           "name": "academyText",
@@ -456,7 +477,7 @@
           "displayName": "Akademi Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/2tplvqpo-rOvTVWz53H",
+          "defaultValue": "/pages/mash-academy",
           "groupId": "links"
         },
         {
@@ -465,7 +486,8 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/search",
-          "groupId": "links"
+          "groupId": "links",
+          "description": "Arama sayfası routeu. Tam domain kullanmayın; /search yazın."
         },
         {
           "name": "searchProductList",
@@ -497,11 +519,12 @@
         },
         {
           "name": "accountHref",
-          "displayName": "Hesap Bağlantısısı",
+          "displayName": "Hesap Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/account/login",
-          "groupId": "links"
+          "groupId": "links",
+          "description": "Hesap giriş routeu. Tam domain kullanmayın; /account/login yazın."
         },
         {
           "name": "accountAriaLabel",
@@ -517,7 +540,8 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/cart",
-          "groupId": "links"
+          "groupId": "links",
+          "description": "Sepet routeu. Tam domain kullanmayın; /cart yazın."
         },
         {
           "name": "cartAriaLabel",
@@ -1512,7 +1536,7 @@
           "displayName": "Neden 6 Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#guven",
+          "defaultValue": "/#guven",
           "groupId": "why"
         },
         {
@@ -1661,11 +1685,12 @@
         },
         {
           "name": "storePanelButtonHref",
-          "displayName": "Mağaza Buton Bağlantı",
+          "displayName": "Mağaza Buton Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/search",
-          "groupId": "action-panels"
+          "defaultValue": "/cart",
+          "groupId": "action-panels",
+          "description": "Mağaza paneli buton routeu. Varsayılan sepet sayfasıdır."
         },
         {
           "name": "storePanelNote",
@@ -1873,7 +1898,7 @@
           "type": "TEXT",
           "required": false,
           "groupId": "action-panels",
-          "defaultValue": "/2tplvqpo-rOvTVWz53H"
+          "defaultValue": "/pages/mash-academy"
         },
         {
           "name": "profileLink6Text",
@@ -1890,13 +1915,31 @@
           "required": false,
           "groupId": "action-panels",
           "defaultValue": "/account/logout"
+        },
+        {
+          "name": "referencesHomeHref",
+          "displayName": "Referanslar Anasayfa Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Referanslar linkinin anasayfa routeu.",
+          "defaultValue": "/",
+          "groupId": "links"
+        },
+        {
+          "name": "referencesSectionId",
+          "displayName": "Referanslar Bölüm ID",
+          "type": "TEXT",
+          "required": false,
+          "description": "Anasayfadaki referanslar section id değeri. # koymadan yazın.",
+          "defaultValue": "guven",
+          "groupId": "links"
         }
       ],
       "propGroups": [
         {
           "id": "data",
-          "name": "Data",
-          "description": "Üst menü arama önerilerinde kullanılan canlı ürün verisi"
+          "name": "Arama Ürün Verisi",
+          "description": "Üst menü arama önerileri için Tüm Ürünler listesini buradan bağlayın."
         },
         {
           "id": "announcement",
@@ -3584,7 +3627,7 @@
           "displayName": "Side Metin HTML",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Kuronun oturması üç şeyin senkronuna bağlı: <b>yazıcı, reçine, kürleme.</b> Biz üçünü birlikte kalibre edip know-how'ıyla teslim ediyoruz — elinizdeki başka marka cihaza bile.",
+          "defaultValue": "Kuronun oturması üç şeyin senkronuna bağlı: <b>yazıcı, reçine, kürleme.</b> Biz üçünü birlikte kalibre edip saha birikimiyle teslim ediyoruz — elinizdeki başka marka cihaza bile.",
           "groupId": "text-customization"
         },
         {
@@ -6089,7 +6132,7 @@
           "displayName": "FAQ 5 Cevap HTML",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Evet. Hem reçine hem printer know-how'una sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.",
+          "defaultValue": "Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.",
           "groupId": "text-customization"
         },
         {
@@ -6308,7 +6351,7 @@
           "displayName": "İkincil Buton Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/academy",
+          "defaultValue": "/pages/mash-academy",
           "groupId": "buttons"
         },
         {
@@ -6474,12 +6517,12 @@
           "displayName": "Açıklama Metin",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme ve üretim know-how'ı — birlikte.",
+          "defaultValue": "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada.",
           "groupId": "text-customization"
         },
         {
           "name": "productLink1Text",
-          "displayName": "productLink1 Metin",
+          "displayName": "Ürün Linki 1 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3D Yazıcılar",
@@ -6487,15 +6530,16 @@
         },
         {
           "name": "productLink1Href",
-          "displayName": "productLink1 Adresi",
+          "displayName": "Ürün Linki 1 Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/3d-yazicilar",
-          "groupId": "productLinks"
+          "groupId": "productLinks",
+          "description": "Tam domain kullanmayın; kategori routeunu /3d-yazicilar olarak girin."
         },
         {
           "name": "productLink2Text",
-          "displayName": "productLink2 Metin",
+          "displayName": "Ürün Linki 2 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Reçineler",
@@ -6503,15 +6547,16 @@
         },
         {
           "name": "productLink2Href",
-          "displayName": "productLink2 Adresi",
+          "displayName": "Ürün Linki 2 Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/dental-3d-yazici-recineleri",
-          "groupId": "productLinks"
+          "groupId": "productLinks",
+          "description": "Tam domain kullanmayın; kategori routeunu /dental-3d-yazici-recineleri olarak girin."
         },
         {
           "name": "productLink3Text",
-          "displayName": "productLink3 Metin",
+          "displayName": "Ürün Linki 3 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama & Kürleme",
@@ -6519,15 +6564,16 @@
         },
         {
           "name": "productLink3Href",
-          "displayName": "productLink3 Adresi",
+          "displayName": "Ürün Linki 3 Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/yikama-kurleme-cihazlari",
-          "groupId": "productLinks"
+          "groupId": "productLinks",
+          "description": "Tam domain kullanmayın; kategori routeunu /yikama-kurleme-cihazlari olarak girin."
         },
         {
           "name": "productLink4Text",
-          "displayName": "productLink4 Metin",
+          "displayName": "Ürün Linki 4 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Zirkon Bloklar",
@@ -6535,15 +6581,16 @@
         },
         {
           "name": "productLink4Href",
-          "displayName": "productLink4 Adresi",
+          "displayName": "Ürün Linki 4 Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/zirkon-bloklar",
-          "groupId": "productLinks"
+          "groupId": "productLinks",
+          "description": "Tam domain kullanmayın; kategori routeunu /zirkon-bloklar olarak girin."
         },
         {
           "name": "companyLink1Text",
-          "displayName": "companyLink1 Metin",
+          "displayName": "Şirket Linki 1 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hakkımızda",
@@ -6551,15 +6598,16 @@
         },
         {
           "name": "companyLink1Href",
-          "displayName": "companyLink1 Adresi",
+          "displayName": "Şirket Linki 1 Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/pages/about-us",
-          "groupId": "companyLinks"
+          "defaultValue": "/pages/hakkimizda",
+          "groupId": "companyLinks",
+          "description": "Hakkımızda sayfası için yayın routeu: /pages/hakkimizda."
         },
         {
           "name": "companyLink2Text",
-          "displayName": "companyLink2 Metin",
+          "displayName": "Şirket Linki 2 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mash Academy",
@@ -6567,15 +6615,16 @@
         },
         {
           "name": "companyLink2Href",
-          "displayName": "companyLink2 Adresi",
+          "displayName": "Şirket Linki 2 Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/academy",
-          "groupId": "companyLinks"
+          "defaultValue": "/pages/mash-academy",
+          "groupId": "companyLinks",
+          "description": "Doğru Academy routeu /pages/mash-academy."
         },
         {
           "name": "companyLink3Text",
-          "displayName": "companyLink3 Metin",
+          "displayName": "Şirket Linki 3 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Blog",
@@ -6583,15 +6632,16 @@
         },
         {
           "name": "companyLink3Href",
-          "displayName": "companyLink3 Adresi",
+          "displayName": "Şirket Linki 3 Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/blog",
-          "groupId": "companyLinks"
+          "groupId": "companyLinks",
+          "description": "Tam domain kullanmayın; blog routeunu /blog olarak girin."
         },
         {
           "name": "companyLink4Text",
-          "displayName": "companyLink4 Metin",
+          "displayName": "Şirket Linki 4 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İletişim",
@@ -6599,15 +6649,16 @@
         },
         {
           "name": "companyLink4Href",
-          "displayName": "companyLink4 Adresi",
+          "displayName": "Şirket Linki 4 Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/pages/iletisim",
-          "groupId": "companyLinks"
+          "groupId": "companyLinks",
+          "description": "Tam domain kullanmayın; iletişim routeunu /pages/iletisim olarak girin."
         },
         {
           "name": "contactLink1Text",
-          "displayName": "contactLink1 Metin",
+          "displayName": "İletişim Linki 1 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "info@3mash.com",
@@ -6615,15 +6666,16 @@
         },
         {
           "name": "contactLink1Href",
-          "displayName": "contactLink1 Adresi",
+          "displayName": "İletişim Linki 1 Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "mailto:info@3mash.com",
-          "groupId": "contactLinks"
+          "groupId": "contactLinks",
+          "description": "Email için mailto: formatı kullanılır."
         },
         {
           "name": "contactLink2Text",
-          "displayName": "contactLink2 Metin",
+          "displayName": "İletişim Linki 2 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Antalya Teknokent, Konyaaltı",
@@ -6631,15 +6683,16 @@
         },
         {
           "name": "contactLink2Href",
-          "displayName": "contactLink2 Adresi",
+          "displayName": "İletişim Linki 2 Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://www.google.com/maps/search/?api=1&query=Antalya%20Teknokent%2C%20Konyaalt%C4%B1",
-          "groupId": "contactLinks"
+          "groupId": "contactLinks",
+          "description": "Harita linki dış bağlantıdır."
         },
         {
           "name": "contactLink3Text",
-          "displayName": "contactLink3 Metin",
+          "displayName": "İletişim Linki 3 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "",
@@ -6647,7 +6700,7 @@
         },
         {
           "name": "contactLink3Href",
-          "displayName": "contactLink3 Adresi",
+          "displayName": "İletişim Linki 3 Bağlantısı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "",
@@ -6658,16 +6711,8 @@
           "displayName": "Copyright Metin",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "© 2026 3MASH Teknoloji A.Ş.",
+          "defaultValue": "© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.",
           "groupId": "legal"
-        },
-        {
-          "name": "legalText",
-          "displayName": "Legal Metin",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "KVKK · İade & Garanti · Mesafeli Satış",
-          "groupId": "text-customization"
         },
         {
           "name": "backgroundColor",
@@ -6784,7 +6829,8 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/",
-          "groupId": "brand"
+          "groupId": "brand",
+          "description": "Tam domain kullanmayın; anasayfa için / girin."
         },
         {
           "name": "logoImageUrl",
@@ -7018,6 +7064,108 @@
           "required": false,
           "defaultValue": false,
           "groupId": "wordStyle"
+        },
+        {
+          "name": "productLink5Text",
+          "displayName": "Ürün Linki 5 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dental Fırınlar",
+          "groupId": "productLinks"
+        },
+        {
+          "name": "productLink5Href",
+          "displayName": "Ürün Linki 5 Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Tam domain kullanmayın; kategori routeunu /dental-firinlar olarak girin.",
+          "defaultValue": "/dental-firinlar",
+          "groupId": "productLinks"
+        },
+        {
+          "name": "productLink6Text",
+          "displayName": "Ürün Linki 6 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productLinks"
+        },
+        {
+          "name": "productLink6Href",
+          "displayName": "Ürün Linki 6 Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Beş ürün linki yeterliyse boş bırakın.",
+          "defaultValue": "",
+          "groupId": "productLinks"
+        },
+        {
+          "name": "legalLink1Text",
+          "displayName": "Yasal Link 1 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "KVKK",
+          "groupId": "legal"
+        },
+        {
+          "name": "legalLink1Href",
+          "displayName": "Yasal Link 1 Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "description": "KVKK sayfası için yayın routeu: /pages/kvkk.",
+          "defaultValue": "/pages/kvkk",
+          "groupId": "legal"
+        },
+        {
+          "name": "legalLink2Text",
+          "displayName": "Yasal Link 2 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "İade & Garanti",
+          "groupId": "legal"
+        },
+        {
+          "name": "legalLink2Href",
+          "displayName": "Yasal Link 2 Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "description": "İade ve garanti sayfası için yayın routeu: /pages/iade-ve-garanti.",
+          "defaultValue": "/pages/iade-ve-garanti",
+          "groupId": "legal"
+        },
+        {
+          "name": "legalLink3Text",
+          "displayName": "Yasal Link 3 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Mesafeli Satış",
+          "groupId": "legal"
+        },
+        {
+          "name": "legalLink3Href",
+          "displayName": "Yasal Link 3 Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Mesafeli satış sayfası için yayın routeu: /pages/mesafeli-satis-sozlesmesi.",
+          "defaultValue": "/pages/mesafeli-satis-sozlesmesi",
+          "groupId": "legal"
+        },
+        {
+          "name": "legalLink4Text",
+          "displayName": "Yasal Link 4 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Üyelik Sözleşmesi",
+          "groupId": "legal"
+        },
+        {
+          "name": "legalLink4Href",
+          "displayName": "Yasal Link 4 Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Üyelik sözleşmesi sayfası için yayın routeu: /pages/uyelik-sozlesmesi.",
+          "defaultValue": "/pages/uyelik-sozlesmesi",
+          "groupId": "legal"
         }
       ],
       "propGroups": [
@@ -8635,6 +8783,2908 @@
         {
           "id": "style",
           "name": "Style"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-product-split-feature",
+      "name": "Ürün İkili Özellik",
+      "entry": "./src/components/ThreeMashProductSplitFeature/index.tsx",
+      "styles": "./src/components/ThreeMashProductSplitFeature/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "layout",
+          "description": "Sayfa içi link için id. Boş bırakılabilir."
+        },
+        {
+          "name": "titleHtml",
+          "displayName": "Başlık HTML Override",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "title",
+          "description": "Boş değilse satırlı başlık propları yerine bu alan kullanılır. Vurgu için <mark>...</mark> kullanın."
+        },
+        {
+          "name": "titleLine1Before",
+          "displayName": "Başlık 1 Öncesi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Katman Çizgileri",
+          "groupId": "title"
+        },
+        {
+          "name": "titleLine1Highlight",
+          "displayName": "Başlık 1 Vurgu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Olmadan",
+          "groupId": "title"
+        },
+        {
+          "name": "titleLine1After",
+          "displayName": "Başlık 1 Sonrası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": " Doğal Diş",
+          "groupId": "title"
+        },
+        {
+          "name": "titleLine2Before",
+          "displayName": "Başlık 2 Öncesi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Görünümü",
+          "groupId": "title"
+        },
+        {
+          "name": "titleLine2Highlight",
+          "displayName": "Başlık 2 Vurgu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "title"
+        },
+        {
+          "name": "titleLine2After",
+          "displayName": "Başlık 2 Sonrası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "title"
+        },
+        {
+          "name": "titleLine3Before",
+          "displayName": "Başlık 3 Öncesi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "title"
+        },
+        {
+          "name": "titleLine3Highlight",
+          "displayName": "Başlık 3 Vurgu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "title"
+        },
+        {
+          "name": "titleLine3After",
+          "displayName": "Başlık 3 Sonrası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "title"
+        },
+        {
+          "name": "introHtml",
+          "displayName": "Ana Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>ArgenZ HT+ Multilayer Zirkonyum Blokları, dişin doğal gradyanını katman çizgileri olmaksızın yansıtarak benzersiz dayanıklılık ve renk doğruluğu sağlar.</p>",
+          "groupId": "content"
+        },
+        {
+          "name": "detailHtml",
+          "displayName": "Ek Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "content"
+        },
+        {
+          "name": "proofTitle",
+          "displayName": "Kanıt / Referans Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Argen bloklarını kullananlar nasıl değerlendirdi?",
+          "groupId": "proof"
+        },
+        {
+          "name": "quote1Text",
+          "displayName": "Yorum 1 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Koleden insizale renk geçişleri çok başarılı. Doğala özdeş renk geçişini yakalamak diğer bloklara nazaran daha az müdahale ile mümkün oluyor.</p>",
+          "groupId": "proof"
+        },
+        {
+          "name": "quote1Name",
+          "displayName": "Yorum 1 İsim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Robert",
+          "groupId": "proof"
+        },
+        {
+          "name": "quote1Role",
+          "displayName": "Yorum 1 Ünvan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "CadCrowns, CA Inc.",
+          "groupId": "proof"
+        },
+        {
+          "name": "quote2Text",
+          "displayName": "Yorum 2 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>ArgenZ HT+, zirkonyum blok konusundaki tercihimiz. Şeffaflığı tam yerinde ve rengi harika. Dayanıklılığı da tam anlamıyla mükemmel.</p>",
+          "groupId": "proof"
+        },
+        {
+          "name": "quote2Name",
+          "displayName": "Yorum 2 İsim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tokuma Tanizaki",
+          "groupId": "proof"
+        },
+        {
+          "name": "quote2Role",
+          "displayName": "Yorum 2 Ünvan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ACL Hawaii, Inc",
+          "groupId": "proof"
+        },
+        {
+          "name": "quote3Text",
+          "displayName": "Yorum 3 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "proof"
+        },
+        {
+          "name": "quote3Name",
+          "displayName": "Yorum 3 İsim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "proof"
+        },
+        {
+          "name": "quote3Role",
+          "displayName": "Yorum 3 Ünvan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "proof"
+        },
+        {
+          "name": "showScoreBars",
+          "displayName": "Skor Barlarını Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "scores",
+          "description": "Açıldığında yorumların yerine yüzde barları gösterilir."
+        },
+        {
+          "name": "score1Text",
+          "displayName": "Skor 1 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Baskı sonrası <b>boyut değiştirmemesi</b> sayesinde herhangi bir uyum sorunu yaşamadığını söyledi.</p>",
+          "groupId": "scores"
+        },
+        {
+          "name": "score1Value",
+          "displayName": "Skor 1 Değeri",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 99,
+          "groupId": "scores"
+        },
+        {
+          "name": "score2Text",
+          "displayName": "Skor 2 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Yüksek doğruluğu sayesinde tüm <b>implant analogları ile mükemmel uyumlu</b> olduğu söyledi.</p>",
+          "groupId": "scores"
+        },
+        {
+          "name": "score2Value",
+          "displayName": "Skor 2 Değeri",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 97,
+          "groupId": "scores"
+        },
+        {
+          "name": "score3Text",
+          "displayName": "Skor 3 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Renk seçenekleri sayesinde hasta ve hekimlere kron renklerini göstermeyi kolaylaştırdığını söyledi.</p>",
+          "groupId": "scores"
+        },
+        {
+          "name": "score3Value",
+          "displayName": "Skor 3 Değeri",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 96,
+          "groupId": "scores"
+        },
+        {
+          "name": "mediaLayout",
+          "displayName": "Medya Layout",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "single",
+          "groupId": "media",
+          "description": "single veya grid yazın."
+        },
+        {
+          "name": "imageUrl",
+          "displayName": "Görsel 1",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "imageAlt",
+          "displayName": "Görsel 1 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "imageLabel",
+          "displayName": "Görsel 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "image2Url",
+          "displayName": "Görsel 2",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "image2Alt",
+          "displayName": "Görsel 2 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "image2Label",
+          "displayName": "Görsel 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "image3Url",
+          "displayName": "Görsel 3",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "image3Alt",
+          "displayName": "Görsel 3 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "image3Label",
+          "displayName": "Görsel 3 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "image4Url",
+          "displayName": "Görsel 4",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "image4Alt",
+          "displayName": "Görsel 4 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "image4Label",
+          "displayName": "Görsel 4 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "media"
+        },
+        {
+          "name": "reverseLayout",
+          "displayName": "Layout Ters Çevir",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "layout"
+        },
+        {
+          "name": "maxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 82,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 82,
+          "groupId": "layout"
+        },
+        {
+          "name": "columnGap",
+          "displayName": "Kolon Boşluğu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 64,
+          "groupId": "layout"
+        },
+        {
+          "name": "textColumnWidth",
+          "displayName": "Yazı Kolon Genişliği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 420,
+          "groupId": "layout"
+        },
+        {
+          "name": "mediaColumnWidth",
+          "displayName": "Görsel Kolon Genişliği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 720,
+          "groupId": "layout"
+        },
+        {
+          "name": "titleFontSize",
+          "displayName": "Başlık Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 34,
+          "groupId": "typography"
+        },
+        {
+          "name": "bodyFontSize",
+          "displayName": "Gövde Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 17,
+          "groupId": "typography"
+        },
+        {
+          "name": "mediaAspectRatio",
+          "displayName": "Görsel Oranı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "1.5 / 1",
+          "groupId": "mediaStyle",
+          "description": "CSS aspect-ratio değeri. Örn: 1.5 / 1, 16 / 9, 1 / 1."
+        },
+        {
+          "name": "mediaBorderRadius",
+          "displayName": "Görsel Köşe Yuvarlaklığı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 28,
+          "groupId": "mediaStyle"
+        },
+        {
+          "name": "imageObjectFit",
+          "displayName": "Görsel Yerleşimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "cover",
+          "groupId": "mediaStyle",
+          "description": "contain, cover, fill veya scale-down."
+        },
+        {
+          "name": "imageScale",
+          "displayName": "Görsel Ölçek",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1,
+          "groupId": "mediaStyle"
+        },
+        {
+          "name": "imageXOffset",
+          "displayName": "Görsel X Kaydırma",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "mediaStyle"
+        },
+        {
+          "name": "imageYOffset",
+          "displayName": "Görsel Y Kaydırma",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "mediaStyle"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#181818",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#c7f136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mediaBackgroundColor",
+          "displayName": "Görsel Arka Planı",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#eeeeee",
+          "groupId": "appearance"
+        },
+        {
+          "name": "scoreTrackColor",
+          "displayName": "Skor Bar Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "title",
+          "name": "Başlık",
+          "description": "Satırlı başlık ve vurgulu kelimeler"
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Ana metin alanları"
+        },
+        {
+          "id": "proof",
+          "name": "Yorumlar",
+          "description": "Referans metinleri"
+        },
+        {
+          "id": "scores",
+          "name": "Skor Barları",
+          "description": "Yüzde barlı alternatif kanıt alanı"
+        },
+        {
+          "id": "media",
+          "name": "Görseller",
+          "description": "Tek görsel veya 2x2 grid görselleri"
+        },
+        {
+          "id": "layout",
+          "name": "Layout",
+          "description": "Genişlik, boşluk ve kolon ayarları"
+        },
+        {
+          "id": "typography",
+          "name": "Tipografi",
+          "description": "Başlık ve gövde boyutları"
+        },
+        {
+          "id": "mediaStyle",
+          "name": "Görsel Stili",
+          "description": "Kart, oran ve görsel yerleşimi"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ayarları"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-product-metrics",
+      "name": "Ürün Metrik Daireleri",
+      "entry": "./src/components/ThreeMashProductMetrics/index.tsx",
+      "styles": "./src/components/ThreeMashProductMetrics/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "content",
+          "description": "Sayfa içi link için id. Boş bırakılabilir."
+        },
+        {
+          "name": "metricCount",
+          "displayName": "Metrik Sayısı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "content",
+          "description": "En fazla 6 metrik render edilir."
+        },
+        {
+          "name": "metric1Enabled",
+          "displayName": "Metrik 1 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "metric1"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "59",
+          "groupId": "metric1"
+        },
+        {
+          "name": "metric1Unit",
+          "displayName": "Metrik 1 Birim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Mpa",
+          "groupId": "metric1"
+        },
+        {
+          "name": "metric1Title",
+          "displayName": "Metrik 1 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Eğilme Mukavemeti",
+          "groupId": "metric1"
+        },
+        {
+          "name": "metric1Subtitle",
+          "displayName": "Metrik 1 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ISO 10477",
+          "groupId": "metric1"
+        },
+        {
+          "name": "metric2Enabled",
+          "displayName": "Metrik 2 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "metric2"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "1521",
+          "groupId": "metric2"
+        },
+        {
+          "name": "metric2Unit",
+          "displayName": "Metrik 2 Birim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Mpa",
+          "groupId": "metric2"
+        },
+        {
+          "name": "metric2Title",
+          "displayName": "Metrik 2 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Esneklik Modülü",
+          "groupId": "metric2"
+        },
+        {
+          "name": "metric2Subtitle",
+          "displayName": "Metrik 2 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ISO 10477",
+          "groupId": "metric2"
+        },
+        {
+          "name": "metric3Enabled",
+          "displayName": "Metrik 3 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "metric3"
+        },
+        {
+          "name": "metric3Value",
+          "displayName": "Metrik 3 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "36",
+          "groupId": "metric3"
+        },
+        {
+          "name": "metric3Unit",
+          "displayName": "Metrik 3 Birim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Mpa",
+          "groupId": "metric3"
+        },
+        {
+          "name": "metric3Title",
+          "displayName": "Metrik 3 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Çekme Dayanımı",
+          "groupId": "metric3"
+        },
+        {
+          "name": "metric3Subtitle",
+          "displayName": "Metrik 3 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ASTM D638",
+          "groupId": "metric3"
+        },
+        {
+          "name": "metric4Enabled",
+          "displayName": "Metrik 4 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "metric4"
+        },
+        {
+          "name": "metric4Value",
+          "displayName": "Metrik 4 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "metric4"
+        },
+        {
+          "name": "metric4Unit",
+          "displayName": "Metrik 4 Birim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Mpa",
+          "groupId": "metric4"
+        },
+        {
+          "name": "metric4Title",
+          "displayName": "Metrik 4 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "metric4"
+        },
+        {
+          "name": "metric4Subtitle",
+          "displayName": "Metrik 4 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "metric4"
+        },
+        {
+          "name": "metric5Enabled",
+          "displayName": "Metrik 5 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "metric5"
+        },
+        {
+          "name": "metric5Value",
+          "displayName": "Metrik 5 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "metric5"
+        },
+        {
+          "name": "metric5Unit",
+          "displayName": "Metrik 5 Birim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Mpa",
+          "groupId": "metric5"
+        },
+        {
+          "name": "metric5Title",
+          "displayName": "Metrik 5 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "metric5"
+        },
+        {
+          "name": "metric5Subtitle",
+          "displayName": "Metrik 5 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "metric5"
+        },
+        {
+          "name": "metric6Enabled",
+          "displayName": "Metrik 6 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "metric6"
+        },
+        {
+          "name": "metric6Value",
+          "displayName": "Metrik 6 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "metric6"
+        },
+        {
+          "name": "metric6Unit",
+          "displayName": "Metrik 6 Birim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Mpa",
+          "groupId": "metric6"
+        },
+        {
+          "name": "metric6Title",
+          "displayName": "Metrik 6 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "metric6"
+        },
+        {
+          "name": "metric6Subtitle",
+          "displayName": "Metrik 6 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "metric6"
+        },
+        {
+          "name": "maxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 88,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 88,
+          "groupId": "layout"
+        },
+        {
+          "name": "gridGap",
+          "displayName": "Metrikler Arası Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 96,
+          "groupId": "layout"
+        },
+        {
+          "name": "circleSize",
+          "displayName": "Daire Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 148,
+          "groupId": "layout"
+        },
+        {
+          "name": "circleSpacing",
+          "displayName": "Daire Altı Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 46,
+          "groupId": "layout"
+        },
+        {
+          "name": "desktopColumns",
+          "displayName": "Desktop Kolon Sayısı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "layout"
+        },
+        {
+          "name": "tabletColumns",
+          "displayName": "Tablet Kolon Sayısı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 2,
+          "groupId": "layout"
+        },
+        {
+          "name": "valueFontSize",
+          "displayName": "Değer Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 50,
+          "groupId": "typography"
+        },
+        {
+          "name": "unitFontSize",
+          "displayName": "Birim Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "typography"
+        },
+        {
+          "name": "titleFontSize",
+          "displayName": "Başlık Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 16,
+          "groupId": "typography"
+        },
+        {
+          "name": "subtitleFontSize",
+          "displayName": "Alt Metin Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 13,
+          "groupId": "typography"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Alt Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "appearance"
+        },
+        {
+          "name": "circleColor",
+          "displayName": "Daire Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#d8ff1f",
+          "groupId": "appearance"
+        },
+        {
+          "name": "circleTextColor",
+          "displayName": "Daire Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Genel",
+          "description": "Anchor ve kaç metrik gösterileceği"
+        },
+        {
+          "id": "metric1",
+          "name": "Metrik 1",
+          "description": "İlk metrik içeriği"
+        },
+        {
+          "id": "metric2",
+          "name": "Metrik 2",
+          "description": "İkinci metrik içeriği"
+        },
+        {
+          "id": "metric3",
+          "name": "Metrik 3",
+          "description": "Üçüncü metrik içeriği"
+        },
+        {
+          "id": "metric4",
+          "name": "Metrik 4",
+          "description": "Opsiyonel metrik içeriği"
+        },
+        {
+          "id": "metric5",
+          "name": "Metrik 5",
+          "description": "Opsiyonel metrik içeriği"
+        },
+        {
+          "id": "metric6",
+          "name": "Metrik 6",
+          "description": "Opsiyonel metrik içeriği"
+        },
+        {
+          "id": "layout",
+          "name": "Layout",
+          "description": "Container, boşluk ve daire ölçüleri"
+        },
+        {
+          "id": "typography",
+          "name": "Tipografi",
+          "description": "Font boyutları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ayarları"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-product-image-text",
+      "name": "Ürün Görsel Metin Detay",
+      "entry": "./src/components/ThreeMashProductImageText/index.tsx",
+      "styles": "./src/components/ThreeMashProductImageText/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "content",
+          "description": "Sayfa içi link için id. Boş bırakılabilir."
+        },
+        {
+          "name": "titleHtml",
+          "displayName": "Başlık HTML Override",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "title",
+          "description": "Boş değilse Başlık Metni yerine kullanılır."
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Geliştirilmiş Kalıp-Ölçü Hassasiyeti",
+          "groupId": "title"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Açıklama Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>CRS Cast, ilk olarak yüksek hassasiyetin bir zorunluluk olduğu, kuyumculuk sektörü için geliştirilmiştir. Kuyumculuktaki uygulamalarda en küçük küçük hata değerleri dahi kabul edilmez hatalar olarak görülmektedir.</p><p>Bu kadar gelişmiş bir kalıp-ölçü hassasiyeti, dental uygulamalarda mükemmel döküm sonuçları ortaya çıkarmaktadır.</p>",
+          "groupId": "content"
+        },
+        {
+          "name": "subTitle",
+          "displayName": "Alt Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uygulama Alanları",
+          "groupId": "content"
+        },
+        {
+          "name": "bullet1Text",
+          "displayName": "Madde 1",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "25 mikrona kadar e-Max press uygulamaları",
+          "groupId": "bullets"
+        },
+        {
+          "name": "bullet2Text",
+          "displayName": "Madde 2",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tüm inleylerin, onleylerin, invaziv kuronların ve laminate veneerlerin kayıp mum pres yöntemiyle üretimi",
+          "groupId": "bullets"
+        },
+        {
+          "name": "bullet3Text",
+          "displayName": "Madde 3",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yüksek kaliteli kuronlar, köprüler, özel barlar ve hibrit abutment kuronlar üretimi",
+          "groupId": "bullets"
+        },
+        {
+          "name": "bullet4Text",
+          "displayName": "Madde 4",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İskelet tasarımları üretimi",
+          "groupId": "bullets"
+        },
+        {
+          "name": "bullet5Text",
+          "displayName": "Madde 5",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "bullets"
+        },
+        {
+          "name": "bullet6Text",
+          "displayName": "Madde 6",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "bullets"
+        },
+        {
+          "name": "imageUrl",
+          "displayName": "Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "image"
+        },
+        {
+          "name": "imageAlt",
+          "displayName": "Görsel Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Dental döküm modeli",
+          "groupId": "image"
+        },
+        {
+          "name": "reverseLayout",
+          "displayName": "Layout Ters Çevir",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "layout",
+          "description": "Açılırsa yazı sola, görsel sağa geçer."
+        },
+        {
+          "name": "maxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 96,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 96,
+          "groupId": "layout"
+        },
+        {
+          "name": "columnGap",
+          "displayName": "Kolon Boşluğu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 92,
+          "groupId": "layout"
+        },
+        {
+          "name": "imageColumnWidth",
+          "displayName": "Görsel Kolon Genişliği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 650,
+          "groupId": "layout"
+        },
+        {
+          "name": "textColumnWidth",
+          "displayName": "Yazı Kolon Genişliği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 430,
+          "groupId": "layout"
+        },
+        {
+          "name": "imageMaxWidth",
+          "displayName": "Görsel Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 650,
+          "groupId": "imageStyle"
+        },
+        {
+          "name": "imageAspectRatio",
+          "displayName": "Görsel Oranı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "1.65 / 1",
+          "groupId": "imageStyle",
+          "description": "CSS aspect-ratio değeri. Örn: 16 / 9, 1.65 / 1."
+        },
+        {
+          "name": "imageObjectFit",
+          "displayName": "Görsel Yerleşimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "imageStyle",
+          "description": "contain, cover, fill veya scale-down."
+        },
+        {
+          "name": "imageScale",
+          "displayName": "Görsel Ölçek",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1,
+          "groupId": "imageStyle"
+        },
+        {
+          "name": "imageXOffset",
+          "displayName": "Görsel X Kaydırma",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "imageStyle"
+        },
+        {
+          "name": "imageYOffset",
+          "displayName": "Görsel Y Kaydırma",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "imageStyle"
+        },
+        {
+          "name": "titleFontSize",
+          "displayName": "Başlık Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "typography"
+        },
+        {
+          "name": "bodyFontSize",
+          "displayName": "Gövde Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 16,
+          "groupId": "typography"
+        },
+        {
+          "name": "subtitleFontSize",
+          "displayName": "Alt Başlık Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 18,
+          "groupId": "typography"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "title",
+          "name": "Başlık",
+          "description": "Başlık metni veya HTML override"
+        },
+        {
+          "id": "content",
+          "name": "Metin",
+          "description": "Açıklama ve alt başlık"
+        },
+        {
+          "id": "bullets",
+          "name": "Maddeler",
+          "description": "Uygulama alanı maddeleri"
+        },
+        {
+          "id": "image",
+          "name": "Görsel",
+          "description": "Ana ürün görseli ve alt metin"
+        },
+        {
+          "id": "layout",
+          "name": "Layout",
+          "description": "Container, kolonlar ve boşluklar"
+        },
+        {
+          "id": "imageStyle",
+          "name": "Görsel Stili",
+          "description": "Görsel oranı, ölçek ve pozisyon"
+        },
+        {
+          "id": "typography",
+          "name": "Tipografi",
+          "description": "Font boyutları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ayarları"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-products-basic-slider",
+      "name": "Ürünler Basic Slider",
+      "entry": "./src/components/ThreeMashProductsBasicSlider/index.tsx",
+      "styles": "./src/components/ThreeMashProductsBasicSlider/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "productList",
+          "displayName": "Ürün Listesi",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "defaultValue": {
+            "id": "2tplvqpo-basic-slider-product-list",
+            "productListType": "ALL",
+            "initialSort": "DEFAULT",
+            "initialLimit": 6,
+            "productCount": null,
+            "productIds": null,
+            "usePageFilter": false,
+            "category": null,
+            "brand": null,
+            "relatedProductsType": null
+          },
+          "groupId": "data",
+          "description": "Kaynak Canlı Ürünler seçiliyken kullanılır."
+        },
+        {
+          "name": "sliderSource",
+          "displayName": "Slider Kaynağı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "products",
+          "groupId": "source",
+          "description": "products veya manual yazın. manual seçilirse mağaza ürünleri yerine manuel kartlar kullanılır."
+        },
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "content"
+        },
+        {
+          "name": "setupMessage",
+          "displayName": "Setup Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu slider ikas canlı ürün datasına bağlıdır. Product List alanını ürün listesine bağlayın veya Slider Kaynağı alanını manual yapın.",
+          "groupId": "content"
+        },
+        {
+          "name": "carouselAriaLabel",
+          "displayName": "Slider Erişilebilirlik Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünler",
+          "groupId": "content"
+        },
+        {
+          "name": "ctaText",
+          "displayName": "Varsayılan CTA Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionMaxLength",
+          "displayName": "Ürün Açıklama Maksimum Karakter",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 170,
+          "groupId": "content"
+        },
+        {
+          "name": "showIntro",
+          "displayName": "Üst Metni Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "intro"
+        },
+        {
+          "name": "introTitle",
+          "displayName": "Üst Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uyumlu Cihazlar",
+          "groupId": "intro"
+        },
+        {
+          "name": "introDescriptionHtml",
+          "displayName": "Üst Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> olarak gerçekleştirmekteyiz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.</p>",
+          "groupId": "intro"
+        },
+        {
+          "name": "introAlign",
+          "displayName": "Üst Metin Hizası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "center",
+          "groupId": "intro",
+          "description": "left, center veya right yazın."
+        },
+        {
+          "name": "introMaxWidth",
+          "displayName": "Üst Metin Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1320,
+          "groupId": "intro"
+        },
+        {
+          "name": "introSpacing",
+          "displayName": "Üst Metin Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 42,
+          "groupId": "intro"
+        },
+        {
+          "name": "introTitleFontSize",
+          "displayName": "Üst Başlık Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "introTypography"
+        },
+        {
+          "name": "introBodyFontSize",
+          "displayName": "Üst Açıklama Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 16,
+          "groupId": "introTypography"
+        },
+        {
+          "name": "showCategoryTag",
+          "displayName": "Kategori/Etiket Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "showDescription",
+          "displayName": "Açıklamayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "showSpecs",
+          "displayName": "Özellik/Fiyat Alanını Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "showCta",
+          "displayName": "CTA Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "manualCardCount",
+          "displayName": "Manuel Kart Sayısı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 4,
+          "groupId": "manualGeneral"
+        },
+        {
+          "name": "manualCard1Enabled",
+          "displayName": "Kart 1 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1ImageUrl",
+          "displayName": "Kart 1 Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1ImageAlt",
+          "displayName": "Kart 1 Görsel Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1Tag",
+          "displayName": "Kart 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3D Yazıcı",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1Title",
+          "displayName": "Kart 1 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Uyumlu Yazıcı Modeli",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1DescriptionHtml",
+          "displayName": "Kart 1 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1Spec1Label",
+          "displayName": "Kart 1 Özellik 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1Spec1Value",
+          "displayName": "Kart 1 Özellik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1Spec2Label",
+          "displayName": "Kart 1 Özellik 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1Spec2Value",
+          "displayName": "Kart 1 Özellik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1CtaText",
+          "displayName": "Kart 1 CTA Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard1CtaHref",
+          "displayName": "Kart 1 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual1"
+        },
+        {
+          "name": "manualCard2Enabled",
+          "displayName": "Kart 2 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2ImageUrl",
+          "displayName": "Kart 2 Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2ImageAlt",
+          "displayName": "Kart 2 Görsel Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2Tag",
+          "displayName": "Kart 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3D Yazıcı",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2Title",
+          "displayName": "Kart 2 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2DescriptionHtml",
+          "displayName": "Kart 2 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2Spec1Label",
+          "displayName": "Kart 2 Özellik 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2Spec1Value",
+          "displayName": "Kart 2 Özellik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2Spec2Label",
+          "displayName": "Kart 2 Özellik 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2Spec2Value",
+          "displayName": "Kart 2 Özellik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2CtaText",
+          "displayName": "Kart 2 CTA Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard2CtaHref",
+          "displayName": "Kart 2 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual2"
+        },
+        {
+          "name": "manualCard3Enabled",
+          "displayName": "Kart 3 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3ImageUrl",
+          "displayName": "Kart 3 Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3ImageAlt",
+          "displayName": "Kart 3 Görsel Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3Tag",
+          "displayName": "Kart 3 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3D Yazıcı",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3Title",
+          "displayName": "Kart 3 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3DescriptionHtml",
+          "displayName": "Kart 3 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3Spec1Label",
+          "displayName": "Kart 3 Özellik 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3Spec1Value",
+          "displayName": "Kart 3 Özellik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3Spec2Label",
+          "displayName": "Kart 3 Özellik 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3Spec2Value",
+          "displayName": "Kart 3 Özellik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3CtaText",
+          "displayName": "Kart 3 CTA Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard3CtaHref",
+          "displayName": "Kart 3 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual3"
+        },
+        {
+          "name": "manualCard4Enabled",
+          "displayName": "Kart 4 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4ImageUrl",
+          "displayName": "Kart 4 Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4ImageAlt",
+          "displayName": "Kart 4 Görsel Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4Tag",
+          "displayName": "Kart 4 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3D Yazıcı",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4Title",
+          "displayName": "Kart 4 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4DescriptionHtml",
+          "displayName": "Kart 4 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4Spec1Label",
+          "displayName": "Kart 4 Özellik 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4Spec1Value",
+          "displayName": "Kart 4 Özellik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4Spec2Label",
+          "displayName": "Kart 4 Özellik 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4Spec2Value",
+          "displayName": "Kart 4 Özellik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4CtaText",
+          "displayName": "Kart 4 CTA Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard4CtaHref",
+          "displayName": "Kart 4 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual4"
+        },
+        {
+          "name": "manualCard5Enabled",
+          "displayName": "Kart 5 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5ImageUrl",
+          "displayName": "Kart 5 Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5ImageAlt",
+          "displayName": "Kart 5 Görsel Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5Tag",
+          "displayName": "Kart 5 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5Title",
+          "displayName": "Kart 5 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5DescriptionHtml",
+          "displayName": "Kart 5 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5Spec1Label",
+          "displayName": "Kart 5 Özellik 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5Spec1Value",
+          "displayName": "Kart 5 Özellik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5Spec2Label",
+          "displayName": "Kart 5 Özellik 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5Spec2Value",
+          "displayName": "Kart 5 Özellik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5CtaText",
+          "displayName": "Kart 5 CTA Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard5CtaHref",
+          "displayName": "Kart 5 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual5"
+        },
+        {
+          "name": "manualCard6Enabled",
+          "displayName": "Kart 6 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6ImageUrl",
+          "displayName": "Kart 6 Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6ImageAlt",
+          "displayName": "Kart 6 Görsel Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6Tag",
+          "displayName": "Kart 6 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6Title",
+          "displayName": "Kart 6 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6DescriptionHtml",
+          "displayName": "Kart 6 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6Spec1Label",
+          "displayName": "Kart 6 Özellik 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6Spec1Value",
+          "displayName": "Kart 6 Özellik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6Spec2Label",
+          "displayName": "Kart 6 Özellik 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6Spec2Value",
+          "displayName": "Kart 6 Özellik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6CtaText",
+          "displayName": "Kart 6 CTA Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard6CtaHref",
+          "displayName": "Kart 6 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual6"
+        },
+        {
+          "name": "manualCard7Enabled",
+          "displayName": "Kart 7 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7ImageUrl",
+          "displayName": "Kart 7 Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7ImageAlt",
+          "displayName": "Kart 7 Görsel Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7Tag",
+          "displayName": "Kart 7 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7Title",
+          "displayName": "Kart 7 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7DescriptionHtml",
+          "displayName": "Kart 7 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7Spec1Label",
+          "displayName": "Kart 7 Özellik 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7Spec1Value",
+          "displayName": "Kart 7 Özellik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7Spec2Label",
+          "displayName": "Kart 7 Özellik 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7Spec2Value",
+          "displayName": "Kart 7 Özellik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7CtaText",
+          "displayName": "Kart 7 CTA Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard7CtaHref",
+          "displayName": "Kart 7 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual7"
+        },
+        {
+          "name": "manualCard8Enabled",
+          "displayName": "Kart 8 Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8ImageUrl",
+          "displayName": "Kart 8 Görsel",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8ImageAlt",
+          "displayName": "Kart 8 Görsel Alt",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8Tag",
+          "displayName": "Kart 8 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8Title",
+          "displayName": "Kart 8 Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8DescriptionHtml",
+          "displayName": "Kart 8 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8Spec1Label",
+          "displayName": "Kart 8 Özellik 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8Spec1Value",
+          "displayName": "Kart 8 Özellik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8Spec2Label",
+          "displayName": "Kart 8 Özellik 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8Spec2Value",
+          "displayName": "Kart 8 Özellik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8CtaText",
+          "displayName": "Kart 8 CTA Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İncele",
+          "groupId": "manual8"
+        },
+        {
+          "name": "manualCard8CtaHref",
+          "displayName": "Kart 8 CTA Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "manual8"
+        },
+        {
+          "name": "maxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "layout"
+        },
+        {
+          "name": "visibleCardsDesktop",
+          "displayName": "Desktop Görünen Kart",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "layout"
+        },
+        {
+          "name": "visibleCardsTablet",
+          "displayName": "Tablet Görünen Kart",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 2,
+          "groupId": "layout"
+        },
+        {
+          "name": "cardGap",
+          "displayName": "Kart Boşluğu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 22,
+          "groupId": "layout"
+        },
+        {
+          "name": "cardRadius",
+          "displayName": "Kart Köşe Yuvarlaklığı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 20,
+          "groupId": "layout"
+        },
+        {
+          "name": "carouselDurationSeconds",
+          "displayName": "Slider Süresi",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 24,
+          "groupId": "slider"
+        },
+        {
+          "name": "pauseOnHover",
+          "displayName": "Hoverda Durdur",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "slider"
+        },
+        {
+          "name": "edgeFadeWidth",
+          "displayName": "Kenar Fade Genişliği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 44,
+          "groupId": "slider"
+        },
+        {
+          "name": "productImageWidth",
+          "displayName": "Ürün/Kart Görsel Genişliği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 170,
+          "groupId": "image"
+        },
+        {
+          "name": "productImageHeight",
+          "displayName": "Ürün/Kart Görsel Yüksekliği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 156,
+          "groupId": "image"
+        },
+        {
+          "name": "productImageXOffset",
+          "displayName": "Ürün/Kart Görsel X Kaydırma",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "image"
+        },
+        {
+          "name": "productImageYOffset",
+          "displayName": "Ürün/Kart Görsel Y Kaydırma",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "image"
+        },
+        {
+          "name": "productImageFit",
+          "displayName": "Ürün/Kart Görsel Yerleşimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "image",
+          "description": "contain, cover, fill veya scale-down."
+        },
+        {
+          "name": "productImageOpacity",
+          "displayName": "Ürün/Kart Görsel Opaklık",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "image"
+        },
+        {
+          "name": "productImageBrightness",
+          "displayName": "Ürün/Kart Görsel Brightness",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "image"
+        },
+        {
+          "name": "productImageContrast",
+          "displayName": "Ürün/Kart Görsel Contrast",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "image"
+        },
+        {
+          "name": "productImageSaturation",
+          "displayName": "Ürün/Kart Görsel Saturation",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 100,
+          "groupId": "image"
+        },
+        {
+          "name": "productImageHue",
+          "displayName": "Ürün/Kart Görsel Hue",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "image"
+        },
+        {
+          "name": "productImageInvert",
+          "displayName": "Ürün/Kart Görsel Invert",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "image"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "subTextColor",
+          "displayName": "Alt Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#55554E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#8F8F86",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Kart Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FFFFFF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentTextColor",
+          "displayName": "Vurgu Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#3D4D0E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardMediaStartColor",
+          "displayName": "Kart Medya Başlangıç Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#F4F4EF",
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardMediaEndColor",
+          "displayName": "Kart Medya Bitiş Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E9E9E2",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "data",
+          "name": "Data",
+          "description": "Canlı ürün listesi"
+        },
+        {
+          "id": "source",
+          "name": "Kaynak",
+          "description": "Canlı ürünler veya manuel kartlar"
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Setup, erişilebilirlik ve CTA metinleri"
+        },
+        {
+          "id": "intro",
+          "name": "Üst Metin",
+          "description": "Slider üstündeki başlık ve açıklama"
+        },
+        {
+          "id": "introTypography",
+          "name": "Üst Metin Tipografi",
+          "description": "Üst başlık ve açıklama fontları"
+        },
+        {
+          "id": "visibility",
+          "name": "Görünürlük",
+          "description": "Kart içindeki alanları aç/kapat"
+        },
+        {
+          "id": "manualGeneral",
+          "name": "Manuel Kartlar Genel",
+          "description": "Manuel kart sayısı"
+        },
+        {
+          "id": "manual1",
+          "name": "Manuel Kart 1",
+          "description": "Mağaza ürünü olmayan özel slider kartı"
+        },
+        {
+          "id": "manual2",
+          "name": "Manuel Kart 2",
+          "description": "Mağaza ürünü olmayan özel slider kartı"
+        },
+        {
+          "id": "manual3",
+          "name": "Manuel Kart 3",
+          "description": "Mağaza ürünü olmayan özel slider kartı"
+        },
+        {
+          "id": "manual4",
+          "name": "Manuel Kart 4",
+          "description": "Mağaza ürünü olmayan özel slider kartı"
+        },
+        {
+          "id": "manual5",
+          "name": "Manuel Kart 5",
+          "description": "Mağaza ürünü olmayan özel slider kartı"
+        },
+        {
+          "id": "manual6",
+          "name": "Manuel Kart 6",
+          "description": "Mağaza ürünü olmayan özel slider kartı"
+        },
+        {
+          "id": "manual7",
+          "name": "Manuel Kart 7",
+          "description": "Mağaza ürünü olmayan özel slider kartı"
+        },
+        {
+          "id": "manual8",
+          "name": "Manuel Kart 8",
+          "description": "Mağaza ürünü olmayan özel slider kartı"
+        },
+        {
+          "id": "layout",
+          "name": "Layout",
+          "description": "Container, kart sayısı ve boşluklar"
+        },
+        {
+          "id": "slider",
+          "name": "Slider",
+          "description": "Animasyon ve kenar fade ayarları"
+        },
+        {
+          "id": "image",
+          "name": "Ürün/Kart Görseli",
+          "description": "Görsel boyutu ve efektleri"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ayarları"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-product-video",
+      "name": "Ürün Video",
+      "entry": "./src/components/ThreeMashProductVideo/index.tsx",
+      "styles": "./src/components/ThreeMashProductVideo/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "content",
+          "description": "Sayfa içi link için id. Boş bırakılabilir."
+        },
+        {
+          "name": "videoUrl",
+          "displayName": "Video Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "video",
+          "description": "YouTube, Vimeo, embed, mp4 veya webm linki girilebilir."
+        },
+        {
+          "name": "posterImage",
+          "displayName": "Poster Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "video",
+          "description": "Direkt mp4/webm linklerinde video başlamadan önce gösterilir."
+        },
+        {
+          "name": "showText",
+          "displayName": "Üst Metni Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Video",
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "content"
+        },
+        {
+          "name": "textAlign",
+          "displayName": "Metin Hizalama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "center",
+          "groupId": "content",
+          "description": "left, center veya right."
+        },
+        {
+          "name": "controlsEnabled",
+          "displayName": "Kontrolleri Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "behavior"
+        },
+        {
+          "name": "autoplayEnabled",
+          "displayName": "Otomatik Oynat",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "behavior",
+          "description": "Tarayıcı kuralı nedeniyle otomatik oynatma açılırsa video sessize alınır."
+        },
+        {
+          "name": "mutedEnabled",
+          "displayName": "Sessiz Başlat",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "behavior"
+        },
+        {
+          "name": "loopEnabled",
+          "displayName": "Loop",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "behavior"
+        },
+        {
+          "name": "playsInlineEnabled",
+          "displayName": "Mobilde Inline Oynat",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "behavior"
+        },
+        {
+          "name": "lazyLoadEnabled",
+          "displayName": "Lazy Load",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "behavior"
+        },
+        {
+          "name": "maxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "layout"
+        },
+        {
+          "name": "videoMaxWidth",
+          "displayName": "Video Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 72,
+          "groupId": "layout"
+        },
+        {
+          "name": "paddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 72,
+          "groupId": "layout"
+        },
+        {
+          "name": "videoAspectRatio",
+          "displayName": "Video Oranı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "16 / 9",
+          "groupId": "layout",
+          "description": "CSS aspect-ratio değeri. Örn: 16 / 9, 4 / 3, 1 / 1."
+        },
+        {
+          "name": "videoBorderRadius",
+          "displayName": "Köşe Yuvarlaklığı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "layout"
+        },
+        {
+          "name": "videoFit",
+          "displayName": "Video Yerleşimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "cover",
+          "groupId": "layout",
+          "description": "Direkt video linklerinde contain, cover, fill veya scale-down."
+        },
+        {
+          "name": "titleFontSize",
+          "displayName": "Başlık Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 28,
+          "groupId": "typography"
+        },
+        {
+          "name": "bodyFontSize",
+          "displayName": "Açıklama Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 16,
+          "groupId": "typography"
+        },
+        {
+          "name": "textSpacing",
+          "displayName": "Metin Video Boşluğu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 24,
+          "groupId": "typography"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "Açıklama Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#171717",
+          "groupId": "appearance"
+        },
+        {
+          "name": "placeholderText",
+          "displayName": "Boş Link Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Video linki ekleyin",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "video",
+          "name": "Video Kaynağı",
+          "description": "Video linki ve poster görseli"
+        },
+        {
+          "id": "content",
+          "name": "Üst Metin",
+          "description": "Video üstündeki opsiyonel başlık ve açıklama"
+        },
+        {
+          "id": "behavior",
+          "name": "Oynatma",
+          "description": "Kontrol, autoplay, sessiz ve loop ayarları"
+        },
+        {
+          "id": "layout",
+          "name": "Layout",
+          "description": "Container, video oranı ve boşluklar"
+        },
+        {
+          "id": "typography",
+          "name": "Tipografi",
+          "description": "Metin boyutu ve metin-video boşluğu"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renkler ve boş durum metni"
         }
       ]
     },
@@ -10327,7 +13377,8 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/pages/uyelik-sozlesmesi",
-          "groupId": "form"
+          "groupId": "form",
+          "description": "Üyelik sözleşmesi için yayın routeu: /pages/uyelik-sozlesmesi."
         },
         {
           "name": "marketingText",
@@ -10645,16 +13696,18 @@
           "displayName": "Ticari Elektronik İleti Linki",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/pages/ticari-elektronik-ileti-onayi",
-          "groupId": "form"
+          "defaultValue": "/pages/ticari-elektronik-ileti",
+          "groupId": "form",
+          "description": "Ticari elektronik ileti onayı için yayın routeu: /pages/ticari-elektronik-ileti."
         },
         {
           "name": "kvkkHref",
           "displayName": "KVKK Linki",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/pages/kvkk-aydinlatma-metni",
-          "groupId": "form"
+          "defaultValue": "/pages/kvkk",
+          "groupId": "form",
+          "description": "KVKK sayfası için yayın routeu: /pages/kvkk."
         }
       ],
       "propGroups": [
@@ -11388,8 +14441,9 @@
           "displayName": "KVKK Linki",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/pages/gizlilik-politikasi-ve-kvkk",
-          "groupId": "form"
+          "defaultValue": "/pages/kvkk",
+          "groupId": "form",
+          "description": "KVKK sayfası için yayın routeu: /pages/kvkk."
         },
         {
           "name": "buttonText",
@@ -12453,12 +15507,12 @@
         },
         {
           "name": "contentHtml",
-          "displayName": "İçerik",
+          "displayName": "Tam İçerik Override",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "<h2>ÜYELİK SÖZLEŞMESİ</h2><p><br><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2 data-doc-id=3051800000000054053 data-doc-type=writer><span style=color:rgb(0,0,0);font-size:12pt>&nbsp;</span><br><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)><b>Taraflar</b></span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>a)3mash.com internet sitesinin faaliyetlerini yürüten </span><span style=font-size:12pt;color:rgb(0,0,0);font-weight:400;background-color:rgba(0,0,0,0)>Kızıltoprak Mah. 919 Sok. No: 19A Muratpaşa, Antalya</span><span style=font-size:12pt;color:rgb(0,0,0)> adresinde mukim 3 MASH TEKNOLOJİ A.Ş. (Bundan böyle “3 MASH” olarak anılacaktır).</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>b)3mash.com internet sitesine üye olan internet kullanıcısı (\"Üye\")</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>&nbsp;</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)><b>Sözleşmenin Konusu</b></span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>İşbu Sözleşme’nin konusu 3 MASH'in sahip olduğu internet sitesi www.3mash.com ‘den üyenin faydalanma şartlarının belirlenmesidir.</span><br class=zw-br><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>Tarafların Hak ve Yükümlülükleri</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.1. Üye, www.3mash.com internet sitesine üye olurken verdiği kişisel ve diğer sair bilgilerin kanunlar önünde doğru olduğunu, </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH'in bu bilgilerin gerçeğe aykırılığı nedeniyle uğrayacağı tüm zararları aynen ve derhal tazmin edeceğini beyan ve taahhüt eder.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.2. Üye, 3 MASH tarafından kendisine verilmiş olan şifreyi başka kişi ya da kuruluşlara veremez, üyenin söz konusu şifreyi kullanma hakkı bizzat kendisine aittir. Bu sebeple doğabilecek tüm sorumluluk ile üçüncü kişiler veya yetkili merciler tarafından </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH'e karşı ileri sürülebilecek tüm iddia ve taleplere karşı, 3 MASH'in söz konusu izinsiz kullanımdan kaynaklanan her türlü tazminat ve sair talep hakkı saklıdır.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.3. Üye www.3mash.com internet sitesini kullanırken yasal mevzuat hükümlerine riayet etmeyi ve bunları ihlal etmemeyi baştan kabul ve taahhüt eder. Aksi takdirde, doğacak tüm hukuki ve cezai yükümlülükler tamamen ve münhasıran üyeyi bağlayacaktır.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.4. Üye, www.3mash.com internet sitesini hiçbir şekilde kamu düzenini bozucu, genel ahlaka aykırı, başkalarını rahatsız ve taciz edici şekilde, yasalara aykırı bir amaç için, başkalarının fikri ve telif haklarına tecavüz edecek şekilde kullanamaz. Ayrıca, üye başkalarının hizmetleri kullanmasını önleyici veya zorlaştırıcı faaliyet (spam, virus, truva atı, vb.) ve işlemlerde bulunamaz.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.5. www.3mash.com internet sitesinde üyeler tarafından beyan edilen, yazılan, kullanılan fikir ve düşünceler, tamamen üyelerin kendi kişisel görüşleridir ve görüş sahibini bağlar. Bu görüş ve düşüncelerin </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH ile hiçbir ilgi ve bağlantısı yoktur. 3 MASH'in üyenin beyan edeceği fikir ve görüşler nedeniyle üçüncü kişilerin uğrayabileceği zararlardan ve üçüncü kişilerin beyan edeceği fikir ve görüşler nedeniyle üyenin uğrayabileceği zararlardan dolayı herhangi bir sorumluluğu bulunmamaktadır.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.6. 3 MASH, üye verilerinin yetkisiz kişilerce okunmasından ve üye yazılım ve verilerine gelebilecek zararlardan dolayı sorumlu olmayacaktır. Üye, www.</span><span style=font-size:12pt;color:rgb(0,0,0)>3mash.com internet sitesinin kullanılmasından dolayı uğrayabileceği herhangi bir zarar yüzünden 3 MASH'ten</span><span style=font-size:12pt;color:rgb(0,0,0)> tazminat talep etmemeyi peşinen kabul etmiştir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.7. Üye, diğer internet kullanıcılarının yazılımlarına ve verilerine izinsiz olarak ulaşmamayı veya bunları kullanmamayı kabul etmiştir. Aksi takdirde, bundan doğacak hukuki ve cezai sorumluluklar tamamen üyeye aittir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.8. İşbu üyelik sözleşmesi içerisinde sayılan maddelerden bir ya da birkaçını ihlal eden üye işbu ihlal nedeniyle cezai ve hukuki olarak şahsen sorumlu olup, </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH'i bu ihlallerin hukuki ve cezai sonuçlarından ari tutacaktır. Ayrıca; işbu ihlal nedeniyle, olayın hukuk alanına intikal ettirilmesi halinde, </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH'in üyeye karşı üyelik sözleşmesine uyulmamasından dolayı tazminat talebinde bulunma hakkı saklıdır.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.9. 3 MASH'in her zaman tek taraflı olarak gerektiğinde üyenin üyeliğini silme, müşteriye ait dosya, belge ve bilgileri silme hakkı vardır. Üye işbu tasarrufu önceden kabul eder. Bu durumda, </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH'in hiçbir sorumluluğu yoktur.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.10. www.3mash.com internet sitesi yazılım ve tasarımı 3 MASH mülkiyetinde olup, bunlara ilişkin telif hakkı ve/veya diğer fikri mülkiyet hakları ilgili kanunlarca korunmakta olup, bunlar üye tarafından izinsiz kullanılamaz, iktisap edilemez ve değiştirilemez. Bu web sitesinde adı geçen başkaca şirketler ve ürünleri sahiplerinin ticari markalarıdır ve ayrıca fikri mülkiyet hakları kapsamında korunmaktadır.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.11. 3 MASH tarafından www.3mash.com internet sitesinin iyileştirilmesi, geliştirilmesine yönelik olarak ve/veya yasal mevzuat çerçevesinde siteye erişmek için kullanılan İnternet servis sağlayıcısının adı ve Internet Protokol (IP) adresi, Siteye erişilen tarih ve saat, sitede bulunulan sırada erişilen sayfalar ve siteye doğrudan bağlanılmasını sağlayan Web sitesinin Internet adresi gibi birtakım bilgiler toplanabilir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.12. 3 MASH kullanıcılarına daha iyi hizmet sunmak, ürünlerini ve hizmetlerini iyileştirmek, sitenin kullanımını kolaylaştırmak için kullanımını kullanıcılarının özel tercihlerine ve ilgi alanlarına yönelik çalışmalarda üyelerin kişisel bilgilerini kullanabilir. </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH, üyenin www.3mash.com internet sitesi üzerinde yaptığı hareketlerin kaydını bulundurma hakkını saklı tutar.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.13. 3 MASH'e üye olan kişi, yürürlükte bulunan ve/veya yürürlüğe alınacak uygulamalar kapsamında </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH iştiraki olan tüm şirketler tarafından kendisine ürün ve hizmet tanıtımları, reklamlar, kampanyalar, avantajlar, anketler ve diğer müşteri memnuniyeti uygulamaları sunulmasına izin verdiğini beyan ve kabul eder. Üye, </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH'e üye olurken ve/veya başka yollarla geçmişte vermiş olduğu ve/veya gelecekte vereceği kişisel ve alışveriş bilgilerinin ve alışveriş ve/veya tüketici davranış bilgilerinin yukarıdaki amaçlarla toplanmasına, </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH iştiraki olan tüm şirketler ile paylaşılmasına, 3 MASH ve 3 MASH iştiraki olan tüm şirketler tarafından kullanılmasına ve arşivlenmesine izin verdiğini beyan ve kabul eder. Üye aksini bildirmediği sürece üyeliği sona erdiğinde de verilerin toplanmasına, </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH iştiraki olan tüm şirketler ile paylaşılmasına, 3 MASH ve 3 MASH iştiraki olan tüm şirketler tarafından kullanılmasına ve arşivlenmesine izin verdiğini beyan ve kabul eder. Üye aksini bildirmediği sürece </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH ve 3 MASH iştiraki olan tüm şirketlerin kendisi ile internet, telefon, SMS, vb iletişim kanalları kullanarak irtibata geçmesine izin verdiğini beyan ve kabul eder. Üye yukarıda bahsi geçen bilgilerin toplanması, paylaşılması, kullanılması, arşivlenmesi ve kendisine erişilmesi nedeniyle doğrudan ve/veya dolaylı maddi ve/veya manevi menfi ve/veya müsbet, velhasıl herhangi bir zarara uğradığı konusunda talepte bulunmayacağını ve </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH ve 3 MASH iştiraki olan şirketleri sorumlu tutmayacağını beyan ve kabul eder. Üye, kişisel verileri ile ilgili detaylı bilgiye </span><span style=font-size:12pt;color:rgb(0,0,0);font-weight:400;background-color:rgba(0,0,0,0)>https://3mash.com/pages/gizlilik-politikasi-ve-kvkk</span><span style=font-size:12pt;color:rgb(0,0,0)> adresinden ulaşabilir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.14. 3 MASH, üyenin kişisel bilgilerini yasal bir zorunluluk olarak istendiğinde veya (a) yasal gereklere uygun hareket etmek veya </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH'e tebliğ edilen yasal işlemlere uymak; (b) 3 MASH ve 3 MASH web sitesi ailesinin haklarını ve mülkiyetini korumak ve savunmak için gerekli olduğuna iyi niyetle kanaat getirdiği hallerde açıklayabilir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.15. 3 MASH web sitesinin virus ve benzeri amaçlı yazılımlardan arındırılmış olması için mevcut imkanlar dahilinde tedbir alınmıştır. Bunun yanında nihai güvenliğin sağlanması için kullanıcının, kendi virus koruma sistemini tedarik etmesi ve gerekli korunmayı sağlaması gerekmektedir. Bu bağlamda üye </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH web sitesi'ne girmesiyle, kendi yazılım ve işletim sistemlerinde oluşabilecek tüm hata ve bunların doğrudan ya da dolaylı sonuçlarından kendisinin sorumlu olduğunu kabul etmiş sayılır.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.16. 3 MASH, sitenin içeriğini dilediği zaman değiştirme, kullanıcılara sağlanan herhangi bir hizmeti değiştirme ya da sona erdirme veya </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH web sitesi'nde kayıtlı kullanıcı bilgi ve verilerini silme hakkını saklı tutar.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.17. 3 MASH, üyelik sözleşmesinin koşullarını hiçbir şekil ve surette ön ihbara ve/veya ihtara gerek kalmaksızın her zaman değiştirebilir, güncelleyebilir veya iptal edebilir. Değiştirilen, güncellenen ya da yürürlükten kaldırılan her hüküm , yayın tarihinde tüm üyeler bakımından hüküm ifade edecektir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.18. Taraflar, 3 MASH'e ait tüm bilgisayar kayıtlarının tek ve gerçek münhasır delil olarak, HUMK madde 287'ye uygun şekilde esas alınacağını ve söz konusu kayıtların bir delil sözleşmesi teşkil ettiği hususunu kabul ve beyan eder.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>3.19. 3 MASH, iş bu üyelik sözleşmesi uyarınca, üyelerinin kendisinde kayıtlı elektronik posta adreslerine bilgilendirme mailleri ve cep telefonlarına bilgilendirme SMS’leri gönderme yetkisine sahip olmakla beraber, üye işbu üyelik sözleşmesini onaylamasıyla beraber bilgilendirme maillerinin elektronik posta adresine ve bilgilendirme SMS’lerinin cep telefonuna gönderilmesini kabul etmiş sayılacaktır. Üye mail ve/veya SMS almaktan vazgeçmek istemesi durumunda info@3mash.com adresine </span><span style=font-size:12pt;color:rgb(0,0,0);font-weight:400;background-color:rgba(0,0,0,0)>elektronik posta göndererek</span><span style=font-size:12pt;color:rgb(0,0,0)> mail ve/veya SMS gönderim iptal işlemini gerçekleştirebilecektir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span class=EOP>&nbsp;</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)><b>Sözleşmenin Feshi</b></span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>İşbu sözleşme üyenin üyeliğini iptal etmesi veya 3 MASH tarafından üyeliğinin iptal edilmesine kadar yürürlükte kalacaktır. </span><span style=font-size:12pt;color:rgb(0,0,0)>3 MASH üyenin üyelik sözleşmesinin herhangi bir hükmünü ihlal etmesi durumunda üyenin üyeliğini iptal ederek sözleşmeyi tek taraflı olarak feshedebilecektir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>&nbsp;</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)><b>İhtilaflerin Halli</b></span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>İşbu sözleşmeye ilişkin ihtilaflerde Antalya Mahkemeleri ve İcra Daireleri yetkilidir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>&nbsp;</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)><b>Yürürlük</b></span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span style=font-size:12pt;color:rgb(0,0,0)>Üyenin, üyelik kaydı yapması üyenin üyelik sözleşmesinde yer alan tüm maddeleri okuduğu ve üyelik sözleşmesinde yer alan maddeleri kabul ettiği anlamına gelir. İşbu Sözleşme üyenin üye olması anında akdedilmiş ve karşılıklı olarak yürürlülüğe girmiştir.</span><p data-header=0 class=\"zw-paragraph heading0\" data-margin-bottom=12pt data-hd-info=0 data-line-height=1.2><span class=EOP>&nbsp;</span></p>",
+          "defaultValue": "",
           "groupId": "content",
-          "description": "Üyelik sözleşmesi gövde metni. üst menü ve alt bilgi dahil değildir."
+          "description": "Boş bırakıldığında üyelik sözleşmesi parçalı prop alanlarından oluşturulur."
         },
         {
           "name": "backgroundColor",
@@ -12507,6 +15561,118 @@
           "required": false,
           "defaultValue": 80,
           "groupId": "appearance"
+        },
+        {
+          "name": "agreementTitleText",
+          "displayName": "Sözleşme Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ÜYELİK SÖZLEŞMESİ",
+          "groupId": "content"
+        },
+        {
+          "name": "partiesTitleText",
+          "displayName": "Taraflar Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Taraflar",
+          "groupId": "content"
+        },
+        {
+          "name": "partyCompanyHtml",
+          "displayName": "3 MASH Taraf Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>a)3mash.com internet sitesinin faaliyetlerini yürüten Kızıltoprak Mah. 919 Sok. No: 19A Muratpaşa, Antalya adresinde mukim 3 MASH TEKNOLOJİ A.Ş. (Bundan böyle “3 MASH” olarak anılacaktır).</p>",
+          "groupId": "content"
+        },
+        {
+          "name": "partyMemberHtml",
+          "displayName": "Üye Taraf Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>b)3mash.com internet sitesine üye olan internet kullanıcısı (\"Üye\")</p>",
+          "groupId": "content"
+        },
+        {
+          "name": "subjectTitleText",
+          "displayName": "Konu Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sözleşmenin Konusu",
+          "groupId": "content"
+        },
+        {
+          "name": "subjectHtml",
+          "displayName": "Konu Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>İşbu Sözleşme’nin konusu 3 MASH'in sahip olduğu internet sitesi www.3mash.com ‘den üyenin faydalanma şartlarının belirlenmesidir.</p>",
+          "groupId": "content"
+        },
+        {
+          "name": "rightsTitleText",
+          "displayName": "Hak ve Yükümlülükler Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tarafların Hak ve Yükümlülükleri",
+          "groupId": "content"
+        },
+        {
+          "name": "rightsHtml",
+          "displayName": "Hak ve Yükümlülükler Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>3.1. Üye, www.3mash.com internet sitesine üye olurken verdiği kişisel ve diğer sair bilgilerin kanunlar önünde doğru olduğunu, 3 MASH'in bu bilgilerin gerçeğe aykırılığı nedeniyle uğrayacağı tüm zararları aynen ve derhal tazmin edeceğini beyan ve taahhüt eder.</p><p>3.2. Üye, 3 MASH tarafından kendisine verilmiş olan şifreyi başka kişi ya da kuruluşlara veremez, üyenin söz konusu şifreyi kullanma hakkı bizzat kendisine aittir.</p><p>3.3. Üye www.3mash.com internet sitesini kullanırken yasal mevzuat hükümlerine riayet etmeyi ve bunları ihlal etmemeyi baştan kabul ve taahhüt eder.</p><p>3.4. Üye, www.3mash.com internet sitesini hiçbir şekilde kamu düzenini bozucu, genel ahlaka aykırı, başkalarını rahatsız ve taciz edici şekilde, yasalara aykırı bir amaç için kullanamaz.</p><p>3.5. www.3mash.com internet sitesinde üyeler tarafından beyan edilen fikir ve düşünceler tamamen üyelerin kendi kişisel görüşleridir ve görüş sahibini bağlar.</p><p>3.6. 3 MASH, üye verilerinin yetkisiz kişilerce okunmasından ve üye yazılım ve verilerine gelebilecek zararlardan dolayı sorumlu olmayacaktır.</p><p>3.7. Üye, diğer internet kullanıcılarının yazılımlarına ve verilerine izinsiz olarak ulaşmamayı veya bunları kullanmamayı kabul etmiştir.</p><p>3.8. İşbu üyelik sözleşmesi içerisinde sayılan maddelerden bir ya da birkaçını ihlal eden üye işbu ihlal nedeniyle cezai ve hukuki olarak şahsen sorumludur.</p><p>3.9. 3 MASH'in her zaman tek taraflı olarak gerektiğinde üyenin üyeliğini silme, müşteriye ait dosya, belge ve bilgileri silme hakkı vardır.</p><p>3.10. www.3mash.com internet sitesi yazılım ve tasarımı 3 MASH mülkiyetinde olup, ilgili haklar kanunlarca korunmaktadır.</p><p>3.11. 3 MASH tarafından siteye erişim ve kullanım bilgileri iyileştirme, geliştirme ve yasal mevzuat kapsamında toplanabilir.</p><p>3.12. 3 MASH kullanıcılarına daha iyi hizmet sunmak, ürünlerini ve hizmetlerini iyileştirmek ve sitenin kullanımını kolaylaştırmak için üyelerin kişisel bilgilerini kullanabilir.</p><p>3.13. 3 MASH'e üye olan kişi, yürürlükte bulunan uygulamalar kapsamında ürün ve hizmet tanıtımları, kampanyalar ve müşteri memnuniyeti uygulamaları sunulmasına izin verdiğini beyan ve kabul eder. Üye, kişisel verileri ile ilgili detaylı bilgiye https://3mash.com/pages/kvkk adresinden ulaşabilir.</p><p>3.14. 3 MASH, üyenin kişisel bilgilerini yasal bir zorunluluk olarak istendiğinde veya haklarını ve mülkiyetini korumak için gerekli olduğuna iyi niyetle kanaat getirdiği hallerde açıklayabilir.</p><p>3.15. 3 MASH web sitesinin virüs ve benzeri amaçlı yazılımlardan arındırılmış olması için mevcut imkanlar dahilinde tedbir alınmıştır.</p><p>3.16. 3 MASH, sitenin içeriğini dilediği zaman değiştirme, kullanıcılara sağlanan hizmeti değiştirme ya da sona erdirme hakkını saklı tutar.</p><p>3.17. 3 MASH, üyelik sözleşmesinin koşullarını ön ihbara gerek kalmaksızın her zaman değiştirebilir, güncelleyebilir veya iptal edebilir.</p><p>3.18. Taraflar, 3 MASH'e ait tüm bilgisayar kayıtlarının tek ve gerçek münhasır delil olarak esas alınacağını kabul ve beyan eder.</p><p>3.19. 3 MASH, işbu üyelik sözleşmesi uyarınca üyelerine bilgilendirme e-postaları ve SMS’leri gönderme yetkisine sahiptir. Üye mail ve/veya SMS almaktan vazgeçmek istemesi durumunda info@3mash.com adresine elektronik posta göndererek iptal işlemini gerçekleştirebilecektir.</p>",
+          "groupId": "content"
+        },
+        {
+          "name": "terminationTitleText",
+          "displayName": "Fesih Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sözleşmenin Feshi",
+          "groupId": "content"
+        },
+        {
+          "name": "terminationHtml",
+          "displayName": "Fesih Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>İşbu sözleşme üyenin üyeliğini iptal etmesi veya 3 MASH tarafından üyeliğinin iptal edilmesine kadar yürürlükte kalacaktır. 3 MASH üyenin üyelik sözleşmesinin herhangi bir hükmünü ihlal etmesi durumunda üyenin üyeliğini iptal ederek sözleşmeyi tek taraflı olarak feshedebilecektir.</p>",
+          "groupId": "content"
+        },
+        {
+          "name": "disputeTitleText",
+          "displayName": "İhtilaf Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İhtilaflerin Halli",
+          "groupId": "content"
+        },
+        {
+          "name": "disputeHtml",
+          "displayName": "İhtilaf Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>İşbu sözleşmeye ilişkin ihtilaflerde Antalya Mahkemeleri ve İcra Daireleri yetkilidir.</p>",
+          "groupId": "content"
+        },
+        {
+          "name": "enforcementTitleText",
+          "displayName": "Yürürlük Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yürürlük",
+          "groupId": "content"
+        },
+        {
+          "name": "enforcementHtml",
+          "displayName": "Yürürlük Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Üyenin, üyelik kaydı yapması üyenin üyelik sözleşmesinde yer alan tüm maddeleri okuduğu ve üyelik sözleşmesinde yer alan maddeleri kabul ettiği anlamına gelir. İşbu Sözleşme üyenin üye olması anında akdedilmiş ve karşılıklı olarak yürürlülüğe girmiştir.</p>",
+          "groupId": "content"
         }
       ],
       "propGroups": [

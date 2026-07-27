@@ -9,6 +9,7 @@ export interface Props {
   announcementCtaText?: string;
   announcementHref?: string;
   logoText: string;
+  /** Logo tıklanınca gidilecek anasayfa routeu. */
   logoHref?: string;
   productsMenuText?: string;
   /** Ürünler mega menüsündeki sağ alt küçük bağlantı metni. */
@@ -19,26 +20,45 @@ export interface Props {
   productsFeatureTitle?: string;
   productsFeatureDescription?: string;
   productsFeatureCtaText?: string;
+  /** C4P kartının gideceği çalışan ürün/kategori routeu. */
   productsFeatureHref?: string;
   productsCol1Title?: string;
+  /** Ürünler menüsünde sol sütundaki ilk kategori başlığı. */
   product1Title?: string;
+  /** 3D Yazıcılar kartı alt açıklaması. */
   product1Description?: string;
+  /** 3D Yazıcılar kategori routeu. */
   product1Href?: string;
+  /** Ürünler menüsünde sol sütundaki ikinci kategori başlığı. */
   product2Title?: string;
+  /** Yıkama & Kürleme kartı alt açıklaması. */
   product2Description?: string;
+  /** Yıkama & Kürleme kategori routeu. */
   product2Href?: string;
+  /** Ürünler menüsünde sol sütundaki üçüncü kategori başlığı. */
   product3Title?: string;
+  /** Dental Reçineler kartı alt açıklaması. */
   product3Description?: string;
+  /** Dental Reçineler kategori routeu. */
   product3Href?: string;
   productsCol2Title?: string;
+  /** Ürünler menüsünde sağ sütundaki ilk kategori başlığı. */
   product4Title?: string;
+  /** Masaüstü Tarayıcılar kartı alt açıklaması. */
   product4Description?: string;
+  /** Masaüstü Tarayıcılar kategori routeu. */
   product4Href?: string;
+  /** Ürünler menüsünde sağ sütundaki ikinci kategori başlığı. */
   product5Title?: string;
+  /** Zirkon Bloklar kartı alt açıklaması. */
   product5Description?: string;
+  /** Zirkon Bloklar kategori routeu. */
   product5Href?: string;
+  /** Ürünler menüsünde sağ sütundaki üçüncü kategori başlığı. */
   product6Title?: string;
+  /** Dental Fırınlar kartı alt açıklaması. */
   product6Description?: string;
+  /** Dental Fırınlar kategori routeu. */
   product6Href?: string;
   whyMenuText?: string;
   why1Number?: string;
@@ -58,15 +78,19 @@ export interface Props {
   why4Description?: string;
   why4Href?: string;
   referencesText?: string;
+  /** Referanslar menü linki. Başka sayfadan doğal olarak anasayfaya gider ve #guven hashini taşır. */
   referencesHref?: string;
   academyText?: string;
   academyHref?: string;
+  /** Arama sayfası routeu. Tam domain kullanmayın; /search yazın. */
   searchHref?: string;
   /** üst menü arama önerileri için Tüm Ürünler olarak bağlayın. */
   searchProductList?: IkasProductList;
   searchAriaLabel?: string;
+  /** Hesap giriş routeu. Tam domain kullanmayın; /account/login yazın. */
   accountHref?: string;
   accountAriaLabel?: string;
+  /** Sepet routeu. Tam domain kullanmayın; /cart yazın. */
   cartHref?: string;
   cartAriaLabel?: string;
   cartCount?: string;
@@ -231,6 +255,7 @@ export interface Props {
   storePanelTitle?: string;
   storePanelDescription?: string;
   storePanelButtonText?: string;
+  /** Mağaza paneli buton routeu. Varsayılan sepet sayfasıdır. */
   storePanelButtonHref?: string;
   storePanelNote?: string;
   announcementWordStyleEnabled?: boolean;
@@ -260,4 +285,8 @@ export interface Props {
   profileLink5Href?: string;
   profileLink6Text?: string;
   profileLink6Href?: string;
+  /** Referanslar linkinin anasayfa routeu. */
+  referencesHomeHref?: string;
+  /** Anasayfadaki referanslar section id değeri. # koymadan yazın. */
+  referencesSectionId?: string;
 }

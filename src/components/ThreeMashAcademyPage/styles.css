@@ -1,5 +1,227 @@
 .three-mash-academy-page {
   display: block;
   width: 100%;
-  background: #ffffff;
+  background: var(--tma-bg, #ffffff);
+  color: var(--tma-text, #111111);
+  font-family: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.three-mash-academy-page *,
+.three-mash-academy-page *::before,
+.three-mash-academy-page *::after {
+  box-sizing: border-box;
+}
+
+.tma-wrap {
+  width: min(100%, var(--tma-max, 1280px));
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+}
+
+.tma-quote-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 0 calc(var(--tma-gap, 32px) + 8px);
+  text-align: center;
+}
+
+.tma-quote-section h1 {
+  margin: 0;
+  color: var(--tma-heading, #1f2933);
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.tma-quote-section blockquote {
+  width: min(var(--tma-quote-width, 50%), 100%);
+  min-width: min(var(--tma-quote-min, 520px), 100%);
+  margin: 0;
+  padding: var(--tma-quote-padding, 30px);
+  color: var(--tma-quote, #070707);
+}
+
+.tma-quote-section blockquote p {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.tma-quote-section cite {
+  display: block;
+  margin-top: 12px;
+  color: var(--tma-quote-author, #2b2b2b);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  text-align: right;
+}
+
+.tma-intro {
+  display: grid;
+  grid-template-columns: minmax(320px, var(--tma-intro-image-width, 53vw)) minmax(320px, 1fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
+  margin-top: var(--tma-gap, 32px);
+  padding: 8px 0 24px;
+  background: var(--tma-intro-bg, #ffffff);
+}
+
+.tma-intro-media {
+  width: min(100%, var(--tma-intro-image-max, 800px));
+  min-height: var(--tma-intro-image-min-height, 0px);
+  justify-self: end;
+  overflow: hidden;
+  background: #f4f4f4;
+}
+
+.tma-intro-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: inherit;
+  object-fit: contain;
+}
+
+.tma-intro-copy {
+  color: var(--tma-intro-text, #000000);
+}
+
+.tma-intro-copy h2,
+.tma-past h2 {
+  margin: 0 0 20px;
+  color: var(--tma-heading, #1f2933);
+  font-size: 38px;
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.tma-rich {
+  color: inherit;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.tma-rich p,
+.tma-card-body p {
+  margin: 0 0 14px;
+}
+
+.tma-past {
+  max-width: 980px;
+  margin: calc(var(--tma-gap, 32px) + 16px) auto 0;
+  text-align: center;
+}
+
+.tma-past-text {
+  color: var(--tma-muted, #555555);
+}
+
+.tma-events {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--tma-event-gap, 24px);
+  margin-top: calc(var(--tma-gap, 32px) + 12px);
+}
+
+.tma-card {
+  overflow: hidden;
+  background: var(--tma-panel, #ffffff);
+  border: 1px solid var(--tma-line, #e8e8e8);
+  border-radius: 8px;
+}
+
+.tma-card-image {
+  display: block;
+  aspect-ratio: var(--tma-event-ratio, 1 / 1);
+  background: var(--tma-event-image-bg, #f7f7f7);
+}
+
+.tma-card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tma-card-body {
+  padding: 18px 20px 22px;
+}
+
+.tma-card-title {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--tma-card-title, #1f2933);
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tma-card-date {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--tma-event-date, #777777);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tma-card-body p {
+  color: var(--tma-muted, #555555);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.tma-read-more {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--tma-read-more, #32303d);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tma-read-more::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin-top: 3px;
+  background: currentColor;
+}
+
+.tma-word-style {
+  color: var(--tma-word-color, #caff12);
+  font-weight: var(--tma-word-weight, 700);
+  font-style: var(--tma-word-style, inherit);
+}
+
+@media (max-width: 900px) {
+  .tma-wrap {
+    padding: 36px 18px 56px;
+  }
+
+  .tma-quote-section blockquote {
+    width: 100%;
+    min-width: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .tma-intro,
+  .tma-events {
+    grid-template-columns: 1fr;
+  }
+
+  .tma-intro-media {
+    justify-self: stretch;
+  }
+
+  .tma-intro-copy h2,
+  .tma-past h2 {
+    font-size: 30px;
+  }
 }

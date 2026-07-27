@@ -1,0 +1,203 @@
+@import "../../sub-components/ThreeMashSectionRenderer/styles.css";
+
+.three-mash-products-basic-slider {
+  width: 100%;
+  padding: var(--tmr-slider-padding-top) 0 var(--tmr-slider-padding-bottom);
+  background: var(--tmr-bg);
+  color: var(--tmr-text);
+}
+
+.three-mash-products-basic-slider *,
+.three-mash-products-basic-slider *::before,
+.three-mash-products-basic-slider *::after {
+  box-sizing: border-box;
+}
+
+.three-mash-products-basic-slider .tmpbs-wrap {
+  width: min(100%, var(--tmr-slider-max), 1240px);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.three-mash-products-basic-slider .tmpbs-intro {
+  display: grid;
+  gap: 24px;
+  max-width: min(100%, var(--tmr-slider-intro-max));
+  margin: 0 auto var(--tmr-slider-intro-spacing);
+  color: var(--tmr-text);
+}
+
+.three-mash-products-basic-slider .tmpbs-intro-left {
+  margin-left: 0;
+  text-align: left;
+}
+
+.three-mash-products-basic-slider .tmpbs-intro-center {
+  text-align: center;
+}
+
+.three-mash-products-basic-slider .tmpbs-intro-right {
+  margin-right: 0;
+  text-align: right;
+}
+
+.three-mash-products-basic-slider .tmpbs-intro h2 {
+  margin: 0;
+  color: var(--tmr-text);
+  font-size: var(--tmr-slider-intro-title-size);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.three-mash-products-basic-slider .tmpbs-intro-copy {
+  color: var(--tmr-text);
+  font-size: var(--tmr-slider-intro-body-size);
+  font-weight: 400;
+  line-height: 1.78;
+  letter-spacing: 0;
+}
+
+.three-mash-products-basic-slider .tmpbs-intro-copy p {
+  margin: 0;
+}
+
+.three-mash-products-basic-slider .tmpbs-intro-copy b,
+.three-mash-products-basic-slider .tmpbs-intro-copy strong {
+  font-weight: 900;
+}
+
+.three-mash-products-basic-slider .tmr-products {
+  margin-top: 0;
+}
+
+.three-mash-products-basic-slider .tmr-products-slider.tmr-products-live {
+  display: block !important;
+  grid-template-columns: none !important;
+  overflow: hidden !important;
+}
+
+.three-mash-products-basic-slider .tmr-products-slider::before,
+.three-mash-products-basic-slider .tmr-products-slider::after {
+  width: var(--tmr-solution-edge-fade-width);
+  opacity: 1;
+  animation: none;
+}
+
+.three-mash-products-basic-slider .tmr-products-slider::before {
+  background: linear-gradient(90deg, var(--tmr-bg) 0%, transparent 100%);
+}
+
+.three-mash-products-basic-slider .tmr-products-slider::after {
+  background: linear-gradient(270deg, var(--tmr-bg) 0%, transparent 100%);
+}
+
+.three-mash-products-basic-slider .tmr-products-track {
+  --tmr-products-loop-distance: 0px;
+  --tmr-products-loop-distance-negative: 0px;
+  width: 100% !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: var(--tmr-solution-card-gap);
+  animation: none;
+  transform: translateX(0);
+  will-change: transform;
+}
+
+.three-mash-products-basic-slider .tmr-products-slider.tmr-products-loop-ready .tmr-products-track {
+  animation: tmr-products-marquee var(--tmr-solution-carousel-duration) linear infinite;
+}
+
+.three-mash-products-basic-slider .tmr-products-slider:hover .tmr-products-track,
+.three-mash-products-basic-slider .tmr-products-slider:focus-within .tmr-products-track {
+  animation-play-state: paused;
+}
+
+.three-mash-products-basic-slider .tmr-products-slider.tmr-products-no-pause:hover .tmr-products-track,
+.three-mash-products-basic-slider .tmr-products-slider.tmr-products-no-pause:focus-within .tmr-products-track {
+  animation-play-state: running;
+}
+
+.three-mash-products-basic-slider .tmr-products-track > .tmr-product {
+  flex: 0 0 calc((100% - (var(--tmr-solution-card-gap) * (var(--tmr-slider-desktop-cards) - 1))) / var(--tmr-slider-desktop-cards)) !important;
+  min-width: 0;
+}
+
+.three-mash-products-basic-slider .tmr-products-slider.tmr-products-single .tmr-products-track {
+  animation: none !important;
+}
+
+.three-mash-products-basic-slider .tmr-product {
+  border-radius: var(--tmr-solution-card-radius);
+}
+
+.three-mash-products-basic-slider .tmr-product-media {
+  background: linear-gradient(160deg, var(--tmr-solution-media-start), var(--tmr-solution-media-end));
+}
+
+.three-mash-products-basic-slider .tmr-product-img {
+  width: var(--tmr-solution-image-width);
+  height: var(--tmr-solution-image-height);
+  max-width: 90%;
+  max-height: 190px;
+  object-fit: var(--tmr-solution-image-fit);
+  opacity: var(--tmr-solution-image-opacity);
+  transform: translate(var(--tmr-solution-image-x), var(--tmr-solution-image-y));
+  filter:
+    drop-shadow(0 18px 26px rgba(0, 0, 0, 0.2))
+    brightness(var(--tmr-solution-image-brightness))
+    contrast(var(--tmr-solution-image-contrast))
+    saturate(var(--tmr-solution-image-saturation))
+    hue-rotate(var(--tmr-solution-image-hue))
+    invert(var(--tmr-solution-image-invert));
+}
+
+.three-mash-products-basic-slider .tmr-products-setup {
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .three-mash-products-basic-slider .tmpbs-wrap {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .three-mash-products-basic-slider .tmpbs-intro {
+    gap: 18px;
+  }
+
+  .three-mash-products-basic-slider .tmr-products-track > .tmr-product {
+    flex-basis: calc((100% - (var(--tmr-solution-card-gap) * (var(--tmr-slider-tablet-cards) - 1))) / var(--tmr-slider-tablet-cards)) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .three-mash-products-basic-slider .tmpbs-wrap {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .three-mash-products-basic-slider .tmpbs-intro,
+  .three-mash-products-basic-slider .tmpbs-intro-left,
+  .three-mash-products-basic-slider .tmpbs-intro-right {
+    text-align: left;
+  }
+
+  .three-mash-products-basic-slider .tmpbs-intro h2 {
+    font-size: min(var(--tmr-slider-intro-title-size), 24px);
+  }
+
+  .three-mash-products-basic-slider .tmpbs-intro-copy {
+    font-size: min(var(--tmr-slider-intro-body-size), 16px);
+    line-height: 1.55;
+  }
+
+  .three-mash-products-basic-slider .tmr-products-track > .tmr-product {
+    flex-basis: 100% !important;
+  }
+
+  .three-mash-products-basic-slider .tmr-products-slider::before,
+  .three-mash-products-basic-slider .tmr-products-slider::after {
+    width: min(var(--tmr-solution-edge-fade-width), 24px);
+  }
+}

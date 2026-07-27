@@ -6,29 +6,38 @@ export interface Props {
   logoText?: string;
   descriptionText?: string;
   productLink1Text?: string;
+  /** Tam domain kullanmayın; kategori routeunu /3d-yazicilar olarak girin. */
   productLink1Href?: string;
   productLink2Text?: string;
+  /** Tam domain kullanmayın; kategori routeunu /dental-3d-yazici-recineleri olarak girin. */
   productLink2Href?: string;
   productLink3Text?: string;
+  /** Tam domain kullanmayın; kategori routeunu /yikama-kurleme-cihazlari olarak girin. */
   productLink3Href?: string;
   productLink4Text?: string;
+  /** Tam domain kullanmayın; kategori routeunu /zirkon-bloklar olarak girin. */
   productLink4Href?: string;
   companyLink1Text?: string;
+  /** Hakkımızda sayfası için yayın routeu: /pages/hakkimizda. */
   companyLink1Href?: string;
   companyLink2Text?: string;
+  /** Doğru Academy routeu /pages/mash-academy. */
   companyLink2Href?: string;
   companyLink3Text?: string;
+  /** Tam domain kullanmayın; blog routeunu /blog olarak girin. */
   companyLink3Href?: string;
   companyLink4Text?: string;
+  /** Tam domain kullanmayın; iletişim routeunu /pages/iletisim olarak girin. */
   companyLink4Href?: string;
   contactLink1Text?: string;
+  /** Email için mailto: formatı kullanılır. */
   contactLink1Href?: string;
   contactLink2Text?: string;
+  /** Harita linki dış bağlantıdır. */
   contactLink2Href?: string;
   contactLink3Text?: string;
   contactLink3Href?: string;
   copyrightText?: string;
-  legalText?: string;
   backgroundColor?: string;
   textColor?: string;
   mutedTextColor?: string;
@@ -47,6 +56,7 @@ export interface Props {
   companyFooterLinks?: IkasNavigationLinkList;
   /** Alt bilgi İletişim sütunu için editörden yönetilen isteğe bağlı bağlantılar. */
   contactFooterLinks?: IkasNavigationLinkList;
+  /** Tam domain kullanmayın; anasayfa için / girin. */
   logoHref?: string;
   /** Logo görseli veya Logo SVG kullanın. İkisi de girilirse Logo SVG gösterilir. */
   logoImageUrl?: IkasImage | null;
@@ -79,4 +89,22 @@ export interface Props {
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
+  productLink5Text?: string;
+  /** Tam domain kullanmayın; kategori routeunu /dental-firinlar olarak girin. */
+  productLink5Href?: string;
+  productLink6Text?: string;
+  /** Beş ürün linki yeterliyse boş bırakın. */
+  productLink6Href?: string;
+  legalLink1Text?: string;
+  /** KVKK sayfası için yayın routeu: /pages/kvkk. */
+  legalLink1Href?: string;
+  legalLink2Text?: string;
+  /** İade ve garanti sayfası için yayın routeu: /pages/iade-ve-garanti. */
+  legalLink2Href?: string;
+  legalLink3Text?: string;
+  /** Mesafeli satış sayfası için yayın routeu: /pages/mesafeli-satis-sozlesmesi. */
+  legalLink3Href?: string;
+  legalLink4Text?: string;
+  /** Üyelik sözleşmesi sayfası için yayın routeu: /pages/uyelik-sozlesmesi. */
+  legalLink4Href?: string;
 }

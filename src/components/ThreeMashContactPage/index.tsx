@@ -136,7 +136,7 @@ export function ThreeMashContactPage(props: Props) {
             <input type="checkbox" checked={kvkkAccepted} onInput={(event) => setKvkkAccepted((event.currentTarget as HTMLInputElement).checked)} />
             <span>
               {text(props.kvkkTextBefore, "Kişisel verilerin korunması kanunu")}{" "}
-              <a href={href(props.kvkkHref, "/pages/gizlilik-politikasi-ve-kvkk")} target="_blank" rel="noreferrer">
+              <a href={href(props.kvkkHref, "/2tplvqpo-kvkk-page")} target="_blank" rel="noreferrer">
                 {text(props.kvkkLinkText, "okudum, onaylıyorum")}
               </a>
             </span>

@@ -1,0 +1,140 @@
+.three-mash-product-video {
+  width: 100%;
+  padding: var(--tmpv-pt) 0 var(--tmpv-pb);
+  background: var(--tmpv-bg);
+  color: var(--tmpv-text);
+  font-family: Poppins, Arial, sans-serif;
+}
+
+.three-mash-product-video *,
+.three-mash-product-video *::before,
+.three-mash-product-video *::after {
+  box-sizing: border-box;
+}
+
+.tmpv-wrap {
+  width: min(100%, var(--tmpv-max), 1240px);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.tmpv-copy {
+  display: grid;
+  gap: 14px;
+  max-width: 920px;
+  margin-bottom: var(--tmpv-text-gap);
+}
+
+.tmpv-copy-center {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.tmpv-copy-left {
+  margin-right: auto;
+  text-align: left;
+}
+
+.tmpv-copy-right {
+  margin-left: auto;
+  text-align: right;
+}
+
+.tmpv-copy h2 {
+  margin: 0;
+  color: var(--tmpv-text);
+  font-size: var(--tmpv-title-size);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.tmpv-description {
+  color: var(--tmpv-muted);
+  font-size: var(--tmpv-body-size);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+.tmpv-description p {
+  margin: 0;
+}
+
+.tmpv-description b,
+.tmpv-description strong {
+  color: var(--tmpv-text);
+  font-weight: 900;
+}
+
+.tmpv-frame {
+  display: grid;
+  width: min(100%, var(--tmpv-video-max));
+  aspect-ratio: var(--tmpv-ratio);
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: var(--tmpv-radius);
+  background: #050505;
+}
+
+.tmpv-frame iframe,
+.tmpv-frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: var(--tmpv-fit);
+  background: #050505;
+}
+
+.tmpv-placeholder {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  place-items: center;
+  padding: 32px;
+  color: #777777;
+  background: #eeeeee;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .tmpv-wrap {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .three-mash-product-video {
+    padding-top: calc(var(--tmpv-pt) * 0.65);
+    padding-bottom: calc(var(--tmpv-pb) * 0.65);
+  }
+
+  .tmpv-wrap {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .tmpv-copy,
+  .tmpv-copy-left,
+  .tmpv-copy-right {
+    text-align: center;
+  }
+
+  .tmpv-copy h2 {
+    font-size: min(var(--tmpv-title-size), 26px);
+  }
+
+  .tmpv-description {
+    font-size: min(var(--tmpv-body-size), 16px);
+  }
+
+  .tmpv-placeholder {
+    min-height: 220px;
+  }
+}

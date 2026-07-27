@@ -179,7 +179,7 @@ export function ThreeMashCartPage(props: Props) {
 
   const items = cart?.orderLineItems?.filter((item) => !item.deleted) || [];
   const itemCount = cartItemCount(items);
-  const hasItems = Boolean(customer) && items.length > 0;
+  const hasItems = items.length > 0;
 
   const style = {
     "--tmcart-bg": text(props.backgroundColor, "#ffffff"),
@@ -210,7 +210,7 @@ export function ThreeMashCartPage(props: Props) {
   if (!hasItems) {
     return (
       <section className="three-mash-cart-page" style={style}>
-        <EmptyCart props={props} count={customer ? items.length : 0} isLoggedIn={Boolean(customer)} />
+        <EmptyCart props={props} count={itemCount} isLoggedIn={Boolean(customer)} />
       </section>
     );
   }

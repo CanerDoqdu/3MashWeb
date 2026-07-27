@@ -98,7 +98,7 @@ export function ThreeMashRegisterPage(props: Props) {
           <label className="tmrpg-auth-check">
             <input type="checkbox" checked={marketingAccepted} onInput={(event) => setMarketingAccepted((event.currentTarget as HTMLInputElement).checked)} />
             <span>
-              Kampanyalardan haberdar olmak için <a href={href(props.marketingHref, "/pages/ticari-elektronik-ileti-onayi")}>Ticari Elektronik İleti Onayı</a> metnini okudum, onaylıyorum.
+              Kampanyalardan haberdar olmak için <a href={href(props.marketingHref, "/2tplvqpo-commercial-electronic-page")}>Ticari Elektronik İleti Onayı</a> metnini okudum, onaylıyorum.
               <br />
               Tarafınızdan gönderilecek ticari elektronik iletileri almak istiyorum.
             </span>
@@ -107,7 +107,7 @@ export function ThreeMashRegisterPage(props: Props) {
           <label className="tmrpg-auth-check">
             <input type="checkbox" checked={termsAccepted} required onInput={(event) => setTermsAccepted((event.currentTarget as HTMLInputElement).checked)} />
             <span>
-              <a href={href(props.termsHref, "/pages/uyelik-sozlesmesi")}>Üyelik Sözleşmesi</a> ve <a href={href(props.kvkkHref, "/pages/kvkk-aydinlatma-metni")}>KVKK Aydınlatma Metni</a>ni okudum, kabul ediyorum.
+              <a href={href(props.termsHref, "/2tplvqpo-membership-agreement-page")}>Üyelik Sözleşmesi</a> ve <a href={href(props.kvkkHref, "/2tplvqpo-kvkk-page")}>KVKK Aydınlatma Metni</a>ni okudum, kabul ediyorum.
             </span>
           </label>
 
