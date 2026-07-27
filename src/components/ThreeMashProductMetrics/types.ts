@@ -1,5 +1,61 @@
 // This file is auto-generated — do not edit manually.
+import type { IkasProduct } from "@ikas/bp-storefront";
+
 export interface Props {
+  /** Ürün bazlı metrik için sayfa ürününe bağlayın. */
+  product?: IkasProduct | null;
+  /** props: Studio değerlerini kullanır. productAttributes: ürüne özel alanlardan okur. */
+  dataSource?: string;
+  /** Boş bırakmayın. Varsayılan alan adları product_metric ile başlar. */
+  productAttributePrefix?: string;
+  metricCountAttributeKey?: string;
+  metric1EnabledAttributeKey?: string;
+  metric1ValueAttributeKey?: string;
+  metric1UnitAttributeKey?: string;
+  metric1TitleAttributeKey?: string;
+  metric1SubtitleAttributeKey?: string;
+  metric2EnabledAttributeKey?: string;
+  metric2ValueAttributeKey?: string;
+  metric2UnitAttributeKey?: string;
+  metric2TitleAttributeKey?: string;
+  metric2SubtitleAttributeKey?: string;
+  metric3EnabledAttributeKey?: string;
+  metric3ValueAttributeKey?: string;
+  metric3UnitAttributeKey?: string;
+  metric3TitleAttributeKey?: string;
+  metric3SubtitleAttributeKey?: string;
+  metric4EnabledAttributeKey?: string;
+  metric4ValueAttributeKey?: string;
+  metric4UnitAttributeKey?: string;
+  metric4TitleAttributeKey?: string;
+  metric4SubtitleAttributeKey?: string;
+  metric5EnabledAttributeKey?: string;
+  metric5ValueAttributeKey?: string;
+  metric5UnitAttributeKey?: string;
+  metric5TitleAttributeKey?: string;
+  metric5SubtitleAttributeKey?: string;
+  metric6EnabledAttributeKey?: string;
+  metric6ValueAttributeKey?: string;
+  metric6UnitAttributeKey?: string;
+  metric6TitleAttributeKey?: string;
+  metric6SubtitleAttributeKey?: string;
+  circleColorAttributeKey?: string;
+  circleTextColorAttributeKey?: string;
+  maxWidthAttributeKey?: string;
+  paddingTopAttributeKey?: string;
+  paddingBottomAttributeKey?: string;
+  gridGapAttributeKey?: string;
+  circleSizeAttributeKey?: string;
+  circleSpacingAttributeKey?: string;
+  desktopColumnsAttributeKey?: string;
+  tabletColumnsAttributeKey?: string;
+  valueFontSizeAttributeKey?: string;
+  unitFontSizeAttributeKey?: string;
+  titleFontSizeAttributeKey?: string;
+  subtitleFontSizeAttributeKey?: string;
+  backgroundColorAttributeKey?: string;
+  textColorAttributeKey?: string;
+  mutedTextColorAttributeKey?: string;
   /** Sayfa içi link için id. Boş bırakılabilir. */
   sectionAnchorId?: string;
   /** En fazla 6 metrik render edilir. */

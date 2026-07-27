@@ -23,6 +23,7 @@ import {
 } from "@ikas/bp-storefront";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
 import { ThreeMashFooter } from "../ThreeMashFooter";
+import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
 import { Props } from "./types";
 
 function inlineHtml(value?: string) {
@@ -99,6 +100,83 @@ function normalizedKey(value: unknown) {
     .replace(/ç/g, "c")
     .replace(/[^a-z0-9]+/g, "_")
     .replace(/^_+|_+$/g, "");
+}
+
+function normalizedVariantText(value: string | undefined) {
+  return (value || "")
+    .toLocaleLowerCase("tr")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizedVariantKey(value: string | undefined) {
+  return normalizedVariantText(value)
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ı/g, "i")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9.]+/g, "");
+}
+
+function cssColorValue(value: unknown): string {
+  if (typeof value !== "string") return "";
+  const text = value.trim();
+  if (/^(?:[0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(text)) return `#${text}`;
+  const isSafeColor =
+    /^#(?:[0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(text) ||
+    /^rgba?\(\s*[\d.\s,%]+\)$/i.test(text) ||
+    /^hsla?\(\s*[\d.\s,%degturnrad]+\)$/i.test(text) ||
+    /^[a-z]+$/i.test(text);
+  return isSafeColor ? text : "";
+}
+
+function variantColorCode(variantValue: unknown): string {
+  if (!isPlainObject(variantValue)) return "";
+  return cssColorValue(variantValue.colorCode);
+}
+
+function colorForVariantValue(product: IkasProduct, variantType: unknown, variantValue: unknown) {
+  const direct = variantColorCode(variantValue);
+  if (direct) return direct;
+
+  const valueId = isPlainObject(variantValue) && typeof variantValue.id === "string" ? variantValue.id : "";
+  if (!valueId) return "";
+
+  const typeData = variantType as { variantType?: { values?: unknown[] } } | undefined;
+  const typeMatch = typeData?.variantType?.values?.find((value) => isPlainObject(value) && value.id === valueId);
+  const typeColor = variantColorCode(typeMatch);
+  if (typeColor) return typeColor;
+
+  for (const productVariantType of product.variantTypes || []) {
+    const match = productVariantType.variantType.values?.find((value) => value.id === valueId);
+    const color = variantColorCode(match);
+    if (color) return color;
+  }
+
+  return "";
+}
+
+function isColorVariant(product: IkasProduct, variantType: unknown, valueName: string | undefined, variantValue?: unknown) {
+  const typeName = (variantType as { variantType?: { name?: string } } | undefined)?.variantType?.name;
+  const type = normalizedVariantText(typeName);
+  return type.includes("renk") || type.includes("color") || Boolean(colorForVariantValue(product, variantType, variantValue));
+}
+
+function uniqueDisplayedVariantValues<T extends { variantValue?: { id?: string; name?: string }; isSelected?: boolean; hasStock?: boolean }>(
+  items: T[],
+) {
+  const values = new Map<string, T>();
+
+  for (const item of items) {
+    const name = item.variantValue?.name || "";
+    const key = normalizedVariantKey(name) || item.variantValue?.id || name;
+    const current = values.get(key);
+    if (!current || item.isSelected || (!current.hasStock && item.hasStock)) values.set(key, item);
+  }
+
+  return Array.from(values.values());
 }
 
 function imageValue(value: unknown): string {
@@ -581,6 +659,7 @@ export function ThreeMashProductDetailLive(props: Props) {
     setIsAdding(true);
     setMessage("");
     try {
+      rememberOrderLineImageFallback(product, variant, image ? [getDefaultSrc(image)] : []);
       const result = await addItemToCart(variant, product, quantity);
       if (result.success) {
         window.dispatchEvent(new CustomEvent("ikas:open-cart-sidebar"));
@@ -670,22 +749,29 @@ export function ThreeMashProductDetailLive(props: Props) {
                         <div className="tmpdl-variant-group" key={variantType.variantType.id}>
                           <span>{variantType.variantType.name}</span>
                           <div>
-                            {variantType.displayedVariantValues.map((item) => (
-                              <button
-                                type="button"
-                                className={item.isSelected ? "is-selected" : ""}
-                                disabled={!item.hasStock}
-                                onClick={() => {
-                                  selectVariantValue(product, item.variantValue, true);
-                                  setSelectedImageIndex(0);
-                                  setMessage("");
-                                  setVersion((current) => current + 1);
-                                }}
-                                key={item.variantValue.id}
-                              >
-                                {item.variantValue.name}
-                              </button>
-                            ))}
+                            {uniqueDisplayedVariantValues(variantType.displayedVariantValues).map((item) => {
+                              const color = colorForVariantValue(product, variantType, item.variantValue);
+                              const isColor = isColorVariant(product, variantType, item.variantValue.name, item.variantValue);
+                              return (
+                                <button
+                                  type="button"
+                                  className={`${item.isSelected ? "is-selected" : ""}${isColor ? " is-color-swatch" : ""}`}
+                                  disabled={!item.hasStock}
+                                  style={isColor ? { "--tmpdl-swatch": color || "#f6f1e7" } as any : undefined}
+                                  onClick={() => {
+                                    selectVariantValue(product, item.variantValue, true);
+                                    setSelectedImageIndex(0);
+                                    setMessage("");
+                                    setVersion((current) => current + 1);
+                                  }}
+                                  aria-label={`${variantType.variantType.name}: ${item.variantValue.name}`}
+                                  title={item.variantValue.name}
+                                  key={item.variantValue.id}
+                                >
+                                  <span>{item.variantValue.name}</span>
+                                </button>
+                              );
+                            })}
                           </div>
                         </div>
                       ))}

@@ -4,7 +4,6 @@ import {
   changeItemQuantity,
   customerStore,
   getCart,
-  getCheckoutUrlFromCartStore,
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getOrderLineItemFormattedFinalUnitPrice,
   initCustomerStore,
@@ -14,7 +13,7 @@ import {
   type IkasCustomer,
   type IkasOrderLineItem,
 } from "@ikas/bp-storefront";
-import { orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
+import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
 import type { Props } from "./types";
 
 const categoryProductsPageHref = "/dental-3d-yazici-recineleri";
@@ -75,9 +74,8 @@ function variantText(item: IkasOrderLineItem) {
   return item.variant?.variantValues?.map((value) => value.variantValueName).filter(Boolean).join(" / ") || item.variant?.sku || "";
 }
 
-function checkoutUrlFromCart(cart: IkasCart | null) {
-  const cartId = cart?.id?.trim();
-  return cartId ? `/checkout?id=${encodeURIComponent(cartId)}&step=info` : "/checkout";
+function checkoutUrlFromCart() {
+  return "/pages/checkout";
 }
 
 function EmptyCart({ props, count, isLoggedIn }: { props: Props; count: number; isLoggedIn: boolean }) {
@@ -160,13 +158,16 @@ export function ThreeMashCartPage(props: Props) {
 
   function refreshState() {
     setCustomer(customerStore.customer);
-    setCartState(cartStore.cart);
+    setCartState(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
   }
 
   useEffect(() => {
     let mounted = true;
     Promise.all([initCustomerStore(customerStore), waitForCartStoreInit(cartStore)])
-      .then(() => getCart())
+      .then(async () => {
+        await getCart();
+        await hydrateMissingOrderLineImageFallbacks(cartStore.cart?.orderLineItems || []);
+      })
       .finally(() => {
         if (!mounted) return;
         refreshState();
@@ -199,8 +200,7 @@ export function ThreeMashCartPage(props: Props) {
       await getCart();
       refreshState();
 
-      const currentCart = cartStore.cart || cart;
-      const checkoutUrl = getCheckoutUrlFromCartStore(cartStore) || checkoutUrlFromCart(currentCart);
+      const checkoutUrl = checkoutUrlFromCart();
       window.location.href = checkoutUrl;
     } finally {
       setIsCheckingOut(false);

@@ -21,10 +21,17 @@ import {
   type IkasProduct,
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
+import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
 import { Props } from "./types";
+
+type PlainObject = Record<string, unknown>;
 
 function inlineHtml(value?: string) {
   return { __html: value || "" };
+}
+
+function isPlainObject(value: unknown): value is PlainObject {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value));
 }
 
 function selectedVariant(product: IkasProduct): IkasProductVariant | null {
@@ -110,41 +117,74 @@ function normalizedVariantText(value: string | undefined) {
     .trim();
 }
 
-function colorForVariantValue(value: string | undefined) {
-  const text = normalizedVariantText(value);
-  const colors: Record<string, string> = {
-    black: "#111111",
-    siyah: "#111111",
-    white: "#f6f3ee",
-    beyaz: "#f6f3ee",
-    clear: "#f0eee8",
-    transparent: "#f0eee8",
-    seffaf: "#f0eee8",
-    şeffaf: "#f0eee8",
-    gray: "#9a9a9a",
-    grey: "#9a9a9a",
-    gri: "#9a9a9a",
-    pink: "#bf666d",
-    pembe: "#bf666d",
-    gum: "#b15a5d",
-    gingiva: "#b15a5d",
-    red: "#bd5f61",
-    kirmizi: "#bd5f61",
-    kırmızı: "#bd5f61",
-    beige: "#d2b89a",
-    a1: "#ead8bd",
-    a2: "#e3cca7",
-    a3: "#d8b98e",
-    b1: "#efe0c4",
-    b2: "#e6d0aa",
-  };
-
-  return colors[text] || "";
+function normalizedVariantKey(value: string | undefined) {
+  return normalizedVariantText(value)
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ı/g, "i")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9.]+/g, "");
 }
 
-function isColorVariant(typeName: string | undefined, valueName: string | undefined) {
+function cssColorValue(value: unknown): string {
+  if (typeof value !== "string") return "";
+  const text = value.trim();
+  if (/^(?:[0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(text)) return `#${text}`;
+  const isSafeColor =
+    /^#(?:[0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(text) ||
+    /^rgba?\(\s*[\d.\s,%]+\)$/i.test(text) ||
+    /^hsla?\(\s*[\d.\s,%degturnrad]+\)$/i.test(text) ||
+    /^[a-z]+$/i.test(text);
+  return isSafeColor ? text : "";
+}
+
+function variantColorCode(variantValue: unknown): string {
+  if (!isPlainObject(variantValue)) return "";
+  return cssColorValue(variantValue.colorCode);
+}
+
+function colorForVariantValue(product: IkasProduct, variantType: unknown, variantValue: unknown) {
+  const direct = variantColorCode(variantValue);
+  if (direct) return direct;
+
+  const valueId = isPlainObject(variantValue) && typeof variantValue.id === "string" ? variantValue.id : "";
+  if (!valueId) return "";
+
+  const typeData = variantType as { variantType?: { values?: unknown[] } } | undefined;
+  const typeMatch = typeData?.variantType?.values?.find((value) => isPlainObject(value) && value.id === valueId);
+  const typeColor = variantColorCode(typeMatch);
+  if (typeColor) return typeColor;
+
+  for (const productVariantType of product.variantTypes || []) {
+    const match = productVariantType.variantType.values?.find((value) => value.id === valueId);
+    const color = variantColorCode(match);
+    if (color) return color;
+  }
+
+  return "";
+}
+
+function isColorVariant(product: IkasProduct, variantType: unknown, valueName: string | undefined, variantValue?: unknown) {
+  const typeName = (variantType as { variantType?: { name?: string } } | undefined)?.variantType?.name;
   const type = normalizedVariantText(typeName);
-  return type.includes("renk") || type.includes("color") || Boolean(colorForVariantValue(valueName));
+  return type.includes("renk") || type.includes("color") || Boolean(colorForVariantValue(product, variantType, variantValue));
+}
+
+function uniqueDisplayedVariantValues<T extends { variantValue?: { id?: string; name?: string }; isSelected?: boolean; hasStock?: boolean }>(
+  items: T[],
+) {
+  const values = new Map<string, T>();
+
+  for (const item of items) {
+    const name = item.variantValue?.name || "";
+    const key = normalizedVariantKey(name) || item.variantValue?.id || name;
+    const current = values.get(key);
+    if (!current || item.isSelected || (!current.hasStock && item.hasStock)) values.set(key, item);
+  }
+
+  return Array.from(values.values());
 }
 
 function themeToken(value: string | undefined, defaultValue: string, tokenName: string) {
@@ -207,6 +247,7 @@ export function ThreeMashSingleProduct(props: Props) {
     setIsAdding(true);
     setMessage("");
     try {
+      rememberOrderLineImageFallback(product, variant, image ? [getDefaultSrc(image)] : []);
       const result = await addItemToCart(variant, product, quantity);
       if (result.success) {
         window.dispatchEvent(new CustomEvent("ikas:open-cart-sidebar"));
@@ -294,16 +335,16 @@ export function ThreeMashSingleProduct(props: Props) {
                         <div className="tmpdl-variant-group" key={variantType.variantType.id}>
                           <span>{variantType.variantType.name}</span>
                           <div>
-                            {variantType.displayedVariantValues.map((item) => (
+                            {uniqueDisplayedVariantValues(variantType.displayedVariantValues).map((item) => (
                               (() => {
-                                const color = colorForVariantValue(item.variantValue.name);
-                                const isColor = isColorVariant(variantType.variantType.name, item.variantValue.name);
+                                const color = colorForVariantValue(product, variantType, item.variantValue);
+                                const isColor = isColorVariant(product, variantType, item.variantValue.name, item.variantValue);
                                 return (
                                   <button
                                     type="button"
                                     className={`${item.isSelected ? "is-selected" : ""}${isColor ? " is-color-swatch" : ""}`}
                                     disabled={!item.hasStock}
-                                    style={isColor ? { "--tmpdl-swatch": color || "#bf666d" } as any : undefined}
+                                    style={isColor ? { "--tmpdl-swatch": color || "#f6f1e7" } as any : undefined}
                                     onClick={() => {
                                       selectVariantValue(product, item.variantValue, true);
                                       setSelectedImageIndex(0);

@@ -10,6 +10,7 @@ import {
   getProductVariantMainImage,
   getSelectedProductVariant,
   initCustomerStore,
+  removeItem,
   searchProductList as updateProductSearchList,
   waitForCartStoreInit,
   type IkasCart,
@@ -20,7 +21,7 @@ import {
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import mashC4pFeatureImage from "../../assets/mash-c4p-feature-data";
 import threeMashLogoImage from "../../assets/three-mash-logo-data";
-import { orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
+import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
 import { Props } from "./types";
 
 type MenuItem = {
@@ -711,6 +712,7 @@ export function ThreeMashHeader(props: Props) {
   const [activeAction, setActiveAction] = useState<ActiveAction>(null);
   const [cart, setCart] = useState<IkasCart | null>(cartStore.cart);
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(customerStore.customer));
+  const [removingCartItemId, setRemovingCartItemId] = useState("");
   const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const committedSuggestionSearchRef = useRef("");
@@ -844,20 +846,25 @@ export function ThreeMashHeader(props: Props) {
     const refreshCartState = () => {
       if (!mounted) return;
       setIsLoggedIn(Boolean(customerStore.customer));
-      setCart(cartStore.cart);
+      setCart(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
+    };
+    const syncCartState = async () => {
+      await getCart();
+      await hydrateMissingOrderLineImageFallbacks(cartStore.cart?.orderLineItems || []);
+      refreshCartState();
     };
 
     Promise.all([initCustomerStore(customerStore), waitForCartStoreInit(cartStore)])
-      .then(() => getCart())
-      .finally(refreshCartState);
+      .then(syncCartState)
+      .catch(refreshCartState);
 
-    window.addEventListener("focus", refreshCartState);
-    window.addEventListener("ikas:open-cart-sidebar", refreshCartState as EventListener);
+    window.addEventListener("focus", syncCartState);
+    window.addEventListener("ikas:open-cart-sidebar", syncCartState as EventListener);
 
     return () => {
       mounted = false;
-      window.removeEventListener("focus", refreshCartState);
-      window.removeEventListener("ikas:open-cart-sidebar", refreshCartState as EventListener);
+      window.removeEventListener("focus", syncCartState);
+      window.removeEventListener("ikas:open-cart-sidebar", syncCartState as EventListener);
     };
   }, []);
 
@@ -993,6 +1000,21 @@ export function ThreeMashHeader(props: Props) {
       window.location.href = url.toString();
     } catch {
       window.location.href = `${target}${target.includes("?") ? "&" : "?"}${encodeURIComponent(param)}=${encodeURIComponent(query)}`;
+    }
+  }
+
+  async function removeCartItem(event: Event, item: IkasOrderLineItem) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (removingCartItemId) return;
+
+    setRemovingCartItemId(item.id);
+    try {
+      await removeItem(item);
+      await getCart();
+      setCart(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
+    } finally {
+      setRemovingCartItemId("");
     }
   }
 
@@ -1183,18 +1205,29 @@ export function ThreeMashHeader(props: Props) {
                           const image = imageCandidates[0] || cartImageUrl(item);
                           const variant = cartItemVariantText(item);
                           return (
-                            <a className="tmh-cart-live-item" href={cartProductHref(item)} key={item.id}>
-                              <span className="tmh-cart-live-image">
-                                <span>{cartItemTitle(item).slice(0, 1)}</span>
-                                {image ? <img src={image} alt={cartItemTitle(item)} loading="lazy" decoding="async" data-image-index="0" onError={(event) => handleOrderLineImageError(event, imageCandidates)} /> : null}
-                              </span>
-                              <span className="tmh-cart-live-copy">
-                                <b>{cartItemTitle(item)}</b>
-                                {variant ? <small>{variant}</small> : null}
-                                <em>Adet {item.quantity}</em>
-                              </span>
+                            <div className="tmh-cart-live-item" key={item.id}>
+                              <a className="tmh-cart-live-link" href={cartProductHref(item)}>
+                                <span className="tmh-cart-live-image">
+                                  <span>{cartItemTitle(item).slice(0, 1)}</span>
+                                  {image ? <img src={image} alt={cartItemTitle(item)} loading="lazy" decoding="async" data-image-index="0" onError={(event) => handleOrderLineImageError(event, imageCandidates)} /> : null}
+                                </span>
+                                <span className="tmh-cart-live-copy">
+                                  <b>{cartItemTitle(item)}</b>
+                                  {variant ? <small>{variant}</small> : null}
+                                  <em>Adet {item.quantity}</em>
+                                </span>
+                              </a>
                               <strong>{getOrderLineItemFormattedFinalPriceWithQuantity(item)}</strong>
-                            </a>
+                              <button
+                                className="tmh-cart-live-remove"
+                                type="button"
+                                aria-label={`${cartItemTitle(item)} sepetten kaldır`}
+                                disabled={removingCartItemId === item.id}
+                                onClick={(event) => removeCartItem(event, item)}
+                              >
+                                ×
+                              </button>
+                            </div>
                           );
                         })}
                       </div>

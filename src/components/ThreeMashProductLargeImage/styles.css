@@ -1,0 +1,138 @@
+.three-mash-product-large-image {
+  width: 100%;
+  padding: var(--tmplg-pt) 0 var(--tmplg-pb);
+  background: var(--tmplg-bg);
+  color: var(--tmplg-text);
+  font-family: Poppins, Arial, sans-serif;
+}
+
+.three-mash-product-large-image *,
+.three-mash-product-large-image *::before,
+.three-mash-product-large-image *::after {
+  box-sizing: border-box;
+}
+
+.tmplg-wrap {
+  width: min(100%, var(--tmplg-max), 1240px);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.tmplg-copy {
+  display: grid;
+  gap: 14px;
+  max-width: 920px;
+  margin-bottom: var(--tmplg-text-gap);
+}
+
+.tmplg-copy-center {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.tmplg-copy-left {
+  margin-right: auto;
+  text-align: left;
+}
+
+.tmplg-copy-right {
+  margin-left: auto;
+  text-align: right;
+}
+
+.tmplg-copy h2 {
+  margin: 0;
+  color: var(--tmplg-text);
+  font-size: var(--tmplg-title-size);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.tmplg-description {
+  color: var(--tmplg-muted);
+  font-size: var(--tmplg-body-size);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+.tmplg-description p {
+  margin: 0;
+}
+
+.tmplg-description b,
+.tmplg-description strong {
+  color: var(--tmplg-text);
+  font-weight: 900;
+}
+
+.tmplg-frame {
+  display: grid;
+  width: min(100%, var(--tmplg-image-max));
+  aspect-ratio: var(--tmplg-ratio);
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: var(--tmplg-radius);
+  background: #eeeeee;
+}
+
+.tmplg-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--tmplg-fit);
+  object-position: var(--tmplg-position);
+}
+
+.tmplg-placeholder {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  place-items: center;
+  padding: 32px;
+  color: #777777;
+  background: #eeeeee;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .tmplg-wrap {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .three-mash-product-large-image {
+    padding-top: calc(var(--tmplg-pt) * 0.65);
+    padding-bottom: calc(var(--tmplg-pb) * 0.65);
+  }
+
+  .tmplg-wrap {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .tmplg-copy,
+  .tmplg-copy-left,
+  .tmplg-copy-right {
+    text-align: center;
+  }
+
+  .tmplg-copy h2 {
+    font-size: min(var(--tmplg-title-size), 26px);
+  }
+
+  .tmplg-description {
+    font-size: min(var(--tmplg-body-size), 16px);
+  }
+
+  .tmplg-placeholder {
+    min-height: 220px;
+  }
+}
