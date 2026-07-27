@@ -6,6 +6,8 @@ export interface Props {
   productBasedEnabled?: boolean;
   /** Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin. */
   product?: IkasProduct | null;
+  /** Kapalıysa bu ürün için SSS section render edilmez. */
+  productBasedSectionVisible?: boolean;
   /** Sayfa içi link için id. Boş bırakılabilir. */
   productBasedSectionAnchorId?: string;
   productBasedTitleText?: string;

@@ -45,6 +45,7 @@ function productBasedApplies(props: Props) {
 }
 
 const ARGENZ_PRODUCT_BASED_DEFAULTS: Record<string, unknown> = {
+  productBasedTitleHtml: "",
   productBasedTitleLine1Before: "",
   productBasedTitleLine1Highlight: "Süper Işık Geçirgenliği(ST)",
   productBasedTitleLine1After: " ile Üst Düzey Uyum",
@@ -56,8 +57,34 @@ const ARGENZ_PRODUCT_BASED_DEFAULTS: Record<string, unknown> = {
   productBasedTitleLine3After: "",
   productBasedIntroHtml:
     "<p>Anterior bölgede uygulanacak kron ve köprü uygulamalarında yüksek ışık geçirgenliği ve yandaki diş rengi ile uyum en üst düzeyde aranmaktadır.</p><p>ArgenZ ST Multilayer Zirkon Blok, doğal dentinin belirgin renk geçişini katman çizgileri olmadan taklit edebilmesi ve süper şeffaflık özelliğiyle diş hekimleri ve laboratuvarlarına büyük avantaj sağlar.</p><p>Makyaj gerektirmez, <b>sadece glaze uygulayıp</b> protezi bitime gönderebilirsiniz.</p>",
+  productBasedDetailHtml: "",
+  productBasedProofTitle: "",
+  productBasedQuote1Text: "",
+  productBasedQuote1Name: "",
+  productBasedQuote1Role: "",
+  productBasedQuote2Text: "",
+  productBasedQuote2Name: "",
+  productBasedQuote2Role: "",
+  productBasedQuote3Text: "",
+  productBasedQuote3Name: "",
+  productBasedQuote3Role: "",
+  productBasedShowScoreBars: false,
+  productBasedScore1Text: "",
+  productBasedScore2Text: "",
+  productBasedScore3Text: "",
+  productBasedMediaLayout: "single",
   productBasedImageUrl: "https://cdn.myikas.com/images/theme-images/5574c72d-1874-42b8-9512-c20987744b5c/image_1080.webp",
   productBasedImageAlt: "ArgenZ ST Multilayer zirkon blok ile doğal diş görünümü",
+  productBasedImageLabel: "",
+  productBasedImage2Url: "",
+  productBasedImage2Alt: "",
+  productBasedImage2Label: "",
+  productBasedImage3Url: "",
+  productBasedImage3Alt: "",
+  productBasedImage3Label: "",
+  productBasedImage4Url: "",
+  productBasedImage4Alt: "",
+  productBasedImage4Label: "",
   productBasedImageObjectFit: "contain",
   productBasedAccentColor: "#dbfa37",
   productBasedMediaBackgroundColor: "#ffffff",
@@ -67,8 +94,51 @@ function filled(value: unknown) {
   return typeof value === "string" ? value.trim() !== "" : value !== undefined && value !== null;
 }
 
+function normalized(value: unknown) {
+  return propString(value).trim().toLocaleLowerCase("tr");
+}
+
+function hasStaleSplitContent(data: Record<string, unknown>) {
+  const titleParts = [
+    data.productBasedTitleHtml,
+    data.productBasedTitleLine1Before,
+    data.productBasedTitleLine1Highlight,
+    data.productBasedTitleLine1After,
+    data.productBasedTitleLine2Before,
+    data.productBasedTitleLine2Highlight,
+    data.productBasedTitleLine2After,
+    data.productBasedTitleLine3Before,
+    data.productBasedTitleLine3Highlight,
+    data.productBasedTitleLine3After,
+  ]
+    .map(normalized)
+    .join(" ");
+
+  const bodyParts = [data.productBasedIntroHtml, data.productBasedDetailHtml, data.productBasedQuote1Text, data.productBasedQuote2Text, data.productBasedQuote3Text]
+    .map(normalized)
+    .join(" ");
+
+  const imageParts = [data.productBasedImageUrl, data.productBasedImage2Url, data.productBasedImage3Url, data.productBasedImage4Url]
+    .map(normalized)
+    .join(" ");
+
+  return (
+    titleParts.includes("katman çizgileri") ||
+    titleParts.includes("olmadan") ||
+    titleParts.includes("doğal diş") ||
+    bodyParts.includes("koleden insizale") ||
+    bodyParts.includes("argenz ht+") ||
+    imageParts.includes("52f4db8b") ||
+    imageParts.includes("409af8d9") ||
+    imageParts.includes("def44dad")
+  );
+}
+
 function productBasedProps(props: Props): Props {
   if (!productBasedApplies(props)) return props;
+
+  const source = props as Record<string, unknown>;
+  const useArgenzDefaults = hasStaleSplitContent(source);
 
   return new Proxy(props as Record<string, unknown>, {
     get(target, prop) {
@@ -76,6 +146,9 @@ function productBasedProps(props: Props): Props {
       if (prop.startsWith("productBased")) return target[prop];
       const productBasedName = `productBased${pascal(prop)}`;
       const productBasedValue = target[productBasedName];
+      if (useArgenzDefaults && productBasedName in ARGENZ_PRODUCT_BASED_DEFAULTS) {
+        return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
+      }
       if (filled(productBasedValue)) return productBasedValue;
       if (filled(ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName])) return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
       return target[prop];

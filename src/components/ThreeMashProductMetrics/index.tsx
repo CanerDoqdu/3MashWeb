@@ -61,12 +61,34 @@ function filled(value: unknown) {
   return typeof value === "string" ? value.trim() !== "" : value !== undefined && value !== null;
 }
 
+function normalized(value: unknown) {
+  return propString(value).trim().toLocaleLowerCase("tr");
+}
+
+function hasStaleMetric1Values(data: Record<string, unknown>) {
+  return (
+    normalized(data.productBasedMetric1Value) === "120" ||
+    normalized(data.productBasedMetric1Unit) === "45" ||
+    normalized(data.productBasedMetric1Title) === "ff" ||
+    normalized(data.productBasedMetric1Subtitle) === "4m nl"
+  );
+}
+
+function isStaleProductBasedValue(data: Record<string, unknown>, productBasedName: string) {
+  if (productBasedName.startsWith("productBasedMetric1") && hasStaleMetric1Values(data)) return true;
+  if (productBasedName === "productBasedMetric3Unit" && normalized(data.productBasedMetric3Value) === "4y") return true;
+  return false;
+}
+
 function valueFor(props: Props, propName: keyof Props) {
   if (!productBasedApplies(props)) return props[propName];
 
   const data = props as Record<string, unknown>;
   const productBasedName = `productBased${pascal(String(propName))}`;
   const productBasedValue = data[productBasedName];
+  if (isStaleProductBasedValue(data, productBasedName) && filled(ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName])) {
+    return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
+  }
   if (filled(productBasedValue)) return productBasedValue;
   if (filled(ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName])) return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
   return props[propName];

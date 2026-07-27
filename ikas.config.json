@@ -12645,6 +12645,15 @@
           "description": "Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin."
         },
         {
+          "name": "productBasedSectionVisible",
+          "displayName": "Bu Üründe Section Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "productBasedSettings",
+          "description": "Kapalıysa bu ürün için SSS section render edilmez."
+        },
+        {
           "name": "productBasedSectionAnchorId",
           "displayName": "Section Anchor ID",
           "type": "TEXT",

@@ -49,14 +49,35 @@ const ARGENZ_PRODUCT_BASED_DEFAULTS: Record<string, unknown> = {
   productBasedShowText: false,
   productBasedTitleText: "ArgenZ ST Multilayer Zirkon Blok",
   productBasedMutedEnabled: true,
+  productBasedAutoplayEnabled: false,
+  productBasedControlsEnabled: true,
+  productBasedLoopEnabled: false,
+  productBasedVideoAspectRatio: "16 / 9",
+  productBasedVideoMaxWidth: 1240,
 };
 
 function filled(value: unknown) {
   return typeof value === "string" ? value.trim() !== "" : value !== undefined && value !== null;
 }
 
+function normalized(value: unknown) {
+  return propString(value).trim().toLocaleLowerCase("tr");
+}
+
+function hasWrongVideoValue(data: Record<string, unknown>) {
+  const productBasedUrl = normalized(data.productBasedVideoUrl);
+  const url = normalized(data.videoUrl);
+  const current = productBasedUrl || url;
+  if (!current) return false;
+  if (current.includes("sg2i5yc8qbk")) return false;
+  return current.includes("youtube") || current.includes("youtu.be") || current.includes("vimeo") || current.includes("mp4") || current.includes("webm");
+}
+
 function productBasedProps(props: Props): Props {
   if (!productBasedApplies(props)) return props;
+
+  const source = props as Record<string, unknown>;
+  const forceArgenzVideo = hasWrongVideoValue(source);
 
   return new Proxy(props as Record<string, unknown>, {
     get(target, prop) {
@@ -64,6 +85,9 @@ function productBasedProps(props: Props): Props {
       if (prop.startsWith("productBased")) return target[prop];
       const productBasedName = `productBased${pascal(prop)}`;
       const productBasedValue = target[productBasedName];
+      if (forceArgenzVideo && productBasedName in ARGENZ_PRODUCT_BASED_DEFAULTS) {
+        return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
+      }
       if (filled(productBasedValue)) return productBasedValue;
       if (filled(ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName])) return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
       return target[prop];
@@ -117,19 +141,40 @@ function addQuery(url: string, params: Record<string, string | number | boolean>
 function youtubeEmbed(value: string, autoplay: boolean, muted: boolean, loop: boolean, controls: boolean) {
   const raw = value.trim();
   if (!raw) return "";
-  const match = raw.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([A-Za-z0-9_-]+)/);
-  if (!match) return "";
-  const id = match[1];
-  return addQuery(`https://www.youtube.com/embed/${id}`, {
+  const id = youtubeId(raw);
+  if (!id) return "";
+  const params: Record<string, string | number | boolean> = {
     rel: 0,
-    modestbranding: 1,
     playsinline: 1,
     controls: controls ? 1 : 0,
-    autoplay: autoplay ? 1 : 0,
-    mute: muted || autoplay ? 1 : 0,
-    loop: loop ? 1 : 0,
-    playlist: loop ? id : "",
-  });
+  };
+  if (autoplay) params.autoplay = 1;
+  if (muted || autoplay) params.mute = 1;
+  if (loop) {
+    params.loop = 1;
+    params.playlist = id;
+  }
+  return addQuery(`https://www.youtube-nocookie.com/embed/${id}`, params);
+}
+
+function youtubeId(value: string) {
+  try {
+    const url = new URL(value);
+    const host = url.hostname.replace(/^www\./, "");
+    if (host === "youtu.be") return url.pathname.split("/").filter(Boolean)[0] || "";
+    if (host.endsWith("youtube.com")) {
+      const byQuery = url.searchParams.get("v");
+      if (byQuery) return byQuery;
+      const parts = url.pathname.split("/").filter(Boolean);
+      const markerIndex = parts.findIndex((part) => ["embed", "shorts", "live"].includes(part));
+      if (markerIndex >= 0) return parts[markerIndex + 1] || "";
+    }
+  } catch {
+    const match = value.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([A-Za-z0-9_-]+)/);
+    return match?.[1] || "";
+  }
+  const match = value.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([A-Za-z0-9_-]+)/);
+  return match?.[1] || "";
 }
 
 function vimeoEmbed(value: string, autoplay: boolean, muted: boolean, loop: boolean, controls: boolean) {

@@ -24,6 +24,25 @@ function text(value: unknown, fallback = "") {
   return trimmed || fallback;
 }
 
+function boolValue(value: unknown): boolean | undefined {
+  if (typeof value === "boolean") return value;
+  if (value && typeof value === "object") {
+    const data = value as Record<string, unknown>;
+    for (const candidate of [data.value, data.checked, data.enabled, data.selected]) {
+      if (typeof candidate === "boolean") return candidate;
+      if (typeof candidate === "string") {
+        const parsed: boolean | undefined = boolValue(candidate);
+        if (parsed !== undefined) return parsed;
+      }
+    }
+  }
+
+  const normalized = propString(value).trim().toLocaleLowerCase("tr");
+  if (["false", "0", "no", "hayir", "hayır", "kapali", "kapalı", "off"].includes(normalized)) return false;
+  if (["true", "1", "yes", "evet", "acik", "açık", "on"].includes(normalized)) return true;
+  return undefined;
+}
+
 function html(value: unknown) {
   return { __html: propString(value) };
 }
@@ -33,10 +52,11 @@ function pascal(value: string) {
 }
 
 function productBasedApplies(props: Props) {
-  return props.productBasedEnabled !== false;
+  return boolValue(props.productBasedEnabled) !== false;
 }
 
 const ARGENZ_PRODUCT_BASED_DEFAULTS: Record<string, unknown> = {
+  productBasedSectionVisible: false,
   productBasedTitleText: "Sıkça Sorulan Sorular",
   productBasedOpenFirstItem: true,
   productBasedFaq1Question: "ArgenZ ST Multilayer hangi uygulamalar için uygundur?",
@@ -122,8 +142,11 @@ export function ThreeMashProductAccordionFaq(props: Props) {
   const viewProps = productBasedProps(props);
   const items = faqItems(viewProps);
   const [openItems, setOpenItems] = useState<Record<number, boolean>>(() =>
-    viewProps.openFirstItem === false ? ({} as Record<number, boolean>) : { 0: true }
+    boolValue(viewProps.openFirstItem) === false ? ({} as Record<number, boolean>) : { 0: true }
   );
+  const sectionVisible = boolValue(viewProps.sectionVisible) !== false;
+
+  if (!sectionVisible) return null;
 
   const style = {
     "--tmpaf-bg": text(viewProps.backgroundColor, "#ffffff"),
@@ -154,7 +177,7 @@ export function ThreeMashProductAccordionFaq(props: Props) {
   function toggle(index: number) {
     setOpenItems((current) => {
       const nextOpen = !current[index];
-      if (viewProps.allowMultipleOpen) return { ...current, [index]: nextOpen };
+      if (boolValue(viewProps.allowMultipleOpen) === true) return { ...current, [index]: nextOpen };
       return nextOpen ? { [index]: true } : {};
     });
   }
@@ -164,7 +187,7 @@ export function ThreeMashProductAccordionFaq(props: Props) {
       <div className="tmpaf-wrap">
         <div className="tmpaf-head">
           <h2>{text(viewProps.titleText, "Sıkça Sorulan Sorular")}</h2>
-          {viewProps.showDescription && text(viewProps.descriptionHtml) ? (
+          {boolValue(viewProps.showDescription) === true && text(viewProps.descriptionHtml) ? (
             <div className="tmpaf-description" dangerouslySetInnerHTML={html(viewProps.descriptionHtml)} />
           ) : null}
         </div>
