@@ -4,6 +4,7 @@ import {
   changeItemQuantity,
   customerStore,
   getCart,
+  getCheckoutUrlFromCartStore,
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getOrderLineItemFormattedFinalUnitPrice,
   initCustomerStore,
@@ -72,10 +73,6 @@ function itemTitle(item: IkasOrderLineItem) {
 
 function variantText(item: IkasOrderLineItem) {
   return item.variant?.variantValues?.map((value) => value.variantValueName).filter(Boolean).join(" / ") || item.variant?.sku || "";
-}
-
-function checkoutUrlFromCart() {
-  return "/pages/checkout";
 }
 
 function EmptyCart({ props, count, isLoggedIn }: { props: Props; count: number; isLoggedIn: boolean }) {
@@ -200,8 +197,10 @@ export function ThreeMashCartPage(props: Props) {
       await getCart();
       refreshState();
 
-      const checkoutUrl = checkoutUrlFromCart();
-      window.location.href = checkoutUrl;
+      const checkoutUrl = getCheckoutUrlFromCartStore(cartStore);
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
     } finally {
       setIsCheckingOut(false);
     }

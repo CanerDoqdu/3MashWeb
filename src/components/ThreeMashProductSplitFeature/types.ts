@@ -1,7 +1,81 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage } from "@ikas/bp-storefront";
+import type { IkasProduct, IkasImage } from "@ikas/bp-storefront";
 
 export interface Props {
+  /** Aktif olduğunda bu bölüm, seçili ürün veya sayfa ürünü için aşağıdaki ürün bazlı ayarları kullanır. */
+  productBasedEnabled?: boolean;
+  /** Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin. */
+  product?: IkasProduct | null;
+  /** Sayfa içi link için id. Boş bırakılabilir. */
+  productBasedSectionAnchorId?: string;
+  /** Boş değilse satırlı başlık propları yerine bu alan kullanılır. Vurgu için <mark>...</mark> kullanın. */
+  productBasedTitleHtml?: string;
+  productBasedTitleLine1Before?: string;
+  productBasedTitleLine1Highlight?: string;
+  productBasedTitleLine1After?: string;
+  productBasedTitleLine2Before?: string;
+  productBasedTitleLine2Highlight?: string;
+  productBasedTitleLine2After?: string;
+  productBasedTitleLine3Before?: string;
+  productBasedTitleLine3Highlight?: string;
+  productBasedTitleLine3After?: string;
+  productBasedIntroHtml?: string;
+  productBasedDetailHtml?: string;
+  productBasedProofTitle?: string;
+  productBasedQuote1Text?: string;
+  productBasedQuote1Name?: string;
+  productBasedQuote1Role?: string;
+  productBasedQuote2Text?: string;
+  productBasedQuote2Name?: string;
+  productBasedQuote2Role?: string;
+  productBasedQuote3Text?: string;
+  productBasedQuote3Name?: string;
+  productBasedQuote3Role?: string;
+  /** Açıldığında yorumların yerine yüzde barları gösterilir. */
+  productBasedShowScoreBars?: boolean;
+  productBasedScore1Text?: string;
+  productBasedScore1Value?: number;
+  productBasedScore2Text?: string;
+  productBasedScore2Value?: number;
+  productBasedScore3Text?: string;
+  productBasedScore3Value?: number;
+  /** single veya grid yazın. */
+  productBasedMediaLayout?: string;
+  productBasedImageUrl?: IkasImage | null;
+  productBasedImageAlt?: string;
+  productBasedImageLabel?: string;
+  productBasedImage2Url?: IkasImage | null;
+  productBasedImage2Alt?: string;
+  productBasedImage2Label?: string;
+  productBasedImage3Url?: IkasImage | null;
+  productBasedImage3Alt?: string;
+  productBasedImage3Label?: string;
+  productBasedImage4Url?: IkasImage | null;
+  productBasedImage4Alt?: string;
+  productBasedImage4Label?: string;
+  productBasedReverseLayout?: boolean;
+  productBasedMaxWidth?: number;
+  productBasedPaddingTop?: number;
+  productBasedPaddingBottom?: number;
+  productBasedColumnGap?: number;
+  productBasedTextColumnWidth?: number;
+  productBasedMediaColumnWidth?: number;
+  productBasedTitleFontSize?: number;
+  productBasedBodyFontSize?: number;
+  /** CSS aspect-ratio değeri. Örn: 1.5 / 1, 16 / 9, 1 / 1. */
+  productBasedMediaAspectRatio?: string;
+  productBasedMediaBorderRadius?: number;
+  /** contain, cover, fill veya scale-down. */
+  productBasedImageObjectFit?: string;
+  productBasedImageScale?: number;
+  productBasedImageXOffset?: number;
+  productBasedImageYOffset?: number;
+  productBasedBackgroundColor?: string;
+  productBasedTextColor?: string;
+  productBasedMutedTextColor?: string;
+  productBasedAccentColor?: string;
+  productBasedMediaBackgroundColor?: string;
+  productBasedScoreTrackColor?: string;
   /** Sayfa içi link için id. Boş bırakılabilir. */
   sectionAnchorId?: string;
   /** Boş değilse satırlı başlık propları yerine bu alan kullanılır. Vurgu için <mark>...</mark> kullanın. */

@@ -8172,7 +8172,7 @@
           "displayName": "Arama Placeholder",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Ürün adı, kategori, marka veya SKU",
+          "defaultValue": "Ürün adı, kategori, marka",
           "groupId": "content"
         },
         {
@@ -8794,6 +8794,542 @@
       "type": "section",
       "props": [
         {
+          "name": "productBasedEnabled",
+          "displayName": "Ürün Bazlı Ayarları Aktif Et",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "productBasedSettings",
+          "description": "Aktif olduğunda bu bölüm, seçili ürün veya sayfa ürünü için aşağıdaki ürün bazlı ayarları kullanır."
+        },
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "defaultValue": null,
+          "groupId": "productBasedSettings",
+          "description": "Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin."
+        },
+        {
+          "name": "productBasedSectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedLayout",
+          "description": "Sayfa içi link için id. Boş bırakılabilir."
+        },
+        {
+          "name": "productBasedTitleHtml",
+          "displayName": "Başlık HTML Override",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedTitle",
+          "description": "Boş değilse satırlı başlık propları yerine bu alan kullanılır. Vurgu için <mark>...</mark> kullanın."
+        },
+        {
+          "name": "productBasedTitleLine1Before",
+          "displayName": "Başlık 1 Öncesi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedTitle"
+        },
+        {
+          "name": "productBasedTitleLine1Highlight",
+          "displayName": "Başlık 1 Vurgu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Süper Işık Geçirgenliği(ST)",
+          "groupId": "productBasedTitle"
+        },
+        {
+          "name": "productBasedTitleLine1After",
+          "displayName": "Başlık 1 Sonrası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": " ile Üst Düzey Uyum",
+          "groupId": "productBasedTitle"
+        },
+        {
+          "name": "productBasedTitleLine2Before",
+          "displayName": "Başlık 2 Öncesi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedTitle"
+        },
+        {
+          "name": "productBasedTitleLine2Highlight",
+          "displayName": "Başlık 2 Vurgu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedTitle"
+        },
+        {
+          "name": "productBasedTitleLine2After",
+          "displayName": "Başlık 2 Sonrası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedTitle"
+        },
+        {
+          "name": "productBasedTitleLine3Before",
+          "displayName": "Başlık 3 Öncesi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedTitle"
+        },
+        {
+          "name": "productBasedTitleLine3Highlight",
+          "displayName": "Başlık 3 Vurgu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedTitle"
+        },
+        {
+          "name": "productBasedTitleLine3After",
+          "displayName": "Başlık 3 Sonrası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedTitle"
+        },
+        {
+          "name": "productBasedIntroHtml",
+          "displayName": "Ana Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Anterior bölgede uygulanacak kron ve köprü uygulamalarında yüksek ışık geçirgenliği ve yandaki diş rengi ile uyum en üst düzeyde aranmaktadır.</p><p>ArgenZ ST Multilayer Zirkon Blok, doğal dentinin belirgin renk geçişini katman çizgileri olmadan taklit edebilmesi ve süper şeffaflık özelliğiyle diş hekimleri ve laboratuvarlarına büyük avantaj sağlar.</p><p>Makyaj gerektirmez, <b>sadece glaze uygulayıp</b> protezi bitime gönderebilirsiniz.</p>",
+          "groupId": "productBasedContent"
+        },
+        {
+          "name": "productBasedDetailHtml",
+          "displayName": "Ek Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedContent"
+        },
+        {
+          "name": "productBasedProofTitle",
+          "displayName": "Kanıt / Referans Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Argen bloklarını kullananlar nasıl değerlendirdi?",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedQuote1Text",
+          "displayName": "Yorum 1 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Koleden insizale renk geçişleri çok başarılı. Doğala özdeş renk geçişini yakalamak diğer bloklara nazaran daha az müdahale ile mümkün oluyor.</p>",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedQuote1Name",
+          "displayName": "Yorum 1 İsim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Robert",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedQuote1Role",
+          "displayName": "Yorum 1 Ünvan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "CadCrowns, CA Inc.",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedQuote2Text",
+          "displayName": "Yorum 2 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>ArgenZ HT+, zirkonyum blok konusundaki tercihimiz. Şeffaflığı tam yerinde ve rengi harika. Dayanıklılığı da tam anlamıyla mükemmel.</p>",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedQuote2Name",
+          "displayName": "Yorum 2 İsim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Tokuma Tanizaki",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedQuote2Role",
+          "displayName": "Yorum 2 Ünvan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ACL Hawaii, Inc",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedQuote3Text",
+          "displayName": "Yorum 3 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedQuote3Name",
+          "displayName": "Yorum 3 İsim",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedQuote3Role",
+          "displayName": "Yorum 3 Ünvan",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedProof"
+        },
+        {
+          "name": "productBasedShowScoreBars",
+          "displayName": "Skor Barlarını Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "productBasedScores",
+          "description": "Açıldığında yorumların yerine yüzde barları gösterilir."
+        },
+        {
+          "name": "productBasedScore1Text",
+          "displayName": "Skor 1 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Baskı sonrası <b>boyut değiştirmemesi</b> sayesinde herhangi bir uyum sorunu yaşamadığını söyledi.</p>",
+          "groupId": "productBasedScores"
+        },
+        {
+          "name": "productBasedScore1Value",
+          "displayName": "Skor 1 Değeri",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 99,
+          "groupId": "productBasedScores"
+        },
+        {
+          "name": "productBasedScore2Text",
+          "displayName": "Skor 2 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Yüksek doğruluğu sayesinde tüm <b>implant analogları ile mükemmel uyumlu</b> olduğu söyledi.</p>",
+          "groupId": "productBasedScores"
+        },
+        {
+          "name": "productBasedScore2Value",
+          "displayName": "Skor 2 Değeri",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 97,
+          "groupId": "productBasedScores"
+        },
+        {
+          "name": "productBasedScore3Text",
+          "displayName": "Skor 3 Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Renk seçenekleri sayesinde hasta ve hekimlere kron renklerini göstermeyi kolaylaştırdığını söyledi.</p>",
+          "groupId": "productBasedScores"
+        },
+        {
+          "name": "productBasedScore3Value",
+          "displayName": "Skor 3 Değeri",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 96,
+          "groupId": "productBasedScores"
+        },
+        {
+          "name": "productBasedMediaLayout",
+          "displayName": "Medya Layout",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "single",
+          "groupId": "productBasedMedia",
+          "description": "single veya grid yazın."
+        },
+        {
+          "name": "productBasedImageUrl",
+          "displayName": "Görsel 1",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "https://cdn.myikas.com/images/theme-images/5574c72d-1874-42b8-9512-c20987744b5c/image_1080.webp",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImageAlt",
+          "displayName": "Görsel 1 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ArgenZ ST Multilayer zirkon blok ile doğal diş görünümü",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImageLabel",
+          "displayName": "Görsel 1 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImage2Url",
+          "displayName": "Görsel 2",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImage2Alt",
+          "displayName": "Görsel 2 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImage2Label",
+          "displayName": "Görsel 2 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImage3Url",
+          "displayName": "Görsel 3",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImage3Alt",
+          "displayName": "Görsel 3 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImage3Label",
+          "displayName": "Görsel 3 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImage4Url",
+          "displayName": "Görsel 4",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImage4Alt",
+          "displayName": "Görsel 4 Alt Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedImage4Label",
+          "displayName": "Görsel 4 Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedMedia"
+        },
+        {
+          "name": "productBasedReverseLayout",
+          "displayName": "Layout Ters Çevir",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedMaxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedPaddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 82,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedPaddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 82,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedColumnGap",
+          "displayName": "Kolon Boşluğu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 64,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedTextColumnWidth",
+          "displayName": "Yazı Kolon Genişliği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 420,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedMediaColumnWidth",
+          "displayName": "Görsel Kolon Genişliği",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 720,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedTitleFontSize",
+          "displayName": "Başlık Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 34,
+          "groupId": "productBasedTypography"
+        },
+        {
+          "name": "productBasedBodyFontSize",
+          "displayName": "Gövde Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 17,
+          "groupId": "productBasedTypography"
+        },
+        {
+          "name": "productBasedMediaAspectRatio",
+          "displayName": "Görsel Oranı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "1.5 / 1",
+          "groupId": "productBasedMediaStyle",
+          "description": "CSS aspect-ratio değeri. Örn: 1.5 / 1, 16 / 9, 1 / 1."
+        },
+        {
+          "name": "productBasedMediaBorderRadius",
+          "displayName": "Görsel Köşe Yuvarlaklığı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 28,
+          "groupId": "productBasedMediaStyle"
+        },
+        {
+          "name": "productBasedImageObjectFit",
+          "displayName": "Görsel Yerleşimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "contain",
+          "groupId": "productBasedMediaStyle",
+          "description": "contain, cover, fill veya scale-down."
+        },
+        {
+          "name": "productBasedImageScale",
+          "displayName": "Görsel Ölçek",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1,
+          "groupId": "productBasedMediaStyle"
+        },
+        {
+          "name": "productBasedImageXOffset",
+          "displayName": "Görsel X Kaydırma",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productBasedMediaStyle"
+        },
+        {
+          "name": "productBasedImageYOffset",
+          "displayName": "Görsel Y Kaydırma",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productBasedMediaStyle"
+        },
+        {
+          "name": "productBasedBackgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedTextColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedMutedTextColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#181818",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedAccentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#dbfa37",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedMediaBackgroundColor",
+          "displayName": "Görsel Arka Planı",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedScoreTrackColor",
+          "displayName": "Skor Bar Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "productBasedAppearance"
+        },
+        {
           "name": "sectionAnchorId",
           "displayName": "Section Anchor ID",
           "type": "TEXT",
@@ -9314,6 +9850,58 @@
       ],
       "propGroups": [
         {
+          "id": "productBasedSettings",
+          "name": "Ürün Bazlı Ayarlar",
+          "description": "Ürün seçimi ve seçili ürün için normal şablon ayarlarının birebir kopyası",
+          "children": [
+            {
+              "id": "productBasedTitle",
+              "name": "Başlık",
+              "description": "Satırlı başlık ve vurgulu kelimeler"
+            },
+            {
+              "id": "productBasedContent",
+              "name": "İçerik",
+              "description": "Ana metin alanları"
+            },
+            {
+              "id": "productBasedProof",
+              "name": "Yorumlar",
+              "description": "Referans metinleri"
+            },
+            {
+              "id": "productBasedScores",
+              "name": "Skor Barları",
+              "description": "Yüzde barlı alternatif kanıt alanı"
+            },
+            {
+              "id": "productBasedMedia",
+              "name": "Görseller",
+              "description": "Tek görsel veya 2x2 grid görselleri"
+            },
+            {
+              "id": "productBasedLayout",
+              "name": "Layout",
+              "description": "Genişlik, boşluk ve kolon ayarları"
+            },
+            {
+              "id": "productBasedTypography",
+              "name": "Tipografi",
+              "description": "Başlık ve gövde boyutları"
+            },
+            {
+              "id": "productBasedMediaStyle",
+              "name": "Görsel Stili",
+              "description": "Kart, oran ve görsel yerleşimi"
+            },
+            {
+              "id": "productBasedAppearance",
+              "name": "Görünüm",
+              "description": "Renk ayarları"
+            }
+          ]
+        },
+        {
           "id": "title",
           "name": "Başlık",
           "description": "Satırlı başlık ve vurgulu kelimeler"
@@ -9368,415 +9956,416 @@
       "type": "section",
       "props": [
         {
+          "name": "productBasedEnabled",
+          "displayName": "Ürün Bazlı Ayarları Aktif Et",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "productBasedSettings",
+          "description": "Aktif olduğunda bu bölüm, seçili ürün veya sayfa ürünü için aşağıdaki ürün bazlı ayarları kullanır."
+        },
+        {
           "name": "product",
-          "displayName": "Sayfa Ürünü",
+          "displayName": "Ürün",
           "type": "PRODUCT",
           "required": false,
           "defaultValue": null,
-          "groupId": "dataSource",
-          "description": "Ürün bazlı metrik için sayfa ürününe bağlayın."
+          "groupId": "productBasedSettings",
+          "description": "Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin."
         },
         {
-          "name": "dataSource",
-          "displayName": "Veri Modu",
+          "name": "productBasedSectionAnchorId",
+          "displayName": "Section Anchor ID",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "productAttributes",
-          "groupId": "dataSource",
-          "description": "props: Studio değerlerini kullanır. productAttributes: ürüne özel alanlardan okur."
+          "defaultValue": "",
+          "groupId": "productBasedContent",
+          "description": "Sayfa içi link için id. Boş bırakılabilir."
         },
         {
-          "name": "productAttributePrefix",
-          "displayName": "Alan Ön Eki",
-          "type": "TEXT",
+          "name": "productBasedMetricCount",
+          "displayName": "Metrik Sayısı",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric",
-          "groupId": "dataSource",
-          "description": "Boş bırakmayın. Varsayılan alan adları product_metric ile başlar."
+          "defaultValue": 3,
+          "groupId": "productBasedContent",
+          "description": "En fazla 6 metrik render edilir."
         },
         {
-          "name": "metricCountAttributeKey",
-          "displayName": "Metrik Sayısı Alanı",
-          "type": "TEXT",
+          "name": "productBasedMetric1Enabled",
+          "displayName": "Metrik 1 Göster",
+          "type": "BOOLEAN",
           "required": false,
-          "defaultValue": "product_metric_count",
-          "groupId": "dataSource"
+          "defaultValue": true,
+          "groupId": "productBasedMetric1"
         },
         {
-          "name": "metric1EnabledAttributeKey",
-          "displayName": "Metrik 1 Göster Alanı",
+          "name": "productBasedMetric1Value",
+          "displayName": "Metrik 1 Değer",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_1_enabled",
-          "groupId": "dataSource"
+          "defaultValue": "50",
+          "groupId": "productBasedMetric1"
         },
         {
-          "name": "metric1ValueAttributeKey",
-          "displayName": "Metrik 1 Değer Alanı",
+          "name": "productBasedMetric1Unit",
+          "displayName": "Metrik 1 Birim",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_1_value",
-          "groupId": "dataSource"
+          "defaultValue": "%",
+          "groupId": "productBasedMetric1"
         },
         {
-          "name": "metric1UnitAttributeKey",
-          "displayName": "Metrik 1 Birim Alanı",
+          "name": "productBasedMetric1Title",
+          "displayName": "Metrik 1 Başlık",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_1_unit",
-          "groupId": "dataSource"
+          "defaultValue": "Işık Geçirgenliği",
+          "groupId": "productBasedMetric1"
         },
         {
-          "name": "metric1TitleAttributeKey",
-          "displayName": "Metrik 1 Başlık Alanı",
+          "name": "productBasedMetric1Subtitle",
+          "displayName": "Metrik 1 Alt Metin",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_1_title",
-          "groupId": "dataSource"
+          "defaultValue": "Süper Translüsent",
+          "groupId": "productBasedMetric1"
         },
         {
-          "name": "metric1SubtitleAttributeKey",
-          "displayName": "Metrik 1 Alt Metin Alanı",
-          "type": "TEXT",
+          "name": "productBasedMetric2Enabled",
+          "displayName": "Metrik 2 Göster",
+          "type": "BOOLEAN",
           "required": false,
-          "defaultValue": "product_metric_1_subtitle",
-          "groupId": "dataSource"
+          "defaultValue": true,
+          "groupId": "productBasedMetric2"
         },
         {
-          "name": "metric2EnabledAttributeKey",
-          "displayName": "Metrik 2 Göster Alanı",
+          "name": "productBasedMetric2Value",
+          "displayName": "Metrik 2 Değer",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_2_enabled",
-          "groupId": "dataSource"
+          "defaultValue": "850",
+          "groupId": "productBasedMetric2"
         },
         {
-          "name": "metric2ValueAttributeKey",
-          "displayName": "Metrik 2 Değer Alanı",
+          "name": "productBasedMetric2Unit",
+          "displayName": "Metrik 2 Birim",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_2_value",
-          "groupId": "dataSource"
+          "defaultValue": "MPa",
+          "groupId": "productBasedMetric2"
         },
         {
-          "name": "metric2UnitAttributeKey",
-          "displayName": "Metrik 2 Birim Alanı",
+          "name": "productBasedMetric2Title",
+          "displayName": "Metrik 2 Başlık",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_2_unit",
-          "groupId": "dataSource"
+          "defaultValue": "Eğilme Mukavemeti",
+          "groupId": "productBasedMetric2"
         },
         {
-          "name": "metric2TitleAttributeKey",
-          "displayName": "Metrik 2 Başlık Alanı",
+          "name": "productBasedMetric2Subtitle",
+          "displayName": "Metrik 2 Alt Metin",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_2_title",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric2"
         },
         {
-          "name": "metric2SubtitleAttributeKey",
-          "displayName": "Metrik 2 Alt Metin Alanı",
-          "type": "TEXT",
+          "name": "productBasedMetric3Enabled",
+          "displayName": "Metrik 3 Göster",
+          "type": "BOOLEAN",
           "required": false,
-          "defaultValue": "product_metric_2_subtitle",
-          "groupId": "dataSource"
+          "defaultValue": true,
+          "groupId": "productBasedMetric3"
         },
         {
-          "name": "metric3EnabledAttributeKey",
-          "displayName": "Metrik 3 Göster Alanı",
+          "name": "productBasedMetric3Value",
+          "displayName": "Metrik 3 Değer",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_3_enabled",
-          "groupId": "dataSource"
+          "defaultValue": "4Y",
+          "groupId": "productBasedMetric3"
         },
         {
-          "name": "metric3ValueAttributeKey",
-          "displayName": "Metrik 3 Değer Alanı",
+          "name": "productBasedMetric3Unit",
+          "displayName": "Metrik 3 Birim",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_3_value",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric3"
         },
         {
-          "name": "metric3UnitAttributeKey",
-          "displayName": "Metrik 3 Birim Alanı",
+          "name": "productBasedMetric3Title",
+          "displayName": "Metrik 3 Başlık",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_3_unit",
-          "groupId": "dataSource"
+          "defaultValue": "İtriyum Mol Yüzdesi",
+          "groupId": "productBasedMetric3"
         },
         {
-          "name": "metric3TitleAttributeKey",
-          "displayName": "Metrik 3 Başlık Alanı",
+          "name": "productBasedMetric3Subtitle",
+          "displayName": "Metrik 3 Alt Metin",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_3_title",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric3"
         },
         {
-          "name": "metric3SubtitleAttributeKey",
-          "displayName": "Metrik 3 Alt Metin Alanı",
-          "type": "TEXT",
+          "name": "productBasedMetric4Enabled",
+          "displayName": "Metrik 4 Göster",
+          "type": "BOOLEAN",
           "required": false,
-          "defaultValue": "product_metric_3_subtitle",
-          "groupId": "dataSource"
+          "defaultValue": false,
+          "groupId": "productBasedMetric4"
         },
         {
-          "name": "metric4EnabledAttributeKey",
-          "displayName": "Metrik 4 Göster Alanı",
+          "name": "productBasedMetric4Value",
+          "displayName": "Metrik 4 Değer",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_4_enabled",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric4"
         },
         {
-          "name": "metric4ValueAttributeKey",
-          "displayName": "Metrik 4 Değer Alanı",
+          "name": "productBasedMetric4Unit",
+          "displayName": "Metrik 4 Birim",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_4_value",
-          "groupId": "dataSource"
+          "defaultValue": "Mpa",
+          "groupId": "productBasedMetric4"
         },
         {
-          "name": "metric4UnitAttributeKey",
-          "displayName": "Metrik 4 Birim Alanı",
+          "name": "productBasedMetric4Title",
+          "displayName": "Metrik 4 Başlık",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_4_unit",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric4"
         },
         {
-          "name": "metric4TitleAttributeKey",
-          "displayName": "Metrik 4 Başlık Alanı",
+          "name": "productBasedMetric4Subtitle",
+          "displayName": "Metrik 4 Alt Metin",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_4_title",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric4"
         },
         {
-          "name": "metric4SubtitleAttributeKey",
-          "displayName": "Metrik 4 Alt Metin Alanı",
-          "type": "TEXT",
+          "name": "productBasedMetric5Enabled",
+          "displayName": "Metrik 5 Göster",
+          "type": "BOOLEAN",
           "required": false,
-          "defaultValue": "product_metric_4_subtitle",
-          "groupId": "dataSource"
+          "defaultValue": false,
+          "groupId": "productBasedMetric5"
         },
         {
-          "name": "metric5EnabledAttributeKey",
-          "displayName": "Metrik 5 Göster Alanı",
+          "name": "productBasedMetric5Value",
+          "displayName": "Metrik 5 Değer",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_5_enabled",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric5"
         },
         {
-          "name": "metric5ValueAttributeKey",
-          "displayName": "Metrik 5 Değer Alanı",
+          "name": "productBasedMetric5Unit",
+          "displayName": "Metrik 5 Birim",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_5_value",
-          "groupId": "dataSource"
+          "defaultValue": "Mpa",
+          "groupId": "productBasedMetric5"
         },
         {
-          "name": "metric5UnitAttributeKey",
-          "displayName": "Metrik 5 Birim Alanı",
+          "name": "productBasedMetric5Title",
+          "displayName": "Metrik 5 Başlık",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_5_unit",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric5"
         },
         {
-          "name": "metric5TitleAttributeKey",
-          "displayName": "Metrik 5 Başlık Alanı",
+          "name": "productBasedMetric5Subtitle",
+          "displayName": "Metrik 5 Alt Metin",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_5_title",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric5"
         },
         {
-          "name": "metric5SubtitleAttributeKey",
-          "displayName": "Metrik 5 Alt Metin Alanı",
-          "type": "TEXT",
+          "name": "productBasedMetric6Enabled",
+          "displayName": "Metrik 6 Göster",
+          "type": "BOOLEAN",
           "required": false,
-          "defaultValue": "product_metric_5_subtitle",
-          "groupId": "dataSource"
+          "defaultValue": false,
+          "groupId": "productBasedMetric6"
         },
         {
-          "name": "metric6EnabledAttributeKey",
-          "displayName": "Metrik 6 Göster Alanı",
+          "name": "productBasedMetric6Value",
+          "displayName": "Metrik 6 Değer",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_6_enabled",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric6"
         },
         {
-          "name": "metric6ValueAttributeKey",
-          "displayName": "Metrik 6 Değer Alanı",
+          "name": "productBasedMetric6Unit",
+          "displayName": "Metrik 6 Birim",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_6_value",
-          "groupId": "dataSource"
+          "defaultValue": "Mpa",
+          "groupId": "productBasedMetric6"
         },
         {
-          "name": "metric6UnitAttributeKey",
-          "displayName": "Metrik 6 Birim Alanı",
+          "name": "productBasedMetric6Title",
+          "displayName": "Metrik 6 Başlık",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_6_unit",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric6"
         },
         {
-          "name": "metric6TitleAttributeKey",
-          "displayName": "Metrik 6 Başlık Alanı",
+          "name": "productBasedMetric6Subtitle",
+          "displayName": "Metrik 6 Alt Metin",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "product_metric_6_title",
-          "groupId": "dataSource"
+          "defaultValue": "",
+          "groupId": "productBasedMetric6"
         },
         {
-          "name": "metric6SubtitleAttributeKey",
-          "displayName": "Metrik 6 Alt Metin Alanı",
-          "type": "TEXT",
+          "name": "productBasedMaxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_6_subtitle",
-          "groupId": "dataSource"
+          "defaultValue": 1240,
+          "groupId": "productBasedLayout"
         },
         {
-          "name": "circleColorAttributeKey",
-          "displayName": "Daire Rengi Alanı",
-          "type": "TEXT",
+          "name": "productBasedPaddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_circle_color",
-          "groupId": "dataSource"
+          "defaultValue": 88,
+          "groupId": "productBasedLayout"
         },
         {
-          "name": "circleTextColorAttributeKey",
-          "displayName": "Daire Yazı Rengi Alanı",
-          "type": "TEXT",
+          "name": "productBasedPaddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_circle_text_color",
-          "groupId": "dataSource"
+          "defaultValue": 88,
+          "groupId": "productBasedLayout"
         },
         {
-          "name": "maxWidthAttributeKey",
-          "displayName": "Maks. Genişlik Alanı",
-          "type": "TEXT",
+          "name": "productBasedGridGap",
+          "displayName": "Metrikler Arası Boşluk",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_max_width",
-          "groupId": "dataSource"
+          "defaultValue": 96,
+          "groupId": "productBasedLayout"
         },
         {
-          "name": "paddingTopAttributeKey",
-          "displayName": "Üst Boşluk Alanı",
-          "type": "TEXT",
+          "name": "productBasedCircleSize",
+          "displayName": "Daire Boyutu",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_padding_top",
-          "groupId": "dataSource"
+          "defaultValue": 148,
+          "groupId": "productBasedLayout"
         },
         {
-          "name": "paddingBottomAttributeKey",
-          "displayName": "Alt Boşluk Alanı",
-          "type": "TEXT",
+          "name": "productBasedCircleSpacing",
+          "displayName": "Daire Altı Boşluk",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_padding_bottom",
-          "groupId": "dataSource"
+          "defaultValue": 46,
+          "groupId": "productBasedLayout"
         },
         {
-          "name": "gridGapAttributeKey",
-          "displayName": "Metrik Boşluğu Alanı",
-          "type": "TEXT",
+          "name": "productBasedDesktopColumns",
+          "displayName": "Desktop Kolon Sayısı",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_grid_gap",
-          "groupId": "dataSource"
+          "defaultValue": 3,
+          "groupId": "productBasedLayout"
         },
         {
-          "name": "circleSizeAttributeKey",
-          "displayName": "Daire Boyutu Alanı",
-          "type": "TEXT",
+          "name": "productBasedTabletColumns",
+          "displayName": "Tablet Kolon Sayısı",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_circle_size",
-          "groupId": "dataSource"
+          "defaultValue": 2,
+          "groupId": "productBasedLayout"
         },
         {
-          "name": "circleSpacingAttributeKey",
-          "displayName": "Daire Alt Boşluğu Alanı",
-          "type": "TEXT",
+          "name": "productBasedValueFontSize",
+          "displayName": "Değer Font Boyutu",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_circle_spacing",
-          "groupId": "dataSource"
+          "defaultValue": 50,
+          "groupId": "productBasedTypography"
         },
         {
-          "name": "desktopColumnsAttributeKey",
-          "displayName": "Desktop Kolon Alanı",
-          "type": "TEXT",
+          "name": "productBasedUnitFontSize",
+          "displayName": "Birim Font Boyutu",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_desktop_columns",
-          "groupId": "dataSource"
+          "defaultValue": 22,
+          "groupId": "productBasedTypography"
         },
         {
-          "name": "tabletColumnsAttributeKey",
-          "displayName": "Tablet Kolon Alanı",
-          "type": "TEXT",
+          "name": "productBasedTitleFontSize",
+          "displayName": "Başlık Font Boyutu",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_tablet_columns",
-          "groupId": "dataSource"
+          "defaultValue": 16,
+          "groupId": "productBasedTypography"
         },
         {
-          "name": "valueFontSizeAttributeKey",
-          "displayName": "Değer Font Alanı",
-          "type": "TEXT",
+          "name": "productBasedSubtitleFontSize",
+          "displayName": "Alt Metin Font Boyutu",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "product_metric_value_font_size",
-          "groupId": "dataSource"
+          "defaultValue": 13,
+          "groupId": "productBasedTypography"
         },
         {
-          "name": "unitFontSizeAttributeKey",
-          "displayName": "Birim Font Alanı",
-          "type": "TEXT",
+          "name": "productBasedBackgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
           "required": false,
-          "defaultValue": "product_metric_unit_font_size",
-          "groupId": "dataSource"
+          "defaultValue": "#ffffff",
+          "groupId": "productBasedAppearance"
         },
         {
-          "name": "titleFontSizeAttributeKey",
-          "displayName": "Başlık Font Alanı",
-          "type": "TEXT",
+          "name": "productBasedTextColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
           "required": false,
-          "defaultValue": "product_metric_title_font_size",
-          "groupId": "dataSource"
+          "defaultValue": "#050505",
+          "groupId": "productBasedAppearance"
         },
         {
-          "name": "subtitleFontSizeAttributeKey",
-          "displayName": "Alt Metin Font Alanı",
-          "type": "TEXT",
+          "name": "productBasedMutedTextColor",
+          "displayName": "Alt Metin Rengi",
+          "type": "COLOR",
           "required": false,
-          "defaultValue": "product_metric_subtitle_font_size",
-          "groupId": "dataSource"
+          "defaultValue": "#050505",
+          "groupId": "productBasedAppearance"
         },
         {
-          "name": "backgroundColorAttributeKey",
-          "displayName": "Arka Plan Alanı",
-          "type": "TEXT",
+          "name": "productBasedCircleColor",
+          "displayName": "Daire Rengi",
+          "type": "COLOR",
           "required": false,
-          "defaultValue": "product_metric_background_color",
-          "groupId": "dataSource"
+          "defaultValue": "#d8ff1f",
+          "groupId": "productBasedAppearance"
         },
         {
-          "name": "textColorAttributeKey",
-          "displayName": "Yazı Rengi Alanı",
-          "type": "TEXT",
+          "name": "productBasedCircleTextColor",
+          "displayName": "Daire Yazı Rengi",
+          "type": "COLOR",
           "required": false,
-          "defaultValue": "product_metric_text_color",
-          "groupId": "dataSource"
-        },
-        {
-          "name": "mutedTextColorAttributeKey",
-          "displayName": "Alt Metin Rengi Alanı",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "product_metric_muted_text_color",
-          "groupId": "dataSource"
+          "defaultValue": "#050505",
+          "groupId": "productBasedAppearance"
         },
         {
           "name": "sectionAnchorId",
@@ -10175,9 +10764,61 @@
       ],
       "propGroups": [
         {
-          "id": "dataSource",
+          "id": "productBasedSettings",
           "name": "Ürün Bazlı Ayarlar",
-          "description": "Bu template ortak kalsa bile değerleri her ürünün kendi alanlarından okutma ayarları"
+          "description": "Ürün seçimi ve seçili ürün için normal şablon ayarlarının birebir kopyası",
+          "children": [
+            {
+              "id": "productBasedContent",
+              "name": "Genel",
+              "description": "Anchor ve kaç metrik gösterileceği"
+            },
+            {
+              "id": "productBasedMetric1",
+              "name": "Metrik 1",
+              "description": "İlk metrik içeriği"
+            },
+            {
+              "id": "productBasedMetric2",
+              "name": "Metrik 2",
+              "description": "İkinci metrik içeriği"
+            },
+            {
+              "id": "productBasedMetric3",
+              "name": "Metrik 3",
+              "description": "Üçüncü metrik içeriği"
+            },
+            {
+              "id": "productBasedMetric4",
+              "name": "Metrik 4",
+              "description": "Opsiyonel metrik içeriği"
+            },
+            {
+              "id": "productBasedMetric5",
+              "name": "Metrik 5",
+              "description": "Opsiyonel metrik içeriği"
+            },
+            {
+              "id": "productBasedMetric6",
+              "name": "Metrik 6",
+              "description": "Opsiyonel metrik içeriği"
+            },
+            {
+              "id": "productBasedLayout",
+              "name": "Layout",
+              "description": "Container, boşluk ve daire ölçüleri"
+            },
+            {
+              "id": "productBasedTypography",
+              "name": "Tipografi",
+              "description": "Font boyutları"
+            },
+            {
+              "id": "productBasedAppearance",
+              "name": "Görünüm",
+              "description": "Renk ayarları"
+            }
+          ]
         },
         {
           "id": "content",
@@ -11167,6 +11808,247 @@
       "type": "section",
       "props": [
         {
+          "name": "productBasedEnabled",
+          "displayName": "Ürün Bazlı Ayarları Aktif Et",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "productBasedSettings",
+          "description": "Aktif olduğunda bu bölüm, seçili ürün veya sayfa ürünü için aşağıdaki ürün bazlı ayarları kullanır."
+        },
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "defaultValue": null,
+          "groupId": "productBasedSettings",
+          "description": "Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin."
+        },
+        {
+          "name": "productBasedSectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedContent",
+          "description": "Sayfa içi link için id. Boş bırakılabilir."
+        },
+        {
+          "name": "productBasedVideoUrl",
+          "displayName": "Video Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://www.youtube.com/watch?v=Sg2I5yC8qBk",
+          "groupId": "productBasedVideo",
+          "description": "YouTube, Vimeo, embed, mp4 veya webm linki girilebilir."
+        },
+        {
+          "name": "productBasedPosterImage",
+          "displayName": "Poster Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedVideo",
+          "description": "Direkt mp4/webm linklerinde video başlamadan önce gösterilir."
+        },
+        {
+          "name": "productBasedShowText",
+          "displayName": "Üst Metni Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "productBasedContent"
+        },
+        {
+          "name": "productBasedTitleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ArgenZ ST Multilayer Zirkon Blok",
+          "groupId": "productBasedContent"
+        },
+        {
+          "name": "productBasedDescriptionHtml",
+          "displayName": "Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedContent"
+        },
+        {
+          "name": "productBasedTextAlign",
+          "displayName": "Metin Hizalama",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "center",
+          "groupId": "productBasedContent",
+          "description": "left, center veya right."
+        },
+        {
+          "name": "productBasedControlsEnabled",
+          "displayName": "Kontrolleri Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "productBasedBehavior"
+        },
+        {
+          "name": "productBasedAutoplayEnabled",
+          "displayName": "Otomatik Oynat",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "productBasedBehavior",
+          "description": "Tarayıcı kuralı nedeniyle otomatik oynatma açılırsa video sessize alınır."
+        },
+        {
+          "name": "productBasedMutedEnabled",
+          "displayName": "Sessiz Başlat",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "productBasedBehavior"
+        },
+        {
+          "name": "productBasedLoopEnabled",
+          "displayName": "Loop",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "productBasedBehavior"
+        },
+        {
+          "name": "productBasedPlaysInlineEnabled",
+          "displayName": "Mobilde Inline Oynat",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "productBasedBehavior"
+        },
+        {
+          "name": "productBasedLazyLoadEnabled",
+          "displayName": "Lazy Load",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "productBasedBehavior"
+        },
+        {
+          "name": "productBasedMaxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedVideoMaxWidth",
+          "displayName": "Video Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedPaddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 72,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedPaddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 72,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedVideoAspectRatio",
+          "displayName": "Video Oranı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "16 / 9",
+          "groupId": "productBasedLayout",
+          "description": "CSS aspect-ratio değeri. Örn: 16 / 9, 4 / 3, 1 / 1."
+        },
+        {
+          "name": "productBasedVideoBorderRadius",
+          "displayName": "Köşe Yuvarlaklığı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 0,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedVideoFit",
+          "displayName": "Video Yerleşimi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "cover",
+          "groupId": "productBasedLayout",
+          "description": "Direkt video linklerinde contain, cover, fill veya scale-down."
+        },
+        {
+          "name": "productBasedTitleFontSize",
+          "displayName": "Başlık Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 28,
+          "groupId": "productBasedTypography"
+        },
+        {
+          "name": "productBasedBodyFontSize",
+          "displayName": "Açıklama Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 16,
+          "groupId": "productBasedTypography"
+        },
+        {
+          "name": "productBasedTextSpacing",
+          "displayName": "Metin Video Boşluğu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 24,
+          "groupId": "productBasedTypography"
+        },
+        {
+          "name": "productBasedBackgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedTextColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedMutedTextColor",
+          "displayName": "Açıklama Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#171717",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedPlaceholderText",
+          "displayName": "Boş Link Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Video linki ekleyin",
+          "groupId": "productBasedAppearance"
+        },
+        {
           "name": "sectionAnchorId",
           "displayName": "Section Anchor ID",
           "type": "TEXT",
@@ -11391,6 +12273,43 @@
         }
       ],
       "propGroups": [
+        {
+          "id": "productBasedSettings",
+          "name": "Ürün Bazlı Ayarlar",
+          "description": "Ürün seçimi ve seçili ürün için normal şablon ayarlarının birebir kopyası",
+          "children": [
+            {
+              "id": "productBasedVideo",
+              "name": "Video Kaynağı",
+              "description": "Video linki ve poster görseli"
+            },
+            {
+              "id": "productBasedContent",
+              "name": "Üst Metin",
+              "description": "Video üstündeki opsiyonel başlık ve açıklama"
+            },
+            {
+              "id": "productBasedBehavior",
+              "name": "Oynatma",
+              "description": "Kontrol, autoplay, sessiz ve loop ayarları"
+            },
+            {
+              "id": "productBasedLayout",
+              "name": "Layout",
+              "description": "Container, video oranı ve boşluklar"
+            },
+            {
+              "id": "productBasedTypography",
+              "name": "Tipografi",
+              "description": "Metin boyutu ve metin-video boşluğu"
+            },
+            {
+              "id": "productBasedAppearance",
+              "name": "Görünüm",
+              "description": "Renkler ve boş durum metni"
+            }
+          ]
+        },
         {
           "id": "video",
           "name": "Video Kaynağı",
@@ -11707,6 +12626,466 @@
       "styles": "./src/components/ThreeMashProductAccordionFaq/styles.css",
       "type": "section",
       "props": [
+        {
+          "name": "productBasedEnabled",
+          "displayName": "Ürün Bazlı Ayarları Aktif Et",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "productBasedSettings",
+          "description": "Aktif olduğunda bu bölüm, seçili ürün veya sayfa ürünü için aşağıdaki ürün bazlı ayarları kullanır."
+        },
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "defaultValue": null,
+          "groupId": "productBasedSettings",
+          "description": "Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin."
+        },
+        {
+          "name": "productBasedSectionAnchorId",
+          "displayName": "Section Anchor ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedContent",
+          "description": "Sayfa içi link için id. Boş bırakılabilir."
+        },
+        {
+          "name": "productBasedTitleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sıkça Sorulan Sorular",
+          "groupId": "productBasedContent"
+        },
+        {
+          "name": "productBasedShowDescription",
+          "displayName": "Açıklamayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "productBasedContent"
+        },
+        {
+          "name": "productBasedDescriptionHtml",
+          "displayName": "Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedContent"
+        },
+        {
+          "name": "productBasedOpenFirstItem",
+          "displayName": "İlk Satırı Açık Başlat",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "productBasedBehavior"
+        },
+        {
+          "name": "productBasedAllowMultipleOpen",
+          "displayName": "Birden Fazla Açık Kalabilsin",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "productBasedBehavior"
+        },
+        {
+          "name": "productBasedFaq1Question",
+          "displayName": "Soru 1",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ArgenZ ST Multilayer hangi uygulamalar için uygundur?",
+          "groupId": "productBasedFaq1"
+        },
+        {
+          "name": "productBasedFaq1AnswerHtml",
+          "displayName": "Cevap 1",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Anterior bölgede yüksek ışık geçirgenliği istenen kron ve köprü uygulamaları için uygundur. Tek kron veya 1 ara gövdeli 3 üyeli köprülere kadar kullanılabilir.</p>",
+          "groupId": "productBasedFaq1"
+        },
+        {
+          "name": "productBasedFaq2Question",
+          "displayName": "Soru 2",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Geçirgenlik ve dayanım değerleri nedir?",
+          "groupId": "productBasedFaq2"
+        },
+        {
+          "name": "productBasedFaq2AnswerHtml",
+          "displayName": "Cevap 2",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Kaynak ürün içeriğine göre ışık geçirgenliği <b>%50</b>, eğilme mukavemeti <b>850 MPa</b> ve itriyum mol yüzdesi <b>4Y</b> olarak verilir.</p>",
+          "groupId": "productBasedFaq2"
+        },
+        {
+          "name": "productBasedFaq3Question",
+          "displayName": "Soru 3",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Makyaj işlemi gerekir mi?",
+          "groupId": "productBasedFaq3"
+        },
+        {
+          "name": "productBasedFaq3AnswerHtml",
+          "displayName": "Cevap 3",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Ürün sayfasındaki açıklamaya göre makyaj gerektirmez; sadece glaze uygulayıp protezi bitime gönderebilirsiniz.</p>",
+          "groupId": "productBasedFaq3"
+        },
+        {
+          "name": "productBasedFaq4Question",
+          "displayName": "Soru 4",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hangi renk seçenekleri vardır?",
+          "groupId": "productBasedFaq4"
+        },
+        {
+          "name": "productBasedFaq4AnswerHtml",
+          "displayName": "Cevap 4",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>A1, A2, A3, A3.5, A4, B1, B2, B3, B4, C1, C2, C3, C4, D2, D3, D4 ve OM1, OM2, OM3 renk seçenekleri bulunur.</p>",
+          "groupId": "productBasedFaq4"
+        },
+        {
+          "name": "productBasedFaq5Question",
+          "displayName": "Soru 5",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hangi kalınlık seçenekleri vardır?",
+          "groupId": "productBasedFaq5"
+        },
+        {
+          "name": "productBasedFaq5AnswerHtml",
+          "displayName": "Cevap 5",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "<p>Kaynak üründe 14 mm, 16 mm, 18 mm ve 20 mm kalınlık seçenekleri yer alır.</p>",
+          "groupId": "productBasedFaq5"
+        },
+        {
+          "name": "productBasedFaq6Question",
+          "displayName": "Soru 6",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq6"
+        },
+        {
+          "name": "productBasedFaq6AnswerHtml",
+          "displayName": "Cevap 6",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq6"
+        },
+        {
+          "name": "productBasedFaq7Question",
+          "displayName": "Soru 7",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq7"
+        },
+        {
+          "name": "productBasedFaq7AnswerHtml",
+          "displayName": "Cevap 7",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq7"
+        },
+        {
+          "name": "productBasedFaq8Question",
+          "displayName": "Soru 8",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq8"
+        },
+        {
+          "name": "productBasedFaq8AnswerHtml",
+          "displayName": "Cevap 8",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq8"
+        },
+        {
+          "name": "productBasedFaq9Question",
+          "displayName": "Soru 9",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq9"
+        },
+        {
+          "name": "productBasedFaq9AnswerHtml",
+          "displayName": "Cevap 9",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq9"
+        },
+        {
+          "name": "productBasedFaq10Question",
+          "displayName": "Soru 10",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq10"
+        },
+        {
+          "name": "productBasedFaq10AnswerHtml",
+          "displayName": "Cevap 10",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq10"
+        },
+        {
+          "name": "productBasedFaq11Question",
+          "displayName": "Soru 11",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq11"
+        },
+        {
+          "name": "productBasedFaq11AnswerHtml",
+          "displayName": "Cevap 11",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq11"
+        },
+        {
+          "name": "productBasedFaq12Question",
+          "displayName": "Soru 12",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq12"
+        },
+        {
+          "name": "productBasedFaq12AnswerHtml",
+          "displayName": "Cevap 12",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedFaq12"
+        },
+        {
+          "name": "productBasedExtraFaqItemsJson",
+          "displayName": "Ek FAQ JSON",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "",
+          "groupId": "productBasedExtra",
+          "description": "Daha fazla satır için JSON array girin: [{\"question\":\"Soru\",\"answerHtml\":\"<p>Cevap</p>\"}]"
+        },
+        {
+          "name": "productBasedMaxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedListMaxWidth",
+          "displayName": "Liste Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 720,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedPaddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 78,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedPaddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 78,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedTitleSpacing",
+          "displayName": "Başlık Liste Boşluğu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 32,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedRowGap",
+          "displayName": "Satır Boşluğu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 16,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedRowPaddingY",
+          "displayName": "Satır Dikey Padding",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 12,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedRowPaddingX",
+          "displayName": "Satır Yatay Padding",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 18,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedRowBorderRadius",
+          "displayName": "Satır Radius",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 999,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedAnswerPaddingTop",
+          "displayName": "Cevap Üst Padding",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 10,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedAnswerPaddingBottom",
+          "displayName": "Cevap Alt Padding",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 18,
+          "groupId": "productBasedLayout"
+        },
+        {
+          "name": "productBasedTitleFontSize",
+          "displayName": "Başlık Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 30,
+          "groupId": "productBasedTypography"
+        },
+        {
+          "name": "productBasedQuestionFontSize",
+          "displayName": "Soru Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 16,
+          "groupId": "productBasedTypography"
+        },
+        {
+          "name": "productBasedAnswerFontSize",
+          "displayName": "Cevap Font Boyutu",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 15,
+          "groupId": "productBasedTypography"
+        },
+        {
+          "name": "productBasedBackgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedTitleColor",
+          "displayName": "Başlık Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedRowBackgroundColor",
+          "displayName": "Satır Arka Planı",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#f5f5f5",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedRowOpenBackgroundColor",
+          "displayName": "Açık Satır Arka Planı",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#f5f5f5",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedQuestionColor",
+          "displayName": "Soru Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedAnswerColor",
+          "displayName": "Cevap Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#171717",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedİconColor",
+          "displayName": "İkon Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#050505",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedİconBackgroundColor",
+          "displayName": "İkon Arka Planı",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "transparent",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedLineColor",
+          "displayName": "Kenarlık Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "transparent",
+          "groupId": "productBasedAppearance"
+        },
+        {
+          "name": "productBasedPlaceholderText",
+          "displayName": "Boş Durum Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "FAQ satırı ekleyin",
+          "groupId": "productBasedAppearance"
+        },
         {
           "name": "sectionAnchorId",
           "displayName": "Section Anchor ID",
@@ -12151,6 +13530,103 @@
         }
       ],
       "propGroups": [
+        {
+          "id": "productBasedSettings",
+          "name": "Ürün Bazlı Ayarlar",
+          "description": "Ürün seçimi ve seçili ürün için normal şablon ayarlarının birebir kopyası",
+          "children": [
+            {
+              "id": "productBasedContent",
+              "name": "Başlık",
+              "description": "Başlık ve opsiyonel açıklama"
+            },
+            {
+              "id": "productBasedBehavior",
+              "name": "Davranış",
+              "description": "Açık başlama ve çoklu açık satır ayarları"
+            },
+            {
+              "id": "productBasedFaq1",
+              "name": "FAQ 1",
+              "description": "Soru 1 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq2",
+              "name": "FAQ 2",
+              "description": "Soru 2 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq3",
+              "name": "FAQ 3",
+              "description": "Soru 3 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq4",
+              "name": "FAQ 4",
+              "description": "Soru 4 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq5",
+              "name": "FAQ 5",
+              "description": "Soru 5 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq6",
+              "name": "FAQ 6",
+              "description": "Soru 6 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq7",
+              "name": "FAQ 7",
+              "description": "Soru 7 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq8",
+              "name": "FAQ 8",
+              "description": "Soru 8 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq9",
+              "name": "FAQ 9",
+              "description": "Soru 9 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq10",
+              "name": "FAQ 10",
+              "description": "Soru 10 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq11",
+              "name": "FAQ 11",
+              "description": "Soru 11 ve cevabı"
+            },
+            {
+              "id": "productBasedFaq12",
+              "name": "FAQ 12",
+              "description": "Soru 12 ve cevabı"
+            },
+            {
+              "id": "productBasedExtra",
+              "name": "Ek FAQ",
+              "description": "12 satırdan fazlası için JSON alanı"
+            },
+            {
+              "id": "productBasedLayout",
+              "name": "Layout",
+              "description": "Container, liste ve satır boşlukları"
+            },
+            {
+              "id": "productBasedTypography",
+              "name": "Tipografi",
+              "description": "Başlık, soru ve cevap font boyutları"
+            },
+            {
+              "id": "productBasedAppearance",
+              "name": "Görünüm",
+              "description": "Renkler ve boş durum metni"
+            }
+          ]
+        },
         {
           "id": "content",
           "name": "Başlık",

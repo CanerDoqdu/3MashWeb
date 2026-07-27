@@ -2,60 +2,61 @@
 import type { IkasProduct } from "@ikas/bp-storefront";
 
 export interface Props {
-  /** Ürün bazlı metrik için sayfa ürününe bağlayın. */
+  /** Aktif olduğunda bu bölüm, seçili ürün veya sayfa ürünü için aşağıdaki ürün bazlı ayarları kullanır. */
+  productBasedEnabled?: boolean;
+  /** Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin. */
   product?: IkasProduct | null;
-  /** props: Studio değerlerini kullanır. productAttributes: ürüne özel alanlardan okur. */
-  dataSource?: string;
-  /** Boş bırakmayın. Varsayılan alan adları product_metric ile başlar. */
-  productAttributePrefix?: string;
-  metricCountAttributeKey?: string;
-  metric1EnabledAttributeKey?: string;
-  metric1ValueAttributeKey?: string;
-  metric1UnitAttributeKey?: string;
-  metric1TitleAttributeKey?: string;
-  metric1SubtitleAttributeKey?: string;
-  metric2EnabledAttributeKey?: string;
-  metric2ValueAttributeKey?: string;
-  metric2UnitAttributeKey?: string;
-  metric2TitleAttributeKey?: string;
-  metric2SubtitleAttributeKey?: string;
-  metric3EnabledAttributeKey?: string;
-  metric3ValueAttributeKey?: string;
-  metric3UnitAttributeKey?: string;
-  metric3TitleAttributeKey?: string;
-  metric3SubtitleAttributeKey?: string;
-  metric4EnabledAttributeKey?: string;
-  metric4ValueAttributeKey?: string;
-  metric4UnitAttributeKey?: string;
-  metric4TitleAttributeKey?: string;
-  metric4SubtitleAttributeKey?: string;
-  metric5EnabledAttributeKey?: string;
-  metric5ValueAttributeKey?: string;
-  metric5UnitAttributeKey?: string;
-  metric5TitleAttributeKey?: string;
-  metric5SubtitleAttributeKey?: string;
-  metric6EnabledAttributeKey?: string;
-  metric6ValueAttributeKey?: string;
-  metric6UnitAttributeKey?: string;
-  metric6TitleAttributeKey?: string;
-  metric6SubtitleAttributeKey?: string;
-  circleColorAttributeKey?: string;
-  circleTextColorAttributeKey?: string;
-  maxWidthAttributeKey?: string;
-  paddingTopAttributeKey?: string;
-  paddingBottomAttributeKey?: string;
-  gridGapAttributeKey?: string;
-  circleSizeAttributeKey?: string;
-  circleSpacingAttributeKey?: string;
-  desktopColumnsAttributeKey?: string;
-  tabletColumnsAttributeKey?: string;
-  valueFontSizeAttributeKey?: string;
-  unitFontSizeAttributeKey?: string;
-  titleFontSizeAttributeKey?: string;
-  subtitleFontSizeAttributeKey?: string;
-  backgroundColorAttributeKey?: string;
-  textColorAttributeKey?: string;
-  mutedTextColorAttributeKey?: string;
+  /** Sayfa içi link için id. Boş bırakılabilir. */
+  productBasedSectionAnchorId?: string;
+  /** En fazla 6 metrik render edilir. */
+  productBasedMetricCount?: number;
+  productBasedMetric1Enabled?: boolean;
+  productBasedMetric1Value?: string;
+  productBasedMetric1Unit?: string;
+  productBasedMetric1Title?: string;
+  productBasedMetric1Subtitle?: string;
+  productBasedMetric2Enabled?: boolean;
+  productBasedMetric2Value?: string;
+  productBasedMetric2Unit?: string;
+  productBasedMetric2Title?: string;
+  productBasedMetric2Subtitle?: string;
+  productBasedMetric3Enabled?: boolean;
+  productBasedMetric3Value?: string;
+  productBasedMetric3Unit?: string;
+  productBasedMetric3Title?: string;
+  productBasedMetric3Subtitle?: string;
+  productBasedMetric4Enabled?: boolean;
+  productBasedMetric4Value?: string;
+  productBasedMetric4Unit?: string;
+  productBasedMetric4Title?: string;
+  productBasedMetric4Subtitle?: string;
+  productBasedMetric5Enabled?: boolean;
+  productBasedMetric5Value?: string;
+  productBasedMetric5Unit?: string;
+  productBasedMetric5Title?: string;
+  productBasedMetric5Subtitle?: string;
+  productBasedMetric6Enabled?: boolean;
+  productBasedMetric6Value?: string;
+  productBasedMetric6Unit?: string;
+  productBasedMetric6Title?: string;
+  productBasedMetric6Subtitle?: string;
+  productBasedMaxWidth?: number;
+  productBasedPaddingTop?: number;
+  productBasedPaddingBottom?: number;
+  productBasedGridGap?: number;
+  productBasedCircleSize?: number;
+  productBasedCircleSpacing?: number;
+  productBasedDesktopColumns?: number;
+  productBasedTabletColumns?: number;
+  productBasedValueFontSize?: number;
+  productBasedUnitFontSize?: number;
+  productBasedTitleFontSize?: number;
+  productBasedSubtitleFontSize?: number;
+  productBasedBackgroundColor?: string;
+  productBasedTextColor?: string;
+  productBasedMutedTextColor?: string;
+  productBasedCircleColor?: string;
+  productBasedCircleTextColor?: string;
   /** Sayfa içi link için id. Boş bırakılabilir. */
   sectionAnchorId?: string;
   /** En fazla 6 metrik render edilir. */

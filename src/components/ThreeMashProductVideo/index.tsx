@@ -36,13 +36,48 @@ function html(value: unknown) {
   return { __html: propString(value) };
 }
 
-function numberValue(value: number | undefined, fallback: number, min?: number, max?: number) {
+function pascal(value: string) {
+  return value.charAt(0).toLocaleUpperCase("tr") + value.slice(1);
+}
+
+function productBasedApplies(props: Props) {
+  return props.productBasedEnabled !== false;
+}
+
+const ARGENZ_PRODUCT_BASED_DEFAULTS: Record<string, unknown> = {
+  productBasedVideoUrl: "https://www.youtube.com/watch?v=Sg2I5yC8qBk",
+  productBasedShowText: false,
+  productBasedTitleText: "ArgenZ ST Multilayer Zirkon Blok",
+  productBasedMutedEnabled: true,
+};
+
+function filled(value: unknown) {
+  return typeof value === "string" ? value.trim() !== "" : value !== undefined && value !== null;
+}
+
+function productBasedProps(props: Props): Props {
+  if (!productBasedApplies(props)) return props;
+
+  return new Proxy(props as Record<string, unknown>, {
+    get(target, prop) {
+      if (typeof prop !== "string") return Reflect.get(target, prop);
+      if (prop.startsWith("productBased")) return target[prop];
+      const productBasedName = `productBased${pascal(prop)}`;
+      const productBasedValue = target[productBasedName];
+      if (filled(productBasedValue)) return productBasedValue;
+      if (filled(ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName])) return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
+      return target[prop];
+    },
+  }) as Props;
+}
+
+function numberValue(value: unknown, fallback: number, min?: number, max?: number) {
   const next = Number(value);
   if (!Number.isFinite(next)) return fallback;
   return Math.min(max ?? next, Math.max(min ?? next, next));
 }
 
-function cssLength(value: number | undefined, fallback: number) {
+function cssLength(value: unknown, fallback: number) {
   return `${numberValue(value, fallback)}px`;
 }
 
@@ -132,42 +167,43 @@ function isNativeVideo(value: string) {
 }
 
 export function ThreeMashProductVideo(props: Props) {
-  const videoUrl = text(props.videoUrl);
-  const title = text(props.titleText);
-  const description = text(props.descriptionHtml);
-  const poster = imageSrc(props.posterImage);
-  const controls = props.controlsEnabled !== false;
-  const autoplay = props.autoplayEnabled === true;
-  const muted = props.mutedEnabled === true || autoplay;
-  const loop = props.loopEnabled === true;
-  const playsInline = props.playsInlineEnabled !== false;
-  const lazy = props.lazyLoadEnabled !== false;
-  const align = normalizedAlign(props.textAlign);
+  const viewProps = productBasedProps(props);
+  const videoUrl = text(viewProps.videoUrl);
+  const title = text(viewProps.titleText);
+  const description = text(viewProps.descriptionHtml);
+  const poster = imageSrc(viewProps.posterImage);
+  const controls = viewProps.controlsEnabled !== false;
+  const autoplay = viewProps.autoplayEnabled === true;
+  const muted = viewProps.mutedEnabled === true || autoplay;
+  const loop = viewProps.loopEnabled === true;
+  const playsInline = viewProps.playsInlineEnabled !== false;
+  const lazy = viewProps.lazyLoadEnabled !== false;
+  const align = normalizedAlign(viewProps.textAlign);
   const embed = embedUrl(videoUrl, autoplay, muted, loop, controls);
 
   const style = {
-    "--tmpv-bg": text(props.backgroundColor, "#ffffff"),
-    "--tmpv-text": text(props.textColor, "#050505"),
-    "--tmpv-muted": text(props.mutedTextColor, "#171717"),
-    "--tmpv-max": cssLength(props.maxWidth, 1240),
-    "--tmpv-video-max": cssLength(props.videoMaxWidth, 1240),
-    "--tmpv-pt": cssLength(props.paddingTop, 72),
-    "--tmpv-pb": cssLength(props.paddingBottom, 72),
-    "--tmpv-ratio": text(props.videoAspectRatio, "16 / 9"),
-    "--tmpv-radius": cssLength(props.videoBorderRadius, 0),
-    "--tmpv-fit": objectFit(props.videoFit),
-    "--tmpv-title-size": cssLength(props.titleFontSize, 28),
-    "--tmpv-body-size": cssLength(props.bodyFontSize, 16),
-    "--tmpv-text-gap": cssLength(props.textSpacing, 24),
+    "--tmpv-bg": text(viewProps.backgroundColor, "#ffffff"),
+    "--tmpv-text": text(viewProps.textColor, "#050505"),
+    "--tmpv-muted": text(viewProps.mutedTextColor, "#171717"),
+    "--tmpv-max": cssLength(viewProps.maxWidth, 1240),
+    "--tmpv-video-max": cssLength(viewProps.videoMaxWidth, 1240),
+    "--tmpv-pt": cssLength(viewProps.paddingTop, 72),
+    "--tmpv-pb": cssLength(viewProps.paddingBottom, 72),
+    "--tmpv-ratio": text(viewProps.videoAspectRatio, "16 / 9"),
+    "--tmpv-radius": cssLength(viewProps.videoBorderRadius, 0),
+    "--tmpv-fit": objectFit(viewProps.videoFit),
+    "--tmpv-title-size": cssLength(viewProps.titleFontSize, 28),
+    "--tmpv-body-size": cssLength(viewProps.bodyFontSize, 16),
+    "--tmpv-text-gap": cssLength(viewProps.textSpacing, 24),
   } as any;
 
   return (
-    <section id={text(props.sectionAnchorId) || undefined} className="three-mash-product-video" style={style}>
+    <section id={text(viewProps.sectionAnchorId) || undefined} className="three-mash-product-video" style={style}>
       <div className="tmpv-wrap">
-        {props.showText !== false && (title || description) ? (
+        {viewProps.showText !== false && (title || description) ? (
           <div className={`tmpv-copy tmpv-copy-${align}`}>
             {title ? <h2>{title}</h2> : null}
-            {description ? <div className="tmpv-description" dangerouslySetInnerHTML={html(props.descriptionHtml)} /> : null}
+            {description ? <div className="tmpv-description" dangerouslySetInnerHTML={html(viewProps.descriptionHtml)} /> : null}
           </div>
         ) : null}
 
@@ -192,7 +228,7 @@ export function ThreeMashProductVideo(props: Props) {
               preload={lazy ? "metadata" : "auto"}
             />
           ) : (
-            <div className="tmpv-placeholder">{text(props.placeholderText, "Video linki ekleyin")}</div>
+            <div className="tmpv-placeholder">{text(viewProps.placeholderText, "Video linki ekleyin")}</div>
           )}
         </div>
       </div>

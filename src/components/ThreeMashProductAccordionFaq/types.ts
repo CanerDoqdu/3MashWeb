@@ -1,5 +1,68 @@
 // This file is auto-generated — do not edit manually.
+import type { IkasProduct } from "@ikas/bp-storefront";
+
 export interface Props {
+  /** Aktif olduğunda bu bölüm, seçili ürün veya sayfa ürünü için aşağıdaki ürün bazlı ayarları kullanır. */
+  productBasedEnabled?: boolean;
+  /** Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin. */
+  product?: IkasProduct | null;
+  /** Sayfa içi link için id. Boş bırakılabilir. */
+  productBasedSectionAnchorId?: string;
+  productBasedTitleText?: string;
+  productBasedShowDescription?: boolean;
+  productBasedDescriptionHtml?: string;
+  productBasedOpenFirstItem?: boolean;
+  productBasedAllowMultipleOpen?: boolean;
+  productBasedFaq1Question?: string;
+  productBasedFaq1AnswerHtml?: string;
+  productBasedFaq2Question?: string;
+  productBasedFaq2AnswerHtml?: string;
+  productBasedFaq3Question?: string;
+  productBasedFaq3AnswerHtml?: string;
+  productBasedFaq4Question?: string;
+  productBasedFaq4AnswerHtml?: string;
+  productBasedFaq5Question?: string;
+  productBasedFaq5AnswerHtml?: string;
+  productBasedFaq6Question?: string;
+  productBasedFaq6AnswerHtml?: string;
+  productBasedFaq7Question?: string;
+  productBasedFaq7AnswerHtml?: string;
+  productBasedFaq8Question?: string;
+  productBasedFaq8AnswerHtml?: string;
+  productBasedFaq9Question?: string;
+  productBasedFaq9AnswerHtml?: string;
+  productBasedFaq10Question?: string;
+  productBasedFaq10AnswerHtml?: string;
+  productBasedFaq11Question?: string;
+  productBasedFaq11AnswerHtml?: string;
+  productBasedFaq12Question?: string;
+  productBasedFaq12AnswerHtml?: string;
+  /** Daha fazla satır için JSON array girin: [{"question":"Soru","answerHtml":"<p>Cevap</p>"}] */
+  productBasedExtraFaqItemsJson?: string;
+  productBasedMaxWidth?: number;
+  productBasedListMaxWidth?: number;
+  productBasedPaddingTop?: number;
+  productBasedPaddingBottom?: number;
+  productBasedTitleSpacing?: number;
+  productBasedRowGap?: number;
+  productBasedRowPaddingY?: number;
+  productBasedRowPaddingX?: number;
+  productBasedRowBorderRadius?: number;
+  productBasedAnswerPaddingTop?: number;
+  productBasedAnswerPaddingBottom?: number;
+  productBasedTitleFontSize?: number;
+  productBasedQuestionFontSize?: number;
+  productBasedAnswerFontSize?: number;
+  productBasedBackgroundColor?: string;
+  productBasedTitleColor?: string;
+  productBasedRowBackgroundColor?: string;
+  productBasedRowOpenBackgroundColor?: string;
+  productBasedQuestionColor?: string;
+  productBasedAnswerColor?: string;
+  productBasedİconColor?: string;
+  productBasedİconBackgroundColor?: string;
+  productBasedLineColor?: string;
+  productBasedPlaceholderText?: string;
   /** Sayfa içi link için id. Boş bırakılabilir. */
   sectionAnchorId?: string;
   titleText?: string;

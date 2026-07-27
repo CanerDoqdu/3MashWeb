@@ -288,7 +288,11 @@ export function ThreeMashProductsPage(props: Props) {
         <div className="tm-products-head">
           <div>
             {isCategoryProductsPage ? (
-              <h1>{pageTitle}</h1>
+              <>
+                {props.eyebrowText ? <p className="tm-products-eyebrow">{props.eyebrowText}</p> : null}
+                <h1>{pageTitle}</h1>
+                {props.descriptionText ? <p>{props.descriptionText}</p> : null}
+              </>
             ) : (
               <>
                 {props.eyebrowText ? <p className="tm-products-eyebrow">{props.eyebrowText}</p> : null}
@@ -318,7 +322,7 @@ export function ThreeMashProductsPage(props: Props) {
                       <input
                         type="search"
                         value={searchValue}
-                        placeholder={props.searchPlaceholder || "Ürün adı, marka veya SKU"}
+                        placeholder={props.searchPlaceholder || "Ürün adı, marka"}
                         onInput={handleSearch}
                         onKeyDown={handleSearchKeyDown}
                       />

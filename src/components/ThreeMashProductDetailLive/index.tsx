@@ -120,6 +120,29 @@ function normalizedVariantKey(value: string | undefined) {
     .replace(/[^a-z0-9.]+/g, "");
 }
 
+const ZIRCON_SHADE_COLORS: Record<string, string> = {
+  a1: "#ede9d0",
+  a2: "#ede9d0",
+  a3: "#ede9d0",
+  "a3.5": "#e4dcc2",
+  a4: "#d2c99a",
+  b1: "#efead4",
+  b2: "#ebe3c7",
+  b3: "#e1d7b2",
+  b4: "#e1d6b5",
+  c1: "#e1d6b5",
+  c2: "#e1d6b5",
+  c3: "#e5dbc3",
+  c4: "#d2c99a",
+  d2: "#dcd4b4",
+  d3: "#d1c2a3",
+  d4: "#d1c2a3",
+  om1: "#fffefe",
+  om2: "#fffefe",
+  om3: "#fffefe",
+  white: "#ffffff",
+};
+
 function cssColorValue(value: unknown): string {
   if (typeof value !== "string") return "";
   const text = value.trim();
@@ -140,6 +163,10 @@ function variantColorCode(variantValue: unknown): string {
 function colorForVariantValue(product: IkasProduct, variantType: unknown, variantValue: unknown) {
   const direct = variantColorCode(variantValue);
   if (direct) return direct;
+
+  const valueName = isPlainObject(variantValue) && typeof variantValue.name === "string" ? variantValue.name : "";
+  const shadeColor = ZIRCON_SHADE_COLORS[normalizedVariantKey(valueName)];
+  if (shadeColor) return shadeColor;
 
   const valueId = isPlainObject(variantValue) && typeof variantValue.id === "string" ? variantValue.id : "";
   if (!valueId) return "";
