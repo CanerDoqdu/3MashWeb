@@ -15,13 +15,15 @@
 .tmpsf-wrap {
   display: grid;
   grid-template-columns:
-    minmax(0, min(var(--tmpsf-text-col), 42%))
-    minmax(0, min(var(--tmpsf-media-col), 58%));
-  gap: var(--tmpsf-gap);
+    minmax(320px, var(--tmpsf-text-col))
+    minmax(0, var(--tmpsf-media-col));
+  column-gap: var(--tmpsf-gap);
+  row-gap: 48px;
   align-items: center;
-  width: min(100%, var(--tmpsf-max), 1240px);
+  justify-content: center;
+  width: min(100%, var(--tmpsf-max));
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 clamp(48px, 4vw, 64px);
 }
 
 .three-mash-product-split-feature.is-reversed .tmpsf-copy {
@@ -33,11 +35,15 @@
 }
 
 .tmpsf-copy {
+  width: 100%;
+  max-width: var(--tmpsf-content-w);
   min-width: 0;
+  justify-self: start;
 }
 
 .tmpsf-title {
-  margin: 0 0 42px;
+  width: 100%;
+  margin: 0;
   color: var(--tmpsf-text);
   font-size: var(--tmpsf-title-size);
   font-weight: 900;
@@ -52,7 +58,7 @@
 .tmpsf-title mark,
 .tmpsf-title .highlight {
   display: inline;
-  padding: 0 3px;
+  padding: 0 5px;
   background: var(--tmpsf-accent);
   color: inherit;
   box-decoration-break: clone;
@@ -72,7 +78,15 @@
 
 .tmpsf-intro,
 .tmpsf-detail {
-  max-width: 560px;
+  width: 100%;
+}
+
+.tmpsf-intro {
+  padding-top: var(--tmpsf-title-mb);
+  margin-bottom: var(--tmpsf-intro-mb);
+  text-align: left;
+  text-align-last: left;
+  text-wrap: pretty;
 }
 
 .tmpsf-intro p,
@@ -102,9 +116,10 @@
 }
 
 .tmpsf-copy h3 {
-  margin: 38px 0 20px;
+  max-width: var(--tmpsf-content-w);
+  margin: var(--tmpsf-proof-mt) 0 var(--tmpsf-proof-mb);
   color: var(--tmpsf-text);
-  font-size: 17px;
+  font-size: var(--tmpsf-body-size);
   font-weight: 900;
   line-height: 1.25;
   letter-spacing: 0;
@@ -112,8 +127,8 @@
 
 .tmpsf-quotes {
   display: grid;
-  gap: 30px;
-  max-width: 560px;
+  gap: 34px;
+  max-width: var(--tmpsf-content-w);
 }
 
 .tmpsf-quote {
@@ -139,21 +154,21 @@
 
 .tmpsf-scores {
   display: grid;
-  gap: 34px;
-  max-width: 610px;
+  gap: var(--tmpsf-score-gap);
+  max-width: var(--tmpsf-content-w);
 }
 
 .tmpsf-score-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, var(--tmpsf-score-bar-w)) auto;
   gap: 22px;
   align-items: center;
-  margin-top: 34px;
+  margin-top: var(--tmpsf-score-bar-mt);
 }
 
 .tmpsf-score-track {
   display: block;
-  height: 18px;
+  height: var(--tmpsf-score-bar-h);
   overflow: hidden;
   border-radius: 999px;
   background: color-mix(in srgb, var(--tmpsf-score-track) 12%, transparent);
@@ -169,7 +184,7 @@
 .tmpsf-score-row b {
   min-width: 42px;
   color: var(--tmpsf-text);
-  font-size: 17px;
+  font-size: var(--tmpsf-body-size);
   font-weight: 900;
   line-height: 1;
 }
@@ -177,6 +192,9 @@
 .tmpsf-media {
   display: grid;
   min-width: 0;
+  width: min(100%, var(--tmpsf-media-display-w));
+  margin-top: var(--tmpsf-media-mt);
+  justify-self: end;
   aspect-ratio: var(--tmpsf-media-ratio);
   overflow: hidden;
   border-radius: var(--tmpsf-media-radius);
@@ -250,13 +268,27 @@
   text-align: center;
 }
 
+@media (max-width: 1500px) {
+  .tmpsf-wrap {
+    grid-template-columns:
+      minmax(300px, min(var(--tmpsf-text-col), 38vw))
+      minmax(0, min(var(--tmpsf-media-col), 52vw));
+    column-gap: clamp(56px, 6vw, var(--tmpsf-gap));
+  }
+}
+
 @media (max-width: 1180px) {
   .tmpsf-wrap {
-    gap: max(34px, calc(var(--tmpsf-gap) * 0.55));
+    grid-template-columns:
+      minmax(280px, min(var(--tmpsf-text-col), 42vw))
+      minmax(0, min(var(--tmpsf-media-col), 48vw));
+    column-gap: 48px;
+    padding-right: 32px;
+    padding-left: 32px;
   }
 
   .tmpsf-title {
-    font-size: min(var(--tmpsf-title-size), 30px);
+    font-size: min(var(--tmpsf-title-size), 28px);
   }
 }
 
@@ -278,13 +310,14 @@
   }
 
   .tmpsf-title {
-    margin-bottom: 28px;
     font-size: min(var(--tmpsf-title-size), 30px);
   }
 
   .tmpsf-media {
-    width: 100%;
+    width: min(100%, var(--tmpsf-media-display-w));
+    justify-self: center;
   }
+
 }
 
 @media (max-width: 560px) {
@@ -331,5 +364,99 @@
   .three-mash-product-split-feature.is-grid .tmpsf-media-item figcaption {
     top: 10px;
     font-size: 16px;
+  }
+
+}
+
+@media (max-width: 1024px) {
+  .tmpsf-wrap {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    row-gap: clamp(28px, 5vw, 44px);
+    padding-right: clamp(16px, 4vw, 24px);
+    padding-left: clamp(16px, 4vw, 24px);
+  }
+
+  .three-mash-product-split-feature.is-reversed .tmpsf-copy,
+  .three-mash-product-split-feature.is-reversed .tmpsf-media {
+    order: initial;
+  }
+
+  .tmpsf-copy {
+    max-width: min(100%, var(--tmpsf-content-w));
+    justify-self: stretch;
+  }
+
+  .tmpsf-media {
+    width: min(100%, var(--tmpsf-media-display-w));
+    max-width: 760px;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .three-mash-product-split-feature {
+    padding-top: calc(var(--tmpsf-pt) * 0.58);
+    padding-bottom: calc(var(--tmpsf-pb) * 0.58);
+  }
+
+  .tmpsf-wrap {
+    row-gap: 24px;
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .tmpsf-title {
+    font-size: clamp(24px, 7vw, 30px);
+    line-height: 1.14;
+    overflow-wrap: anywhere;
+  }
+
+  .tmpsf-title-line {
+    display: inline;
+  }
+
+  .tmpsf-intro {
+    padding-top: min(var(--tmpsf-title-mb), 22px);
+    margin-bottom: min(var(--tmpsf-intro-mb), 28px);
+  }
+
+  .tmpsf-intro,
+  .tmpsf-detail,
+  .tmpsf-quote blockquote,
+  .tmpsf-score p {
+    font-size: min(var(--tmpsf-body-size), 16px);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .tmpsf-quotes,
+  .tmpsf-scores {
+    gap: 24px;
+  }
+
+  .tmpsf-score-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  .tmpsf-media {
+    margin-top: min(var(--tmpsf-media-mt), 20px);
+    border-radius: min(var(--tmpsf-media-radius), 18px);
+  }
+
+  .three-mash-product-split-feature.is-grid .tmpsf-media {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    aspect-ratio: auto;
+  }
+
+  .three-mash-product-split-feature.is-grid .tmpsf-media-item {
+    aspect-ratio: var(--tmpsf-media-ratio);
+    border-radius: min(calc(var(--tmpsf-media-radius) * 0.55), 14px);
+  }
+
+  .tmpsf-media-placeholder {
+    min-height: 220px;
   }
 }

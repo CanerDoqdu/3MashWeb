@@ -40,6 +40,23 @@ function text(value: unknown, fallback = "") {
   return trimmed || fallback;
 }
 
+function boolValue(value: unknown): boolean | undefined {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "number") return value === 0 ? false : true;
+  if (value && typeof value === "object") {
+    const data = value as Record<string, unknown>;
+    for (const candidate of [data.value, data.checked, data.enabled, data.selected, data.current, data.data]) {
+      const parsed = boolValue(candidate);
+      if (parsed !== undefined) return parsed;
+    }
+  }
+
+  const normalized = propString(value).trim().toLocaleLowerCase("tr");
+  if (["false", "0", "no", "hayir", "hayır", "kapali", "kapalı", "off"].includes(normalized)) return false;
+  if (["true", "1", "yes", "evet", "acik", "açık", "on"].includes(normalized)) return true;
+  return undefined;
+}
+
 function html(value: unknown) {
   return { __html: propString(value) };
 }
@@ -117,10 +134,12 @@ function ImageItem({ image, cloneIndex }: { image: SliderImage; cloneIndex?: num
 
 export function ThreeMashProductsBasicSlider(props: Props) {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const images = sliderImages(props);
+  const sectionVisible = boolValue(props.sectionVisible) !== false;
+  const images = sectionVisible ? sliderImages(props) : [];
   const itemCount = images.length;
 
   useEffect(() => {
+    if (!sectionVisible) return;
     const slider = sliderRef.current;
     if (!slider) return;
     const track = slider.querySelector<HTMLElement>(".tmpbs-track");
@@ -149,7 +168,9 @@ export function ThreeMashProductsBasicSlider(props: Props) {
       window.cancelAnimationFrame(frame);
       observer?.disconnect();
     };
-  }, [itemCount]);
+  }, [itemCount, sectionVisible]);
+
+  if (!sectionVisible) return null;
 
   const style = {
     "--tmr-bg": backgroundColor(props.backgroundColor),

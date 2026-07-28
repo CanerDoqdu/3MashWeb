@@ -144,7 +144,7 @@ export function ThreeMashProductAccordionFaq(props: Props) {
   const [openItems, setOpenItems] = useState<Record<number, boolean>>(() =>
     boolValue(viewProps.openFirstItem) === false ? ({} as Record<number, boolean>) : { 0: true }
   );
-  const sectionVisible = boolValue(viewProps.sectionVisible) !== false;
+  const sectionVisible = boolValue((viewProps as unknown as Record<string, unknown>).sectionVisible) !== false;
 
   if (!sectionVisible) return null;
 

@@ -136,3 +136,58 @@
     min-height: 220px;
   }
 }
+
+@media (max-width: 1024px) {
+  .tmplg-wrap {
+    width: 100%;
+    padding-right: clamp(16px, 4vw, 24px);
+    padding-left: clamp(16px, 4vw, 24px);
+  }
+
+  .tmplg-copy {
+    max-width: 780px;
+  }
+
+  .tmplg-frame {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .three-mash-product-large-image {
+    padding-top: calc(var(--tmplg-pt) * 0.58);
+    padding-bottom: calc(var(--tmplg-pb) * 0.58);
+  }
+
+  .tmplg-wrap {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .tmplg-copy {
+    gap: 12px;
+    margin-bottom: min(var(--tmplg-text-gap), 24px);
+  }
+
+  .tmplg-copy,
+  .tmplg-copy-left,
+  .tmplg-copy-right {
+    text-align: center;
+  }
+
+  .tmplg-copy h2 {
+    font-size: clamp(24px, 7vw, 30px);
+    line-height: 1.14;
+    overflow-wrap: anywhere;
+  }
+
+  .tmplg-description {
+    font-size: min(var(--tmplg-body-size), 16px);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .tmplg-frame {
+    border-radius: min(var(--tmplg-radius), 18px);
+  }
+}

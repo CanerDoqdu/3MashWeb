@@ -2,6 +2,8 @@
 import type { IkasImage } from "@ikas/bp-storefront";
 
 export interface Props {
+  /** Kapalıysa ürünler basic slider section render edilmez. */
+  sectionVisible?: boolean;
   sectionAnchorId?: string;
   setupMessage?: string;
   carouselAriaLabel?: string;

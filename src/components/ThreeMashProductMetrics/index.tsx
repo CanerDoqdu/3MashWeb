@@ -1,3 +1,4 @@
+import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
 
 function propString(value: unknown) {
@@ -6,12 +7,36 @@ function propString(value: unknown) {
   if (!value || typeof value !== "object") return "";
 
   const data = value as Record<string, unknown>;
-  const candidates = [data.value, data.text, data.html, data.label, data.title];
+  const candidates = [
+    data.src,
+    data.url,
+    data.href,
+    data.defaultSrc,
+    data.originalSrc,
+    data.imageUrl,
+    data.value,
+    data.text,
+    data.html,
+    data.label,
+    data.title,
+    (data.image as Record<string, unknown> | undefined)?.src,
+    (data.image as Record<string, unknown> | undefined)?.url,
+  ];
   for (const candidate of candidates) {
     if (typeof candidate === "string" && candidate.trim()) return candidate;
   }
 
   return "";
+}
+
+function imageSrc(value: unknown) {
+  if (!value) return "";
+  if (typeof value === "string") return value.trim();
+  try {
+    return getDefaultSrc(value as any) || propString(value);
+  } catch {
+    return propString(value);
+  }
 }
 
 function boolValue(value: unknown) {
@@ -65,19 +90,22 @@ function normalized(value: unknown) {
   return propString(value).trim().toLocaleLowerCase("tr");
 }
 
-function hasStaleMetric1Values(data: Record<string, unknown>) {
-  return (
-    normalized(data.productBasedMetric1Value) === "120" ||
-    normalized(data.productBasedMetric1Unit) === "45" ||
-    normalized(data.productBasedMetric1Title) === "ff" ||
-    normalized(data.productBasedMetric1Subtitle) === "4m nl"
-  );
+const STALE_PRODUCT_BASED_VALUES: Record<string, unknown[]> = {
+  productBasedMetric1Value: ["120"],
+  productBasedMetric1Unit: ["45"],
+  productBasedMetric1Title: ["ff"],
+  productBasedMetric1Subtitle: ["4m nl"],
+  productBasedMetric3Unit: ["4y"],
+};
+
+function samePropValue(value: unknown, staleValue: unknown) {
+  if (typeof staleValue === "number") return Number(value) === staleValue;
+  return normalized(value) === normalized(staleValue);
 }
 
 function isStaleProductBasedValue(data: Record<string, unknown>, productBasedName: string) {
-  if (productBasedName.startsWith("productBasedMetric1") && hasStaleMetric1Values(data)) return true;
-  if (productBasedName === "productBasedMetric3Unit" && normalized(data.productBasedMetric3Value) === "4y") return true;
-  return false;
+  const staleValues = STALE_PRODUCT_BASED_VALUES[productBasedName];
+  return staleValues?.some((staleValue) => samePropValue(data[productBasedName], staleValue)) ?? false;
 }
 
 function valueFor(props: Props, propName: keyof Props) {
@@ -89,7 +117,7 @@ function valueFor(props: Props, propName: keyof Props) {
   if (isStaleProductBasedValue(data, productBasedName) && filled(ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName])) {
     return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
   }
-  if (filled(productBasedValue)) return productBasedValue;
+  if (productBasedValue !== undefined && productBasedValue !== null) return productBasedValue;
   if (filled(ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName])) return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
   return props[propName];
 }
@@ -113,14 +141,17 @@ function metric(props: Props, index: number) {
   const enabled = boolValue(field("Enabled")) ?? field("Enabled") !== false;
   const value = text(field("Value"));
   const title = text(field("Title"));
+  const image = imageSrc(field("ImageUrl"));
 
-  if (!enabled || (!value && !title)) return null;
+  if (!enabled || (!value && !title && !image)) return null;
 
   return {
     value,
     unit: text(field("Unit")),
     title,
     subtitle: text(field("Subtitle")),
+    image,
+    imageAlt: text(field("ImageAlt"), title),
   };
 }
 
@@ -139,6 +170,8 @@ export function ThreeMashProductMetrics(props: Props) {
     "--tmpm-pb": cssLength(valueFor(props, "paddingBottom"), 88),
     "--tmpm-gap": cssLength(valueFor(props, "gridGap"), 96),
     "--tmpm-circle-size": cssLength(valueFor(props, "circleSize"), 148),
+    "--tmpm-image-size": cssLength(valueFor(props, "metricImageSize"), 148),
+    "--tmpm-image-fit": text(valueFor(props, "metricImageObjectFit"), "contain"),
     "--tmpm-circle-spacing": cssLength(valueFor(props, "circleSpacing"), 46),
     "--tmpm-value-size": cssLength(valueFor(props, "valueFontSize"), 50),
     "--tmpm-unit-size": cssLength(valueFor(props, "unitFontSize"), 22),
@@ -153,13 +186,19 @@ export function ThreeMashProductMetrics(props: Props) {
       <div className="tmpm-wrap">
         <div className="tmpm-grid">
           {metrics.map((item, index) => {
-            const metricItem = item as { value: string; unit: string; title: string; subtitle: string };
+            const metricItem = item as { value: string; unit: string; title: string; subtitle: string; image: string; imageAlt: string };
             return (
-              <article className="tmpm-item" key={index}>
-                <div className="tmpm-circle">
-                  <strong>{metricItem.value}</strong>
-                  {metricItem.unit ? <span>{metricItem.unit}</span> : null}
-                </div>
+              <article className={`tmpm-item${metricItem.image ? " has-image" : ""}`} key={index}>
+                {metricItem.image ? (
+                  <div className="tmpm-image">
+                    <img src={metricItem.image} alt={metricItem.imageAlt} loading="lazy" decoding="async" />
+                  </div>
+                ) : (
+                  <div className="tmpm-circle">
+                    <strong>{metricItem.value}</strong>
+                    {metricItem.unit ? <span>{metricItem.unit}</span> : null}
+                  </div>
+                )}
                 <div className="tmpm-copy">
                   {metricItem.title ? <h3>{metricItem.title}</h3> : null}
                   {metricItem.subtitle ? <p>{metricItem.subtitle}</p> : null}

@@ -59,14 +59,29 @@ export interface Props {
   productBasedPaddingBottom?: number;
   productBasedColumnGap?: number;
   productBasedTextColumnWidth?: number;
+  /** Sol taraftaki başlık, açıklama ve skor metinlerinin maksimum genişliği. */
+  productBasedContentWidth?: number;
+  /** Sağ tarafta görsele ayrılan toplam kolon alanı. Kutunun sığması için Görsel Kutusu Genişliği ile beraber kullan. */
   productBasedMediaColumnWidth?: number;
   productBasedTitleFontSize?: number;
   productBasedBodyFontSize?: number;
+  productBasedTitleMarginBottom?: number;
+  productBasedIntroMarginBottom?: number;
+  productBasedProofTitleMarginTop?: number;
+  productBasedProofTitleMarginBottom?: number;
+  productBasedScoreGap?: number;
+  productBasedScoreBarMarginTop?: number;
+  productBasedScoreBarWidth?: number;
+  productBasedScoreBarHeight?: number;
+  /** Görselin dış kutu genişliği. Resim alanını büyütmek/küçültmek için bunu değiştir. */
+  productBasedMediaDisplayWidth?: number;
+  productBasedMediaTopMargin?: number;
   /** CSS aspect-ratio değeri. Örn: 1.5 / 1, 16 / 9, 1 / 1. */
   productBasedMediaAspectRatio?: string;
   productBasedMediaBorderRadius?: number;
   /** contain, cover, fill veya scale-down. */
   productBasedImageObjectFit?: string;
+  /** Sadece kutunun içindeki resmi yakınlaştırır. Dış kutu boyutu için Görsel Kutusu Genişliği değerini değiştir. */
   productBasedImageScale?: number;
   productBasedImageXOffset?: number;
   productBasedImageYOffset?: number;
@@ -129,14 +144,30 @@ export interface Props {
   paddingBottom?: number;
   columnGap?: number;
   textColumnWidth?: number;
+  /** Sol taraftaki başlık, açıklama ve skor metinlerinin maksimum genişliği. */
+  contentWidth?: number;
+  /** Sağ tarafta görsele ayrılan toplam kolon alanı. Kutunun sığması için Görsel Kutusu Genişliği ile beraber kullan. */
   mediaColumnWidth?: number;
   titleFontSize?: number;
   bodyFontSize?: number;
+  titleMarginBottom?: number;
+  introMarginBottom?: number;
+  proofTitleMarginTop?: number;
+  proofTitleMarginBottom?: number;
+  scoreGap?: number;
+  scoreBarMarginTop?: number;
+  /** 0 bırakılırsa mevcut alanı kullanır. */
+  scoreBarWidth?: number;
+  scoreBarHeight?: number;
+  /** Görselin dış kutu genişliği. Resim alanını büyütmek/küçültmek için bunu değiştir. */
+  mediaDisplayWidth?: number;
+  mediaTopMargin?: number;
   /** CSS aspect-ratio değeri. Örn: 1.5 / 1, 16 / 9, 1 / 1. */
   mediaAspectRatio?: string;
   mediaBorderRadius?: number;
   /** contain, cover, fill veya scale-down. */
   imageObjectFit?: string;
+  /** Sadece kutunun içindeki resmi yakınlaştırır. Dış kutu boyutu için Görsel Kutusu Genişliği değerini değiştir. */
   imageScale?: number;
   imageXOffset?: number;
   imageYOffset?: number;
