@@ -1,9 +1,11 @@
+@import "../../sub-components/ThreeMashProductDetailTemplate/styles.css";
+
 .three-mash-product-accordion-faq {
   width: 100%;
   padding: var(--tmpaf-pt) 0 var(--tmpaf-pb);
   background: var(--tmpaf-bg);
   color: var(--tmpaf-question);
-  font-family: Poppins, Arial, sans-serif;
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
 
 .three-mash-product-accordion-faq *,

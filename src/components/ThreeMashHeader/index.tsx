@@ -18,9 +18,6 @@ import {
   type IkasProduct,
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
-import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
-import mashC4pFeatureImage from "../../assets/mash-c4p-feature-data";
-import threeMashLogoImage from "../../assets/three-mash-logo-data";
 import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
 import { Props } from "./types";
 
@@ -28,8 +25,6 @@ type MenuItem = {
   title?: string;
   description?: string;
   href?: string;
-  iconImageUrl?: unknown;
-  iconSvg?: unknown;
 };
 
 type FlowItem = {
@@ -45,6 +40,14 @@ type ActiveAction = "profile" | "store" | null;
 type SearchSuggestion = {
   product: IkasProduct;
   score: number;
+};
+
+type HeaderAnnouncementOverride = {
+  enabled?: boolean;
+  highlightText?: string;
+  text?: string;
+  ctaText?: string;
+  href?: string;
 };
 
 function cartImageUrl(item: IkasOrderLineItem) {
@@ -82,11 +85,53 @@ function cartItemVariantText(item: IkasOrderLineItem) {
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
+const threeMashHeaderLogoImage = "https://cdn.myikas.com/images/theme-images/4a6af8e2-cb7c-4cc8-ba17-13656d4b8670/image_3840.webp";
 const academyPageHref = "/pages/mash-academy";
 const defaultReferencesHomeHref = "/";
 const defaultReferencesSectionId = "guven";
 const pendingReferencesScrollKey = "tmh-pending-references-scroll";
 const legacyAcademyRouteKeys = new Set(["academy", "mash-academy", "pages-mash-academy", "2tplvqpo-rovtvwz53h"]);
+const defaultProductsMenuText = "Ürünler";
+const defaultWhyMenuText = "Neden 3mash?";
+const defaultReferencesText = "Referanslar";
+const defaultAcademyText = "Academy";
+const defaultMobileMenuLabel = "Menü";
+const defaultAnnouncement = {
+  highlightText: "⚡ Fırsatı kaçırmayın.",
+  text: "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
+  ctaText: "Hemen hesaplayın",
+  href: "#hesapla",
+};
+
+function announcementOverridePayload(value: unknown): HeaderAnnouncementOverride | null {
+  if (!value || typeof value !== "object") return null;
+  const data = value as HeaderAnnouncementOverride;
+  if (data.enabled === false) return null;
+  if (!data.highlightText && !data.text && !data.ctaText) return null;
+  return data;
+}
+
+function currentProductAnnouncement() {
+  if (typeof window === "undefined") return null;
+  return announcementOverridePayload((window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown }).__THREE_MASH_PRODUCT_ANNOUNCEMENT__);
+}
+const defaultProductsFeature = {
+  eyebrow: "YENİ · DÜNYADA İLK",
+  title: "MASH C4P<br>Akıllı Kürleme Cihazı",
+  description: "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
+  ctaText: "Keşfet →",
+  href: "https://studio.ikasapps.com/yikama-kurleme-cihazlari",
+};
+const defaultProductPrimary: Required<MenuItem>[] = [
+  { title: "3D Yazıcılar", description: "P1D / P16L hassas baskı", href: "https://3mash.com/3d-yazicilar" },
+  { title: "Yıkama & Kürleme", description: "Yıkama ve akıllı kürleme", href: "https://3mash.com/yikama-kurleme-cihazlari" },
+  { title: "Dental Reçineler", description: "Dental reçine seçenekleri", href: "https://3mash.com/dental-3d-yazici-recineleri" },
+];
+const defaultProductSecondary: Required<MenuItem>[] = [
+  { title: "Masaüstü Tarayıcılar", description: "Lab tarafında hassas veri", href: "https://3mash.com/masasustu-tarayicilar" },
+  { title: "Zirkon Bloklar & Titanyum", description: "Freze tarafının sarfları", href: "https://3mash.com/zirkon-bloklar" },
+  { title: "Dental Fırınlar", description: "Sinterleme çözümleri", href: "https://3mash.com/dental-firinlar" },
+];
 
 function href(value?: string) {
   const trimmed = value?.trim();
@@ -261,12 +306,6 @@ function handleReferencesClick(event: MouseEvent, homeHref: string | undefined, 
   window.location.href = stored ? homeTarget : `${homeTarget}${hash}`;
 }
 
-function searchCategoryHref(searchHref: string | undefined, firstCategoryHref: string | undefined) {
-  const configuredSearchHref = searchHref?.trim();
-  const configuredFirstCategoryHref = firstCategoryHref?.trim();
-  return productRouteHref(configuredSearchHref && configuredSearchHref !== "#" ? configuredSearchHref : configuredFirstCategoryHref, "/3d-yazicilar");
-}
-
 function c4pRouteHref(value: string | undefined) {
   const trimmed = value?.trim();
   if (!trimmed) return "/yikama-kurleme-cihazlari";
@@ -329,7 +368,7 @@ function searchSuggestions(products: IkasProduct[], query: string): SearchSugges
     .map((product) => ({ product, score: fuzzyScore(productSearchText(product), normalizedQuery) }))
     .filter((item) => Number.isFinite(item.score))
     .sort((a, b) => a.score - b.score || a.product.name.length - b.product.name.length)
-    .slice(0, 5);
+    .slice(0, 1);
 }
 
 function text(value: string | undefined, fallback: string) {
@@ -422,6 +461,25 @@ function inlineHtml(value?: string) {
     .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
     .replace(/^<p[^>]*>/i, "")
     .replace(/<\/p>$/i, "");
+}
+
+function visibleTextKey(value?: string) {
+  return inlineHtml(value)
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLocaleLowerCase("tr-TR")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i");
+}
+
+function sourceRichText(value: string | undefined, fallback: string, staleKeys: string[] = []) {
+  const key = visibleTextKey(value);
+  if (!key || staleKeys.includes(key)) return fallback;
+  return value;
 }
 
 function escapeRegExp(value: string) {
@@ -534,6 +592,10 @@ function themeToken(value: string | undefined, defaultValue: string, tokenName: 
   return `var(${tokenName}, ${defaultValue})`;
 }
 
+function sourceThemeToken(defaultValue: string, tokenName: string) {
+  return `var(${tokenName}, ${defaultValue})`;
+}
+
 function imageControlVars(cssPrefix: string, props: Props, propPrefix: string, width: number, height: number, max: number) {
   const source = props as unknown as Record<string, unknown>;
   return {
@@ -591,32 +653,6 @@ function InlineIcon({ image, svg, className }: { image?: unknown; svg?: unknown;
   return <InlineSvg svg={svg} className={className} />;
 }
 
-function legacyProductIcon(image: unknown, svg: unknown, replacement: string, tokens: string[]) {
-  if (imageSource(image)) {
-    return { iconImageUrl: image, iconSvg: svg };
-  }
-
-  const markup = svgMarkup(svg);
-  if (markup && tokens.some((token) => markup.includes(token))) {
-    return { iconImageUrl: replacement, iconSvg: undefined };
-  }
-
-  return { iconImageUrl: image, iconSvg: svg };
-}
-
-function resolveProductIcon(image: unknown, svg: unknown, replacement: string, tokens: string[], showIcons: boolean) {
-  if (!showIcons) {
-    return { iconImageUrl: undefined, iconSvg: undefined };
-  }
-
-  const resolved = legacyProductIcon(image, svg, replacement, tokens);
-  if (imageSource(resolved.iconImageUrl) || svgMarkup(resolved.iconSvg)) {
-    return resolved;
-  }
-
-  return { iconImageUrl: replacement, iconSvg: undefined };
-}
-
 function resolveActionIcon(image: unknown, svg: unknown, fallbackSvg: string, showIcons: boolean) {
   if (!showIcons) {
     return { image: undefined, svg: undefined };
@@ -629,11 +665,8 @@ function resolveActionIcon(image: unknown, svg: unknown, fallbackSvg: string, sh
 }
 
 function ProductLink({ item, wordStyle }: { item: MenuItem; wordStyle: Props }) {
-  const hasIcon = Boolean(imageSource(item.iconImageUrl) || svgMarkup(item.iconSvg));
-
   return (
-    <a href={href(item.href)} className={`tmh-mega-link${hasIcon ? "" : " tmh-mega-link-no-icon"}`}>
-      <InlineIcon image={item.iconImageUrl} svg={item.iconSvg} className="tmh-product-icon" />
+    <a href={href(item.href)} className="tmh-mega-link">
       <span className="tmh-mega-link-copy">
         <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
         <span dangerouslySetInnerHTML={richText(item.description, wordStyle)} />
@@ -682,17 +715,14 @@ function FlowLink({ item, wordStyle }: { item: FlowItem; wordStyle: Props }) {
 }
 
 function Logo({ props }: { props: Props }) {
-  const { logoText, logoHref, logoImageUrl, logoImageAlt, logoSvg } = props;
-  const logoSvgMarkup = svgMarkup(logoSvg);
+  const { logoText, logoHref, logoImageAlt } = props;
+  const logoImage = threeMashHeaderLogoImage;
 
   return (
     <a className="tmh-logo" href={headerRouteHref(logoHref, "/")} aria-label={logoText}>
-      {logoSvgMarkup ? (
-        <span className="tmh-logo-svg" dangerouslySetInnerHTML={{ __html: logoSvgMarkup }} />
-      ) : (
-        <img src={imageSource(logoImageUrl, threeMashLogoImage)} alt={logoImageAlt || logoText} />
-      )}
-      <span dangerouslySetInnerHTML={richText(logoText, props)} />
+      <span className="tmh-logo-image-wrap" style={{ "--tmh-logo-mask-image": `url("${logoImage}")` } as any}>
+        <img src={logoImage} alt={logoImageAlt || logoText} />
+      </span>
     </a>
   );
 }
@@ -710,36 +740,67 @@ export function ThreeMashHeader(props: Props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
   const [activeAction, setActiveAction] = useState<ActiveAction>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [cart, setCart] = useState<IkasCart | null>(cartStore.cart);
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(customerStore.customer));
   const [removingCartItemId, setRemovingCartItemId] = useState("");
+  const [productsMenuLeft, setProductsMenuLeft] = useState<number | null>(null);
   const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
+  const [productAnnouncement, setProductAnnouncement] = useState<HeaderAnnouncementOverride | null>(() => currentProductAnnouncement());
   const searchInputRef = useRef<HTMLInputElement>(null);
   const committedSuggestionSearchRef = useRef("");
   const headerRef = useRef<HTMLElement>(null);
+  const productsMenuRef = useRef<HTMLLIElement>(null);
   const whyMenuRef = useRef<HTMLLIElement>(null);
-  const showProductIcons = props.showProductIcons !== false;
   const showActionIcons = props.showActionIcons !== false;
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
   const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
   const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
-  const searchTargetHref = href(searchCategoryHref(props.searchHref, props.product1Href));
   const referencesTargetHref = referencesSectionTarget(props.referencesHomeHref, props.referencesSectionId);
   const searchSuggestionItems = searchSuggestions(props.searchProductList?.data || [], searchQuery);
   const hasSearchSuggestions = isSearchOpen && searchQuery.trim().length > 0 && searchSuggestionItems.length > 0;
   const cartItems = isLoggedIn ? cart?.orderLineItems?.filter((item) => !item.deleted) || [] : [];
   const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
   const visibleCartItems = cartItems.slice(0, 4);
+  const productsMenuText = sourceRichText(props.productsMenuText, defaultProductsMenuText);
+  const whyMenuText = sourceRichText(props.whyMenuText, defaultWhyMenuText);
+  const referencesText = sourceRichText(props.referencesText, defaultReferencesText);
+  const academyText = sourceRichText(props.academyText, defaultAcademyText, ["akademi"]);
+  const mobileMenuLabel = richTextValue(props.mobileMenuLabel, defaultMobileMenuLabel);
+  const announcementHighlightText = richTextValue(productAnnouncement?.highlightText ?? props.announcementHighlightText, defaultAnnouncement.highlightText);
+  const announcementText = richTextValue(productAnnouncement?.text ?? props.announcementText, defaultAnnouncement.text);
+  const announcementCtaText = richTextValue(productAnnouncement?.ctaText ?? props.announcementCtaText, defaultAnnouncement.ctaText);
+  const announcementHref = productAnnouncement?.href ?? props.announcementHref;
+  const productsCol1Title = sourceRichText(props.productsCol1Title, "ÜRETİM", ["uretim"]);
+  const productsCol2Title = sourceRichText(props.productsCol2Title, "TAMAMLAYICI", ["tamamlayici"]);
+  const productsFeatureEyebrow = sourceRichText(props.productsFeatureEyebrow, defaultProductsFeature.eyebrow);
+  const productsFeatureTitle = sourceRichText(props.productsFeatureTitle, defaultProductsFeature.title, ["mash c4p akilli kurleme cihazi"]);
+  const productsFeatureDescription = sourceRichText(props.productsFeatureDescription, defaultProductsFeature.description, [
+    "recineye gore otomatik kurleme. sonuc kalitesini kullanici hatasindan cikarir.",
+  ]);
+  const productsFeatureCtaText = sourceRichText(props.productsFeatureCtaText, defaultProductsFeature.ctaText, ["kesfet"]);
   const productPrimary: MenuItem[] = [
-    { title: props.product1Title, description: props.product1Description, href: productRouteHref(props.product1Href, "/3d-yazicilar"), ...resolveProductIcon(props.product1IconImageUrl, props.product1IconSvg, ecoPrinterIcon, ["printer", "M6 9V3h12v6"], showProductIcons) },
-    { title: props.product2Title, description: props.product2Description, href: productRouteHref(props.product2Href, "/yikama-kurleme-cihazlari"), ...resolveProductIcon(props.product2IconImageUrl, props.product2IconSvg, ecoScannerIcon, ["washer", "circle cx=\"12\" cy=\"14\"", "M7 7h10"], showProductIcons) },
-    { title: props.product3Title, description: props.product3Description, href: productRouteHref(props.product3Href, "/dental-3d-yazici-recineleri"), ...resolveProductIcon(props.product3IconImageUrl, props.product3IconSvg, ecoResinIcon, ["flask-conical", "M10 2v7.5"], showProductIcons) },
+    {
+      title: sourceRichText(props.product1Title, defaultProductPrimary[0].title),
+      description: sourceRichText(props.product1Description, defaultProductPrimary[0].description, ["mash p1d (385 nm dlp) · p16l — ±20µm hassasiyet"]),
+      href: productRouteHref(props.product1Href, defaultProductPrimary[0].href),
+    },
+    {
+      title: sourceRichText(props.product2Title, defaultProductPrimary[1].title),
+      description: sourceRichText(props.product2Description, defaultProductPrimary[1].description, ["c4p akilli kurleme · c1e ekonomik"]),
+      href: productRouteHref(props.product2Href, defaultProductPrimary[1].href),
+    },
+    {
+      title: sourceRichText(props.product3Title, defaultProductPrimary[2].title),
+      description: sourceRichText(props.product3Description, defaultProductPrimary[2].description, ["crs · ce class iia biyouyumlu & model"]),
+      href: productRouteHref(props.product3Href, defaultProductPrimary[2].href),
+    },
   ];
 
   const productSecondary: MenuItem[] = [
-    { title: props.product4Title, description: props.product4Description, href: productRouteHref(props.product4Href, "/masasustu-tarayicilar"), ...resolveProductIcon(props.product4IconImageUrl, props.product4IconSvg, ecoCuringIcon, ["scan-line", "M3 7V5a2 2"], showProductIcons) },
-    { title: props.product5Title, description: props.product5Description, href: productRouteHref(props.product5Href, "/zirkon-bloklar"), ...resolveProductIcon(props.product5IconImageUrl, props.product5IconSvg, ecoBlocksIcon, ["class=\"box\"", "M12 2 3 7l9 5"], showProductIcons) },
-    { title: props.product6Title, description: props.product6Description, href: productRouteHref(props.product6Href, "/dental-firinlar"), ...resolveProductIcon(props.product6IconImageUrl, props.product6IconSvg, ecoOvenIcon, ["flame", "a3.5 3.5"], showProductIcons) },
+    { title: sourceRichText(props.product4Title, defaultProductSecondary[0].title), description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, ["lab icin hassas tarama"]), href: productRouteHref(props.product4Href, defaultProductSecondary[0].href) },
+    { title: sourceRichText(props.product5Title, defaultProductSecondary[1].title), description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]), href: productRouteHref(props.product5Href, defaultProductSecondary[1].href) },
+    { title: sourceRichText(props.product6Title, defaultProductSecondary[2].title), description: sourceRichText(props.product6Description, defaultProductSecondary[2].description, ["sinterleme cozumleri"]), href: productRouteHref(props.product6Href, defaultProductSecondary[2].href) },
   ];
 
   const whyItems: FlowItem[] = [
@@ -757,26 +818,28 @@ export function ThreeMashHeader(props: Props) {
   ];
 
   const themeStyle = {
-    "--tmh-bg": themeToken(props.backgroundColor, "#FAFAF7", "--tm-theme-bg"),
-    "--tmh-ann-bg": themeToken(props.announcementBackgroundColor, "#0E0E0C", "--tm-theme-announcement-bg"),
-    "--tmh-ann-text": themeToken(props.announcementTextColor, "#CFCFC6", "--tm-theme-announcement-text"),
-    "--tmh-word-color": themeToken(props.styledPhraseColor, "#C7F136", "--tm-theme-accent"),
+    "--tmh-bg": sourceThemeToken("#FAFAF7", "--tm-theme-bg"),
+    "--tmh-ann-bg": sourceThemeToken("#0E0E0C", "--tm-theme-announcement-bg"),
+    "--tmh-ann-text": sourceThemeToken("#CFCFC6", "--tm-theme-announcement-text"),
+    "--tmh-word-color": sourceThemeToken("#C7F136", "--tm-theme-accent"),
     "--tmh-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmh-word-style": props.styledPhraseItalic ? "italic" : "inherit",
-    "--tmh-ann-word-color": themeToken(props.announcementStyledPhraseColor, "#C7F136", "--tm-theme-accent"),
+    "--tmh-ann-word-color": sourceThemeToken("#C7F136", "--tm-theme-accent"),
     "--tmh-ann-word-weight": props.announcementStyledPhraseBold ? "800" : "inherit",
     "--tmh-ann-word-style": props.announcementStyledPhraseItalic ? "italic" : "inherit",
-    "--tmh-accent": themeToken(props.accentColor, "#C7F136", "--tm-theme-accent"),
+    "--tmh-accent": sourceThemeToken("#C7F136", "--tm-theme-accent"),
     "--tmh-accent-text": "var(--tm-theme-accent-text, #3D4D0E)",
-    "--tmh-text": themeToken(props.textColor, "#0E0E0C", "--tm-theme-text"),
-    "--tmh-muted": themeToken(props.mutedTextColor, "#8F8F86", "--tm-theme-muted"),
-    "--tmh-line": themeToken(props.lineColor, "#E6E6E0", "--tm-theme-line"),
-    "--tmh-panel": themeToken(props.panelColor, "#FFFFFF", "--tm-theme-panel"),
-    "--tmh-badge": themeToken(props.badgeColor, "#E2492F", "--tm-theme-danger"),
+    "--tmh-text": sourceThemeToken("#0E0E0C", "--tm-theme-text"),
+    "--tmh-muted": sourceThemeToken("#8F8F86", "--tm-theme-muted"),
+    "--tmh-line": sourceThemeToken("#E6E6E0", "--tm-theme-line"),
+    "--tmh-panel": sourceThemeToken("#FFFFFF", "--tm-theme-surface"),
+    "--tmh-source-panel": "var(--tm-theme-panel, #F1F1EC)",
+    "--tmh-badge": sourceThemeToken("#E2492F", "--tm-theme-danger"),
     "--tmh-why-card-glow": props.showWhyItemGlow === false ? "none" : "linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 10%, transparent), transparent 44%)",
     "--tmh-why-card-hover-glow": props.showWhyItemGlow === false ? "none" : "linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 18%, transparent), transparent 48%)",
-    "--tmh-logo-image-width": `${numberInRange(props.logoImageWidth, 32, 18, 96)}px`,
-    "--tmh-logo-image-height": `${numberInRange(props.logoImageHeight, 32, 18, 96)}px`,
+    // Older page instances can retain their former 32px Studio values. Keep the shared brand mark at the source size.
+    "--tmh-logo-image-width": `${numberInRange(props.logoImageWidth, 116, 116, 118)}px`,
+    "--tmh-logo-image-height": `${numberInRange(props.logoImageHeight, 24, 24, 25)}px`,
     "--tmh-logo-image-x": `${numberInRange(props.logoImageXOffset, 0, -24, 24)}px`,
     "--tmh-logo-image-y": `${numberInRange(props.logoImageYOffset, 0, -24, 24)}px`,
     "--tmh-logo-image-fit": logoFit(props.logoImageFit),
@@ -786,8 +849,8 @@ export function ThreeMashHeader(props: Props) {
     "--tmh-logo-image-saturation": percentage(props.logoImageSaturation, 100, 0, 300),
     "--tmh-logo-image-hue": `${numberInRange(props.logoImageHue, 0, -180, 180)}deg`,
     "--tmh-logo-image-invert": percentage(props.logoImageInvert, 0, 0, 100),
-    "--tmh-logo-svg-width": `${numberInRange(props.logoSvgWidth, 32, 18, 96)}px`,
-    "--tmh-logo-svg-height": `${numberInRange(props.logoSvgHeight, 32, 18, 96)}px`,
+    "--tmh-logo-svg-width": `${numberInRange(props.logoSvgWidth, 116, 116, 118)}px`,
+    "--tmh-logo-svg-height": `${numberInRange(props.logoSvgHeight, 24, 24, 25)}px`,
     "--tmh-logo-svg-x": `${numberInRange(props.logoSvgXOffset, 0, -24, 24)}px`,
     "--tmh-logo-svg-y": `${numberInRange(props.logoSvgYOffset, 0, -24, 24)}px`,
     "--tmh-logo-svg-opacity": numberInRange(props.logoSvgOpacity, 100, 0, 100) / 100,
@@ -796,9 +859,6 @@ export function ThreeMashHeader(props: Props) {
     "--tmh-logo-svg-saturation": percentage(props.logoSvgSaturation, 100, 0, 300),
     "--tmh-logo-svg-hue": `${numberInRange(props.logoSvgHue, 0, -180, 180)}deg`,
     "--tmh-logo-svg-invert": percentage(props.logoSvgInvert, 0, 0, 100),
-    ...imageControlVars("tmh-products-feature-image", props, "productsFeatureImage", 152, 122, 260),
-    ...imageControlVars("tmh-product-icon-image", props, "productIconImage", 34, 34, 48),
-    ...svgControlVars("tmh-product-icon-svg", props, "productIconSvg", 21, 21, 48),
     ...imageControlVars("tmh-action-icon-image", props, "actionIconImage", 22, 22, 36),
     ...svgControlVars("tmh-action-icon-svg", props, "actionIconSvg", 22, 22, 36),
   };
@@ -897,6 +957,17 @@ export function ThreeMashHeader(props: Props) {
   }, []);
 
   useEffect(() => {
+    setProductAnnouncement(currentProductAnnouncement());
+
+    function handleProductAnnouncement(event: Event) {
+      setProductAnnouncement(announcementOverridePayload((event as CustomEvent).detail));
+    }
+
+    window.addEventListener("three-mash:product-announcement", handleProductAnnouncement);
+    return () => window.removeEventListener("three-mash:product-announcement", handleProductAnnouncement);
+  }, []);
+
+  useEffect(() => {
     function smoothSamePageAnchor(event: MouseEvent) {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
@@ -956,12 +1027,31 @@ export function ThreeMashHeader(props: Props) {
   }, []);
 
   useEffect(() => {
+    if (activeMenu !== "products") return;
+
+    updateProductsMenuPosition();
+    window.addEventListener("resize", updateProductsMenuPosition);
+    return () => window.removeEventListener("resize", updateProductsMenuPosition);
+  }, [activeMenu]);
+
+  useEffect(() => {
     if (activeMenu !== "why") return;
 
     updateWhyMenuPosition();
     window.addEventListener("resize", updateWhyMenuPosition);
     return () => window.removeEventListener("resize", updateWhyMenuPosition);
   }, [activeMenu]);
+
+  function updateProductsMenuPosition() {
+    const item = productsMenuRef.current;
+    if (!item || typeof window === "undefined") return;
+
+    const rect = item.getBoundingClientRect();
+    const panelWidth = Math.min(880, window.innerWidth - 32);
+    const desiredLeft = rect.left + rect.width / 2 - panelWidth / 2;
+    const clampedLeft = Math.min(window.innerWidth - panelWidth - 16, Math.max(16, desiredLeft));
+    setProductsMenuLeft(clampedLeft - rect.left);
+  }
 
   function updateWhyMenuPosition() {
     const item = whyMenuRef.current;
@@ -977,6 +1067,10 @@ export function ThreeMashHeader(props: Props) {
   function openMenu(menu: ActiveMenu) {
     setActiveMenu(menu);
     setActiveAction(null);
+    setIsMobileMenuOpen(false);
+    if (menu === "products") {
+      requestAnimationFrame(updateProductsMenuPosition);
+    }
     if (menu === "why") {
       requestAnimationFrame(updateWhyMenuPosition);
     }
@@ -984,14 +1078,12 @@ export function ThreeMashHeader(props: Props) {
 
   function toggleAction(action: ActiveAction) {
     setActiveMenu(null);
+    setIsMobileMenuOpen(false);
     setIsSearchOpen(false);
     setActiveAction((current) => (current === action ? null : action));
   }
 
-  function submitSearch(event: Event) {
-    event.preventDefault();
-    const query = searchQuery.trim();
-    if (!query) return;
+  function navigateSearchFallback(query: string) {
     const target = searchPageHref(props.searchHref);
     const param = props.searchQueryParam || "q";
     try {
@@ -1001,6 +1093,40 @@ export function ThreeMashHeader(props: Props) {
     } catch {
       window.location.href = `${target}${target.includes("?") ? "&" : "?"}${encodeURIComponent(param)}=${encodeURIComponent(query)}`;
     }
+  }
+
+  function goToSearchMatch() {
+    const query = searchQuery.trim();
+    if (!query) return;
+
+    const firstSuggestion = searchSuggestionItems[0]?.product;
+    if (firstSuggestion) {
+      window.location.href = getProductHref(firstSuggestion);
+      return;
+    }
+
+    navigateSearchFallback(query);
+  }
+
+  function submitSearch(event: Event) {
+    event.preventDefault();
+    const query = searchQuery.trim();
+    if (!query) return;
+    goToSearchMatch();
+  }
+
+  function toggleSearch(event: Event) {
+    event.preventDefault();
+    setActiveMenu(null);
+    setActiveAction(null);
+    setIsMobileMenuOpen(false);
+
+    if (!isSearchOpen) {
+      setIsSearchOpen(true);
+      return;
+    }
+
+    goToSearchMatch();
   }
 
   async function removeCartItem(event: Event, item: IkasOrderLineItem) {
@@ -1023,9 +1149,9 @@ export function ThreeMashHeader(props: Props) {
       {props.showAnnouncement !== false && (
         <div className="tmh-announcement">
           <div className="tmh-announcement-inner">
-            <b dangerouslySetInnerHTML={announcementRichText(props.announcementHighlightText, props)} />
-            <span dangerouslySetInnerHTML={announcementRichText(props.announcementText, props)} />
-            <a href={href(props.announcementHref)} dangerouslySetInnerHTML={announcementRichText(props.announcementCtaText, props)} />
+            <b dangerouslySetInnerHTML={announcementRichText(announcementHighlightText, props)} />
+            <span dangerouslySetInnerHTML={announcementRichText(announcementText, props)} />
+            <a href={href(text(announcementHref, defaultAnnouncement.href))} dangerouslySetInnerHTML={announcementRichText(announcementCtaText, props)} />
           </div>
         </div>
       )}
@@ -1034,42 +1160,40 @@ export function ThreeMashHeader(props: Props) {
         <div className="tmh-wrap tmh-nav">
           <Logo props={props} />
 
-          <nav className="tmh-desktop-nav" aria-label={props.mobileMenuLabel}>
+          <nav className="tmh-desktop-nav" aria-label={mobileMenuLabel}>
             <ul className="tmh-menu">
               <li
+                ref={productsMenuRef}
                 className={activeMenu === "products" ? "is-open" : ""}
                 onMouseEnter={() => openMenu("products")}
                 onFocusIn={() => openMenu("products")}
               >
                 <button className="tmh-menu-trigger" type="button">
-                  <RichInline value={props.productsMenuText} wordStyle={props} />
+                  <RichInline value={productsMenuText} wordStyle={props} />
                   <CaretIcon />
                 </button>
-                <div className="tmh-mega tmh-products-mega">
-                  <a className="tmh-feature" href={href(c4pRouteHref(props.productsFeatureHref))}>
-                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsFeatureEyebrow, props)} />
-                    <b dangerouslySetInnerHTML={richText(props.productsFeatureTitle, props)} />
-                    <span className="tmh-feature-media">
-                      <img src={imageSource(props.productsFeatureImageUrl, mashC4pFeatureImage)} alt={props.productsFeatureImageAlt || ""} />
-                    </span>
-                    <span dangerouslySetInnerHTML={richText(props.productsFeatureDescription, props)} />
-                    <em dangerouslySetInnerHTML={richText(props.productsFeatureCtaText, props)} />
+                <div
+                  className="tmh-mega tmh-products-mega"
+                  style={productsMenuLeft == null ? undefined : { "--tmh-products-mega-left": `${productsMenuLeft}px`, "--tmh-products-translate-x": "0px" } as any}
+                >
+                  <a className="tmh-feature" href={href(c4pRouteHref(text(props.productsFeatureHref, defaultProductsFeature.href)))}>
+                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(productsFeatureEyebrow, props)} />
+                    <b dangerouslySetInnerHTML={richText(productsFeatureTitle, props)} />
+                    <span dangerouslySetInnerHTML={richText(productsFeatureDescription, props)} />
+                    <em dangerouslySetInnerHTML={richText(productsFeatureCtaText, props)} />
                   </a>
                   <div className="tmh-mega-column">
-                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsCol1Title, props)} />
+                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(productsCol1Title, props)} />
                     {productPrimary.map((item, index) => (
                       <ProductLink item={item} wordStyle={props} key={index} />
                     ))}
                   </div>
                   <div className="tmh-mega-column">
-                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(props.productsCol2Title, props)} />
+                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(productsCol2Title, props)} />
                     {productSecondary.map((item, index) => (
                       <ProductLink item={item} wordStyle={props} key={index} />
                     ))}
                   </div>
-                  <a className="tmh-products-all-link" href={href(productRouteHref(props.allProductsHref, "/tum-urunler"))}>
-                    {props.allProductsText || "Tümü"}
-                  </a>
                 </div>
               </li>
 
@@ -1080,7 +1204,7 @@ export function ThreeMashHeader(props: Props) {
                 onFocusIn={() => openMenu("why")}
               >
                 <button className="tmh-menu-trigger" type="button">
-                  <RichInline value={props.whyMenuText} wordStyle={props} />
+                  <RichInline value={whyMenuText} wordStyle={props} />
                   <CaretIcon />
                 </button>
                 <div
@@ -1102,12 +1226,12 @@ export function ThreeMashHeader(props: Props) {
                   onClick={(event) => handleReferencesClick(event, props.referencesHomeHref, props.referencesSectionId)}
                   onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}
                 >
-                  <RichInline value={props.referencesText} wordStyle={props} />
+                  <RichInline value={referencesText} wordStyle={props} />
                 </a>
               </li>
               <li>
                 <a className="tmh-plain-link" href={academyPageTarget(props.academyHref)} onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}>
-                  <RichInline value={props.academyText} wordStyle={props} />
+                  <RichInline value={academyText} wordStyle={props} />
                 </a>
               </li>
             </ul>
@@ -1131,18 +1255,15 @@ export function ThreeMashHeader(props: Props) {
                   }}
                 />
               )}
-              <a
+              <button
                 className="tmh-icon-button"
-                href={searchTargetHref}
+                type="button"
                 aria-label={props.searchAriaLabel || ""}
-                onClick={() => {
-                  setActiveMenu(null);
-                  setActiveAction(null);
-                  setIsSearchOpen(false);
-                }}
+                aria-expanded={isSearchOpen}
+                onClick={toggleSearch}
               >
                 <InlineIcon image={searchIcon.image} svg={searchIcon.svg} className="tmh-action-svg" />
-              </a>
+              </button>
               {hasSearchSuggestions ? (
                 <div className="tmh-search-suggestions" role="listbox">
                   {searchSuggestionItems.map((item) => (
@@ -1247,43 +1368,32 @@ export function ThreeMashHeader(props: Props) {
             )}
           </div>
 
-          <details className="tmh-mobile-menu">
-            <summary dangerouslySetInnerHTML={richText(props.mobileMenuLabel, props)} />
-            <div className="tmh-mobile-panel">
-              <div className="tmh-mobile-group">
-                <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.productsMenuText, props)} />
-                {productPrimary.concat(productSecondary).map((item, index) => (
-                  <a href={href(item.href)} className="tmh-mobile-product" key={index}>
-                      <InlineIcon image={item.iconImageUrl} svg={item.iconSvg} className="tmh-mobile-link-icon" />
-                      <span>
-                        <b dangerouslySetInnerHTML={richText(item.title, props)} />
-                      <small dangerouslySetInnerHTML={richText(item.description, props)} />
-                      </span>
-                    </a>
-                  ))}
-              </div>
-              <div className="tmh-mobile-group">
-                <span className="tmh-mobile-heading" dangerouslySetInnerHTML={richText(props.whyMenuText, props)} />
-                {whyItems.map((item, index) => (
-                  <a href={href(item.href)} className="tmh-mobile-flow" key={index}>
-                    <span className="tmh-mobile-flow-number" dangerouslySetInnerHTML={richText(item.number, props)} />
-                    <span>
-                      <b dangerouslySetInnerHTML={richText(item.title, props)} />
-                      <small dangerouslySetInnerHTML={richText(item.description, props)} />
-                    </span>
-                  </a>
-                ))}
-              </div>
-              <div className="tmh-mobile-group tmh-mobile-group-inline">
-                <a
-                  href={referencesTargetHref}
-                  onClick={(event) => handleReferencesClick(event, props.referencesHomeHref, props.referencesSectionId)}
-                  dangerouslySetInnerHTML={richText(props.referencesText, props)}
-                />
-                <a href={academyPageTarget(props.academyHref)} dangerouslySetInnerHTML={richText(props.academyText, props)} />
-              </div>
-            </div>
-          </details>
+          <button
+            className="tmh-mobile-menu"
+            type="button"
+            aria-label={inlineHtml(mobileMenuLabel).replace(/<[^>]*>/g, " ").trim()}
+            aria-expanded={isMobileMenuOpen}
+            onClick={() => {
+              setActiveMenu(null);
+              setActiveAction(null);
+              setIsSearchOpen(false);
+              setIsMobileMenuOpen((current) => !current);
+            }}
+          >
+            <svg className="tmh-hamburger-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true" focusable="false">
+              <line x1="3" y1="7" x2="21" y2="7" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="17" x2="21" y2="17" />
+            </svg>
+          </button>
+        </div>
+        <div className={`tmh-mobile-panel${isMobileMenuOpen ? " is-open" : ""}`}>
+          <nav className="tmh-mobile-list" aria-label={mobileMenuLabel}>
+            <a href="/#cozum" dangerouslySetInnerHTML={richText(productsMenuText, props)} />
+            <a className="tmh-mobile-accent-link" href={href(productPrimary[2]?.href)} dangerouslySetInnerHTML={richText(productPrimary[2]?.title, props)} />
+            <a href={href(productPrimary[0]?.href)} dangerouslySetInnerHTML={richText(productPrimary[0]?.title, props)} />
+            <a href={academyPageTarget(props.academyHref)} dangerouslySetInnerHTML={richText(academyText, props)} />
+          </nav>
         </div>
       </header>
 

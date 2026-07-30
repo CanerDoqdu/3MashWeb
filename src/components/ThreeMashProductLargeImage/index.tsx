@@ -1,5 +1,13 @@
 import { createMediaSrcset, getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { ProductDetailSectionScope, ProductDetailSpecHighlightSection } from "../../sub-components/ThreeMashProductDetailTemplate";
+
+const ZIRCON_PRODUCTS = [
+  { slug: "argenz-st-multilayer-zirkon-blok", aliases: ["ArgenZ ST Multilayer Zirkon Blok"] },
+  { slug: "argenz-ht-plus-zirkon-blok", aliases: ["ArgenZ HT+ Zirkon Blok", "ArgenZ HT Plus Zirkon Blok"] },
+  { slug: "argenz-ht-multilayer-zirkon-blok", aliases: ["ArgenZ HT Multilayer Zirkon Blok"] },
+] as const;
 
 function propString(value: unknown) {
   if (typeof value === "string") return value;
@@ -8,14 +16,21 @@ function propString(value: unknown) {
 
   const data = value as Record<string, unknown>;
   const candidates = [
-    data.src,
+    data.name,
+    data.slug,
+    data.handle,
+    data.href,
     data.url,
+    data.src,
     data.defaultSrc,
     data.originalSrc,
     data.imageUrl,
     data.value,
-    data.html,
     data.text,
+    (data.product as Record<string, unknown> | undefined)?.name,
+    (data.product as Record<string, unknown> | undefined)?.slug,
+    (data.product as Record<string, unknown> | undefined)?.href,
+    (data.product as Record<string, unknown> | undefined)?.url,
     (data.image as Record<string, unknown> | undefined)?.src,
     (data.image as Record<string, unknown> | undefined)?.url,
   ];
@@ -27,33 +42,44 @@ function propString(value: unknown) {
   return "";
 }
 
-function text(value: unknown, fallback = "") {
-  const trimmed = propString(value).trim();
-  return trimmed || fallback;
+function slugify(value?: string) {
+  return (value || "")
+    .toLocaleLowerCase("tr")
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ı/g, "i")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
-function html(value: unknown) {
-  return { __html: propString(value) };
+function currentPageText() {
+  const parts: string[] = [];
+  if (typeof window !== "undefined") {
+    parts.push(window.location.pathname, window.location.href);
+    const nextSlug = (window as any).__NEXT_DATA__?.query?.slug;
+    if (typeof nextSlug === "string") parts.push(nextSlug);
+  }
+  if (typeof document !== "undefined") {
+    parts.push(document.title);
+    document.querySelectorAll('link[rel="canonical"], meta[property="og:url"], meta[property="og:title"], meta[name="twitter:title"]').forEach((node) => {
+      const value = node instanceof HTMLMetaElement ? node.content : node.getAttribute("href");
+      if (value) parts.push(value);
+    });
+  }
+
+  return slugify(parts.join(" "));
 }
 
-function numberValue(value: number | undefined, fallback: number, min?: number, max?: number) {
-  const next = Number(value);
-  if (!Number.isFinite(next)) return fallback;
-  return Math.min(max ?? next, Math.max(min ?? next, next));
-}
+function sectionIsActive(props: Props) {
+  const pageText = slugify(`${currentPageText()} ${propString(props.product)}`);
 
-function cssLength(value: number | undefined, fallback: number) {
-  return `${numberValue(value, fallback)}px`;
-}
-
-function normalizedAlign(value: unknown) {
-  const align = text(value, "center").toLowerCase();
-  return ["left", "center", "right"].includes(align) ? align : "center";
-}
-
-function objectFit(value: unknown) {
-  const fit = text(value, "cover").toLowerCase();
-  return ["contain", "cover", "fill", "scale-down", "none"].includes(fit) ? fit : "cover";
+  return ZIRCON_PRODUCTS.some(({ slug, aliases }) => {
+    const terms = [slug, ...aliases].map(slugify);
+    return terms.some((term) => pageText.includes(term));
+  });
 }
 
 function imageSource(value: unknown) {
@@ -75,71 +101,35 @@ function imageSrcSet(value: unknown) {
   }
 }
 
-function loadingMode(value: unknown) {
-  const mode = text(value, "lazy").toLowerCase();
-  return mode === "eager" ? "eager" : "lazy";
-}
-
-function decodingMode(value: unknown) {
-  const mode = text(value, "async").toLowerCase();
-  return ["async", "sync", "auto"].includes(mode) ? mode : "async";
-}
-
-function fetchPriorityMode(value: unknown) {
-  const mode = text(value, "auto").toLowerCase();
-  return ["high", "low", "auto"].includes(mode) ? mode : "auto";
-}
-
 export function ThreeMashProductLargeImage(props: Props) {
-  const src = imageSource(props.image) || text(props.imageUrl);
-  const srcSet = props.useSrcSet !== false ? imageSrcSet(props.image) : "";
-  const title = text(props.titleText);
-  const description = text(props.descriptionHtml);
-  const align = normalizedAlign(props.textAlign);
-  const loading = loadingMode(props.loadingMode);
-  const fetchPriority = fetchPriorityMode(props.fetchPriorityMode);
+  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  if (sourceData) {
+    return (
+      <ProductDetailSectionScope data={sourceData}>
+        <ProductDetailSpecHighlightSection data={sourceData} />
+      </ProductDetailSectionScope>
+    );
+  }
 
-  const style = {
-    "--tmplg-bg": text(props.backgroundColor, "#ffffff"),
-    "--tmplg-text": text(props.textColor, "#050505"),
-    "--tmplg-muted": text(props.mutedTextColor, "#171717"),
-    "--tmplg-max": cssLength(props.maxWidth, 1240),
-    "--tmplg-image-max": cssLength(props.imageMaxWidth, 1240),
-    "--tmplg-pt": cssLength(props.paddingTop, 72),
-    "--tmplg-pb": cssLength(props.paddingBottom, 72),
-    "--tmplg-ratio": text(props.imageAspectRatio, "16 / 9"),
-    "--tmplg-radius": cssLength(props.imageBorderRadius, 0),
-    "--tmplg-fit": objectFit(props.imageFit),
-    "--tmplg-position": text(props.imagePosition, "center center"),
-    "--tmplg-title-size": cssLength(props.titleFontSize, 28),
-    "--tmplg-body-size": cssLength(props.bodyFontSize, 16),
-    "--tmplg-text-gap": cssLength(props.textSpacing, 24),
-  } as any;
+  if (!sectionIsActive(props)) return null;
+
+  const src = imageSource(props.image);
+  if (!src) return null;
+
+  const srcSet = imageSrcSet(props.image);
 
   return (
-    <section id={text(props.sectionAnchorId) || undefined} className="three-mash-product-large-image" style={style}>
+    <section className="three-mash-product-large-image">
       <div className="tmplg-wrap">
-        {props.showText !== false && (title || description) ? (
-          <div className={`tmplg-copy tmplg-copy-${align}`}>
-            {title ? <h2>{title}</h2> : null}
-            {description ? <div className="tmplg-description" dangerouslySetInnerHTML={html(props.descriptionHtml)} /> : null}
-          </div>
-        ) : null}
-
         <div className="tmplg-frame">
-          {src ? (
-            <img
-              src={src}
-              srcSet={srcSet || undefined}
-              sizes={text(props.sizes, "(max-width: 900px) calc(100vw - 36px), min(1240px, calc(100vw - 64px))")}
-              alt={text(props.imageAlt, title)}
-              loading={loading}
-              decoding={decodingMode(props.decodingMode) as any}
-              fetchPriority={fetchPriority as any}
-            />
-          ) : (
-            <div className="tmplg-placeholder">{text(props.placeholderText, "Görsel ekleyin")}</div>
-          )}
+          <img
+            src={src}
+            srcSet={srcSet || undefined}
+            sizes="(max-width: 900px) calc(100vw - 36px), min(1240px, calc(100vw - 64px))"
+            alt="Zirkon blok ürün görseli"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
     </section>

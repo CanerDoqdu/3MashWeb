@@ -12,6 +12,13 @@ import {
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import {
+  ProductDetailFinalCtaSection,
+  ProductDetailRelatedSection,
+  ProductDetailSectionScope,
+  type ProductDetailRelatedProduct,
+} from "../../sub-components/ThreeMashProductDetailTemplate";
 
 function propString(value: unknown) {
   if (typeof value === "string") return value;
@@ -32,6 +39,24 @@ function text(value: unknown, fallback = "") {
 
 function html(value: unknown) {
   return { __html: propString(value) };
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function plainText(value: unknown) {
+  return propString(value).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function truncateText(value: string, limit: number) {
+  if (value.length <= limit) return value;
+  const trimmed = value.slice(0, limit - 1).trimEnd();
+  return `${trimmed.replace(/[,.!?;:]+$/, "")}…`;
 }
 
 function numberValue(value: number | undefined, fallback: number, min: number, max: number) {
@@ -186,7 +211,25 @@ function ProductCard({ product, showCategoryName, showPrice, target }: { product
   );
 }
 
+function sourceRelatedProduct(product: IkasProduct): ProductDetailRelatedProduct {
+  const variant = selectedVariant(product);
+  const media = variant ? getProductVariantMainImage(variant) : undefined;
+  const image = media?.image ? getDefaultSrc(media.image) : "";
+  const description = truncateText(plainText((product as { shortDescription?: unknown; description?: unknown }).shortDescription || (product as { description?: unknown }).description), 118);
+  return {
+    id: product.id,
+    title: product.name,
+    href: getProductHref(product),
+    image,
+    imageAlt: media?.image?.altText || product.name,
+    category: product.categories?.[0]?.name || product.brand?.name || "",
+    descriptionHtml: description ? escapeHtml(description) : "",
+  };
+}
+
 export function ThreeMashProductCategoryCarousel(props: Props) {
+  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+
   const [resolvedProducts, setResolvedProducts] = useState<IkasProduct[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const requestKeyRef = useRef("");
@@ -266,6 +309,15 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     "--tmpcc-card-title-size": cssLength(props.cardTitleFontSize, 13, 10, 24),
     "--tmpcc-price-size": cssLength(props.priceFontSize, 13, 10, 24),
   } as any;
+
+  if (sourceData) {
+    return (
+      <ProductDetailSectionScope data={sourceData}>
+        <ProductDetailRelatedSection data={sourceData} products={products.map(sourceRelatedProduct)} />
+        <ProductDetailFinalCtaSection data={sourceData} />
+      </ProductDetailSectionScope>
+    );
+  }
 
   return (
     <section id={text(props.sectionAnchorId) || undefined} className="three-mash-product-category-carousel" style={style}>

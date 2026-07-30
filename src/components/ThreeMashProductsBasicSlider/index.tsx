@@ -1,8 +1,12 @@
 import { useEffect, useRef } from "preact/hooks";
 import { basicSliderImages } from "../../assets/basic-slider-images-data";
 import { Props } from "./types";
+import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 
 const DEFAULT_IMAGES = basicSliderImages;
+const DEFAULT_INTRO_TITLE = "Uyumlu Cihazlar";
+const DEFAULT_INTRO_DESCRIPTION =
+  "<p>Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> olarak gerçekleştirmekteyiz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.</p>";
 
 type SliderImage = {
   src: string;
@@ -55,6 +59,94 @@ function boolValue(value: unknown): boolean | undefined {
   if (["false", "0", "no", "hayir", "hayır", "kapali", "kapalı", "off"].includes(normalized)) return false;
   if (["true", "1", "yes", "evet", "acik", "açık", "on"].includes(normalized)) return true;
   return undefined;
+}
+
+function slugify(value: string) {
+  return value
+    .toLocaleLowerCase("tr")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i")
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function collectProductStrings(value: unknown, output: string[] = []) {
+  if (!value) return output;
+  if (typeof value === "string" || typeof value === "number") {
+    const raw = String(value).trim();
+    if (raw) {
+      output.push(raw.toLocaleLowerCase("tr"));
+      output.push(slugify(raw));
+    }
+    return output;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectProductStrings(item, output));
+    return output;
+  }
+  if (typeof value === "object") {
+    const data = value as Record<string, unknown>;
+    for (const key of ["slug", "handle", "url", "path", "href", "name", "title", "id"]) collectProductStrings(data[key], output);
+    for (const key of ["metadata", "product", "variant", "variants", "selectedVariant"]) collectProductStrings(data[key], output);
+  }
+  return output;
+}
+
+function currentPageStrings() {
+  const terms: string[] = [];
+  if (typeof window !== "undefined") {
+    terms.push(window.location.pathname, window.location.href);
+    const nextSlug = (window as any).__NEXT_DATA__?.query?.slug;
+    if (typeof nextSlug === "string") terms.push(nextSlug);
+  }
+  if (typeof document !== "undefined") {
+    terms.push(document.title);
+    document.querySelectorAll('link[rel="canonical"], meta[property="og:url"], meta[property="og:title"], meta[name="twitter:title"]').forEach((node) => {
+      const value = node instanceof HTMLMetaElement ? node.content : node.getAttribute("href");
+      if (value) terms.push(value);
+    });
+  }
+  return terms;
+}
+
+function isResinProduct(product: unknown) {
+  const terms = Array.from(new Set([...collectProductStrings(product), ...currentPageStrings()].map(slugify))).filter((term) => term.length > 2);
+  if (!terms.length) return false;
+
+  const text = terms.join(" ");
+  const resinTerms = [
+    "dental-3d-yazici-recineleri",
+    "recine",
+    "recinesi",
+    "resin",
+    "composite",
+    "gingiva",
+    "model",
+    "denture",
+    "aligner",
+    "splint",
+    "guide",
+    "ibt",
+    "cast",
+    "tray",
+    "flexit",
+    "trial",
+    "study",
+    "clear",
+  ];
+
+  return resinTerms.some((term) => text.includes(term));
+}
+
+function sectionIsVisible(props: Props) {
+  if (boolValue(props.sectionVisible) === false) return false;
+  return isResinProduct(props.product);
 }
 
 function html(value: unknown) {
@@ -133,8 +225,10 @@ function ImageItem({ image, cloneIndex }: { image: SliderImage; cloneIndex?: num
 }
 
 export function ThreeMashProductsBasicSlider(props: Props) {
+  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+
   const sliderRef = useRef<HTMLDivElement>(null);
-  const sectionVisible = boolValue(props.sectionVisible) !== false;
+  const sectionVisible = !sourceData && sectionIsVisible(props);
   const images = sectionVisible ? sliderImages(props) : [];
   const itemCount = images.length;
 
@@ -170,6 +264,8 @@ export function ThreeMashProductsBasicSlider(props: Props) {
     };
   }, [itemCount, sectionVisible]);
 
+  if (sourceData) return null;
+
   if (!sectionVisible) return null;
 
   const style = {
@@ -202,7 +298,9 @@ export function ThreeMashProductsBasicSlider(props: Props) {
     "--tmpbs-tablet-items": numberValue(props.visibleImagesTablet, 3, 1, 4),
   } as any;
 
-  const hasIntro = props.showIntro !== false && (text(props.introTitle) || text(props.introDescriptionHtml));
+  const introTitle = text(props.introTitle, DEFAULT_INTRO_TITLE);
+  const introDescriptionHtml = text(props.introDescriptionHtml, DEFAULT_INTRO_DESCRIPTION);
+  const hasIntro = props.showIntro !== false && (introTitle || introDescriptionHtml);
   const noPause = props.pauseOnHover === false ? " is-no-pause" : "";
   const single = itemCount === 1 ? " is-single" : "";
   const baseItems = images.map((image) => <ImageItem image={image} />);
@@ -220,8 +318,8 @@ export function ThreeMashProductsBasicSlider(props: Props) {
       <div className="tmpbs-wrap">
         {hasIntro ? (
           <div className={`tmpbs-intro tmpbs-intro-${props.introAlign || "center"}`}>
-            {text(props.introTitle) ? <h2>{text(props.introTitle)}</h2> : null}
-            {text(props.introDescriptionHtml) ? <div className="tmpbs-intro-copy" dangerouslySetInnerHTML={html(props.introDescriptionHtml)} /> : null}
+            {introTitle ? <h2>{introTitle}</h2> : null}
+            {introDescriptionHtml ? <div className="tmpbs-intro-copy" dangerouslySetInnerHTML={{ __html: introDescriptionHtml }} /> : null}
           </div>
         ) : null}
 

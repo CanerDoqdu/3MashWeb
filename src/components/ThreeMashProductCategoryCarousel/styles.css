@@ -1,9 +1,11 @@
+@import "../../sub-components/ThreeMashProductDetailTemplate/styles.css";
+
 .three-mash-product-category-carousel {
   width: 100%;
   padding: var(--tmpcc-pt) 0 var(--tmpcc-pb);
   background: var(--tmpcc-bg);
   color: var(--tmpcc-text);
-  font-family: Poppins, Arial, sans-serif;
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
 
 .three-mash-product-category-carousel *,

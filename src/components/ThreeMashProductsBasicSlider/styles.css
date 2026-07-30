@@ -1,9 +1,11 @@
+@import "../../sub-components/ThreeMashProductDetailTemplate/styles.css";
+
 .three-mash-products-basic-slider {
   width: 100%;
   padding: var(--tmr-slider-padding-top) 0 var(--tmr-slider-padding-bottom);
   background: #ffffff;
   color: var(--tmr-text);
-  font-family: Poppins, Arial, sans-serif;
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
 
 .three-mash-products-basic-slider *,
@@ -33,6 +35,10 @@
 
 .three-mash-products-basic-slider .tmpbs-intro-center {
   text-align: center;
+}
+
+.three-mash-products-basic-slider .tmpbs-intro-center .tmpbs-intro-copy {
+  text-align: left;
 }
 
 .three-mash-products-basic-slider .tmpbs-intro-right {

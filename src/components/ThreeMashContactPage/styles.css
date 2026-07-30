@@ -3,7 +3,7 @@
   padding: 40px 16px 80px;
   background: var(--tm-contact-bg);
   color: var(--tm-contact-text);
-  font-family: Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
 
 .three-mash-contact-page *,

@@ -42,4 +42,6 @@ export interface Props {
   cardBackgroundColor?: string;
   arrowBackgroundColor?: string;
   arrowColor?: string;
+  /** CRS kaynaklı reusable ürün template datası. Doluysa bu section kendi karşılık gelen bölümünü bu datadan render eder. */
+  productTemplateJson?: string;
 }

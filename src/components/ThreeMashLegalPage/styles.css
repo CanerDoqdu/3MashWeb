@@ -5,7 +5,7 @@
   padding: var(--tmlp-pt) 16px var(--tmlp-pb);
   background: var(--tmlp-bg);
   color: var(--tmlp-text);
-  font-family: Poppins, var(--tm-theme-font-body, system-ui, sans-serif);
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
 
 .three-mash-legal-page *,

@@ -1,12 +1,29 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Props } from "./types";
 
+function stripInlineTypographyStyles(markup: string) {
+  return markup.replace(/\sstyle=("[^"]*"|'[^']*'|[^\s>]+)/gi, (_match, rawValue: string) => {
+    const quote = rawValue[0] === '"' || rawValue[0] === "'" ? rawValue[0] : "";
+    const style = quote ? rawValue.slice(1, -1) : rawValue;
+    const kept = style
+      .split(";")
+      .map((part) => part.trim())
+      .filter(
+        (part) =>
+          part &&
+          !/^(font-family|font-size|font-weight|font-style|font-variant(?:-[\w-]+)?|letter-spacing|color|background(?:-color)?|border-color|text-align)\s*:/i.test(part),
+      );
+
+    return kept.length ? ` style=${quote}${kept.join("; ")}${quote}` : "";
+  });
+}
+
 function inlineHtml(value?: string) {
-  return (value || "")
+  return stripInlineTypographyStyles((value || "")
     .trim()
     .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
     .replace(/^<p[^>]*>/i, "")
-    .replace(/<\/p>$/i, "");
+    .replace(/<\/p>$/i, ""));
 }
 
 function escapeRegExp(value: string) {
@@ -98,12 +115,6 @@ function percentage(value: unknown, fallback: number, min: number, max: number) 
   return `${numberInRange(value, fallback, min, max)}%`;
 }
 
-function themeToken(value: string | undefined, defaultValue: string, tokenName: string) {
-  const trimmed = value?.trim();
-  if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase()) return trimmed;
-  return `var(${tokenName}, ${defaultValue})`;
-}
-
 function parseRangeValue(value?: string) {
   const match = (value || "").match(/^\s*(\d+)\s*[–-]\s*(\d+)\s*(.*)$/);
   if (!match) return null;
@@ -180,19 +191,19 @@ export function ThreeMashProblem(props: Props) {
   }, [props.badValue, props.showBadValueCountUp]);
 
   const themeStyle = {
-    "--tmproblem-bg": themeToken(props.backgroundColor, "#FAFAF7", "--tm-theme-bg"),
-    "--tmproblem-text": themeToken(props.textColor, "#0E0E0C", "--tm-theme-text"),
-    "--tmproblem-sub": themeToken(props.subTextColor, "#55554E", "--tm-theme-sub"),
-    "--tmproblem-muted": themeToken(props.mutedTextColor, "#8F8F86", "--tm-theme-muted"),
-    "--tmproblem-line": themeToken(props.lineColor, "#E6E6E0", "--tm-theme-line"),
-    "--tmproblem-line-strong": themeToken(props.lineStrongColor, "#D4D4CC", "--tm-theme-line-strong"),
-    "--tmproblem-panel": themeToken(props.panelColor, "#FFFFFF", "--tm-theme-panel"),
-    "--tmproblem-accent": themeToken(props.accentColor, "#C7F136", "--tm-theme-accent"),
-    "--tmproblem-accent-text": themeToken(props.accentTextColor, "#3D4D0E", "--tm-theme-accent-text"),
-    "--tmproblem-danger": themeToken(props.dangerColor, "#E2492F", "--tm-theme-danger"),
-    "--tmproblem-bg-glow-color": themeToken(props.backgroundGlowColor || props.accentColor, "#C7F136", "--tm-theme-accent"),
-    "--tmproblem-bg-glow-opacity": props.showBackgroundGlow === false ? 0 : numberInRange(props.backgroundGlowOpacity, 18, 0, 100) / 100,
-    "--tmproblem-word-color": themeToken(props.styledPhraseColor, "#C7F136", "--tm-theme-accent"),
+    "--tmproblem-bg": "var(--bg, #FAFAF7)",
+    "--tmproblem-text": "var(--ink, #0E0E0C)",
+    "--tmproblem-sub": "var(--sub, #55554E)",
+    "--tmproblem-muted": "var(--mut, #8F8F86)",
+    "--tmproblem-line": "var(--line, #E6E6E0)",
+    "--tmproblem-line-strong": "var(--line2, #D5D5CD)",
+    "--tmproblem-panel": "#FFFFFF",
+    "--tmproblem-accent": "var(--lime, #C7F136)",
+    "--tmproblem-accent-text": "var(--lime-ink, #3D4D0E)",
+    "--tmproblem-danger": "var(--red, #E2492F)",
+    "--tmproblem-bg-glow-color": "var(--lime, #C7F136)",
+    "--tmproblem-bg-glow-opacity": 0,
+    "--tmproblem-word-color": "var(--lime, #C7F136)",
     "--tmproblem-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmproblem-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmproblem-hair-image-width": `${numberInRange(props.hairImageWidth, 58, 8, 140)}px`,

@@ -1,10 +1,97 @@
 import { useState } from "preact/hooks";
 import { Props } from "./types";
+import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { ProductDetailFaqSection, ProductDetailSectionScope } from "../../sub-components/ThreeMashProductDetailTemplate";
 
 type FaqItem = {
   question: string;
   answerHtml: string;
 };
+
+const CRS_COMPOSITE_SLUG = "crs-composite-mukemmel-dayanimli-gecici-recinesi";
+const CRS_MODEL_SLUG = "crs-model-yuksek-hassasiyetli-model-recinesi";
+const CRS_TRAY_SLUG = "crs-tray-resin-olcu-kasigi-3d-yazici-recinesi";
+const CRS_COMPOSITE_FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "1 kg CRS Composite Reçinesi'nden kaç üye iş alabiliriz?",
+    answerHtml: "<p>1000-1200 üye arasında iş alabilirsiniz.</p>",
+  },
+  {
+    question: "CRS Composite reçinesinin kırılma direnci nedir?",
+    answerHtml:
+      "<p>Kompozit reçinesinin kırılma direnci, baskılar 3D Printer'dan çıkartılıp alkol ile yıkandıktan sonra <b>135-145 MPa</b> arasındadır. Baskı sonrası yapılan post kürleme işleminden sonra bu değer <b>150-155 MPa</b>'a kadar çıkmaktadır.</p>",
+  },
+  {
+    question: "CRS Composite Reçinesi hasta ağzında tat veya koku bırakır mı?",
+    answerHtml: "<p>CE Class IIA sertifikalı CRS Composite Reçinesi hasta ağzında tat ve koku bırakmaz.</p>",
+  },
+  {
+    question: "CRS Composite Reçinesi'nin dirençli olması için tavsiye edilen tasarım parametreleri nelerdir?",
+    answerHtml:
+      "<p>Kompozit reçinesinin dirençli olması için tavsiye ettiğimiz en önemli parametre duvar kalınlığıdır. Tasarlanan işin duvar kalınlığının minimum <b>0,08 mm</b> olması gerekmektedir. Hasta ağzına yapılacak geçici işler 5 üyenin üzerinde ise 2 parça halinde gönderilmesi hasta ağzında oluşabilecek basıncı azaltacak ve dayanımı arttıracaktır. Full işlerde hasta ağzına uygulanacak geçicinin 3-4 üyelik parçalara bölünmesini tavsiye ederiz.</p>",
+  },
+  {
+    question: "CRS Composite Reçinesi klinik uygulamalar için şırınga kompozitler ile uyumlu mudur?",
+    answerHtml:
+      "<p>Klinik uygulamalarında kullanılan şırınga kompozitler ile birebir uyumludur. Yapılan geçici işlerin üzerine şırınga kompozitler ile istenilen ekleme yapılabilir.</p>",
+  },
+];
+const CRS_MODEL_FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "1 kg CRS Model Reçinesi'nden kaç adet model basabiliriz?",
+    answerHtml: "<p>40-50 arasında model basabilirsiniz.</p>",
+  },
+  {
+    question: "İmplant kütüphaneleri CRS Model Reçinesi ile uyumlu mu?",
+    answerHtml:
+      "<p>İmplant kütüphaneleri tasarım programlarında yer almaktadır. Üreteceğiniz güdük veya analog modellerde kullandığınız 3D yazıcıya özel parametreler ile uyarlayabilirsiniz.</p>",
+  },
+  {
+    question: "Güdüklü model üretimi için önerdiğiniz parametreler var mı?",
+    answerHtml: "<p>Güdüklü model üretimi için parametrelerimiz hazırdır.</p>",
+  },
+];
+const CRS_TRAY_FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "CRS Tray Resin nedir?",
+    answerHtml:
+      "<p>CRS Tray Resin, kişiye özel dental ölçü kaşıklarının üretimi için kullanılan, DLP ve LCD 3D yazıcılarla uyumlu bir fotopolimer reçinedir.</p>",
+  },
+  {
+    question: "CRS Tray Resin ne için kullanılır?",
+    answerHtml: "<p>CRS Tray Resin, kron, köprü, protez ve ortodontik işlemlerde kullanılan ölçü kaşıklarının üretimi için kullanılır.</p>",
+  },
+  {
+    question: "Hangi yazıcılarla uyumludur?",
+    answerHtml: "<p>CRS Tray Resin, 385-405 nm dalga boyunda çalışan DLP ve LCD 3D yazıcılarla uyumludur.</p>",
+  },
+  {
+    question: "Ağız içinde kullanılabilir mi?",
+    answerHtml:
+      "<p>CRS Tray Resin, doğrudan ağız içinde kullanılmaz; ölçü kaşığı üretimi için geliştirilmiştir ve tam kürlenmemiş hali intraoral kullanım için uygun değildir.</p>",
+  },
+  {
+    question: "Baskı sonrası işlem gerekli mi?",
+    answerHtml: "<p>Evet. Baskı sonrası parçalar izopropil alkol ile yıkanmalı ve UV ışık ile post-cure işlemi uygulanmalıdır.</p>",
+  },
+  {
+    question: "Post-cure neden gereklidir?",
+    answerHtml: "<p>Post-cure işlemi, reçinenin gerekli mekanik özellikleri kazanmasını ve artık monomerlerin azaltılmasını sağlar.</p>",
+  },
+  {
+    question: "Hangi alanlarda tercih edilir?",
+    answerHtml:
+      "<p>CRS Tray Resin, implant, protez, ortodonti ve termoform uygulamalarında kullanılan ölçü kaşıklarının üretiminde tercih edilir.</p>",
+  },
+  {
+    question: "Raf ömrü ne kadardır?",
+    answerHtml: "<p>Açılmamış ürün, serin ve karanlık ortamda saklandığında yaklaşık 2 yıl raf ömrüne sahiptir.</p>",
+  },
+  {
+    question: "Reçine baskıdan önce karıştırılmalı mı?",
+    answerHtml: "<p>Evet. Homojen karışım sağlamak için baskı öncesinde şişe en az 1 dakika çalkalanmalıdır.</p>",
+  },
+];
 
 function propString(value: unknown) {
   if (typeof value === "string") return value;
@@ -47,52 +134,108 @@ function html(value: unknown) {
   return { __html: propString(value) };
 }
 
-function pascal(value: string) {
-  return value.charAt(0).toLocaleUpperCase("tr") + value.slice(1);
+function slugify(value: string) {
+  return value
+    .toLocaleLowerCase("tr")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i")
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
-function productBasedApplies(props: Props) {
-  return boolValue(props.productBasedEnabled) !== false;
+function collectProductStrings(value: unknown, output: string[] = []) {
+  if (!value) return output;
+  if (typeof value === "string" || typeof value === "number") {
+    const raw = String(value).trim();
+    if (raw) {
+      output.push(raw.toLocaleLowerCase("tr"));
+      output.push(slugify(raw));
+    }
+    return output;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectProductStrings(item, output));
+    return output;
+  }
+  if (typeof value === "object") {
+    const data = value as Record<string, unknown>;
+    for (const key of ["slug", "handle", "url", "path", "href", "name", "title", "id"]) collectProductStrings(data[key], output);
+    for (const key of ["metadata", "product", "variant", "variants", "selectedVariant", "category", "categories", "brand"]) {
+      collectProductStrings(data[key], output);
+    }
+  }
+  return output;
 }
 
-const ARGENZ_PRODUCT_BASED_DEFAULTS: Record<string, unknown> = {
-  productBasedSectionVisible: false,
-  productBasedTitleText: "Sıkça Sorulan Sorular",
-  productBasedOpenFirstItem: true,
-  productBasedFaq1Question: "ArgenZ ST Multilayer hangi uygulamalar için uygundur?",
-  productBasedFaq1AnswerHtml:
-    "<p>Anterior bölgede yüksek ışık geçirgenliği istenen kron ve köprü uygulamaları için uygundur. Tek kron veya 1 ara gövdeli 3 üyeli köprülere kadar kullanılabilir.</p>",
-  productBasedFaq2Question: "Geçirgenlik ve dayanım değerleri nedir?",
-  productBasedFaq2AnswerHtml:
-    "<p>Kaynak ürün içeriğine göre ışık geçirgenliği <b>%50</b>, eğilme mukavemeti <b>850 MPa</b> ve itriyum mol yüzdesi <b>4Y</b> olarak verilir.</p>",
-  productBasedFaq3Question: "Makyaj işlemi gerekir mi?",
-  productBasedFaq3AnswerHtml:
-    "<p>Ürün sayfasındaki açıklamaya göre makyaj gerektirmez; sadece glaze uygulayıp protezi bitime gönderebilirsiniz.</p>",
-  productBasedFaq4Question: "Hangi renk seçenekleri vardır?",
-  productBasedFaq4AnswerHtml:
-    "<p>A1, A2, A3, A3.5, A4, B1, B2, B3, B4, C1, C2, C3, C4, D2, D3, D4 ve OM1, OM2, OM3 renk seçenekleri bulunur.</p>",
-  productBasedFaq5Question: "Hangi kalınlık seçenekleri vardır?",
-  productBasedFaq5AnswerHtml: "<p>Kaynak üründe 14 mm, 16 mm, 18 mm ve 20 mm kalınlık seçenekleri yer alır.</p>",
-};
-
-function filled(value: unknown) {
-  return typeof value === "string" ? value.trim() !== "" : value !== undefined && value !== null;
+function currentPageStrings() {
+  const terms: string[] = [];
+  if (typeof window !== "undefined") {
+    terms.push(window.location.pathname, window.location.href);
+    const nextSlug = (window as any).__NEXT_DATA__?.query?.slug;
+    if (typeof nextSlug === "string") terms.push(nextSlug);
+  }
+  if (typeof document !== "undefined") {
+    terms.push(document.title);
+    document.querySelectorAll('link[rel="canonical"], meta[property="og:url"], meta[property="og:title"], meta[name="twitter:title"]').forEach((node) => {
+      const value = node instanceof HTMLMetaElement ? node.content : node.getAttribute("href");
+      if (value) terms.push(value);
+    });
+  }
+  return terms;
 }
 
-function productBasedProps(props: Props): Props {
-  if (!productBasedApplies(props)) return props;
+function productPageTerms(product: unknown) {
+  return Array.from(new Set([...collectProductStrings(product), ...currentPageStrings()].map(slugify))).filter((term) => term.length > 2);
+}
 
-  return new Proxy(props as Record<string, unknown>, {
-    get(target, prop) {
-      if (typeof prop !== "string") return Reflect.get(target, prop);
-      if (prop.startsWith("productBased")) return target[prop];
-      const productBasedName = `productBased${pascal(prop)}`;
-      const productBasedValue = target[productBasedName];
-      if (filled(productBasedValue)) return productBasedValue;
-      if (filled(ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName])) return ARGENZ_PRODUCT_BASED_DEFAULTS[productBasedName];
-      return target[prop];
-    },
-  }) as Props;
+function isCrsCompositeProduct(product: unknown) {
+  const value = productPageTerms(product).join(" ");
+  return value.includes(CRS_COMPOSITE_SLUG) || value.includes("crs-composite") || value.includes("custom-composite-resin");
+}
+
+function isCrsModelProduct(product: unknown) {
+  const value = productPageTerms(product).join(" ");
+  return value.includes(CRS_MODEL_SLUG) || value.includes("crs-model") || value.includes("custom-model-sand-resin");
+}
+
+function isCrsTrayProduct(product: unknown) {
+  const value = productPageTerms(product).join(" ");
+  return value.includes(CRS_TRAY_SLUG) || value.includes("crs-tray") || value.includes("tray-resin") || value.includes("olcu-kasigi");
+}
+
+function isResinProduct(product: unknown) {
+  const terms = productPageTerms(product);
+  if (!terms.length) return false;
+
+  const value = terms.join(" ");
+  const resinTerms = [
+    "dental-3d-yazici-recineleri",
+    "recine",
+    "recinesi",
+    "resin",
+    "composite",
+    "gingiva",
+    "model",
+    "denture",
+    "aligner",
+    "splint",
+    "guide",
+    "ibt",
+    "cast",
+    "tray",
+    "flexit",
+    "trial",
+    "study",
+    "clear",
+  ];
+
+  return resinTerms.some((term) => value.includes(term));
 }
 
 function numberValue(value: unknown, fallback: number, min?: number, max?: number) {
@@ -127,6 +270,10 @@ function parseExtraItems(value: unknown): FaqItem[] {
 }
 
 function faqItems(props: Props) {
+  if (isCrsCompositeProduct(props.product)) return CRS_COMPOSITE_FAQ_ITEMS;
+  if (isCrsModelProduct(props.product)) return CRS_MODEL_FAQ_ITEMS;
+  if (isCrsTrayProduct(props.product)) return CRS_TRAY_FAQ_ITEMS;
+
   const builtIn = Array.from({ length: 12 }, (_, index) => {
     const number = index + 1;
     const data = props as unknown as Record<string, unknown>;
@@ -139,14 +286,21 @@ function faqItems(props: Props) {
 }
 
 export function ThreeMashProductAccordionFaq(props: Props) {
-  const viewProps = productBasedProps(props);
-  const items = faqItems(viewProps);
+  const viewProps = props;
   const [openItems, setOpenItems] = useState<Record<number, boolean>>(() =>
     boolValue(viewProps.openFirstItem) === false ? ({} as Record<number, boolean>) : { 0: true }
   );
-  const sectionVisible = boolValue((viewProps as unknown as Record<string, unknown>).sectionVisible) !== false;
+  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  if (sourceData) {
+    return (
+      <ProductDetailSectionScope data={sourceData}>
+        <ProductDetailFaqSection data={sourceData} />
+      </ProductDetailSectionScope>
+    );
+  }
 
-  if (!sectionVisible) return null;
+  if (boolValue(props.sectionVisible) === false || !isResinProduct(props.product)) return null;
+  const items = faqItems(viewProps);
 
   const style = {
     "--tmpaf-bg": text(viewProps.backgroundColor, "#ffffff"),

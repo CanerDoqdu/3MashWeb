@@ -3,7 +3,7 @@
   padding: 1px 0;
   background: var(--tmfaq-bg);
   color: var(--tmfaq-text);
-  font-family: Poppins, var(--tm-theme-font-body, system-ui, sans-serif);
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
 
 .three-mash-faq-page *,

@@ -23,23 +23,177 @@
  * Component-scoped styles naturally override these globals.
  */
 
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
 :root {
-  --tm-theme-bg: var(--vDxMg9K4Ic, #FAFAF7);
-  --tm-theme-text: var(--2VcIcEvfFl, #0E0E0C);
-  --tm-theme-sub: var(--lT7LplV2Bw, #55554E);
-  --tm-theme-muted: var(--j3KOzmtxDd, #8F8F86);
-  --tm-theme-line: var(--lvhd8C5Ifp, #E6E6E0);
-  --tm-theme-line-strong: var(--7WAtFFkPeW, #D4D4CC);
-  --tm-theme-panel: var(--hrAnwBdMxV, #FFFFFF);
-  --tm-theme-accent: var(--ta1JZdJr86, #C7F136);
-  --tm-theme-accent-text: var(--uw4NrApqAt, #3D4D0E);
-  --tm-theme-accent-soft: var(--aP58EiakHq, #F2F8DC);
-  --tm-theme-danger: var(--ho7LuwnSfi, #E2492F);
-  --tm-theme-dark: var(--2VcIcEvfFl, #0E0E0C);
-  --tm-theme-announcement-bg: var(--2VcIcEvfFl, #0E0E0C);
-  --tm-theme-announcement-text: var(--t4Oc05QCiJ, #CFCFC6);
-  --tm-theme-font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --bg: #FAFAF7;
+  --ink: #0E0E0C;
+  --sub: #55554E;
+  --mut: #8F8F86;
+  --line: #E6E6E0;
+  --line2: #D5D5CD;
+  --lime: #C7F136;
+  --lime-ink: #3D4D0E;
+  --lime-soft: #F2F8DC;
+  --red: #E2492F;
+  --panel: #F1F1EC;
+  --dark: #0E0E0C;
+
+  --tm-theme-bg: var(--bg);
+  --tm-theme-text: var(--ink);
+  --tm-theme-sub: var(--sub);
+  --tm-theme-muted: var(--mut);
+  --tm-theme-line: var(--line);
+  --tm-theme-line-strong: var(--line2);
+  --tm-theme-panel: var(--panel);
+  --tm-theme-surface: #FFFFFF;
+  --tm-theme-accent: var(--lime);
+  --tm-theme-accent-text: var(--lime-ink);
+  --tm-theme-accent-soft: var(--lime-soft);
+  --tm-theme-danger: var(--red);
+  --tm-theme-dark: var(--dark);
+  --tm-theme-announcement-bg: var(--dark);
+  --tm-theme-announcement-text: #CFCFC6;
+  --tm-theme-font-body: "Inter", sans-serif;
   --tm-theme-font-heading: "Space Grotesk", sans-serif;
   --tm-theme-font-serif: "Newsreader", serif;
-  --tm-theme-font-logo: "Baloo 2", "Space Grotesk", sans-serif;
+  --tm-theme-font-emphasis: var(--tm-theme-font-serif);
+  --tm-theme-font-logo: "Baloo 2", sans-serif;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]),
+:where([class^="three-mash"], [class*=" three-mash"]) :where(*) {
+  font-family: var(--tm-theme-font-body) !important;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]) :where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .disp,
+  .tmh-feature b,
+  .tmh-flow-number,
+  .tmh-mobile-flow-number,
+  .tmh-cart-badge,
+  .tmhero-title,
+  .tmhero-money,
+  .tmhero-est,
+  .tmhero-segment button,
+  .tmhero-slider-label b,
+  .tmhero-row b,
+  .tmhero-total-value,
+  .tmhero-stat-value,
+  .tmproblem-index-number,
+  .tmproblem-card-label,
+  .tmproblem-card-value,
+  .tmr-index-number,
+  .tmr-head h2,
+  .tmr-product h3,
+  .tmr-spec b,
+  .tmr-why h4,
+  .tmr-why-grid div,
+  .tmr-why-grid h4,
+  .tmr-roi-num,
+  .tmr-roi-num *,
+  .tmr-tstats-value,
+  .tmr-who > span,
+  .tmr-trusted-label,
+  .tmr-faq summary,
+  .tmr-final h2,
+  .tmr-footer h6,
+  .tmr-payment-badge
+) {
+  font-family: var(--tm-theme-font-heading) !important;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]) :where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .disp
+) :where(*) {
+  font-family: var(--tm-theme-font-heading) !important;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]) :where(
+  h1,
+  h2,
+  h3,
+  .disp,
+  .tmhero-money,
+  .tmhero-total-value,
+  .tmhero-stat-value,
+  .tmproblem-card-value,
+  .tmr-head h2,
+  .tmr-roi-num b,
+  .tmr-final h2
+) {
+  letter-spacing: -0.02em !important;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]) :where(
+  .tmproblem-card-value,
+  .tmr-roi-num b
+) {
+  letter-spacing: -0.03em !important;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]) :where(
+  .micro,
+  .kicker,
+  .tmh-micro,
+  .tmh-mobile-heading,
+  .tmh-action-panel-kicker,
+  .tmhero-micro,
+  .tmhero-est,
+  .tmproblem-index-text,
+  .tmproblem-card-label,
+  .tmr-index-text,
+  .tmr-tag,
+  .tmr-roi-num span,
+  .tmr-footer h6
+) {
+  font-family: var(--tm-theme-font-heading) !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]) :where(
+  .tmhero-est,
+  .tmproblem-card-label,
+  .tmr-trusted-label
+) {
+  letter-spacing: 0.14em !important;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]) :where(.tmr-tag) {
+  letter-spacing: 0.12em !important;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]) :where(.tmr-footer h6) {
+  letter-spacing: 0.1em !important;
+}
+
+:where([class^="three-mash"], [class*=" three-mash"]) :where(
+  .em,
+  .serif,
+  .tmhero-em,
+  .tmproblem-title-em,
+  .tmr-title-em,
+  .tmr-head h2 span,
+  .tmr-final h2 span,
+  .tmr-quote,
+  .tmr-testimonial.tmr-featured p,
+  .tmr-bigquote p
+) {
+  font-family: var(--tm-theme-font-serif) !important;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0 !important;
 }

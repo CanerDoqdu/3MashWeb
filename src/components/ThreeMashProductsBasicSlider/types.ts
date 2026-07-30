@@ -1,7 +1,9 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage } from "@ikas/bp-storefront";
+import type { IkasProduct, IkasImage } from "@ikas/bp-storefront";
 
 export interface Props {
+  /** Ürün sayfasındaki mevcut ürünü bağla. Slider sadece reçine ürünlerinde render edilir. */
+  product?: IkasProduct | null;
   /** Kapalıysa ürünler basic slider section render edilmez. */
   sectionVisible?: boolean;
   sectionAnchorId?: string;
@@ -78,4 +80,6 @@ export interface Props {
   backgroundColor?: string;
   textColor?: string;
   subTextColor?: string;
+  /** CRS kaynaklı reusable ürün template datası. Doluysa source'da karşılığı olmayan bu section ürün template'inde render edilmez. */
+  productTemplateJson?: string;
 }

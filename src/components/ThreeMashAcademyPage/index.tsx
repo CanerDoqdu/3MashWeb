@@ -84,32 +84,67 @@ function cssColor(input: string | undefined, fallback: string) {
   return trimmed || fallback;
 }
 
+function themeColor(input: string | undefined, fallback: string, token: string, legacyDefaults: string[] = []) {
+  const trimmed = input?.trim();
+  const normalized = trimmed?.toLowerCase();
+  const defaults = [fallback, ...legacyDefaults].map((item) => item.toLowerCase());
+
+  if (!trimmed || (normalized && defaults.includes(normalized))) {
+    return `var(${token}, ${fallback})`;
+  }
+
+  return trimmed;
+}
+
+function htmlParts(input: string | undefined, props: Props, fallback = "") {
+  return inlineHtml(input, fallback)
+    .split(/(?:<br\s*\/?>\s*){2,}/gi)
+    .map((part) => styledHtml(part.trim(), props))
+    .filter(Boolean);
+}
+
+const sourceDescription =
+  "Çalıştığımız sektörlerde özellikle dental alanda öncü isimlerle genç ve değişime açık profesyonelleri buluşturarak bilgi paylaşımını teşvik etmeyi amaçlamaktadır. Amacımız, sektördeki son gelişmeleri yakından takip ederek bu bilgileri paydaşlarımıza aktarmak ve birlikte öğrenerek büyüdüğümüz bir ekosistem oluşturmaktır.<br><br>Mash Academy, sektörün önde gelen isimleriyle işbirliği yaparak eğitimler, seminerler ve etkinlikler düzenlemekte ve katılımcılarını sektördeki en güncel bilgilerle buluşturmaktadır. Ayrıca, genç yeteneklere yönelik mentorluk programları ve uzmanlık eğitimleri ile sektöre yeni katılanları desteklemekteyiz.<br><br>Biz, bilgiyi paylaşmanın ve birlikte öğrenmenin gücüne inanıyoruz. Mash Academy olarak, sektördeki değişimi takip etmek ve bu değişime ayak uydurmak isteyen herkesi bir araya getirerek sektörün gelişimine katkıda bulunmaya davet ediyoruz.<br><br>Siz de bizimle birlikte, bilgiyi paylaşarak ve birlikte öğrenerek sektördeki gelişmelere yön vermek isterseniz, etkinliklerimize katılarak bu heyecanlı yolculuğa ortak olabilirsiniz. Haydi, geleceği birlikte şekillendirelim!";
+
+const sourcePastText =
+  "Geçmiş etkinliklerimiz arasında sektörde deneyimli isimlerin katıldığı paneller, uzmanlık seminerleri ve interaktif atölye çalışmaları bulunmaktadır. Ayrıca, yeni teknolojiler ve tedavi yöntemlerinin ele alındığı konferanslar düzenlemekteyiz. Bu etkinlikler sayesinde katılımcılarımız, sektördeki gelişmeleri yakından takip etmenin yanı sıra deneyimlerini paylaşarak birbirlerinden öğrenme fırsatı bulmaktadır.";
+
+const sourceTitle = "Mash Academy";
+const sourceIntroTitle = "Bilgiyle büyüyen ekosistem.";
+const sourceQuote = "Eğitimdir ki bir milleti ya hür bağımsız şanlı yüce bir toplum olarak yaşatır veya bir milleti esaret ve sefalete terk eder.";
+const sourceQuoteAuthor = "M. Kemal Atatürk";
+const sourcePastTitle = "Geçmiş Etkinlikler";
+const sourceReadMore = "Devamını Oku";
+
 export function ThreeMashAcademyPage(props: Props) {
+  const accentColor = themeColor(props.accentColor, "#C7F136", "--tm-theme-accent", ["#caff12"]);
+  const headingColor = themeColor(props.headingColor, "#0E0E0C", "--tm-theme-text", ["#1f2933", "#111111", "#070707"]);
+  const mutedColor = themeColor(props.mutedTextColor, "#55554e", "--tm-theme-sub", ["#555555", "#777777"]);
+  const textColor = themeColor(props.textColor, "#0E0E0C", "--tm-theme-text", ["#111111", "#000000"]);
+
   const style = {
-    "--tma-bg": cssColor(props.backgroundColor, "#ffffff"),
-    "--tma-text": cssColor(props.textColor, "#111111"),
-    "--tma-muted": cssColor(props.mutedTextColor, "#555555"),
-    "--tma-panel": cssColor(props.panelColor, "#ffffff"),
-    "--tma-accent": cssColor(props.accentColor, "#caff12"),
-    "--tma-line": cssColor(props.lineColor, "#e8e8e8"),
-    "--tma-quote": cssColor(props.quoteTextColor, "#070707"),
-    "--tma-quote-author": cssColor(props.quoteAuthorColor, "#2b2b2b"),
-    "--tma-heading": cssColor(props.headingColor, "#1f2933"),
-    "--tma-intro-bg": cssColor(props.introBackgroundColor, "#ffffff"),
-    "--tma-intro-text": cssColor(props.introTextColor, "#000000"),
-    "--tma-card-title": cssColor(props.cardTitleColor, "#1f2933"),
-    "--tma-event-date": cssColor(props.eventDateColor, "#777777"),
-    "--tma-event-image-bg": cssColor(props.eventImageBackgroundColor, "#f7f7f7"),
-    "--tma-read-more": cssColor(props.readMoreColor, "#32303d"),
-    "--tma-word-color": cssColor(props.styledPhraseColor, cssColor(props.accentColor, "#caff12")),
+    "--tma-bg": themeColor(props.backgroundColor, "#FAFAF7", "--tm-theme-bg", ["#ffffff", "#fff"]),
+    "--tma-text": textColor,
+    "--tma-muted": mutedColor,
+    "--tma-panel": themeColor(props.panelColor, "#F1F1EC", "--tm-theme-panel", ["#ffffff", "#fff"]),
+    "--tma-accent": accentColor,
+    "--tma-line": themeColor(props.lineColor, "#E6E6E0", "--tm-theme-line", ["#e8e8e8"]),
+    "--tma-quote": themeColor(props.quoteTextColor, "#0E0E0C", "--tm-theme-text", ["#070707", "#111111"]),
+    "--tma-quote-author": themeColor(props.quoteAuthorColor, "#55554e", "--tm-theme-sub", ["#2b2b2b"]),
+    "--tma-heading": headingColor,
+    "--tma-intro-bg": themeColor(props.introBackgroundColor, "#F1F1EC", "--tm-theme-panel", ["#ffffff", "#fff"]),
+    "--tma-intro-text": themeColor(props.introTextColor, "#0E0E0C", "--tm-theme-text", ["#000000", "#111111"]),
+    "--tma-card-title": themeColor(props.cardTitleColor, "#0E0E0C", "--tm-theme-text", ["#1f2933"]),
+    "--tma-event-date": themeColor(props.eventDateColor, "#8f8f86", "--tm-theme-muted", ["#777777"]),
+    "--tma-event-image-bg": themeColor(props.eventImageBackgroundColor, "#E6E6E0", "--tm-theme-line", ["#f7f7f7"]),
+    "--tma-read-more": themeColor(props.readMoreColor, "#0E0E0C", "--tm-theme-text", ["#32303d"]),
+    "--tma-word-color": cssColor(props.styledPhraseColor, accentColor),
     "--tma-max": `${numberInRange(props.maxContentWidth, 1280, 720, 1800)}px`,
     "--tma-quote-width": `${numberInRange(props.quoteWidthPercent, 50, 30, 100)}%`,
     "--tma-quote-min": `${numberInRange(props.quoteMinWidth, 520, 260, 900)}px`,
     "--tma-quote-padding": `${numberInRange(props.quotePadding, 30, 0, 96)}px`,
     "--tma-gap": `${numberInRange(props.sectionGap, 32, 0, 120)}px`,
-    "--tma-intro-image-width": `${numberInRange(props.introImageWidthVw, 53, 20, 100)}vw`,
-    "--tma-intro-image-max": `${numberInRange(props.introImageMaxWidth, 800, 240, 1400)}px`,
-    "--tma-intro-image-min-height": `${numberInRange(props.introImageMinHeight, 0, 0, 720)}px`,
+    "--tma-intro-image-max": "560px",
     "--tma-event-gap": `${numberInRange(props.eventCardsGap, 24, 8, 80)}px`,
     "--tma-event-ratio": value(props.eventImageRatio, "1 / 1"),
     "--tma-word-weight": props.styledPhraseBold === false ? "inherit" : "700",
@@ -118,94 +153,69 @@ export function ThreeMashAcademyPage(props: Props) {
 
   const events = [
     {
-      title: props.card1Title,
-      text: props.card1Text,
-      href: props.primaryButtonHref,
-      button: props.primaryButtonText,
-      image: imageUrl(props.event1ImageUrl, academyEvent1Image),
-      alt: props.event1ImageAlt,
-      date: props.event1Date,
+      image: academyEvent1Image,
       fallbackTitle: "Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi Raporu",
       fallbackText: "''Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi\" webinarında, dijital diş hekimliği alanında yenilikçi yaklaşımlar ve IBAR destekli hibrit protez tasarımı ele alınmıştır.",
       fallbackHref: "/blog/blender-for-dental-ile-ibar-uzeri-composite-kron-tasarim-egitimi-raporu",
       fallbackDate: "Apr 2, 2025",
     },
     {
-      title: props.card2Title,
-      text: props.card2Text,
-      href: props.secondaryButtonHref,
-      button: props.secondaryButtonText,
-      image: imageUrl(props.event2ImageUrl, academyEvent2Image),
-      alt: props.event2ImageAlt,
+      image: academyEvent2Image,
       fallbackTitle: "IBAR Tasarımı Eğitimi",
       fallbackText: "Eğitim Mash Academy tarafından, 23 Mart 2024 tarihinde Antalya'da organize edilmiştir. Eğitimcilerimizden Vahit Topçu \"Hibrit Protez Tasarımı\" ve Alihan Şahbaz \"IBAR Tasarımı\" eğitimi ile katılımcılara tecrübelerini aktarmıştır. Eğitimin sonunda 3D printer kullanımındaki sık karşılaşılan hatalar ve püf noktalara değinilmiştir.",
       fallbackHref: "/blog/ibar-tasarimi-egitimi",
       fallbackDate: "Apr 5, 2024",
-      date: props.event2Date,
     },
   ];
 
+  const descriptionParts = htmlParts(undefined, props, sourceDescription);
   return (
     <section className="three-mash-academy-page" style={style}>
-      <div className="tma-wrap">
+      <div className="tma-shell">
         <section className="tma-quote-section">
-          <h1 dangerouslySetInnerHTML={richText(props.eyebrowText, props, "Mash Academy")} />
+          <h1 dangerouslySetInnerHTML={richText(undefined, props, sourceTitle)} />
           <blockquote>
-            <p dangerouslySetInnerHTML={richText(props.titleText, props, "\"Eğitimdir ki bir milleti ya hür bağımsız şanlı yüce bir toplum olarak yaşatır veya bir milleti esaret ve sefalete terk eder.\"")} />
-            <cite dangerouslySetInnerHTML={richText(props.quoteAuthorText, props, "M. Kemal Atatürk")} />
+            <p dangerouslySetInnerHTML={richText(undefined, props, sourceQuote)} />
+            <cite dangerouslySetInnerHTML={richText(undefined, props, sourceQuoteAuthor)} />
           </blockquote>
         </section>
 
         <section className="tma-intro">
-          {props.showIntroImage === false ? null : (
-            <div className="tma-intro-media">
-              <img src={imageUrl(props.introImageUrl, academyIntroImage)} alt={props.introImageAlt || ""} loading="eager" decoding="async" />
+          <div className="tma-intro-media">
+            <img src={academyIntroImage} alt={sourceTitle} loading="eager" decoding="async" />
+          </div>
+          <div className="tma-section-head">
+            <h2 dangerouslySetInnerHTML={richText(undefined, props, sourceIntroTitle)} />
+            <div className="tma-description-flow">
+              {descriptionParts.map((part, index) => (
+                <p key={index} dangerouslySetInnerHTML={{ __html: part }} />
+              ))}
             </div>
-          )}
-          <div className="tma-intro-copy">
-            <h2 dangerouslySetInnerHTML={richText(props.introTitleText, props, "Mash Academy,")} />
-            <div
-              className="tma-rich"
-              dangerouslySetInnerHTML={richText(
-                props.descriptionHtml,
-                props,
-                "Çalıştığımız sektörlerde özellikle dental alanda öncü isimlerle genç ve değişime açık profesyonelleri buluşturarak bilgi paylaşımını teşvik etmeyi amaçlamaktadır. Amacımız, sektördeki son gelişmeleri yakından takip ederek bu bilgileri paydaşlarımıza aktarmak ve birlikte öğrenerek büyüdüğümüz bir ekosistem oluşturmaktır.<br><br>Mash Academy, sektörün önde gelen isimleriyle işbirliği yaparak eğitimler, seminerler ve etkinlikler düzenlemekte ve katılımcılarını sektördeki en güncel bilgilerle buluşturmaktadır. Ayrıca, genç yeteneklere yönelik mentorluk programları ve uzmanlık eğitimleri ile sektöre yeni katılanları desteklemekteyiz.<br><br>Biz, bilgiyi paylaşmanın ve birlikte öğrenmenin gücüne inanıyoruz. Mash Academy olarak, sektördeki değişimi takip etmek ve bu değişime ayak uydurmak isteyen herkesi bir araya getirerek sektörün gelişimine katkıda bulunmaya davet ediyoruz.<br><br>Siz de bizimle birlikte, bilgiyi paylaşarak ve birlikte öğrenerek sektördeki gelişmelere yön vermek isterseniz, etkinliklerimize katılarak bu heyecanlı yolculuğa ortak olabilirsiniz. Haydi, geleceği birlikte şekillendirelim!"
-              )}
-            />
           </div>
         </section>
 
-        {props.showPastSection === false ? null : (
-          <section className="tma-past">
-            <h2 dangerouslySetInnerHTML={richText(props.card3Title, props, "Geçmiş Etkinlikler")} />
-            <div
-              className="tma-rich tma-past-text"
-              dangerouslySetInnerHTML={richText(
-                props.card3Text,
-                props,
-                "Geçmiş etkinliklerimiz arasında sektörde deneyimli isimlerin katıldığı paneller, uzmanlık seminerleri ve interaktif atölye çalışmaları bulunmaktadır. Ayrıca, yeni teknolojiler ve tedavi yöntemlerinin ele alındığı konferanslar düzenlemekteyiz. Bu etkinlikler sayesinde katılımcılarımız, sektördeki gelişmeleri yakından takip etmenin yanı sıra deneyimlerini paylaşarak birbirlerinden öğrenme fırsatı bulmaktadır."
-              )}
-            />
-          </section>
-        )}
+        <section className="tma-past">
+          <div className="tma-section-head">
+            <h2 dangerouslySetInnerHTML={richText(undefined, props, sourcePastTitle)} />
+          </div>
+          <p dangerouslySetInnerHTML={richText(undefined, props, sourcePastText)} />
+        </section>
 
-        {props.showEventCards === false ? null : (
-          <section className="tma-events">
-            {events.map((event, index) => (
-              <article className="tma-card" key={index}>
-                <a className="tma-card-image" href={href(event.href, event.fallbackHref)}>
-                  <img src={event.image} alt={event.alt || ""} loading="lazy" decoding="async" />
-                </a>
-                <div className="tma-card-body">
-                  <a className="tma-card-title" href={href(event.href, event.fallbackHref)} dangerouslySetInnerHTML={richText(event.title, props, event.fallbackTitle)} />
-                  <span className="tma-card-date">{value(event.date, event.fallbackDate)}</span>
-                  <p dangerouslySetInnerHTML={richText(event.text, props, event.fallbackText)} />
-                  <a className="tma-read-more" href={href(event.href, event.fallbackHref)} dangerouslySetInnerHTML={richText(event.button, props, "Devamını Oku")} />
-                </div>
-              </article>
-            ))}
-          </section>
-        )}
+        <section className="tma-events" id="tma-events">
+          {events.map((event, index) => (
+            <article className="tma-card" key={index}>
+              <a className="tma-card-image" href={href(undefined, event.fallbackHref)}>
+                <img src={event.image} alt={event.fallbackTitle} loading="lazy" decoding="async" />
+              </a>
+              <div className="tma-card-body">
+                <span className="tma-card-date">{event.fallbackDate}</span>
+                <a className="tma-card-title" href={href(undefined, event.fallbackHref)} dangerouslySetInnerHTML={richText(undefined, props, event.fallbackTitle)} />
+                <p dangerouslySetInnerHTML={richText(undefined, props, event.fallbackText)} />
+                <a className="tma-read-more" href={href(undefined, event.fallbackHref)} dangerouslySetInnerHTML={richText(undefined, props, sourceReadMore)} />
+              </div>
+            </article>
+          ))}
+        </section>
       </div>
     </section>
   );

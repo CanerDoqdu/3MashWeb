@@ -22,4 +22,7 @@ export interface Props {
   panelColor?: string;
   lineColor?: string;
   accentColor?: string;
+  showTemplatePreview?: boolean;
+  /** CRS Composite kaynak yapısındaki reusable template datası. Boş bırakılırsa CRS Composite default datası kullanılır. */
+  productTemplateJson?: string;
 }

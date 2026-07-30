@@ -6,7 +6,7 @@
   padding: 0;
   background: var(--tmabout-bg);
   color: var(--tmabout-text);
-  font-family: Poppins, var(--tm-theme-font-body, system-ui, sans-serif);
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
 
 .three-mash-about-page *,

@@ -1,9 +1,11 @@
+@import "../../sub-components/ThreeMashProductDetailTemplate/styles.css";
+
 .three-mash-product-video {
   width: 100%;
   padding: var(--tmpv-pt) 0 var(--tmpv-pb);
   background: var(--tmpv-bg);
   color: var(--tmpv-text);
-  font-family: Poppins, Arial, sans-serif;
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
 
 .three-mash-product-video *,

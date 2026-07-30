@@ -1,8 +1,8 @@
 @import "../ThreeMashHeader/styles.css";
 @import "../ThreeMashFooter/styles.css";
+@import "../../sub-components/ThreeMashPrintersSourceLanding/styles.css";
 
-.three-mash-empty-product-page {
+.three-mash-three-d-printers-page {
   width: 100%;
-  min-height: 52vh;
-  background: #fafaf7;
+  background: var(--tm-theme-bg, #FAFAF7);
 }

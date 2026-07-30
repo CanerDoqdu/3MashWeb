@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Props } from "./types";
 
 type Mode = "clinic" | "lab";
@@ -24,16 +24,59 @@ type Preset = {
   costDetailHref?: string;
 };
 
+const defaultConsultationWhatsappHref = "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum";
+
 function href(value?: string) {
   return value && value.trim() ? value : "#";
 }
 
+function routeKey(value: string) {
+  return value
+    .trim()
+    .toLocaleLowerCase("tr-TR")
+    .replace(/^https?:\/\/(?:www\.)?3mash\.com/i, "")
+    .split(/[?#]/)[0]
+    .replace(/\/+$/g, "")
+    .replace(/^\//, "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function consultationHref(value?: string) {
+  const current = href(value);
+  const key = routeKey(current);
+  if (current === "#" || key === "pages-iletisim" || key === "iletisim" || key === "contact") {
+    return defaultConsultationWhatsappHref;
+  }
+  return current;
+}
+
+function stripInlineTypographyStyles(markup: string) {
+  return markup.replace(/\sstyle=("[^"]*"|'[^']*'|[^\s>]+)/gi, (_match, rawValue: string) => {
+    const quote = rawValue[0] === '"' || rawValue[0] === "'" ? rawValue[0] : "";
+    const style = quote ? rawValue.slice(1, -1) : rawValue;
+    const kept = style
+      .split(";")
+      .map((part) => part.trim())
+      .filter(
+        (part) =>
+          part &&
+          !/^(font-family|font-size|font-weight|font-style|font-variant(?:-[\w-]+)?|letter-spacing|color|background(?:-color)?|border-color|text-align)\s*:/i.test(part),
+      );
+
+    return kept.length ? ` style=${quote}${kept.join("; ")}${quote}` : "";
+  });
+}
+
 function inlineHtml(value?: string) {
-  return (value || "")
+  return stripInlineTypographyStyles((value || "")
     .trim()
     .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
     .replace(/^<p[^>]*>/i, "")
-    .replace(/<\/p>$/i, "");
+    .replace(/<\/p>$/i, ""));
 }
 
 function escapeRegExp(value: string) {
@@ -56,6 +99,14 @@ function styleTextChunks(markup: string, props?: Props) {
 
 function richText(value?: string, props?: Props) {
   return { __html: styleTextChunks(inlineHtml(value), props) };
+}
+
+function statRichText(value?: string) {
+  return {
+    __html: inlineHtml(value)
+      .replace(/\sclass=("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+      .replace(/\s(?:color|bgcolor)=("[^"]*"|'[^']*'|[^\s>]+)/gi, ""),
+  };
 }
 
 function RichInline({ value, className, wordStyle }: { value?: string; className?: string; wordStyle?: Props }) {
@@ -134,12 +185,6 @@ function percentage(value: unknown, fallback: number, min: number, max: number) 
   return `${numberInRange(value, fallback, min, max)}%`;
 }
 
-function themeToken(value: string | undefined, defaultValue: string, tokenName: string) {
-  const trimmed = value?.trim();
-  if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase()) return trimmed;
-  return `var(${tokenName}, ${defaultValue})`;
-}
-
 function rangeProgress(value: number, min: number, max: number) {
   if (max <= min) return 0;
   return clamp(((value - min) / (max - min)) * 100, 0, 100);
@@ -157,8 +202,8 @@ function StatBlock({ value, suffix, label, wordStyle }: { value?: string; suffix
   return (
     <div className="tmhero-stat">
       <div className="tmhero-stat-value">
-        <span dangerouslySetInnerHTML={richText(value, wordStyle)} />
-        {suffix ? <em dangerouslySetInnerHTML={richText(suffix, wordStyle)} /> : null}
+        <span dangerouslySetInnerHTML={statRichText(value)} />
+        {suffix ? <em dangerouslySetInnerHTML={statRichText(suffix)} /> : null}
       </div>
       <div className="tmhero-stat-label" dangerouslySetInnerHTML={richText(label, wordStyle)} />
     </div>
@@ -254,6 +299,9 @@ export function ThreeMashHero(props: Props) {
   const [work, setWork] = useState(active.workDefault);
   const [rpt, setRpt] = useState(active.rptDefault);
   const [cost, setCost] = useState(active.costDefault);
+  const [animatedLoss, setAnimatedLoss] = useState(0);
+  const heroAnimatingRef = useRef(true);
+  const currentLossRef = useRef(0);
 
   useEffect(() => {
     const next = presets[mode];
@@ -278,6 +326,7 @@ export function ThreeMashHero(props: Props) {
 
   const yearly = work * 12;
   const currentLoss = yearly * (rpt / 100) * cost;
+  currentLossRef.current = currentLoss;
   const targetLoss = yearly * (active.targetRepeatRate / 100) * cost;
   const cappedTargetLoss = Math.min(currentLoss, targetLoss);
   const savings = Math.max(0, currentLoss - targetLoss);
@@ -285,30 +334,76 @@ export function ThreeMashHero(props: Props) {
   const percent = props.percentPrefix || "";
   const negative = props.negativePrefix || "";
   const positive = props.positivePrefix || "";
-  const formattedLoss = `${currency}${formatPlain(currentLoss, props.locale)}`;
+  const titleLoss = heroAnimatingRef.current ? animatedLoss : currentLoss;
+  const formattedLoss = `${currency}${formatPlain(titleLoss, props.locale)}`;
   const titleUnderlineImage = imageSource(props.titleUnderlineImageUrl);
   const showDesktopTitleUnderline = props.showTitleUnderline !== false;
   const showTabletTitleUnderline = props.showTitleUnderlineTablet !== false;
   const showMobileTitleUnderline = props.showTitleUnderlineMobile !== false;
   const shouldRenderTitleUnderline = showDesktopTitleUnderline || showTabletTitleUnderline || showMobileTitleUnderline;
   const isAtTarget = rpt <= active.targetRepeatRate;
+  const secondaryButtonHref = consultationHref(props.secondaryButtonHref);
+  const secondaryButtonExternal = /^https?:\/\//i.test(secondaryButtonHref);
+
+  useEffect(() => {
+    if (!heroAnimatingRef.current) {
+      setAnimatedLoss(currentLoss);
+    }
+  }, [currentLoss]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.requestAnimationFrame !== "function") {
+      heroAnimatingRef.current = false;
+      setAnimatedLoss(currentLossRef.current);
+      return;
+    }
+
+    let animationFrame = 0;
+    let startTime: number | null = null;
+    const targetLoss = currentLossRef.current;
+
+    const animate = (timestamp: number) => {
+      if (!heroAnimatingRef.current) return;
+      if (startTime === null) startTime = timestamp;
+
+      const progress = Math.min((timestamp - startTime) / 1500, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setAnimatedLoss(targetLoss * eased);
+
+      if (progress < 1) {
+        animationFrame = window.requestAnimationFrame(animate);
+        return;
+      }
+
+      heroAnimatingRef.current = false;
+      setAnimatedLoss(currentLossRef.current);
+    };
+
+    animationFrame = window.requestAnimationFrame(animate);
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, []);
+
+  const stopHeroAnimation = () => {
+    heroAnimatingRef.current = false;
+  };
 
   const themeStyle = {
-    "--tmhero-bg": themeToken(props.backgroundColor, "#FAFAF7", "--tm-theme-bg"),
-    "--tmhero-text": themeToken(props.textColor, "#0E0E0C", "--tm-theme-text"),
-    "--tmhero-muted": themeToken(props.mutedTextColor, "#8F8F86", "--tm-theme-muted"),
-    "--tmhero-sub": themeToken(props.subTextColor, "#55554E", "--tm-theme-sub"),
-    "--tmhero-line": themeToken(props.lineColor, "#E6E6E0", "--tm-theme-line"),
-    "--tmhero-panel": themeToken(props.panelColor, "#FFFFFF", "--tm-theme-panel"),
-    "--tmhero-accent": themeToken(props.accentColor, "#C7F136", "--tm-theme-accent"),
-    "--tmhero-accent-soft": themeToken(props.accentSoftColor, "#F2F8DC", "--tm-theme-accent-soft"),
-    "--tmhero-accent-text": themeToken(props.accentTextColor, "#3D4D0E", "--tm-theme-accent-text"),
-    "--tmhero-primary-button-text": themeToken(props.primaryButtonTextColor, "#0E0E0C", "--tm-theme-text"),
-    "--tmhero-secondary-button-text": themeToken(props.secondaryButtonTextColor, "#0E0E0C", "--tm-theme-text"),
-    "--tmhero-lab-accent": props.labAccentColor || "#7C4DFF",
-    "--tmhero-lab-accent-text": props.labAccentTextColor || "#4F2FCF",
-    "--tmhero-danger": themeToken(props.dangerColor, "#E2492F", "--tm-theme-danger"),
-    "--tmhero-word-color": themeToken(props.styledPhraseColor, "#C7F136", "--tm-theme-accent"),
+    "--tmhero-bg": "var(--bg, #FAFAF7)",
+    "--tmhero-text": "var(--ink, #0E0E0C)",
+    "--tmhero-muted": "var(--mut, #8F8F86)",
+    "--tmhero-sub": "var(--sub, #55554E)",
+    "--tmhero-line": "var(--line, #E6E6E0)",
+    "--tmhero-line-strong": "var(--line2, #D5D5CD)",
+    "--tmhero-panel": "#FFFFFF",
+    "--tmhero-accent": "var(--lime, #C7F136)",
+    "--tmhero-accent-soft": "var(--lime-soft, #F2F8DC)",
+    "--tmhero-accent-text": "var(--lime-ink, #3D4D0E)",
+    "--tmhero-primary-button-text": "var(--ink, #0E0E0C)",
+    "--tmhero-secondary-button-text": "var(--ink, #0E0E0C)",
+    "--tmhero-lab-accent": "var(--lime, #C7F136)",
+    "--tmhero-lab-accent-text": "var(--lime-ink, #3D4D0E)",
+    "--tmhero-danger": "var(--red, #E2492F)",
+    "--tmhero-word-color": "var(--lime, #C7F136)",
     "--tmhero-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmhero-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmhero-title-underline-width": percentage(props.titleUnderlineImageWidth, 72, 10, 140),
@@ -371,7 +466,12 @@ export function ThreeMashHero(props: Props) {
               <a className="tmhero-btn tmhero-btn-accent" href={href(props.primaryButtonHref)} onClick={(event) => smoothAnchorClick(event, props.primaryButtonHref)}>
                 <RichInline value={props.primaryButtonText} wordStyle={props} />
               </a>
-              <a className="tmhero-btn tmhero-btn-line" href={href(props.secondaryButtonHref)}>
+              <a
+                className="tmhero-btn tmhero-btn-line"
+                href={secondaryButtonHref}
+                target={secondaryButtonExternal ? "_blank" : undefined}
+                rel={secondaryButtonExternal ? "noopener noreferrer" : undefined}
+              >
                 <RichInline value={props.secondaryButtonText} wordStyle={props} />
               </a>
               <span dangerouslySetInnerHTML={richText(props.hintText, props)} />
@@ -406,7 +506,10 @@ export function ThreeMashHero(props: Props) {
                   step={active.workStep}
                   value={work}
                   style={{ "--p": `${rangeProgress(work, active.workMin, active.workMax)}%` } as any}
-                  onInput={(event) => setWork(Number((event.currentTarget as HTMLInputElement).value))}
+                  onInput={(event) => {
+                    stopHeroAnimation();
+                    setWork(Number((event.currentTarget as HTMLInputElement).value));
+                  }}
                   aria-label={active.workLabel || undefined}
                 />
               </div>
@@ -426,7 +529,10 @@ export function ThreeMashHero(props: Props) {
                   step={active.rptStep}
                   value={rpt}
                   style={{ "--p": `${rangeProgress(rpt, active.rptMin, active.rptMax)}%` } as any}
-                  onInput={(event) => setRpt(Number((event.currentTarget as HTMLInputElement).value))}
+                  onInput={(event) => {
+                    stopHeroAnimation();
+                    setRpt(Number((event.currentTarget as HTMLInputElement).value));
+                  }}
                   aria-label={active.rptLabel || undefined}
                 />
               </div>
@@ -446,7 +552,10 @@ export function ThreeMashHero(props: Props) {
                   step={active.costStep}
                   value={cost}
                   style={{ "--p": `${rangeProgress(cost, active.costMin, Math.max(active.costMax, cost))}%` } as any}
-                  onInput={(event) => setCost(Number((event.currentTarget as HTMLInputElement).value))}
+                  onInput={(event) => {
+                    stopHeroAnimation();
+                    setCost(Number((event.currentTarget as HTMLInputElement).value));
+                  }}
                   aria-label={active.costLabel || undefined}
                 />
                 <a className="tmhero-calc-link" href={href(active.costDetailHref)}>
