@@ -129,7 +129,7 @@
           "displayName": "Öne Çıkan Ürün Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://studio.ikasapps.com/yikama-kurleme-cihazlari",
+          "defaultValue": "/yikama-kurleme-cihazlari",
           "groupId": "products",
           "description": "C4P kartının gideceği çalışan ürün/kategori routeu."
         },
@@ -2836,7 +2836,7 @@
           "displayName": "Cost Detail Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "3MASH-Maliyet-Detay.html",
+          "defaultValue": "#",
           "groupId": "clinicCalculator"
         },
         {
@@ -2892,7 +2892,7 @@
           "displayName": "Cost Detail Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "3MASH-Maliyet-Detay.html",
+          "defaultValue": "#",
           "groupId": "labCalculator"
         },
         {
@@ -6084,7 +6084,7 @@
           "displayName": "FAQ 2 Cevap HTML",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"3MASH-Maliyet-Detay.html\">maliyet detay sayfamıza</a> bakabilirsiniz.",
+          "defaultValue": "Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"#\">maliyet detay sayfamıza</a> bakabilirsiniz.",
           "groupId": "text-customization"
         },
         {
@@ -8181,7 +8181,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Arama",
-          "groupId": "text"
+          "groupId": "content"
         },
         {
           "name": "searchQueryParam",
@@ -8213,7 +8213,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "stokta",
-          "groupId": "text"
+          "groupId": "content"
         },
         {
           "name": "emptyTitle",
@@ -8253,7 +8253,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "İndirim",
-          "groupId": "text"
+          "groupId": "content"
         },
         {
           "name": "fallbackCategoryText",
@@ -8261,7 +8261,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "3MASH",
-          "groupId": "text"
+          "groupId": "content"
         },
         {
           "name": "priceRequestText",
@@ -8269,7 +8269,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Teklif Alın",
-          "groupId": "text"
+          "groupId": "content"
         },
         {
           "name": "prevPageText",
@@ -8277,7 +8277,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Önceki",
-          "groupId": "text"
+          "groupId": "content"
         },
         {
           "name": "nextPageText",
@@ -8285,7 +8285,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Sonraki",
-          "groupId": "text"
+          "groupId": "content"
         },
         {
           "name": "inStockText",
@@ -14452,15 +14452,6 @@
             "brand": null,
             "relatedProductsType": null
           }
-        },
-        {
-          "name": "categoryTemplate",
-          "displayName": "Kategori Tasarımı",
-          "type": "ENUM",
-          "required": false,
-          "defaultValue": "generic",
-          "groupId": "data",
-          "enumTypeId": "1uC9KCivip"
         }
       ],
       "propGroups": [
@@ -15123,6 +15114,132 @@
       ]
     },
     {
+      "id": "2tplvqpo-blog-category-page",
+      "name": "Blog Kategori Sayfası",
+      "type": "section",
+      "entry": "./src/components/ThreeMashBlogListingPage/index.tsx",
+      "styles": "./src/components/ThreeMashBlogListingPage/styles.css",
+      "props": [
+        {
+          "name": "blogList",
+          "displayName": "Kategori Blog Listesi",
+          "type": "BLOG_LIST",
+          "required": true,
+          "description": "Blog kategori sayfasında geçerli kategoriye bağlı yazıları canlı listeler.",
+          "defaultValue": {
+            "blogListType": "ALL",
+            "initialLimit": 12,
+            "blogIds": null,
+            "categoryId": null,
+            "usePageFilter": true
+          }
+        },
+        {
+          "name": "blogCategoryList",
+          "displayName": "Blog Kategorileri",
+          "type": "BLOG_CATEGORY_LIST",
+          "required": false,
+          "description": "İsteğe bağlı dinamik blog kategori etiketleri.",
+          "defaultValue": {
+            "blogCategoryListType": "ALL",
+            "initialLimit": 50,
+            "blogCategoryIds": null
+          }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "MASH ACADEMY"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Blog Kategorisi"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu kategoriye bağlı blog yazıları canlı olarak listelenir."
+        },
+        {
+          "name": "readMoreText",
+          "displayName": "Read More Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Oku"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Blog yazısı bulunamadı"
+        },
+        {
+          "name": "emptyMessage",
+          "displayName": "Boş Message",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu listeye bağlı yayında olan blog yazısı yok."
+        },
+        {
+          "name": "setupMessage",
+          "displayName": "Setup Message",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu sayfanın blog kategori yazılarını göstermesi için Blog List alanını sayfa filtresiyle bağlayın."
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#f6f7f3"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#10120f"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#64695f"
+        },
+        {
+          "name": "cardColor",
+          "displayName": "Card Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#ffffff"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#dfe3da"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#c7f136"
+        }
+      ]
+    },
+    {
       "id": "2tplvqpo-blog-detail-page",
       "name": "Canlı Blog Detay",
       "type": "section",
@@ -15156,6 +15273,78 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Bu sayfanın canlı blog detayı göstermesi için ikas editörde Blog alanını bağlayın."
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#f6f7f3"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#10120f"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#64695f"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#dfe3da"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#c7f136"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-blog-post-page",
+      "name": "Blog Yazı Sayfası",
+      "type": "section",
+      "entry": "./src/components/ThreeMashBlogDetailPage/index.tsx",
+      "styles": "./src/components/ThreeMashBlogDetailPage/styles.css",
+      "props": [
+        {
+          "name": "blog",
+          "displayName": "Blog Yazısı",
+          "type": "BLOG",
+          "required": true,
+          "description": "Blog yazı rotasında geçerli ikas blog yazısına bağlayın."
+        },
+        {
+          "name": "backLinkText",
+          "displayName": "Geri Bağlantı Metin",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Blog'a dön"
+        },
+        {
+          "name": "backLinkHref",
+          "displayName": "Geri Bağlantı Adresi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/blog"
+        },
+        {
+          "name": "setupMessage",
+          "displayName": "Setup Message",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu sayfanın blog yazısını göstermesi için ikas editörde Blog Yazısı alanını bağlayın."
         },
         {
           "name": "backgroundColor",
@@ -18478,6 +18667,260 @@
           "defaultValue": "transparent"
         }
       ]
+    },
+    {
+      "id": "2tplvqpo-hTgMexiUME",
+      "name": "ThreeMashCostDetailPage",
+      "entry": "./src/components/ThreeMashCostDetailPage/index.tsx",
+      "styles": "./src/components/ThreeMashCostDetailPage/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Bir tekrarın gerçek maliyeti <em>kalem kalem.</em>",
+          "groupId": "content"
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "MALİYET DETAYI",
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Kron, splint veya model tekrarları sadece malzeme firelerinden oluşmaz. Asıl fark; koltuk süresi, yeniden ölçü, üretim zamanı ve hasta memnuniyeti gibi görünmeyen kalemlerde birikir.",
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Hesaplayıcıya dön →",
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/#hesap",
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ücretsiz analiz iste",
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/pages/iletisim",
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Metin",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#55554e",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "links",
+          "name": "Links"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-RbxLJ1yEhN",
+      "name": "ThreeMashReferences",
+      "entry": "./src/components/ThreeMashReferences/index.tsx",
+      "styles": "./src/components/ThreeMashReferences/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "sectionAnchorId",
+          "displayName": "Bölüm ID",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "referanslar",
+          "groupId": "content"
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Referanslar ve başarı hikayeleri",
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Dijital üretimde güveni <em>gerçek işlerle</em> kuruyoruz.",
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "3MASH ekosistemi; kliniklerin, laboratuvarların ve çözüm ortaklarının günlük üretiminde aynı hedefe çalışır: doğru cihaz, doğru malzeme, doğru parametre ve kesintisiz teknik destek.",
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Başarı hikayesini gör",
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#referanslar-vaka",
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ekosistemi incele",
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#referanslar-isleyis",
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Metin",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#55554e",
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "appearance"
+        },
+        {
+          "name": "maxWidth",
+          "displayName": "Maksimum Genişlik",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1240,
+          "groupId": "appearance"
+        },
+        {
+          "name": "paddingTop",
+          "displayName": "Üst Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 72,
+          "groupId": "appearance"
+        },
+        {
+          "name": "paddingBottom",
+          "displayName": "Alt Boşluk",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 96,
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "Content"
+        },
+        {
+          "id": "links",
+          "name": "Links"
+        },
+        {
+          "id": "appearance",
+          "name": "Appearance"
+        }
+      ]
     }
   ],
   "customTypes": [
@@ -18490,17 +18933,6 @@
         "Cover": "cover",
         "Fill": "fill",
         "Scale down": "scale-down"
-      },
-      "isDynamic": false
-    },
-    {
-      "id": "1uC9KCivip",
-      "name": "ThreeMashCategoryTemplate",
-      "type": "enum",
-      "enumOptions": {
-        "Dental Reçineler": "dental-resins",
-        "3D Yazıcılar": "printers",
-        "Genel Ürün Listesi": "generic"
       },
       "isDynamic": false
     }

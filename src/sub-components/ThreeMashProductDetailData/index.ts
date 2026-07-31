@@ -26,6 +26,24 @@ export const MASH_P16L_LARGE_BUILD_PLATE_SLUG = "mash-p16l-buyuk-baski-tablasi-2
 export const MASH_P16L_SMALL_BUILD_PLATE_SLUG = "mash-p16l-kucuk-hizli-baski-tablasi";
 export const MASH_P16L_LCD_SCREEN_SLUG = "mash-p16l-16k-monokrom-lcd-ekran-yedek-parca";
 export const MASH_P16L_RESIN_TANK_SLUG = "mash-p16l-recine-tanki-800ml";
+export const ARGENZ_ST_MULTILAYER_SLUG = "argenz-st-multilayer-zirkon-blok";
+export const ARGENZ_HT_PLUS_SLUG = "argenz-ht-plus-zirkon-blok";
+export const ARGENZ_HT_MULTILAYER_SLUG = "argenz-ht-multilayer-zirkon-blok";
+export const CREALITY_WASH_CURE_UW03_SLUG = "creality-washcure-uw-02";
+export const THREESHAPE_E2_SLUG = "3shape-e2";
+export const THREESHAPE_E3_SLUG = "3shape-e3";
+export const THREESHAPE_E4_SLUG = "3shape-e4";
+export const NABERTHEM_LHT_02_17_LB_SPEED_SLUG = "naberthem-lht-02-17-lb-speed";
+export const NABERTHEM_LHT_01_16_TURBO_FIRE_SLUG = "naberthem-lht-01-16-turbo-fire";
+export const NABERTHEM_VL_01_12_LB_PRESS_SLUG = "naberthem-vl-01-12-lb-press-firini";
+export const NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG = "naberthem-vl-01-12-lb-porselen-firini";
+export const MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG = "mesa-grade-5-eli-titanyum-disk";
+export const TRASFORMER_COMP_FLOW_SLUG = "trasformer-comp-flow-siringa-kompozit";
+export const TRASFORMER_LIGHT_GLASS_SLUG = "trasformer-light-glass-mufla-sistemi";
+export const MASH_P16L_PRINTER_SLUG = "mash-p16l-385nm-16k-dental-3d-yazici";
+export const MASH_CURIE_M1_DENTAL_SLUG = "mash-curie-m1-dental-3d-yazici";
+export const MASH_CURIE_M1_JEWELRY_SLUG = "mash-curie-m1-jewelry-3d-printer";
+export const CREALITY_HALOT_SKY_6K_SLUG = "creality-halot-sky-6k";
 
 const CRS_GALLERY: ProductGalleryItem[] = [
   {
@@ -4493,6 +4511,1486 @@ const PRINTER_SPARE_PART_ALIASES: Record<string, string[]> = {
   [MASH_P16L_RESIN_TANK_SLUG]: ["mash-p16l-recine-tanki", "p16l-recine-tanki", "800ml", "800-ml"],
 };
 
+type ZirconBlockConfig = {
+  slug: string;
+  productText: string;
+  kicker: string;
+  titleHtml: string;
+  leadHtml: string;
+  pills: Array<{ label: string; value?: string }>;
+  images: string[];
+  videoHref: string;
+  metricTitleHtml: string;
+  metricSideHtml: string;
+  metrics: Array<{ name: string; value: string; unit?: string; tag?: string; caption: string }>;
+  specTag: string;
+  specTitleHtml: string;
+  specDescriptionHtml: string;
+  specRows: Array<{ label: string; value: string }>;
+  useCaseSideHtml: string;
+  useCasePhotos: Array<{ imageIndex?: number; title: string; text: string; alt: string }>;
+  indicationItems: string[];
+  processItems: string[];
+  deviceChips: Array<{ label: string; highlighted?: boolean }>;
+  faqItems: Array<{ question: string; answerHtml: string }>;
+};
+
+const ZIRCON_CATEGORY = {
+  text: "Zirkon Bloklar",
+  href: "/zirkon-bloklar",
+};
+
+function zirconPhotoSrc(config: ZirconBlockConfig, index: number | undefined) {
+  const usable = config.images.slice(1);
+  if (usable.length) return usable[Math.min(Math.max((index || 1) - 2, 0), usable.length - 1)];
+  return config.images[0] || "";
+}
+
+function zirconRelatedItems(currentSlug: string): NonNullable<ProductDetailTemplateData["related"]>["items"] {
+  const all = [
+    {
+      tag: "ST ML",
+      title: "ArgenZ ST Multilayer",
+      descriptionHtml: "Doğal dentin geçişini taklit eden süper translüsent multilayer zirkonya disk.",
+      href: `/${ARGENZ_ST_MULTILAYER_SLUG}`,
+      linkText: "İncele",
+      background: "linear-gradient(160deg,#F0ECE2,#fff)",
+    },
+    {
+      tag: "HT+",
+      title: "ArgenZ HT+",
+      descriptionHtml: "Yüksek translüsent plus yapı; dayanım, performans ve estetik dengesi.",
+      href: `/${ARGENZ_HT_PLUS_SLUG}`,
+      linkText: "İncele",
+      background: "linear-gradient(160deg,#EEF0F3,#fff)",
+    },
+    {
+      tag: "HT+ ML",
+      title: "ArgenZ HT+ Multilayer",
+      descriptionHtml: "HT+ materyal dayanımıyla doğal dentin-mine geçişini birleştiren multilayer disk.",
+      href: `/${ARGENZ_HT_MULTILAYER_SLUG}`,
+      linkText: "İncele",
+      background: "linear-gradient(160deg,#ECE7DB,#fff)",
+    },
+    {
+      tag: "FIRIN",
+      title: "Dental Fırınlar",
+      descriptionHtml: "Zirkon sinterleme ve porselen/press akışları için uyumlu fırın seçenekleri.",
+      href: "/dental-firinlar",
+      linkText: "Fırınları gör",
+      background: "linear-gradient(160deg,#F1F1EC,#fff)",
+    },
+  ];
+  return all.filter((item) => item.href !== `/${currentSlug}`).slice(0, 4);
+}
+
+function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData {
+  const gallery = normalizedGallery(config.images, config.productText);
+  return {
+    key: config.slug,
+    announcement: {
+      enabled: true,
+      strongText: "Zirkon iş akışı.",
+      longText: "Blok seçimi, kalınlık ve sinterleme akışını birlikte kontrol ederek doğru ArgenZ zirkonu seçiyoruz.",
+      ctaText: "Vaka uyumunu kontrol et →",
+      ctaHref: "#satinal",
+    },
+    breadcrumb: {
+      homeText: "Ana sayfa",
+      homeHref: "/",
+      categoryText: ZIRCON_CATEGORY.text,
+      categoryHref: ZIRCON_CATEGORY.href,
+      productText: config.productText,
+    },
+    hero: {
+      kicker: config.kicker,
+      titleHtml: config.titleHtml,
+      leadHtml: config.leadHtml,
+      pills: config.pills,
+      galleryBadge: "ARGEN",
+      gallery,
+      selectedPrefix: "Seçiminiz:",
+      summarySuffix: "— vaka uyumu ve teknik destek dahil.",
+      buyHrefBase: `/${config.slug}`,
+      whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
+      whatsappText: "WhatsApp'tan sor",
+      addToCartText: "Sepete ekle →",
+      addingToCartText: "Ekleniyor...",
+      outOfStockText: "Stok yok",
+      trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    },
+    ratings: {
+      index: "01",
+      label: "Vaka Uygunluğu",
+      titleHtml: 'Doğru zirkon, <span class="hl">endikasyona</span> göre seçilir.',
+      sideHtml: "Zirkon blok seçiminde restorasyon tipi, estetik beklenti, köprü açıklığı ve sinterleme protokolü birlikte değerlendirilir.",
+      panelTitleHtml: `${config.productText} için <span class="em">seçim kontrolü.</span>`,
+      note: "Milling ve sinterleme öncesi kontrol edilen temel başlıklar.",
+      items: [
+        { descriptionHtml: "Vaka endikasyonu ve köprü açıklığı <b>materyal tipine</b> göre kontrol edilir." },
+        { descriptionHtml: "Renk, kalınlık ve multilayer geçişi <b>estetik beklentiyle</b> eşleştirilir." },
+        { descriptionHtml: "Sinterleme fırını ve freze iş akışı <b>blok parametreleriyle</b> birlikte doğrulanır." },
+      ],
+    },
+    metrics: {
+      index: "02",
+      label: "Teknik Özellikler",
+      titleHtml: config.metricTitleHtml,
+      sideHtml: config.metricSideHtml,
+      items: config.metrics,
+    },
+    specHighlight: {
+      tag: config.specTag,
+      titleHtml: config.specTitleHtml,
+      descriptionHtml: config.specDescriptionHtml,
+      ctaText: "Renk ve kalınlık seç →",
+      ctaHref: "#satinal",
+      rows: config.specRows,
+    },
+    useCases: {
+      index: "03",
+      label: "Uygulama & Uyumluluk",
+      titleHtml: 'Nerede kullanılır, <span class="em">neyle çalışır?</span>',
+      sideHtml: config.useCaseSideHtml,
+      photos: config.useCasePhotos.map((photo) => ({
+        src: zirconPhotoSrc(config, photo.imageIndex),
+        alt: photo.alt,
+        title: photo.title,
+        text: photo.text,
+      })),
+      cards: [
+        { eyebrow: "Endikasyon", title: "Hangi vakalarda?", items: config.indicationItems },
+        { eyebrow: "İş Akışı", title: "Neler kontrol edilir?", items: config.processItems },
+      ],
+      devices: {
+        eyebrow: "Uyumlu Sistemler",
+        title: "Dental freze ve sinterleme akışıyla çalışır",
+        textHtml:
+          "ArgenZ zirkon bloklarda renk, kalınlık, frezeleme stratejisi ve sinterleme protokolü birlikte planlanmalıdır. Kullandığınız freze ve fırın akışını satın alma öncesi birlikte kontrol edebiliriz.",
+        chips: config.deviceChips,
+      },
+    },
+    ecosystem: {
+      index: "04",
+      label: "Laboratuvar Ekosistemi",
+      titleHtml: 'Zirkon blok, <span class="em">freze ve fırınla</span> tamamlanır.',
+      textHtml:
+        "Doğru zirkon sonucu; blok seçimi, CAM stratejisi, sinterleme çevrimi ve finishing/glaze adımlarının birlikte yönetilmesiyle alınır. Kalınlık ve renk seçimini vaka planına göre birlikte netleştirebiliriz.",
+      chips: ["Zirkon blok", "CAM frezeleme", "Sinterleme", "Finishing / glaze"],
+      buttons: [
+        { text: "Teknik destek al", href: "/pages/iletisim" },
+        { text: "Zirkonları gör", href: ZIRCON_CATEGORY.href, variant: "line" },
+      ],
+    },
+    faq: {
+      index: "05",
+      label: "Sık Sorulanlar",
+      titleHtml: `${config.productText} <span class="em">hakkında.</span>`,
+      sideHtml: "Renk, kalınlık ve endikasyon seçimi satın alma öncesi netleştirilmelidir.",
+      openFirst: true,
+      items: config.faqItems,
+    },
+    video: {
+      index: "06",
+      label: "Videoda Gör",
+      titleHtml: 'Zirkon akışını <span class="em">videoda görün.</span>',
+      sideHtml: "ArgenZ zirkon bloklarda milling, nesting ve sinterleme yaklaşımını video üzerinden değerlendirin.",
+      href: config.videoHref,
+      image: youtubePreview(config.videoHref, config.images[0] || ""),
+      imageAlt: `${config.productText} video`,
+      title: `${config.productText} iş akışı`,
+      text: "Vaka seçimi, nesting ve laboratuvar üretim akışına odaklanan video.",
+      meta: "Mash Academy · YouTube'da izle",
+    },
+    related: {
+      index: "07",
+      label: "İlgili Zirkonlar",
+      titleHtml: 'Aynı laboratuvarda <span class="em">birlikte çalışanlar.</span>',
+      items: zirconRelatedItems(config.slug),
+    },
+    finalCta: {
+      titleHtml: `${config.productText} için <span class="em">vaka uyumunu birlikte kontrol edelim.</span>`,
+      textHtml:
+        "Renk, kalınlık, endikasyon ve sinterleme akışını kısa bir görüşmeyle netleştirip doğru ArgenZ zirkon bloğu seçelim.",
+      primaryText: "Sepete dön ↑",
+      primaryHref: "#satinal",
+      secondaryText: "Uzmana danış",
+      secondaryHref: "/pages/iletisim",
+    },
+  };
+}
+
+const ZIRCON_BLOCK_CONFIGS: ZirconBlockConfig[] = [
+  {
+    slug: ARGENZ_ST_MULTILAYER_SLUG,
+    productText: "ArgenZ ST Multilayer Zirkon Blok",
+    kicker: "ArgenZ ST Multilayer · Süper Translüsent Zirkonya",
+    titleHtml: 'Doğal dentin geçişi <span class="em">multilayer</span> diskten gelir.',
+    leadHtml:
+      "ArgenZ ST Süper Translüsent Multilayer Zirkon Blok, lityum disilikata alternatif olacak yüksek geçirgenlik ve optimum dayanıklılık sunar. Doğal dentini taklit eden geçişiyle estetik restorasyonlar için kullanılır; ABD'de üretilir, izostatik preslenir ve FDA 510K onaylıdır.",
+    pills: [{ value: "50%", label: "translüsentlik" }, { value: "850", label: "MPa" }, { label: "ST Multilayer" }, { label: "FDA 510K" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/ce6a0485-2b4f-4d5d-82db-b7410f337570/540/5.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/ce6a0485-2b4f-4d5d-82db-b7410f337570/540/5.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/ce6a0485-2b4f-4d5d-82db-b7410f337570/540/5.webp",
+    ],
+    videoHref: "https://www.youtube.com/watch?v=Sg2I5yC8qBk",
+    metricTitleHtml: 'Süper translüsent <span class="em">estetik zirkon.</span>',
+    metricSideHtml: "ST Multilayer, doğal dentin geçişi ve estetik anterior/tek üye vakalarında yüksek geçirgenlik ihtiyacına odaklanır.",
+    metrics: [
+      { name: "Translüsentlik", value: "50", unit: "%", tag: "ST", caption: "Doğal dentini taklit eden yüksek geçirgenlik seviyesi." },
+      { name: "Dayanım", value: "850", unit: "MPa", tag: "Zirkonya", caption: "Estetik vakalar için optimum dayanıklılık dengesi." },
+      { name: "Köprü", value: "3", unit: "üyeye kadar", tag: "Anterior", caption: "Tek kronlar ve 1 pontikli 3 üyeye kadar anterior köprüler için konumlandırılır." },
+    ],
+    specTag: "ARGENZ ST MULTILAYER · 50% · 850 MPa",
+    specTitleHtml: 'Lityum disilikata <span class="em">estetik alternatif.</span>',
+    specDescriptionHtml: "Süper translüsent multilayer yapı, doğal renk geçişi ve yüksek estetik beklenti olan vakalarda kullanılmak üzere konumlandırılır.",
+    specRows: [
+      { label: "Materyal", value: "ST Multilayer" },
+      { label: "Translüsentlik", value: "50%" },
+      { label: "Dayanım", value: "850 MPa" },
+      { label: "Üretim", value: "ABD / izostatik pres" },
+      { label: "Onay", value: "FDA 510K" },
+    ],
+    useCaseSideHtml: "ST Multilayer, estetik geçiş ve doğal dentin taklidi gereken zirkon restorasyonlarında tercih edilir.",
+    useCasePhotos: [
+      { imageIndex: 2, title: "Anterior estetik", text: "Doğal renk geçişi ve yüksek translüsentlik.", alt: "ArgenZ ST Multilayer anterior estetik" },
+      { imageIndex: 3, title: "Tek kron", text: "Lityum disilikata alternatif estetik zirkon.", alt: "ArgenZ ST Multilayer tek kron" },
+      { imageIndex: 2, title: "3 üyeli köprü", text: "1 pontikli anterior köprü endikasyonu.", alt: "ArgenZ ST Multilayer anterior köprü" },
+    ],
+    indicationItems: ["Tek kron restorasyonları", "Yüksek estetik anterior vakalar", "1 pontikli 3 üyeye kadar anterior köprüler"],
+    processItems: ["Renk ve kalınlık seçimi", "Shrinkage değerinin CAM yazılıma doğru girilmesi", "Sinterleme çevrimi ve finishing/glaze kontrolü"],
+    deviceChips: [{ label: "Dental CAD/CAM freze" }, { label: "Sinterleme fırını" }, { label: "VITA Classical tonları" }, { label: "Estetik vaka", highlighted: true }],
+    faqItems: [
+      { question: "ArgenZ ST Multilayer ne için kullanılır?", answerHtml: "Doğal dentin geçişi ve yüksek estetik beklenti olan zirkon restorasyonlarda kullanılır." },
+      { question: "Dayanım değeri nedir?", answerHtml: "ST Multilayer için 850 MPa dayanım bilgisi ürün kaynaklarında yer alır." },
+      { question: "Hangi köprülerde tercih edilir?", answerHtml: "Tek kronlar ve 1 pontikli 3 üyeye kadar anterior köprüler için konumlandırılır." },
+    ],
+  },
+  {
+    slug: ARGENZ_HT_PLUS_SLUG,
+    productText: "ArgenZ HT+ Zirkon Blok",
+    kicker: "ArgenZ HT+ · Yüksek Translüsent Plus Zirkonya",
+    titleHtml: 'Dayanım ve estetik <span class="em">HT+</span> formülde birleşir.',
+    leadHtml:
+      "Argen HT+ ile üretilen restorasyonlar dayanıklılık, performans ve estetik dengesi sunar. Klinik ihtiyaçlara uygun çok yönlü formülasyonu sayesinde birçok vakada zirkonyum reçeteleme imkanı sağlar.",
+    pills: [{ value: "1250", label: "MPa" }, { value: "45%", label: "translüsentlik" }, { label: "HT+" }, { label: "Full contour / altyapı" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/bb246f06-b3c4-4a10-b35c-9bf224734b73/540/6.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/bb246f06-b3c4-4a10-b35c-9bf224734b73/540/6.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/bb246f06-b3c4-4a10-b35c-9bf224734b73/540/6.webp",
+    ],
+    videoHref: "https://www.youtube.com/watch?v=kgyZhW8YC-I",
+    metricTitleHtml: 'Güçlü restorasyonlar için <span class="em">HT+ zirkon.</span>',
+    metricSideHtml: "HT+ materyal, dayanım ve translüsentlik dengesini geniş klinik endikasyonlarda kullanmak için konumlandırılır.",
+    metrics: [
+      { name: "Dayanım", value: "1250", unit: "MPa", tag: "HT+", caption: "Geleneksel HT zirkonyaya göre artırılmış dayanım seviyesi." },
+      { name: "Translüsentlik", value: "45", unit: "%", tag: "HT+", caption: "Dayanım korunurken estetik ışık geçirgenliği sağlar." },
+      { name: "Endikasyon", value: "Full", unit: "arch", tag: "IFU", caption: "Full contour ve altyapı restorasyonlarında geniş kullanım alanı." },
+    ],
+    specTag: "ARGENZ HT+ · 1250 MPa · 45%",
+    specTitleHtml: 'Geniş endikasyon için <span class="em">yüksek dayanım.</span>',
+    specDescriptionHtml: "HT+ zirkonya, full contour ve altyapı restorasyonlarında dayanım, performans ve estetik dengesini korumak için kullanılır.",
+    specRows: [
+      { label: "Materyal", value: "HT+" },
+      { label: "Dayanım", value: "1250 MPa" },
+      { label: "Translüsentlik", value: "45%" },
+      { label: "Kullanım", value: "Full contour / altyapı" },
+      { label: "Kategori", value: "Zirkon blok" },
+    ],
+    useCaseSideHtml: "HT+ zirkon blok, yüksek dayanım isteyen kron, köprü ve altyapı iş akışlarında kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 2, title: "Posterior dayanım", text: "Yük taşıyan restorasyonlar için güçlü yapı.", alt: "ArgenZ HT+ posterior restorasyon" },
+      { imageIndex: 3, title: "Full contour", text: "Tek parça zirkon restorasyon iş akışları.", alt: "ArgenZ HT+ full contour" },
+      { imageIndex: 2, title: "Altyapı", text: "Substructure ve geniş endikasyon desteği.", alt: "ArgenZ HT+ altyapı restorasyonu" },
+    ],
+    indicationItems: ["Full contour restorasyonlar", "Substructure / altyapı restorasyonları", "Dayanım öncelikli kron ve köprü vakaları"],
+    processItems: ["CAM shrinkage değeri kontrolü", "Keskin frez ve uygun milling stratejisi", "Sinterleme sonrası wet adjustment ve finishing kontrolü"],
+    deviceChips: [{ label: "Dental CAD/CAM freze" }, { label: "Sinterleme fırını" }, { label: "HT+ shading liquids" }, { label: "Dayanım odaklı vaka", highlighted: true }],
+    faqItems: [
+      { question: "ArgenZ HT+ hangi restorasyonlarda kullanılır?", answerHtml: "Full contour ve altyapı restorasyonlarında, dayanım ve estetik dengesinin önemli olduğu vakalarda kullanılır." },
+      { question: "Dayanım ve translüsentlik değeri nedir?", answerHtml: "HT+ için kaynaklarda 1250 MPa dayanım ve 45% translüsentlik bilgisi yer alır." },
+      { question: "Sinterleme öncesi ne kontrol edilmeli?", answerHtml: "Disk üzerindeki shrinkage değeri CAM yazılımına doğru girilmeli ve sinterleme protokolü takip edilmelidir." },
+    ],
+  },
+  {
+    slug: ARGENZ_HT_MULTILAYER_SLUG,
+    productText: "ArgenZ HT+ Multilayer Zirkon Blok",
+    kicker: "ArgenZ HT+ Multilayer · Güçlü Doğal Gradient",
+    titleHtml: 'HT+ dayanımı <span class="em">doğal multilayer</span> geçişle birleşir.',
+    leadHtml:
+      "ArgenZ HT+ Multilayer, HT+ materyal dayanımı ve renk doğruluğunu doğal dentin-mine geçişine benzeyen multilayer yapı ile birleştirir. Katman çizgisi oluşturmadan doğal shade gradient hedefleyen zirkon restorasyonlar için kullanılır.",
+    pills: [{ value: "HT+", label: "multilayer" }, { value: "1250", label: "MPa" }, { label: "Doğal gradient" }, { label: "Shade accuracy" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/363b392e-4c9b-499b-8590-a5b1f6ad7b85/540/4.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/363b392e-4c9b-499b-8590-a5b1f6ad7b85/540/4.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/363b392e-4c9b-499b-8590-a5b1f6ad7b85/540/4.webp",
+    ],
+    videoHref: "https://www.youtube.com/watch?v=kgyZhW8YC-I",
+    metricTitleHtml: 'Dayanım üstüne <span class="em">doğal renk geçişi.</span>',
+    metricSideHtml: "HT+ Multilayer, yüksek dayanım ihtiyacı olan vakalarda doğal gradient ve shade doğruluğu hedefler.",
+    metrics: [
+      { name: "Yapı", value: "HT+", unit: "ML", tag: "Multilayer", caption: "HT+ materyali doğal shade gradient ile birleştiren multilayer yapı." },
+      { name: "Dayanım", value: "1250", unit: "MPa", tag: "HT+", caption: "HT+ zirkonyanın yüksek dayanım sınıfını koruyan formülasyon." },
+      { name: "Estetik", value: "Doğal", unit: "gradient", tag: "Shade", caption: "Dentin-mine geçişini andıran doğal renk doğruluğu hedefler." },
+    ],
+    specTag: "ARGENZ HT+ MULTILAYER · GRADIENT · HT+",
+    specTitleHtml: 'Katman çizgisiz <span class="em">doğal geçiş.</span>',
+    specDescriptionHtml: "HT+ Multilayer, güç ve shade doğruluğunu doğal gradient ile birleştirerek anterior-posterior estetik dayanım dengesinde kullanılır.",
+    specRows: [
+      { label: "Materyal", value: "HT+ Multilayer" },
+      { label: "Dayanım", value: "1250 MPa" },
+      { label: "Geçiş", value: "Doğal shade gradient" },
+      { label: "Hedef", value: "Dentin-mine uyumu" },
+      { label: "Kategori", value: "Zirkon blok" },
+    ],
+    useCaseSideHtml: "HT+ Multilayer, dayanım korunurken doğal renk geçişi istenen zirkon restorasyonlarda tercih edilir.",
+    useCasePhotos: [
+      { imageIndex: 2, title: "Doğal gradient", text: "Dentin-mine geçişine benzeyen multilayer yapı.", alt: "ArgenZ HT+ Multilayer doğal gradient" },
+      { imageIndex: 3, title: "Shade doğruluğu", text: "Tutarlı renk geçişi ve estetik sonuç hedefi.", alt: "ArgenZ HT+ Multilayer shade doğruluğu" },
+      { imageIndex: 2, title: "Güçlü estetik", text: "HT+ dayanımıyla multilayer görünüm dengesi.", alt: "ArgenZ HT+ Multilayer güçlü estetik" },
+    ],
+    indicationItems: ["Doğal renk geçişi istenen kron ve köprüler", "HT+ dayanım gerektiren estetik vakalar", "Shade accuracy ve gradient beklentisi olan restorasyonlar"],
+    processItems: ["Disk yönü ve nesting pozisyonu", "Renk/kalınlık seçimi", "Sinterleme ve finishing/glaze protokolü"],
+    deviceChips: [{ label: "Dental CAD/CAM freze" }, { label: "Sinterleme fırını" }, { label: "Multilayer nesting" }, { label: "Doğal gradient", highlighted: true }],
+    faqItems: [
+      { question: "HT+ Multilayer farkı nedir?", answerHtml: "HT+ materyal dayanımı ve shade doğruluğunu doğal multilayer renk geçişiyle birleştirir." },
+      { question: "Hangi vakalarda tercih edilir?", answerHtml: "Dayanım korunurken doğal dentin-mine geçişi istenen zirkon restorasyonlarda tercih edilir." },
+      { question: "Nesting neden önemli?", answerHtml: "Multilayer disklerde restorasyonun disk içindeki konumu renk geçişini doğrudan etkiler." },
+    ],
+  },
+];
+
+export const ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG: Record<string, ProductDetailTemplateData> = Object.fromEntries(
+  ZIRCON_BLOCK_CONFIGS.map((config) => [config.slug, zirconBlockDetail(config)]),
+);
+
+const ZIRCON_BLOCK_ALIASES: Record<string, string[]> = {
+  [ARGENZ_ST_MULTILAYER_SLUG]: ["argenz-st-multilayer", "st-multilayer-zirkon", "stml"],
+  [ARGENZ_HT_PLUS_SLUG]: ["argenz-ht-plus", "ht-plus-zirkon", "ht-zirkon-blok"],
+  [ARGENZ_HT_MULTILAYER_SLUG]: ["argenz-ht-multilayer", "ht-plus-multilayer", "ht-multilayer-zirkon", "html"],
+};
+
+type LabProductCategory = {
+  text: string;
+  href: string;
+  label: string;
+  relatedLabel: string;
+  relatedTitleHtml: string;
+  announcementStrong: string;
+  announcementText: string;
+  ecosystemLabel: string;
+  ecosystemTitleHtml: string;
+  ecosystemTextHtml: string;
+  ecosystemChips: string[];
+};
+
+type LabProductConfig = {
+  slug: string;
+  category: LabProductCategory;
+  productText: string;
+  kicker: string;
+  titleHtml: string;
+  leadHtml: string;
+  pills: Array<{ label: string; value?: string }>;
+  images: string[];
+  galleryBadge?: string;
+  metricTitleHtml: string;
+  metricSideHtml: string;
+  metrics: Array<{ name: string; value: string; unit?: string; tag?: string; caption: string }>;
+  specTag: string;
+  specTitleHtml: string;
+  specDescriptionHtml: string;
+  specRows: Array<{ label: string; value: string }>;
+  useCaseSideHtml: string;
+  useCasePhotos: Array<{ imageIndex?: number; title: string; text: string; alt: string }>;
+  useCaseCards: Array<{ eyebrow: string; title: string; items: string[]; note?: string }>;
+  devicesTitle: string;
+  devicesTextHtml: string;
+  deviceChips: Array<{ label: string; highlighted?: boolean }>;
+  faqItems: Array<{ question: string; answerHtml: string }>;
+  videoHref?: string;
+  videoTitleHtml: string;
+  videoSideHtml: string;
+  videoTitle: string;
+  videoText: string;
+};
+
+const WASH_CURE_CATEGORY: LabProductCategory = {
+  text: "Yıkama & Kürleme Cihazları",
+  href: "/yikama-kurleme-cihazlari",
+  label: "Yıkama & Kürleme",
+  relatedLabel: "İlgili Cihazlar",
+  relatedTitleHtml: 'Aynı baskı akışında <span class="em">birlikte çalışanlar.</span>',
+  announcementStrong: "Post-process kontrolü.",
+  announcementText: "Yıkama ve kürleme adımlarını kullandığınız reçineyle birlikte netleştiriyoruz.",
+  ecosystemLabel: "Post-Process Ekosistemi",
+  ecosystemTitleHtml: 'Baskı sonucu, <span class="em">yıkama ve kürlemeyle</span> tamamlanır.',
+  ecosystemTextHtml: "Reçine baskıda nihai mekanik değerler; doğru yıkama, kurutma ve UV kürleme süreciyle korunur. Cihazı reçine ve iş akışınıza göre birlikte konumlandırabiliriz.",
+  ecosystemChips: ["Yıkama", "Kürleme", "365 / 405 nm", "Reçine sonrası işlem"],
+};
+
+const PRINTER_CATEGORY: LabProductCategory = {
+  text: "3D Yazıcılar",
+  href: "/3d-yazicilar",
+  label: "3D Yazıcı",
+  relatedLabel: "İlgili Yazıcılar",
+  relatedTitleHtml: 'Aynı üretim ekosisteminde <span class="em">birlikte değerlendirilenler.</span>',
+  announcementStrong: "Yazıcı seçimi.",
+  announcementText: "Uygulama, materyal ve üretim hacminize göre doğru 3D yazıcıyı birlikte seçiyoruz.",
+  ecosystemLabel: "Baskı Ekosistemi",
+  ecosystemTitleHtml: 'Yazıcı seçimi, <span class="em">materyal ve post-process</span> ile tamamlanır.',
+  ecosystemTextHtml: "Dental ve mücevher üretiminde yazıcı, reçine, yıkama-kürleme ve teknik parametreler birlikte çalışır. Cihaz seçimini üretim hedefinize göre birlikte netleştirebiliriz.",
+  ecosystemChips: ["3D yazıcı", "Reçine", "Yıkama & kürleme", "Parametre desteği"],
+};
+
+const SCANNER_CATEGORY: LabProductCategory = {
+  text: "Masaüstü Tarayıcılar",
+  href: "/masasustu-tarayicilar",
+  label: "Masaüstü Tarayıcı",
+  relatedLabel: "İlgili Tarayıcılar",
+  relatedTitleHtml: 'Aynı laboratuvarda <span class="em">birlikte değerlendirilenler.</span>',
+  announcementStrong: "Tarama doğruluğu.",
+  announcementText: "Laboratuvar üretim hacminize göre doğru masaüstü tarayıcıyı birlikte seçiyoruz.",
+  ecosystemLabel: "Tarama Ekosistemi",
+  ecosystemTitleHtml: 'Dijital iş akışı, <span class="em">doğru taramayla</span> başlar.',
+  ecosystemTextHtml: "Tarama doğruluğu; model, implant bar ve tam çene iş akışlarında CAD/CAM üretimin temelini oluşturur. Tarayıcı seçimini üretim hacmi ve vaka tiplerinize göre birlikte planlayabiliriz.",
+  ecosystemChips: ["Model tarama", "Doku tarama", "CAD/CAM", "Laboratuvar üretimi"],
+};
+
+const FURNACE_CATEGORY: LabProductCategory = {
+  text: "Dental Fırınlar",
+  href: "/dental-firinlar",
+  label: "Dental Fırın",
+  relatedLabel: "İlgili Fırınlar",
+  relatedTitleHtml: 'Aynı laboratuvarda <span class="em">ısı akışını tamamlayanlar.</span>',
+  announcementStrong: "Fırın seçimi.",
+  announcementText: "Zirkon, press veya porselen iş akışınıza göre doğru fırını birlikte seçiyoruz.",
+  ecosystemLabel: "Fırın Ekosistemi",
+  ecosystemTitleHtml: 'Restorasyon kalitesi, <span class="em">kontrollü ısıyla</span> tamamlanır.',
+  ecosystemTextHtml: "Sinterleme, press ve porselen pişiriminde doğru sıcaklık aralığı ve fırın tipi kritik rol oynar. Laboratuvar iş akışınıza göre fırın seçimini birlikte netleştirebiliriz.",
+  ecosystemChips: ["Sinterleme", "Press", "Porselen", "Vakum / sıcaklık kontrolü"],
+};
+
+const TITANIUM_CATEGORY: LabProductCategory = {
+  text: "Titanyum Diskler",
+  href: "/titanyum-diskler",
+  label: "Titanyum Disk",
+  relatedLabel: "İlgili Malzemeler",
+  relatedTitleHtml: 'CAD/CAM iş akışında <span class="em">birlikte kullanılanlar.</span>',
+  announcementStrong: "CAD/CAM materyal seçimi.",
+  announcementText: "Disk ölçüsü ve endikasyon uyumunu frezeleme akışınızla birlikte kontrol ediyoruz.",
+  ecosystemLabel: "CAD/CAM Ekosistemi",
+  ecosystemTitleHtml: 'Titanyum disk, <span class="em">implant üstü işlerde</span> güven verir.',
+  ecosystemTextHtml: "İmplant üstü restorasyonlarda materyal seçimi, disk ölçüsü ve frezeleme stratejisi birlikte değerlendirilmelidir. Uyumlu CAD/CAM akışını satın alma öncesi netleştirebiliriz.",
+  ecosystemChips: ["Grade 5 ELI", "CAD/CAM", "Ø98.5 mm", "İmplant üstü restorasyon"],
+};
+
+const SYSTEM_CATEGORY: LabProductCategory = {
+  text: "Sistemler",
+  href: "/sistemler",
+  label: "Sistem",
+  relatedLabel: "İlgili Sistemler",
+  relatedTitleHtml: 'Kompozit restorasyonda <span class="em">birlikte çalışanlar.</span>',
+  announcementStrong: "Kompozit sistem akışı.",
+  announcementText: "Mufla, kompozit ve baskı akışını tam çene restorasyon hedefinize göre birlikte değerlendiriyoruz.",
+  ecosystemLabel: "Restorasyon Ekosistemi",
+  ecosystemTitleHtml: 'Tam çene kompozit işlerde <span class="em">sistem birlikte çalışır.</span>',
+  ecosystemTextHtml: "Trasformer sistemi; ışık geçirgenliği, stabilite ve kompozit uygulamasını aynı restorasyon akışında birleştirir. Ürün seçimini vaka ve laboratuvar sürecinize göre birlikte netleştirebiliriz.",
+  ecosystemChips: ["Light Glass mufla", "Comp Flow", "Tam çene kompozit", "Işık geçirgenliği"],
+};
+
+function labPhotoSrc(config: LabProductConfig, index: number | undefined) {
+  const usable = config.images.length > 1 ? config.images.slice(1) : config.images;
+  if (!usable.length) return config.images[0] || "";
+  return usable[Math.min(Math.max((index || 1) - 1, 0), usable.length - 1)];
+}
+
+function labRelatedItems(config: LabProductConfig): NonNullable<ProductDetailTemplateData["related"]>["items"] {
+  const related = LAB_PRODUCT_CONFIGS.filter((item) => item.category.href === config.category.href && item.slug !== config.slug).map((item) => ({
+    tag: item.galleryBadge || item.category.label.toLocaleUpperCase("tr"),
+    title: item.productText,
+    descriptionHtml: item.leadHtml,
+    href: `/${item.slug}`,
+    linkText: "İncele",
+    background: "linear-gradient(160deg,#F1F1EC,#fff)",
+  }));
+  return [
+    ...related,
+    {
+      tag: "KATEGORİ",
+      title: config.category.text,
+      descriptionHtml: `${config.category.text} ürünlerini birlikte karşılaştırın.`,
+      href: config.category.href,
+      linkText: "Kategoriye dön",
+      background: "linear-gradient(160deg,#EEF0EA,#fff)",
+    },
+  ].slice(0, 4);
+}
+
+function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
+  const gallery = normalizedGallery(config.images, config.productText);
+  const mainImage = config.images[0] || gallery[0]?.src || "";
+  return {
+    key: config.slug,
+    announcement: {
+      enabled: true,
+      strongText: config.category.announcementStrong,
+      longText: config.category.announcementText,
+      ctaText: "Uyumu kontrol et →",
+      ctaHref: "#satinal",
+    },
+    breadcrumb: {
+      homeText: "Ana sayfa",
+      homeHref: "/",
+      categoryText: config.category.text,
+      categoryHref: config.category.href,
+      productText: config.productText,
+    },
+    hero: {
+      kicker: config.kicker,
+      titleHtml: config.titleHtml,
+      leadHtml: config.leadHtml,
+      pills: config.pills,
+      galleryBadge: config.galleryBadge,
+      gallery,
+      selectedPrefix: "Seçiminiz:",
+      summarySuffix: "— uyumluluk kontrolü ve teknik destek dahil.",
+      buyHrefBase: `/${config.slug}`,
+      whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
+      whatsappText: "WhatsApp'tan sor",
+      addToCartText: "Sepete ekle →",
+      addingToCartText: "Ekleniyor...",
+      outOfStockText: "Stok yok",
+      trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    },
+    ratings: {
+      index: "01",
+      label: "Seçim Kontrolü",
+      titleHtml: 'Doğru ürün, <span class="hl">iş akışına</span> göre seçilir.',
+      sideHtml: config.metricSideHtml,
+      panelTitleHtml: `${config.productText} için <span class="em">kontrol listesi.</span>`,
+      note: "Satın alma öncesi kontrol edilmesi gereken başlıklar.",
+      items: [
+        { descriptionHtml: "Ürün, laboratuvarın mevcut cihaz ve üretim akışıyla <b>uyumlu</b> seçilmelidir." },
+        { descriptionHtml: "Vaka tipi, kapasite ve teknik gereksinimler <b>satın alma öncesi</b> netleştirilmelidir." },
+        { descriptionHtml: "Kurulum veya kullanım sonrası süreç için <b>teknik destek</b> planlanmalıdır." },
+      ],
+    },
+    metrics: {
+      index: "02",
+      label: "Öne Çıkanlar",
+      titleHtml: config.metricTitleHtml,
+      sideHtml: config.metricSideHtml,
+      items: config.metrics,
+    },
+    specHighlight: {
+      tag: config.specTag,
+      titleHtml: config.specTitleHtml,
+      descriptionHtml: config.specDescriptionHtml,
+      ctaText: "Seçenekleri gör →",
+      ctaHref: "#satinal",
+      rows: config.specRows,
+    },
+    useCases: {
+      index: "03",
+      label: "Uygulama & Uyumluluk",
+      titleHtml: 'Nerede kullanılır, <span class="em">neyle çalışır?</span>',
+      sideHtml: config.useCaseSideHtml,
+      photos: config.useCasePhotos.map((photo) => ({
+        src: labPhotoSrc(config, photo.imageIndex),
+        alt: photo.alt,
+        title: photo.title,
+        text: photo.text,
+      })),
+      cards: config.useCaseCards,
+      devices: {
+        eyebrow: "Uyumlu Akış",
+        title: config.devicesTitle,
+        textHtml: config.devicesTextHtml,
+        chips: config.deviceChips,
+      },
+    },
+    ecosystem: {
+      index: "04",
+      label: config.category.ecosystemLabel,
+      titleHtml: config.category.ecosystemTitleHtml,
+      textHtml: config.category.ecosystemTextHtml,
+      chips: config.category.ecosystemChips,
+      buttons: [
+        { text: "Teknik destek al", href: "/pages/iletisim" },
+        { text: "Kategoriye dön", href: config.category.href, variant: "line" },
+      ],
+    },
+    faq: {
+      index: "05",
+      label: "Sık Sorulanlar",
+      titleHtml: `${config.productText} <span class="em">hakkında.</span>`,
+      sideHtml: "Uyumluluk, kapasite ve kullanım akışı satın alma öncesi netleştirilmelidir.",
+      openFirst: true,
+      items: config.faqItems,
+    },
+    video: {
+      index: "06",
+      label: "Videoda Gör",
+      titleHtml: config.videoTitleHtml,
+      sideHtml: config.videoSideHtml,
+      href: config.videoHref || "/pages/iletisim",
+      image: config.videoHref ? youtubePreview(config.videoHref, mainImage) : mainImage,
+      imageAlt: `${config.productText} video ve teknik destek`,
+      title: config.videoTitle,
+      text: config.videoText,
+      meta: config.videoHref ? "Mash Academy · YouTube'da izle" : "3MASH teknik destek",
+    },
+    related: {
+      index: "07",
+      label: config.category.relatedLabel,
+      titleHtml: config.category.relatedTitleHtml,
+      items: labRelatedItems(config),
+    },
+    finalCta: {
+      titleHtml: `${config.productText} için <span class="em">uyumu birlikte kontrol edelim.</span>`,
+      textHtml: "Cihaz, materyal, varyant ve laboratuvar iş akışınızı birlikte değerlendirip doğru seçeneği netleştirelim.",
+      primaryText: "Sepete dön ↑",
+      primaryHref: "#satinal",
+      secondaryText: "Uzmana danış",
+      secondaryHref: "/pages/iletisim",
+    },
+  };
+}
+
+const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
+  {
+    slug: MASH_P16L_PRINTER_SLUG,
+    category: PRINTER_CATEGORY,
+    productText: "MASH P16L",
+    kicker: "MASH P16L · 385 nm 16K Dental 3D Yazıcı",
+    titleHtml: 'Dental üretimde <span class="em">385 nm ve 16K</span> hassasiyet.',
+    leadHtml:
+      "MASH P16L, 385 nm profesyonel UV ışık ve 16K çözünürlük ile dental restorasyonlarda mikron hassasiyeti hedefleyen profesyonel dental 3D yazıcıdır. Maksimum hız ve mükemmel uyumu aynı üretim akışında sunmak için konumlandırılır.",
+    pills: [{ value: "385", label: "nm UV" }, { value: "16K", label: "çözünürlük" }, { label: "Dental restorasyon" }, { label: "MASH" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e47e604b-5052-4935-800f-57d4ead78ced/1080/mash-p16l.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/b92468e1-e607-46f2-b5fd-c7001c066fd8/1080/mash-p16l.webp",
+    ],
+    galleryBadge: "16K",
+    metricTitleHtml: 'Mikron hassasiyet için <span class="em">profesyonel LCD.</span>',
+    metricSideHtml: "P16L, dental restorasyonlarda 385 nm ışık sistemi ve 16K çözünürlükle hassas baskı akışına odaklanır.",
+    metrics: [
+      { name: "Işık", value: "385", unit: "nm", tag: "UV", caption: "Kaynak ürün sayfasında belirtilen profesyonel UV ışık dalga boyu." },
+      { name: "Çözünürlük", value: "16K", unit: "", tag: "LCD", caption: "Dental restorasyonlarda detay ve yüzey kalitesi için yüksek çözünürlük." },
+      { name: "Kullanım", value: "Dental", unit: "restorasyon", tag: "Lab", caption: "Mikron hassasiyeti ve uyum hedefleyen dental üretim akışı." },
+    ],
+    specTag: "MASH P16L · 385 NM · 16K",
+    specTitleHtml: 'Dental restorasyonlarda <span class="em">hız ve uyum.</span>',
+    specDescriptionHtml: "MASH P16L, 385 nm ışık sistemi ve 16K çözünürlükle dental restorasyon üretiminde hassasiyet, hız ve tekrarlanabilir uyum hedefler.",
+    specRows: [
+      { label: "Model", value: "MASH P16L" },
+      { label: "Işık", value: "385 nm" },
+      { label: "Çözünürlük", value: "16K" },
+      { label: "Kullanım", value: "Dental restorasyon" },
+      { label: "Kategori", value: "3D yazıcı" },
+    ],
+    useCaseSideHtml: "Dental restorasyon, reçine üretimi ve hassas laboratuvar baskı akışlarında kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "Dental restorasyon", text: "Mikron hassasiyet isteyen üretimler.", alt: "MASH P16L dental restorasyon" },
+      { imageIndex: 1, title: "16K detay", text: "Yüksek çözünürlüklü LCD baskı akışı.", alt: "MASH P16L 16K baskı" },
+      { imageIndex: 1, title: "385 nm", text: "Dental reçine parametreleriyle uyumlu ışık sistemi.", alt: "MASH P16L 385 nm" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Dental restorasyon baskıları", "Hassas model ve aparey üretimi", "Laboratuvar seri üretim akışı"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Reçine parametresi", "Katman kalınlığı", "Yıkama ve kürleme süreci"] },
+    ],
+    devicesTitle: "Dental reçine ve post-process akışıyla çalışır",
+    devicesTextHtml: "P16L, dental reçineler ve yıkama-kürleme cihazlarıyla birlikte kalibre edildiğinde üretim sonucu daha kontrollü ilerler.",
+    deviceChips: [{ label: "Dental reçineler" }, { label: "Yıkama & kürleme" }, { label: "385 nm" }, { label: "16K", highlighted: true }],
+    faqItems: [
+      { question: "MASH P16L ne için kullanılır?", answerHtml: "Dental restorasyonlarda 385 nm UV ışık ve 16K çözünürlükle hassas reçine baskı üretimi için kullanılır." },
+      { question: "Öne çıkan teknik bilgisi nedir?", answerHtml: "Ürün sayfasında 385 nm profesyonel UV ışık ve 16K çözünürlük vurgulanır." },
+      { question: "Reçine parametresi gerekir mi?", answerHtml: "Evet. Dental reçine, yazıcı ve post-process parametreleri birlikte netleştirilmelidir." },
+    ],
+    videoHref: "https://www.youtube.com/watch?v=dNPHy_sd9aQ",
+    videoTitleHtml: 'P16L üretim akışını <span class="em">videoda görün.</span>',
+    videoSideHtml: "Ürün sayfasındaki video ile MASH P16L ve üretim ekosistemi akışını inceleyin.",
+    videoTitle: "MASH P16L dental 3D yazıcı",
+    videoText: "385 nm, 16K ve dental üretim akışına odaklanan ürün videosu.",
+  },
+  {
+    slug: MASH_CURIE_M1_DENTAL_SLUG,
+    category: PRINTER_CATEGORY,
+    productText: "Mash CURIE M1 Dental",
+    kicker: "Mash CURIE M1 · Dental DLP 3D Yazıcı",
+    titleHtml: 'Klinik hassasiyet isteyen işler için <span class="em">yerli DLP.</span>',
+    leadHtml:
+      "Curie M1, dijital diş hekimliği uygulamaları için geliştirilmiş yüksek hassasiyetli DLP 3D yazıcıdır. Geçici kuron, ortodontik model, gece plağı ve implant analogları gibi klinik hassasiyet gerektiren üretimlerde istikrarlı ve tekrarlanabilir sonuçlar sağlar.",
+    pills: [{ label: "DLP" }, { label: "Dental" }, { label: "Geçici kuron" }, { label: "Ortodontik model" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/302ffc22-20c4-49b7-8d16-b303e079f0cf/1080/1.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/cb34e574-8ace-4eeb-84bd-eb5cd8fc85c2/1080/3.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/37cdcfa4-761f-4f1d-b4da-db077fc1cc91/1080/2.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d00ddb3d-77b0-454b-81e5-ff967b6cb36b/1080/4.webp",
+    ],
+    galleryBadge: "DLP",
+    metricTitleHtml: 'Dental uygulamalar için <span class="em">tekrarlanabilir DLP.</span>',
+    metricSideHtml: "Curie M1 Dental; geçici kuron, ortodontik model, gece plağı ve implant analogları gibi hassas dental işlerde konumlandırılır.",
+    metrics: [
+      { name: "Teknoloji", value: "DLP", unit: "", tag: "Curie", caption: "Kaynak açıklamada DLP teknolojili yüksek hassasiyetli yazıcı olarak geçer." },
+      { name: "Uygulama", value: "Dental", unit: "", tag: "Clinical", caption: "Dijital diş hekimliği uygulamaları için geliştirilmiştir." },
+      { name: "Sonuç", value: "Stabil", unit: "", tag: "Repeat", caption: "İstikrarlı ve tekrarlanabilir sonuçlar hedefler." },
+    ],
+    specTag: "CURIE M1 · DENTAL DLP",
+    specTitleHtml: 'Klinik hassasiyet için <span class="em">dental DLP yazıcı.</span>',
+    specDescriptionHtml: "Curie M1 Dental, dijital diş hekimliği uygulamalarında stabil ve tekrarlanabilir reçine baskı üretimi için geliştirilmiştir.",
+    specRows: [
+      { label: "Model", value: "Curie M1 Dental" },
+      { label: "Teknoloji", value: "DLP" },
+      { label: "Kullanım", value: "Dijital diş hekimliği" },
+      { label: "Uygulamalar", value: "Kuron / model / gece plağı" },
+      { label: "Kategori", value: "3D yazıcı" },
+    ],
+    useCaseSideHtml: "Geçici kuron, ortodontik model, gece plağı ve implant analog üretimlerinde kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "Geçici kuron", text: "Klinik hassasiyet isteyen restorasyonlar.", alt: "Curie M1 geçici kuron" },
+      { imageIndex: 2, title: "Ortodontik model", text: "Tekrarlanabilir dental model üretimi.", alt: "Curie M1 ortodontik model" },
+      { imageIndex: 3, title: "Gece plağı", text: "Splint ve aparey üretim akışı.", alt: "Curie M1 gece plağı" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Geçici kuron üretimi", "Ortodontik model baskıları", "Gece plağı ve implant analogları"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Dental reçine uyumu", "Baskı parametreleri", "Klinik uygulama tipi"] },
+    ],
+    devicesTitle: "Dental reçine ve klinik/lab üretim akışıyla çalışır",
+    devicesTextHtml: "Curie M1 Dental için reçine seçimi, baskı parametresi ve post-process adımları birlikte planlanmalıdır.",
+    deviceChips: [{ label: "Dental reçine" }, { label: "DLP" }, { label: "Klinik hassasiyet" }, { label: "Yerli üretim", highlighted: true }],
+    faqItems: [
+      { question: "Curie M1 Dental ne için kullanılır?", answerHtml: "Geçici kuron, ortodontik model, gece plağı ve implant analogları gibi dental üretimlerde kullanılır." },
+      { question: "Teknolojisi nedir?", answerHtml: "Ürün açıklamasında DLP teknolojili yüksek hassasiyetli 3D yazıcı olarak belirtilir." },
+      { question: "Sonuçlar tekrarlanabilir mi?", answerHtml: "Kaynak açıklamada istikrarlı ve tekrarlanabilir sonuçlar sağladığı vurgulanır." },
+    ],
+    videoTitleHtml: 'Curie M1 Dental için <span class="em">teknik destek alın.</span>',
+    videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için dental uygulama ve reçine uyumunu teknik destekle netleştirin.",
+    videoTitle: "Curie M1 Dental teknik destek",
+    videoText: "Dental reçine, uygulama ve DLP baskı parametreleri için uzman desteği alın.",
+  },
+  {
+    slug: MASH_CURIE_M1_JEWELRY_SLUG,
+    category: PRINTER_CATEGORY,
+    productText: "Mash CURIE M1 Jewelry",
+    kicker: "Mash CURIE M1 · Jewelry DLP 3D Printer",
+    titleHtml: 'Mücevher tasarımında <span class="em">yüksek detay.</span>',
+    leadHtml:
+      "Curie M1 Jewelry, kuyumculuk ve mücevher tasarımı için geliştirilmiş DLP teknolojili 3D yazıcıdır. Yüksek detay hassasiyeti, kusursuz yüzey kalitesi ve geniş malzeme uyumluluğu sunar.",
+    pills: [{ label: "Jewelry" }, { label: "DLP" }, { label: "Yüksek detay" }, { label: "Malzeme uyumu" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/6caed2e3-e939-4ef3-8a80-7b04c5ef7d31/1080/1.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a9dc7080-68cc-4114-aa76-a1e99a81c834/1080/3.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/6fea4dc9-2737-494b-9bc9-100a21ad5824/1080/2.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/7012539d-d394-4b84-b6d3-fcff9d95bc64/1080/4.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a46d0cdc-0a54-4ce8-8bdc-30d0c2c15425/1080/1.webp",
+    ],
+    galleryBadge: "JEWELRY",
+    metricTitleHtml: 'Kuyumculukta <span class="em">detay ve yüzey kalitesi.</span>',
+    metricSideHtml: "Curie M1 Jewelry, mücevher tasarımı ve kuyumculuk uygulamalarında detay hassasiyeti ve malzeme uyumluluğu için konumlandırılır.",
+    metrics: [
+      { name: "Teknoloji", value: "DLP", unit: "", tag: "Jewelry", caption: "Kuyumculuk için geliştirilmiş DLP teknolojili yazıcı." },
+      { name: "Detay", value: "Yüksek", unit: "", tag: "Hassasiyet", caption: "Kaynak açıklamada yüksek detay hassasiyeti vurgulanır." },
+      { name: "Yüzey", value: "Kusursuz", unit: "", tag: "Finish", caption: "Mücevher üretiminde yüzey kalitesi hedefler." },
+    ],
+    specTag: "CURIE M1 · JEWELRY DLP",
+    specTitleHtml: 'Mücevher üretimi için <span class="em">hassas DLP.</span>',
+    specDescriptionHtml: "Curie M1 Jewelry, kuyumculuk ve mücevher tasarımı için yüksek detay, yüzey kalitesi ve malzeme uyumluluğu hedefleyen DLP 3D yazıcıdır.",
+    specRows: [
+      { label: "Model", value: "Curie M1 Jewelry" },
+      { label: "Teknoloji", value: "DLP" },
+      { label: "Kullanım", value: "Kuyumculuk / mücevher" },
+      { label: "Odak", value: "Detay hassasiyeti" },
+      { label: "Kategori", value: "3D yazıcı" },
+    ],
+    useCaseSideHtml: "Mücevher tasarımı, döküm masterı ve yüksek detay isteyen kuyumculuk baskılarında kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "Mücevher tasarımı", text: "Yüksek detay isteyen parçalar.", alt: "Curie M1 Jewelry mücevher tasarımı" },
+      { imageIndex: 2, title: "Yüzey kalitesi", text: "Kusursuz yüzey hedefleyen üretimler.", alt: "Curie M1 Jewelry yüzey kalitesi" },
+      { imageIndex: 3, title: "Malzeme uyumu", text: "Kuyumculuk reçine ve materyal akışı.", alt: "Curie M1 Jewelry malzeme uyumu" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Kuyumculuk model baskıları", "Mücevher tasarımı", "Yüksek detaylı küçük parçalar"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Malzeme uyumu", "Detay ve yüzey hedefi", "Döküm veya üretim akışı"] },
+    ],
+    devicesTitle: "Kuyumculuk reçineleri ve DLP üretim akışıyla çalışır",
+    devicesTextHtml: "Curie M1 Jewelry için materyal, detay hedefi ve döküm/üretim akışı birlikte değerlendirilmelidir.",
+    deviceChips: [{ label: "Jewelry resin" }, { label: "DLP" }, { label: "Yüksek detay" }, { label: "Kuyumculuk", highlighted: true }],
+    faqItems: [
+      { question: "Curie M1 Jewelry ne için kullanılır?", answerHtml: "Kuyumculuk ve mücevher tasarımı için yüksek detaylı DLP 3D baskı üretiminde kullanılır." },
+      { question: "Öne çıkan özellikleri nelerdir?", answerHtml: "Yüksek detay hassasiyeti, kusursuz yüzey kalitesi ve geniş malzeme uyumluluğu vurgulanır." },
+      { question: "Dental Curie M1 ile aynı mı?", answerHtml: "Aynı Curie M1 ailesindedir; Jewelry konfigürasyonu kuyumculuk ve mücevher tasarımı iş akışına odaklanır." },
+    ],
+    videoTitleHtml: 'Curie M1 Jewelry için <span class="em">teknik destek alın.</span>',
+    videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için kuyumculuk materyal uyumunu teknik destekle netleştirin.",
+    videoTitle: "Curie M1 Jewelry teknik destek",
+    videoText: "Mücevher baskı materyali, detay hedefi ve DLP üretim parametreleri için uzman desteği alın.",
+  },
+  {
+    slug: CREALITY_HALOT_SKY_6K_SLUG,
+    category: PRINTER_CATEGORY,
+    productText: "Creality Halot-Sky 6K",
+    kicker: "Creality Halot-Sky 6K · Reçine 3D Yazıcı",
+    titleHtml: 'Halot-Sky 6K, <span class="em">iki cihaz geliştirmesiyle</span> seçilir.',
+    leadHtml:
+      "Creality Halot-Sky 6K, reçine 3D baskı için kullanılan LCD yazıcıdır. 3mash kategori kaynağında Fabrika Çıkışlı Versiyon ve Hassasiyeti Arttırılmış Versiyon seçenekleriyle listelenir.",
+    pills: [{ value: "6K", label: "LCD" }, { label: "Fabrika çıkışlı" }, { label: "Hassasiyeti artırılmış" }, { label: "Creality" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d5482fea-966e-4198-887b-7a1ffd659ed7/1080/creality-halot-sky-cl-89-recine-3d-yaz--8eb5-.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d5482fea-966e-4198-887b-7a1ffd659ed7/1080/creality-halot-sky-cl-89-recine-3d-yaz--8eb5-.webp",
+    ],
+    galleryBadge: "6K",
+    metricTitleHtml: 'Reçine baskıda <span class="em">6K LCD seçenekleri.</span>',
+    metricSideHtml: "Halot-Sky ürün sayfası JSON-LD kaynağı hatalı döndüğü için isim ve görsel verisi 3mash kategori ItemList kaynağından alınmıştır.",
+    metrics: [
+      { name: "Çözünürlük", value: "6K", unit: "", tag: "LCD", caption: "Kategori kaynağında Creality Halot-Sky 6K olarak listelenir." },
+      { name: "Versiyon", value: "2", unit: "seçenek", tag: "Variant", caption: "Fabrika çıkışlı ve hassasiyeti arttırılmış versiyonlar aynı ürün slug'ında listelenir." },
+      { name: "Kullanım", value: "Reçine", unit: "baskı", tag: "LCD", caption: "LCD reçine 3D yazıcı üretim akışı için kullanılır." },
+    ],
+    specTag: "CREALITY HALOT-SKY · 6K",
+    specTitleHtml: 'Fabrika çıkışlı veya <span class="em">hassasiyeti artırılmış.</span>',
+    specDescriptionHtml: "Halot-Sky 6K, kategori kaynağında iki cihaz geliştirmesi seçeneğiyle listelenir. Seçim, kullanılacak reçine ve hassasiyet beklentisine göre netleştirilmelidir.",
+    specRows: [
+      { label: "Model", value: "Creality Halot-Sky 6K" },
+      { label: "Teknoloji", value: "LCD reçine yazıcı" },
+      { label: "Seçenek", value: "Fabrika çıkışlı" },
+      { label: "Seçenek", value: "Hassasiyeti arttırılmış" },
+      { label: "Kategori", value: "3D yazıcı" },
+    ],
+    useCaseSideHtml: "Reçine baskı, dental üretim ve hassasiyet geliştirmesi isteyen LCD yazıcı akışlarında kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "Fabrika çıkışlı", text: "Standart Creality Halot-Sky 6K seçeneği.", alt: "Creality Halot-Sky fabrika çıkışlı" },
+      { imageIndex: 1, title: "Hassasiyet artırımı", text: "3mash kategori kaynağındaki geliştirilmiş seçenek.", alt: "Creality Halot-Sky hassasiyet arttırılmış" },
+      { imageIndex: 1, title: "Reçine baskı", text: "LCD reçine üretim akışı.", alt: "Creality Halot-Sky reçine baskı" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["LCD reçine baskı", "Dental üretim başlangıç akışı", "Hassasiyet geliştirmesi isteyen uygulamalar"] },
+      { eyebrow: "Seçim", title: "Hangi versiyon?", items: ["Fabrika çıkışlı versiyon", "Hassasiyeti arttırılmış versiyon", "Reçine ve uygulama ihtiyacına göre seçim"] },
+    ],
+    devicesTitle: "Reçine, yıkama-kürleme ve teknik kalibrasyonla çalışır",
+    devicesTextHtml: "Halot-Sky 6K seçimi yapılırken cihaz geliştirmesi, reçine parametresi ve post-process akışı birlikte kontrol edilmelidir.",
+    deviceChips: [{ label: "LCD reçine yazıcı" }, { label: "6K" }, { label: "Dental reçine" }, { label: "Hassasiyet seçimi", highlighted: true }],
+    faqItems: [
+      { question: "Halot-Sky 6K kaç seçenekle listeleniyor?", answerHtml: "3mash kategori kaynağında Fabrika Çıkışlı Versiyon ve Hassasiyeti Arttırılmış Versiyon olarak iki seçenekle listelenir." },
+      { question: "Ürün sayfası kaynağında neden detay az?", answerHtml: "Ürün sayfasındaki JSON-LD veri farklı ürünle karışık dönüyor; bu nedenle isim ve görsel kategori kaynağından eşleştirildi." },
+      { question: "Hangi versiyon seçilmeli?", answerHtml: "Kullanılacak reçine, hassasiyet beklentisi ve üretim tipi birlikte değerlendirilerek seçilmelidir." },
+    ],
+    videoTitleHtml: 'Halot-Sky seçimini <span class="em">birlikte netleştirin.</span>',
+    videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için cihaz geliştirmesi ve reçine uyumunu teknik destekle kontrol edin.",
+    videoTitle: "Creality Halot-Sky 6K teknik destek",
+    videoText: "Fabrika çıkışlı veya hassasiyeti artırılmış versiyon seçimi için uzman desteği alın.",
+  },
+  {
+    slug: CREALITY_WASH_CURE_UW03_SLUG,
+    category: WASH_CURE_CATEGORY,
+    productText: "Creality Wash&Cure UW-03",
+    kicker: "Creality Wash&Cure UW-03 · Yıkama ve Kürleme",
+    titleHtml: 'Baskı sonrası süreç <span class="em">tek cihazda</span> tamamlanır.',
+    leadHtml:
+      "Creality Wash&Cure UW-03, 3D yazıcı baskıları için hızlı yıkama ve kürleme makinesidir. Baskıların doğru mekanik değerlere ulaşabilmesi için 365 nm ve 405 nm ışık dalga boyuyla kürleme yapar.",
+    pills: [{ value: "365 / 405", label: "nm UV" }, { label: "Yıkama" }, { label: "Kürleme" }, { label: "Reçine baskı sonrası" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/152789ed-cca6-47ff-8018-c1ee04e645a6/1080/washcure-website-1.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/6b8fae85-844f-4bf6-872b-a7e32c817a0f/1080/washcure-website-5.webp",
+    ],
+    galleryBadge: "UW-03",
+    metricTitleHtml: 'Yıkama ve kürleme <span class="em">aynı akışta.</span>',
+    metricSideHtml: "UW-03, reçine baskı sonrası temizleme ve UV kürleme adımlarını tek cihazla yönetmek için kullanılır.",
+    metrics: [
+      { name: "Dalga Boyu", value: "365", unit: "/ 405 nm", tag: "UV", caption: "Kaynak ürün sayfasında listelenen kürleme dalga boyları." },
+      { name: "Süreç", value: "Wash", unit: "& Cure", tag: "2 aşama", caption: "Baskı sonrası yıkama ve kürleme adımları için tek cihaz." },
+      { name: "Kullanım", value: "Reçine", unit: "baskı", tag: "Post-process", caption: "3D yazıcı reçine baskılarının son işlem süreci için kullanılır." },
+    ],
+    specTag: "CREALITY UW-03 · 365 / 405 NM",
+    specTitleHtml: 'Mekanik değerler için <span class="em">doğru kürleme.</span>',
+    specDescriptionHtml: "UW-03, reçine baskıların yıkama sonrası UV ışıkla kürlenmesi ve nihai mekanik değerlere ulaşması için konumlandırılır.",
+    specRows: [
+      { label: "Cihaz", value: "Wash&Cure UW-03" },
+      { label: "İşlem", value: "Yıkama + kürleme" },
+      { label: "UV", value: "365 nm / 405 nm" },
+      { label: "Kullanım", value: "Reçine 3D baskı" },
+      { label: "Marka", value: "Creality" },
+    ],
+    useCaseSideHtml: "Reçine baskıların temizlenmesi, kurutulması ve UV kürlenmesi için post-process cihazı.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "Yıkama", text: "Baskı üzerindeki reçine kalıntılarını temizleme.", alt: "Creality UW-03 yıkama" },
+      { imageIndex: 2, title: "Kürleme", text: "365 ve 405 nm UV ışıkla son kürleme.", alt: "Creality UW-03 kürleme" },
+      { imageIndex: 2, title: "Post-process", text: "Baskı sonrası mekanik değerleri destekleyen akış.", alt: "Creality UW-03 post-process" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Hangi adımlarda?", items: ["Reçine baskıların yıkanması", "UV ışıkla son kürleme", "Dental reçine baskılarda post-process"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Reçineye uygun süre", "Yıkama sonrası kurutma", "Kürleme dalga boyu ve çevrim"] },
+    ],
+    devicesTitle: "LCD ve DLP reçine baskı akışıyla çalışır",
+    devicesTextHtml: "UW-03, reçine 3D baskıların baskı sonrası yıkama ve kürleme süreci için kullanılır. Reçine tipine göre süre ve işlem akışını birlikte netleştirebiliriz.",
+    deviceChips: [{ label: "LCD reçine yazıcı" }, { label: "DLP reçine yazıcı" }, { label: "Dental reçineler" }, { label: "365 / 405 nm", highlighted: true }],
+    faqItems: [
+      { question: "Creality Wash&Cure UW-03 ne için kullanılır?", answerHtml: "Reçine 3D baskıların yıkanması ve UV ışıkla kürlenmesi için kullanılır." },
+      { question: "Hangi dalga boylarında kürleme yapar?", answerHtml: "Ürün sayfasında 365 nm ve 405 nm ışık dalga boyuyla kürleme bilgisi yer alır." },
+      { question: "Dental reçinelerle kullanılır mı?", answerHtml: "Reçine baskıların post-process sürecinde kullanılır; süre ve işlem akışı reçineye göre netleştirilmelidir." },
+    ],
+    videoHref: "https://www.youtube.com/watch?v=b3cLqCnfKAk",
+    videoTitleHtml: 'UW-03 akışını <span class="em">videoda görün.</span>',
+    videoSideHtml: "Ürün sayfasındaki UW-03 videosu ile yıkama ve kürleme akışını inceleyin.",
+    videoTitle: "Creality Wash&Cure UW-03",
+    videoText: "Reçine baskı sonrası yıkama ve kürleme sürecine odaklanan ürün videosu.",
+  },
+  {
+    slug: THREESHAPE_E2_SLUG,
+    category: SCANNER_CATEGORY,
+    productText: "3Shape E2",
+    kicker: "3Shape E2 · Masaüstü Tarayıcı",
+    titleHtml: 'Üretken laboratuvarlar için <span class="em">doku taraması.</span>',
+    leadHtml:
+      "3Shape E2, diş laboratuvarlarının üretkenliğini artırmak ve üst düzey doku taraması yapmak için tasarlanmış masaüstü tarayıcıdır. Siyah beyaz dokuya sahip olan E2, daha fazla hassasiyet ve doğruluk sunar.",
+    pills: [{ label: "Masaüstü tarayıcı" }, { label: "Doku taraması" }, { label: "Laboratuvar" }, { label: "3Shape" }],
+    images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d2937ac4-16ad-4c18-a76e-24a2b26ced24/1080/e2-new-red-2.webp"],
+    galleryBadge: "3SHAPE",
+    metricTitleHtml: 'Giriş seviyesi değil, <span class="em">üretken tarama.</span>',
+    metricSideHtml: "E2, laboratuvar üretkenliğini artırmak ve doğru model taraması yapmak için konumlandırılır.",
+    metrics: [
+      { name: "Tarama", value: "Doku", unit: "", tag: "E2", caption: "Ürün sayfasında üst düzey doku taraması vurgulanır." },
+      { name: "Kullanım", value: "Lab", unit: "", tag: "Dental", caption: "Diş laboratuvarları için masaüstü tarayıcı." },
+      { name: "Odak", value: "Doğru", unit: "tarama", tag: "3Shape", caption: "Her vaka için hassasiyet ve doğruluk hedefler." },
+    ],
+    specTag: "3SHAPE E2 · DOKU TARAMASI",
+    specTitleHtml: 'Daha doğru model için <span class="em">stabil tarama.</span>',
+    specDescriptionHtml: "3Shape E2, laboratuvar model ve doku tarama işlerinde üretkenliği artırmaya odaklanan masaüstü tarayıcıdır.",
+    specRows: [
+      { label: "Marka", value: "3Shape" },
+      { label: "Model", value: "E2" },
+      { label: "Tip", value: "Masaüstü tarayıcı" },
+      { label: "Odak", value: "Doku taraması" },
+      { label: "Kullanım", value: "Dental laboratuvar" },
+    ],
+    useCaseSideHtml: "Model ve doku tarama akışında laboratuvar üretkenliğini artırmak için kullanılır.",
+    useCasePhotos: [
+      { title: "Model tarama", text: "Laboratuvar model tarama akışları.", alt: "3Shape E2 model tarama" },
+      { title: "Doku tarama", text: "Doku detaylarının dijital ortama aktarılması.", alt: "3Shape E2 doku tarama" },
+      { title: "CAD/CAM giriş", text: "Tarama datasından dijital tasarım akışı.", alt: "3Shape E2 CAD CAM" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Dental laboratuvar model taraması", "Doku tarama işleri", "CAD/CAM üretim başlangıcı"] },
+      { eyebrow: "Seçim", title: "Kimler için?", items: ["Üretkenliği artırmak isteyen laboratuvarlar", "Doğru ve stabil tarama isteyen ekipler", "3Shape ekosistemine geçiş yapanlar"] },
+    ],
+    devicesTitle: "Dental laboratuvar CAD/CAM akışıyla çalışır",
+    devicesTextHtml: "Tarayıcı verisi, tasarım ve üretim adımlarına temel oluşturur. Mevcut CAD/CAM sürecinizle uyumu birlikte değerlendirebiliriz.",
+    deviceChips: [{ label: "3Shape CAD" }, { label: "Model tarama" }, { label: "Doku tarama" }, { label: "Laboratuvar", highlighted: true }],
+    faqItems: [
+      { question: "3Shape E2 ne için kullanılır?", answerHtml: "Dental laboratuvarlarda model ve doku taraması için kullanılan masaüstü tarayıcıdır." },
+      { question: "E2'nin öne çıkan tarafı nedir?", answerHtml: "Ürün sayfasında üretkenlik, üst düzey doku taraması, hassasiyet ve doğruluk vurgulanır." },
+      { question: "Hangi iş akışına bağlanır?", answerHtml: "Tarama datası CAD/CAM tasarım ve üretim iş akışının başlangıcıdır." },
+    ],
+    videoHref: "https://www.youtube.com/watch?v=6IUVgU336Qc",
+    videoTitleHtml: '3Shape tarama akışını <span class="em">videoda görün.</span>',
+    videoSideHtml: "E serisi masaüstü tarayıcı kullanımını ürün sayfasındaki video üzerinden inceleyin.",
+    videoTitle: "3Shape E2 masaüstü tarayıcı",
+    videoText: "Laboratuvar tarama ve dijital iş akışı videosu.",
+  },
+  {
+    slug: THREESHAPE_E3_SLUG,
+    category: SCANNER_CATEGORY,
+    productText: "3Shape E3",
+    kicker: "3Shape E3 · İmplant Bar Doğruluğu",
+    titleHtml: 'İmplant bar işleri için <span class="em">yüksek performans.</span>',
+    leadHtml:
+      "3Shape E3, uygun maliyetle yüksek performans sunan masaüstü tarayıcıdır. Özellikle implant bar doğruluğu için tasarlanmış olan E3, diş laboratuvarlarının ihtiyaçlarını karşılamak üzere üretilmiştir.",
+    pills: [{ label: "İmplant bar" }, { label: "Yüksek performans" }, { label: "Masaüstü tarayıcı" }, { label: "3Shape" }],
+    images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/0adf4e0d-a7a0-48ef-b2f2-65b9c5719703/1080/e3-new-red.webp"],
+    galleryBadge: "3SHAPE",
+    metricTitleHtml: 'Bar doğruluğu için <span class="em">performans dengesi.</span>',
+    metricSideHtml: "E3, implant bar doğruluğu ve yüksek performans ihtiyacını uygun maliyetle karşılamak için konumlandırılır.",
+    metrics: [
+      { name: "Odak", value: "Bar", unit: "doğruluğu", tag: "Implant", caption: "Ürün sayfasında implant bar doğruluğu özellikle vurgulanır." },
+      { name: "Performans", value: "Yüksek", unit: "", tag: "E3", caption: "Uygun maliyetle yüksek performans hedefler." },
+      { name: "Kullanım", value: "Lab", unit: "", tag: "Dental", caption: "Dental laboratuvar ihtiyaçları için tasarlanmıştır." },
+    ],
+    specTag: "3SHAPE E3 · IMPLANT BAR",
+    specTitleHtml: 'İmplant bar doğruluğu için <span class="em">doğru tarayıcı.</span>',
+    specDescriptionHtml: "3Shape E3, implant bar doğruluğu ve yüksek performans gerektiren dental laboratuvar taramalarında kullanılır.",
+    specRows: [
+      { label: "Marka", value: "3Shape" },
+      { label: "Model", value: "E3" },
+      { label: "Tip", value: "Masaüstü tarayıcı" },
+      { label: "Odak", value: "İmplant bar doğruluğu" },
+      { label: "Kullanım", value: "Dental laboratuvar" },
+    ],
+    useCaseSideHtml: "İmplant bar doğruluğu, model tarama ve CAD/CAM hazırlık işlerinde kullanılır.",
+    useCasePhotos: [
+      { title: "İmplant bar", text: "Bar doğruluğu gereken laboratuvar işleri.", alt: "3Shape E3 implant bar" },
+      { title: "Model tarama", text: "Dental model taramalarında stabil veri.", alt: "3Shape E3 model tarama" },
+      { title: "CAD/CAM", text: "Dijital tasarım ve üretim akışına hazırlık.", alt: "3Shape E3 CAD CAM" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["İmplant bar işleri", "Laboratuvar model taraması", "CAD/CAM üretim hazırlığı"] },
+      { eyebrow: "Seçim", title: "Kimler için?", items: ["İmplant bar doğruluğu isteyen laboratuvarlar", "Yüksek performansı uygun maliyetle arayan ekipler", "3Shape E serisi akışını kullananlar"] },
+    ],
+    devicesTitle: "İmplant ve CAD/CAM laboratuvar akışıyla çalışır",
+    devicesTextHtml: "E3, implant bar doğruluğu gerektiren dijital işlerde tarama verisini CAD/CAM sürecine hazırlar.",
+    deviceChips: [{ label: "İmplant bar" }, { label: "Dental model" }, { label: "3Shape CAD" }, { label: "Yüksek performans", highlighted: true }],
+    faqItems: [
+      { question: "3Shape E3 hangi işlerde öne çıkar?", answerHtml: "Ürün sayfasında özellikle implant bar doğruluğu için tasarlandığı belirtilir." },
+      { question: "E3 laboratuvar için mi?", answerHtml: "Evet. Dental laboratuvar ihtiyaçlarını karşılamak üzere konumlandırılmış masaüstü tarayıcıdır." },
+      { question: "E2 ile farkı nedir?", answerHtml: "E3 tarafında implant bar doğruluğu ve yüksek performans vurgusu öne çıkar." },
+    ],
+    videoHref: "https://www.youtube.com/watch?v=6IUVgU336Qc",
+    videoTitleHtml: 'E3 tarama akışını <span class="em">videoda görün.</span>',
+    videoSideHtml: "3Shape masaüstü tarayıcı videosu ile E serisi iş akışını inceleyin.",
+    videoTitle: "3Shape E3 masaüstü tarayıcı",
+    videoText: "İmplant bar ve laboratuvar tarama akışına odaklanan video.",
+  },
+  {
+    slug: THREESHAPE_E4_SLUG,
+    category: SCANNER_CATEGORY,
+    productText: "3Shape E4",
+    kicker: "3Shape E4 · Hız ve Hassasiyet",
+    titleHtml: 'Dört kamera ile <span class="em">en güçlü E serisi.</span>',
+    leadHtml:
+      "3Shape E4, iki kat hız, iki kat hassasiyet ve dört kamera ile E serisinin en güçlü cihazıdır. 4 μm hassasiyet ve 9 saniye tam çene tarama hızıyla yüksek hacimli laboratuvar iş akışları için konumlandırılır.",
+    pills: [{ value: "4", label: "μm hassasiyet" }, { value: "9 sn", label: "tam çene" }, { value: "4", label: "kamera" }, { label: "E serisi" }],
+    images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/f6ee476e-9d5a-4744-b561-b2990f9db4ae/1080/4-1550872.webp"],
+    galleryBadge: "3SHAPE",
+    metricTitleHtml: 'Hız ve hassasiyet <span class="em">aynı cihazda.</span>',
+    metricSideHtml: "E4, E serisinin en güçlü cihazı olarak hızlı tam çene tarama ve yüksek hassasiyet gerektiren üretimlerde öne çıkar.",
+    metrics: [
+      { name: "Hassasiyet", value: "4", unit: "μm", tag: "E4", caption: "Ürün sayfasında listelenen hassasiyet değeri." },
+      { name: "Tam Çene", value: "9", unit: "sn", tag: "Scan", caption: "Kaynakta belirtilen tam çene tarama hızı." },
+      { name: "Kamera", value: "4", unit: "adet", tag: "E serisi", caption: "Dört kamera ile E serisinin en güçlü cihazı olarak konumlandırılır." },
+    ],
+    specTag: "3SHAPE E4 · 4 μM · 9 SN",
+    specTitleHtml: 'Yüksek hacimli lab için <span class="em">hızlı tarama.</span>',
+    specDescriptionHtml: "E4; dört kamera, 4 μm hassasiyet ve 9 saniye tam çene tarama hızıyla hızlı ve hassas laboratuvar taramalarına odaklanır.",
+    specRows: [
+      { label: "Marka", value: "3Shape" },
+      { label: "Model", value: "E4" },
+      { label: "Hassasiyet", value: "4 μm" },
+      { label: "Tam çene", value: "9 sn" },
+      { label: "Kamera", value: "4" },
+    ],
+    useCaseSideHtml: "Hızlı tam çene tarama, yüksek hassasiyet ve yoğun laboratuvar üretiminde kullanılır.",
+    useCasePhotos: [
+      { title: "Tam çene", text: "9 saniye tam çene tarama bilgisiyle hızlı akış.", alt: "3Shape E4 tam çene tarama" },
+      { title: "Hassas tarama", text: "4 μm hassasiyet gerektiren işler.", alt: "3Shape E4 hassas tarama" },
+      { title: "Yoğun lab", text: "Yüksek hacimli laboratuvar üretimi.", alt: "3Shape E4 laboratuvar üretimi" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede öne çıkar?", items: ["Tam çene tarama", "Yüksek hacimli laboratuvar akışları", "Hız ve hassasiyet isteyen CAD/CAM süreçleri"] },
+      { eyebrow: "Seçim", title: "Kimler için?", items: ["E serisinin en güçlü cihazını isteyen laboratuvarlar", "Hızlı tarama ihtiyacı olan ekipler", "4 μm hassasiyet hedefleyen işler"] },
+    ],
+    devicesTitle: "Yüksek hacimli dental CAD/CAM akışıyla çalışır",
+    devicesTextHtml: "E4, hızlı tarama datasını tasarım ve üretim sürecine taşır. Laboratuvar kapasitenize göre E2/E3/E4 seçimini birlikte netleştirebiliriz.",
+    deviceChips: [{ label: "Tam çene tarama" }, { label: "4 kamera" }, { label: "3Shape CAD" }, { label: "4 μm", highlighted: true }],
+    faqItems: [
+      { question: "3Shape E4 neden öne çıkar?", answerHtml: "Ürün sayfasında iki kat hız, iki kat hassasiyet, dört kamera, 4 μm hassasiyet ve 9 sn tam çene tarama bilgileri yer alır." },
+      { question: "E4 hangi laboratuvarlar için uygundur?", answerHtml: "Hızlı ve hassas tarama ihtiyacı yüksek olan dental laboratuvarlar için konumlandırılır." },
+      { question: "E serisinin en güçlü cihazı mı?", answerHtml: "Ürün açıklamasında E serisinin en güçlü cihazı olarak belirtilir." },
+    ],
+    videoHref: "https://www.youtube.com/watch?v=-gsABaM06sg",
+    videoTitleHtml: 'E4 hızını <span class="em">videoda görün.</span>',
+    videoSideHtml: "3Shape E4 ürün sayfasındaki video ile hızlı ve hassas tarama akışını inceleyin.",
+    videoTitle: "3Shape E4 masaüstü tarayıcı",
+    videoText: "E4 hız, hassasiyet ve tam çene tarama akışı videosu.",
+  },
+  {
+    slug: NABERTHEM_LHT_02_17_LB_SPEED_SLUG,
+    category: FURNACE_CATEGORY,
+    productText: "Naberthem LHT 02/17 LB Speed",
+    kicker: "Naberthem LHT 02/17 LB Speed · Zirkon Sinterleme",
+    titleHtml: 'Yarı saydam zirkonya için <span class="em">1650 °C</span> fırın.',
+    leadHtml:
+      "Naberthem LHT 02/17 LB Speed, maksimum 1650 °C sıcaklığı ve geniş fırın odası sayesinde yarı saydam zirkonyanın sinterlenmesi için uyumludur. Elektrikli kaldırma masası yüksek sıcaklık fırınının yüklenmesini kolaylaştırır.",
+    pills: [{ value: "1650 °C", label: "maksimum" }, { label: "Zirkonya sinterleme" }, { label: "Geniş fırın odası" }, { label: "Kaldırma masası" }],
+    images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/c72ba72c-c628-46f6-ac9d-863e3ccb6d8a/1080/firinlar2.webp"],
+    galleryBadge: "1650 °C",
+    metricTitleHtml: 'Yüksek sıcaklıkta <span class="em">zirkon sinterleme.</span>',
+    metricSideHtml: "LHT 02/17 LB Speed, yarı saydam zirkonyanın sinterlenmesi ve geniş fırın odası ihtiyacı için konumlandırılır.",
+    metrics: [
+      { name: "Maks. Sıcaklık", value: "1650", unit: "°C", tag: "Speed", caption: "Ürün sayfasında belirtilen maksimum sıcaklık." },
+      { name: "Uygulama", value: "Zirkon", unit: "sinter", tag: "Dental", caption: "Yarı saydam zirkonya sinterleme için kullanılır." },
+      { name: "Yükleme", value: "Lift", unit: "table", tag: "Elektrikli", caption: "Elektrikle çalışan kaldırma masası yüklemeyi kolaylaştırır." },
+    ],
+    specTag: "LHT 02/17 LB SPEED · 1650 °C",
+    specTitleHtml: 'Geniş fırın odasıyla <span class="em">sinterleme kontrolü.</span>',
+    specDescriptionHtml: "LHT 02/17 LB Speed, yüksek sıcaklık ve geniş fırın odası gerektiren zirkonya sinterleme iş akışları için kullanılır.",
+    specRows: [
+      { label: "Model", value: "LHT 02/17 LB Speed" },
+      { label: "Maksimum", value: "1650 °C" },
+      { label: "Uygulama", value: "Yarı saydam zirkonya" },
+      { label: "Yükleme", value: "Elektrikli kaldırma masası" },
+      { label: "Kategori", value: "Dental fırın" },
+    ],
+    useCaseSideHtml: "Zirkonya sinterleme ve yüksek sıcaklık gerektiren dental laboratuvar işlerinde kullanılır.",
+    useCasePhotos: [
+      { title: "Zirkon sinterleme", text: "Yarı saydam zirkonya için yüksek sıcaklık.", alt: "LHT 02/17 zirkon sinterleme" },
+      { title: "Geniş oda", text: "Laboratuvar yükleme hacmini destekleyen yapı.", alt: "LHT 02/17 geniş fırın odası" },
+      { title: "Lift table", text: "Elektrikli kaldırma masasıyla kolay yükleme.", alt: "LHT 02/17 kaldırma masası" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Yarı saydam zirkonya sinterleme", "Yüksek sıcaklık dental laboratuvar işleri", "Geniş fırın odası isteyen akışlar"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Sinterleme protokolü", "Fırın hacmi ve yükleme ihtiyacı", "Zirkon blok iş akışı"] },
+    ],
+    devicesTitle: "Zirkon blok ve sinterleme laboratuvar akışıyla çalışır",
+    devicesTextHtml: "Zirkon blok, CAM frezeleme ve sinterleme protokolü birlikte değerlendirilmelidir. Fırın seçimini zirkon kullanım hacminize göre netleştirebiliriz.",
+    deviceChips: [{ label: "Zirkon blok" }, { label: "Sinterleme" }, { label: "1650 °C" }, { label: "Dental lab", highlighted: true }],
+    faqItems: [
+      { question: "LHT 02/17 LB Speed ne için kullanılır?", answerHtml: "Yarı saydam zirkonyanın sinterlenmesi için kullanılan yüksek sıcaklık fırınıdır." },
+      { question: "Maksimum sıcaklığı nedir?", answerHtml: "Ürün sayfasında maksimum 1650 °C sıcaklık bilgisi yer alır." },
+      { question: "Yükleme yapısı nasıldır?", answerHtml: "Elektrikle çalışan kaldırma masası yüksek sıcaklık fırınının yüklenmesini kolaylaştırır." },
+    ],
+    videoTitleHtml: 'Sinterleme akışını <span class="em">birlikte planlayın.</span>',
+    videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için teknik destek üzerinden fırın seçimini netleştirebilirsiniz.",
+    videoTitle: "LHT 02/17 LB Speed teknik destek",
+    videoText: "Zirkon sinterleme, fırın hacmi ve sıcaklık akışı için uzman desteği alın.",
+  },
+  {
+    slug: NABERTHEM_LHT_01_16_TURBO_FIRE_SLUG,
+    category: FURNACE_CATEGORY,
+    productText: "Naberthem LHT 01/16 Turbo Fire",
+    kicker: "Naberthem LHT 01/16 Turbo Fire · Hızlı Sinterleme",
+    titleHtml: 'Tek kronlarda <span class="em">1 saatlik</span> hızlı sinterleme.',
+    leadHtml:
+      "LHT 01/16 Turbo Fire, yarı saydam zirkonyum oksitten yapılmış 1-3 tek kronun maksimum 1600 °C sıcaklığa kadar hızlı sinterlenmesi için geliştirilmiştir. Tüm sinterleme işlemi bir saat içinde tamamlanabilir.",
+    pills: [{ value: "1600 °C", label: "maksimum" }, { value: "1 saat", label: "sinterleme" }, { value: "1-3", label: "tek kron" }, { label: "Turbo Fire" }],
+    images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/cef47053-2e60-4139-9089-9aadb5855033/1080/firinlar3.webp"],
+    galleryBadge: "TURBO",
+    metricTitleHtml: 'Hızlı sinterleme için <span class="em">kompakt güç.</span>',
+    metricSideHtml: "LHT 01/16 Turbo Fire, 1-3 tek kronluk hızlı zirkonyum oksit sinterleme akışı için geliştirilmiştir.",
+    metrics: [
+      { name: "Maks. Sıcaklık", value: "1600", unit: "°C", tag: "Turbo", caption: "Ürün sayfasında belirtilen maksimum sıcaklık." },
+      { name: "Sinterleme", value: "1", unit: "saat", tag: "Hızlı", caption: "Tüm sinterleme işlemi bir saat içinde tamamlanabilir." },
+      { name: "Kapasite", value: "1-3", unit: "tek kron", tag: "Zirkon", caption: "Yarı saydam zirkonyum oksitten tek kronlar için geliştirilmiştir." },
+    ],
+    specTag: "LHT 01/16 TURBO FIRE · 1600 °C",
+    specTitleHtml: 'Hızlı tek kron sinterleme için <span class="em">Turbo Fire.</span>',
+    specDescriptionHtml: "LHT 01/16 Turbo Fire, 1-3 tek kronluk hızlı zirkonyum oksit sinterleme döngüsünü bir saat içinde tamamlayabilen fırındır.",
+    specRows: [
+      { label: "Model", value: "LHT 01/16 Turbo Fire" },
+      { label: "Maksimum", value: "1600 °C" },
+      { label: "Kapasite", value: "1-3 tek kron" },
+      { label: "Süreç", value: "1 saat içinde sinterleme" },
+      { label: "Kategori", value: "Dental fırın" },
+    ],
+    useCaseSideHtml: "Hızlı tek kron sinterleme ve küçük vaka akışları için kullanılır.",
+    useCasePhotos: [
+      { title: "Tek kron", text: "1-3 tek kronluk hızlı zirkon akışı.", alt: "LHT 01/16 tek kron sinterleme" },
+      { title: "Hızlı çevrim", text: "Bir saat içinde tamamlanabilen sinterleme.", alt: "LHT 01/16 hızlı çevrim" },
+      { title: "Zirkonyum oksit", text: "Yarı saydam zirkonyum oksit işler.", alt: "LHT 01/16 zirkonyum oksit" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["1-3 tek kron sinterleme", "Hızlı küçük vaka akışı", "Yarı saydam zirkonyum oksit"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Sinterleme süresi", "Maksimum sıcaklık ihtiyacı", "Vaka hacmi ve fırın seçimi"] },
+    ],
+    devicesTitle: "Zirkon tek kron üretim akışıyla çalışır",
+    devicesTextHtml: "Küçük vaka ve hızlı sinterleme ihtiyacı için zirkon blok, frezeleme ve fırın çevrimi birlikte planlanmalıdır.",
+    deviceChips: [{ label: "Tek kron" }, { label: "Zirkonyum oksit" }, { label: "1600 °C" }, { label: "1 saat", highlighted: true }],
+    faqItems: [
+      { question: "Turbo Fire ne için geliştirilmiştir?", answerHtml: "1-3 tek kronun maksimum 1600 °C'ye kadar hızlı sinterlenmesi için geliştirilmiştir." },
+      { question: "Sinterleme ne kadar sürer?", answerHtml: "Ürün açıklamasında tüm sinterleme işleminin bir saat içinde tamamlanabileceği belirtilir." },
+      { question: "Hangi materyal için idealdir?", answerHtml: "Yarı saydam zirkonyum oksit için konumlandırılır." },
+    ],
+    videoTitleHtml: 'Hızlı sinterleme için <span class="em">uzmana danışın.</span>',
+    videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için fırın seçimini teknik destekle netleştirin.",
+    videoTitle: "LHT 01/16 Turbo Fire teknik destek",
+    videoText: "Hızlı sinterleme, vaka hacmi ve zirkon iş akışı için uzman desteği alın.",
+  },
+  {
+    slug: NABERTHEM_VL_01_12_LB_PRESS_SLUG,
+    category: FURNACE_CATEGORY,
+    productText: "Naberthem VL 01/12 LB Pres Fırını",
+    kicker: "Naberthem VL 01/12 LB · Pres Fırını",
+    titleHtml: 'Press seramik işleri için <span class="em">vakumlu fırın.</span>',
+    leadHtml:
+      "VL 01/12 LB Pres Fırını, dental laboratuvarlarda press seramik ve kontrollü ısı gerektiren restorasyon akışları için konumlandırılır. Kaldırma tablalı yapı yükleme ve işlem kontrolünü kolaylaştırır.",
+    pills: [{ label: "Pres fırını" }, { label: "Kaldırma tabla" }, { label: "Dental laboratuvar" }, { label: "Naberthem" }],
+    images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/4112bcc1-a205-4063-bb3b-c52112d8dba2/1080/firinlar4.webp"],
+    galleryBadge: "PRESS",
+    metricTitleHtml: 'Press işler için <span class="em">kontrollü ısı.</span>',
+    metricSideHtml: "Pres fırını seçimi, dental laboratuvarın press seramik ve restorasyon akışına göre netleştirilmelidir.",
+    metrics: [
+      { name: "Uygulama", value: "Press", unit: "", tag: "Dental", caption: "Press seramik restorasyon akışı için konumlandırılır." },
+      { name: "Yapı", value: "Lift", unit: "table", tag: "LB", caption: "Kaldırma tablalı yapı yükleme sürecini kolaylaştırır." },
+      { name: "Kullanım", value: "Lab", unit: "", tag: "Fırın", caption: "Dental laboratuvar ısı işlem akışları için kullanılır." },
+    ],
+    specTag: "VL 01/12 LB · PRESS",
+    specTitleHtml: 'Press restorasyonlarda <span class="em">kontrollü çevrim.</span>',
+    specDescriptionHtml: "VL 01/12 LB Pres Fırını, press seramik restorasyon işlerinde kontrollü fırın çevrimi için kullanılan dental laboratuvar fırınıdır.",
+    specRows: [
+      { label: "Model", value: "VL 01/12 LB" },
+      { label: "Tip", value: "Pres fırını" },
+      { label: "Yapı", value: "Kaldırma tablalı" },
+      { label: "Kullanım", value: "Press seramik" },
+      { label: "Kategori", value: "Dental fırın" },
+    ],
+    useCaseSideHtml: "Press seramik ve dental laboratuvar fırınlama akışlarında kullanılır.",
+    useCasePhotos: [
+      { title: "Press seramik", text: "Press restorasyon fırınlama işleri.", alt: "VL 01/12 press seramik" },
+      { title: "Kaldırma tabla", text: "Yükleme ve işlem kontrolünü kolaylaştıran yapı.", alt: "VL 01/12 kaldırma tabla" },
+      { title: "Laboratuvar", text: "Dental restorasyon ısı işlem akışı.", alt: "VL 01/12 dental laboratuvar" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Press seramik restorasyonlar", "Dental laboratuvar fırın çevrimleri", "Kontrollü ısı işlem akışları"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Press materyal uyumu", "Fırın çevrimi", "Laboratuvar kapasitesi"] },
+    ],
+    devicesTitle: "Press seramik laboratuvar akışıyla çalışır",
+    devicesTextHtml: "Press materyal, fırın çevrimi ve laboratuvar üretim hacmi birlikte değerlendirilmelidir.",
+    deviceChips: [{ label: "Press seramik" }, { label: "Kaldırma tabla" }, { label: "Dental lab" }, { label: "Fırın çevrimi", highlighted: true }],
+    faqItems: [
+      { question: "VL 01/12 LB Pres Fırını ne için kullanılır?", answerHtml: "Dental laboratuvarlarda press seramik restorasyonların fırınlanması için konumlandırılır." },
+      { question: "Kaldırma tablalı yapı ne sağlar?", answerHtml: "Yükleme ve işlem kontrolünü kolaylaştırır." },
+      { question: "Satın alma öncesi ne kontrol edilmeli?", answerHtml: "Press materyal, fırın çevrimi ve laboratuvar kapasitesi birlikte değerlendirilmelidir." },
+    ],
+    videoTitleHtml: 'Press fırın seçimini <span class="em">birlikte netleştirin.</span>',
+    videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için teknik destek üzerinden fırın uyumunu kontrol edebilirsiniz.",
+    videoTitle: "VL 01/12 LB Pres Fırını teknik destek",
+    videoText: "Press seramik iş akışı ve fırın seçimi için uzman desteği alın.",
+  },
+  {
+    slug: NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG,
+    category: FURNACE_CATEGORY,
+    productText: "Naberthem VL 01/12 LB Porselen Fırını",
+    kicker: "Naberthem VL 01/12 LB · Vakumlu Porselen Fırını",
+    titleHtml: 'Porselen kaplamada <span class="em">vakumlu pişirim.</span>',
+    leadHtml:
+      "Naberthem VL 01/12 LB Porselen Fırını, geleneksel seramik kaplamaların normal atmosfer veya vakum altında pişirilmesi için idealdir. Fırın odasının çepeçevre ısıtılması eşit sıcaklık homojenliği ve hızlı ısınma süreleri sağlar.",
+    pills: [{ label: "Vakumlu porselen" }, { label: "Normal atmosfer" }, { label: "Çepeçevre ısıtma" }, { label: "Hızlı ısınma" }],
+    images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/3bfdd659-7c98-4939-8573-8fecb1408edc/1080/washcure-website-kopyasi.webp"],
+    galleryBadge: "VACUUM",
+    metricTitleHtml: 'Porselende <span class="em">homojen ısı.</span>',
+    metricSideHtml: "VL 01/12 LB Porselen Fırını, seramik kaplamaların normal atmosfer veya vakum altında pişirilmesi için kullanılır.",
+    metrics: [
+      { name: "Atmosfer", value: "Vakum", unit: "/ normal", tag: "Porselen", caption: "Ürün sayfasında normal atmosfer veya vakum altında pişirim bilgisi yer alır." },
+      { name: "Isıtma", value: "360", unit: "° çevre", tag: "Homojen", caption: "Fırın odasının çepeçevre ısıtılması eşit sıcaklık dağılımını destekler." },
+      { name: "Süreç", value: "Hızlı", unit: "ısınma", tag: "VL", caption: "Kaynak açıklamada hızlı ısınma süreleri vurgulanır." },
+    ],
+    specTag: "VL 01/12 LB · PORSELEN",
+    specTitleHtml: 'Seramik kaplamalar için <span class="em">vakum kontrolü.</span>',
+    specDescriptionHtml: "VL 01/12 LB Porselen Fırını, geleneksel seramik kaplamaların normal atmosfer veya vakum altında pişirilmesi için kullanılır.",
+    specRows: [
+      { label: "Model", value: "VL 01/12 LB" },
+      { label: "Tip", value: "Porselen fırını" },
+      { label: "Atmosfer", value: "Normal / vakum" },
+      { label: "Isıtma", value: "Çepeçevre fırın odası" },
+      { label: "Kategori", value: "Dental fırın" },
+    ],
+    useCaseSideHtml: "Seramik kaplama, porselen pişirim ve vakumlu dental fırınlama işlerinde kullanılır.",
+    useCasePhotos: [
+      { title: "Porselen pişirim", text: "Geleneksel seramik kaplamalar.", alt: "VL 01/12 porselen pişirim" },
+      { title: "Vakum", text: "Vakum altında kontrollü fırınlama.", alt: "VL 01/12 vakumlu fırın" },
+      { title: "Homojen ısı", text: "Çepeçevre ısıtılan fırın odası.", alt: "VL 01/12 homojen sıcaklık" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Seramik kaplama pişirimi", "Vakumlu porselen fırınlama", "Dental laboratuvar restorasyon işleri"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Vakum ihtiyacı", "Porselen materyal çevrimi", "Fırın ısınma ve homojenlik beklentisi"] },
+    ],
+    devicesTitle: "Porselen ve seramik dental laboratuvar akışıyla çalışır",
+    devicesTextHtml: "Seramik kaplama materyali, vakum ihtiyacı ve fırın çevrimi birlikte değerlendirilmelidir.",
+    deviceChips: [{ label: "Porselen" }, { label: "Vakum" }, { label: "Seramik kaplama" }, { label: "Homojen ısı", highlighted: true }],
+    faqItems: [
+      { question: "VL 01/12 LB Porselen Fırını ne için kullanılır?", answerHtml: "Geleneksel seramik kaplamaların normal atmosfer veya vakum altında pişirilmesi için kullanılır." },
+      { question: "Isıtma yapısı nasıldır?", answerHtml: "Fırın odasının çepeçevre ısıtılması eşit sıcaklık homojenliğini destekler." },
+      { question: "Hızlı ısınır mı?", answerHtml: "Ürün açıklamasında çok hızlı ısınma süreleri sağladığı belirtilir." },
+    ],
+    videoTitleHtml: 'Porselen fırın seçimini <span class="em">birlikte netleştirin.</span>',
+    videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için teknik destek üzerinden fırın uyumunu kontrol edebilirsiniz.",
+    videoTitle: "VL 01/12 LB Porselen Fırını teknik destek",
+    videoText: "Porselen pişirim, vakum ve fırın çevrimi için uzman desteği alın.",
+  },
+  {
+    slug: MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG,
+    category: TITANIUM_CATEGORY,
+    productText: "MESA Titanyum Disk Grade 5 ELI",
+    kicker: "MESA Grade 5 ELI · Dental CAD/CAM Titanyum Disk",
+    titleHtml: 'İmplant üstü restorasyonda <span class="em">biyouyumlu titanyum.</span>',
+    leadHtml:
+      "MESA Grade 5 ELI titanyum disk, implant üstü restorasyonlar için yüksek dayanım ve biyouyumluluk sunar. Ø98.5 mm formu ile CAD/CAM sistemlerle uyumlu, dental laboratuvarlar için güvenilir bir çözümdür.",
+    pills: [{ value: "Grade 5", label: "ELI" }, { value: "Ø98.5", label: "mm" }, { label: "CAD/CAM" }, { label: "İmplant üstü" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/8eaf20f5-0227-4f18-b8fc-7f054422ce88/1080/mesa-titanyum-disk.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/12bb1fd1-ea51-4b79-9003-956f2298dd1c/1080/mesa-titanyum-disk.webp",
+    ],
+    galleryBadge: "GRADE 5",
+    metricTitleHtml: 'Yüksek dayanım ve <span class="em">biyouyumluluk.</span>',
+    metricSideHtml: "MESA Grade 5 ELI disk, implant üstü restorasyonlarda CAD/CAM frezeleme akışı için konumlandırılır.",
+    metrics: [
+      { name: "Materyal", value: "Grade", unit: "5 ELI", tag: "Titanium", caption: "Ürün adı ve açıklamasında Grade 5 ELI titanyum olarak listelenir." },
+      { name: "Çap", value: "98.5", unit: "mm", tag: "CAD/CAM", caption: "Kaynak açıklamada Ø98.5 mm formu belirtilir." },
+      { name: "Kullanım", value: "İmplant", unit: "üstü", tag: "Dental", caption: "İmplant üstü restorasyonlar için yüksek dayanım ve biyouyumluluk sunar." },
+    ],
+    specTag: "MESA · GRADE 5 ELI · Ø98.5 MM",
+    specTitleHtml: 'CAD/CAM frezeleme için <span class="em">titanyum disk.</span>',
+    specDescriptionHtml: "MESA Grade 5 ELI, implant üstü restorasyonlarda CAD/CAM sistemlerle uyumlu yüksek dayanımlı titanyum disk çözümüdür.",
+    specRows: [
+      { label: "Materyal", value: "Titanyum Grade 5 ELI" },
+      { label: "Çap", value: "Ø98.5 mm" },
+      { label: "Kullanım", value: "İmplant üstü restorasyon" },
+      { label: "Uyum", value: "CAD/CAM sistemler" },
+      { label: "Kategori", value: "Titanyum disk" },
+    ],
+    useCaseSideHtml: "İmplant üstü restorasyonlar ve CAD/CAM frezeleme iş akışlarında kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "İmplant üstü", text: "Yüksek dayanım ve biyouyumluluk isteyen restorasyonlar.", alt: "MESA titanyum implant üstü restorasyon" },
+      { imageIndex: 1, title: "CAD/CAM", text: "Ø98.5 mm disk formuyla frezeleme akışı.", alt: "MESA titanyum CAD CAM" },
+      { imageIndex: 1, title: "Dental lab", text: "Laboratuvar için güvenilir materyal çözümü.", alt: "MESA titanyum dental laboratuvar" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["İmplant üstü restorasyonlar", "CAD/CAM frezeleme", "Dental laboratuvar titanyum işleri"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Disk kalınlığı / boyutu", "Freze uyumu", "İmplant üstü endikasyon"] },
+    ],
+    devicesTitle: "Dental CAD/CAM freze sistemleriyle çalışır",
+    devicesTextHtml: "Ø98.5 mm disk formu ve Grade 5 ELI titanyum materyal, implant üstü CAD/CAM restorasyon işlerinde kullanılır.",
+    deviceChips: [{ label: "CAD/CAM freze" }, { label: "Ø98.5 mm" }, { label: "İmplant üstü" }, { label: "Grade 5 ELI", highlighted: true }],
+    faqItems: [
+      { question: "MESA Grade 5 ELI ne için kullanılır?", answerHtml: "İmplant üstü restorasyonlar için kullanılan CAD/CAM uyumlu titanyum disktir." },
+      { question: "Disk çapı nedir?", answerHtml: "Ürün açıklamasında Ø98.5 mm formu belirtilir." },
+      { question: "Biyouyumlu mudur?", answerHtml: "Kaynak açıklamada yüksek dayanım ve biyouyumluluk sunduğu belirtilir." },
+    ],
+    videoHref: "https://www.youtube.com/watch?v=dNPHy_sd9aQ",
+    videoTitleHtml: 'Titanyum CAD/CAM akışını <span class="em">videoda görün.</span>',
+    videoSideHtml: "Ürün sayfasındaki video ile MESA titanyum disk iş akışını inceleyin.",
+    videoTitle: "MESA Grade 5 ELI titanyum disk",
+    videoText: "Dental CAD/CAM titanyum disk ve implant üstü restorasyon akışı videosu.",
+  },
+  {
+    slug: TRASFORMER_COMP_FLOW_SLUG,
+    category: SYSTEM_CATEGORY,
+    productText: "Trasformer Comp Flow Şırınga Kompozit",
+    kicker: "CRS Trasformer Comp Flow · Şırınga Kompozit",
+    titleHtml: 'Tam çene kompozitte <span class="em">akışkan restorasyon.</span>',
+    leadHtml:
+      "Trasformer Comp Flow Şırınga Kompozit, Trasformer Light Glass Mufla Sistemi ile birlikte tam çene kompozit restorasyonlarda doğruluk, ışık geçirgenliği ve stabilite hedefleyen dijital laboratuvar akışında kullanılır.",
+    pills: [{ label: "Comp Flow" }, { label: "Şırınga kompozit" }, { label: "Tam çene" }, { label: "CRS" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2eb7407c-c84b-4bf3-bb87-343b261f6854/1080/iso.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/28c424ec-645c-429c-bdcd-274c0dad3ac8/1080/1.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/94af1b68-60ef-4a34-ad37-e0601e02e183/1080/2.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/6cc51852-fb8a-4d54-b2e6-e8d0a14cb618/1080/3.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/bd485d92-3abb-40e2-92f3-f7b20642bc45/1080/4.webp",
+    ],
+    galleryBadge: "COMP FLOW",
+    metricTitleHtml: 'Kompozit restorasyonda <span class="em">akış ve stabilite.</span>',
+    metricSideHtml: "Comp Flow, Trasformer sistem akışında tam çene kompozit restorasyonlar için kullanılan şırınga kompozit ürünüdür.",
+    metrics: [
+      { name: "Form", value: "Flow", unit: "", tag: "Şırınga", caption: "Şırınga kompozit formunda listelenir." },
+      { name: "Uygulama", value: "Tam", unit: "çene", tag: "Composite", caption: "Tam çene kompozit restorasyon sistemiyle birlikte kullanılır." },
+      { name: "Sistem", value: "Light", unit: "Glass", tag: "Trasformer", caption: "Mufla sistemiyle birlikte doğruluk ve ışık geçirgenliği hedefler." },
+    ],
+    specTag: "TRASFORMER · COMP FLOW",
+    specTitleHtml: 'Light Glass sisteminde <span class="em">kompozit akışı.</span>',
+    specDescriptionHtml: "Comp Flow, Trasformer Light Glass Mufla Sistemi ile birlikte tam çene kompozit restorasyonlarda kullanılmak üzere konumlandırılır.",
+    specRows: [
+      { label: "Ürün", value: "Şırınga kompozit" },
+      { label: "Sistem", value: "Trasformer Light Glass" },
+      { label: "Kullanım", value: "Tam çene kompozit restorasyon" },
+      { label: "Marka", value: "CRS" },
+      { label: "Kategori", value: "Sistemler" },
+    ],
+    useCaseSideHtml: "Tam çene kompozit restorasyon ve Light Glass mufla sistemiyle birlikte kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "Comp Flow", text: "Şırınga kompozit uygulama akışı.", alt: "Trasformer Comp Flow" },
+      { imageIndex: 2, title: "Tam çene", text: "Kompozit restorasyon sistemi.", alt: "Trasformer tam çene kompozit" },
+      { imageIndex: 3, title: "Light Glass", text: "Mufla sistemiyle birlikte çalışma.", alt: "Trasformer Light Glass uygulama" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Tam çene kompozit restorasyonlar", "Light Glass mufla sistemi", "Dijital laboratuvar kompozit akışı"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Renk seçimi", "Mufla sistemi uyumu", "Restorasyon vaka planı"] },
+    ],
+    devicesTitle: "Trasformer Light Glass Mufla Sistemi ile çalışır",
+    devicesTextHtml: "Comp Flow, Light Glass sistem akışındaki kompozit uygulama adımıdır. Vaka planı ve sistem uyumunu birlikte değerlendirebiliriz.",
+    deviceChips: [{ label: "Light Glass" }, { label: "Comp Flow" }, { label: "Tam çene" }, { label: "CRS", highlighted: true }],
+    faqItems: [
+      { question: "Trasformer Comp Flow ne için kullanılır?", answerHtml: "Trasformer Light Glass sistemiyle birlikte tam çene kompozit restorasyon akışında kullanılan şırınga kompozittir." },
+      { question: "Tek başına mı kullanılır?", answerHtml: "Ürün, Light Glass mufla sistemiyle birlikte çalışan restorasyon akışı içinde konumlandırılır." },
+      { question: "Hangi hedeflere odaklanır?", answerHtml: "Kaynak açıklamada doğruluk, ışık geçirgenliği ve stabilite hedefleri vurgulanır." },
+    ],
+    videoTitleHtml: 'Comp Flow uyumunu <span class="em">birlikte netleştirin.</span>',
+    videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için sistem uyumunu teknik destek üzerinden kontrol edebilirsiniz.",
+    videoTitle: "Trasformer Comp Flow teknik destek",
+    videoText: "Renk, sistem uyumu ve tam çene kompozit vaka akışı için uzman desteği alın.",
+  },
+  {
+    slug: TRASFORMER_LIGHT_GLASS_SLUG,
+    category: SYSTEM_CATEGORY,
+    productText: "Trasformer Light Glass Mufla Sistemi",
+    kicker: "CRS Trasformer Light Glass · Mufla Sistemi",
+    titleHtml: 'Tam çene kompozitte <span class="em">ışık geçirgenliği ve stabilite.</span>',
+    leadHtml:
+      "Trasformer Light Glass Mufla Sistemi, modern dijital laboratuvarların tam çene kompozit restorasyonlarda ihtiyaç duyduğu doğruluk, ışık geçirgenliği ve stabiliteyi üst seviyede sunmak için tasarlanmıştır.",
+    pills: [{ label: "Light Glass" }, { label: "Mufla sistemi" }, { label: "Tam çene" }, { label: "Kompozit restorasyon" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/ee5b1f34-39b8-4ca3-b9d1-e911a6547b71/1080/tra.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/28c424ec-645c-429c-bdcd-274c0dad3ac8/1080/1.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/94af1b68-60ef-4a34-ad37-e0601e02e183/1080/2.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/6cc51852-fb8a-4d54-b2e6-e8d0a14cb618/1080/3.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/bd485d92-3abb-40e2-92f3-f7b20642bc45/1080/4.webp",
+    ],
+    galleryBadge: "LIGHT GLASS",
+    metricTitleHtml: 'Doğruluk, ışık geçirgenliği ve <span class="em">stabilite.</span>',
+    metricSideHtml: "Light Glass, tam çene kompozit restorasyonlarda modern dijital laboratuvarların ihtiyaç duyduğu sistem akışını destekler.",
+    metrics: [
+      { name: "Sistem", value: "Light", unit: "Glass", tag: "Mufla", caption: "Mufla sistemi olarak listelenir." },
+      { name: "Uygulama", value: "Tam", unit: "çene", tag: "Composite", caption: "Tam çene kompozit restorasyon hedefler." },
+      { name: "Hedef", value: "Stabil", unit: "akış", tag: "Lab", caption: "Doğruluk, ışık geçirgenliği ve stabilite vurgulanır." },
+    ],
+    specTag: "TRASFORMER · LIGHT GLASS",
+    specTitleHtml: 'Tam çene kompozit için <span class="em">mufla sistemi.</span>',
+    specDescriptionHtml: "Light Glass Mufla Sistemi, tam çene kompozit restorasyonlarda doğruluk, ışık geçirgenliği ve stabilite ihtiyacını karşılamak için tasarlanmıştır.",
+    specRows: [
+      { label: "Ürün", value: "Mufla sistemi" },
+      { label: "Sistem", value: "Trasformer Light Glass" },
+      { label: "Kullanım", value: "Tam çene kompozit restorasyon" },
+      { label: "Hedef", value: "Doğruluk / ışık geçirgenliği / stabilite" },
+      { label: "Kategori", value: "Sistemler" },
+    ],
+    useCaseSideHtml: "Tam çene kompozit restorasyonlarda sistem stabilitesi ve ışık geçirgenliği için kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "Mufla sistemi", text: "Light Glass restorasyon akışı.", alt: "Trasformer Light Glass mufla sistemi" },
+      { imageIndex: 2, title: "Tam çene", text: "Kompozit restorasyon planı.", alt: "Trasformer Light Glass tam çene" },
+      { imageIndex: 3, title: "Stabilite", text: "Işık geçirgenliği ve doğruluk hedefi.", alt: "Trasformer Light Glass stabilite" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Tam çene kompozit restorasyonlar", "Dijital laboratuvar restorasyon akışı", "Comp Flow ile sistem çalışması"] },
+      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Mufla sistemi kullanımı", "Kompozit materyal seçimi", "Vaka planı ve restorasyon hedefi"] },
+    ],
+    devicesTitle: "Comp Flow ve tam çene kompozit akışıyla çalışır",
+    devicesTextHtml: "Light Glass sistemi, Comp Flow kompozit ve restorasyon planıyla birlikte değerlendirilmelidir.",
+    deviceChips: [{ label: "Mufla sistemi" }, { label: "Comp Flow" }, { label: "Tam çene" }, { label: "Light Glass", highlighted: true }],
+    faqItems: [
+      { question: "Trasformer Light Glass ne için kullanılır?", answerHtml: "Tam çene kompozit restorasyonlarda doğruluk, ışık geçirgenliği ve stabilite hedefleyen mufla sistemidir." },
+      { question: "Hangi ürünle birlikte çalışır?", answerHtml: "Trasformer Comp Flow şırınga kompozit ile aynı sistem akışında kullanılır." },
+      { question: "Hangi laboratuvarlar için uygundur?", answerHtml: "Modern dijital laboratuvarların tam çene kompozit restorasyon akışları için konumlandırılır." },
+    ],
+    videoTitleHtml: 'Light Glass sistemini <span class="em">birlikte netleştirin.</span>',
+    videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için sistem uyumunu teknik destek üzerinden kontrol edebilirsiniz.",
+    videoTitle: "Trasformer Light Glass teknik destek",
+    videoText: "Mufla sistemi, Comp Flow uyumu ve tam çene kompozit vaka akışı için uzman desteği alın.",
+  },
+];
+
+export const LAB_PRODUCT_DETAIL_DATA_BY_SLUG: Record<string, ProductDetailTemplateData> = Object.fromEntries(
+  LAB_PRODUCT_CONFIGS.map((config) => [config.slug, labProductDetail(config)]),
+);
+
+const LAB_PRODUCT_ALIASES: Record<string, string[]> = {
+  [CREALITY_WASH_CURE_UW03_SLUG]: ["creality-wash-cure-uw-03", "creality-washcure-uw-03", "uw-03", "uw-02"],
+  [THREESHAPE_E2_SLUG]: ["3shape-e2", "e2-yuksek-uretkenlik"],
+  [THREESHAPE_E3_SLUG]: ["3shape-e3", "implant-bar-dogrulugu"],
+  [THREESHAPE_E4_SLUG]: ["3shape-e4", "hiz-ve-hassasiyet"],
+  [NABERTHEM_LHT_02_17_LB_SPEED_SLUG]: ["lht-02-17-lb-speed", "nabertherm-lht-02-17"],
+  [NABERTHEM_LHT_01_16_TURBO_FIRE_SLUG]: ["lht-01-16-turbo-fire", "nabertherm-lht-01-16"],
+  [NABERTHEM_VL_01_12_LB_PRESS_SLUG]: ["vl-01-12-lb-press", "vl-01-12-lb-pres", "press-firini", "pres-firini"],
+  [NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG]: ["vl-01-12-lb-porselen", "porcelain-firini", "porselen-firini"],
+  [MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG]: ["mesa-grade-5-eli", "titanyum-disk", "titanium-disk"],
+  [TRASFORMER_COMP_FLOW_SLUG]: ["trasformer-comp-flow", "comp-flow-siringa-kompozit"],
+  [TRASFORMER_LIGHT_GLASS_SLUG]: ["trasformer-light-glass", "light-glass-mufla"],
+  [MASH_P16L_PRINTER_SLUG]: ["mash-p16l", "385nm-16k", "16k-dental-3d-yazici"],
+  [MASH_CURIE_M1_DENTAL_SLUG]: ["mash-curie-m1-dental", "curie-m1-dental", "yerli-dental-3d-printer"],
+  [MASH_CURIE_M1_JEWELRY_SLUG]: ["mash-curie-m1-jewelry", "curie-m1-jewelry", "jewelry-3d-printer", "kuyumculuk"],
+  [CREALITY_HALOT_SKY_6K_SLUG]: ["creality-halot-sky", "halot-sky-6k", "fabrika-cikisli-versiyon", "hassasiyeti-arttirilmis-versiyon"],
+};
+
 function isPlainObject(value: unknown): value is PlainObject {
   return Boolean(value && typeof value === "object" && !Array.isArray(value));
 }
@@ -4637,6 +6135,42 @@ function printerSparePartData(product: unknown) {
   return undefined;
 }
 
+function zirconBlockData(product: unknown) {
+  const slug = productSlug(product);
+  const name = slugifyProduct(stringValue((product as { name?: unknown } | null)?.name));
+  const haystack = `${slug} ${name}`;
+  const direct = ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG[slug];
+  if (direct) return direct;
+
+  for (const config of ZIRCON_BLOCK_CONFIGS) {
+    const productText = slugifyProduct(config.productText);
+    const aliases = [config.slug, productText, ...(ZIRCON_BLOCK_ALIASES[config.slug] || [])];
+    if (aliases.some((alias) => alias && haystack.includes(alias))) {
+      return ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG[config.slug];
+    }
+  }
+
+  return undefined;
+}
+
+function labProductData(product: unknown) {
+  const slug = productSlug(product);
+  const name = slugifyProduct(stringValue((product as { name?: unknown } | null)?.name));
+  const haystack = `${slug} ${name}`;
+  const direct = LAB_PRODUCT_DETAIL_DATA_BY_SLUG[slug];
+  if (direct) return direct;
+
+  for (const config of LAB_PRODUCT_CONFIGS) {
+    const productText = slugifyProduct(config.productText);
+    const aliases = [config.slug, productText, ...(LAB_PRODUCT_ALIASES[config.slug] || [])];
+    if (aliases.some((alias) => alias && haystack.includes(alias))) {
+      return LAB_PRODUCT_DETAIL_DATA_BY_SLUG[config.slug];
+    }
+  }
+
+  return undefined;
+}
+
 function parseJson(source: unknown) {
   const text = typeof source === "string" ? source.trim() : "";
   if (!text) return undefined;
@@ -4661,9 +6195,15 @@ function deepMerge<T>(base: T, override: unknown): T {
 
 export function resolveProductDetailData(product: unknown, productTemplateJson?: unknown) {
   const override = parseJson(productTemplateJson);
+  const zirconData = zirconBlockData(product);
   const sparePartData = printerSparePartData(product);
-  const baseData = sparePartData
-    ? sparePartData
+  const labData = labProductData(product);
+  const baseData = zirconData
+    ? zirconData
+    : sparePartData
+      ? sparePartData
+      : labData
+        ? labData
     : productLooksLikeTrialWhite(product)
     ? MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA
     : productLooksLikeTrialPink(product)

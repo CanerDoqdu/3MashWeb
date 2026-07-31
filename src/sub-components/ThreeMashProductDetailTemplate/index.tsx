@@ -323,6 +323,7 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
 
 function Configurator(props: Props) {
   const buyHref = productBuyHref(props.data.hero.buyHrefBase, props.variantGroups);
+  const hasManySwatches = props.variantGroups.some((group) => group.values.some((value) => value.color) && group.values.length > 12);
 
   return (
     <div className="tmpdt-cfg">
@@ -333,12 +334,13 @@ function Configurator(props: Props) {
         </div>
       ) : null}
       {props.variantGroups.length ? (
-        <div className="tmpdt-options">
+        <div className={`tmpdt-options${hasManySwatches ? " has-many-swatches" : ""}`}>
           {props.variantGroups.map((group) => {
             const selected = group.values.find((value) => value.selected);
             const isColor = group.values.some((value) => value.color);
+            const isManyColor = isColor && group.values.length > 12;
             return (
-              <div className={`tmpdt-cfg-row${isColor ? " is-color" : ""}`} key={group.id}>
+              <div className={`tmpdt-cfg-row${isColor ? " is-color" : ""}${isManyColor ? " is-many-color" : ""}`} key={group.id}>
                 <div className="tmpdt-lab">
                   {group.name} <b>{selected?.name || ""}</b>
                 </div>
@@ -428,13 +430,16 @@ export function ProductDetailHeroSection(props: Props) {
       }
 
       const buy = hero.querySelector<HTMLElement>(".tmpdt-buy");
+      const gallery = hero.querySelector<HTMLElement>(".tmpdt-gal");
       const thumbs = hero.querySelector<HTMLElement>(".tmpdt-thumbs");
-      if (!buy || !thumbs) return;
+      if (!buy || !gallery || !thumbs) return;
 
       const buyHeight = buy.getBoundingClientRect().height;
+      const galleryWidth = gallery.getBoundingClientRect().width || 520;
       const thumbsHeight = thumbs.getBoundingClientRect().height;
       const thumbsMargin = Number.parseFloat(window.getComputedStyle(thumbs).marginTop) || 0;
-      const targetMainHeight = Math.max(280, buyHeight - thumbsHeight - thumbsMargin);
+      const maxMainHeight = Math.min(520, Math.max(320, galleryWidth));
+      const targetMainHeight = Math.min(maxMainHeight, Math.max(280, buyHeight - thumbsHeight - thumbsMargin));
 
       hero.style.setProperty("--tmpdt-gallery-main-height", `${Math.round(targetMainHeight)}px`);
     };

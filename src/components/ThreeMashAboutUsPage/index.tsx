@@ -1,90 +1,200 @@
-import { aboutPage } from '../ThreeMashPageData/sourceData';
-import { Props } from './types';
+import { aboutPage } from "../ThreeMashPageData/sourceData";
+import { Props } from "./types";
 
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
 }
 
 function numberValue(value: number | undefined, fallback: number) {
-  return typeof value === 'number' ? value : fallback;
+  return typeof value === "number" ? value : fallback;
 }
 
 function html(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
 }
 
+function themeColor(
+  input: string | undefined,
+  fallback: string,
+  token: string,
+  legacyDefaults: string[] = [],
+) {
+  const trimmed = input?.trim();
+  const normalized = trimmed?.toLowerCase();
+  const defaults = [fallback, ...legacyDefaults].map((item) =>
+    item.toLowerCase(),
+  );
+
+  if (!trimmed || (normalized && defaults.includes(normalized))) {
+    return `var(${token}, ${fallback})`;
+  }
+
+  return trimmed;
+}
+
+function imageUrl(input: string | undefined, fallback: string) {
+  const trimmed = input?.trim();
+  if (!trimmed) return fallback;
+  return trimmed.startsWith("theme-images/")
+    ? `https://cdn.myikas.com/images/${trimmed}/image_3840.webp`
+    : trimmed;
+}
+
+function splitTitle(value: string) {
+  const cleaned = value.replace(/[⚖️🧭🔭]/g, "").trim();
+  const [first = cleaned, ...rest] = cleaned.split(/\s+/);
+  return { first, rest: rest.join(" ") };
+}
+
 export function ThreeMashAboutUsPage(props: Props) {
   const blocks = aboutPage.blocks.map((block, index) => ({
     ...block,
     html: html((props as any)[`block${index + 1}Html`], block.html),
-    imageUrl: text((props as any)[`block${index + 1}ImageUrl`], block.imageUrl),
+    imageUrl: imageUrl(
+      (props as any)[`block${index + 1}ImageUrl`],
+      block.imageUrl,
+    ),
     imageAlt: text((props as any)[`block${index + 1}ImageAlt`], block.imageAlt),
   }));
+
   const values = aboutPage.values.map((value, index) => ({
     ...value,
     title: text((props as any)[`value${index + 1}Title`], value.title),
     subTitle: text((props as any)[`value${index + 1}SubTitle`], value.subTitle),
-    imageUrl: text((props as any)[`value${index + 1}ImageUrl`], value.imageUrl),
+    imageUrl: imageUrl(
+      (props as any)[`value${index + 1}ImageUrl`],
+      value.imageUrl,
+    ),
     imageAlt: text((props as any)[`value${index + 1}ImageAlt`], value.imageAlt),
   }));
+
+  const valuesTitle = splitTitle(
+    text(props.valuesTitle, aboutPage.valuesTitle),
+  );
+  const heroTitle = html(props.introTitleHtml, aboutPage.introTitleHtml);
+  const heroQuote = html(props.introContentHtml, aboutPage.introContentHtml);
+
   const style = {
-    '--tmabout-bg': text(props.backgroundColor, '#ffffff'),
-    '--tmabout-text': text(props.textColor, '#2b2b2b'),
-    '--tmabout-muted': text(props.mutedTextColor, '#5f5f5f'),
-    '--tmabout-panel': text(props.panelColor, '#f7f7f7'),
-    '--tmabout-max': String(numberValue(props.maxWidth, 1320)) + 'px',
+    "--tmabout-bg": themeColor(
+      props.backgroundColor,
+      "#FAFAF7",
+      "--tm-theme-bg",
+      ["#ffffff", "#fff"],
+    ),
+    "--tmabout-text": themeColor(
+      props.textColor,
+      "#0E0E0C",
+      "--tm-theme-text",
+      ["#2b2b2b", "#111111", "#000000"],
+    ),
+    "--tmabout-muted": themeColor(
+      props.mutedTextColor,
+      "#55554e",
+      "--tm-theme-sub",
+      ["#5f5f5f", "#777777"],
+    ),
+    "--tmabout-panel": themeColor(
+      props.panelColor,
+      "#F1F1EC",
+      "--tm-theme-panel",
+      ["#f7f7f7", "#ffffff", "#fff"],
+    ),
+    "--tmabout-line": "var(--tm-theme-line, #E6E6E0)",
+    "--tmabout-accent": "var(--tm-theme-accent, #C7F136)",
+    "--tmabout-dark": "var(--tm-theme-dark, #0E0E0C)",
+    "--tmabout-max": `${numberValue(props.maxWidth, 1180)}px`,
   } as any;
 
   return (
     <section className="three-mash-about-page" style={style}>
       <div className="tmabout-shell">
-        <div id="0">
-          <div className="tmabout-text-view-main tmabout-pt-12 tmabout-pb-12 tmabout-flex tmabout-items-center tmabout-justify-center tmabout-flex-col">
-            <div
-              className="tmabout-title tmabout-text-center tmabout-unreset"
-              dangerouslySetInnerHTML={{ __html: html(props.introTitleHtml, aboutPage.introTitleHtml) }}
-            />
-            <div
-              className="tmabout-content tmabout-unreset tmabout-unreset-reset tmabout-text-view-scroll"
-              dangerouslySetInnerHTML={{ __html: html(props.introContentHtml, aboutPage.introContentHtml) }}
-            />
-          </div>
-        </div>
-
-        {blocks.map((block, index) => (
-          <div id={String(index + 1)} key={index}>
-            <div className="tmabout-image-card-container" style={block.reverse ? { flexDirection: 'row-reverse' } : undefined}>
-              <div className="tmabout-card-content">
-                <div className="tmabout-title tmabout-unreset tmabout-unreset-reset" dangerouslySetInnerHTML={{ __html: block.html }} />
-              </div>
-              <div className={block.reverse ? 'tmabout-image-container' : 'tmabout-image-container is-reverse'}>
-                <img className="tmabout-image" src={block.imageUrl} alt={block.imageAlt || 'Image'} loading="lazy" />
-              </div>
-            </div>
-          </div>
-        ))}
-
-        <div id="3">
-          <div className="tmabout-container tmabout-flex tmabout-flex-col tmabout-mx-auto tmabout-relative tmabout-px-4">
+        <section className="tmabout-hero">
+          <span className="tmabout-kicker">3MASH</span>
+          <div className="tmabout-hero-grid">
             <div>
-              <div className="tmabout-flex tmabout-justify-center tmabout-text-center tmabout-flex-col tmabout-mb-10 tmabout-mt-4">
-                <h1 className="tmabout-font-bold tmabout-text-2xl">{text(props.valuesTitle, aboutPage.valuesTitle)}</h1>
-                <p className="tmabout-font-light tmabout-text-base tmabout-mt-2" />
-              </div>
-              <div className="tmabout-flex tmabout-w-full tmabout-flex-wrap tmabout-gap-x-6 tmabout-values-grid">
-                {values.map((value) => (
-                  <div className="tmabout-lb-image-main tmabout-lb-image-only tmabout-relative tmabout-mb-3 tmabout-mx-auto" key={value.title}>
-                    {value.imageUrl ? <img className="tmabout-value-image" src={value.imageUrl} alt={value.imageAlt || 'Görsel'} loading="lazy" /> : null}
-                    <div className="tmabout-value-text tmabout-flex tmabout-flex-col tmabout-justify-center tmabout-text-center tmabout-lookbook-title-main">
-                      <p className="tmabout-font-bold tmabout-mt-4">{value.title}</p>
-                      <p className="tmabout-font-light tmabout-text-sm">{value.subTitle}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <h1>{aboutPage.title}</h1>
+              <p>{aboutPage.description}</p>
             </div>
+            <blockquote>
+              <div
+                className="tmabout-hero-title"
+                dangerouslySetInnerHTML={{ __html: heroTitle }}
+              />
+              <div
+                className="tmabout-quote"
+                dangerouslySetInnerHTML={{ __html: heroQuote }}
+              />
+            </blockquote>
           </div>
-        </div>
+        </section>
+
+        <section className="tmabout-story">
+          <div className="tmabout-story-copy">
+            <span className="tmabout-section-code">01</span>
+            <div
+              className="tmabout-rich"
+              dangerouslySetInnerHTML={{ __html: blocks[0]?.html || "" }}
+            />
+          </div>
+          <figure className="tmabout-story-media">
+            <img
+              src={blocks[0]?.imageUrl}
+              alt={blocks[0]?.imageAlt || "3mash"}
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+        </section>
+
+        <section className="tmabout-mission">
+          <figure className="tmabout-mission-media">
+            <img
+              src={blocks[1]?.imageUrl}
+              alt={blocks[1]?.imageAlt || "Misyon ve vizyon"}
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <div className="tmabout-mission-panel">
+            <span className="tmabout-section-code">02</span>
+            <div
+              className="tmabout-rich"
+              dangerouslySetInnerHTML={{ __html: blocks[1]?.html || "" }}
+            />
+          </div>
+        </section>
+
+        <section className="tmabout-values">
+          <div className="tmabout-values-head">
+            <span className="tmabout-section-code">03</span>
+            <h2>
+              {valuesTitle.first} <em>{valuesTitle.rest}</em>
+            </h2>
+          </div>
+          <div className="tmabout-values-grid">
+            {values.map((value, index) => (
+              <article className="tmabout-value-card" key={value.title}>
+                <span className="tmabout-value-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div className="tmabout-value-media">
+                  {value.imageUrl ? (
+                    <img
+                      src={value.imageUrl}
+                      alt={value.imageAlt || value.title}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
+                </div>
+                <div className="tmabout-value-body">
+                  <h3>{value.title.replace(/^\d+\.\s*/, "")}</h3>
+                  <p>{value.subTitle}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
     </section>
   );

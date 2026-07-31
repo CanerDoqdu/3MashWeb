@@ -24,10 +24,26 @@ type Preset = {
   costDetailHref?: string;
 };
 
-const defaultConsultationWhatsappHref = "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum";
+const defaultConsultationWhatsappHref =
+  "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum";
+const costDetailPageHref = "#";
 
 function href(value?: string) {
-  return value && value.trim() ? value : "#";
+  const next = value?.trim();
+  if (!next) return "#";
+
+  const key = routeKey(next);
+  if (
+    key === "3mash-maliyet-detay-html" ||
+    key === "maliyet-detay" ||
+    key === "pages-maliyet-detay" ||
+    key === "hesaplama" ||
+    key === "pages-hesaplama"
+  ) {
+    return costDetailPageHref;
+  }
+
+  return next;
 }
 
 function routeKey(value: string) {
@@ -48,35 +64,48 @@ function routeKey(value: string) {
 function consultationHref(value?: string) {
   const current = href(value);
   const key = routeKey(current);
-  if (current === "#" || key === "pages-iletisim" || key === "iletisim" || key === "contact") {
+  if (
+    current === "#" ||
+    key === "pages-iletisim" ||
+    key === "iletisim" ||
+    key === "contact"
+  ) {
     return defaultConsultationWhatsappHref;
   }
   return current;
 }
 
 function stripInlineTypographyStyles(markup: string) {
-  return markup.replace(/\sstyle=("[^"]*"|'[^']*'|[^\s>]+)/gi, (_match, rawValue: string) => {
-    const quote = rawValue[0] === '"' || rawValue[0] === "'" ? rawValue[0] : "";
-    const style = quote ? rawValue.slice(1, -1) : rawValue;
-    const kept = style
-      .split(";")
-      .map((part) => part.trim())
-      .filter(
-        (part) =>
-          part &&
-          !/^(font-family|font-size|font-weight|font-style|font-variant(?:-[\w-]+)?|letter-spacing|color|background(?:-color)?|border-color|text-align)\s*:/i.test(part),
-      );
+  return markup.replace(
+    /\sstyle=("[^"]*"|'[^']*'|[^\s>]+)/gi,
+    (_match, rawValue: string) => {
+      const quote =
+        rawValue[0] === '"' || rawValue[0] === "'" ? rawValue[0] : "";
+      const style = quote ? rawValue.slice(1, -1) : rawValue;
+      const kept = style
+        .split(";")
+        .map((part) => part.trim())
+        .filter(
+          (part) =>
+            part &&
+            !/^(font-family|font-size|font-weight|font-style|font-variant(?:-[\w-]+)?|letter-spacing|color|background(?:-color)?|border-color|text-align)\s*:/i.test(
+              part,
+            ),
+        );
 
-    return kept.length ? ` style=${quote}${kept.join("; ")}${quote}` : "";
-  });
+      return kept.length ? ` style=${quote}${kept.join("; ")}${quote}` : "";
+    },
+  );
 }
 
 function inlineHtml(value?: string) {
-  return stripInlineTypographyStyles((value || "")
-    .trim()
-    .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
-    .replace(/^<p[^>]*>/i, "")
-    .replace(/<\/p>$/i, ""));
+  return stripInlineTypographyStyles(
+    (value || "")
+      .trim()
+      .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+      .replace(/^<p[^>]*>/i, "")
+      .replace(/<\/p>$/i, ""),
+  );
 }
 
 function escapeRegExp(value: string) {
@@ -92,7 +121,10 @@ function styleTextChunks(markup: string, props?: Props) {
     .split(/(<[^>]+>)/g)
     .map((part) => {
       if (!part || part.startsWith("<")) return part;
-      return part.replace(matcher, (match) => `<span class="tmhero-word-style">${match}</span>`);
+      return part.replace(
+        matcher,
+        (match) => `<span class="tmhero-word-style">${match}</span>`,
+      );
     })
     .join("");
 }
@@ -109,21 +141,68 @@ function statRichText(value?: string) {
   };
 }
 
-function RichInline({ value, className, wordStyle }: { value?: string; className?: string; wordStyle?: Props }) {
-  return <span className={className} dangerouslySetInnerHTML={richText(value, wordStyle)} />;
+function RichInline({
+  value,
+  className,
+  wordStyle,
+}: {
+  value?: string;
+  className?: string;
+  wordStyle?: Props;
+}) {
+  return (
+    <span
+      className={className}
+      dangerouslySetInnerHTML={richText(value, wordStyle)}
+    />
+  );
 }
 
 function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
   const target = href(targetHref);
-  const hash = target.startsWith("#") ? target : target.startsWith("/#") ? target.slice(1) : "";
+  const hash = target.startsWith("#")
+    ? target
+    : target.startsWith("/#")
+      ? target.slice(1)
+      : "";
   if (!hash || hash.length <= 1) return;
-
-  const section = document.querySelector(hash);
-  if (!section) return;
 
   event.preventDefault();
   window.history.pushState(null, "", hash);
-  section.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  const scrollToTarget = () => {
+    const targetId = decodeURIComponent(hash.slice(1)).trim();
+    const targetIds =
+      targetId === "sorun"
+        ? [targetId, "sebep"]
+        : targetId === "sebep"
+          ? [targetId, "sorun"]
+          : [targetId];
+
+    for (const id of targetIds) {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+        return true;
+      }
+    }
+
+    try {
+      const section = document.querySelector(hash);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+        return true;
+      }
+    } catch {
+      return false;
+    }
+
+    return false;
+  };
+
+  if (!scrollToTarget()) {
+    window.setTimeout(scrollToTarget, 60);
+  }
 }
 
 function imageSource(value: unknown) {
@@ -146,10 +225,14 @@ function imageSource(value: unknown) {
     if (typeof image.imageUrl === "string") return imageIdToUrl(image.imageUrl);
     if (typeof image.value === "string") return imageIdToUrl(image.value);
     if (typeof image.id === "string") return imageIdToUrl(image.id);
-    if (typeof image.image?.url === "string") return imageIdToUrl(image.image.url);
-    if (typeof image.image?.src === "string") return imageIdToUrl(image.image.src);
-    if (typeof image.file?.url === "string") return imageIdToUrl(image.file.url);
-    if (typeof image.file?.src === "string") return imageIdToUrl(image.file.src);
+    if (typeof image.image?.url === "string")
+      return imageIdToUrl(image.image.url);
+    if (typeof image.image?.src === "string")
+      return imageIdToUrl(image.image.src);
+    if (typeof image.file?.url === "string")
+      return imageIdToUrl(image.file.url);
+    if (typeof image.file?.src === "string")
+      return imageIdToUrl(image.file.src);
   }
 
   return "";
@@ -171,17 +254,32 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
-function numberInRange(value: unknown, fallback: number, min: number, max: number) {
+function numberInRange(
+  value: unknown,
+  fallback: number,
+  min: number,
+  max: number,
+) {
   const numeric = typeof value === "number" ? value : Number(value);
   if (!Number.isFinite(numeric)) return fallback;
   return clamp(numeric, min, max);
 }
 
 function imageFit(value: unknown, fallback = "contain") {
-  return value === "cover" || value === "fill" || value === "scale-down" || value === "contain" ? value : fallback;
+  return value === "cover" ||
+    value === "fill" ||
+    value === "scale-down" ||
+    value === "contain"
+    ? value
+    : fallback;
 }
 
-function percentage(value: unknown, fallback: number, min: number, max: number) {
+function percentage(
+  value: unknown,
+  fallback: number,
+  min: number,
+  max: number,
+) {
   return `${numberInRange(value, fallback, min, max)}%`;
 }
 
@@ -198,14 +296,27 @@ function formatPlain(value: number, locale?: string) {
   }
 }
 
-function StatBlock({ value, suffix, label, wordStyle }: { value?: string; suffix?: string; label?: string; wordStyle: Props }) {
+function StatBlock({
+  value,
+  suffix,
+  label,
+  wordStyle,
+}: {
+  value?: string;
+  suffix?: string;
+  label?: string;
+  wordStyle: Props;
+}) {
   return (
     <div className="tmhero-stat">
       <div className="tmhero-stat-value">
         <span dangerouslySetInnerHTML={statRichText(value)} />
         {suffix ? <em dangerouslySetInnerHTML={statRichText(suffix)} /> : null}
       </div>
-      <div className="tmhero-stat-label" dangerouslySetInnerHTML={richText(label, wordStyle)} />
+      <div
+        className="tmhero-stat-label"
+        dangerouslySetInnerHTML={richText(label, wordStyle)}
+      />
     </div>
   );
 }
@@ -314,8 +425,11 @@ export function ThreeMashHero(props: Props) {
     try {
       const params = new URLSearchParams(window.location.search);
       const urlCost = Number(params.get("rc"));
-      const storedCost = Number(window.localStorage.getItem("mash_remake_cost"));
-      const externalCost = urlCost > 0 ? urlCost : storedCost > 0 ? storedCost : 0;
+      const storedCost = Number(
+        window.localStorage.getItem("mash_remake_cost"),
+      );
+      const externalCost =
+        urlCost > 0 ? urlCost : storedCost > 0 ? storedCost : 0;
       if (externalCost > 0) {
         setCost(externalCost);
       }
@@ -340,7 +454,10 @@ export function ThreeMashHero(props: Props) {
   const showDesktopTitleUnderline = props.showTitleUnderline !== false;
   const showTabletTitleUnderline = props.showTitleUnderlineTablet !== false;
   const showMobileTitleUnderline = props.showTitleUnderlineMobile !== false;
-  const shouldRenderTitleUnderline = showDesktopTitleUnderline || showTabletTitleUnderline || showMobileTitleUnderline;
+  const shouldRenderTitleUnderline =
+    showDesktopTitleUnderline ||
+    showTabletTitleUnderline ||
+    showMobileTitleUnderline;
   const isAtTarget = rpt <= active.targetRepeatRate;
   const secondaryButtonHref = consultationHref(props.secondaryButtonHref);
   const secondaryButtonExternal = /^https?:\/\//i.test(secondaryButtonHref);
@@ -352,7 +469,10 @@ export function ThreeMashHero(props: Props) {
   }, [currentLoss]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || typeof window.requestAnimationFrame !== "function") {
+    if (
+      typeof window === "undefined" ||
+      typeof window.requestAnimationFrame !== "function"
+    ) {
       heroAnimatingRef.current = false;
       setAnimatedLoss(currentLossRef.current);
       return;
@@ -406,28 +526,73 @@ export function ThreeMashHero(props: Props) {
     "--tmhero-word-color": "var(--lime, #C7F136)",
     "--tmhero-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmhero-word-style": props.styledPhraseItalic ? "italic" : "inherit",
-    "--tmhero-title-underline-width": percentage(props.titleUnderlineImageWidth, 72, 10, 140),
+    "--tmhero-title-underline-width": percentage(
+      props.titleUnderlineImageWidth,
+      72,
+      10,
+      140,
+    ),
     "--tmhero-title-underline-height": `${numberInRange(props.titleUnderlineImageHeight, 22, 4, 80)}px`,
     "--tmhero-title-underline-x": `${numberInRange(props.titleUnderlineImageXOffset, 0, -120, 120)}px`,
     "--tmhero-title-underline-y": `${numberInRange(props.titleUnderlineImageYOffset, 0, -80, 80)}px`,
-    "--tmhero-title-underline-desktop-display": showDesktopTitleUnderline ? "block" : "none",
-    "--tmhero-title-underline-tablet-display": showTabletTitleUnderline ? "block" : "none",
-    "--tmhero-title-underline-mobile-display": showMobileTitleUnderline ? "block" : "none",
-    "--tmhero-title-underline-tablet-width": percentage(props.titleUnderlineTabletWidth, 66, 10, 140),
+    "--tmhero-title-underline-desktop-display": showDesktopTitleUnderline
+      ? "block"
+      : "none",
+    "--tmhero-title-underline-tablet-display": showTabletTitleUnderline
+      ? "block"
+      : "none",
+    "--tmhero-title-underline-mobile-display": showMobileTitleUnderline
+      ? "block"
+      : "none",
+    "--tmhero-title-underline-tablet-width": percentage(
+      props.titleUnderlineTabletWidth,
+      66,
+      10,
+      140,
+    ),
     "--tmhero-title-underline-tablet-height": `${numberInRange(props.titleUnderlineTabletHeight, 18, 4, 80)}px`,
     "--tmhero-title-underline-tablet-x": `${numberInRange(props.titleUnderlineTabletXOffset, 0, -120, 120)}px`,
     "--tmhero-title-underline-tablet-y": `${numberInRange(props.titleUnderlineTabletYOffset, 0, -80, 80)}px`,
-    "--tmhero-title-underline-mobile-width": percentage(props.titleUnderlineMobileWidth, 58, 10, 140),
+    "--tmhero-title-underline-mobile-width": percentage(
+      props.titleUnderlineMobileWidth,
+      58,
+      10,
+      140,
+    ),
     "--tmhero-title-underline-mobile-height": `${numberInRange(props.titleUnderlineMobileHeight, 14, 4, 80)}px`,
     "--tmhero-title-underline-mobile-x": `${numberInRange(props.titleUnderlineMobileXOffset, -6, -120, 120)}px`,
     "--tmhero-title-underline-mobile-y": `${numberInRange(props.titleUnderlineMobileYOffset, 0, -80, 80)}px`,
-    "--tmhero-title-underline-fit": imageFit(props.titleUnderlineImageFit, "fill"),
-    "--tmhero-title-underline-opacity": numberInRange(props.titleUnderlineImageOpacity, 100, 0, 100) / 100,
-    "--tmhero-title-underline-brightness": percentage(props.titleUnderlineImageBrightness, 100, 0, 220),
-    "--tmhero-title-underline-contrast": percentage(props.titleUnderlineImageContrast, 100, 0, 220),
-    "--tmhero-title-underline-saturation": percentage(props.titleUnderlineImageSaturation, 100, 0, 300),
+    "--tmhero-title-underline-fit": imageFit(
+      props.titleUnderlineImageFit,
+      "fill",
+    ),
+    "--tmhero-title-underline-opacity":
+      numberInRange(props.titleUnderlineImageOpacity, 100, 0, 100) / 100,
+    "--tmhero-title-underline-brightness": percentage(
+      props.titleUnderlineImageBrightness,
+      100,
+      0,
+      220,
+    ),
+    "--tmhero-title-underline-contrast": percentage(
+      props.titleUnderlineImageContrast,
+      100,
+      0,
+      220,
+    ),
+    "--tmhero-title-underline-saturation": percentage(
+      props.titleUnderlineImageSaturation,
+      100,
+      0,
+      300,
+    ),
     "--tmhero-title-underline-hue": `${numberInRange(props.titleUnderlineImageHue, 0, -180, 180)}deg`,
-    "--tmhero-title-underline-invert": percentage(props.titleUnderlineImageInvert, 0, 0, 100),
+    "--tmhero-title-underline-invert": percentage(
+      props.titleUnderlineImageInvert,
+      0,
+      0,
+      100,
+    ),
   } as any;
 
   return (
@@ -441,62 +606,121 @@ export function ThreeMashHero(props: Props) {
             </div>
 
             <h1>
-              <RichInline value={props.titleBeforeAmount} wordStyle={props} /> <span className="tmhero-money">{formattedLoss}</span>{" "}
+              <RichInline value={props.titleBeforeAmount} wordStyle={props} />{" "}
+              <span className="tmhero-money">{formattedLoss}</span>{" "}
               <RichInline value={props.titleAfterAmount} wordStyle={props} />{" "}
               <span className="tmhero-em-wrap">
-                <span className="tmhero-em" dangerouslySetInnerHTML={richText(props.titleEmphasis, props)} />
+                <span
+                  className="tmhero-em"
+                  dangerouslySetInnerHTML={richText(props.titleEmphasis, props)}
+                />
                 {shouldRenderTitleUnderline && titleUnderlineImage ? (
                   <img
                     className="tmhero-title-underline-image"
                     src={titleUnderlineImage}
                     alt={props.titleUnderlineImageAlt || ""}
-                    aria-hidden={props.titleUnderlineImageAlt ? undefined : "true"}
+                    aria-hidden={
+                      props.titleUnderlineImageAlt ? undefined : "true"
+                    }
                   />
                 ) : null}
               </span>
             </h1>
 
             <p className="tmhero-subtitle">
-              <RichInline value={props.subtitleStart} wordStyle={props} /> <b dangerouslySetInnerHTML={richText(props.subtitleStrongOne, props)} />{" "}
+              <RichInline value={props.subtitleStart} wordStyle={props} />{" "}
+              <b
+                dangerouslySetInnerHTML={richText(
+                  props.subtitleStrongOne,
+                  props,
+                )}
+              />{" "}
               <RichInline value={props.subtitleMiddle} wordStyle={props} />{" "}
-              <b dangerouslySetInnerHTML={richText(props.subtitleStrongTwo, props)} /> <RichInline value={props.subtitleEnd} wordStyle={props} />
+              <b
+                dangerouslySetInnerHTML={richText(
+                  props.subtitleStrongTwo,
+                  props,
+                )}
+              />{" "}
+              <RichInline value={props.subtitleEnd} wordStyle={props} />
             </p>
 
             <div className="tmhero-cta">
-              <a className="tmhero-btn tmhero-btn-accent" href={href(props.primaryButtonHref)} onClick={(event) => smoothAnchorClick(event, props.primaryButtonHref)}>
+              <a
+                className="tmhero-btn tmhero-btn-accent"
+                href={href(props.primaryButtonHref)}
+                onClick={(event) =>
+                  smoothAnchorClick(event, props.primaryButtonHref)
+                }
+              >
                 <RichInline value={props.primaryButtonText} wordStyle={props} />
               </a>
               <a
                 className="tmhero-btn tmhero-btn-line"
                 href={secondaryButtonHref}
                 target={secondaryButtonExternal ? "_blank" : undefined}
-                rel={secondaryButtonExternal ? "noopener noreferrer" : undefined}
+                rel={
+                  secondaryButtonExternal ? "noopener noreferrer" : undefined
+                }
+                onClick={(event) =>
+                  smoothAnchorClick(event, secondaryButtonHref)
+                }
               >
-                <RichInline value={props.secondaryButtonText} wordStyle={props} />
+                <RichInline
+                  value={props.secondaryButtonText}
+                  wordStyle={props}
+                />
               </a>
               <span dangerouslySetInnerHTML={richText(props.hintText, props)} />
             </div>
           </div>
 
-          <div className="tmhero-calculator-side" id={props.calculatorAnchorId || undefined}>
-            <div className={`tmhero-calc${mode === "lab" ? " is-lab-mode" : ""}`}>
+          <div
+            className="tmhero-calculator-side"
+            id={props.calculatorAnchorId || undefined}
+          >
+            <div
+              className={`tmhero-calc${mode === "lab" ? " is-lab-mode" : ""}`}
+            >
               <div className="tmhero-calc-head">
-                <span className="tmhero-micro" dangerouslySetInnerHTML={richText(props.calculatorEyebrow, props)} />
-                <span className="tmhero-est" dangerouslySetInnerHTML={richText(props.calculatorBadgeText, props)} />
+                <span
+                  className="tmhero-micro"
+                  dangerouslySetInnerHTML={richText(
+                    props.calculatorEyebrow,
+                    props,
+                  )}
+                />
+                <span
+                  className="tmhero-est"
+                  dangerouslySetInnerHTML={richText(
+                    props.calculatorBadgeText,
+                    props,
+                  )}
+                />
               </div>
 
               <div className="tmhero-segment">
-                <button className={mode === "clinic" ? "is-active" : ""} type="button" onClick={() => setMode("clinic")}>
+                <button
+                  className={mode === "clinic" ? "is-active" : ""}
+                  type="button"
+                  onClick={() => setMode("clinic")}
+                >
                   <RichInline value={props.clinicModeText} wordStyle={props} />
                 </button>
-                <button className={mode === "lab" ? "is-active" : ""} type="button" onClick={() => setMode("lab")}>
+                <button
+                  className={mode === "lab" ? "is-active" : ""}
+                  type="button"
+                  onClick={() => setMode("lab")}
+                >
                   <RichInline value={props.labModeText} wordStyle={props} />
                 </button>
               </div>
 
               <div className="tmhero-slider">
                 <div className="tmhero-slider-label">
-                  <span dangerouslySetInnerHTML={richText(active.workLabel, props)} />
+                  <span
+                    dangerouslySetInnerHTML={richText(active.workLabel, props)}
+                  />
                   <b>{formatPlain(work, props.locale)}</b>
                 </div>
                 <input
@@ -505,10 +729,16 @@ export function ThreeMashHero(props: Props) {
                   max={active.workMax}
                   step={active.workStep}
                   value={work}
-                  style={{ "--p": `${rangeProgress(work, active.workMin, active.workMax)}%` } as any}
+                  style={
+                    {
+                      "--p": `${rangeProgress(work, active.workMin, active.workMax)}%`,
+                    } as any
+                  }
                   onInput={(event) => {
                     stopHeroAnimation();
-                    setWork(Number((event.currentTarget as HTMLInputElement).value));
+                    setWork(
+                      Number((event.currentTarget as HTMLInputElement).value),
+                    );
                   }}
                   aria-label={active.workLabel || undefined}
                 />
@@ -516,7 +746,9 @@ export function ThreeMashHero(props: Props) {
 
               <div className="tmhero-slider">
                 <div className="tmhero-slider-label">
-                  <span dangerouslySetInnerHTML={richText(active.rptLabel, props)} />
+                  <span
+                    dangerouslySetInnerHTML={richText(active.rptLabel, props)}
+                  />
                   <b>
                     {percent}
                     {rpt}
@@ -528,10 +760,16 @@ export function ThreeMashHero(props: Props) {
                   max={active.rptMax}
                   step={active.rptStep}
                   value={rpt}
-                  style={{ "--p": `${rangeProgress(rpt, active.rptMin, active.rptMax)}%` } as any}
+                  style={
+                    {
+                      "--p": `${rangeProgress(rpt, active.rptMin, active.rptMax)}%`,
+                    } as any
+                  }
                   onInput={(event) => {
                     stopHeroAnimation();
-                    setRpt(Number((event.currentTarget as HTMLInputElement).value));
+                    setRpt(
+                      Number((event.currentTarget as HTMLInputElement).value),
+                    );
                   }}
                   aria-label={active.rptLabel || undefined}
                 />
@@ -539,7 +777,9 @@ export function ThreeMashHero(props: Props) {
 
               <div className="tmhero-slider">
                 <div className="tmhero-slider-label">
-                  <span dangerouslySetInnerHTML={richText(active.costLabel, props)} />
+                  <span
+                    dangerouslySetInnerHTML={richText(active.costLabel, props)}
+                  />
                   <b>
                     {currency}
                     {formatPlain(cost, props.locale)}
@@ -551,14 +791,23 @@ export function ThreeMashHero(props: Props) {
                   max={Math.max(active.costMax, cost)}
                   step={active.costStep}
                   value={cost}
-                  style={{ "--p": `${rangeProgress(cost, active.costMin, Math.max(active.costMax, cost))}%` } as any}
+                  style={
+                    {
+                      "--p": `${rangeProgress(cost, active.costMin, Math.max(active.costMax, cost))}%`,
+                    } as any
+                  }
                   onInput={(event) => {
                     stopHeroAnimation();
-                    setCost(Number((event.currentTarget as HTMLInputElement).value));
+                    setCost(
+                      Number((event.currentTarget as HTMLInputElement).value),
+                    );
                   }}
                   aria-label={active.costLabel || undefined}
                 />
-                <a className="tmhero-calc-link" href={href(active.costDetailHref)}>
+                <a
+                  className="tmhero-calc-link"
+                  href={href(active.costDetailHref)}
+                >
                   <RichInline value={active.costDetailText} wordStyle={props} />
                 </a>
               </div>
@@ -566,7 +815,16 @@ export function ThreeMashHero(props: Props) {
               <div className="tmhero-output">
                 <div className="tmhero-row">
                   <span>
-                    <RichInline value={props.currentLossLabel} wordStyle={props} /> <i dangerouslySetInnerHTML={richText(props.currentLossNote, props)} />
+                    <RichInline
+                      value={props.currentLossLabel}
+                      wordStyle={props}
+                    />{" "}
+                    <i
+                      dangerouslySetInnerHTML={richText(
+                        props.currentLossNote,
+                        props,
+                      )}
+                    />
                   </span>
                   <b className="tmhero-loss">
                     {negative}
@@ -576,7 +834,16 @@ export function ThreeMashHero(props: Props) {
                 </div>
                 <div className="tmhero-row">
                   <span>
-                    <RichInline value={props.targetLossLabel} wordStyle={props} /> <i dangerouslySetInnerHTML={richText(props.targetLossNote, props)} />
+                    <RichInline
+                      value={props.targetLossLabel}
+                      wordStyle={props}
+                    />{" "}
+                    <i
+                      dangerouslySetInnerHTML={richText(
+                        props.targetLossNote,
+                        props,
+                      )}
+                    />
                   </span>
                   <b>
                     {negative}
@@ -587,14 +854,36 @@ export function ThreeMashHero(props: Props) {
               </div>
 
               <div className="tmhero-total">
-                <div className="tmhero-micro" dangerouslySetInnerHTML={richText(props.savingsEyebrow, props)} />
-                <div className={`tmhero-total-value${isAtTarget ? " is-message" : ""}`}>
-                  {isAtTarget ? <RichInline value={props.alreadyTargetText} wordStyle={props} /> : `${positive}${currency}${formatPlain(savings, props.locale)}`}
+                <div
+                  className="tmhero-micro"
+                  dangerouslySetInnerHTML={richText(
+                    props.savingsEyebrow,
+                    props,
+                  )}
+                />
+                <div
+                  className={`tmhero-total-value${isAtTarget ? " is-message" : ""}`}
+                >
+                  {isAtTarget ? (
+                    <RichInline
+                      value={props.alreadyTargetText}
+                      wordStyle={props}
+                    />
+                  ) : (
+                    `${positive}${currency}${formatPlain(savings, props.locale)}`
+                  )}
                 </div>
               </div>
 
               <div className="tmhero-fine">
-                <RichInline value={props.fineTextBeforeLink} wordStyle={props} /> <a href={href(props.fineLinkHref)} dangerouslySetInnerHTML={richText(props.fineLinkText, props)} />{" "}
+                <RichInline
+                  value={props.fineTextBeforeLink}
+                  wordStyle={props}
+                />{" "}
+                <a
+                  href={href(props.fineLinkHref)}
+                  dangerouslySetInnerHTML={richText(props.fineLinkText, props)}
+                />{" "}
                 <RichInline value={props.fineTextAfterLink} wordStyle={props} />
               </div>
             </div>
@@ -602,10 +891,30 @@ export function ThreeMashHero(props: Props) {
         </div>
 
         <div className="tmhero-stats">
-          <StatBlock value={props.stat1Value} suffix={props.stat1Suffix} label={props.stat1Label} wordStyle={props} />
-          <StatBlock value={props.stat2Value} suffix={props.stat2Suffix} label={props.stat2Label} wordStyle={props} />
-          <StatBlock value={props.stat3Value} suffix={props.stat3Suffix} label={props.stat3Label} wordStyle={props} />
-          <StatBlock value={props.stat4Value} suffix={props.stat4Suffix} label={props.stat4Label} wordStyle={props} />
+          <StatBlock
+            value={props.stat1Value}
+            suffix={props.stat1Suffix}
+            label={props.stat1Label}
+            wordStyle={props}
+          />
+          <StatBlock
+            value={props.stat2Value}
+            suffix={props.stat2Suffix}
+            label={props.stat2Label}
+            wordStyle={props}
+          />
+          <StatBlock
+            value={props.stat3Value}
+            suffix={props.stat3Suffix}
+            label={props.stat3Label}
+            wordStyle={props}
+          />
+          <StatBlock
+            value={props.stat4Value}
+            suffix={props.stat4Suffix}
+            label={props.stat4Label}
+            wordStyle={props}
+          />
         </div>
       </div>
     </section>

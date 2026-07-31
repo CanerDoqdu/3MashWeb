@@ -14,11 +14,20 @@ import {
   type IkasCustomer,
   type IkasOrderLineItem,
 } from "@ikas/bp-storefront";
-import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
+import {
+  hydrateMissingOrderLineImageFallbacks,
+  orderLineImageUrl,
+  orderLineImageUrlCandidates,
+} from "../ThreeMashOrderLineImage";
 import type { Props } from "./types";
 
 const categoryProductsPageHref = "/dental-3d-yazici-recineleri";
-const legacyContinueShoppingHrefs = new Set(["/2tplvqpo-category-products-page", "/tum-urunler", "/search", "/cart"]);
+const legacyContinueShoppingHrefs = new Set([
+  "/2tplvqpo-category-products-page",
+  "/tum-urunler",
+  "/search",
+  "/cart",
+]);
 
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
@@ -31,7 +40,9 @@ function href(value: string | undefined, fallback: string) {
 
 function continueShoppingTarget(value: string | undefined) {
   const next = href(value, categoryProductsPageHref);
-  return legacyContinueShoppingHrefs.has(next) ? categoryProductsPageHref : next;
+  return legacyContinueShoppingHrefs.has(next)
+    ? categoryProductsPageHref
+    : next;
 }
 
 function money(value: number | null | undefined, cart: IkasCart | null) {
@@ -72,28 +83,76 @@ function itemTitle(item: IkasOrderLineItem) {
 }
 
 function variantText(item: IkasOrderLineItem) {
-  return item.variant?.variantValues?.map((value) => value.variantValueName).filter(Boolean).join(" / ") || item.variant?.sku || "";
+  return (
+    item.variant?.variantValues
+      ?.map((value) => value.variantValueName)
+      .filter(Boolean)
+      .join(" / ") ||
+    item.variant?.sku ||
+    ""
+  );
 }
 
-function EmptyCart({ props, count, isLoggedIn }: { props: Props; count: number; isLoggedIn: boolean }) {
-  const buttonHref = isLoggedIn ? continueShoppingTarget(props.emptyButtonHref) : href(props.loginHref, "/account/login");
+function EmptyCart({
+  props,
+  count,
+  isLoggedIn,
+}: {
+  props: Props;
+  count: number;
+  isLoggedIn: boolean;
+}) {
+  const buttonHref = isLoggedIn
+    ? continueShoppingTarget(props.emptyButtonHref)
+    : href(props.loginHref, "/account/login");
+  const buttonText = isLoggedIn
+    ? text(props.emptyButtonText, "ALIŞVERİŞE BAŞLA")
+    : text(props.loginRequiredText, "GİRİŞ YAP");
 
   return (
     <div className="tmcart-wrap">
-      <h1>{text(props.titleText, "Sepetim")} ( {count} )</h1>
+      <header className="tmcart-head">
+        <span>SEPET</span>
+        <h1>{text(props.titleText, "Sepetim")}</h1>
+        <p>
+          {count} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve
+          adetleri kontrol edin.
+        </p>
+      </header>
       <div className="tmcart-empty">
-        <svg className="tmcart-empty-icon" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" aria-hidden="true" focusable="false">
+        <svg
+          className="tmcart-empty-icon"
+          stroke="currentColor"
+          fill="currentColor"
+          strokeWidth="0"
+          viewBox="0 0 576 512"
+          aria-hidden="true"
+          focusable="false"
+        >
           <path d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z" />
         </svg>
+        <h2>Sepetiniz boş.</h2>
+        <p>
+          3mash ürünlerine geri dönerek ihtiyacınız olan cihaz, reçine veya sarf
+          ürününü sepete ekleyin.
+        </p>
       </div>
       <a className="tmcart-empty-button" href={buttonHref}>
-        {text(props.emptyButtonText, "ALIŞVERİŞE BAŞLA")}
+        {buttonText}
       </a>
     </div>
   );
 }
 
-function CartLine({ item, props, onChanged }: { item: IkasOrderLineItem; props: Props; onChanged: () => void }) {
+function CartLine({
+  item,
+  props,
+  onChanged,
+}: {
+  item: IkasOrderLineItem;
+  props: Props;
+  onChanged: () => void;
+}) {
   const [isUpdating, setIsUpdating] = useState(false);
   const imageCandidates = orderLineImageUrlCandidates(item, 360);
   const image = imageCandidates[0] || imageUrl(item);
@@ -128,17 +187,47 @@ function CartLine({ item, props, onChanged }: { item: IkasOrderLineItem; props: 
     <article className="tmcart-item">
       <a className="tmcart-item-media" href={productHref(item)}>
         <span>{itemTitle(item).slice(0, 1)}</span>
-        {image ? <img src={image} alt={itemTitle(item)} loading="lazy" decoding="async" data-image-index="0" onError={(event) => handleOrderLineImageError(event, imageCandidates)} /> : null}
+        {image ? (
+          <img
+            src={image}
+            alt={itemTitle(item)}
+            loading="lazy"
+            decoding="async"
+            data-image-index="0"
+            onError={(event) =>
+              handleOrderLineImageError(event, imageCandidates)
+            }
+          />
+        ) : null}
       </a>
       <div className="tmcart-item-copy">
         <a href={productHref(item)}>{itemTitle(item)}</a>
         {detail ? <small>{detail}</small> : null}
-        <button type="button" onClick={remove} disabled={isUpdating}>{text(props.removeText, "Kaldır")}</button>
+        <button
+          type="button"
+          onClick={remove}
+          disabled={isUpdating}
+          aria-label={`${itemTitle(item)} sepetten kaldır`}
+        >
+          {text(props.removeText, "Kaldır")}
+        </button>
       </div>
       <div className="tmcart-qty" aria-label="Adet">
-        <button type="button" disabled={isUpdating || item.quantity <= 1} onClick={() => updateQuantity(item.quantity - 1)}>-</button>
+        <button
+          type="button"
+          disabled={isUpdating || item.quantity <= 1}
+          onClick={() => updateQuantity(item.quantity - 1)}
+        >
+          -
+        </button>
         <span>{item.quantity}</span>
-        <button type="button" disabled={isUpdating} onClick={() => updateQuantity(item.quantity + 1)}>+</button>
+        <button
+          type="button"
+          disabled={isUpdating}
+          onClick={() => updateQuantity(item.quantity + 1)}
+        >
+          +
+        </button>
       </div>
       <div className="tmcart-price">
         <strong>{getOrderLineItemFormattedFinalPriceWithQuantity(item)}</strong>
@@ -149,7 +238,9 @@ function CartLine({ item, props, onChanged }: { item: IkasOrderLineItem; props: 
 }
 
 export function ThreeMashCartPage(props: Props) {
-  const [customer, setCustomer] = useState<IkasCustomer | null>(customerStore.customer);
+  const [customer, setCustomer] = useState<IkasCustomer | null>(
+    customerStore.customer,
+  );
   const [cart, setCartState] = useState<IkasCart | null>(cartStore.cart);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
@@ -160,10 +251,15 @@ export function ThreeMashCartPage(props: Props) {
 
   useEffect(() => {
     let mounted = true;
-    Promise.all([initCustomerStore(customerStore), waitForCartStoreInit(cartStore)])
+    Promise.all([
+      initCustomerStore(customerStore),
+      waitForCartStoreInit(cartStore),
+    ])
       .then(async () => {
         await getCart();
-        await hydrateMissingOrderLineImageFallbacks(cartStore.cart?.orderLineItems || []);
+        await hydrateMissingOrderLineImageFallbacks(
+          cartStore.cart?.orderLineItems || [],
+        );
       })
       .finally(() => {
         if (!mounted) return;
@@ -180,12 +276,21 @@ export function ThreeMashCartPage(props: Props) {
   const hasItems = items.length > 0;
 
   const style = {
-    "--tmcart-bg": text(props.backgroundColor, "#ffffff"),
-    "--tmcart-text": text(props.textColor, "#000000"),
-    "--tmcart-muted": text(props.mutedTextColor, "#777777"),
-    "--tmcart-line": text(props.lineColor, "#e8e8e8"),
-    "--tmcart-button-bg": text(props.buttonBackgroundColor, "#000000"),
-    "--tmcart-button-text": text(props.buttonTextColor, "#ffffff"),
+    "--tmcart-bg": text(props.backgroundColor, "var(--tm-theme-bg, #fafaf7)"),
+    "--tmcart-text": text(props.textColor, "var(--tm-theme-text, #0e0e0c)"),
+    "--tmcart-muted": text(
+      props.mutedTextColor,
+      "var(--tm-theme-sub, #55554e)",
+    ),
+    "--tmcart-line": text(props.lineColor, "var(--tm-theme-line, #e6e6e0)"),
+    "--tmcart-button-bg": text(
+      props.buttonBackgroundColor,
+      "var(--tm-theme-accent, #c7f136)",
+    ),
+    "--tmcart-button-text": text(
+      props.buttonTextColor,
+      "var(--tm-theme-text, #0e0e0c)",
+    ),
   } as any;
 
   async function checkout() {
@@ -209,7 +314,11 @@ export function ThreeMashCartPage(props: Props) {
   if (!hasItems) {
     return (
       <section className="three-mash-cart-page" style={style}>
-        <EmptyCart props={props} count={itemCount} isLoggedIn={Boolean(customer)} />
+        <EmptyCart
+          props={props}
+          count={itemCount}
+          isLoggedIn={Boolean(customer)}
+        />
       </section>
     );
   }
@@ -217,10 +326,24 @@ export function ThreeMashCartPage(props: Props) {
   return (
     <section className="three-mash-cart-page" style={style}>
       <div className="tmcart-wrap">
-        <h1>{text(props.titleText, "Sepetim")} ( {itemCount} )</h1>
+        <header className="tmcart-head">
+          <span>SEPET</span>
+          <h1>{text(props.titleText, "Sepetim")}</h1>
+          <p>
+            {itemCount} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve
+            adetleri kontrol edin.
+          </p>
+        </header>
         <div className="tmcart-shell">
           <div className="tmcart-list">
-            {items.map((item) => <CartLine item={item} props={props} onChanged={refreshState} key={item.id} />)}
+            {items.map((item) => (
+              <CartLine
+                item={item}
+                props={props}
+                onChanged={refreshState}
+                key={item.id}
+              />
+            ))}
           </div>
 
           <aside className="tmcart-summary">
@@ -234,12 +357,16 @@ export function ThreeMashCartPage(props: Props) {
               <strong>{money(cart?.totalFinalPrice, cart)}</strong>
             </div>
             <button type="button" onClick={checkout} disabled={isCheckingOut}>
-              <span>{text(props.checkoutButtonText, "ALIŞVERİŞİ TAMAMLA")}</span>
+              <span>
+                {text(props.checkoutButtonText, "ALIŞVERİŞİ TAMAMLA")}
+              </span>
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" />
               </svg>
             </button>
-            <a href={continueShoppingTarget(props.continueShoppingHref)}>{text(props.continueShoppingText, "Alışverişe devam et")}</a>
+            <a href={continueShoppingTarget(props.continueShoppingHref)}>
+              {text(props.continueShoppingText, "Alışverişe devam et")}
+            </a>
           </aside>
         </div>
       </div>

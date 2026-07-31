@@ -1,3 +1,5 @@
+@import "../../sub-components/ThreeMashPrintersSourceLanding/styles.css";
+
 .three-mash-category-landing {
   --tmcl-bg: var(--tm-theme-bg, #FAFAF7);
   --tmcl-ink: var(--tm-theme-text, #0E0E0C);
@@ -29,7 +31,7 @@
 }
 
 .tmcl-hero {
-  padding: 56px 0 64px;
+  padding: 56px 0 0;
   border-bottom: 1px solid var(--tmcl-line);
   background: radial-gradient(900px 380px at 88% -10%, rgba(199, 241, 54, 0.15), transparent 60%), var(--tmcl-bg);
 }
@@ -38,6 +40,7 @@
   color: var(--tmcl-mut);
   font-size: 13px;
   line-height: 1.4;
+  padding-bottom: 24px;
 }
 
 .tmcl-crumb a {
@@ -65,9 +68,13 @@
 
 .tmcl-hero h1 {
   max-width: 840px;
-  margin: 20px 0 0;
+  margin: 0;
   font-size: 60px;
   line-height: 1.05;
+}
+
+.tmcl-hero .tmcl-crumb + h1 {
+  margin-top: 0;
 }
 
 .tmcl-resins .tmcl-hero h1 {
@@ -194,7 +201,7 @@
 
 .tmcl-value-strip em {
   margin-left: 6px;
-  color: var(--tmcl-lime-ink);
+  color: var(--tmcl-ink);
   font-style: normal;
 }
 
@@ -203,6 +210,7 @@
 }
 
 .tmcl-printers .tmcl-value-strip strong {
+  color: var(--tmcl-ink);
   font-size: 23px;
 }
 
@@ -1001,7 +1009,7 @@
   }
 
   .tmcl-hero {
-    padding: 44px 0 52px;
+    padding: 44px 0 0;
   }
 
   .tmcl-hero h1 {
@@ -1058,4 +1066,3 @@
     min-width: 0;
   }
 }
-@import "../../sub-components/ThreeMashPrintersSourceLanding/styles.css";

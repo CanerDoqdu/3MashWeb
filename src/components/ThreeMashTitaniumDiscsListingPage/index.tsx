@@ -1,17 +1,9 @@
-import { ThreeMashProductsPage } from "../ThreeMashProductsPage";
-import { listingProps } from "../ThreeMashProductListingPresets";
-import type { Props } from "../ThreeMashProductsPage/types";
+import ThreeMashCategoryLanding from "../../sub-components/ThreeMashCategoryLanding";
+import { titaniumDiscsCategoryData } from "../../sub-components/ThreeMashCategoryLanding/presets";
+import type { Props } from "./types";
 
 export function ThreeMashTitaniumDiscsListingPage(props: Props) {
-  return (
-    <ThreeMashProductsPage
-      {...listingProps(props, {
-        eyebrowText: "ÜRÜN KATEGORİSİ",
-        titleText: "Titanyum Diskler",
-        descriptionText: "Dental CAD/CAM üretim için titanyum disk canlı envanteri.",
-      })}
-    />
-  );
+  return <ThreeMashCategoryLanding data={titaniumDiscsCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashTitaniumDiscsListingPage;

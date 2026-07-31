@@ -1,16 +1,35 @@
-import { faqSections } from '../ThreeMashPageData/sourceData';
-import { Props } from './types';
+import { faqSections } from "../ThreeMashPageData/sourceData";
+import { Props } from "./types";
 
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
 }
 
 function numberValue(value: number | undefined, fallback: number) {
-  return typeof value === 'number' ? value : fallback;
+  return typeof value === "number" ? value : fallback;
 }
 
 function propText(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
+}
+
+function themeColor(
+  input: string | undefined,
+  fallback: string,
+  token: string,
+  legacyDefaults: string[] = [],
+) {
+  const trimmed = input?.trim();
+  const normalized = trimmed?.toLowerCase();
+  const defaults = [fallback, ...legacyDefaults].map((item) =>
+    item.toLowerCase(),
+  );
+
+  if (!trimmed || (normalized && defaults.includes(normalized))) {
+    return `var(${token}, ${fallback})`;
+  }
+
+  return trimmed;
 }
 
 function sectionsFromProps(props: Props) {
@@ -21,13 +40,27 @@ function sectionsFromProps(props: Props) {
     {
       title: propText(props.resinSectionTitle, resin.title),
       questions: resin.questions.map((item, index) => ({
-        question: propText((props as any)[`resinQuestion${index + 1}`], item.question),
+        question: propText(
+          (props as any)[`resinQuestion${index + 1}`],
+          item.question,
+        ),
+        answerHtml: propText(
+          (props as any)[`resinAnswer${index + 1}`],
+          item.answerHtml,
+        ),
       })),
     },
     {
       title: propText(props.printerSectionTitle, printer.title),
       questions: printer.questions.map((item, index) => ({
-        question: propText((props as any)[`printerQuestion${index + 1}`], item.question),
+        question: propText(
+          (props as any)[`printerQuestion${index + 1}`],
+          item.question,
+        ),
+        answerHtml: propText(
+          (props as any)[`printerAnswer${index + 1}`],
+          item.answerHtml,
+        ),
       })),
     },
   ];
@@ -36,37 +69,81 @@ function sectionsFromProps(props: Props) {
 export function ThreeMashFaqPage(props: Props) {
   const sections = sectionsFromProps(props);
   const style = {
-    '--tmfaq-bg': text(props.backgroundColor, '#ffffff'),
-    '--tmfaq-text': text(props.textColor, '#101010'),
-    '--tmfaq-muted': text(props.mutedTextColor, '#6f6f6f'),
-    '--tmfaq-panel': text(props.panelColor, '#ebebeb'),
-    '--tmfaq-line': text(props.lineColor, '#e5e5e5'),
-    '--tmfaq-max': String(numberValue(props.maxWidth, 1280)) + 'px',
+    "--tmfaq-bg": themeColor(
+      props.backgroundColor,
+      "#FAFAF7",
+      "--tm-theme-bg",
+      ["#ffffff", "#fff"],
+    ),
+    "--tmfaq-text": themeColor(props.textColor, "#0E0E0C", "--tm-theme-text", [
+      "#101010",
+      "#111111",
+      "#000000",
+    ]),
+    "--tmfaq-muted": themeColor(
+      props.mutedTextColor,
+      "#55554e",
+      "--tm-theme-sub",
+      ["#6f6f6f", "#777777"],
+    ),
+    "--tmfaq-panel": themeColor(
+      props.panelColor,
+      "#F1F1EC",
+      "--tm-theme-panel",
+      ["#ebebeb", "#ffffff", "#fff"],
+    ),
+    "--tmfaq-line": themeColor(props.lineColor, "#E6E6E0", "--tm-theme-line", [
+      "#e5e5e5",
+    ]),
+    "--tmfaq-accent": "var(--tm-theme-accent, #C7F136)",
+    "--tmfaq-dark": "var(--tm-theme-dark, #0E0E0C)",
+    "--tmfaq-max": `${numberValue(props.maxWidth, 1180)}px`,
   } as any;
+  const pageTitle = text(props.titleText, "Sık Sorulan Sorular");
 
   return (
     <section className="three-mash-faq-page" style={style}>
       <div className="tmfaq-shell">
-        {props.showPageTitle && props.titleText ? <h1>{props.titleText}</h1> : null}
+        {props.showPageTitle !== false ? (
+          <section className="tmfaq-hero">
+            <span className="tmfaq-kicker">SSS</span>
+            <div className="tmfaq-hero-grid">
+              <h1>{pageTitle}</h1>
+              <p>
+                Dental üretim akışı, reçine kullanımı ve 3D yazıcı süreçlerinde
+                en sık gelen soruları tek yerde topladık.
+              </p>
+            </div>
+          </section>
+        ) : null}
+
         {sections.map((section, sectionIndex) => (
-          <div className="tmfaq-section" key={section.title}>
-            <h2>{section.title}</h2>
+          <section className="tmfaq-section" key={section.title}>
+            <div className="tmfaq-section-head">
+              <span className="tmfaq-section-code">
+                {String(sectionIndex + 1).padStart(2, "0")}
+              </span>
+              <h2>{section.title}</h2>
+            </div>
             <div className="tmfaq-list">
               {section.questions.map((item, itemIndex) => (
-                <article className="tmfaq-item" key={`${sectionIndex}-${itemIndex}`}>
-                  <div className="tmfaq-row">
-                    <span className="tmfaq-icon" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" focusable="false">
-                        <path fill="none" d="M0 0h24v24H0V0z" />
-                        <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
-                      </svg>
-                    </span>
+                <details
+                  className="tmfaq-item"
+                  key={`${sectionIndex}-${itemIndex}`}
+                  open={sectionIndex === 0 && itemIndex === 0}
+                >
+                  <summary>
                     <span>{item.question}</span>
-                  </div>
-                </article>
+                    <b aria-hidden="true">+</b>
+                  </summary>
+                  <div
+                    className="tmfaq-answer"
+                    dangerouslySetInnerHTML={{ __html: item.answerHtml }}
+                  />
+                </details>
               ))}
             </div>
-          </div>
+          </section>
         ))}
       </div>
     </section>

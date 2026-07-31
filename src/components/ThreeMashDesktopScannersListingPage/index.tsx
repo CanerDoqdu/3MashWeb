@@ -1,17 +1,9 @@
-import { ThreeMashProductsPage } from "../ThreeMashProductsPage";
-import { listingProps } from "../ThreeMashProductListingPresets";
-import type { Props } from "../ThreeMashProductsPage/types";
+import ThreeMashCategoryLanding from "../../sub-components/ThreeMashCategoryLanding";
+import { desktopScannersCategoryData } from "../../sub-components/ThreeMashCategoryLanding/presets";
+import type { Props } from "./types";
 
 export function ThreeMashDesktopScannersListingPage(props: Props) {
-  return (
-    <ThreeMashProductsPage
-      {...listingProps(props, {
-        eyebrowText: "ÜRÜN KATEGORİSİ",
-        titleText: "Masaüstü Tarayıcılar",
-        descriptionText: "Dijital ölçü ve laboratuvar akışı için canlı masaüstü tarayıcı envanteri.",
-      })}
-    />
-  );
+  return <ThreeMashCategoryLanding data={desktopScannersCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashDesktopScannersListingPage;

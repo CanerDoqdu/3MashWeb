@@ -1,4 +1,7 @@
 import { useEffect } from "preact/hooks";
+import p1dPrinterImage from "../../assets/p1d-printer-data";
+import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
+import vectorPrinterImage from "../../assets/vectorprinter-data";
 
 type AnnouncementWindow = Window & {
   __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: {
@@ -9,18 +12,6 @@ type AnnouncementWindow = Window & {
     href?: string;
   };
 };
-
-function PrinterIcon() {
-  return (
-    <svg viewBox="0 0 64 74" fill="none" stroke="#0E0E0C" strokeWidth="2.4" strokeLinejoin="round" aria-hidden="true" focusable="false">
-      <rect x="12" y="6" width="40" height="60" rx="9" />
-      <rect x="21" y="15" width="22" height="17" rx="2" stroke="#E2492F" />
-      <line x1="21" y1="44" x2="43" y2="44" />
-      <line x1="32" y1="32" x2="32" y2="44" stroke="#E2492F" />
-      <rect x="19" y="52" width="26" height="8" rx="4" />
-    </svg>
-  );
-}
 
 export default function ThreeMashPrintersSourceLanding() {
   useEffect(() => {
@@ -90,7 +81,7 @@ export default function ThreeMashPrintersSourceLanding() {
           </div>
           <div className="pgrid">
             <div className="pc hot">
-              <div className="ph"><span className="tag hot">EN YÜKSEK ÇÖZÜNÜRLÜK</span><span className="st">Satışta</span><PrinterIcon /></div>
+              <div className="ph"><span className="tag hot">EN YÜKSEK ÇÖZÜNÜRLÜK</span><span className="st">Satışta</span><img className="printer-img printer-img-p16l" src={p16lPrimaryImage} alt="MASH P16L dental 3D yazıcı" loading="lazy" /></div>
               <div className="bd">
                 <h3>MASH P16L</h3>
                 <div className="ds">385 nm profesyonel dental yazıcı. <b>16K</b> ultra çözünürlük ve termal kontrolle en detaylı yüzey ve keskin marjin.</div>
@@ -103,7 +94,7 @@ export default function ThreeMashPrintersSourceLanding() {
               </div>
             </div>
             <div className="pc">
-              <div className="ph"><span className="tag">YERLİ · HIZLI</span><span className="st">Talep üzerine</span><PrinterIcon /></div>
+              <div className="ph"><span className="tag">YERLİ · HIZLI</span><span className="st">Talep üzerine</span><img className="printer-img printer-img-curie" src={p1dPrinterImage} alt="Mash CURIE M1 dental 3D yazıcı" loading="lazy" /></div>
               <div className="bd">
                 <h3>Mash CURIE M1</h3>
                 <div className="ds">Antalya Teknokent'te üretilen <b>tamamen yerli</b> yazıcı. Hız ve düşük toplam maliyet için tasarlandı.</div>
@@ -116,7 +107,7 @@ export default function ThreeMashPrintersSourceLanding() {
               </div>
             </div>
             <div className="pc">
-              <div className="ph"><span className="tag">EKONOMİK GİRİŞ</span><span className="st">Talep üzerine</span><PrinterIcon /></div>
+              <div className="ph"><span className="tag">EKONOMİK GİRİŞ</span><span className="st">Talep üzerine</span><img className="printer-img printer-img-halot" src={vectorPrinterImage} alt="Creality Halot-Sky 6K dental 3D yazıcı" loading="lazy" /></div>
               <div className="bd">
                 <h3>Creality Halot-Sky 6K</h3>
                 <div className="ds">6K çözünürlük; <b>3mash iyileştirmeli</b> versiyonda <b>±15 µm</b> garanti. $10.000'lık cihaz kalitesine çok daha uygun fiyata.</div>

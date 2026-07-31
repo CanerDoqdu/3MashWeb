@@ -2,7 +2,7 @@
 import type { IkasBlog } from "@ikas/bp-storefront";
 
 export interface Props {
-  /** Blog detay rotasında geçerli ikas blog verisine bağlayın. */
+  /** Blog yazı rotasında geçerli ikas blog yazısına bağlayın. */
   blog: IkasBlog | null;
   backLinkText?: string;
   backLinkHref?: string;

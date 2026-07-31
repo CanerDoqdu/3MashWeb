@@ -105,7 +105,7 @@ export type CategorySectionHead = {
 };
 
 export type CategoryLandingData = {
-  kind: "resins" | "printers" | "generic";
+  kind: "resins" | "printers" | "wash-cure" | "zircon" | "furnaces" | "scanners" | "spares" | "systems" | "titanium";
   announcement: {
     highlight: string;
     text: string;

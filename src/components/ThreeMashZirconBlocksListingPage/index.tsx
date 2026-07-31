@@ -1,17 +1,9 @@
-import { ThreeMashProductsPage } from "../ThreeMashProductsPage";
-import { listingProps } from "../ThreeMashProductListingPresets";
-import type { Props } from "../ThreeMashProductsPage/types";
+import ThreeMashCategoryLanding from "../../sub-components/ThreeMashCategoryLanding";
+import { zirconBlocksCategoryData } from "../../sub-components/ThreeMashCategoryLanding/presets";
+import type { Props } from "./types";
 
 export function ThreeMashZirconBlocksListingPage(props: Props) {
-  return (
-    <ThreeMashProductsPage
-      {...listingProps(props, {
-        eyebrowText: "ÜRÜN KATEGORİSİ",
-        titleText: "Zirkon Bloklar",
-        descriptionText: "Restoratif üretim için canlı zirkon blok envanteri.",
-      })}
-    />
-  );
+  return <ThreeMashCategoryLanding data={zirconBlocksCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashZirconBlocksListingPage;

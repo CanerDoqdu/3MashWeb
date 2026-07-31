@@ -37,22 +37,37 @@ function href(value: string | undefined, fallback: string) {
 
 function imageIdToUrl(value: string) {
   const trimmed = value.trim();
-  if (trimmed.startsWith("theme-images/")) return `https://cdn.myikas.com/images/${trimmed}/image_3840.webp`;
+  if (trimmed.startsWith("theme-images/"))
+    return `https://cdn.myikas.com/images/${trimmed}/image_3840.webp`;
   return trimmed;
 }
 
-function imageSource(value: IkasImage | string | null | undefined, fallback: string) {
+function imageSource(
+  value: IkasImage | string | null | undefined,
+  fallback: string,
+) {
   if (typeof value === "string" && value.trim()) return imageIdToUrl(value);
   if (value && typeof value === "object") {
-    const image = value as { id?: unknown; url?: unknown; src?: unknown; imageUrl?: unknown; image?: { url?: unknown; src?: unknown }; file?: { url?: unknown; src?: unknown } };
+    const image = value as {
+      id?: unknown;
+      url?: unknown;
+      src?: unknown;
+      imageUrl?: unknown;
+      image?: { url?: unknown; src?: unknown };
+      file?: { url?: unknown; src?: unknown };
+    };
     if (typeof image.url === "string") return imageIdToUrl(image.url);
     if (typeof image.src === "string") return imageIdToUrl(image.src);
     if (typeof image.imageUrl === "string") return imageIdToUrl(image.imageUrl);
     if (typeof image.id === "string") return imageIdToUrl(image.id);
-    if (typeof image.image?.url === "string") return imageIdToUrl(image.image.url);
-    if (typeof image.image?.src === "string") return imageIdToUrl(image.image.src);
-    if (typeof image.file?.url === "string") return imageIdToUrl(image.file.url);
-    if (typeof image.file?.src === "string") return imageIdToUrl(image.file.src);
+    if (typeof image.image?.url === "string")
+      return imageIdToUrl(image.image.url);
+    if (typeof image.image?.src === "string")
+      return imageIdToUrl(image.image.src);
+    if (typeof image.file?.url === "string")
+      return imageIdToUrl(image.file.url);
+    if (typeof image.file?.src === "string")
+      return imageIdToUrl(image.file.src);
   }
   return fallback;
 }
@@ -64,7 +79,11 @@ function getQueryParam(name: string) {
 
 function formatDate(value: number | null | undefined) {
   if (!value) return "";
-  return new Intl.DateTimeFormat("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(value));
+  return new Intl.DateTimeFormat("tr-TR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(new Date(value));
 }
 
 function formatOrderTotal(order: IkasOrder) {
@@ -74,60 +93,142 @@ function formatOrderTotal(order: IkasOrder) {
 
 function customerName(customer: IkasCustomer | null) {
   if (!customer) return "Hesabım";
-  return customer.fullName || `${customer.firstName || ""} ${customer.lastName || ""}`.trim() || customer.email || "Hesabım";
+  return (
+    customer.fullName ||
+    `${customer.firstName || ""} ${customer.lastName || ""}`.trim() ||
+    customer.email ||
+    "Hesabım"
+  );
 }
 
-function AccountSidebar({ customer, props }: { customer: IkasCustomer | null; props: Props }) {
+function AccountSidebar({
+  customer,
+  props,
+  active,
+}: {
+  customer: IkasCustomer | null;
+  props: Props;
+  active: string;
+}) {
   async function handleLogout(event: Event) {
     event.preventDefault();
     await logout(customerStore);
     Router.navigateToPage("LOGIN");
   }
 
+  const personalLinks = [
+    {
+      key: "account",
+      label: "Kişisel Bilgilerim",
+      href: href(props.accountHref, "/account"),
+    },
+    {
+      key: "addresses",
+      label: "Adreslerim",
+      href: href(props.addressesHref, "/account/addresses"),
+    },
+    {
+      key: "favorites",
+      label: "Beğendiğim Ürünler",
+      href: href(props.favoritesHref, "/account/favorites"),
+    },
+  ];
+
   return (
     <aside className="tmau-sidebar">
+      <span className="tmau-kicker">HESABIM</span>
       <div className="tmau-user">
         <strong>{customerName(customer)}</strong>
-        <a href="/account/logout" onClick={handleLogout}>Çıkış yap</a>
+        <a href="/account/logout" onClick={handleLogout}>
+          Çıkış yap
+        </a>
       </div>
 
       <nav className="tmau-menu">
         <h2>Kişisel Bilgilerim</h2>
-        <a href={href(props.accountHref, "/account")}>Kişisel Bilgilerim</a>
-        <a href={href(props.addressesHref, "/account/addresses")}>Adreslerim</a>
-        <a href={href(props.favoritesHref, "/account/favorites")}>Beğendiğim Ürünler</a>
+        {personalLinks.map((item) => (
+          <a
+            key={item.key}
+            className={active === item.key ? "is-active" : ""}
+            href={item.href}
+          >
+            {item.label}
+          </a>
+        ))}
         <h2>Sipariş Bilgilerim</h2>
-        <a href={href(props.ordersHref, "/account/orders")}>Siparişlerim</a>
+        <a
+          className={active === "orders" ? "is-active" : ""}
+          href={href(props.ordersHref, "/account/orders")}
+        >
+          Siparişlerim
+        </a>
       </nav>
     </aside>
   );
 }
 
-function AuthShell({ props, active, children }: { props: Props; active: "forgot" | "recover"; children: preact.ComponentChildren }) {
+function pageDescription(mode: string) {
+  if (mode === "addresses")
+    return "Teslimat ve fatura adreslerinizi hesabınıza bağlı olarak görüntüleyin.";
+  if (mode === "favorites")
+    return "Beğendiğiniz ürünleri hızlıca takip edin ve ürün sayfalarına geri dönün.";
+  return "Sipariş geçmişinizi, tarih ve toplam bilgileriyle birlikte kontrol edin.";
+}
+
+function AuthShell({
+  props,
+  active,
+  children,
+}: {
+  props: Props;
+  active: "forgot" | "recover";
+  children: preact.ComponentChildren;
+}) {
   const image = imageSource(props.backgroundImageUrl, defaultAuthImage);
+  const title =
+    active === "forgot"
+      ? text(props.titleText, "Parolamı Unuttum")
+      : text(props.titleText, "Şifremi Kurtar");
+  const copy =
+    active === "forgot"
+      ? "Lütfen üye olurken kullandığınız email adresinizi giriniz. Şifreniz email adresinize gönderilecektir."
+      : "Yeni şifrenizi belirleyin ve hesabınıza güvenli şekilde tekrar erişin.";
+
   return (
-    <section className={`tmau-auth is-${active}`}>
+    <section
+      className={`tmau-auth is-${active}`}
+      style={{ "--tmau-auth-visual": `url(${image})` } as any}
+    >
       <div className="tmau-auth-panel">
         <div className="tmau-auth-form">
-          {active === "recover" && (
-            <div className="tmau-auth-tabs">
-              <a href={href(props.loginHref, "/account/login")}>Üye Girişi</a>
-              <a href={href(props.registerHref, "/account/register")}>Üye Ol</a>
-            </div>
-          )}
-          <h1>{active === "forgot" ? text(props.titleText, "Parolamı Unuttum") : text(props.titleText, "Şifremi Kurtar")}</h1>
-          {active === "forgot" && <p className="tmau-auth-copy">Lütfen üye olurken kullandığınız email adresinizi giriniz. Şifreniz email adresinize gönderilecektir.</p>}
-          {children}
+          <div className="tmau-auth-copy">
+            <span>HESAP</span>
+            <h1>{title}</h1>
+            <p>{copy}</p>
+          </div>
+
+          <div className="tmau-auth-fields">
+            {active === "recover" && (
+              <div className="tmau-auth-tabs">
+                <a href={href(props.loginHref, "/account/login")}>Üye Girişi</a>
+                <a href={href(props.registerHref, "/account/register")}>
+                  Üye Ol
+                </a>
+              </div>
+            )}
+            {children}
+          </div>
         </div>
       </div>
-      <div className="tmau-auth-image" style={{ backgroundImage: `url(${image})` }} aria-hidden="true" />
     </section>
   );
 }
 
 function ForgotPasswordView({ props }: { props: Props }) {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   async function submit(event: Event) {
     event.preventDefault();
@@ -141,15 +242,42 @@ function ForgotPasswordView({ props }: { props: Props }) {
     <AuthShell props={props} active="forgot">
       <form onSubmit={submit}>
         <label className="tmau-auth-field">
-          <span><b>* </b>Email</span>
-          <input type="email" value={email} required autoComplete="email" onInput={(event) => setEmail((event.currentTarget as HTMLInputElement).value)} />
+          <span>
+            <b>* </b>Email
+          </span>
+          <input
+            type="email"
+            value={email}
+            required
+            autoComplete="email"
+            onInput={(event) =>
+              setEmail((event.currentTarget as HTMLInputElement).value)
+            }
+          />
         </label>
-        <button className="tmau-auth-submit" type="submit" disabled={status === "loading"}>
+        <button
+          className="tmau-auth-submit"
+          type="submit"
+          disabled={status === "loading"}
+        >
           {status === "loading" ? "Gönderiliyor..." : "Gönder"}
         </button>
-        {status !== "idle" && <p className={`tmau-status is-${status}`}>{status === "success" ? "Şifre yenileme bağlantısı email adresinize gönderildi." : status === "error" ? "İşlem tamamlanamadı. Email adresini kontrol edin." : "Gönderiliyor..."}</p>}
+        {status !== "idle" && (
+          <p className={`tmau-status is-${status}`}>
+            {status === "success"
+              ? "Şifre yenileme bağlantısı email adresinize gönderildi."
+              : status === "error"
+                ? "İşlem tamamlanamadı. Email adresini kontrol edin."
+                : "Gönderiliyor..."}
+          </p>
+        )}
       </form>
-      <a className="tmau-auth-login-link" href={href(props.loginHref, "/account/login")}>Üye Girişi</a>
+      <a
+        className="tmau-auth-login-link"
+        href={href(props.loginHref, "/account/login")}
+      >
+        Üye Girişi
+      </a>
     </AuthShell>
   );
 }
@@ -157,7 +285,9 @@ function ForgotPasswordView({ props }: { props: Props }) {
 function RecoverPasswordView({ props }: { props: Props }) {
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error" | "mismatch">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error" | "mismatch"
+  >("idle");
 
   async function submit(event: Event) {
     event.preventDefault();
@@ -168,7 +298,9 @@ function RecoverPasswordView({ props }: { props: Props }) {
     }
     const token = getQueryParam("token");
     setStatus("loading");
-    const success = token ? await recoverPassword(customerStore, password, passwordAgain, token) : false;
+    const success = token
+      ? await recoverPassword(customerStore, password, passwordAgain, token)
+      : false;
     if (success) {
       setStatus("success");
       setTimeout(() => Router.navigateToPage("LOGIN"), 650);
@@ -182,16 +314,46 @@ function RecoverPasswordView({ props }: { props: Props }) {
       <form onSubmit={submit}>
         <label className="tmau-auth-field">
           <span>* Şifre</span>
-          <input type="password" value={password} required autoComplete="new-password" onInput={(event) => setPassword((event.currentTarget as HTMLInputElement).value)} />
+          <input
+            type="password"
+            value={password}
+            required
+            autoComplete="new-password"
+            onInput={(event) =>
+              setPassword((event.currentTarget as HTMLInputElement).value)
+            }
+          />
         </label>
         <label className="tmau-auth-field">
           <span>* Şifre Tekrar</span>
-          <input type="password" value={passwordAgain} required autoComplete="new-password" onInput={(event) => setPasswordAgain((event.currentTarget as HTMLInputElement).value)} />
+          <input
+            type="password"
+            value={passwordAgain}
+            required
+            autoComplete="new-password"
+            onInput={(event) =>
+              setPasswordAgain((event.currentTarget as HTMLInputElement).value)
+            }
+          />
         </label>
-        <button className="tmau-auth-submit" type="submit" disabled={status === "loading"}>
+        <button
+          className="tmau-auth-submit"
+          type="submit"
+          disabled={status === "loading"}
+        >
           {status === "loading" ? "Kaydediliyor..." : "Şifreyi Güncelle"}
         </button>
-        {status !== "idle" && <p className={`tmau-status is-${status}`}>{status === "success" ? "Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz." : status === "mismatch" ? "Şifreler eşleşmiyor." : status === "error" ? "Token geçersiz veya işlem tamamlanamadı." : "Kaydediliyor..."}</p>}
+        {status !== "idle" && (
+          <p className={`tmau-status is-${status}`}>
+            {status === "success"
+              ? "Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz."
+              : status === "mismatch"
+                ? "Şifreler eşleşmiyor."
+                : status === "error"
+                  ? "Token geçersiz veya işlem tamamlanamadı."
+                  : "Kaydediliyor..."}
+          </p>
+        )}
       </form>
     </AuthShell>
   );
@@ -202,7 +364,9 @@ function AddressCard({ address }: { address: IkasCustomerAddress }) {
     <article className="tmau-card">
       <h2>{address.title || "Adres"}</h2>
       <p>{getCustomerAddressText(address)}</p>
-      <small>{`${address.firstName || ""} ${address.lastName || ""}`.trim()}</small>
+      <small>
+        {`${address.firstName || ""} ${address.lastName || ""}`.trim()}
+      </small>
     </article>
   );
 }
@@ -214,17 +378,30 @@ function ProductCard({ product }: { product: IkasProduct }) {
   return (
     <a className="tmau-product" href={getProductHref(product)}>
       <div className="tmau-product-media">
-        {image ? <img src={getDefaultSrc(image)} srcSet={createMediaSrcset(image)} alt={image.altText || product.name} loading="lazy" /> : <span>{product.name.slice(0, 1)}</span>}
+        {image ? (
+          <img
+            src={getDefaultSrc(image)}
+            srcSet={createMediaSrcset(image)}
+            alt={image.altText || product.name}
+            loading="lazy"
+          />
+        ) : (
+          <span>{product.name.slice(0, 1)}</span>
+        )}
       </div>
       <strong>{product.name}</strong>
-      <small>{variant ? getProductVariantFormattedFinalPrice(variant) : ""}</small>
+      <small>
+        {variant ? getProductVariantFormattedFinalPrice(variant) : ""}
+      </small>
     </a>
   );
 }
 
 export function ThreeMashAccountUtilityPage(props: Props) {
   const mode = props.mode || "orders";
-  const [customer, setCustomer] = useState<IkasCustomer | null>(customerStore.customer);
+  const [customer, setCustomer] = useState<IkasCustomer | null>(
+    customerStore.customer,
+  );
   const [orders, setOrders] = useState<IkasOrder[]>([]);
   const [favorites, setFavorites] = useState<IkasProduct[]>([]);
   const [ready, setReady] = useState(customerStore._initialized);
@@ -237,7 +414,8 @@ export function ThreeMashAccountUtilityPage(props: Props) {
       setReady(true);
       if (!customerStore.customer) return;
       if (mode === "orders") setOrders(await getOrders(customerStore));
-      if (mode === "favorites") setFavorites(await getFavoriteProducts(customerStore));
+      if (mode === "favorites")
+        setFavorites(await getFavoriteProducts(customerStore));
     });
     return () => {
       mounted = false;
@@ -247,7 +425,8 @@ export function ThreeMashAccountUtilityPage(props: Props) {
   const addresses = customer?.addresses || [];
   const title = useMemo(() => {
     if (mode === "addresses") return text(props.titleText, "Adreslerim");
-    if (mode === "favorites") return text(props.titleText, "Beğendiğim Ürünler");
+    if (mode === "favorites")
+      return text(props.titleText, "Beğendiğim Ürünler");
     return text(props.titleText, "Siparişlerim");
   }, [mode, props.titleText]);
 
@@ -258,8 +437,12 @@ export function ThreeMashAccountUtilityPage(props: Props) {
     return (
       <section className="tmau-page">
         <div className="tmau-login-required">
+          <span>HESAP</span>
           <h1>Hesabınıza giriş yapın</h1>
-          <p>Bu sayfayı görüntülemek için müşteri hesabıyla giriş yapılması gerekiyor.</p>
+          <p>
+            Bu sayfayı görüntülemek için müşteri hesabıyla giriş yapılması
+            gerekiyor.
+          </p>
           <a href={href(props.loginHref, "/account/login")}>Giriş Yap</a>
         </div>
       </section>
@@ -267,15 +450,29 @@ export function ThreeMashAccountUtilityPage(props: Props) {
   }
 
   return (
-    <section className="tmau-page">
+    <section className={`tmau-page is-${mode}`}>
       <div className="tmau-shell">
-        <AccountSidebar customer={customer} props={props} />
+        <AccountSidebar customer={customer} props={props} active={mode} />
         <main className="tmau-main">
-          <h1>{ready ? title : "Yükleniyor..."}</h1>
+          <header className="tmau-main-head">
+            <span>
+              {mode === "addresses" ? "01" : mode === "orders" ? "02" : "03"}
+            </span>
+            <h1>{ready ? title : "Yükleniyor..."}</h1>
+            <p>{pageDescription(mode)}</p>
+          </header>
 
           {mode === "addresses" && (
             <div className="tmau-list">
-              {addresses.length ? addresses.map((address) => <AddressCard address={address} />) : <p className="tmau-empty">{text(props.emptyText, "Kayıtlı adresiniz bulunmuyor.")}</p>}
+              {addresses.length ? (
+                addresses.map((address, index) => (
+                  <AddressCard key={index} address={address} />
+                ))
+              ) : (
+                <p className="tmau-empty">
+                  {text(props.emptyText, "Kayıtlı adresiniz bulunmuyor.")}
+                </p>
+              )}
             </div>
           )}
 
@@ -283,21 +480,31 @@ export function ThreeMashAccountUtilityPage(props: Props) {
             <div className="tmau-list">
               {orders.length ? (
                 orders.map((order) => (
-                  <article className="tmau-card">
+                  <article key={order.id} className="tmau-card">
                     <h2>{order.orderNumber || order.id}</h2>
                     <p>{formatDate(order.orderedAt || order.createdAt)}</p>
                     <small>{formatOrderTotal(order)}</small>
                   </article>
                 ))
               ) : (
-                <p className="tmau-empty">{text(props.emptyText, "Henüz siparişiniz bulunmuyor.")}</p>
+                <p className="tmau-empty">
+                  {text(props.emptyText, "Henüz siparişiniz bulunmuyor.")}
+                </p>
               )}
             </div>
           )}
 
           {mode === "favorites" && (
             <div className="tmau-products">
-              {favorites.length ? favorites.map((product) => <ProductCard product={product} />) : <p className="tmau-empty">{text(props.emptyText, "Beğendiğiniz ürün bulunmuyor.")}</p>}
+              {favorites.length ? (
+                favorites.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))
+              ) : (
+                <p className="tmau-empty">
+                  {text(props.emptyText, "Beğendiğiniz ürün bulunmuyor.")}
+                </p>
+              )}
             </div>
           )}
         </main>

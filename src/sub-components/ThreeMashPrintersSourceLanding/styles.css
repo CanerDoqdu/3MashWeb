@@ -102,7 +102,7 @@
 }
 
 .three-mash-printers-source .hero {
-  padding: 56px 0 64px;
+  padding: 56px 0 0;
   border-bottom: 1px solid var(--line);
   background: radial-gradient(900px 380px at 88% -10%, rgba(199, 241, 54, 0.15), transparent 60%), var(--bg);
 }
@@ -110,6 +110,7 @@
 .three-mash-printers-source .crumb {
   font-size: 13px;
   color: var(--mut);
+  padding-bottom: 24px;
 }
 
 .three-mash-printers-source .crumb a {
@@ -125,8 +126,12 @@
   font-size: 60px;
   line-height: 1.05;
   font-weight: 600;
-  margin-top: 20px;
+  margin-top: 0;
   max-width: 840px;
+}
+
+.three-mash-printers-source .hero .crumb + h1 {
+  margin-top: 0;
 }
 
 .three-mash-printers-source .hero h1 .em {
@@ -161,13 +166,13 @@
   border-top: 1px solid var(--line);
 }
 
-.three-mash-printers-source .vstrip div {
+.three-mash-printers-source .vstrip > div {
   flex: 1;
   padding: 24px 24px 4px;
   border-left: 1px solid var(--line);
 }
 
-.three-mash-printers-source .vstrip div:first-child {
+.three-mash-printers-source .vstrip > div:first-child {
   border-left: none;
   padding-left: 0;
 }
@@ -292,16 +297,51 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
 }
 
-.three-mash-printers-source .pc .ph svg {
-  height: 118px;
+.three-mash-printers-source .pc .ph::before {
+  content: "";
+  position: absolute;
+  right: 36px;
+  bottom: 22px;
+  left: 36px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(14, 14, 12, 0.08);
+  filter: blur(10px);
+}
+
+.three-mash-printers-source .pc .printer-img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(76%, 190px);
+  height: 140px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.three-mash-printers-source .pc .printer-img-p16l {
+  width: min(82%, 208px);
+  height: 154px;
+}
+
+.three-mash-printers-source .pc .printer-img-curie {
+  width: min(74%, 178px);
+  height: 138px;
+}
+
+.three-mash-printers-source .pc .printer-img-halot {
+  width: min(78%, 196px);
+  height: 142px;
 }
 
 .three-mash-printers-source .pc .tag {
   position: absolute;
   top: 14px;
   left: 14px;
+  z-index: 2;
   font-family: "Space Grotesk", sans-serif;
   font-size: 10px;
   font-weight: 700;
@@ -322,6 +362,7 @@
   position: absolute;
   top: 14px;
   right: 14px;
+  z-index: 2;
   font-size: 10px;
   font-weight: 600;
   color: var(--mut);
@@ -754,7 +795,7 @@
     flex-wrap: wrap;
   }
 
-  .three-mash-printers-source .vstrip div {
+  .three-mash-printers-source .vstrip > div {
     flex: 1 1 45%;
     border-left: none;
     padding-left: 0;
@@ -762,5 +803,509 @@
 
   .three-mash-printers-source .final h2 {
     font-size: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .three-mash-printers-source {
+    overflow-x: hidden;
+  }
+
+  .three-mash-printers-source .wrap {
+    padding: 0 14px;
+  }
+
+  .three-mash-printers-source .hero {
+    padding: 30px 0 0;
+    background: var(--bg);
+  }
+
+  .three-mash-printers-source .crumb {
+    padding-bottom: 14px;
+    font-size: 11.5px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .hero h1 {
+    max-width: 100%;
+    font-size: 30px;
+    line-height: 1.04;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .hero .sub,
+  .three-mash-printers-source .shead .side,
+  .three-mash-printers-source .cure p,
+  .three-mash-printers-source .final p {
+    max-width: 100%;
+    font-size: 13.5px;
+    line-height: 1.54;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .hero .sub {
+    display: -webkit-box;
+    margin-top: 14px;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .three-mash-printers-source .hero .cta,
+  .three-mash-printers-source .final .cta {
+    gap: 9px;
+    margin-top: 20px;
+  }
+
+  .three-mash-printers-source .btn {
+    min-height: 42px;
+    flex: 1 1 150px;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 13px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .three-mash-printers-source .vstrip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 26px;
+  }
+
+  .three-mash-printers-source .vstrip > div,
+  .three-mash-printers-source .vstrip > div:first-child {
+    min-width: 0;
+    padding: 13px 12px 12px 0;
+    border-left: 0;
+  }
+
+  .three-mash-printers-source .vstrip .v {
+    font-size: 18px;
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .vstrip .l {
+    margin-top: 5px;
+    font-size: 11px;
+    line-height: 1.32;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source section {
+    padding: 44px 0;
+  }
+
+  .three-mash-printers-source .section-no-top {
+    padding-top: 0;
+  }
+
+  .three-mash-printers-source .idx {
+    gap: 9px;
+    margin-bottom: 15px;
+  }
+
+  .three-mash-printers-source .idx .n {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+
+  .three-mash-printers-source .idx .t {
+    min-width: 0;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .shead {
+    gap: 10px;
+  }
+
+  .three-mash-printers-source .shead h2 {
+    max-width: 100%;
+    font-size: 25px;
+    line-height: 1.08;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .shead .side {
+    display: -webkit-box;
+    padding-bottom: 0;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .three-mash-printers-source .pgrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .three-mash-printers-source .pc {
+    display: grid;
+    grid-template-columns: minmax(96px, 32%) minmax(0, 1fr);
+    min-height: 142px;
+    border-radius: 14px;
+  }
+
+  .three-mash-printers-source .pc:hover {
+    transform: none;
+  }
+
+  .three-mash-printers-source .pc .ph {
+    width: 100%;
+    height: auto;
+    min-height: 142px;
+  }
+
+  .three-mash-printers-source .pc .ph::before {
+    right: 14px;
+    bottom: 18px;
+    left: 14px;
+    height: 18px;
+    filter: blur(8px);
+  }
+
+  .three-mash-printers-source .pc .printer-img,
+  .three-mash-printers-source .pc .printer-img-p16l,
+  .three-mash-printers-source .pc .printer-img-curie,
+  .three-mash-printers-source .pc .printer-img-halot {
+    width: 86%;
+    height: 112px;
+    max-width: 118px;
+  }
+
+  .three-mash-printers-source .pc .tag {
+    top: 8px;
+    left: 8px;
+    max-width: calc(100% - 16px);
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-size: 8.5px;
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .pc .st {
+    display: none;
+  }
+
+  .three-mash-printers-source .pc .bd {
+    min-width: 0;
+    padding: 13px 13px 12px;
+  }
+
+  .three-mash-printers-source .pc h3 {
+    font-size: 15px;
+    line-height: 1.12;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .pc .ds {
+    display: -webkit-box;
+    flex: 0 0 auto;
+    margin-top: 5px;
+    overflow: hidden;
+    font-size: 11.5px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .three-mash-printers-source .pc .kv {
+    margin-top: 8px;
+  }
+
+  .three-mash-printers-source .pc .kv div {
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 10.5px;
+    line-height: 1.25;
+  }
+
+  .three-mash-printers-source .pc .kv div:nth-child(n+3) {
+    display: none;
+  }
+
+  .three-mash-printers-source .pc .kv b,
+  .three-mash-printers-source .pc .go {
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .pc .go {
+    margin-top: 9px;
+    font-size: 12px;
+  }
+
+  .three-mash-printers-source .cmp {
+    max-width: 100%;
+    border-radius: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .three-mash-printers-source .cmp table {
+    min-width: 560px;
+  }
+
+  .three-mash-printers-source .cmp th,
+  .three-mash-printers-source .cmp td {
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.32;
+  }
+
+  .three-mash-printers-source .note {
+    font-size: 11.5px;
+    line-height: 1.45;
+  }
+
+  .three-mash-printers-source .flag,
+  .three-mash-printers-source .cure {
+    gap: 20px;
+    border-radius: 14px;
+    padding: 22px 18px;
+  }
+
+  .three-mash-printers-source .flag h3,
+  .three-mash-printers-source .cure h3 {
+    font-size: 21px;
+    line-height: 1.12;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .flag p,
+  .three-mash-printers-source .cure p,
+  .three-mash-printers-source .why p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+  }
+
+  .three-mash-printers-source .flag p {
+    -webkit-line-clamp: 4;
+  }
+
+  .three-mash-printers-source .cure p,
+  .three-mash-printers-source .why p {
+    -webkit-line-clamp: 3;
+  }
+
+  .three-mash-printers-source .spectbl div {
+    display: grid;
+    gap: 6px;
+    padding: 9px 0;
+    font-size: 12px;
+  }
+
+  .three-mash-printers-source .spectbl b {
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .whygrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .three-mash-printers-source .why {
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .three-mash-printers-source .why h4 {
+    font-size: 15px;
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .cure .tx {
+    min-width: 0;
+  }
+
+  .three-mash-printers-source .cure .lk {
+    width: 100%;
+    gap: 9px;
+  }
+
+  .three-mash-printers-source .faq summary {
+    gap: 12px;
+    padding: 16px 0;
+    font-size: 15px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .three-mash-printers-source .faq .a {
+    max-height: 124px;
+    padding: 0 0 18px;
+    overflow: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .three-mash-printers-source .final {
+    padding: 58px 0;
+  }
+
+  .three-mash-printers-source .final h2 {
+    max-width: 100%;
+    font-size: 27px;
+    line-height: 1.08;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 420px) {
+  .three-mash-printers-source .wrap {
+    padding: 0 12px;
+  }
+
+  .three-mash-printers-source .hero h1 {
+    font-size: 28px;
+  }
+
+  .three-mash-printers-source .vstrip .v {
+    font-size: 16px;
+  }
+
+  .three-mash-printers-source .pc {
+    grid-template-columns: 94px minmax(0, 1fr);
+    min-height: 132px;
+  }
+
+  .three-mash-printers-source .pc .ph {
+    min-height: 132px;
+  }
+
+  .three-mash-printers-source .pc .bd {
+    padding: 12px 11px;
+  }
+
+  .three-mash-printers-source .pc .kv div:nth-child(n+2) {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .three-mash-printers-source .hero {
+    padding: 40px 0 0;
+  }
+
+  .three-mash-printers-source .hero p,
+  .three-mash-printers-source .shead .side,
+  .three-mash-printers-source .flag p,
+  .three-mash-printers-source .cure p,
+  .three-mash-printers-source .why p {
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
+  }
+
+  .three-mash-printers-source section {
+    padding: 56px 0;
+  }
+
+  .three-mash-printers-source .pgrid {
+    gap: 18px;
+  }
+
+  .three-mash-printers-source .pc {
+    display: flex;
+    min-height: 0;
+    border-radius: 16px;
+  }
+
+  .three-mash-printers-source .pc .ph {
+    height: clamp(198px, 56vw, 250px);
+    min-height: 0;
+  }
+
+  .three-mash-printers-source .pc .printer-img,
+  .three-mash-printers-source .pc .printer-img-p16l,
+  .three-mash-printers-source .pc .printer-img-curie,
+  .three-mash-printers-source .pc .printer-img-halot {
+    width: 78%;
+    height: 78%;
+    max-width: 260px;
+    max-height: 180px;
+  }
+
+  .three-mash-printers-source .pc .bd {
+    padding: 18px 18px 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .three-mash-printers-source .pc h3 {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .three-mash-printers-source .pc .ds {
+    display: -webkit-box;
+    margin-top: 10px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .three-mash-printers-source .pc .kv {
+    margin-top: 14px;
+  }
+
+  .three-mash-printers-source .pc .kv div {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 12.5px;
+    line-height: 1.35;
+  }
+
+  .three-mash-printers-source .pc .kv div:nth-child(n+2),
+  .three-mash-printers-source .pc .kv div:nth-child(n+3) {
+    display: flex;
+  }
+
+  .three-mash-printers-source .flag,
+  .three-mash-printers-source .cure {
+    border-radius: 16px;
+    padding: 28px 22px;
+  }
+
+  .three-mash-printers-source .faq .a {
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 420px) {
+  .three-mash-printers-source .hero h1 {
+    font-size: 31px;
+  }
+
+  .three-mash-printers-source .pc .ph {
+    height: 198px;
+  }
+
+  .three-mash-printers-source .pc .bd {
+    padding: 16px 15px 18px;
   }
 }

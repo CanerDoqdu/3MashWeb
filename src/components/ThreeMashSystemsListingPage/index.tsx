@@ -1,17 +1,9 @@
-import { ThreeMashProductsPage } from "../ThreeMashProductsPage";
-import { listingProps } from "../ThreeMashProductListingPresets";
-import type { Props } from "../ThreeMashProductsPage/types";
+import ThreeMashCategoryLanding from "../../sub-components/ThreeMashCategoryLanding";
+import { systemsCategoryData } from "../../sub-components/ThreeMashCategoryLanding/presets";
+import type { Props } from "./types";
 
 export function ThreeMashSystemsListingPage(props: Props) {
-  return (
-    <ThreeMashProductsPage
-      {...listingProps(props, {
-        eyebrowText: "ÜRÜN KATEGORİSİ",
-        titleText: "Sistemler",
-        descriptionText: "Dental üretim iş akışları için sistem çözümleri ve canlı envanter.",
-      })}
-    />
-  );
+  return <ThreeMashCategoryLanding data={systemsCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashSystemsListingPage;

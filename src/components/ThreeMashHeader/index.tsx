@@ -19,12 +19,14 @@ import {
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
+import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import { Props } from "./types";
 
 type MenuItem = {
   title?: string;
   description?: string;
   href?: string;
+  icon?: string;
 };
 
 type FlowItem = {
@@ -100,7 +102,7 @@ const defaultAnnouncement = {
   highlightText: "⚡ Fırsatı kaçırmayın.",
   text: "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
   ctaText: "Hemen hesaplayın",
-  href: "#hesapla",
+  href: "#hesap",
 };
 
 function announcementOverridePayload(value: unknown): HeaderAnnouncementOverride | null {
@@ -120,17 +122,17 @@ const defaultProductsFeature = {
   title: "MASH C4P<br>Akıllı Kürleme Cihazı",
   description: "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
   ctaText: "Keşfet →",
-  href: "https://studio.ikasapps.com/yikama-kurleme-cihazlari",
+  href: "/yikama-kurleme-cihazlari",
 };
 const defaultProductPrimary: Required<MenuItem>[] = [
-  { title: "3D Yazıcılar", description: "P1D / P16L hassas baskı", href: "https://3mash.com/3d-yazicilar" },
-  { title: "Yıkama & Kürleme", description: "Yıkama ve akıllı kürleme", href: "https://3mash.com/yikama-kurleme-cihazlari" },
-  { title: "Dental Reçineler", description: "Dental reçine seçenekleri", href: "https://3mash.com/dental-3d-yazici-recineleri" },
+  { title: "3D Yazıcılar", description: "P1D / P16L hassas baskı", href: "/3d-yazicilar", icon: ecoPrinterIcon },
+  { title: "Yıkama & Kürleme", description: "Yıkama ve akıllı kürleme", href: "/yikama-kurleme-cihazlari", icon: ecoScannerIcon },
+  { title: "Dental Reçineler", description: "Dental reçine seçenekleri", href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
 ];
 const defaultProductSecondary: Required<MenuItem>[] = [
-  { title: "Masaüstü Tarayıcılar", description: "Lab tarafında hassas veri", href: "https://3mash.com/masasustu-tarayicilar" },
-  { title: "Zirkon Bloklar & Titanyum", description: "Freze tarafının sarfları", href: "https://3mash.com/zirkon-bloklar" },
-  { title: "Dental Fırınlar", description: "Sinterleme çözümleri", href: "https://3mash.com/dental-firinlar" },
+  { title: "Masaüstü Tarayıcılar", description: "Lab tarafında hassas veri", href: "/masasustu-tarayicilar", icon: ecoCuringIcon },
+  { title: "Zirkon Bloklar & Titanyum", description: "Freze tarafının sarfları", href: "/zirkon-bloklar", icon: ecoBlocksIcon },
+  { title: "Dental Fırınlar", description: "Sinterleme çözümleri", href: "/dental-firinlar", icon: ecoOvenIcon },
 ];
 
 function href(value?: string) {
@@ -188,7 +190,7 @@ function internalSiteHref(value: string) {
 
   try {
     const url = new URL(trimmed);
-    if (url.hostname === "3mash.com" || url.hostname === "www.3mash.com") {
+    if (url.hostname === "3mash.com" || url.hostname === "www.3mash.com" || url.hostname === "studio.ikasapps.com") {
       return `${url.pathname}${url.search}${url.hash}` || "/";
     }
   } catch {
@@ -226,10 +228,11 @@ const productCategoryRoutes: Record<string, string> = {
 function productRouteHref(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
   if (!trimmed || trimmed === "#") return fallback;
-  const normalized = routeAliasKey(trimmed);
+  const internal = internalSiteHref(trimmed);
+  const normalized = routeAliasKey(internal);
   const slug = routeTextKey(normalized);
   const nestedSlug = slug.replace(/^urunler-/, "");
-  return productCategoryRoutes[slug] || productCategoryRoutes[nestedSlug] || internalSiteHref(trimmed);
+  return productCategoryRoutes[slug] || productCategoryRoutes[nestedSlug] || internal;
 }
 
 function academyPageTarget(value: string | undefined) {
@@ -311,9 +314,9 @@ function c4pRouteHref(value: string | undefined) {
   if (!trimmed) return "/yikama-kurleme-cihazlari";
   const normalized = trimmed
     .toLowerCase()
-    .replace(/^https?:\/\/(?:www\.)?3mash\.com/i, "")
+    .replace(/^https?:\/\/(?:www\.)?(?:3mash\.com|studio\.ikasapps\.com)/i, "")
     .replace(/\/$/, "");
-  if (normalized === "/mash" || normalized === "/urunler/c4p") return "/yikama-kurleme-cihazlari";
+  if (normalized === "/mash" || normalized === "/urunler/c4p" || normalized === "/yikama-kurleme-cihazlari") return "/yikama-kurleme-cihazlari";
   return trimmed;
 }
 
@@ -353,11 +356,7 @@ function fuzzyScore(candidate: string, query: string) {
   const containsIndex = candidate.indexOf(query);
   if (containsIndex >= 0) return 20 + containsIndex;
 
-  let queryIndex = 0;
-  for (let index = 0; index < candidate.length && queryIndex < query.length; index += 1) {
-    if (candidate[index] === query[queryIndex]) queryIndex += 1;
-  }
-  return queryIndex === query.length ? 70 + candidate.length : Number.POSITIVE_INFINITY;
+  return Number.POSITIVE_INFINITY;
 }
 
 function searchSuggestions(products: IkasProduct[], query: string): SearchSuggestion[] {
@@ -667,6 +666,11 @@ function resolveActionIcon(image: unknown, svg: unknown, fallbackSvg: string, sh
 function ProductLink({ item, wordStyle }: { item: MenuItem; wordStyle: Props }) {
   return (
     <a href={href(item.href)} className="tmh-mega-link">
+      {item.icon ? (
+        <span className="tmh-mega-link-icon" aria-hidden="true">
+          <img src={item.icon} alt="" loading="lazy" decoding="async" />
+        </span>
+      ) : null}
       <span className="tmh-mega-link-copy">
         <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
         <span dangerouslySetInnerHTML={richText(item.description, wordStyle)} />
@@ -784,23 +788,26 @@ export function ThreeMashHeader(props: Props) {
       title: sourceRichText(props.product1Title, defaultProductPrimary[0].title),
       description: sourceRichText(props.product1Description, defaultProductPrimary[0].description, ["mash p1d (385 nm dlp) · p16l — ±20µm hassasiyet"]),
       href: productRouteHref(props.product1Href, defaultProductPrimary[0].href),
+      icon: ecoPrinterIcon,
     },
     {
       title: sourceRichText(props.product2Title, defaultProductPrimary[1].title),
       description: sourceRichText(props.product2Description, defaultProductPrimary[1].description, ["c4p akilli kurleme · c1e ekonomik"]),
       href: productRouteHref(props.product2Href, defaultProductPrimary[1].href),
+      icon: ecoScannerIcon,
     },
     {
       title: sourceRichText(props.product3Title, defaultProductPrimary[2].title),
       description: sourceRichText(props.product3Description, defaultProductPrimary[2].description, ["crs · ce class iia biyouyumlu & model"]),
       href: productRouteHref(props.product3Href, defaultProductPrimary[2].href),
+      icon: ecoResinIcon,
     },
   ];
 
   const productSecondary: MenuItem[] = [
-    { title: sourceRichText(props.product4Title, defaultProductSecondary[0].title), description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, ["lab icin hassas tarama"]), href: productRouteHref(props.product4Href, defaultProductSecondary[0].href) },
-    { title: sourceRichText(props.product5Title, defaultProductSecondary[1].title), description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]), href: productRouteHref(props.product5Href, defaultProductSecondary[1].href) },
-    { title: sourceRichText(props.product6Title, defaultProductSecondary[2].title), description: sourceRichText(props.product6Description, defaultProductSecondary[2].description, ["sinterleme cozumleri"]), href: productRouteHref(props.product6Href, defaultProductSecondary[2].href) },
+    { title: sourceRichText(props.product4Title, defaultProductSecondary[0].title), description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, ["lab icin hassas tarama"]), href: productRouteHref(props.product4Href, defaultProductSecondary[0].href), icon: ecoCuringIcon },
+    { title: sourceRichText(props.product5Title, defaultProductSecondary[1].title), description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]), href: productRouteHref(props.product5Href, defaultProductSecondary[1].href), icon: ecoBlocksIcon },
+    { title: sourceRichText(props.product6Title, defaultProductSecondary[2].title), description: sourceRichText(props.product6Description, defaultProductSecondary[2].description, ["sinterleme cozumleri"]), href: productRouteHref(props.product6Href, defaultProductSecondary[2].href), icon: ecoOvenIcon },
   ];
 
   const whyItems: FlowItem[] = [
@@ -1087,9 +1094,9 @@ export function ThreeMashHeader(props: Props) {
     const target = searchPageHref(props.searchHref);
     const param = props.searchQueryParam || "q";
     try {
-      const url = new URL(target, window.location.origin);
+      const url = new URL(target, "https://3mash.local");
       url.searchParams.set(param, query);
-      window.location.href = url.toString();
+      window.location.href = `${url.pathname}${url.search}${url.hash}`;
     } catch {
       window.location.href = `${target}${target.includes("?") ? "&" : "?"}${encodeURIComponent(param)}=${encodeURIComponent(query)}`;
     }
@@ -1101,8 +1108,11 @@ export function ThreeMashHeader(props: Props) {
 
     const firstSuggestion = searchSuggestionItems[0]?.product;
     if (firstSuggestion) {
-      window.location.href = getProductHref(firstSuggestion);
-      return;
+      const productHref = getProductHref(firstSuggestion);
+      if (productHref && productHref !== "#") {
+        window.location.href = productHref;
+        return;
+      }
     }
 
     navigateSearchFallback(query);
@@ -1389,7 +1399,7 @@ export function ThreeMashHeader(props: Props) {
         </div>
         <div className={`tmh-mobile-panel${isMobileMenuOpen ? " is-open" : ""}`}>
           <nav className="tmh-mobile-list" aria-label={mobileMenuLabel}>
-            <a href="/#cozum" dangerouslySetInnerHTML={richText(productsMenuText, props)} />
+            <a href="/tum-urunler" dangerouslySetInnerHTML={richText(productsMenuText, props)} />
             <a className="tmh-mobile-accent-link" href={href(productPrimary[2]?.href)} dangerouslySetInnerHTML={richText(productPrimary[2]?.title, props)} />
             <a href={href(productPrimary[0]?.href)} dangerouslySetInnerHTML={richText(productPrimary[0]?.title, props)} />
             <a href={academyPageTarget(props.academyHref)} dangerouslySetInnerHTML={richText(academyText, props)} />
