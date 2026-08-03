@@ -783,6 +783,7 @@ export function ThreeMashHeader(props: Props) {
     "recineye gore otomatik kurleme. sonuc kalitesini kullanici hatasindan cikarir.",
   ]);
   const productsFeatureCtaText = sourceRichText(props.productsFeatureCtaText, defaultProductsFeature.ctaText, ["kesfet"]);
+  const mobileSearchHref = searchPageHref(props.searchHref);
   const productPrimary: MenuItem[] = [
     {
       title: sourceRichText(props.product1Title, defaultProductPrimary[0].title),
@@ -812,7 +813,7 @@ export function ThreeMashHeader(props: Props) {
 
   const whyItems: FlowItem[] = [
     { number: text(props.why1Number, "01"), title: text(props.why1Title, "Yılda $126K'ya varan görünmez kayıp"), description: text(props.why1Description, "Tekrarlanan işlerin kliniğinize gerçek maliyeti"), href: text(props.why1Href, "#sorun") },
-    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Sebep: ölçüsel hassasiyet"), description: text(props.why2Description, "250–500µm sapma bandı vs ±20µm güvenli bölge"), href: text(props.why2Href, "#sebep") },
+    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Sebep: ölçüsel hassasiyet"), description: text(props.why2Description, "250–500µm sapma bandı vs ±20µm güvenli bölge"), href: text(props.why2Href, "#piyasada-yaygin-kurulum-250-500") },
     { number: text(props.why3Number, "03"), title: text(props.why3Title, "Çözüm: uyumlu ekosistem"), description: text(props.why3Description, "Yazıcı + reçine + parametre bilgisi, birlikte kalibre"), href: text(props.why3Href, "#cozum") },
     { number: text(props.why4Number, "04"), title: text(props.why4Title, "Ve kürleme — son %20'lik fark"), description: text(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"), href: text(props.why4Href, "#kurleme") },
   ];
@@ -1399,10 +1400,11 @@ export function ThreeMashHeader(props: Props) {
         </div>
         <div className={`tmh-mobile-panel${isMobileMenuOpen ? " is-open" : ""}`}>
           <nav className="tmh-mobile-list" aria-label={mobileMenuLabel}>
-            <a href="/tum-urunler" dangerouslySetInnerHTML={richText(productsMenuText, props)} />
+            <a href={mobileSearchHref} dangerouslySetInnerHTML={richText(productsMenuText, props)} />
             <a className="tmh-mobile-accent-link" href={href(productPrimary[2]?.href)} dangerouslySetInnerHTML={richText(productPrimary[2]?.title, props)} />
             <a href={href(productPrimary[0]?.href)} dangerouslySetInnerHTML={richText(productPrimary[0]?.title, props)} />
             <a href={academyPageTarget(props.academyHref)} dangerouslySetInnerHTML={richText(academyText, props)} />
+            <a href={headerRouteHref(props.accountHref, "/account/login")} dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuTitle, "Hesabım"), props)} />
           </nav>
         </div>
       </header>

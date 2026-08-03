@@ -8,7 +8,7 @@ export function ThreeMashAllProductsPage(props: Props) {
       {...listingProps(props, {
         eyebrowText: "TÜM ÜRÜNLER",
         titleText: "Ürünler",
-        descriptionText: "3mash envanterindeki aktif ürünleri canlı olarak inceleyin.",
+        descriptionText: "Güncel ürün kataloğunu keşfedin; yayındaki ürünleri tek yerden inceleyin.",
       })}
     />
   );

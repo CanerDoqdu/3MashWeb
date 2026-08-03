@@ -59,9 +59,8 @@ function sideHtml(value?: string, enabled = true, props?: Props) {
   return html(source.replace(/dijitalleşti/gi, (match) => `<span class="tmproblem-glitch">${match}</span>`), props);
 }
 
-function anchorId(value?: string) {
-  const trimmed = value?.trim();
-  return trimmed || undefined;
+function anchorId(_value?: string) {
+  return "sebep";
 }
 
 function imageSource(value: unknown) {

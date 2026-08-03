@@ -1317,7 +1317,7 @@
   .tmcl-product-grid-resins,
   .tmcl-product-grid-generic,
   .tmcl-why-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .tmcl-product-media {
@@ -1533,8 +1533,6 @@
   }
 
   .tmcl-product-grid,
-  .tmcl-product-grid-resins,
-  .tmcl-product-grid-generic,
   .tmcl-product-grid-printers,
   .tmcl-product-grid-wash-cure,
   .tmcl-product-grid-zircon,
@@ -1548,11 +1546,18 @@
     margin-top: 20px;
   }
 
+  .tmcl-product-grid-resins,
+  .tmcl-product-grid-generic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+  }
+
   .tmcl-product-card {
     display: grid;
-    grid-template-columns: minmax(96px, 32%) minmax(0, 1fr);
-    min-height: 142px;
-    border-radius: 14px;
+    grid-template-columns: minmax(82px, 34%) minmax(0, 1fr);
+    min-height: 0;
+    border-radius: 12px;
     transform: none;
   }
 
@@ -1560,20 +1565,24 @@
     transform: none;
   }
 
-  .tmcl-product-media,
-  .tmcl-printers .tmcl-product-media,
-  .tmcl-wash-cure .tmcl-product-media,
-  .tmcl-zircon .tmcl-product-media,
-  .tmcl-furnaces .tmcl-product-media,
-  .tmcl-scanners .tmcl-product-media,
-  .tmcl-spares .tmcl-product-media,
-  .tmcl-systems .tmcl-product-media,
-  .tmcl-titanium .tmcl-product-media {
-    width: 100%;
-    height: auto;
+  .tmcl-product-grid,
+  .tmcl-product-grid-printers,
+  .tmcl-product-grid-wash-cure,
+  .tmcl-product-grid-zircon,
+  .tmcl-product-grid-furnaces,
+  .tmcl-product-grid-scanners,
+  .tmcl-product-grid-spares,
+  .tmcl-product-grid-systems,
+  .tmcl-product-grid-titanium {
     min-height: 142px;
   }
 
+
+  .tmcl-product-grid-resins,
+  .tmcl-product-grid-generic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
   .tmcl-product-media img,
   .tmcl-product-media video,
   .tmcl-resins .tmcl-product-media img,
@@ -1903,7 +1912,7 @@
   .tmcl-product-grid-resins,
   .tmcl-product-grid-generic,
   .tmcl-product-grid-printers,
-  .tmcl-product-grid-wash-cure,
+    gap: 10px;
   .tmcl-product-grid-zircon,
   .tmcl-product-grid-furnaces,
   .tmcl-product-grid-scanners,
@@ -2041,7 +2050,7 @@
   .tmcl-spares .tmcl-product-media,
   .tmcl-systems .tmcl-product-media,
   .tmcl-titanium .tmcl-product-media {
-    height: 188px;
+    height: 150px;
   }
 
   .tmcl-product-body,
@@ -2053,7 +2062,35 @@
   .tmcl-spares .tmcl-product-body,
   .tmcl-systems .tmcl-product-body,
   .tmcl-titanium .tmcl-product-body {
-    padding: 16px 15px 18px;
+    padding: 12px 12px 14px;
+  }
+
+  .tmcl-product-body h3,
+  .tmcl-printers .tmcl-product-body h3,
+  .tmcl-wash-cure .tmcl-product-body h3,
+  .tmcl-zircon .tmcl-product-body h3,
+  .tmcl-furnaces .tmcl-product-body h3,
+  .tmcl-scanners .tmcl-product-body h3,
+  .tmcl-spares .tmcl-product-body h3,
+  .tmcl-systems .tmcl-product-body h3,
+  .tmcl-titanium .tmcl-product-body h3 {
+    font-size: 16px;
+    line-height: 1.15;
+  }
+
+  .tmcl-product-body p,
+  .tmcl-printers .tmcl-product-body p,
+  .tmcl-wash-cure .tmcl-product-body p,
+  .tmcl-zircon .tmcl-product-body p,
+  .tmcl-furnaces .tmcl-product-body p,
+  .tmcl-scanners .tmcl-product-body p,
+  .tmcl-spares .tmcl-product-body p,
+  .tmcl-systems .tmcl-product-body p,
+  .tmcl-titanium .tmcl-product-body p {
+    margin-top: 8px;
+    font-size: 12.5px;
+    line-height: 1.45;
+    -webkit-line-clamp: 2;
   }
 }
 

@@ -124,7 +124,7 @@
 
 .tmr-ecosystem {
   padding-top: 104px;
-  padding-bottom: 84px;
+  padding-bottom: 56px;
   --tmr-section-glow-left: calc(50% - 310px);
   --tmr-section-glow-top: calc(50% - 190px);
   --tmr-section-glow-w: 620px;
@@ -2161,6 +2161,11 @@
 @media (max-width: 620px) {
   .tmr-wrap {
     padding: 0 18px;
+  }
+
+  .tmr-section::before,
+  .tmr-section::after {
+    display: none;
   }
 
   .tmr-section {

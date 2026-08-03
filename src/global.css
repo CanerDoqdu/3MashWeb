@@ -25,6 +25,10 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --bg: #FAFAF7;
   --ink: #0E0E0C;

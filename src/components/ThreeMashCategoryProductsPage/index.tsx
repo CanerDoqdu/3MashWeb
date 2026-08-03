@@ -333,7 +333,7 @@ export function ThreeMashCategoryProductsPage(props: Props) {
       {...listingProps(props, {
         eyebrowText: "ÜRÜN KATEGORİSİ",
         titleText: "",
-        descriptionText: "Bu kategoriye bağlı aktif ürünleri canlı olarak inceleyin.",
+        descriptionText: "Bu kategoriye ait güncel ürünleri tek yerden inceleyin.",
         showSort: false,
       })}
     />

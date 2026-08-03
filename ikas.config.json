@@ -164,7 +164,7 @@
           "displayName": "Ürün Kartı 1 Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/3d-yazicilar",
+          "defaultValue": "/3d-yazicilar",
           "groupId": "products",
           "description": "3D Yazıcılar kategori routeu."
         },
@@ -191,7 +191,7 @@
           "displayName": "Ürün Kartı 2 Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/yikama-kurleme-cihazlari",
+          "defaultValue": "/yikama-kurleme-cihazlari",
           "groupId": "products",
           "description": "Yıkama & Kürleme kategori routeu."
         },
@@ -218,7 +218,7 @@
           "displayName": "Ürün Kartı 3 Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/dental-3d-yazici-recineleri",
+          "defaultValue": "/dental-3d-yazici-recineleri",
           "groupId": "products",
           "description": "Dental Reçineler kategori routeu."
         },
@@ -253,7 +253,7 @@
           "displayName": "Ürün Kartı 4 Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/masasustu-tarayicilar",
+          "defaultValue": "/masasustu-tarayicilar",
           "groupId": "products",
           "description": "Masaüstü Tarayıcılar kategori routeu."
         },
@@ -280,7 +280,7 @@
           "displayName": "Ürün Kartı 5 Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/zirkon-bloklar",
+          "defaultValue": "/zirkon-bloklar",
           "groupId": "products",
           "description": "Zirkon Bloklar kategori routeu."
         },
@@ -307,7 +307,7 @@
           "displayName": "Ürün Kartı 6 Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://3mash.com/dental-firinlar",
+          "defaultValue": "/dental-firinlar",
           "groupId": "products",
           "description": "Dental Fırınlar kategori routeu."
         },
@@ -380,7 +380,7 @@
           "displayName": "Neden 2 Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#sebep",
+          "defaultValue": "#piyasada-yaygin-kurulum-250-500",
           "groupId": "why"
         },
         {
@@ -2130,7 +2130,7 @@
           "displayName": "Birincil Buton Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#sebep",
+          "defaultValue": "#sorun",
           "groupId": "buttons"
         },
         {
@@ -2836,7 +2836,7 @@
           "displayName": "Cost Detail Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#",
+          "defaultValue": "/pages/hesaplama",
           "groupId": "clinicCalculator"
         },
         {
@@ -2892,7 +2892,7 @@
           "displayName": "Cost Detail Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#",
+          "defaultValue": "/pages/hesaplama",
           "groupId": "labCalculator"
         },
         {
@@ -3147,7 +3147,6 @@
           "name": "indexText",
           "displayName": "Sıra Metni",
           "type": "RICH_TEXT",
-          "required": false,
           "defaultValue": "Sorunun Kaynağı",
           "groupId": "content"
         },
@@ -6084,7 +6083,7 @@
           "displayName": "FAQ 2 Cevap HTML",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"#\">maliyet detay sayfamıza</a> bakabilirsiniz.",
+          "defaultValue": "Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"/pages/hesaplama\">maliyet detay sayfamıza</a> bakabilirsiniz.",
           "groupId": "text-customization"
         },
         {
@@ -6335,7 +6334,7 @@
           "displayName": "Birincil Buton Bağlantı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/pages/iletisim",
+          "defaultValue": "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum",
           "groupId": "buttons"
         },
         {
@@ -8164,7 +8163,7 @@
           "displayName": "Açıklama Metin",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Tüm ürünler içinde arayın; sonuçtan ürüne doğrudan gidin.",
+          "defaultValue": "Güncel ürün kataloğunu keşfedin; yayındaki ürünleri tek yerden inceleyin.",
           "groupId": "content"
         },
         {
@@ -18712,7 +18711,7 @@
           "displayName": "Birincil Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/#hesap",
+          "defaultValue": "#sebep",
           "groupId": "links"
         },
         {

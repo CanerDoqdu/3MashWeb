@@ -122,6 +122,31 @@ function searchKey(value: string | undefined) {
     .trim();
 }
 
+function localizeSortLabel(value: string | undefined) {
+  const label = (value || "").trim();
+  const normalized = searchKey(label);
+
+  if (!normalized) return label;
+  if (normalized === "sirala") return "Sırala";
+  if (normalized.includes("default") || normalized.includes("varsayilan")) return "Varsayılan";
+  if (normalized.includes("most relevant") || normalized.includes("relevant")) return "En Alakalı";
+  if (normalized.includes("newest") || normalized.includes("en yeni") || normalized === "new") return "En Yeni";
+  if (normalized.includes("oldest") || normalized.includes("en eski")) return "En Eski";
+  if (normalized.includes("price") && (normalized.includes("low") || normalized.includes("asc") || normalized.includes("cheap"))) return "Fiyat: Artan";
+  if (normalized.includes("price") && (normalized.includes("high") || normalized.includes("desc") || normalized.includes("expensive"))) return "Fiyat: Azalan";
+  if (normalized.includes("name") && normalized.includes("az")) return "İsim: A-Z";
+  if (normalized.includes("name") && normalized.includes("za")) return "İsim: Z-A";
+  if (normalized.includes("increasing price")) return "Fiyat: Artan";
+  if (normalized.includes("decreasing price")) return "Fiyat: Azalan";
+  if (normalized.includes("last added")) return "Son Eklenen";
+  if (normalized.includes("first added")) return "İlk Eklenen";
+  if (normalized.includes("increasing discount")) return "İndirim: Artan";
+  if (normalized.includes("decreasing discount")) return "İndirim: Azalan";
+  if (normalized.includes("featured")) return "Öne Çıkan";
+
+  return label;
+}
+
 function productSearchText(product: IkasProduct) {
   const categoryNames =
     product.categories
@@ -242,7 +267,7 @@ export function ThreeMashProductsPage(props: Props) {
   const selectedSort =
     sortOptions.find((option) => option.isSelected)?.value || "";
   const selectedSortLabel =
-    sortOptions.find((option) => option.value === selectedSort)?.label ||
+    localizeSortLabel(sortOptions.find((option) => option.value === selectedSort)?.label) ||
     props.sortLabel ||
     "Sırala";
   const pageTitle =
@@ -250,13 +275,16 @@ export function ThreeMashProductsPage(props: Props) {
     productList?.category?.name ||
     productList?.brand?.name ||
     "Ürünler";
-  const currentGroup = activeGroup(pageTitle, props.eyebrowText);
+  const eyebrowText = props.eyebrowText?.trim() || "";
+  const currentGroup = activeGroup(pageTitle, eyebrowText);
   const categoryLinks = listingLinks.filter(
     (link) => link.group === "Kategori",
   );
   const brandLinks = listingLinks.filter((link) => link.group === "Marka");
   const isCategoryProductsPage =
-    normalizedText(props.eyebrowText) === "ürün kategorisi";
+    normalizedText(eyebrowText) === "ürün kategorisi";
+  const isDentalResinCategoryPage =
+    isCategoryProductsPage && normalizedText(pageTitle) === "dental reçineler";
   const showSearchControl = props.showSearch !== false;
   const showSortControl =
     !isCategoryProductsPage &&
@@ -265,6 +293,7 @@ export function ThreeMashProductsPage(props: Props) {
   const showListControls = showSearchControl || showSortControl;
   const showNavigationControls =
     !isCategoryProductsPage && props.showNavigation !== false;
+  const displayEyebrowText = eyebrowText || (isCategoryProductsPage ? "ÜRÜN KATEGORİSİ" : "CANLI ÜRÜN KATALOĞU");
   const trimmedSearch = searchValue.trim();
   const fallbackProducts =
     unfilteredProductsRef.current.length > 0
@@ -399,7 +428,7 @@ export function ThreeMashProductsPage(props: Props) {
 
   return (
     <section
-      className={`three-mash-products-page${isCategoryProductsPage ? " is-category-products-page" : " is-search-products-page"}`}
+      className={`three-mash-products-page${isCategoryProductsPage ? " is-category-products-page" : " is-search-products-page"}${isDentalResinCategoryPage ? " is-dental-resin-category-page" : ""}`}
       style={style}
     >
       <div className="tm-products-wrap">
@@ -407,21 +436,17 @@ export function ThreeMashProductsPage(props: Props) {
           <div>
             {isCategoryProductsPage ? (
               <>
-                {props.eyebrowText ? (
-                  <p className="tm-products-eyebrow">{props.eyebrowText}</p>
-                ) : null}
+                <p className="tm-products-eyebrow">{displayEyebrowText}</p>
                 <h1>{pageTitle}</h1>
                 {props.descriptionText ? <p>{props.descriptionText}</p> : null}
               </>
             ) : (
               <>
-                {props.eyebrowText ? (
-                  <p className="tm-products-eyebrow">{props.eyebrowText}</p>
-                ) : null}
+                <p className="tm-products-eyebrow">{displayEyebrowText}</p>
                 <h1>{pageTitle}</h1>
                 <p>
                   {props.descriptionText ||
-                    "ikas envanterindeki aktif ürünler bu sayfada canlı olarak listelenir."}
+                    "Güncel ürün kataloğunu keşfedin; yayındaki ürünleri tek yerden inceleyin."}
                 </p>
               </>
             )}
@@ -512,7 +537,7 @@ export function ThreeMashProductsPage(props: Props) {
                             }
                             key={option.value}
                           >
-                            {option.label}
+                            {localizeSortLabel(option.label)}
                           </button>
                         ))}
                       </div>

@@ -26,7 +26,7 @@ type Preset = {
 
 const defaultConsultationWhatsappHref =
   "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum";
-const costDetailPageHref = "#";
+const costDetailPageHref = "/pages/hesaplama";
 
 function href(value?: string) {
   const next = value?.trim();
@@ -172,19 +172,10 @@ function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
 
   const scrollToTarget = () => {
     const targetId = decodeURIComponent(hash.slice(1)).trim();
-    const targetIds =
-      targetId === "sorun"
-        ? [targetId, "sebep"]
-        : targetId === "sebep"
-          ? [targetId, "sorun"]
-          : [targetId];
-
-    for (const id of targetIds) {
-      const section = document.getElementById(id);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-        return true;
-      }
+    const section = document.getElementById(targetId) || document.querySelector(hash);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      return true;
     }
 
     try {
