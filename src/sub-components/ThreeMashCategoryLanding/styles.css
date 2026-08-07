@@ -184,7 +184,7 @@
 
 .tmcl-value-strip div {
   flex: 1;
-  padding: 24px 24px 4px;
+  padding: 24px 24px 34px;
   border-left: 1px solid var(--tmcl-line);
 }
 
