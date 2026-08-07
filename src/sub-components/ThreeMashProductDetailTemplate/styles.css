@@ -115,10 +115,10 @@
 
 .tmpdt-thumbs {
   display: grid;
-  width: calc(100% - 10px);
+  width: 100%;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
-  margin: 12px 10px 0 0;
+  margin-top: 12px;
 }
 
 .tmpdt-thumbs button {
@@ -1412,6 +1412,8 @@
 
   .tmpdt-gal {
     position: static;
+    margin: 0 auto;
+    width: min(520px, 100%);
   }
 
   .tmpdt-buy h1 {
