@@ -3,7 +3,7 @@ import { desktopScannersCategoryData } from "../../sub-components/ThreeMashCateg
 import type { Props } from "./types";
 
 export function ThreeMashDesktopScannersListingPage(props: Props) {
-  return <ThreeMashCategoryLanding data={desktopScannersCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={desktopScannersCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashDesktopScannersListingPage;

@@ -4,6 +4,7 @@
   width: 100%;
   background: var(--tmpdt-bg, var(--tm-theme-bg, #FAFAF7));
   color: var(--tmpdt-ink, var(--tm-theme-text, #0E0E0C));
+  container-type: inline-size;
 }
 
 .three-mash-product-detail-live,

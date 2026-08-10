@@ -1,7 +1,7 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import crsModelDimensionalStabilityImage from "../../assets/crs-model-dimensional-stability-data";
-import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailRatingsSection, ProductDetailSectionScope } from "../../sub-components/ThreeMashProductDetailTemplate";
 
 function propString(value: unknown) {
@@ -974,7 +974,7 @@ function renderMediaItem(src: unknown, alt: unknown, label: unknown, index: numb
 }
 
 export function ThreeMashProductSplitFeature(props: Props) {
-  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  const sourceData = useSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   if (sourceData) {
     return (
       <ProductDetailSectionScope data={sourceData}>
@@ -985,7 +985,9 @@ export function ThreeMashProductSplitFeature(props: Props) {
 
   const visibility = productBasedVisibilityOverride(props);
   if (visibility === false) return null;
-  if (visibility !== true && (isEditorPreview() || productBasedApplies(props)) && boolValue(props.productBasedSectionVisible) === false) return null;
+  const applies = productBasedApplies(props);
+  if (isEditorPreview() && visibility !== true && !applies) return null;
+  if (visibility !== true && (isEditorPreview() || applies) && boolValue(props.productBasedSectionVisible) === false) return null;
   if (productBasedHidden(props)) return null;
 
   const viewProps = productBasedProps(props);

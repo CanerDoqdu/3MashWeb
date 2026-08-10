@@ -334,6 +334,12 @@
   margin-top: 34px;
 }
 
+.tmcl-product-grid-wash-cure {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 34px;
+}
+
 .tmcl-product-card {
   min-width: 0;
   display: flex;
@@ -354,6 +360,15 @@
 
 .tmcl-printers .tmcl-product-card {
   border-radius: 20px;
+}
+
+.tmcl-wash-cure .tmcl-product-card {
+  border-radius: 20px;
+}
+
+.tmcl-wash-cure .tmcl-product-card.is-hot {
+  border-color: var(--tmcl-lime);
+  box-shadow: 0 0 0 3px var(--tmcl-lime-soft);
 }
 
 .tmcl-product-card:hover {
@@ -393,6 +408,11 @@
   background: linear-gradient(160deg, #f3f3ee, #e9e9e2);
 }
 
+.tmcl-wash-cure .tmcl-product-media {
+  height: 230px;
+  background: linear-gradient(160deg, #f3f3ee, #e9e9e2);
+}
+
 .tmcl-product-media svg {
   position: relative;
   z-index: 1;
@@ -422,6 +442,12 @@
 .tmcl-resins .tmcl-product-media video {
   width: 58%;
   height: 70%;
+}
+
+.tmcl-wash-cure .tmcl-product-media img,
+.tmcl-wash-cure .tmcl-product-media video {
+  width: 84%;
+  height: 84%;
 }
 
 .tmcl-card-tag,
@@ -491,12 +517,21 @@
   border-top: 0;
 }
 
+.tmcl-wash-cure .tmcl-product-body {
+  padding: 22px 24px 24px;
+  border-top: 0;
+}
+
 .tmcl-product-body h3 {
   font-size: 16.5px;
   line-height: 1.2;
 }
 
 .tmcl-printers .tmcl-product-body h3 {
+  font-size: 19px;
+}
+
+.tmcl-wash-cure .tmcl-product-body h3 {
   font-size: 19px;
 }
 
@@ -509,6 +544,12 @@
 }
 
 .tmcl-printers .tmcl-product-body p {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.tmcl-wash-cure .tmcl-product-body p {
   margin-top: 8px;
   font-size: 13px;
   line-height: 1.6;
@@ -976,6 +1017,7 @@
   }
 
   .tmcl-product-grid-printers,
+  .tmcl-product-grid-wash-cure,
   .tmcl-flag,
   .tmcl-line-cards {
     grid-template-columns: 1fr;
@@ -1045,6 +1087,10 @@
 
   .tmcl-printers .tmcl-product-media {
     height: 190px;
+  }
+
+  .tmcl-wash-cure .tmcl-product-media {
+    height: 210px;
   }
 
   .tmcl-value-strip div {
@@ -1242,7 +1288,8 @@
   .tmcl-product-media-spare,
   .tmcl-product-media-system,
   .tmcl-product-media-titanium,
-  .tmcl-printers .tmcl-product-media {
+  .tmcl-printers .tmcl-product-media,
+  .tmcl-wash-cure .tmcl-product-media {
     height: 100%;
     min-height: 142px;
     padding: 10px;
@@ -1273,7 +1320,8 @@
   .tmcl-product-body-scanner,
   .tmcl-product-body-spare,
   .tmcl-product-body-system,
-  .tmcl-product-body-titanium {
+  .tmcl-product-body-titanium,
+  .tmcl-wash-cure .tmcl-product-body {
     min-width: 0;
     padding: 12px 12px 13px;
   }

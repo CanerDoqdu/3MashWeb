@@ -321,11 +321,11 @@ export function ThreeMashCategoryProductsPage(props: Props) {
   const detectedCategoryData = productListCategory || routeCategoryData;
 
   if (detectedCategoryData === printersCategoryData) {
-    return <ThreeMashPrintersSourceLanding />;
+    return <ThreeMashPrintersSourceLanding {...props} />;
   }
 
   if (detectedCategoryData) {
-    return <ThreeMashCategoryLanding data={detectedCategoryData} productList={props.productList} />;
+    return <ThreeMashCategoryLanding {...props} data={detectedCategoryData} productList={props.productList} />;
   }
 
   return (

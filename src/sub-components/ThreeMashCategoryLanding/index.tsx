@@ -116,7 +116,9 @@ export type CategoryLandingData = {
     homeLabel: string;
     homeHref: string;
     parentLabel: string;
+    parentHref?: string;
     currentLabel: string;
+    currentHref?: string;
   };
   hero: {
     titlePrefix: string;
@@ -164,7 +166,36 @@ export type CategoryLandingData = {
   };
 };
 
-interface Props {
+export type CategoryLandingOverrides = {
+  eyebrowText?: string;
+  heroTitlePrefix?: string;
+  heroTitleEmphasis?: string;
+  heroTitleSuffix?: string;
+  heroDescriptionHtml?: string;
+  primaryButtonText?: string;
+  primaryButtonHref?: string;
+  secondaryButtonText?: string;
+  secondaryButtonHref?: string;
+  metric1Value?: string;
+  metric1Label?: string;
+  metric2Value?: string;
+  metric2Label?: string;
+  finalTitlePrefix?: string;
+  finalTitleEmphasis?: string;
+  finalDescriptionHtml?: string;
+  finalPrimaryButtonText?: string;
+  finalPrimaryButtonHref?: string;
+  finalSecondaryButtonText?: string;
+  finalSecondaryButtonHref?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  mutedTextColor?: string;
+  panelColor?: string;
+  accentColor?: string;
+  lineColor?: string;
+};
+
+interface Props extends CategoryLandingOverrides {
   data: CategoryLandingData;
   productList?: IkasProductList;
 }
@@ -180,7 +211,143 @@ type CategoryAnnouncementWindow = Window & {
 };
 
 function rich(value: string) {
-  return { __html: value };
+  return { __html: normalizeHtmlLinks(value) };
+}
+
+function textValue(value: string | undefined, fallback: string) {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : fallback;
+}
+
+function richValue(value: string | undefined, fallback: string) {
+  return value !== undefined && value.trim() ? value : fallback;
+}
+
+function routeKey(value: string) {
+  return value
+    .trim()
+    .toLocaleLowerCase("tr-TR")
+    .replace(/^https?:\/\/(?:www\.)?(?:3mash\.com|studio\.ikasapps\.com)/i, "")
+    .split(/[?#]/)[0]
+    .replace(/\/+$/g, "")
+    .replace(/^\//, "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+const categoryRouteAliases: Record<string, string> = {
+  "": "/",
+  "anasayfa": "/",
+  "home": "/",
+  "search": "/search",
+  "arama": "/search",
+  "arama-sayfasi": "/search",
+  "tum-urunler": "/search",
+  "urunler": "/search",
+  "products": "/search",
+  "resins": "/dental-3d-yazici-recineleri",
+  "printers": "/3d-yazicilar",
+  "wash-cure": "/yikama-kurleme-cihazlari",
+  "zircon": "/zirkon-bloklar",
+  "furnaces": "/dental-firinlar",
+  "scanners": "/masasustu-tarayicilar",
+  "spares": "/3d-yazici-yedek-parcalari",
+  "systems": "/sistemler",
+  "titanium": "/titanyum-diskler",
+  "3d-yazicilar": "/3d-yazicilar",
+  "3d-yazici": "/3d-yazicilar",
+  "urunler-3d-yazicilar": "/3d-yazicilar",
+  "dental-3d-yazici-recineleri": "/dental-3d-yazici-recineleri",
+  "dental-recineler": "/dental-3d-yazici-recineleri",
+  "urunler-dental-recineler": "/dental-3d-yazici-recineleri",
+  "recineler": "/dental-3d-yazici-recineleri",
+  "yikama-kurleme-cihazlari": "/yikama-kurleme-cihazlari",
+  "yikama-kurleme": "/yikama-kurleme-cihazlari",
+  "urunler-yikama-kurleme": "/yikama-kurleme-cihazlari",
+  "kurleme-cihazlari": "/yikama-kurleme-cihazlari",
+  "urunler-kurleme-cihazlari": "/yikama-kurleme-cihazlari",
+  "masasustu-tarayicilar": "/masasustu-tarayicilar",
+  "masaustu-tarayicilar": "/masasustu-tarayicilar",
+  "urunler-masasustu-tarayicilar": "/masasustu-tarayicilar",
+  "zirkon-bloklar": "/zirkon-bloklar",
+  "zirkon-bloklar-titanyum": "/zirkon-bloklar",
+  "urunler-zirkon-bloklar": "/zirkon-bloklar",
+  "dental-firinlar": "/dental-firinlar",
+  "firinlar": "/dental-firinlar",
+  "urunler-dental-firinlar": "/dental-firinlar",
+  "3d-yazici-yedek-parcalari": "/3d-yazici-yedek-parcalari",
+  "yedek-parcalar": "/3d-yazici-yedek-parcalari",
+  "sistemler": "/sistemler",
+  "titanyum-diskler": "/titanyum-diskler",
+};
+
+function categoryHref(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed || /^(#|mailto:|tel:|whatsapp:)/i.test(trimmed)) return trimmed || "#";
+
+  try {
+    const url = new URL(trimmed);
+    if (url.hostname !== "3mash.com" && url.hostname !== "www.3mash.com" && url.hostname !== "studio.ikasapps.com") {
+      return trimmed;
+    }
+    const route = `${url.pathname}${url.search}${url.hash}` || "/";
+    const mapped = categoryRouteAliases[routeKey(route)];
+    return mapped ? `${mapped}${url.search}${url.hash}` : route;
+  } catch {
+    const mapped = categoryRouteAliases[routeKey(trimmed)];
+    return mapped || trimmed;
+  }
+}
+
+function currentCategoryHref(data: CategoryLandingData) {
+  return categoryRouteAliases[routeKey(data.kind)] || `/${data.kind}`;
+}
+
+function parentCategoryHref(data: CategoryLandingData) {
+  const parentLabelKey = routeKey(data.breadcrumb.parentLabel || "");
+  if (parentLabelKey === "urunler" || parentLabelKey === "products") {
+    return "/search";
+  }
+
+  return categoryHref(data.breadcrumb.parentHref || "/search");
+}
+
+function breadcrumbCurrentHref(data: CategoryLandingData) {
+  const currentHref = categoryHref(data.breadcrumb.currentHref || "");
+  if (!currentHref || currentHref === "#" || currentHref === "/") {
+    return currentCategoryHref(data);
+  }
+
+  return currentHref;
+}
+
+function smoothCategoryClick(event: MouseEvent, rawHref: string) {
+  const target = categoryHref(rawHref);
+  const hashIndex = target.indexOf("#");
+  const hash = hashIndex >= 0 ? target.slice(hashIndex) : "";
+  if (!hash || hash.length <= 1 || typeof window === "undefined") return;
+
+  const targetPath = hashIndex > 0 ? target.slice(0, hashIndex) : "";
+  const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+  const normalizedTargetPath = targetPath ? targetPath.replace(/\/+$/, "") || "/" : currentPath;
+  if (normalizedTargetPath !== currentPath) return;
+
+  const targetId = decodeURIComponent(hash.slice(1)).trim();
+  const section = document.getElementById(targetId) || document.querySelector(hash);
+  if (!section) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function normalizeHtmlLinks(value: string) {
+  return value.replace(/\shref=(["'])(.*?)\1/gi, (_match, quote: string, rawHref: string) => {
+    return ` href=${quote}${categoryHref(rawHref)}${quote}`;
+  });
 }
 
 function normalize(value: string | undefined) {
@@ -245,9 +412,24 @@ function titleWithEmphasis(prefix: string, emphasis: string, suffix?: string) {
   );
 }
 
+function categoryStyle(props: CategoryLandingOverrides) {
+  return {
+    "--tmcl-bg": textValue(props.backgroundColor, "var(--tm-theme-bg, #FAFAF7)"),
+    "--tmcl-ink": textValue(props.textColor, "var(--tm-theme-text, #0E0E0C)"),
+    "--tmcl-sub": textValue(props.mutedTextColor, "var(--tm-theme-sub, #55554e)"),
+    "--tmcl-mut": textValue(props.mutedTextColor, "var(--tm-theme-muted, #8f8f86)"),
+    "--tmcl-line": textValue(props.lineColor, "var(--tm-theme-line, #E6E6E0)"),
+    "--tmcl-line2": textValue(props.lineColor, "var(--tm-theme-line-strong, #d5d5cd)"),
+    "--tmcl-lime": textValue(props.accentColor, "var(--tm-theme-accent, #C7F136)"),
+    "--tmcl-panel": textValue(props.panelColor, "var(--tm-theme-panel, #F1F1EC)"),
+  };
+}
+
 function ButtonLink({ button }: { button: CategoryButton }) {
+  const normalizedHref = categoryHref(button.href);
+
   return (
-    <a className={`tmcl-btn tmcl-btn-${button.variant || "dark"}`} href={button.href}>
+    <a className={`tmcl-btn tmcl-btn-${button.variant || "dark"}`} href={normalizedHref} onClick={(event) => smoothCategoryClick(event, normalizedHref)}>
       {button.label}
     </a>
   );
@@ -289,7 +471,7 @@ function ProductCard({
   const variant = product ? safeVariant(product) : null;
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image;
-  const href = product ? getProductHref(product) : card.href;
+  const href = categoryHref(product ? getProductHref(product) : card.href);
   const liveImageSrc = image ? getDefaultSrc(image) : "";
   const imageSrc = card.sourceIcon ? "" : card.imageSrc || liveImageSrc;
   const imageAlt = card.imageAlt || image?.altText || card.title;
@@ -354,7 +536,76 @@ function SectionHead({ section }: { section: CategorySectionHead }) {
   );
 }
 
-export default function ThreeMashCategoryLanding({ data, productList }: Props) {
+function FaqItem({ item, defaultOpen }: { item: CategoryFaq; defaultOpen: boolean }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const panelId = `tmcl-faq-${routeKey(item.question)}`;
+
+  return (
+    <div className={`tmcl-faq-item${isOpen ? " is-open" : ""}`}>
+      <button type="button" aria-expanded={isOpen} aria-controls={panelId} onClick={() => setIsOpen((current) => !current)}>
+        {item.question}
+        <span>+</span>
+      </button>
+      <div className="tmcl-faq-panel" id={panelId}>
+        <div dangerouslySetInnerHTML={rich(item.answerHtml)} />
+      </div>
+    </div>
+  );
+}
+
+export default function ThreeMashCategoryLanding(props: Props) {
+  const { data, productList } = props;
+  const heroButtons = data.hero.buttons.map((button, index) => {
+    if (index === 0) {
+      return {
+        ...button,
+        label: textValue(props.primaryButtonText, button.label),
+        href: textValue(props.primaryButtonHref, button.href),
+      };
+    }
+    if (index === 1) {
+      return {
+        ...button,
+        label: textValue(props.secondaryButtonText, button.label),
+        href: textValue(props.secondaryButtonHref, button.href),
+      };
+    }
+    return button;
+  });
+  const heroMetrics = data.hero.metrics.map((metric, index) => {
+    if (index === 0) {
+      return {
+        ...metric,
+        value: textValue(props.metric1Value, metric.value),
+        label: textValue(props.metric1Label, metric.label),
+      };
+    }
+    if (index === 1) {
+      return {
+        ...metric,
+        value: textValue(props.metric2Value, metric.value),
+        label: textValue(props.metric2Label, metric.label),
+      };
+    }
+    return metric;
+  });
+  const finalButtons = data.finalCta.buttons.map((button, index) => {
+    if (index === 0) {
+      return {
+        ...button,
+        label: textValue(props.finalPrimaryButtonText, button.label),
+        href: textValue(props.finalPrimaryButtonHref, button.href),
+      };
+    }
+    if (index === 1) {
+      return {
+        ...button,
+        label: textValue(props.finalSecondaryButtonText, button.label),
+        href: textValue(props.finalSecondaryButtonHref, button.href),
+      };
+    }
+    return button;
+  });
   const [activeFilter, setActiveFilter] = useState(data.selector.filters?.[0]?.id || "all");
   const liveProducts = productList?.data || [];
   const liveProductsByTitle = useMemo(() => {
@@ -370,7 +621,7 @@ export default function ThreeMashCategoryLanding({ data, productList }: Props) {
 
     const payload = {
       enabled: true,
-      highlightText: data.announcement.highlight,
+      highlightText: textValue(props.eyebrowText, data.announcement.highlight),
       text: data.announcement.text,
       ctaText: data.announcement.ctaText,
       href: data.announcement.href,
@@ -383,28 +634,32 @@ export default function ThreeMashCategoryLanding({ data, productList }: Props) {
       delete targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__;
       window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: { enabled: false } }));
     };
-  }, [data.announcement.ctaText, data.announcement.highlight, data.announcement.href, data.announcement.text]);
+  }, [data.announcement.ctaText, data.announcement.highlight, data.announcement.href, data.announcement.text, props.eyebrowText]);
 
   return (
-    <section className={`three-mash-category-landing tmcl-${data.kind}`}>
+    <section className={`three-mash-category-landing tmcl-${data.kind}`} style={categoryStyle(props) as any}>
       <div className="tmcl-hero">
         <div className="tmcl-wrap">
           <div className="tmcl-crumb">
-            <a href={data.breadcrumb.homeHref}>{data.breadcrumb.homeLabel}</a>
+            <a href={categoryHref(data.breadcrumb.homeHref)}>{data.breadcrumb.homeLabel}</a>
             {" \u00A0/\u00A0 "}
-            <span>{data.breadcrumb.parentLabel}</span>
+            <a href={parentCategoryHref(data)}>{data.breadcrumb.parentLabel}</a>
             {" \u00A0/\u00A0 "}
-            <span>{data.breadcrumb.currentLabel}</span>
+            <a href={breadcrumbCurrentHref(data)}>{data.breadcrumb.currentLabel}</a>
           </div>
-          <h1>{titleWithEmphasis(data.hero.titlePrefix, data.hero.titleEmphasis, data.hero.titleSuffix)}</h1>
-          <p dangerouslySetInnerHTML={rich(data.hero.descriptionHtml)} />
+          <h1>{titleWithEmphasis(
+            textValue(props.heroTitlePrefix, data.hero.titlePrefix),
+            textValue(props.heroTitleEmphasis, data.hero.titleEmphasis),
+            props.heroTitleSuffix !== undefined ? props.heroTitleSuffix : data.hero.titleSuffix,
+          )}</h1>
+          <p dangerouslySetInnerHTML={rich(richValue(props.heroDescriptionHtml, data.hero.descriptionHtml))} />
           <div className="tmcl-actions">
-            {data.hero.buttons.map((button) => (
+            {heroButtons.map((button) => (
               <ButtonLink button={button} key={`${button.label}-${button.href}`} />
             ))}
           </div>
           <div className="tmcl-value-strip">
-            {data.hero.metrics.map((metric) => (
+            {heroMetrics.map((metric) => (
               <div key={`${metric.value}-${metric.label}`}>
                 <strong>
                   {metric.value}
@@ -493,7 +748,7 @@ export default function ThreeMashCategoryLanding({ data, productList }: Props) {
                 {data.feature.content.titleSuffix ? ` ${data.feature.content.titleSuffix}` : null}
               </h3>
               <p dangerouslySetInnerHTML={rich(data.feature.content.descriptionHtml)} />
-              <a href={data.feature.content.href}>{data.feature.content.ctaText}</a>
+              <a href={categoryHref(data.feature.content.href)}>{data.feature.content.ctaText}</a>
             </div>
             <div className="tmcl-spec-table">
               {data.feature.content.specs.map((spec) => (
@@ -564,15 +819,7 @@ export default function ThreeMashCategoryLanding({ data, productList }: Props) {
           </div>
           <div className="tmcl-faq">
             {data.faq.items.map((item, index) => (
-              <div className="tmcl-faq-item" key={item.question}>
-                <details open={index === 0}>
-                  <summary>
-                    {item.question}
-                    <span>+</span>
-                  </summary>
-                  <div dangerouslySetInnerHTML={rich(item.answerHtml)} />
-                </details>
-              </div>
+              <FaqItem item={item} defaultOpen={index === 0} key={item.question} />
             ))}
           </div>
         </div>
@@ -580,10 +827,14 @@ export default function ThreeMashCategoryLanding({ data, productList }: Props) {
 
       <section className="tmcl-final">
         <div className="tmcl-wrap">
-          <h2>{titleWithEmphasis(data.finalCta.titlePrefix, data.finalCta.titleEmphasis, data.finalCta.titleSuffix)}</h2>
-          <p dangerouslySetInnerHTML={rich(data.finalCta.descriptionHtml)} />
+          <h2>{titleWithEmphasis(
+            textValue(props.finalTitlePrefix, data.finalCta.titlePrefix),
+            textValue(props.finalTitleEmphasis, data.finalCta.titleEmphasis),
+            data.finalCta.titleSuffix,
+          )}</h2>
+          <p dangerouslySetInnerHTML={rich(richValue(props.finalDescriptionHtml, data.finalCta.descriptionHtml))} />
           <div className="tmcl-actions tmcl-final-actions">
-            {data.finalCta.buttons.map((button) => (
+            {finalButtons.map((button) => (
               <ButtonLink button={button} key={`${button.label}-${button.href}`} />
             ))}
           </div>

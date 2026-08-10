@@ -3,7 +3,7 @@ import { printerSparePartsCategoryData } from "../../sub-components/ThreeMashCat
 import type { Props } from "./types";
 
 export function ThreeMashPrinterSparePartsListingPage(props: Props) {
-  return <ThreeMashCategoryLanding data={printerSparePartsCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={printerSparePartsCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashPrinterSparePartsListingPage;

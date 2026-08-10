@@ -52,7 +52,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
         <div className="tm-blog-detail-wrap">
           <div className="tm-blog-detail-setup">
             {props.setupMessage ||
-              "Bu sayfanın canlı blog detayı göstermesi için ikas editörde Blog alanını bağlayın."}
+              "Blog yazısı kısa süre içinde burada gösterilecek."}
           </div>
         </div>
       </section>

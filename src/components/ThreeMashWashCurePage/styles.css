@@ -6,3 +6,51 @@
   min-height: 52vh;
   background: #fafaf7;
 }
+
+.three-mash-empty-product-content {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  padding: 96px 32px;
+}
+
+.three-mash-empty-product-content span {
+  display: inline-flex;
+  margin-bottom: 18px;
+  color: #6b7617;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.three-mash-empty-product-content h1 {
+  max-width: 760px;
+  margin: 0;
+  color: inherit;
+  font-family: "Space Grotesk", var(--tm-theme-font-heading, sans-serif);
+  font-size: clamp(38px, 6vw, 72px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.three-mash-empty-product-content p {
+  max-width: 660px;
+  margin: 24px 0 0;
+  color: #50544d;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.three-mash-empty-product-content a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 32px;
+  padding: 0 24px;
+  border-radius: 10px;
+  background: #c7f136;
+  color: #0e0e0c;
+  font-weight: 800;
+  text-decoration: none;
+}

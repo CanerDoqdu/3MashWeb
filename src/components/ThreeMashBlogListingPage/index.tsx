@@ -130,7 +130,7 @@ export function ThreeMashBlogListingPage(props: Props) {
         {!blogList ? (
           <div className="tm-blog-setup">
             {props.setupMessage ||
-              "Bu sayfanın canlı blogları göstermesi için ikas editörde Blog List alanını All Blogs veya ilgili kategori olarak bağlayın."}
+              "Blog yazıları kısa süre içinde burada listelenecek."}
           </div>
         ) : blogs.length > 0 ? (
           <>

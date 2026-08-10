@@ -4,7 +4,7 @@ import argenzHtMultilayerDetailImage from "../../assets/argenz-ht-multilayer-det
 import crsCompositeSararmaImage from "../../assets/crs-composite-sararma-data";
 import crsModelMarginDetailImage from "../../assets/crs-model-margin-detail-data";
 import crsTrayControlledProcessImage from "../../assets/crs-tray-controlled-process-data";
-import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailEcosystemSection, ProductDetailSectionScope, ProductDetailUseCasesSection } from "../../sub-components/ThreeMashProductDetailTemplate";
 
 function propString(value: unknown) {
@@ -596,7 +596,7 @@ function objectFit(value: unknown) {
 }
 
 export function ThreeMashProductImageText(props: Props) {
-  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  const sourceData = useSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   if (sourceData) {
     return (
       <ProductDetailSectionScope data={sourceData}>
@@ -605,7 +605,6 @@ export function ThreeMashProductImageText(props: Props) {
       </ProductDetailSectionScope>
     );
   }
-
   const visibility = productBasedVisibilityOverride(props);
   if (visibility === false) return null;
   if (visibility !== true && (isEditorPreview() || productBasedApplies(props)) && boolValue(props.productBasedSectionVisible) === false) return null;

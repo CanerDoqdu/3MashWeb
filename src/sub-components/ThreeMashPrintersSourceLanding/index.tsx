@@ -13,13 +13,38 @@ type AnnouncementWindow = Window & {
   };
 };
 
-export default function ThreeMashPrintersSourceLanding() {
+type Props = {
+  eyebrowText?: string;
+  heroTitlePrefix?: string;
+  heroTitleEmphasis?: string;
+  heroDescriptionHtml?: string;
+  primaryButtonText?: string;
+  primaryButtonHref?: string;
+  secondaryButtonText?: string;
+  secondaryButtonHref?: string;
+  metric1Value?: string;
+  metric1Label?: string;
+  metric2Value?: string;
+  metric2Label?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  mutedTextColor?: string;
+  accentColor?: string;
+  lineColor?: string;
+};
+
+function textValue(value: string | undefined, fallback: string) {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : fallback;
+}
+
+export default function ThreeMashPrintersSourceLanding(props: Props) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const payload = {
       enabled: true,
-      highlightText: "⚡ Hangi yazıcı size uygun?",
+      highlightText: textValue(props.eyebrowText, "⚡ Hangi yazıcı size uygun?"),
       text: "Hız, çözünürlük ve bütçeye göre karşılaştırın; emin değilseniz ekibimiz eşleştirir.",
       ctaText: "Karşılaştırmaya git →",
       href: "#karsilastir",
@@ -32,33 +57,37 @@ export default function ThreeMashPrintersSourceLanding() {
       delete targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__;
       window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: { enabled: false } }));
     };
-  }, []);
+  }, [props.eyebrowText]);
 
   return (
-    <div className="three-mash-printers-source">
+    <div className="three-mash-printers-source" style={{
+      "--p-bg": textValue(props.backgroundColor, "var(--tm-theme-bg, #FAFAF7)"),
+      "--p-ink": textValue(props.textColor, "#0d0d0b"),
+      "--p-sub": textValue(props.mutedTextColor, "#4f514a"),
+      "--p-line": textValue(props.lineColor, "#deded6"),
+      "--p-lime": textValue(props.accentColor, "#c7f136"),
+    } as any}>
       <div className="hero">
         <div className="wrap">
           <div className="crumb">
             <a href="/">Ana sayfa</a> &nbsp;/&nbsp; Ürünler &nbsp;/&nbsp; 3D Yazıcılar
           </div>
           <h1>
-            ±20 mikron <span className="em">burada doğar.</span>
+            {textValue(props.heroTitlePrefix, "±20 mikron")} <span className="em">{textValue(props.heroTitleEmphasis, "burada doğar.")}</span>
           </h1>
-          <p className="sub">
-            Hassasiyet tesadüf değildir; <b>doğru dalga boyu</b>, termal stabilite ve kalibrasyonla kurulur. 3mash yazıcıları malzemeye göre tasarlanır: <b>385 nm</b> ışık reçinenin kürlenme spektrumuna tam uyar, entegre ısıtma viskoziteyi sabitler. Üstelik <b>gizli lisans veya RFID ücreti yok</b> — istediğiniz reçineyle çalışırsınız.
-          </p>
+          <p className="sub" dangerouslySetInnerHTML={{ __html: props.heroDescriptionHtml || "Hassasiyet tesadüf değildir; <b>doğru dalga boyu</b>, termal stabilite ve kalibrasyonla kurulur. 3mash yazıcıları malzemeye göre tasarlanır: <b>385 nm</b> ışık reçinenin kürlenme spektrumuna tam uyar, entegre ısıtma viskoziteyi sabitler. Üstelik <b>gizli lisans veya RFID ücreti yok</b> — istediğiniz reçineyle çalışırsınız." }} />
           <div className="cta">
-            <a className="btn lime" href="#karsilastir">Yazıcıları karşılaştır ↓</a>
-            <a className="btn line" href="/pages/iletisim">Bana uygun olanı öner</a>
+            <a className="btn lime" href={props.primaryButtonHref || "#karsilastir"}>{props.primaryButtonText || "Yazıcıları karşılaştır ↓"}</a>
+            <a className="btn line" href={props.secondaryButtonHref || "/pages/iletisim"}>{props.secondaryButtonText || "Bana uygun olanı öner"}</a>
           </div>
           <div className="vstrip">
             <div>
-              <div className="v">385 <em>nm</em></div>
-              <div className="l">reçine kürlenme spektrumuna tam uyum · keskin marjin</div>
+              <div className="v">{textValue(props.metric1Value, "385")} <em>nm</em></div>
+              <div className="l">{textValue(props.metric1Label, "reçine kürlenme spektrumuna tam uyum · keskin marjin")}</div>
             </div>
             <div>
-              <div className="v">14×19 <em>µm</em></div>
-              <div className="l">MASH P16L · 16K XY çözünürlük</div>
+              <div className="v">{textValue(props.metric2Value, "14×19")} <em>µm</em></div>
+              <div className="l">{textValue(props.metric2Label, "MASH P16L · 16K XY çözünürlük")}</div>
             </div>
             <div>
               <div className="v">±20 <em>µm</em></div>

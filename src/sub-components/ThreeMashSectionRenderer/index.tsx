@@ -20,7 +20,6 @@ import {
   profileGoksel,
   profileMehmet,
 } from "../../assets/remaining-assets-data";
-import crealityUW02 from "../../assets/creality-uw02-data";
 import {
   ecoBlocksIcon,
   ecoCuringIcon,
@@ -29,9 +28,9 @@ import {
   ecoResinIcon,
   ecoScannerIcon,
 } from "../../assets/eco-icons-data";
-import mashC4pFeatureImage from "../../assets/mash-c4p-feature-data";
+import mashC1eImage from "../../assets/mash-c1e-section-clean-data";
+import mashW1eImage from "../../assets/mash-w1e-section-clean-data";
 import p1dSectionCardImage from "../../assets/p1d-section-card-data";
-import phrozenWashCureKit from "../../assets/phrozen-wash-cure-kit-data";
 import { crsModelBottleImage } from "../../assets/crs-model-data";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
 import trustLogo1 from "../../assets/trust-logo-1-data";
@@ -50,7 +49,7 @@ const academyPageHref = "/pages/mash-academy";
 const consultationWhatsappHref =
   "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum";
 
-const solutionSetupHtml = `<div class="tmr-products-setup">Bu bölüm ikas canlı ürün datasına bağlıdır. Editörde <b>Product List</b> alanını All Products veya yeni ürünlerin bulunduğu liste/kategori olarak yeniden bağlayın.</div>`;
+const solutionSetupHtml = `<div class="tmr-products-setup">Ürünler kısa süre içinde burada listelenecek.</div>`;
 
 const legacyThemeCategoryNames = new Set([
   "clothing",
@@ -81,7 +80,7 @@ export const defaultCuringHtml = `
     <div class="tmr-index"><span class="tmr-index-number">04</span><span class="tmr-index-text">Kritik Son Adım</span><span class="tmr-index-line"></span></div>
     <div class="tmr-head"><h2>Sadece yazıcı değil. Sonucu <span class="tmr-title-em">kürleme</span> tamamlar.</h2><div class="tmr-side">Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:</div></div>
     <div class="tmr-why-grid"><article><div>SEBEP 01</div><h4>Mekanik dayanım</h4><p>Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.</p></article><article id="piyasada-yaygin-kurulum-250-500" style="scroll-margin-top: 112px;"><div>SEBEP 02</div><h4>Ölçüsel doğruluk</h4><p>Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.</p></article><article><div>SEBEP 03</div><h4>Biyouyumluluk &amp; renk</h4><p>Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.</p></article></div>
-    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">DÜNYADA İLK · AKILLI</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashC4pFeatureImage}" alt="MASH C4P - Akıllı Kürleme"></div><div class="tmr-product-body"><h3>MASH C4P — Akıllı Kürleme</h3><p>Reçineye göre süre, sıcaklık ve dalga boyunu <b>otomatik yöneten</b>, post-curing'i <b>kullanıcı hatasından arındıran</b> profesyonel cihaz. Her partide aynı sonuç.</p><div class="tmr-spec"><div><span>Parametre yönetimi</span><b>Otomatik</b></div><div><span>Overcure / undercure</span><b>Elimine</b></div></div><a class="tmr-go" href="/yikama-kurleme-cihazlari">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">EKONOMİK</span><img class="tmr-product-img tmr-machine-uw02" src="${crealityUW02}" alt="MASH C1E - Ekonomik Kürleme"></div><div class="tmr-product-body"><h3>MASH C1E — Ekonomik Kürleme</h3><p>Ekosisteme ilk adım için <b>güvenilir ve tutarlı</b> kürleme. P16L ile birlikte, dijital akışın eksiksiz başlangıç seti.</p><div class="tmr-spec"><div><span>Rol</span><b>Giriş segmenti</b></div><div><span>Uyum</span><b>P16L + CRS ile set</b></div></div><a class="tmr-go" href="/yikama-kurleme-cihazlari">İncele <span>→</span></a></div></article></div>
+    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashW1eImage}" alt="Mash W1E Ultrasonik Yıkama Cihazı"></div><div class="tmr-product-body"><h3>Mash W1E Ultrasonik Yıkama Cihazı</h3><p>Baskı sonrası parçaların yüzeyindeki reçine kalıntılarını <b>ultrasonik yıkama</b> ile temizler; kürleme öncesi yüzeyi hazırlar.</p><div class="tmr-spec"><div><span>İşlem</span><b>Ultrasonik yıkama</b></div><div><span>Akış</span><b>Baskı sonrası temizlik</b></div></div><a class="tmr-go" href="/mash-w1e-ultrasonik-yikama-cihazi">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${mashC1eImage}" alt="Mash C1E UV Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Mash C1E UV Kürleme Cihazı</h3><p>24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılarda <b>UV post-curing</b> adımını tamamlar.</p><div class="tmr-spec"><div><span>Işık sistemi</span><b>360° / 24 LED</b></div><div><span>Spektrum</span><b>360-530 nm</b></div></div><a class="tmr-go" href="/mash-c1e-uv-kurleme-cihazi">İncele <span>→</span></a></div></article></div>
     <p class="tmr-readmore">Derine inmek isteyenlere, Mash Academy'den: <a href="/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber">Overcure ve Undercure Nedir?</a> · <a href="/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi">385nm mi 405nm mi?</a></p>
   </div>
 </section>`;
@@ -517,6 +516,8 @@ function productPageHref(source: unknown, fallback: string) {
     "/urunler/3d-yazicilar": "/3d-yazicilar",
     "/urunler/dental-recineler": "/dental-3d-yazici-recineleri",
     "/urunler/yikama-kurleme": "/yikama-kurleme-cihazlari",
+    "/urunler/kurleme-cihazlari": "/yikama-kurleme-cihazlari",
+    "/kurleme-cihazlari": "/yikama-kurleme-cihazlari",
     "/urunler/masasustu-tarayicilar": "/masasustu-tarayicilar",
     "/urunler/zirkon-bloklar": "/zirkon-bloklar",
     "/urunler/dental-firinlar": "/dental-firinlar",
@@ -558,6 +559,8 @@ function normalizedInternalRouteHref(href: string) {
     "/urunler/3d-yazicilar": "/3d-yazicilar",
     "/urunler/dental-recineler": "/dental-3d-yazici-recineleri",
     "/urunler/yikama-kurleme": "/yikama-kurleme-cihazlari",
+    "/urunler/kurleme-cihazlari": "/yikama-kurleme-cihazlari",
+    "/kurleme-cihazlari": "/yikama-kurleme-cihazlari",
     "/urunler/masasustu-tarayicilar": "/masasustu-tarayicilar",
     "/urunler/zirkon-bloklar": "/zirkon-bloklar",
     "/urunler/dental-firinlar": "/dental-firinlar",
@@ -914,8 +917,8 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-curing-product-media-end": "#14140F",
     "--tmr-curing-reason-radius": `${numberInRange(raw(props, "reasonCardRadius"), 18, 0, 36)}px`,
     "--tmr-curing-product-radius": `${numberInRange(raw(props, "productCardRadius"), 20, 0, 36)}px`,
-    "--tmr-curing-image-width": `${numberInRange(raw(props, "productImageWidth"), 205, 48, 340)}px`,
-    "--tmr-curing-image-height": `${numberInRange(raw(props, "productImageHeight"), 190, 48, 300)}px`,
+    "--tmr-curing-image-width": `${numberInRange(raw(props, "productImageWidth"), 226, 48, 380)}px`,
+    "--tmr-curing-image-height": `${numberInRange(raw(props, "productImageHeight"), 206, 48, 340)}px`,
     "--tmr-curing-image-x": `${numberInRange(raw(props, "productImageXOffset"), 0, -90, 90)}px`,
     "--tmr-curing-image-y": `${numberInRange(raw(props, "productImageYOffset"), 0, -90, 90)}px`,
     "--tmr-curing-image-fit": imageFit(raw(props, "productImageFit")),
@@ -1195,7 +1198,7 @@ const curingContentHtml = `<div class="tmr-why-grid"><article>
 
 
 <div>SEBEP 01</div><h4>Mekanik dayanım</h4><p>Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.</p></article><article><div>SEBEP 02</div><h4>Ölçüsel doğruluk</h4><p>Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.</p></article><article><div>SEBEP 03</div><h4>Biyouyumluluk &amp; renk</h4><p>Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.</p></article></div>
-    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">DÜNYADA İLK · AKILLI</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashC4pFeatureImage}" alt="MASH C4P - Akıllı Kürleme"></div><div class="tmr-product-body"><h3>MASH C4P — Akıllı Kürleme</h3><p>Reçineye göre süre, sıcaklık ve dalga boyunu <b>otomatik yöneten</b>, post-curing'i <b>kullanıcı hatasından arındıran</b> profesyonel cihaz. Her partide aynı sonuç.</p><div class="tmr-spec"><div><span>Parametre yönetimi</span><b>Otomatik</b></div><div><span>Overcure / undercure</span><b>Elimine</b></div></div><a class="tmr-go" href="/yikama-kurleme-cihazlari">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">EKONOMİK</span><img class="tmr-product-img tmr-machine-uw02" src="${crealityUW02}" alt="MASH C1E - Ekonomik Kürleme"></div><div class="tmr-product-body"><h3>MASH C1E — Ekonomik Kürleme</h3><p>Ekosisteme ilk adım için <b>güvenilir ve tutarlı</b> kürleme. P16L ile birlikte, dijital akışın eksiksiz başlangıç seti.</p><div class="tmr-spec"><div><span>Rol</span><b>Giriş segmenti</b></div><div><span>Uyum</span><b>P16L + CRS ile set</b></div></div><a class="tmr-go" href="/yikama-kurleme-cihazlari">İncele <span>→</span></a></div></article></div>
+    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashW1eImage}" alt="Mash W1E Ultrasonik Yıkama Cihazı"></div><div class="tmr-product-body"><h3>Mash W1E Ultrasonik Yıkama Cihazı</h3><p>Baskı sonrası parçaların yüzeyindeki reçine kalıntılarını <b>ultrasonik yıkama</b> ile temizler; kürleme öncesi yüzeyi hazırlar.</p><div class="tmr-spec"><div><span>İşlem</span><b>Ultrasonik yıkama</b></div><div><span>Akış</span><b>Baskı sonrası temizlik</b></div></div><a class="tmr-go" href="/mash-w1e-ultrasonik-yikama-cihazi">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${mashC1eImage}" alt="Mash C1E UV Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Mash C1E UV Kürleme Cihazı</h3><p>24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılarda <b>UV post-curing</b> adımını tamamlar.</p><div class="tmr-spec"><div><span>Işık sistemi</span><b>360° / 24 LED</b></div><div><span>Spektrum</span><b>360-530 nm</b></div></div><a class="tmr-go" href="/mash-c1e-uv-kurleme-cihazi">İncele <span>→</span></a></div></article></div>
     <p class="tmr-readmore">Derine inmek isteyenlere, Mash Academy'den: <a href="/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber">Overcure ve Undercure Nedir?</a> · <a href="/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi">385nm mi 405nm mi?</a></p>`;
 
 const ecosystemContentHtml = `<div class="tmr-eco"><a href="/3d-yazicilar"><span class="tmr-eco-icon"><img src="${ecoPrinterIcon}" alt="" aria-hidden="true"></span><span>3D Yazıcılar</span></a><a href="/dental-3d-yazici-recineleri"><span class="tmr-eco-icon"><img src="${ecoResinIcon}" alt="" aria-hidden="true"></span><span>Dental Reçineler</span></a><a href="/yikama-kurleme-cihazlari"><span class="tmr-eco-icon"><img src="${ecoScannerIcon}" alt="" aria-hidden="true"></span><span>Yıkama &amp; Kürleme</span></a><a href="/masasustu-tarayicilar"><span class="tmr-eco-icon"><img src="${ecoCuringIcon}" alt="" aria-hidden="true"></span><span>Masaüstü Tarayıcılar</span></a><a href="/zirkon-bloklar"><span class="tmr-eco-icon"><img src="${ecoBlocksIcon}" alt="" aria-hidden="true"></span><span>Zirkon Bloklar</span></a><a href="/dental-firinlar"><span class="tmr-eco-icon"><img src="${ecoOvenIcon}" alt="" aria-hidden="true"></span><span>Dental Fırınlar</span></a></div>`;
@@ -1243,93 +1246,103 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
   const normalizedProps = withLegacyDefaults(props, {
     curingProduct1Tag: {
       legacy: "YIKAMA · KÜRLEME",
-      next: "DÜNYADA İLK · AKILLI",
+      next: "YIKAMA",
     },
     curingProduct1Title: {
       legacy: "Phrozen Wash & Cure Kit",
-      next: "MASH C4P — Akıllı Kürleme",
+      next: "Mash W1E Ultrasonik Yıkama Cihazı",
     },
     curingProduct1DescriptionHtml: {
       legacy:
         "8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.",
-      next: "Reçineye göre süre, sıcaklık ve dalga boyunu <b>otomatik yöneten</b>, post-curing'i <b>kullanıcı hatasından arındıran</b> profesyonel cihaz. Her partide aynı sonuç.",
+      next: "Baskı sonrası parçaların yüzeyindeki reçine kalıntılarını <b>ultrasonik yıkama</b> ile temizler; kürleme öncesi yüzeyi hazırlar.",
     },
     curingProduct1ImageAlt: {
       legacy: "Phrozen Wash & Cure Kit",
-      next: "MASH C4P - Akıllı Kürleme",
+      next: "Mash W1E Ultrasonik Yıkama Cihazı",
     },
     curingProduct1Spec1Label: {
       legacy: "Yıkama hacmi",
-      next: "Parametre yönetimi",
+      next: "İşlem",
     },
-    curingProduct1Spec1Value: { legacy: "8 L", next: "Otomatik" },
+    curingProduct1Spec1Value: { legacy: "8 L", next: "Ultrasonik yıkama" },
     curingProduct1Spec2Label: {
       legacy: "Kürleme",
-      next: "Overcure / undercure",
+      next: "Akış",
     },
-    curingProduct1Spec2Value: { legacy: "405 nm UV", next: "Elimine" },
+    curingProduct1Spec2Value: { legacy: "405 nm UV", next: "Baskı sonrası temizlik" },
     curingProduct1CtaHref: {
       legacy: "https://uk.phrozen3d.com/products/wash-cure-kit",
-      next: "/yikama-kurleme-cihazlari",
+      next: "/mash-w1e-ultrasonik-yikama-cihazi",
     },
-    curingProduct2Tag: { legacy: "YIKAMA · KÜRLEME", next: "EKONOMİK" },
+    curingProduct2Tag: { legacy: "YIKAMA · KÜRLEME", next: "KÜRLEME" },
     curingProduct2Title: {
       legacy: "Creality UW02",
-      next: "MASH C1E — Ekonomik Kürleme",
+      next: "Mash C1E UV Kürleme Cihazı",
     },
     curingProduct2DescriptionHtml: {
       legacy:
         "Baskı sonrası yıkama ve kürleme adımlarını <b>tek kontrollü akışta</b> toplar. P16L ile tamamlayıcı başlangıç seti.",
-      next: "Ekosisteme ilk adım için <b>güvenilir ve tutarlı</b> kürleme. P16L ile birlikte, dijital akışın eksiksiz başlangıç seti.",
+      next: "24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılarda <b>UV post-curing</b> adımını tamamlar.",
     },
     curingProduct2ImageAlt: {
       legacy: "Creality UW02",
-      next: "MASH C1E - Ekonomik Kürleme",
+      next: "Mash C1E UV Kürleme Cihazı",
     },
-    curingProduct2Spec1Label: { legacy: "Görev", next: "Rol" },
+    curingProduct2Spec1Label: { legacy: "Görev", next: "Işık sistemi" },
     curingProduct2Spec1Value: {
       legacy: "Yıkama + kürleme",
-      next: "Giriş segmenti",
+      next: "360° / 24 LED",
     },
+    curingProduct2Spec2Label: { legacy: "Uyum", next: "Spektrum" },
     curingProduct2Spec2Value: {
       legacy: "P16L + CRS",
-      next: "P16L + CRS ile set",
+      next: "360-530 nm",
+    },
+    curingProduct2CtaHref: {
+      legacy: "/yikama-kurleme-cihazlari",
+      next: "/mash-c1e-uv-kurleme-cihazi",
     },
   });
+  const staticCuringProps = {
+    ...normalizedProps,
+    curingProduct1Product: null,
+    curingProduct2Product: null,
+  };
 
   return `<div class="tmr-products tmr-products-two">${productCard(
-    normalizedProps,
+    staticCuringProps,
     "curingProduct1",
     {
-      tag: "DÜNYADA İLK · AKILLI",
+      tag: "YIKAMA",
       tagClass: "tmr-lime-tag",
-      image: mashC4pFeatureImage,
-      imageAlt: "MASH C4P - Akıllı Kürleme",
+      image: mashW1eImage,
+      imageAlt: "Mash W1E Ultrasonik Yıkama Cihazı",
       imageClass: "tmr-machine-phrozen",
-      title: "MASH C4P — Akıllı Kürleme",
+      title: "Mash W1E Ultrasonik Yıkama Cihazı",
       descriptionHtml:
-        "Reçineye göre süre, sıcaklık ve dalga boyunu <b>otomatik yöneten</b>, post-curing'i <b>kullanıcı hatasından arındıran</b> profesyonel cihaz. Her partide aynı sonuç.",
+        "Baskı sonrası parçaların yüzeyindeki reçine kalıntılarını <b>ultrasonik yıkama</b> ile temizler; kürleme öncesi yüzeyi hazırlar.",
       specs: [
-        ["Parametre yönetimi", "Otomatik"],
-        ["Overcure / undercure", "Elimine"],
+        ["İşlem", "Ultrasonik yıkama"],
+        ["Akış", "Baskı sonrası temizlik"],
       ],
       ctaText: "İncele",
-      ctaHref: "/yikama-kurleme-cihazlari",
+      ctaHref: "/mash-w1e-ultrasonik-yikama-cihazi",
     },
-  )}${productCard(normalizedProps, "curingProduct2", {
-    tag: "EKONOMİK",
-    image: crealityUW02,
-    imageAlt: "MASH C1E - Ekonomik Kürleme",
+  )}${productCard(staticCuringProps, "curingProduct2", {
+    tag: "KÜRLEME",
+    image: mashC1eImage,
+    imageAlt: "Mash C1E UV Kürleme Cihazı",
     imageClass: "tmr-machine-uw02",
-    title: "MASH C1E — Ekonomik Kürleme",
+    title: "Mash C1E UV Kürleme Cihazı",
     descriptionHtml:
-      "Ekosisteme ilk adım için <b>güvenilir ve tutarlı</b> kürleme. P16L ile birlikte, dijital akışın eksiksiz başlangıç seti.",
+      "24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılarda <b>UV post-curing</b> adımını tamamlar.",
     specs: [
-      ["Rol", "Giriş segmenti"],
-      ["Uyum", "P16L + CRS ile set"],
+      ["Işık sistemi", "360° / 24 LED"],
+      ["Spektrum", "360-530 nm"],
     ],
     ctaText: "İncele",
-    ctaHref: "/yikama-kurleme-cihazlari",
+    ctaHref: "/mash-c1e-uv-kurleme-cihazi",
   })}</div>`;
 }
 

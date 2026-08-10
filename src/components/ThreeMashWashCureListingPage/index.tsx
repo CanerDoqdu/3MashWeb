@@ -3,7 +3,7 @@ import { washCureCategoryData } from "../../sub-components/ThreeMashCategoryLand
 import type { Props } from "./types";
 
 export function ThreeMashWashCureListingPage(props: Props) {
-  return <ThreeMashCategoryLanding data={washCureCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={washCureCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashWashCureListingPage;

@@ -898,6 +898,11 @@
   font-size: 20px;
   font-weight: 600;
   line-height: 1.25;
+  min-height: 2.5em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .tmr-product-body p {
@@ -906,16 +911,16 @@
   color: var(--tmr-sub);
   font-size: 13.5px;
   line-height: 1.65;
-  overflow-wrap: anywhere;
-}
-
-.tmr-live-product .tmr-product-body p {
-  min-height: 68px;
-  flex: 0 0 auto;
+  min-height: calc(1.65em * 4);
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.tmr-live-product .tmr-product-body p {
+  flex: 0 0 auto;
 }
 
 .tmr-live-spec {
@@ -1096,6 +1101,8 @@
 
 .tmr-curing .tmr-product-media {
   background: linear-gradient(160deg, #1d1d17, #14140f);
+  min-height: 260px;
+  overflow: hidden;
 }
 
 .tmr-curing .tmr-tag {
@@ -1124,13 +1131,12 @@
 .tmr-curing .tmr-machine-uw02 {
   width: var(--tmr-curing-image-width);
   height: var(--tmr-curing-image-height);
-  max-width: 90%;
-  max-height: 300px;
+  max-width: none;
+  max-height: none;
   object-fit: var(--tmr-curing-image-fit);
   opacity: var(--tmr-curing-image-opacity);
   transform: translate(var(--tmr-curing-image-x), var(--tmr-curing-image-y));
   filter:
-    drop-shadow(0 22px 30px rgba(0, 0, 0, 0.45))
     brightness(var(--tmr-curing-image-brightness))
     contrast(var(--tmr-curing-image-contrast))
     saturate(var(--tmr-curing-image-saturation))
@@ -1351,6 +1357,7 @@
   position: relative;
   z-index: 2;
   min-height: 390px;
+  margin-top: 56px;
 }
 
 .tmr-eco-list {
@@ -1358,7 +1365,11 @@
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 14px;
   min-height: auto;
-  margin-top: 46px;
+  margin-top: 56px;
+}
+
+.tmr-eco.tmr-eco-list {
+  margin-top: 56px;
 }
 
 .tmr-eco a {
@@ -2202,7 +2213,8 @@
   }
 
   .tmr-curing .tmr-product-media {
-    height: 218px;
+    height: 230px;
+    min-height: 230px;
     padding: 42px 18px 18px;
   }
 
@@ -2215,15 +2227,15 @@
   .tmr-curing .tmr-product-img,
   .tmr-curing .tmr-machine-phrozen,
   .tmr-curing .tmr-machine-uw02 {
-    max-width: 76%;
-    max-height: 150px;
+    max-width: none;
+    max-height: none;
     transform: translate(var(--tmr-curing-image-x), calc(var(--tmr-curing-image-y) + 8px));
   }
 
   .tmr-curing .tmr-machine-phrozen,
   .tmr-curing .tmr-machine-uw02 {
-    max-width: 72%;
-    max-height: 144px;
+    max-width: none;
+    max-height: none;
   }
 
   .tmr-machine-printer {

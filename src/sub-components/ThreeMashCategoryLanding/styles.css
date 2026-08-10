@@ -338,7 +338,7 @@
 }
 
 .tmcl-product-grid-wash-cure {
-  grid-template-columns: minmax(0, 420px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
   margin-top: 34px;
 }
@@ -1084,14 +1084,20 @@
 }
 
 .tmcl-why-card > span {
+  display: block;
+  width: max-content;
+  margin-bottom: 12px;
   color: var(--tmcl-lime-ink);
   font-family: "Space Grotesk", var(--tm-theme-font-heading, sans-serif);
   font-size: 12px;
   font-weight: 700;
+  line-height: 1;
 }
 
 .tmcl-why-card h3 {
-  margin-top: 10px;
+  display: block;
+  clear: both;
+  margin: 0;
   font-size: 16px;
   line-height: 1.25;
 }
@@ -1151,26 +1157,26 @@
   border-top: 1px solid var(--tmcl-line);
 }
 
-.tmcl-faq summary {
+.tmcl-faq button {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   gap: 20px;
   align-items: center;
+  border: 0;
   padding: 22px 4px;
   color: var(--tmcl-ink);
+  background: transparent;
   font-family: "Space Grotesk", var(--tm-theme-font-heading, sans-serif);
   font-size: 18px;
   font-weight: 600;
   line-height: 1.35;
+  text-align: left;
   list-style: none;
   cursor: pointer;
 }
 
-.tmcl-faq summary::-webkit-details-marker {
-  display: none;
-}
-
-.tmcl-faq summary span {
+.tmcl-faq button span {
   flex: 0 0 auto;
   color: var(--tmcl-lime-ink);
   font-size: 22px;
@@ -1178,16 +1184,33 @@
   transition: transform 200ms ease;
 }
 
-.tmcl-faq details[open] summary span {
+.tmcl-faq-item.is-open button span {
   transform: rotate(45deg);
 }
 
-.tmcl-faq details > div {
+.tmcl-faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 260ms ease;
+}
+
+.tmcl-faq-item.is-open .tmcl-faq-panel {
+  grid-template-rows: 1fr;
+}
+
+.tmcl-faq-panel > div {
+  min-height: 0;
   max-width: 720px;
-  padding: 0 4px 24px;
+  overflow: hidden;
+  padding: 0 4px;
   color: var(--tmcl-sub);
   font-size: 15px;
   line-height: 1.75;
+  transition: padding-bottom 260ms ease;
+}
+
+.tmcl-faq-item.is-open .tmcl-faq-panel > div {
+  padding-bottom: 24px;
 }
 
 .tmcl-faq a {
@@ -1805,7 +1828,7 @@
     width: 100%;
   }
 
-  .tmcl-faq summary {
+  .tmcl-faq button {
     gap: 12px;
     padding: 16px 0;
     font-size: 15px;
@@ -1813,9 +1836,8 @@
     overflow-wrap: anywhere;
   }
 
-  .tmcl-faq details > div {
+  .tmcl-faq-panel > div {
     max-height: 124px;
-    padding: 0 0 18px;
     overflow: auto;
     font-size: 13px;
     line-height: 1.5;
@@ -2030,7 +2052,7 @@
     display: list-item;
   }
 
-  .tmcl-faq details > div {
+  .tmcl-faq-panel > div {
     max-height: none;
     overflow: visible;
   }

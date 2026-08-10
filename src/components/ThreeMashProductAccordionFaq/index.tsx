@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 import { Props } from "./types";
-import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailFaqSection, ProductDetailSectionScope } from "../../sub-components/ThreeMashProductDetailTemplate";
 
 type FaqItem = {
@@ -290,7 +290,7 @@ export function ThreeMashProductAccordionFaq(props: Props) {
   const [openItems, setOpenItems] = useState<Record<number, boolean>>(() =>
     boolValue(viewProps.openFirstItem) === false ? ({} as Record<number, boolean>) : { 0: true }
   );
-  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  const sourceData = useSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   if (sourceData) {
     return (
       <ProductDetailSectionScope data={sourceData}>
@@ -298,7 +298,6 @@ export function ThreeMashProductAccordionFaq(props: Props) {
       </ProductDetailSectionScope>
     );
   }
-
   if (boolValue(props.sectionVisible) === false || !isResinProduct(props.product)) return null;
   const items = faqItems(viewProps);
 
@@ -379,7 +378,7 @@ export function ThreeMashProductAccordionFaq(props: Props) {
             })}
           </div>
         ) : (
-          <div className="tmpaf-placeholder">{text(viewProps.placeholderText, "FAQ satırı ekleyin")}</div>
+          <div className="tmpaf-placeholder">{text(viewProps.placeholderText, "SSS içeriği hazırlanıyor")}</div>
         )}
       </div>
     </section>

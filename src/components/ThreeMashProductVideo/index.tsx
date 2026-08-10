@@ -1,6 +1,6 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailSectionScope, ProductDetailVideoSection } from "../../sub-components/ThreeMashProductDetailTemplate";
 
 type PlainObject = Record<string, unknown>;
@@ -638,7 +638,7 @@ function isNativeVideo(value: string) {
 }
 
 export function ThreeMashProductVideo(props: Props) {
-  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  const sourceData = useSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   if (sourceData) {
     return (
       <ProductDetailSectionScope data={sourceData}>
@@ -646,7 +646,6 @@ export function ThreeMashProductVideo(props: Props) {
       </ProductDetailSectionScope>
     );
   }
-
   const hasProductBasedMatch = productBasedApplies(props);
   const viewProps = hasProductBasedMatch ? productBasedProps(props) : props;
   const productVideoUrl = customText(props.product, ["product_video_url", "video_url", "tanitim_video_url", "urun_video_url", "ürün_video_url"]);
@@ -723,7 +722,7 @@ export function ThreeMashProductVideo(props: Props) {
               preload={lazy ? "metadata" : "auto"}
             />
           ) : (
-            <div className="tmpv-placeholder">{text(viewProps.placeholderText, "Video linki ekleyin")}</div>
+            <div className="tmpv-placeholder">{text(viewProps.placeholderText, "Video hazırlanıyor")}</div>
           )}
         </div>
       </div>

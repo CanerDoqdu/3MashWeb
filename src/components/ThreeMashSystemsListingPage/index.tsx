@@ -3,7 +3,7 @@ import { systemsCategoryData } from "../../sub-components/ThreeMashCategoryLandi
 import type { Props } from "./types";
 
 export function ThreeMashSystemsListingPage(props: Props) {
-  return <ThreeMashCategoryLanding data={systemsCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={systemsCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashSystemsListingPage;

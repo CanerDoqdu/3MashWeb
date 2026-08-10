@@ -81,9 +81,14 @@
 }
 
 .tmhero-money {
+  display: inline-block;
+  min-width: 5.8ch;
   color: var(--tmhero-danger);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-align: right;
+  vertical-align: baseline;
   white-space: nowrap;
 }
 

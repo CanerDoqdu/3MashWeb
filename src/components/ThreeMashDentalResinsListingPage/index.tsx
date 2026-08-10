@@ -3,7 +3,7 @@ import { dentalResinsCategoryData } from "../../sub-components/ThreeMashCategory
 import type { Props } from "./types";
 
 export function ThreeMashDentalResinsListingPage(props: Props) {
-  return <ThreeMashCategoryLanding data={dentalResinsCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={dentalResinsCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashDentalResinsListingPage;

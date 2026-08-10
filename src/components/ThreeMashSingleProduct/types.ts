@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProduct } from "@ikas/bp-storefront";
+import type { IkasProduct, IkasNavigationLink } from "@ikas/bp-storefront";
 
 export interface Props {
   product?: IkasProduct | null;
@@ -25,4 +25,18 @@ export interface Props {
   showTemplatePreview?: boolean;
   /** CRS Composite kaynak yapısındaki reusable template datası. Boş bırakılırsa CRS Composite default datası kullanılır. */
   productTemplateJson?: string;
+  announcementStrongText?: string;
+  announcementText?: string;
+  announcementButtonText?: string;
+  announcementButtonHref?: IkasNavigationLink | null;
+  breadcrumbCategoryText?: string;
+  breadcrumbCategoryHref?: IkasNavigationLink | null;
+  heroKicker?: string;
+  heroTitleHtml?: string;
+  heroDescriptionHtml?: string;
+  whatsappButtonText?: string;
+  whatsappButtonHref?: IkasNavigationLink | null;
+  trustBadge1?: string;
+  trustBadge2?: string;
+  trustBadge3?: string;
 }

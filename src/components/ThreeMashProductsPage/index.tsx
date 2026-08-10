@@ -467,7 +467,7 @@ export function ThreeMashProductsPage(props: Props) {
         {!productList ? (
           <div className="tm-products-setup">
             {props.setupMessage ||
-              "Bu sayfanın canlı ürünleri göstermesi için ikas editörde Product List alanını All Products veya ilgili kategori olarak bağlayın."}
+              "Ürünler kısa süre içinde burada listelenecek."}
           </div>
         ) : (
           <>

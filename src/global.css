@@ -29,6 +29,28 @@ html {
   scroll-behavior: smooth;
 }
 
+:where(
+  .tmr-faq,
+  .three-mash-printers-source .faq,
+  .tmpdt-faq,
+  .tmfaq-list
+) details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 260ms ease,
+    content-visibility 260ms ease allow-discrete;
+}
+
+:where(
+  .tmr-faq,
+  .three-mash-printers-source .faq,
+  .tmpdt-faq,
+  .tmfaq-list
+) details[open]::details-content {
+  block-size: auto;
+}
+
 :root {
   --bg: #FAFAF7;
   --ink: #0E0E0C;

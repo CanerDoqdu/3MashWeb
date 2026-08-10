@@ -295,6 +295,7 @@ function productBuyHref(base: string, variantGroups: ProductVariantGroup[]) {
 function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "data" | "selectedGalleryIndex" | "onGallerySelect">) {
   const gallery = data.hero.gallery;
   const selected = gallery[selectedGalleryIndex] || gallery[0];
+  const thumbColumns = Math.max(1, Math.min(gallery.length, 8));
 
   return (
     <div className="tmpdt-gal">
@@ -303,7 +304,7 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
         {selected ? <img src={selected.src} alt={selected.alt || data.breadcrumb.productText} loading="eager" decoding="async" /> : null}
       </div>
       {gallery.length > 1 ? (
-        <div className="tmpdt-thumbs">
+        <div className="tmpdt-thumbs" style={{ "--tmpdt-thumb-cols": thumbColumns } as any}>
           {gallery.map((item, index) => (
             <button
               type="button"
@@ -424,7 +425,8 @@ export function ProductDetailHeroSection(props: Props) {
     let frame = 0;
     const balance = () => {
       frame = 0;
-      if (window.innerWidth <= 1000) {
+      const heroWidth = hero.getBoundingClientRect().width;
+      if (heroWidth <= 1000 || window.innerWidth <= 1000) {
         hero.style.removeProperty("--tmpdt-gallery-main-height");
         return;
       }

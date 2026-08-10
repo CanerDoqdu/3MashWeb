@@ -12,7 +12,7 @@ import {
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { resolveSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import {
   ProductDetailFinalCtaSection,
   ProductDetailRelatedSection,
@@ -228,7 +228,7 @@ function sourceRelatedProduct(product: IkasProduct): ProductDetailRelatedProduct
 }
 
 export function ThreeMashProductCategoryCarousel(props: Props) {
-  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  const sourceData = resolveSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
 
   const [resolvedProducts, setResolvedProducts] = useState<IkasProduct[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -318,7 +318,6 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
       </ProductDetailSectionScope>
     );
   }
-
   return (
     <section id={text(props.sectionAnchorId) || undefined} className="three-mash-product-category-carousel" style={style}>
       <div className="tmpcc-wrap">
@@ -369,7 +368,7 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
           <div className="tmpcc-setup">
             {isLoading
               ? "Ürünler yükleniyor..."
-              : props.setupMessage || "Otomatik mod için Product alanını sayfa ürününe bağlayın veya manuel modda Product List alanından kategori/ürün seçin."}
+              : props.setupMessage || "İlgili ürünler kısa süre içinde burada listelenecek."}
           </div>
         )}
       </div>

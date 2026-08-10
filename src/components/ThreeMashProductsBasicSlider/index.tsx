@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "preact/hooks";
 import { basicSliderImages } from "../../assets/basic-slider-images-data";
 import { Props } from "./types";
-import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { resolveSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 
 const DEFAULT_IMAGES = basicSliderImages;
 const DEFAULT_INTRO_TITLE = "Uyumlu Cihazlar";
@@ -225,7 +225,7 @@ function ImageItem({ image, cloneIndex }: { image: SliderImage; cloneIndex?: num
 }
 
 export function ThreeMashProductsBasicSlider(props: Props) {
-  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  const sourceData = resolveSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
 
   const sliderRef = useRef<HTMLDivElement>(null);
   const sectionVisible = !sourceData && sectionIsVisible(props);

@@ -3,7 +3,7 @@ import { titaniumDiscsCategoryData } from "../../sub-components/ThreeMashCategor
 import type { Props } from "./types";
 
 export function ThreeMashTitaniumDiscsListingPage(props: Props) {
-  return <ThreeMashCategoryLanding data={titaniumDiscsCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={titaniumDiscsCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashTitaniumDiscsListingPage;

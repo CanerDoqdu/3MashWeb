@@ -1,6 +1,6 @@
 import { createMediaSrcset, getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { resolveSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailSectionScope, ProductDetailSpecHighlightSection } from "../../sub-components/ThreeMashProductDetailTemplate";
 
 const ZIRCON_PRODUCTS = [
@@ -102,7 +102,7 @@ function imageSrcSet(value: unknown) {
 }
 
 export function ThreeMashProductLargeImage(props: Props) {
-  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  const sourceData = resolveSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   if (sourceData) {
     return (
       <ProductDetailSectionScope data={sourceData}>
@@ -110,7 +110,6 @@ export function ThreeMashProductLargeImage(props: Props) {
       </ProductDetailSectionScope>
     );
   }
-
   if (!sectionIsActive(props)) return null;
 
   const src = imageSource(props.image);

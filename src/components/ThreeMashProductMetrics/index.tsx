@@ -1,6 +1,6 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailMetricsSection, ProductDetailSectionScope } from "../../sub-components/ThreeMashProductDetailTemplate";
 
 function propString(value: unknown) {
@@ -501,7 +501,7 @@ function metric(props: Props, index: number) {
 }
 
 export function ThreeMashProductMetrics(props: Props) {
-  const sourceData = resolveProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
+  const sourceData = useSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   if (sourceData) {
     return (
       <ProductDetailSectionScope data={sourceData}>
@@ -509,7 +509,6 @@ export function ThreeMashProductMetrics(props: Props) {
       </ProductDetailSectionScope>
     );
   }
-
   const visibility = productBasedVisibilityOverride(props);
   if (visibility === false) return null;
   if (visibility !== true && (isEditorPreview() || productBasedApplies(props)) && boolValue(props.productBasedSectionVisible) === false) return null;

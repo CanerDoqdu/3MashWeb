@@ -28,7 +28,7 @@ import ThreeMashProductDetailTemplate, {
   type ProductGalleryItem,
   type ProductVariantGroup,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
-import { resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { publishSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
 import { Props } from "./types";
 
@@ -566,8 +566,117 @@ function parseTemplateJson(source: unknown) {
   }
 }
 
+function trimmedText(value: unknown) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function linkValue(source: unknown) {
+  if (typeof source === "string") return source.trim();
+  if (!source || typeof source !== "object") return "";
+  const link = source as {
+    href?: unknown;
+    externalLink?: unknown;
+    fileUrl?: unknown;
+    pageId?: unknown;
+    label?: unknown;
+  };
+  if (typeof link.href === "string" && link.href.trim()) return link.href.trim();
+  if (typeof link.externalLink === "string" && link.externalLink.trim()) return link.externalLink.trim();
+  if (typeof link.fileUrl === "string" && link.fileUrl.trim()) return link.fileUrl.trim();
+  if (link.pageId === "2tplvqpo-search-page") return "/search";
+  if (link.pageId === "2tplvqpo-contact-page") return "/pages/iletisim";
+  if (link.pageId === "2tplvqpo-references-page") return "/pages/referanslar";
+  if (link.label === "Arama Sayfası") return "/search";
+  if (link.label === "iletişim" || link.label === "İletişim") return "/pages/iletisim";
+  return "";
+}
+
+function productDetailPropOverrides(props: Props) {
+  const announcement: PlainObject = {};
+  const breadcrumb: PlainObject = {};
+  const hero: PlainObject = {};
+
+  const announcementStrongText = trimmedText(props.announcementStrongText);
+  if (announcementStrongText) {
+    announcement.enabled = true;
+    announcement.strongText = announcementStrongText;
+  }
+
+  const announcementText = trimmedText(props.announcementText);
+  if (announcementText) {
+    announcement.enabled = true;
+    announcement.longText = announcementText;
+  }
+
+  const announcementButtonText = trimmedText(props.announcementButtonText);
+  if (announcementButtonText) {
+    announcement.enabled = true;
+    announcement.ctaText = announcementButtonText;
+  }
+
+  const announcementButtonHref = linkValue(props.announcementButtonHref);
+  if (announcementButtonHref) {
+    announcement.enabled = true;
+    announcement.ctaHref = announcementButtonHref;
+  }
+
+  const breadcrumbCategoryText = trimmedText(props.breadcrumbCategoryText || props.categoryText);
+  if (breadcrumbCategoryText && breadcrumbCategoryText !== "Kategori") breadcrumb.categoryText = breadcrumbCategoryText;
+
+  const breadcrumbCategoryHref = linkValue(props.breadcrumbCategoryHref);
+  if (breadcrumbCategoryHref) breadcrumb.categoryHref = breadcrumbCategoryHref;
+
+  const heroKicker = trimmedText(props.heroKicker || props.eyebrowText);
+  if (heroKicker && heroKicker !== "ÜRÜN DETAYI") hero.kicker = heroKicker;
+
+  const heroTitleHtml = trimmedText(props.heroTitleHtml);
+  if (heroTitleHtml) hero.titleHtml = heroTitleHtml;
+
+  const heroDescriptionHtml = trimmedText(props.heroDescriptionHtml);
+  if (heroDescriptionHtml) hero.leadHtml = heroDescriptionHtml;
+
+  const whatsappButtonText = trimmedText(props.whatsappButtonText);
+  if (whatsappButtonText) hero.whatsappText = whatsappButtonText;
+
+  const whatsappButtonHref = linkValue(props.whatsappButtonHref);
+  if (whatsappButtonHref) hero.whatsappHref = whatsappButtonHref;
+
+  const trustBadges = [props.trustBadge1, props.trustBadge2, props.trustBadge3].map(trimmedText).filter(Boolean);
+  if (trustBadges.length) hero.trustBadges = trustBadges;
+
+  const overrides: PlainObject = {};
+  if (Object.keys(announcement).length) overrides.announcement = announcement;
+  if (Object.keys(breadcrumb).length) overrides.breadcrumb = breadcrumb;
+  if (Object.keys(hero).length) overrides.hero = hero;
+  return overrides;
+}
+
+function productDetailPropKey(props: Props) {
+  return [
+    props.announcementStrongText,
+    props.announcementText,
+    props.announcementButtonText,
+    linkValue(props.announcementButtonHref),
+    props.breadcrumbCategoryText,
+    linkValue(props.breadcrumbCategoryHref),
+    props.heroKicker,
+    props.heroTitleHtml,
+    props.heroDescriptionHtml,
+    props.whatsappButtonText,
+    linkValue(props.whatsappButtonHref),
+    props.trustBadge1,
+    props.trustBadge2,
+    props.trustBadge3,
+    props.eyebrowText,
+    props.categoryText,
+  ]
+    .map((item) => trimmedText(item))
+    .join("\n");
+}
+
 function propsTemplateData(props: Props): ProductDetailTemplateData {
-  const merged = deepMerge(CRS_COMPOSITE_TEMPLATE, parseTemplateJson(props.productTemplateJson));
+  const template = deepMerge(CRS_COMPOSITE_TEMPLATE, parseTemplateJson(props.productTemplateJson));
+  const merged = deepMerge(template, productDetailPropOverrides(props));
   return {
     ...merged,
     key: `${merged.key || CRS_COMPOSITE_SLUG}-studio-preview`,
@@ -645,7 +754,7 @@ function templateData(product: IkasProduct, variant: IkasProductVariant | null, 
   const base = resolved || (isCrsComposite(product) ? CRS_COMPOSITE_TEMPLATE : genericProductData(product, variant, props));
   const fromProps = deepMerge(base, parseTemplateJson(props.productTemplateJson));
   const custom = customJson(product);
-  const merged = custom ? deepMerge(fromProps, custom) : fromProps;
+  const merged = deepMerge(custom ? deepMerge(fromProps, custom) : fromProps, productDetailPropOverrides(props));
   return {
     ...merged,
     key: `${merged.key}-${product.id || productSlug(product)}`,
@@ -751,10 +860,14 @@ export function ThreeMashProductDetailLive(props: Props) {
 
   const variant = product ? selectedVariant(product) : null;
   const image = allVariantMedia(variant)[selectedImageIndex]?.image || (variant ? getProductVariantMainImage(variant)?.image : undefined);
+  const detailPropKey = productDetailPropKey(props);
   const data = useMemo(
     () => (product ? templateData(product, variant, props) : props.showTemplatePreview === false ? null : propsTemplateData(props)),
-    [product?.id, version, props.addToCartText, props.addingToCartText, props.outOfStockText, props.productTemplateJson, props.showTemplatePreview],
+    [product?.id, version, props.addToCartText, props.addingToCartText, props.outOfStockText, props.productTemplateJson, props.showTemplatePreview, detailPropKey],
   );
+  if (typeof window !== "undefined") {
+    (window as unknown as { __THREE_MASH_PRODUCT_DETAIL_DATA__?: unknown }).__THREE_MASH_PRODUCT_DETAIL_DATA__ = data;
+  }
   const groups = useMemo(() => (product ? variantGroups(product) : previewVariantGroups(previewSelection)), [product?.id, version, previewSelection]);
   const isInStock = !!product && !!variant && hasProductStock(product) && hasProductVariantStock(variant);
   const hasDiscount = !!variant && hasProductVariantDiscount(variant);
@@ -769,12 +882,14 @@ export function ThreeMashProductDetailLive(props: Props) {
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
+    publishSharedProductDetailData(data);
     const payload = data ? productAnnouncementPayload(data) : null;
     (window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown }).__THREE_MASH_PRODUCT_ANNOUNCEMENT__ = payload;
     window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: payload }));
 
     return () => {
       (window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown }).__THREE_MASH_PRODUCT_ANNOUNCEMENT__ = null;
+      publishSharedProductDetailData(null);
       window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: null }));
     };
   }, [
@@ -821,7 +936,7 @@ export function ThreeMashProductDetailLive(props: Props) {
     return (
       <section className="three-mash-product-detail-live" style={style}>
         <div className="tmpdl-setup">
-          {props.setupMessage || "Bu section Ürün Sayfası için tasarlandı. ikas editörde Product alanını sayfa ürününe bağlayın veya ürün preview datasını seçin."}
+          {props.setupMessage || "Ürün detayları kısa süre içinde burada gösterilecek."}
         </div>
       </section>
     );

@@ -89,8 +89,8 @@
           "displayName": "Tüm Ürünler Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/tum-urunler",
-          "description": "Ürünler mega menüsündeki sağ alt küçük bağlantı adresi."
+          "defaultValue": "/search",
+          "description": "Ürünler mega menüsündeki sağ alt küçük bağlantı adresi. Arama sayfası için /search yazın."
         },
         {
           "name": "productsFeatureEyebrow",
@@ -1688,9 +1688,9 @@
           "displayName": "Mağaza Buton Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/cart",
+          "defaultValue": "/search",
           "groupId": "action-panels",
-          "description": "Mağaza paneli buton routeu. Varsayılan sepet sayfasıdır."
+          "description": "Mağaza paneli buton routeu. Varsayılan arama sayfasıdır; /search yazın."
         },
         {
           "name": "storePanelNote",
@@ -8090,7 +8090,74 @@
       "entry": "./src/components/ThreeMashC4ppage/index.tsx",
       "styles": "./src/components/ThreeMashC4ppage/styles.css",
       "type": "section",
-      "props": []
+      "props": [
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Buton Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
+        }
+      ]
     },
     {
       "id": "2tplvqpo-yxaj3pvvSH",
@@ -8098,7 +8165,74 @@
       "entry": "./src/components/ThreeMashThreeDprintersPage/index.tsx",
       "styles": "./src/components/ThreeMashThreeDprintersPage/styles.css",
       "type": "section",
-      "props": []
+      "props": [
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Buton Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
+        }
+      ]
     },
     {
       "id": "2tplvqpo-MxJHbC7ndN",
@@ -8106,7 +8240,74 @@
       "entry": "./src/components/ThreeMashWashCurePage/index.tsx",
       "styles": "./src/components/ThreeMashWashCurePage/styles.css",
       "type": "section",
-      "props": []
+      "props": [
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Buton Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
+        }
+      ]
     },
     {
       "id": "2tplvqpo-ycIcUXsTfj",
@@ -8114,7 +8315,74 @@
       "entry": "./src/components/ThreeMashDentalResinsPage/index.tsx",
       "styles": "./src/components/ThreeMashDentalResinsPage/styles.css",
       "type": "section",
-      "props": []
+      "props": [
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionHtml",
+          "displayName": "Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Buton Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
+        }
+      ]
     },
     {
       "id": "2tplvqpo-products-page",
@@ -8443,7 +8711,7 @@
         },
         {
           "name": "addToCartText",
-          "displayName": "Add To Sepet Metin",
+          "displayName": "Sepete Ekle Buton Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Sepete Ekle",
@@ -8451,7 +8719,7 @@
         },
         {
           "name": "addingToCartText",
-          "displayName": "Adding To Sepet Metin",
+          "displayName": "Sepete Eklenirken Metin",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ekleniyor...",
@@ -8459,7 +8727,7 @@
         },
         {
           "name": "outOfStockText",
-          "displayName": "Out Of Stock Metin",
+          "displayName": "Stok Yok Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Stok Yok",
@@ -8467,7 +8735,7 @@
         },
         {
           "name": "inStockText",
-          "displayName": "In Stock Metin",
+          "displayName": "Stokta Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Stokta",
@@ -8475,7 +8743,7 @@
         },
         {
           "name": "quantityText",
-          "displayName": "Quantity Metin",
+          "displayName": "Adet Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Adet",
@@ -8491,7 +8759,7 @@
         },
         {
           "name": "brandText",
-          "displayName": "Brand Metin",
+          "displayName": "Marka Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Marka",
@@ -8499,7 +8767,7 @@
         },
         {
           "name": "categoryText",
-          "displayName": "Kategori Metin",
+          "displayName": "Kategori Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Kategori",
@@ -8515,7 +8783,7 @@
         },
         {
           "name": "setupMessage",
-          "displayName": "Setup Message",
+          "displayName": "Boş Ürün Mesajı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Bu bölüm Ürün Sayfası için tasarlandı. ikas editörde Ürün alanını sayfa ürününe bağlayın veya ürün ön izleme verisini seçin.",
@@ -8523,7 +8791,7 @@
         },
         {
           "name": "optionRequiredMessage",
-          "displayName": "Option Required Message",
+          "displayName": "Seçenek Uyarı Mesajı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Lütfen gerekli ürün seçeneklerini tamamlayın.",
@@ -8531,7 +8799,7 @@
         },
         {
           "name": "addToCartErrorMessage",
-          "displayName": "Add To Sepet Error Message",
+          "displayName": "Sepete Ekleme Hata Mesajı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ürün sepete eklenemedi.",
@@ -8587,7 +8855,7 @@
         },
         {
           "name": "showTemplatePreview",
-          "displayName": "Studio Preview Göster",
+          "displayName": "Studio Önizleme Göster",
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": true,
@@ -8595,11 +8863,109 @@
         },
         {
           "name": "productTemplateJson",
-          "displayName": "Ürün Template JSON",
+          "displayName": "Gelişmiş Ürün Datası JSON",
           "type": "TEXT",
           "required": false,
           "description": "CRS Composite kaynak yapısındaki reusable template datası. Boş bırakılırsa CRS Composite default datası kullanılır.",
           "groupId": "template"
+        },
+        {
+          "name": "announcementStrongText",
+          "displayName": "Üst Bant Kalın Metin",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "announcementText",
+          "displayName": "Üst Bant Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "announcementButtonText",
+          "displayName": "Üst Bant Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "announcementButtonHref",
+          "displayName": "Üst Bant Buton Linki",
+          "type": "LINK",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "breadcrumbCategoryText",
+          "displayName": "Breadcrumb Kategori Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "breadcrumbCategoryHref",
+          "displayName": "Breadcrumb Kategori Linki",
+          "type": "LINK",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroKicker",
+          "displayName": "Hero Üst Metin",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleHtml",
+          "displayName": "Hero Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "whatsappButtonText",
+          "displayName": "WhatsApp Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "whatsappButtonHref",
+          "displayName": "WhatsApp Linki",
+          "type": "LINK",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "trustBadge1",
+          "displayName": "Güven Rozeti 1",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "trustBadge2",
+          "displayName": "Güven Rozeti 2",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "trustBadge3",
+          "displayName": "Güven Rozeti 3",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
         }
       ],
       "propGroups": [
@@ -8647,7 +9013,7 @@
         },
         {
           "name": "addToCartText",
-          "displayName": "Add To Sepet Metin",
+          "displayName": "Sepete Ekle Buton Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "SEPETE EKLE",
@@ -8655,7 +9021,7 @@
         },
         {
           "name": "addingToCartText",
-          "displayName": "Adding To Sepet Metin",
+          "displayName": "Sepete Eklenirken Metin",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ekleniyor...",
@@ -8663,7 +9029,7 @@
         },
         {
           "name": "outOfStockText",
-          "displayName": "Out Of Stock Metin",
+          "displayName": "Stok Yok Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Stok Yok",
@@ -8671,7 +9037,7 @@
         },
         {
           "name": "inStockText",
-          "displayName": "In Stock Metin",
+          "displayName": "Stokta Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Stokta",
@@ -8679,7 +9045,7 @@
         },
         {
           "name": "quantityText",
-          "displayName": "Quantity Metin",
+          "displayName": "Adet Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Adet",
@@ -8695,7 +9061,7 @@
         },
         {
           "name": "brandText",
-          "displayName": "Brand Metin",
+          "displayName": "Marka Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Marka",
@@ -8703,7 +9069,7 @@
         },
         {
           "name": "categoryText",
-          "displayName": "Kategori Metin",
+          "displayName": "Kategori Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Kategori",
@@ -8719,7 +9085,7 @@
         },
         {
           "name": "setupMessage",
-          "displayName": "Setup Message",
+          "displayName": "Boş Ürün Mesajı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Bu bölüm Ürün Sayfası için tasarlandı. Ürün alanını ikas ürün verisine bağlayın.",
@@ -8727,7 +9093,7 @@
         },
         {
           "name": "optionRequiredMessage",
-          "displayName": "Option Required Message",
+          "displayName": "Seçenek Uyarı Mesajı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Lütfen gerekli ürün seçeneklerini tamamlayın.",
@@ -8735,7 +9101,7 @@
         },
         {
           "name": "addToCartErrorMessage",
-          "displayName": "Add To Sepet Error Message",
+          "displayName": "Sepete Ekleme Hata Mesajı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ürün sepete eklenemedi.",
@@ -8791,7 +9157,7 @@
         },
         {
           "name": "showTemplatePreview",
-          "displayName": "Studio Preview Göster",
+          "displayName": "Studio Önizleme Göster",
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": true,
@@ -8799,11 +9165,109 @@
         },
         {
           "name": "productTemplateJson",
-          "displayName": "Ürün Template JSON",
+          "displayName": "Gelişmiş Ürün Datası JSON",
           "type": "TEXT",
           "required": false,
           "description": "CRS Composite kaynak yapısındaki reusable template datası. Boş bırakılırsa CRS Composite default datası kullanılır.",
           "groupId": "template"
+        },
+        {
+          "name": "announcementStrongText",
+          "displayName": "Üst Bant Kalın Metin",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "announcementText",
+          "displayName": "Üst Bant Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "announcementButtonText",
+          "displayName": "Üst Bant Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "announcementButtonHref",
+          "displayName": "Üst Bant Buton Linki",
+          "type": "LINK",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "breadcrumbCategoryText",
+          "displayName": "Breadcrumb Kategori Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "breadcrumbCategoryHref",
+          "displayName": "Breadcrumb Kategori Linki",
+          "type": "LINK",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroKicker",
+          "displayName": "Hero Üst Metin",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleHtml",
+          "displayName": "Hero Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "whatsappButtonText",
+          "displayName": "WhatsApp Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "whatsappButtonHref",
+          "displayName": "WhatsApp Linki",
+          "type": "LINK",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "trustBadge1",
+          "displayName": "Güven Rozeti 1",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "trustBadge2",
+          "displayName": "Güven Rozeti 2",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "trustBadge3",
+          "displayName": "Güven Rozeti 3",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
         }
       ],
       "propGroups": [
@@ -14415,6 +14879,125 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Arama Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Liste Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyMessage",
+          "displayName": "Boş Liste Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "viewProductText",
+          "displayName": "Ürün İncele Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "priceRequestText",
+          "displayName": "Fiyat Yok Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "showSearch",
+          "displayName": "Aramayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showSort",
+          "displayName": "Sıralamayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showNavigation",
+          "displayName": "Kategori/Marka Navigasyonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardColor",
+          "displayName": "Kart Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14422,6 +15005,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Tüm Ürünler listesine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14451,6 +15049,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14458,6 +15238,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu ikas Kategori Sayfasında kullanın. Ürün listesi geçerli sayfa/kategori filtresini kullanmalıdır."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14486,6 +15281,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14493,6 +15470,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu 3D Yazıcılar kategorisine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14521,6 +15513,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14528,6 +15702,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Dental Reçineler kategorisine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14556,6 +15745,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14563,6 +15934,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Yıkama & Kürleme kategorisine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14591,6 +15977,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14598,6 +16166,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Masaüstü Tarayıcılar kategorisine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14626,6 +16209,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14633,6 +16398,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Zirkon Bloklar kategorisine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14661,6 +16441,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14668,6 +16630,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Dental Fırınlar kategorisine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14696,6 +16673,125 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Arama Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Liste Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyMessage",
+          "displayName": "Boş Liste Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "viewProductText",
+          "displayName": "Ürün İncele Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "priceRequestText",
+          "displayName": "Fiyat Yok Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "showSearch",
+          "displayName": "Aramayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showSort",
+          "displayName": "Sıralamayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showNavigation",
+          "displayName": "Kategori/Marka Navigasyonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardColor",
+          "displayName": "Kart Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14703,6 +16799,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu 3Shape koleksiyonuna bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14731,6 +16842,125 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Arama Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Liste Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyMessage",
+          "displayName": "Boş Liste Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "viewProductText",
+          "displayName": "Ürün İncele Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "priceRequestText",
+          "displayName": "Fiyat Yok Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "showSearch",
+          "displayName": "Aramayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showSort",
+          "displayName": "Sıralamayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showNavigation",
+          "displayName": "Kategori/Marka Navigasyonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardColor",
+          "displayName": "Kart Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14738,6 +16968,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Creality koleksiyonuna bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14766,6 +17011,125 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Arama Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Liste Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyMessage",
+          "displayName": "Boş Liste Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "viewProductText",
+          "displayName": "Ürün İncele Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "priceRequestText",
+          "displayName": "Fiyat Yok Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "showSearch",
+          "displayName": "Aramayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showSort",
+          "displayName": "Sıralamayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showNavigation",
+          "displayName": "Kategori/Marka Navigasyonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardColor",
+          "displayName": "Kart Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14773,6 +17137,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Argen koleksiyonuna bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14801,6 +17180,125 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Arama Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Liste Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyMessage",
+          "displayName": "Boş Liste Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "viewProductText",
+          "displayName": "Ürün İncele Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "priceRequestText",
+          "displayName": "Fiyat Yok Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "showSearch",
+          "displayName": "Aramayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showSort",
+          "displayName": "Sıralamayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showNavigation",
+          "displayName": "Kategori/Marka Navigasyonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardColor",
+          "displayName": "Kart Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14808,6 +17306,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Nabertherm koleksiyonuna bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14836,6 +17349,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14843,6 +17538,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu 3D Yazıcı Yedek Parçaları kategorisine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14871,6 +17581,125 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Arama Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Liste Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyMessage",
+          "displayName": "Boş Liste Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "viewProductText",
+          "displayName": "Ürün İncele Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "priceRequestText",
+          "displayName": "Fiyat Yok Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "showSearch",
+          "displayName": "Aramayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showSort",
+          "displayName": "Sıralamayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showNavigation",
+          "displayName": "Kategori/Marka Navigasyonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardColor",
+          "displayName": "Kart Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14878,6 +17707,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu MASH koleksiyonuna bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14906,6 +17750,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14913,6 +17939,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Sistemler kategorisine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14941,6 +17982,188 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitlePrefix",
+          "displayName": "Hero Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleEmphasis",
+          "displayName": "Hero Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroTitleSuffix",
+          "displayName": "Hero Başlık Son Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Hero Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "Birincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "İkincil Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "metric1Value",
+          "displayName": "Metrik 1 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric1Label",
+          "displayName": "Metrik 1 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Value",
+          "displayName": "Metrik 2 Değer",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "metric2Label",
+          "displayName": "Metrik 2 Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "Final Başlık İlk Kısım",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "Final Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "Final Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "Final Birincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "Final Birincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "Final İkincil Buton",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "Final İkincil Link",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "links"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14948,6 +18171,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu Titanyum Diskler kategorisine bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },
@@ -14976,6 +18214,125 @@
             "brand": null,
             "relatedProductsType": null
           }
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "titleText",
+          "displayName": "Başlık",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "descriptionText",
+          "displayName": "Açıklama",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "searchPlaceholder",
+          "displayName": "Arama Placeholder",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyTitle",
+          "displayName": "Boş Liste Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "emptyMessage",
+          "displayName": "Boş Liste Mesajı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "viewProductText",
+          "displayName": "Ürün İncele Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "priceRequestText",
+          "displayName": "Fiyat Yok Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "content"
+        },
+        {
+          "name": "showSearch",
+          "displayName": "Aramayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showSort",
+          "displayName": "Sıralamayı Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "showNavigation",
+          "displayName": "Kategori/Marka Navigasyonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "textColor",
+          "displayName": "Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "İkincil Yazı Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "cardColor",
+          "displayName": "Kart Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
@@ -14983,6 +18340,21 @@
           "id": "data",
           "name": "Data",
           "description": "Bunu CRS koleksiyonuna bağlayın."
+        },
+        {
+          "id": "content",
+          "name": "İçerik",
+          "description": "Başlık, açıklama ve metinler"
+        },
+        {
+          "id": "links",
+          "name": "Bağlantılar",
+          "description": "Buton ve link ayarları"
+        },
+        {
+          "id": "appearance",
+          "name": "Görünüm",
+          "description": "Renk ve görünüm ayarları"
         }
       ]
     },

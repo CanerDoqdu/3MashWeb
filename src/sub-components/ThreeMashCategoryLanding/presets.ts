@@ -534,7 +534,7 @@ export const washCureCategoryData: CategoryLandingData = {
   kind: "wash-cure",
   announcement: {
     highlight: "⚡ Baskı sonrası sonucu sabitleyin",
-    text: "Yıkama ve kürleme adımı doğru mekanik değerler için kritik; cihazı, reçine ve yazıcı akışınızla birlikte seçin.",
+    text: "Yıkama ve kürleme adımı doğru mekanik değerler için kritik; W1E ve C1E cihazlarını iş akışınıza göre birlikte seçin.",
     href: "#cihaz",
     ctaText: "Cihaza git →",
   },
@@ -554,37 +554,69 @@ export const washCureCategoryData: CategoryLandingData = {
       { label: "Akışı birlikte kuralım", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "365", emphasis: "+ 405 nm", label: "ürün datasındaki çift dalga boylu kürleme desteği" },
-      { value: "3", emphasis: "görsel", label: "canlı ürün sayfasından alınan doğru ürün görselleri" },
-      { value: "1", emphasis: "cihaz", label: "kategori ItemList sırasındaki aktif ürün" },
-      { value: "17.349", emphasis: "TRY", label: "canlı kategori JSON-LD fiyat bilgisi" },
+      { value: "3", emphasis: "cihaz", label: "yıkama ve kürleme adımları" },
+      { value: "360", emphasis: "°", label: "C1E ışık sistemi" },
+      { value: "24", emphasis: "LED", label: "C1E UV kürleme düzeni" },
+      { value: "16.453", emphasis: "TRY", label: "W1E başlangıç fiyatı" },
     ],
   },
   selector: {
     anchorId: "cihaz",
     cardCtaText: "İncele",
     number: "01",
-    label: "Cihaz",
+    label: "Cihazlar",
     titlePrefix: "Baskı sonrası için",
-    titleEmphasis: "tek doğru adım.",
+    titleEmphasis: "iki tamamlayıcı adım.",
     sideHtml:
-      "Canlı kategori verisine göre bu kategoride aktif ürün <b>Creality Wash&Cure UW-03</b>. İsim, görsel, link ve sıra kategori ItemList datasıyla eşleşir.",
+      "<b>Mash W1E</b> baskı sonrası yıkama adımını, <b>Mash C1E</b> ise UV kürleme adımını kontrol altına alır. Birlikte kullanıldığında reçine baskı sonrası temiz yüzey, dengeli kürleme ve tekrar edilebilir sonuç için net bir akış oluşturur.",
     products: [
       {
-        title: "Creality Wash&Cure UW-03",
+        title: "Mash W1E Ultrasonik Yıkama Cihazı",
         descriptionHtml:
-          "3D yazıcı baskıları için hızlı <b>yıkama ve kürleme</b> makinesi. Baskıların doğru mekanik değerlere ulaşması için 365 + 405 nm ışık dalga boylu kürleme akışı sunar.",
-        href: "/creality-washcure-uw-02",
-        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
-        imageAlt: "Creality Wash&Cure UW-03 yıkama ve kürleme cihazı",
-        tag: "YIKAMA & KÜRLEME",
-        status: "17.349 TRY",
+          "3D baskı sonrası parçaların yüzeyindeki reçine kalıntılarını temizlemek için konumlanan <b>ultrasonik yıkama</b> cihazı.",
+        href: "/mash-w1e-ultrasonik-yikama-cihazi",
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp",
+        imageAlt: "Mash W1E ultrasonik yıkama cihazı",
+        tag: "YIKAMA",
+        status: "16.453 TRY",
         hot: true,
         tone: "#F1F1EC",
         specs: [
-          { label: "Kategori sırası", value: "1" },
-          { label: "Işık", value: "365 + 405 nm" },
-          { label: "Video", value: "Ürün sayfasında var" },
+          { label: "İşlem", value: "Ultrasonik yıkama" },
+          { label: "Akış", value: "Baskı sonrası temizlik" },
+          { label: "Kategori", value: "Yıkama" },
+        ],
+      },
+      {
+        title: "Mash C1E UV Kürleme Cihazı",
+        descriptionHtml:
+          "24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılar için <b>UV post-curing</b> cihazı.",
+        href: "/mash-c1e-uv-kurleme-cihazi",
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e7c22c86-93e4-4c53-92f8-969d358e0c0f/1080/mash-c1e-dental-post-cure-cihazi.webp",
+        imageAlt: "Mash C1E UV kürleme cihazı",
+        tag: "KÜRLEME",
+        status: "76.782 TRY",
+        tone: "#F2F8DC",
+        specs: [
+          { label: "Işık", value: "360° / 24 LED" },
+          { label: "Spektrum", value: "360-530 nm" },
+          { label: "Kategori", value: "Kürleme" },
+        ],
+      },
+      {
+        title: "Creality UW02 - Yıkama & Kürleme Cihazı",
+        descriptionHtml:
+          "Reçine 3D baskılar için yıkama ve UV kürleme adımlarını <b>tek post-process akışında</b> toplayan cihaz.",
+        href: "/creality-washcure-uw-02",
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
+        imageAlt: "Creality UW02 yıkama ve kürleme cihazı",
+        tag: "YIKAMA + KÜRLEME",
+        status: "17.506 TRY",
+        tone: "#F1F1EC",
+        specs: [
+          { label: "İşlem", value: "Yıkama + kürleme" },
+          { label: "UV", value: "365 / 405 nm" },
+          { label: "Kategori", value: "Post-process" },
         ],
       },
     ],
@@ -593,33 +625,33 @@ export const washCureCategoryData: CategoryLandingData = {
         { title: "Akış" },
         { title: "Yıkama" },
         { title: "Kürleme" },
-        { title: "3mash ekosistemi" },
+        { title: "Birlikte" },
       ],
       rows: [
         { label: "Amaç", values: ["Baskı sonrası yüzey temizliği", "Mekanik değerleri tamamlamak", "Yazıcı, reçine ve post-process uyumu"] },
-        { label: "Risk", values: ["Yetersiz temizlik yüzey kalitesini bozar", "Yanlış kürleme dayanımı ve stabiliteyi etkiler", "Parametreler birlikte düşünülmezse sonuç değişkenleşir"] },
-        { label: "Bu kategori", values: ["Creality Wash&Cure UW-03", "365 + 405 nm kürleme desteği", "Teknik destek ve doğru protokol yönlendirmesi"] },
+        { label: "Cihaz", values: ["Mash W1E Ultrasonik Yıkama", "Mash C1E UV Kürleme", "W1E + C1E birlikte planlanır"] },
+        { label: "Kontrol", values: ["Fazla reçine kalıntısını azaltmak", "UV ışıkla son dayanımı desteklemek", "Reçine protokolüne göre süre ve işlem akışı"] },
       ],
       noteHtml:
-        "Ürün adı, görseli, fiyatı ve bağlantısı canlı <b>yikama-kurleme-cihazlari</b> kategori ItemList datasından alınmıştır.",
+        "Yıkama ve kürleme cihazını iş akışınıza göre değerlendirmeniz için ürün bilgileri tek ekranda karşılaştırılır.",
     },
   },
   feature: {
     number: "02",
     label: "Öne Çıkan",
     content: {
-      eyebrow: "CREALITY WASH&CURE UW-03",
-      titlePrefix: "Temizlik ve kürleme",
-      titleEmphasis: "aynı akışta.",
+      eyebrow: "MASH W1E + MASH C1E",
+      titlePrefix: "Yıkama ve kürleme",
+      titleEmphasis: "ayrı ayrı kontrol edilir.",
       descriptionHtml:
-        "Ürün detay datasına göre UW serisi cihaz, 3D yazıcı baskıları için hızlı yıkama ve kürleme makinesidir. Baskıların doğru mekanik değerlere ulaşması için çift dalga boylu ışıkla kürleme adımını destekler.",
-      href: "/creality-washcure-uw-02",
-      ctaText: "Ürün detayına git →",
+        "W1E yıkama adımında yüzeyi hazırlar; C1E, 24 LED'li 360° ışık sistemiyle UV post-curing sürecini tamamlar. Böylece baskı sonrası akış iki net cihazla yönetilir.",
+      href: "/mash-c1e-uv-kurleme-cihazi",
+      ctaText: "C1E detayına git →",
       specs: [
-        { label: "Canlı kategori adı", value: "Creality Wash&Cure UW-03" },
-        { label: "Marka", value: "Creality" },
-        { label: "Fiyat", value: "17.349 TRY" },
-        { label: "Video", value: "youtube.com/watch?v=b3cLqCnfKAk" },
+        { label: "Yıkama", value: "Mash W1E" },
+        { label: "Kürleme", value: "Mash C1E" },
+        { label: "C1E ışık sistemi", value: "360° / 24 LED" },
+        { label: "C1E spektrum", value: "360-530 nm" },
       ],
     },
   },
@@ -661,12 +693,12 @@ export const washCureCategoryData: CategoryLandingData = {
       {
         question: "Bu kategoride hangi ürün var?",
         answerHtml:
-          'Canlı kategori ItemList datasına göre bu kategoride <b>Creality Wash&Cure UW-03</b> yer alıyor. Ürün bağlantısı <a href="/creality-washcure-uw-02">creality-washcure-uw-02</a> slugına gidiyor.',
+          "Bu kategoride Mash W1E Ultrasonik Yıkama Cihazı, Mash C1E UV Kürleme Cihazı ve Creality UW02 - Yıkama & Kürleme Cihazı birlikte konumlanır.",
       },
       {
-        question: "365 + 405 nm ne işe yarar?",
+        question: "C1E hangi ışık sistemiyle çalışır?",
         answerHtml:
-          "Ürün detay açıklamasında çift dalga boylu kürleme desteği belirtiliyor. Bu destek, farklı reçine protokollerine daha uygun bir post-curing akışı kurmaya yardımcı olur.",
+          "Mash C1E, 24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskıların UV post-curing adımını destekler.",
       },
       {
         question: "Yazıcı ve reçine doğruysa kürleme yine de önemli mi?",
@@ -687,7 +719,7 @@ export const washCureCategoryData: CategoryLandingData = {
       "Hangi yazıcı, hangi reçine, hangi parça tipi? Kısa bir görüşmeyle yıkama ve kürleme adımını iş akışınıza göre birlikte netleştirelim.",
     buttons: [
       { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
-      { label: "Cihaza dön", href: "#cihaz", variant: "inverse" },
+      { label: "Cihazlara dön", href: "#cihaz", variant: "inverse" },
     ],
   },
 };
@@ -717,10 +749,10 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
       { label: "Vaka uyumunu sor", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "3", emphasis: "ürün", label: "canlı zirkon blok kategori sırasıyla eşleşir" },
+      { value: "3", emphasis: "ürün", label: "farklı estetik ve dayanım seçenekleri" },
       { value: "850", emphasis: "MPa", label: "ST Multilayer estetik zirkon dayanımı" },
       { value: "1250", emphasis: "MPa", label: "HT+ ve HT+ Multilayer yüksek dayanım sınıfı" },
-      { value: "7.337", emphasis: "TRY", label: "kategori JSON-LD başlangıç fiyatı" },
+      { value: "7.337", emphasis: "TRY", label: "başlangıç fiyat aralığı" },
     ],
   },
   selector: {
@@ -731,7 +763,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
     titlePrefix: "Estetik, dayanım,",
     titleEmphasis: "gradient.",
     sideHtml:
-      "Canlı <b>zirkon-bloklar</b> kategori ItemList datasındaki ürün sırası, görseli ve bağlantısı korunur. Detay sayfasında yanlış JSON-LD dönen ürünlerde kategori datası esas alınır.",
+      "Estetik, dayanım ve indikasyon ihtiyacına göre HT+, ST Multilayer ve multilayer seçeneklerini birlikte değerlendirin.",
     products: [
       {
         title: "ArgenZ HT+ Zirkon Blok",
@@ -796,7 +828,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
         { label: "Kontrol", values: ["Shrinkage, milling ve sinterleme çevrimi", "Renk, kalınlık ve disk içi konum", "Nesting yönü, shade doğruluğu ve finishing"] },
       ],
       noteHtml:
-        "Ürün adları, ana görseller, fiyatlar ve kategori sırası canlı <b>zirkon-bloklar</b> ItemList datasıyla eşleşir.",
+        "Zirkon blok seçenekleri estetik beklenti, dayanım ve restorasyon tipine göre karşılaştırılır.",
     },
   },
   feature: {
@@ -851,7 +883,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
       {
         question: "Bu kategoride hangi ürünler var?",
         answerHtml:
-          "Canlı kategori datasına göre ArgenZ HT+ Zirkon Blok, ArgenZ ST Multilayer Zirkon Blok ve ArgenZ HT+ Multilayer Zirkon Blok listelenir.",
+          "ArgenZ HT+, ArgenZ ST Multilayer ve ArgenZ HT+ Multilayer seçenekleri farklı estetik ve dayanım ihtiyaçlarına göre konumlanır.",
       },
       {
         question: "ST Multilayer ne zaman seçilir?",
@@ -912,7 +944,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
       { label: "Akışı birlikte planlayalım", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "4", emphasis: "ürün", label: "kategori sırası korunarak listelenir" },
+      { value: "4", emphasis: "ürün", label: "sinterleme ve porselen pişirim seçenekleri" },
       { value: "1650", emphasis: "°C", label: "LHT 02/17 LB Speed maksimum sıcaklık sınıfı" },
       { value: "1600", emphasis: "°C", label: "LHT 01/16 Turbo Fire hızlı sinterleme akışı" },
       { value: "Press", emphasis: "/ Porselen", label: "VL 01/12 LB hattında iki farklı laboratuvar işi" },
@@ -1007,7 +1039,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
         { label: "Seçim notu", values: ["Geniş fırın odası ve yoğun üretim", "1-3 tek kron gibi hızlı işler", "İş tipine göre press ya da porselen versiyon"] },
       ],
       noteHtml:
-        "Ürün adı, ana görseli, bağlantısı ve kategori sırası <b>dental-firinlar</b> kategori datasıyla eşleşir.",
+        "Fırın seçeneklerini sıcaklık, çevrim ve uygulama tipine göre karşılaştırın.",
     },
   },
   feature: {
@@ -1124,7 +1156,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
       { label: "Laboratuvarı birlikte eşleyelim", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "3", emphasis: "ürün", label: "kategori sırası E2, E3, E4 olarak korunur" },
+      { value: "3", emphasis: "ürün", label: "E2, E3 ve E4 tarayıcı seçenekleri" },
       { value: "4", emphasis: "μm", label: "3Shape E4 hassasiyet bilgisi" },
       { value: "9", emphasis: "sn", label: "3Shape E4 tam çene tarama hızı" },
       { value: "3Shape", emphasis: "E serisi", label: "dental laboratuvar CAD/CAM başlangıcı" },
@@ -1204,7 +1236,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
         { label: "Video", values: ["6IUVgU336Qc", "6IUVgU336Qc", "-gsABaM06sg"] },
       ],
       noteHtml:
-        "Ürün adı, ana görseli, bağlantısı ve kategori sırası <b>masasustu-tarayicilar</b> kategori datasıyla eşleşir.",
+        "Tarayıcı seçeneklerini laboratuvar tipi, hız ve hassasiyet ihtiyacına göre karşılaştırın.",
     },
   },
   feature: {
@@ -1237,7 +1269,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
       { number: "01", title: "Doku taraması", descriptionHtml: "E2, model ve doku tarama işlerinde üretkenliği artırmaya odaklanan giriş seviyesidir." },
       { number: "02", title: "İmplant bar doğruluğu", descriptionHtml: "E3, implant bar doğruluğu ve yüksek performans ihtiyacını uygun maliyetle karşılamak için konumlanır." },
       { number: "03", title: "Yüksek hacim", descriptionHtml: "E4, hızlı tam çene tarama ve hassasiyet gerektiren yoğun laboratuvar akışlarında öne çıkar." },
-      { number: "04", title: "CAD/CAM bağlantısı", descriptionHtml: "Tarama datası, tasarım ve üretim adımlarına temel oluşturur; mevcut akışla uyum birlikte değerlendirilmelidir." },
+      { number: "04", title: "CAD/CAM bağlantısı", descriptionHtml: "Tarama verisi, tasarım ve üretim adımlarına temel oluşturur; mevcut akışla uyum birlikte değerlendirilmelidir." },
     ],
     callout: {
       titlePrefix: "Tarama + tasarım +",
@@ -1259,7 +1291,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
       {
         question: "Bu kategoride hangi tarayıcılar var?",
         answerHtml:
-          "Kategori datasına göre 3Shape E2, 3Shape E3 ve 3Shape E4 listelenir. Ürün sırası E2, E3, E4 olarak korunur.",
+          "3Shape E2, E3 ve E4 seçenekleri laboratuvarların farklı tarama hızı ve hassasiyet ihtiyaçlarına göre konumlanır.",
       },
       {
         question: "3Shape E2 ne için seçilir?",
@@ -1299,7 +1331,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
   kind: "spares",
   announcement: {
     highlight: "⚡ Doğru yedek parça cihaz uyumuyla seçilir",
-    text: "P16L, Halot Sky, Piocreat C01 ve sarf parçaları kategori sırasıyla karşılaştırın.",
+    text: "P16L, Halot Sky, Piocreat C01 ve sarf parçalarını kullanım ihtiyacınıza göre karşılaştırın.",
     href: "#yedek-parcalar",
     ctaText: "Yedek parçaları gör →",
   },
@@ -1320,7 +1352,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
       { label: "Uyumluluğu kontrol ettir", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "8", emphasis: "ürün", label: "canlı kategori sırası korunarak listelenir" },
+      { value: "8", emphasis: "ürün", label: "yazıcı bakım ve yedek parça seçenekleri" },
       { value: "16K", emphasis: "LCD", label: "MASH P16L monokrom ekran yedek parçası" },
       { value: "800", emphasis: "ml", label: "MASH P16L reçine tankı kapasitesi" },
       { value: "6K", emphasis: "Mono", label: "Creality Halot Sky LCD ekran kiti" },
@@ -1479,7 +1511,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
         { label: "Amaç", values: ["Pozlama ve kontrol stabilitesi", "Baskı tutunması ve üretim hızı", "Reçine akışı ve katman ayrımı"] },
       ],
       noteHtml:
-        "Ürün adı, fiyat, ana görsel, bağlantı ve sıra <b>3d-yazici-yedek-parcalari</b> kategori datasıyla eşleşir.",
+        "Yedek parçaları uyum, kullanım amacı ve bakım ihtiyacına göre seçin.",
     },
   },
   feature: {
@@ -1576,10 +1608,10 @@ export const systemsCategoryData: CategoryLandingData = {
       { label: "Vaka uyumunu sor", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "2", emphasis: "ürün", label: "kategori sırasıyla Comp Flow ve Light Glass" },
+      { value: "2", emphasis: "ürün", label: "Comp Flow ve Light Glass sistemleri" },
       { value: "Tam", emphasis: "çene", label: "kompozit restorasyon akışı" },
       { value: "CRS", emphasis: "Trasformer", label: "sistem ve materyal birlikte konumlanır" },
-      { value: "14.654", emphasis: "TRY", label: "Light Glass kategori fiyat bilgisi" },
+      { value: "14.654", emphasis: "TRY", label: "Light Glass başlangıç fiyat aralığı" },
     ],
   },
   selector: {
@@ -1640,7 +1672,7 @@ export const systemsCategoryData: CategoryLandingData = {
         { label: "Kontrol", values: ["Renk ve materyal seçimi", "Sistem kullanımı ve vaka uyumu", "Vaka planı, materyal ve laboratuvar süreci"] },
       ],
       noteHtml:
-        "Ürün adı, ana görsel, bağlantı ve sıra <b>sistemler</b> kategori datasıyla eşleşir.",
+        "Sistemleri endikasyon, çalışma akışı ve laboratuvar ihtiyacına göre değerlendirin.",
     },
   },
   feature: {
@@ -1736,10 +1768,10 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
       { label: "Freze uyumunu sor", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "1", emphasis: "ürün", label: "kategori ItemList sırasındaki aktif ürün" },
+      { value: "1", emphasis: "ürün", label: "freze iş akışı için titanyum disk" },
       { value: "Grade", emphasis: "5 ELI", label: "titanyum materyal sınıfı" },
       { value: "Ø98.5", emphasis: "mm", label: "CAD/CAM disk formu" },
-      { value: "3.930", emphasis: "TRY", label: "kategori başlangıç fiyat bilgisi" },
+      { value: "3.930", emphasis: "TRY", label: "başlangıç fiyat aralığı" },
     ],
   },
   selector: {
@@ -1783,7 +1815,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
         { label: "Satın alma öncesi", values: ["Materyal sınıfı", "Boyut / holder uyumu", "Restorasyon ve CAM stratejisi"] },
       ],
       noteHtml:
-        "Ürün adı, ana görsel, bağlantı ve kategori sırası <b>titanyum-diskler</b> kategori datasıyla eşleşir.",
+        "Titanyum diski freze uyumu, ölçü ve uygulama ihtiyacına göre değerlendirin.",
     },
   },
   feature: {
@@ -1836,7 +1868,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
     title: "Titanyum disk seçerken merak edilenler.",
     sideHtml: "Materyal, çap, CAD/CAM uyumu ve implant üstü kullanım için temel sorular.",
     items: [
-      { question: "Bu kategoride hangi ürün var?", answerHtml: "Kategori datasına göre MESA Titanyum Disk Grade 5 ELI listelenir." },
+      { question: "Bu kategoride hangi ürün var?", answerHtml: "MESA Titanyum Disk Grade 5 ELI, CAD/CAM freze iş akışları için konumlanan titanyum disk seçeneğidir." },
       { question: "MESA Grade 5 ELI ne için kullanılır?", answerHtml: "İmplant üstü restorasyonlar için kullanılan CAD/CAM uyumlu titanyum disktir." },
       { question: "Disk çapı nedir?", answerHtml: "Ürün açıklamasında Ø98.5 mm formu belirtilir." },
       { question: "Biyouyumlu mudur?", answerHtml: "Kaynak açıklamada yüksek dayanım ve biyouyumluluk sunduğu belirtilir." },
@@ -1860,7 +1892,7 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
   if (!key) return null;
   const dentalKeys = ["dental 3d yazici recineleri", "3d yazici recineleri", "dental recineler", "dental recine"];
   const printerKeys = ["3d yazicilar", "dental 3d yazicilar", "mash p16l", "curie m1", "halot sky", "creality halot"];
-  const washCureKeys = ["yikama kurleme cihazlari", "yikama kurleme", "wash cure", "washcure", "uw 03", "uw 02"];
+  const washCureKeys = ["yikama kurleme cihazlari", "kurleme cihazlari", "yikama kurleme", "wash cure", "washcure", "mash c1e", "mash w1e", "uw 03", "uw 02"];
   const zirconKeys = ["zirkon bloklar", "zirkon blok", "zircon blocks", "argenz ht plus", "argenz st multilayer", "argenz ht multilayer"];
   const furnaceKeys = [
     "dental firinlar",

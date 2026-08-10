@@ -1,6 +1,8 @@
 import type { ProductDetailTemplateData, ProductGalleryItem } from "../ThreeMashProductDetailTemplate";
+import { useEffect, useMemo, useState } from "preact/hooks";
 
 type PlainObject = Record<string, unknown>;
+const SHARED_PRODUCT_DETAIL_EVENT = "three-mash:product-detail-data";
 
 export const CRS_COMPOSITE_SLUG = "crs-composite-mukemmel-dayanimli-gecici-recinesi";
 export const CRS_SPLINT_HARD_SLUG = "crs-splint-hard-resin-sert-gece-plagi-recinesi";
@@ -44,6 +46,8 @@ export const MASH_P16L_PRINTER_SLUG = "mash-p16l-385nm-16k-dental-3d-yazici";
 export const MASH_CURIE_M1_DENTAL_SLUG = "mash-curie-m1-dental-3d-yazici";
 export const MASH_CURIE_M1_JEWELRY_SLUG = "mash-curie-m1-jewelry-3d-printer";
 export const CREALITY_HALOT_SKY_6K_SLUG = "creality-halot-sky-6k";
+export const MASH_C1E_UV_CURING_SLUG = "mash-c1e-uv-kurleme-cihazi";
+export const MASH_W1E_ULTRASONIC_WASH_SLUG = "mash-w1e-ultrasonik-yikama-cihazi";
 
 const CRS_GALLERY: ProductGalleryItem[] = [
   {
@@ -5007,13 +5011,17 @@ function labPhotoSrc(config: LabProductConfig, index: number | undefined) {
 }
 
 function labRelatedItems(config: LabProductConfig): NonNullable<ProductDetailTemplateData["related"]>["items"] {
-  const related = LAB_PRODUCT_CONFIGS.filter((item) => item.category.href === config.category.href && item.slug !== config.slug).map((item) => ({
+  const related = LAB_PRODUCT_CONFIGS.filter((item) => {
+    return item.category.href === config.category.href && item.slug !== config.slug;
+  }).map((item) => ({
     tag: item.galleryBadge || item.category.label.toLocaleUpperCase("tr"),
     title: item.productText,
     descriptionHtml: item.leadHtml,
     href: `/${item.slug}`,
     linkText: "İncele",
     background: "linear-gradient(160deg,#F1F1EC,#fff)",
+    image: item.images[0],
+    imageAlt: item.productText,
   }));
   return [
     ...related,
@@ -5024,6 +5032,8 @@ function labRelatedItems(config: LabProductConfig): NonNullable<ProductDetailTem
       href: config.category.href,
       linkText: "Kategoriye dön",
       background: "linear-gradient(160deg,#EEF0EA,#fff)",
+      image: config.images[0],
+      imageAlt: config.category.text,
     },
   ].slice(0, 4);
 }
@@ -5335,7 +5345,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     kicker: "Creality Halot-Sky 6K · Reçine 3D Yazıcı",
     titleHtml: 'Halot-Sky 6K, <span class="em">iki cihaz geliştirmesiyle</span> seçilir.',
     leadHtml:
-      "Creality Halot-Sky 6K, reçine 3D baskı için kullanılan LCD yazıcıdır. 3mash kategori kaynağında Fabrika Çıkışlı Versiyon ve Hassasiyeti Arttırılmış Versiyon seçenekleriyle listelenir.",
+      "Creality Halot-Sky 6K, reçine 3D baskı için kullanılan LCD yazıcıdır. Fabrika çıkışlı versiyon ve hassasiyeti arttırılmış versiyon seçenekleriyle değerlendirilir.",
     pills: [{ value: "6K", label: "LCD" }, { label: "Fabrika çıkışlı" }, { label: "Hassasiyeti artırılmış" }, { label: "Creality" }],
     images: [
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d5482fea-966e-4198-887b-7a1ffd659ed7/1080/creality-halot-sky-cl-89-recine-3d-yaz--8eb5-.webp",
@@ -5343,7 +5353,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     ],
     galleryBadge: "6K",
     metricTitleHtml: 'Reçine baskıda <span class="em">6K LCD seçenekleri.</span>',
-    metricSideHtml: "Halot-Sky ürün sayfası JSON-LD kaynağı hatalı döndüğü için isim ve görsel verisi 3mash kategori ItemList kaynağından alınmıştır.",
+    metricSideHtml: "Halot-Sky seçimi yapılırken cihaz versiyonu, reçine uyumu ve hedeflenen hassasiyet birlikte kontrol edilmelidir.",
     metrics: [
       { name: "Çözünürlük", value: "6K", unit: "", tag: "LCD", caption: "Kategori kaynağında Creality Halot-Sky 6K olarak listelenir." },
       { name: "Versiyon", value: "2", unit: "seçenek", tag: "Variant", caption: "Fabrika çıkışlı ve hassasiyeti arttırılmış versiyonlar aynı ürün slug'ında listelenir." },
@@ -5351,7 +5361,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     ],
     specTag: "CREALITY HALOT-SKY · 6K",
     specTitleHtml: 'Fabrika çıkışlı veya <span class="em">hassasiyeti artırılmış.</span>',
-    specDescriptionHtml: "Halot-Sky 6K, kategori kaynağında iki cihaz geliştirmesi seçeneğiyle listelenir. Seçim, kullanılacak reçine ve hassasiyet beklentisine göre netleştirilmelidir.",
+    specDescriptionHtml: "Halot-Sky 6K, iki cihaz geliştirmesi seçeneğiyle değerlendirilir. Seçim, kullanılacak reçine ve hassasiyet beklentisine göre netleştirilmelidir.",
     specRows: [
       { label: "Model", value: "Creality Halot-Sky 6K" },
       { label: "Teknoloji", value: "LCD reçine yazıcı" },
@@ -5362,7 +5372,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     useCaseSideHtml: "Reçine baskı, dental üretim ve hassasiyet geliştirmesi isteyen LCD yazıcı akışlarında kullanılır.",
     useCasePhotos: [
       { imageIndex: 1, title: "Fabrika çıkışlı", text: "Standart Creality Halot-Sky 6K seçeneği.", alt: "Creality Halot-Sky fabrika çıkışlı" },
-      { imageIndex: 1, title: "Hassasiyet artırımı", text: "3mash kategori kaynağındaki geliştirilmiş seçenek.", alt: "Creality Halot-Sky hassasiyet arttırılmış" },
+      { imageIndex: 1, title: "Hassasiyet artırımı", text: "Daha kontrollü baskı hedefleyen geliştirilmiş seçenek.", alt: "Creality Halot-Sky hassasiyet arttırılmış" },
       { imageIndex: 1, title: "Reçine baskı", text: "LCD reçine üretim akışı.", alt: "Creality Halot-Sky reçine baskı" },
     ],
     useCaseCards: [
@@ -5373,14 +5383,120 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     devicesTextHtml: "Halot-Sky 6K seçimi yapılırken cihaz geliştirmesi, reçine parametresi ve post-process akışı birlikte kontrol edilmelidir.",
     deviceChips: [{ label: "LCD reçine yazıcı" }, { label: "6K" }, { label: "Dental reçine" }, { label: "Hassasiyet seçimi", highlighted: true }],
     faqItems: [
-      { question: "Halot-Sky 6K kaç seçenekle listeleniyor?", answerHtml: "3mash kategori kaynağında Fabrika Çıkışlı Versiyon ve Hassasiyeti Arttırılmış Versiyon olarak iki seçenekle listelenir." },
-      { question: "Ürün sayfası kaynağında neden detay az?", answerHtml: "Ürün sayfasındaki JSON-LD veri farklı ürünle karışık dönüyor; bu nedenle isim ve görsel kategori kaynağından eşleştirildi." },
+      { question: "Halot-Sky 6K kaç seçenekle değerlendiriliyor?", answerHtml: "Fabrika çıkışlı versiyon ve hassasiyeti arttırılmış versiyon olarak iki seçenekle değerlendirilebilir." },
+      { question: "Hangi versiyon seçilmeli?", answerHtml: "Kullanılacak reçine, hassasiyet beklentisi ve üretim tipi birlikte değerlendirilerek seçilmelidir." },
       { question: "Hangi versiyon seçilmeli?", answerHtml: "Kullanılacak reçine, hassasiyet beklentisi ve üretim tipi birlikte değerlendirilerek seçilmelidir." },
     ],
     videoTitleHtml: 'Halot-Sky seçimini <span class="em">birlikte netleştirin.</span>',
     videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için cihaz geliştirmesi ve reçine uyumunu teknik destekle kontrol edin.",
     videoTitle: "Creality Halot-Sky 6K teknik destek",
     videoText: "Fabrika çıkışlı veya hassasiyeti artırılmış versiyon seçimi için uzman desteği alın.",
+  },
+  {
+    slug: MASH_W1E_ULTRASONIC_WASH_SLUG,
+    category: WASH_CURE_CATEGORY,
+    productText: "Mash W1E Ultrasonik Yıkama Cihazı",
+    kicker: "Mash W1E · Ultrasonik Yıkama",
+    titleHtml: 'Baskı sonrası yüzey <span class="em">temiz başlar.</span>',
+    leadHtml:
+      "Mash W1E, 3D baskı sonrası parçaların yüzeyindeki reçine kalıntılarını temizlemek için konumlanan ultrasonik yıkama cihazıdır. Kürleme öncesi yüzeyi hazırlayarak daha kontrollü bir post-process akışı kurmanıza yardımcı olur.",
+    pills: [{ label: "Ultrasonik yıkama" }, { label: "Baskı sonrası temizlik" }, { label: "Reçine kalıntısı kontrolü" }, { label: "C1E ile tamamlanır" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp",
+    ],
+    galleryBadge: "W1E",
+    metricTitleHtml: 'Yıkama adımı <span class="em">kürleme öncesi zemini hazırlar.</span>',
+    metricSideHtml: "W1E, reçine baskı sonrası yüzeyde kalan fazla materyalin temizlenmesi için yıkama adımına odaklanır.",
+    metrics: [
+      { name: "İşlem", value: "Ultrasonik", unit: "yıkama", tag: "Wash", caption: "Baskı sonrası parçaların yüzey temizliği için kullanılır." },
+      { name: "Akış", value: "Post", unit: "process", tag: "Baskı sonrası", caption: "Kürleme öncesi yüzey hazırlığı sağlar." },
+      { name: "Uyum", value: "C1E", unit: "ile", tag: "Tamamlayıcı", caption: "W1E yıkama adımı C1E UV kürleme adımıyla birlikte planlanır." },
+    ],
+    specTag: "MASH W1E · ULTRASONİK YIKAMA",
+    specTitleHtml: 'Yüzey temizliği için <span class="em">ayrı kontrol.</span>',
+    specDescriptionHtml: "W1E, reçine baskıların kürleme öncesi temizlenmesi için baskı sonrası iş akışında konumlanır.",
+    specRows: [
+      { label: "Cihaz", value: "Mash W1E" },
+      { label: "İşlem", value: "Ultrasonik yıkama" },
+      { label: "Kullanım", value: "Reçine 3D baskı sonrası" },
+      { label: "Kategori", value: "Yıkama cihazı" },
+      { label: "Marka", value: "Mash" },
+    ],
+    useCaseSideHtml: "Reçine baskıların yüzey temizliği, kurutma ve ardından UV post-curing adımına hazırlanması için kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "Yıkama", text: "Baskı üzerindeki reçine kalıntılarını temizleme.", alt: "Mash W1E ultrasonik yıkama" },
+      { imageIndex: 1, title: "Hazırlık", text: "Kürleme öncesi yüzey hazırlığı.", alt: "Mash W1E kürleme öncesi hazırlık" },
+      { imageIndex: 1, title: "Akış", text: "W1E yıkama, C1E kürleme adımına bağlanır.", alt: "Mash W1E post-process akışı" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Hangi adımda?", items: ["Reçine baskıların temizlenmesi", "Kürleme öncesi yüzey hazırlığı", "Dental baskı sonrası yıkama"] },
+      { eyebrow: "Kontrol", title: "Neyi iyileştirir?", items: ["Yüzeydeki fazla reçineyi azaltma", "Son kürleme öncesi temizlik", "Daha tutarlı post-process akışı"] },
+    ],
+    devicesTitle: "Reçine baskı sonrası temizlik akışına eklenir",
+    devicesTextHtml: "W1E, dental reçine baskıların yıkama adımında kullanılır. C1E UV kürleme cihazıyla birlikte konumlandığında baskı sonrası süreç daha net ayrışır.",
+    deviceChips: [{ label: "Ultrasonik yıkama", highlighted: true }, { label: "Reçine baskı" }, { label: "C1E ile tamamlanır" }, { label: "Post-process" }],
+    faqItems: [
+      { question: "Mash W1E ne için kullanılır?", answerHtml: "Reçine 3D baskı sonrası parçaların yüzeyindeki kalıntıları temizlemek için kullanılır." },
+      { question: "W1E tek başına yeterli mi?", answerHtml: "W1E yıkama adımını yönetir; reçinenin nihai mekanik özellikleri için ardından uygun UV kürleme protokolü gerekir." },
+      { question: "C1E ile birlikte mi kullanılmalı?", answerHtml: "Evet. W1E temizlik, C1E UV post-curing adımına odaklanır; birlikte daha kontrollü bir baskı sonrası akış oluştururlar." },
+    ],
+    videoTitleHtml: 'W1E için <span class="em">akışı birlikte netleştirin.</span>',
+    videoSideHtml: "Bu ürün için video yerine yıkama ve kürleme protokolünü teknik destekle netleştirmeniz önerilir.",
+    videoTitle: "Mash W1E teknik destek",
+    videoText: "Baskı sonrası yıkama sürecini kullandığınız reçine ve parça tipine göre birlikte planlayalım.",
+  },
+  {
+    slug: MASH_C1E_UV_CURING_SLUG,
+    category: WASH_CURE_CATEGORY,
+    productText: "Mash C1E UV Kürleme Cihazı",
+    kicker: "Mash C1E · UV Kürleme",
+    titleHtml: 'Dental reçine baskılar <span class="em">doğru ışıkla tamamlanır.</span>',
+    leadHtml:
+      "Mash C1E, dental 3D baskılar için geliştirilen profesyonel UV kürleme cihazıdır. Sararmayı önlemeye yardımcı olan kürleme teknolojisi, 24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle farklı dental reçinelerle uyumlu çalışır.",
+    pills: [{ value: "24", label: "LED" }, { value: "360°", label: "ışık sistemi" }, { value: "360-530", label: "nm spektrum" }, { label: "UV post-curing" }],
+    images: [
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e7c22c86-93e4-4c53-92f8-969d358e0c0f/1080/mash-c1e-dental-post-cure-cihazi.webp",
+    ],
+    galleryBadge: "C1E",
+    metricTitleHtml: 'UV kürleme <span class="em">mekanik sonucu tamamlar.</span>',
+    metricSideHtml: "C1E, dental reçine baskıların son kürleme adımında ışık dağılımını ve spektrum uyumunu kontrol altına almak için konumlanır.",
+    metrics: [
+      { name: "LED", value: "24", unit: "adet", tag: "Işık", caption: "360° ışık sistemiyle homojen kürleme hedeflenir." },
+      { name: "Açı", value: "360", unit: "°", tag: "Kapsama", caption: "Parça çevresinde daha dengeli ışık dağılımı için kullanılır." },
+      { name: "Spektrum", value: "360", unit: "-530 nm", tag: "UV", caption: "Farklı dental reçine protokolleriyle uyumlu geniş spektrum desteği." },
+    ],
+    specTag: "MASH C1E · 24 LED / 360-530 NM",
+    specTitleHtml: 'Sararmayı azaltmaya yardımcı <span class="em">kontrollü post-curing.</span>',
+    specDescriptionHtml: "C1E, reçine baskıların UV post-curing adımında dayanım, yüzey kalitesi ve renk stabilitesini desteklemek için kullanılır.",
+    specRows: [
+      { label: "Cihaz", value: "Mash C1E" },
+      { label: "İşlem", value: "UV kürleme" },
+      { label: "Işık sistemi", value: "24 LED / 360°" },
+      { label: "Spektrum", value: "360-530 nm" },
+      { label: "Marka", value: "Mash" },
+    ],
+    useCaseSideHtml: "Yıkama sonrası dental reçine parçaların nihai post-curing adımında, reçine protokolüne göre kullanılır.",
+    useCasePhotos: [
+      { imageIndex: 1, title: "Kürleme", text: "Dental reçine baskıların UV post-curing adımı.", alt: "Mash C1E UV kürleme" },
+      { imageIndex: 1, title: "Işık dağılımı", text: "24 LED'li 360° ışık sistemi.", alt: "Mash C1E 360 derece ışık sistemi" },
+      { imageIndex: 1, title: "Reçine uyumu", text: "360-530 nm geniş spektrum desteği.", alt: "Mash C1E geniş spektrum desteği" },
+    ],
+    useCaseCards: [
+      { eyebrow: "Kullanım", title: "Hangi adımda?", items: ["Yıkama sonrası UV kürleme", "Dental reçine baskıların post-curing süreci", "Renk ve mekanik stabilite hedefi"] },
+      { eyebrow: "Kontrol", title: "Neyi netleştirir?", items: ["Kürleme süresi", "Reçine protokolü", "Işık spektrumu uyumu"] },
+    ],
+    devicesTitle: "W1E yıkama sonrası C1E ile kürleme tamamlanır",
+    devicesTextHtml: "C1E, yıkanmış reçine baskıların UV post-curing adımına odaklanır. Reçine tipine göre süre ve işlem protokolünü birlikte netleştirebiliriz.",
+    deviceChips: [{ label: "UV post-curing", highlighted: true }, { label: "24 LED" }, { label: "360° ışık" }, { label: "360-530 nm" }],
+    faqItems: [
+      { question: "Mash C1E ne için kullanılır?", answerHtml: "Dental reçine 3D baskıların yıkama sonrası UV post-curing adımında kullanılır." },
+      { question: "360-530 nm spektrum ne sağlar?", answerHtml: "Geniş spektrum desteği, farklı dental reçine protokolleriyle daha uyumlu bir kürleme akışı kurmaya yardımcı olur." },
+      { question: "W1E ile birlikte mi kullanılmalı?", answerHtml: "W1E yıkama adımını, C1E ise UV kürleme adımını yönetir. Dental baskı sonrası süreçte bu iki adım birbirini tamamlar." },
+    ],
+    videoTitleHtml: 'C1E protokolünü <span class="em">reçinenize göre netleştirin.</span>',
+    videoSideHtml: "Bu ürün için video yerine kürleme protokolünü reçine ve yazıcı parametreleriyle birlikte kontrol edin.",
+    videoTitle: "Mash C1E teknik destek",
+    videoText: "UV post-curing süresini ve işlem akışını kullandığınız reçineye göre birlikte planlayalım.",
   },
   {
     slug: CREALITY_WASH_CURE_UW03_SLUG,
@@ -5974,6 +6090,8 @@ export const LAB_PRODUCT_DETAIL_DATA_BY_SLUG: Record<string, ProductDetailTempla
 );
 
 const LAB_PRODUCT_ALIASES: Record<string, string[]> = {
+  [MASH_W1E_ULTRASONIC_WASH_SLUG]: ["mash-w1e", "w1e", "ultrasonik-yikama", "washing-device"],
+  [MASH_C1E_UV_CURING_SLUG]: ["mash-c1e", "c1e", "uv-kurleme", "dental-post-cure"],
   [CREALITY_WASH_CURE_UW03_SLUG]: ["creality-wash-cure-uw-03", "creality-washcure-uw-03", "uw-03", "uw-02"],
   [THREESHAPE_E2_SLUG]: ["3shape-e2", "e2-yuksek-uretkenlik"],
   [THREESHAPE_E3_SLUG]: ["3shape-e3", "implant-bar-dogrulugu"],
@@ -6245,4 +6363,42 @@ export function resolveProductDetailData(product: unknown, productTemplateJson?:
     ...data,
     key: `${data.key}-${productSlug(product) || "studio"}`,
   };
+}
+
+export function resolveSharedProductDetailData(product: unknown, productTemplateJson?: unknown) {
+  const direct = resolveProductDetailData(product, productTemplateJson);
+  if (direct) return direct;
+  return currentSharedProductDetailData();
+}
+
+function currentSharedProductDetailData() {
+  if (typeof window === "undefined") return null;
+  const shared = (window as unknown as { __THREE_MASH_PRODUCT_DETAIL_DATA__?: unknown }).__THREE_MASH_PRODUCT_DETAIL_DATA__;
+  if (!shared || typeof shared !== "object") return null;
+  const data = shared as Partial<ProductDetailTemplateData>;
+  return data.key && data.hero ? (shared as ProductDetailTemplateData) : null;
+}
+
+export function publishSharedProductDetailData(data: ProductDetailTemplateData | null) {
+  if (typeof window === "undefined") return;
+  (window as unknown as { __THREE_MASH_PRODUCT_DETAIL_DATA__?: unknown }).__THREE_MASH_PRODUCT_DETAIL_DATA__ = data;
+  window.dispatchEvent(new CustomEvent(SHARED_PRODUCT_DETAIL_EVENT, { detail: data }));
+}
+
+export function useSharedProductDetailData(product: unknown, productTemplateJson?: unknown) {
+  const direct = useMemo(() => resolveProductDetailData(product, productTemplateJson), [product, productTemplateJson]);
+  const [shared, setShared] = useState<ProductDetailTemplateData | null>(() => (direct ? null : currentSharedProductDetailData()));
+
+  useEffect(() => {
+    if (direct || typeof window === "undefined") return undefined;
+    const update = (event?: Event) => {
+      const detail = event instanceof CustomEvent ? event.detail : undefined;
+      setShared(detail && typeof detail === "object" ? (detail as ProductDetailTemplateData) : currentSharedProductDetailData());
+    };
+    update();
+    window.addEventListener(SHARED_PRODUCT_DETAIL_EVENT, update);
+    return () => window.removeEventListener(SHARED_PRODUCT_DETAIL_EVENT, update);
+  }, [direct?.key]);
+
+  return direct || shared;
 }

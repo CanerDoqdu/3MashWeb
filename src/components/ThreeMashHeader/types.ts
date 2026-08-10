@@ -14,7 +14,7 @@ export interface Props {
   productsMenuText?: string;
   /** Ürünler mega menüsündeki sağ alt küçük bağlantı metni. */
   allProductsText?: string;
-  /** Ürünler mega menüsündeki sağ alt küçük bağlantı adresi. */
+  /** Ürünler mega menüsündeki sağ alt küçük bağlantı adresi. Arama sayfası için /search yazın. */
   allProductsHref?: string;
   productsFeatureEyebrow?: string;
   productsFeatureTitle?: string;
@@ -255,7 +255,7 @@ export interface Props {
   storePanelTitle?: string;
   storePanelDescription?: string;
   storePanelButtonText?: string;
-  /** Mağaza paneli buton routeu. Varsayılan sepet sayfasıdır. */
+  /** Mağaza paneli buton routeu. Varsayılan arama sayfasıdır; /search yazın. */
   storePanelButtonHref?: string;
   storePanelNote?: string;
   announcementWordStyleEnabled?: boolean;

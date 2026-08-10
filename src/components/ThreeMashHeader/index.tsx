@@ -119,7 +119,7 @@ function currentProductAnnouncement() {
 }
 const defaultProductsFeature = {
   eyebrow: "YENİ · DÜNYADA İLK",
-  title: "MASH C4P<br>Akıllı Kürleme Cihazı",
+  title: "MASH C1E<br>Akıllı Kürleme Cihazı",
   description: "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
   ctaText: "Keşfet →",
   href: "/yikama-kurleme-cihazlari",
@@ -152,6 +152,7 @@ function headerRouteHref(value: string | undefined, fallback: string) {
   if (slug === "account-login" || slug === "login" || slug === "hesabim" || slug === "account") return "/account/login";
   if (slug === "cart" || slug === "sepet") return "/cart";
   if (slug === "search" || slug === "arama") return "/search";
+  if (productCategoryRoutes[slug]) return productCategoryRoutes[slug];
   return internal || fallback;
 }
 
@@ -159,8 +160,10 @@ function searchPageHref(value?: string) {
   return headerRouteHref(value, "/search");
 }
 
-function storePageHref(value?: string, fallback?: string) {
-  return headerRouteHref(value || fallback, "/cart");
+function storePageHref(value?: string) {
+  const slug = routeTextKey(internalSiteHref(value || "") || value || "");
+  if (slug === "cart" || slug === "sepet") return "/search";
+  return headerRouteHref(value, "/search");
 }
 
 function routeAliasKey(value: string) {
@@ -208,6 +211,7 @@ const productCategoryRoutes: Record<string, string> = {
   "recineler": "/dental-3d-yazici-recineleri",
   "yikama-kurleme-cihazlari": "/yikama-kurleme-cihazlari",
   "yikama-kurleme": "/yikama-kurleme-cihazlari",
+  "kurleme-cihazlari": "/yikama-kurleme-cihazlari",
   "masasustu-tarayicilar": "/masasustu-tarayicilar",
   "masaustu-tarayicilar": "/masasustu-tarayicilar",
   "tarayicilar": "/masasustu-tarayicilar",
@@ -219,10 +223,10 @@ const productCategoryRoutes: Record<string, string> = {
   "yedek-parcalar": "/3d-yazici-yedek-parcalari",
   "sistemler": "/sistemler",
   "titanyum-diskler": "/titanyum-diskler",
-  "tum-urunler": "/tum-urunler",
-  "urunler": "/tum-urunler",
-  "products": "/tum-urunler",
-  "collections-all": "/tum-urunler",
+  "tum-urunler": "/search",
+  "urunler": "/search",
+  "products": "/search",
+  "collections-all": "/search",
 };
 
 function productRouteHref(value: string | undefined, fallback: string) {
@@ -305,8 +309,8 @@ function handleReferencesClick(event: MouseEvent, homeHref: string | undefined, 
     return;
   }
 
-  const stored = savePendingReferencesScroll(targetId);
-  window.location.href = stored ? homeTarget : `${homeTarget}${hash}`;
+  savePendingReferencesScroll(targetId);
+  window.location.href = `${homeTarget}${hash}`;
 }
 
 function c4pRouteHref(value: string | undefined) {
@@ -1369,7 +1373,7 @@ export function ThreeMashHeader(props: Props) {
                     <div className="tmh-cart-empty-card">
                       <a
                         className="tmh-cart-market-button"
-                        href={storePageHref(props.storePanelButtonHref, props.cartHref)}
+                        href={storePageHref(props.storePanelButtonHref)}
                         dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git"), props)}
                       />
                     </div>

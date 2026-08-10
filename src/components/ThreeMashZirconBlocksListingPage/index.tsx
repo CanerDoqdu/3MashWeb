@@ -3,7 +3,7 @@ import { zirconBlocksCategoryData } from "../../sub-components/ThreeMashCategory
 import type { Props } from "./types";
 
 export function ThreeMashZirconBlocksListingPage(props: Props) {
-  return <ThreeMashCategoryLanding data={zirconBlocksCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={zirconBlocksCategoryData} productList={props.productList} />;
 }
 
 export default ThreeMashZirconBlocksListingPage;
