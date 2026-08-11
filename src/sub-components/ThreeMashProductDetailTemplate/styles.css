@@ -956,6 +956,58 @@
   object-position: center center;
 }
 
+.tmpdt-usecases-uniform .tmpdt-pstrip {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+
+.tmpdt-usecases-uniform .tmpdt-pshot-im,
+.tmpdt-usecases-uniform .tmpdt-pshot-1 .tmpdt-pshot-im,
+.tmpdt-usecases-uniform .tmpdt-pshot-3 .tmpdt-pshot-im,
+.tmpdt-usecases-uniform .tmpdt-pshot.is-white-media .tmpdt-pshot-im {
+  background: #fff;
+  padding: clamp(18px, 2.4vw, 34px);
+}
+
+.tmpdt-usecases-uniform .tmpdt-pshot-im img,
+.tmpdt-usecases-uniform .tmpdt-pshot-1 .tmpdt-pshot-im img,
+.tmpdt-usecases-uniform .tmpdt-pshot-2 .tmpdt-pshot-im img,
+.tmpdt-usecases-uniform .tmpdt-pshot-3 .tmpdt-pshot-im img,
+.tmpdt-usecases-uniform .tmpdt-pshot.is-white-media .tmpdt-pshot-im img {
+  --tmpdt-photo-y: 0px;
+  --tmpdt-photo-scale: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.tmpdt-usecases-bleed .tmpdt-pstrip {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tmpdt-usecases-bleed .tmpdt-pshot-im,
+.tmpdt-usecases-bleed .tmpdt-pshot-1 .tmpdt-pshot-im,
+.tmpdt-usecases-bleed .tmpdt-pshot-3 .tmpdt-pshot-im,
+.tmpdt-usecases-bleed .tmpdt-pshot.is-cover .tmpdt-pshot-im,
+.tmpdt-usecases-bleed .tmpdt-pshot.is-white-media .tmpdt-pshot-im {
+  background: #fff;
+  padding: clamp(12px, 1.4vw, 20px);
+}
+
+.tmpdt-usecases-bleed .tmpdt-pshot-im img,
+.tmpdt-usecases-bleed .tmpdt-pshot-1 .tmpdt-pshot-im img,
+.tmpdt-usecases-bleed .tmpdt-pshot-2 .tmpdt-pshot-im img,
+.tmpdt-usecases-bleed .tmpdt-pshot-3 .tmpdt-pshot-im img,
+.tmpdt-usecases-bleed .tmpdt-pshot.is-cover .tmpdt-pshot-im img,
+.tmpdt-usecases-bleed .tmpdt-pshot.is-white-media .tmpdt-pshot-im img {
+  --tmpdt-photo-y: 0px;
+  --tmpdt-photo-scale: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
 .tmpdt-pshot.is-video .tmpdt-pshot-im video {
   object-fit: cover;
 }
@@ -1845,6 +1897,46 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center center;
+  }
+
+  .tmpdt-usecases-uniform .tmpdt-pshot-im,
+  .tmpdt-usecases-uniform .tmpdt-pshot-1 .tmpdt-pshot-im,
+  .tmpdt-usecases-uniform .tmpdt-pshot-3 .tmpdt-pshot-im,
+  .tmpdt-usecases-uniform .tmpdt-pshot.is-white-media .tmpdt-pshot-im {
+    padding: 16px;
+  }
+
+  .tmpdt-usecases-uniform .tmpdt-pshot-im img,
+  .tmpdt-usecases-uniform .tmpdt-pshot-1 .tmpdt-pshot-im img,
+  .tmpdt-usecases-uniform .tmpdt-pshot-2 .tmpdt-pshot-im img,
+  .tmpdt-usecases-uniform .tmpdt-pshot-3 .tmpdt-pshot-im img,
+  .tmpdt-usecases-uniform .tmpdt-pshot.is-white-media .tmpdt-pshot-im img {
+    --tmpdt-photo-y: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+  }
+
+  .tmpdt-usecases-bleed .tmpdt-pshot-im,
+  .tmpdt-usecases-bleed .tmpdt-pshot-1 .tmpdt-pshot-im,
+  .tmpdt-usecases-bleed .tmpdt-pshot-3 .tmpdt-pshot-im,
+  .tmpdt-usecases-bleed .tmpdt-pshot.is-cover .tmpdt-pshot-im,
+  .tmpdt-usecases-bleed .tmpdt-pshot.is-white-media .tmpdt-pshot-im {
+    padding: 12px;
+  }
+
+  .tmpdt-usecases-bleed .tmpdt-pshot-im img,
+  .tmpdt-usecases-bleed .tmpdt-pshot-1 .tmpdt-pshot-im img,
+  .tmpdt-usecases-bleed .tmpdt-pshot-2 .tmpdt-pshot-im img,
+  .tmpdt-usecases-bleed .tmpdt-pshot-3 .tmpdt-pshot-im img,
+  .tmpdt-usecases-bleed .tmpdt-pshot.is-cover .tmpdt-pshot-im img,
+  .tmpdt-usecases-bleed .tmpdt-pshot.is-white-media .tmpdt-pshot-im img {
+    --tmpdt-photo-y: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     object-position: center center;
   }
 

@@ -790,20 +790,20 @@ function productCard(
     const tagClass = productDefaults.tagClass
       ? ` ${productDefaults.tagClass}`
       : "";
-    const media = `<div class="tmr-product-media"><span class="tmr-tag${tagClass}">${escapeHtml(productDefaults.tag)}</span><img class="tmr-product-img ${productDefaults.imageClass}" src="${escapeAttr(productDefaults.image)}" alt="${escapeAttr(productDefaults.imageAlt)}"></div>`;
+    const media = `<div class="tmr-product-media tmr-product-media-${escapeAttr(prefix)}"><span class="tmr-tag${tagClass}">${escapeHtml(productDefaults.tag)}</span><img class="tmr-product-img ${productDefaults.imageClass}" src="${escapeAttr(productDefaults.image)}" alt="${escapeAttr(productDefaults.imageAlt)}"></div>`;
     return `<article class="tmr-product">${media}<div class="tmr-product-body"><h3>${escapeHtml(productDefaults.title)}</h3><p>${productDefaults.descriptionHtml}</p><div class="tmr-spec">${productDefaults.specs.map(([label, text]) => `<div><span>${escapeHtml(label)}</span><b>${escapeHtml(text)}</b></div>`).join("")}</div><a class="tmr-go" href="${escapeAttr(productDefaults.ctaHref)}">${escapeHtml(productDefaults.ctaText)} <span>→</span></a></div></article>`;
   }
 
   const image = imageSource(raw(props, `${prefix}ImageUrl`), defaults.image);
   const alt = field(props, `${prefix}ImageAlt`, defaults.imageAlt);
   const tagClass = defaults.tagClass ? ` ${defaults.tagClass}` : "";
-  const media = `<div class="tmr-product-media"><span class="tmr-tag${tagClass}">${field(props, `${prefix}Tag`, defaults.tag)}</span><img class="tmr-product-img ${defaults.imageClass}" src="${escapeAttr(image)}" alt="${escapeAttr(alt)}"></div>`;
+  const media = `<div class="tmr-product-media tmr-product-media-${escapeAttr(prefix)}"><span class="tmr-tag${tagClass}">${field(props, `${prefix}Tag`, defaults.tag)}</span><img class="tmr-product-img ${defaults.imageClass}" src="${escapeAttr(image)}" alt="${escapeAttr(alt)}"></div>`;
 
   return `<article class="tmr-product">${media}<div class="tmr-product-body"><h3>${field(props, `${prefix}Title`, defaults.title)}</h3><p>${field(props, `${prefix}DescriptionHtml`, defaults.descriptionHtml)}</p><div class="tmr-spec">${specs(props, prefix, defaults.specs.length, defaults.specs)}</div><a class="tmr-go" href="${escapeAttr(linkHref(raw(props, `${prefix}CtaHref`), defaults.ctaHref))}">${field(props, `${prefix}CtaText`, defaults.ctaText)} <span>→</span></a></div></article>`;
 }
 
-function solutionDefaultCards(props: ThreeMashSectionRenderProps) {
-  return `<div class="tmr-products">${productCard(props, "solutionCard1", {
+function solutionP1dCard(props: ThreeMashSectionRenderProps) {
+  return productCard(props, "solutionCard1", {
     tag: "PROFESYONEL",
     image: p1dSectionCardImage,
     imageAlt: "MASH P1D",
@@ -818,7 +818,11 @@ function solutionDefaultCards(props: ThreeMashSectionRenderProps) {
     ],
     ctaText: "İncele",
     ctaHref: "/3d-yazicilar",
-  })}${productCard(props, "solutionCard2", {
+  });
+}
+
+function solutionSecondCard(props: ThreeMashSectionRenderProps) {
+  return productCard(props, "solutionCard2", {
     tag: "GİRİŞ SEGMENTİ",
     image: p16lPrimaryImage,
     imageAlt: "MASH P16L",
@@ -833,7 +837,11 @@ function solutionDefaultCards(props: ThreeMashSectionRenderProps) {
     ],
     ctaText: "İncele",
     ctaHref: "/3d-yazicilar",
-  })}${productCard(props, "solutionCard3", {
+  });
+}
+
+function solutionResinCategoryCard(props: ThreeMashSectionRenderProps) {
+  return productCard(props, "solutionCard3", {
     tag: "RESMİ DİSTRİBÜTÖR",
     image: crsModelBottleImage,
     imageAlt: "CRS Reçineler",
@@ -848,7 +856,11 @@ function solutionDefaultCards(props: ThreeMashSectionRenderProps) {
     ],
     ctaText: "İncele",
     ctaHref: "/dental-3d-yazici-recineleri",
-  })}</div>`;
+  });
+}
+
+function solutionDefaultCards(props: ThreeMashSectionRenderProps) {
+  return `<div class="tmr-products">${solutionP1dCard(props)}${solutionSecondCard(props)}${solutionResinCategoryCard(props)}</div>`;
 }
 
 export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
@@ -1208,12 +1220,7 @@ const trustContentHtml = `<div class="tmr-testimonials"><article class="tmr-test
 const faqContentHtml = `<div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="#">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div>`;
 
 function solutionContent(props: ThreeMashSectionRenderProps) {
-  const liveProducts = solutionProducts(props.productList).slice(0, 3);
-  if (liveProducts.length > 0) {
-    return `<div class="tmr-products" aria-label="${escapeAttr(field(props, "carouselAriaLabel", "Çözüm ürünleri"))}">${liveProducts.map(liveProductCard).join("")}</div>`;
-  }
-
-  return solutionDefaultCards(props);
+  return `<div class="tmr-products" aria-label="${escapeAttr(field(props, "carouselAriaLabel", "Çözüm ürünleri"))}">${solutionP1dCard(props)}${solutionSecondCard(props)}${solutionResinCategoryCard(props)}</div>`;
 }
 
 function curingReasons(props: ThreeMashSectionRenderProps) {

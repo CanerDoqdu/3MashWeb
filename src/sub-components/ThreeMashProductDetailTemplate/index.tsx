@@ -84,6 +84,7 @@ export type ProductDetailTemplateData = {
     label: string;
     titleHtml: string;
     sideHtml: string;
+    layout?: "uniform" | "bleed";
     photos: Array<{
       src: string;
       alt: string;
@@ -644,7 +645,7 @@ export function ProductDetailUseCasesSection({ data }: { data: ProductDetailTemp
   if (!useCases) return null;
 
   return (
-    <section className="tmpdt-section tmpdt-section-tight" id="uygulama">
+    <section className={`tmpdt-section tmpdt-section-tight${useCases.layout ? ` tmpdt-usecases-${useCases.layout}` : ""}`} id="uygulama">
       <div className="tmpdt-wrap">
         <SectionIndex index={useCases.index} label={useCases.label} />
         <SectionHead titleHtml={useCases.titleHtml} sideHtml={useCases.sideHtml} wide />

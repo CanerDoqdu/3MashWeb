@@ -1,7 +1,9 @@
 import { useEffect } from "preact/hooks";
-import p1dPrinterImage from "../../assets/p1d-printer-data";
+import { curieM1DentalPrintersImage } from "../../assets/curie-m1-dental-media-data";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
-import vectorPrinterImage from "../../assets/vectorprinter-data";
+
+const halotSkyPrinterImage =
+  "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d5482fea-966e-4198-887b-7a1ffd659ed7/1080/creality-halot-sky-cl-89-recine-3d-yaz--8eb5-.webp";
 
 type AnnouncementWindow = Window & {
   __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: {
@@ -123,7 +125,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
               </div>
             </div>
             <div className="pc">
-              <div className="ph"><span className="tag">YERLİ · HIZLI</span><span className="st">Talep üzerine</span><img className="printer-img printer-img-curie" src={p1dPrinterImage} alt="Mash CURIE M1 dental 3D yazıcı" loading="lazy" /></div>
+              <div className="ph"><span className="tag">YERLİ · HIZLI</span><span className="st">Talep üzerine</span><img className="printer-img printer-img-curie" src={curieM1DentalPrintersImage} alt="Mash CURIE M1 dental 3D yazıcı" loading="lazy" /></div>
               <div className="bd">
                 <h3>Mash CURIE M1</h3>
                 <div className="ds">Antalya Teknokent'te üretilen <b>tamamen yerli</b> yazıcı. Hız ve düşük toplam maliyet için tasarlandı.</div>
@@ -136,7 +138,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
               </div>
             </div>
             <div className="pc">
-              <div className="ph"><span className="tag">EKONOMİK GİRİŞ</span><span className="st">Talep üzerine</span><img className="printer-img printer-img-halot" src={vectorPrinterImage} alt="Creality Halot-Sky 6K dental 3D yazıcı" loading="lazy" /></div>
+              <div className="ph ph-halot"><span className="tag">EKONOMİK GİRİŞ</span><span className="st">Talep üzerine</span><img className="printer-img printer-img-halot" src={halotSkyPrinterImage} alt="Creality Halot-Sky 6K dental 3D yazıcı" loading="lazy" /></div>
               <div className="bd">
                 <h3>Creality Halot-Sky 6K</h3>
                 <div className="ds">6K çözünürlük; <b>3mash iyileştirmeli</b> versiyonda <b>±15 µm</b> garanti. $10.000'lık cihaz kalitesine çok daha uygun fiyata.</div>

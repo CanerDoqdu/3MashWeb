@@ -5,6 +5,8 @@ import {
   p16lPrinterOpenImage,
   p16lPrintPlateImage,
 } from "../../assets/p16l-detail-media-data";
+import { mashC1eDentalCureImage, mashC1eOpenImage } from "../../assets/mash-c1e-detail-media-data";
+import { mashW1eControlFlowImage, mashW1eWaterTankImage } from "../../assets/mash-w1e-detail-media-data";
 import { curieM1DentalPrintersImage, curieM1DentalSectionVideo } from "../../assets/curie-m1-dental-media-data";
 
 type PlainObject = Record<string, unknown>;
@@ -4910,6 +4912,7 @@ type LabProductConfig = {
   specDescriptionHtml: string;
   specRows: Array<{ label: string; value: string }>;
   useCaseSideHtml: string;
+  useCasePhotoLayout?: "uniform" | "bleed";
   useCasePhotos: Array<{
     imageIndex?: number;
     imageSrc?: string;
@@ -4947,6 +4950,12 @@ const WASH_CURE_CATEGORY: LabProductCategory = {
   ecosystemTextHtml: "Reçine baskıda nihai mekanik değerler; doğru yıkama, kurutma ve UV kürleme süreciyle korunur. Cihazı reçine ve iş akışınıza göre birlikte konumlandırabiliriz.",
   ecosystemChips: ["Yıkama", "Kürleme", "365 / 405 nm", "Reçine sonrası işlem"],
 };
+
+const MASH_C1E_MAIN_IMAGE =
+  "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e7c22c86-93e4-4c53-92f8-969d358e0c0f/1080/mash-c1e-dental-post-cure-cihazi.webp";
+
+const MASH_W1E_MAIN_IMAGE =
+  "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp";
 
 const PRINTER_CATEGORY: LabProductCategory = {
   text: "3D Yazıcılar",
@@ -5108,6 +5117,7 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       label: "Uygulama & Uyumluluk",
       titleHtml: 'Nerede kullanılır, <span class="em">neyle çalışır?</span>',
       sideHtml: config.useCaseSideHtml,
+      layout: config.useCasePhotoLayout,
       photos: config.useCasePhotos.map((photo) => ({
         src: photo.imageSrc || labPhotoSrc(config, photo.imageIndex),
         alt: photo.alt,
@@ -5456,7 +5466,9 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       "Mash W1E, 3D baskı sonrası parçaların yüzeyindeki reçine kalıntılarını temizlemek için konumlanan ultrasonik yıkama cihazıdır. Kürleme öncesi yüzeyi hazırlayarak daha kontrollü bir post-process akışı kurmanıza yardımcı olur.",
     pills: [{ label: "Ultrasonik yıkama" }, { label: "Baskı sonrası temizlik" }, { label: "Reçine kalıntısı kontrolü" }, { label: "C1E ile tamamlanır" }],
     images: [
-      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp",
+      MASH_W1E_MAIN_IMAGE,
+      mashW1eWaterTankImage,
+      mashW1eControlFlowImage,
     ],
     galleryBadge: "W1E",
     metricTitleHtml: 'Yıkama adımı <span class="em">kürleme öncesi zemini hazırlar.</span>',
@@ -5477,10 +5489,11 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Marka", value: "Mash" },
     ],
     useCaseSideHtml: "Reçine baskıların yüzey temizliği, kurutma ve ardından UV post-curing adımına hazırlanması için kullanılır.",
+    useCasePhotoLayout: "bleed",
     useCasePhotos: [
-      { imageIndex: 1, title: "Yıkama", text: "Baskı üzerindeki reçine kalıntılarını temizleme.", alt: "Mash W1E ultrasonik yıkama" },
-      { imageIndex: 1, title: "Hazırlık", text: "Kürleme öncesi yüzey hazırlığı.", alt: "Mash W1E kürleme öncesi hazırlık" },
-      { imageIndex: 1, title: "Akış", text: "W1E yıkama, C1E kürleme adımına bağlanır.", alt: "Mash W1E post-process akışı" },
+      { imageSrc: MASH_W1E_MAIN_IMAGE, imageFit: "contain", imageBackground: "white", title: "W1E cihaz görünümü", text: "Ultrasonik yıkama adımı için konumlanan Mash W1E cihazı.", alt: "Mash W1E ultrasonik yıkama cihazı" },
+      { imageSrc: mashW1eWaterTankImage, imageFit: "contain", imageBackground: "white", imageOffsetY: "28px", imageScale: "0.64", title: "Yıkama haznesi", text: "Reçine baskı sonrası parçaların yüzey temizliği için kullanılan hazne.", alt: "Mash W1E yıkama haznesi" },
+      { imageSrc: mashW1eControlFlowImage, imageFit: "contain", imageBackground: "white", imageOffsetY: "-68px", imageScale: "0.42", title: "Kontrollü yıkama", text: "Yıkama süresi ve işlem akışının cihaz üzerinden kontrol edilmesi.", alt: "Mash W1E kontrollü yıkama akışı" },
     ],
     useCaseCards: [
       { eyebrow: "Kullanım", title: "Hangi adımda?", items: ["Reçine baskıların temizlenmesi", "Kürleme öncesi yüzey hazırlığı", "Dental baskı sonrası yıkama"] },
@@ -5509,7 +5522,9 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       "Mash C1E, dental 3D baskılar için geliştirilen profesyonel UV kürleme cihazıdır. Sararmayı önlemeye yardımcı olan kürleme teknolojisi, 24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle farklı dental reçinelerle uyumlu çalışır.",
     pills: [{ value: "24", label: "LED" }, { value: "360°", label: "ışık sistemi" }, { value: "360-530", label: "nm spektrum" }, { label: "UV post-curing" }],
     images: [
-      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e7c22c86-93e4-4c53-92f8-969d358e0c0f/1080/mash-c1e-dental-post-cure-cihazi.webp",
+      MASH_C1E_MAIN_IMAGE,
+      mashC1eOpenImage,
+      mashC1eDentalCureImage,
     ],
     galleryBadge: "C1E",
     metricTitleHtml: 'UV kürleme <span class="em">mekanik sonucu tamamlar.</span>',
@@ -5530,10 +5545,34 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Marka", value: "Mash" },
     ],
     useCaseSideHtml: "Yıkama sonrası dental reçine parçaların nihai post-curing adımında, reçine protokolüne göre kullanılır.",
+    useCasePhotoLayout: "uniform",
     useCasePhotos: [
-      { imageIndex: 1, title: "Kürleme", text: "Dental reçine baskıların UV post-curing adımı.", alt: "Mash C1E UV kürleme" },
-      { imageIndex: 1, title: "Işık dağılımı", text: "24 LED'li 360° ışık sistemi.", alt: "Mash C1E 360 derece ışık sistemi" },
-      { imageIndex: 1, title: "Reçine uyumu", text: "360-530 nm geniş spektrum desteği.", alt: "Mash C1E geniş spektrum desteği" },
+      {
+        imageSrc: MASH_C1E_MAIN_IMAGE,
+        imageFit: "contain",
+        imageBackground: "white",
+        title: "C1E cihaz görünümü",
+        text: "UV kürleme adımı için konumlanan Mash C1E cihaz gövdesi.",
+        alt: "Mash C1E UV kürleme cihazı",
+      },
+      {
+        imageSrc: mashC1eOpenImage,
+        imageFit: "contain",
+        imageBackground: "white",
+        imageOffsetY: "-82px",
+        imageScale: "0.60",
+        title: "UV kürleme cihazı",
+        text: "Yıkama sonrası parçaların kontrollü UV post-curing adımı için kullanılır.",
+        alt: "Mash C1E kapağı açık UV kürleme cihazı",
+      },
+      {
+        imageSrc: mashC1eDentalCureImage,
+        imageFit: "contain",
+        imageBackground: "white",
+        title: "Dental parça kürleme",
+        text: "Dental reçine parçalar, cihaz içindeki ışık düzeniyle kürleme sürecine alınır.",
+        alt: "Mash C1E içinde dental reçine parça kürleme",
+      },
     ],
     useCaseCards: [
       { eyebrow: "Kullanım", title: "Hangi adımda?", items: ["Yıkama sonrası UV kürleme", "Dental reçine baskıların post-curing süreci", "Renk ve mekanik stabilite hedefi"] },

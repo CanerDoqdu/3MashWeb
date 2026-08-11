@@ -3564,7 +3564,7 @@
         {
           "name": "productList",
           "displayName": "Ürün Listesi",
-          "description": "Bunu Tüm Ürünler ya da geçerli ürün listesi/kategoriye bağlayın. Bölüm 3 yalnızca canlı ikas ürünlerini gösterir; eski statik demo ürünleri kullanılmaz.",
+          "description": "Geriye dönük uyumluluk için kalır. Bölüm 3 kartları statiktir: MASH P1D, MASH P16L ve CRS Reçineler.",
           "type": "PRODUCT_LIST",
           "required": true,
           "groupId": "data",

@@ -1,4 +1,5 @@
 import type { CategoryLandingData } from "./index";
+import { curieM1DentalPrintersImage } from "../../assets/curie-m1-dental-media-data";
 
 function normalizeCategoryKey(value: string | undefined) {
   const decoded = (() => {
@@ -402,7 +403,8 @@ export const printersCategoryData: CategoryLandingData = {
         href: "/mash-curie-m1-dental-3d-yazici",
         tag: "YERLİ · HIZLI",
         status: "Talep üzerine",
-        sourceIcon: true,
+        imageSrc: curieM1DentalPrintersImage,
+        imageAlt: "Mash CURIE M1 dental 3D yazıcı",
         specs: [
           { label: "Hassasiyet", value: "±20 µm tekrarlanabilir" },
           { label: "Hız", value: "14 dk'da geçici kron" },
@@ -415,7 +417,9 @@ export const printersCategoryData: CategoryLandingData = {
         href: "/creality-halot-sky-6k",
         tag: "EKONOMİK GİRİŞ",
         status: "Talep üzerine",
-        sourceIcon: true,
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d5482fea-966e-4198-887b-7a1ffd659ed7/1080/creality-halot-sky-cl-89-recine-3d-yaz--8eb5-.webp",
+        imageAlt: "Creality Halot-Sky 6K reçine 3D yazıcı",
+        tone: "#FFFFFF",
         specs: [
           { label: "Çözünürlük", value: "6K" },
           { label: "Hassasiyet", value: "±15 µm (arttırılmış)" },

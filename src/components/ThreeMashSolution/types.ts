@@ -3,7 +3,7 @@ import type { IkasProductList } from "@ikas/bp-storefront";
 import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
-  /** Bunu Tüm Ürünler ya da geçerli ürün listesi/kategoriye bağlayın. Bölüm 3 yalnızca canlı ikas ürünlerini gösterir; eski statik demo ürünleri kullanılmaz. */
+  /** Geriye dönük uyumluluk için kalır. Bölüm 3 kartları statiktir: MASH P1D, MASH P16L ve CRS Reçineler. */
   productList: IkasProductList;
   sectionAnchorId?: string;
   indexNumber?: string;

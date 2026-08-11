@@ -581,6 +581,23 @@
   border-radius: var(--tmr-solution-card-radius);
 }
 
+.tmr-solution .tmr-product-body {
+  min-height: 354px;
+}
+
+.tmr-solution .tmr-product-body p {
+  flex: 0 0 auto;
+}
+
+.tmr-solution .tmr-spec {
+  min-height: 110px;
+  margin-top: auto;
+}
+
+.tmr-solution .tmr-go {
+  margin-top: 18px;
+}
+
 .tmr-solution .tmr-product-media {
   background: linear-gradient(160deg, var(--tmr-solution-media-start), var(--tmr-solution-media-end));
 }
@@ -613,6 +630,13 @@
   max-height: 208px;
 }
 
+.tmr-solution .tmr-product-media-solutionCard2 .tmr-machine-p16l {
+  width: min(calc(var(--tmr-solution-image-width) + 26px), 92%);
+  height: min(calc(var(--tmr-solution-image-height) + 22px), 184px);
+  max-width: 92%;
+  max-height: 184px;
+}
+
 .tmr-solution .tmr-product-media-p16l .tmr-p16l-main {
   transform: scale(1.36);
 }
@@ -623,10 +647,11 @@
 }
 
 .tmr-solution .tmr-product-media-solutionCard1 .tmr-machine-printer {
-  height: min(calc(var(--tmr-solution-image-height) + 64px), 210px);
-  max-height: 210px;
-  width: min(calc(var(--tmr-solution-image-width) + 68px), 98%);
-  max-width: 98%;
+  height: min(calc(var(--tmr-solution-image-height) + 52px), 202px);
+  max-height: 202px;
+  width: min(calc(var(--tmr-solution-image-width) + 54px), 96%);
+  max-width: 96%;
+  transform: translate(var(--tmr-solution-image-x), var(--tmr-solution-image-y)) scale(1.03);
 }
 
 .tmr-solution .tmr-product-video {

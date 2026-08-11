@@ -3,7 +3,9 @@ import {
   addItemToCart,
   getDefaultSrc,
   getDisplayedProductVariantTypes,
+  getProductFirstCategory,
   getProductHref,
+  getProductListInitialData,
   getProductOptionSet,
   getProductVariantFormattedFinalPrice,
   getProductVariantFormattedSellPrice,
@@ -13,11 +15,13 @@ import {
   hasProductValidOptionValues,
   hasProductVariantDiscount,
   hasProductVariantStock,
+  initProductList,
   initProductOnBrowser,
   initProductOptionSetValues,
   isAddToCartEnabled,
   selectVariantValue,
   type IkasProduct,
+  type IkasProductList,
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import ThreeMashProductDetailTemplate, {
@@ -26,6 +30,7 @@ import ThreeMashProductDetailTemplate, {
   productAnnouncementPayload,
   type ProductDetailTemplateData,
   type ProductGalleryItem,
+  type ProductDetailRelatedProduct,
   type ProductVariantGroup,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { publishSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
@@ -353,6 +358,14 @@ function plainText(value?: string) {
     .trim();
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 function summaryText(product: IkasProduct) {
   const source = (product as unknown as { shortDescription?: string }).shortDescription || product.description || "";
   const text = plainText(source);
@@ -382,6 +395,11 @@ function categoryName(category: unknown) {
   return stringValue(data?.name) || stringValue(data?.title);
 }
 
+function categoryId(category: unknown) {
+  const data = category as { id?: unknown; categoryId?: unknown; value?: unknown } | undefined;
+  return stringValue(data?.id) || stringValue(data?.categoryId) || stringValue(data?.value);
+}
+
 function categoryHref(category: unknown) {
   const data = category as { href?: unknown; path?: unknown; slug?: unknown; name?: unknown; title?: unknown } | undefined;
   const href = stringValue(data?.href);
@@ -392,6 +410,84 @@ function categoryHref(category: unknown) {
   if (path) return path.startsWith("/") ? path : `/${path}`;
   if (slug) return slug.startsWith("/") ? slug : `/${slug}`;
   return name ? `/${slugify(name)}` : "/";
+}
+
+function firstProductCategory(product: IkasProduct | null) {
+  if (!product) return null;
+  try {
+    return getProductFirstCategory(product) || product.categories?.[0] || null;
+  } catch {
+    return product.categories?.[0] || null;
+  }
+}
+
+function categoryProductList(product: IkasProduct | null, limit: number): IkasProductList | undefined {
+  const id = categoryId(firstProductCategory(product));
+  if (!id) return undefined;
+  return initProductList({
+    type: "CATEGORY",
+    sort: "DEFAULT",
+    limit,
+    pageType: "CATEGORY",
+    filterCategoryId: id,
+    productListPropValue: {
+      id: `product-detail-related-${id}`,
+      productListType: "CATEGORY",
+      initialSort: "DEFAULT",
+      initialLimit: limit,
+      productCount: null,
+      productIds: [],
+      usePageFilter: false,
+      category: id,
+      brand: null,
+      relatedProductsType: null,
+    },
+  });
+}
+
+function listProducts(productList: IkasProductList | undefined) {
+  if (!productList) return [];
+  const list = productList as IkasProductList & { products?: unknown[]; items?: unknown[] };
+  const raw = [
+    ...(Array.isArray(list.data) ? list.data : []),
+    ...(Array.isArray(list.products) ? list.products : []),
+    ...(Array.isArray(list.items) ? list.items : []),
+  ];
+  const seen = new Set<string>();
+  return raw
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const source = item as { name?: unknown; product?: unknown; value?: unknown };
+      if (typeof source.name === "string") return source as IkasProduct;
+      if (source.product && typeof source.product === "object" && typeof (source.product as { name?: unknown }).name === "string") {
+        return source.product as IkasProduct;
+      }
+      if (source.value && typeof source.value === "object" && typeof (source.value as { name?: unknown }).name === "string") {
+        return source.value as IkasProduct;
+      }
+      return null;
+    })
+    .filter((item): item is IkasProduct => {
+      if (!item || !item.id || seen.has(item.id)) return false;
+      seen.add(item.id);
+      return true;
+    });
+}
+
+function relatedProduct(product: IkasProduct): ProductDetailRelatedProduct {
+  const variant = selectedVariant(product);
+  const media = variant ? getProductVariantMainImage(variant) : undefined;
+  const image = media?.image ? getDefaultSrc(media.image) : "";
+  const description = summaryText(product);
+  return {
+    id: product.id,
+    title: product.name,
+    href: getProductHref(product) || `/${productSlug(product)}`,
+    image,
+    imageAlt: media?.image?.altText || product.name,
+    category: categoryName(firstProductCategory(product)) || product.brand?.name || "",
+    descriptionHtml: description ? escapeHtml(description.length > 118 ? `${description.slice(0, 117).trimEnd()}...` : description) : "",
+  };
 }
 
 function productSlug(product: IkasProduct | null) {
@@ -842,6 +938,7 @@ export function ThreeMashProductDetailLive(props: Props) {
   const [message, setMessage] = useState("");
   const [version, setVersion] = useState(0);
   const [previewSelection, setPreviewSelection] = useState<PreviewSelection>({});
+  const [relatedProducts, setRelatedProducts] = useState<ProductDetailRelatedProduct[]>([]);
 
   useEffect(() => {
     if (!product) return;
@@ -872,6 +969,33 @@ export function ThreeMashProductDetailLive(props: Props) {
   const isInStock = !!product && !!variant && hasProductStock(product) && hasProductVariantStock(variant);
   const hasDiscount = !!variant && hasProductVariantDiscount(variant);
   const addDisabled = !product || !variant || !isInStock || isAdding;
+
+  useEffect(() => {
+    const productList = categoryProductList(product, 12);
+    if (!productList || !product) {
+      setRelatedProducts([]);
+      return undefined;
+    }
+    let isMounted = true;
+    const currentId = product.id;
+    getProductListInitialData(productList)
+      .then(() => {
+        if (!isMounted) return;
+        setRelatedProducts(
+          listProducts(productList)
+            .filter((item) => item.id !== currentId)
+            .slice(0, 8)
+            .map(relatedProduct),
+        );
+      })
+      .catch((error) => {
+        console.error("ThreeMashProductDetailLive related products failed", error);
+        if (isMounted) setRelatedProducts([]);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, [product?.id, product ? categoryId(firstProductCategory(product)) : ""]);
 
   useEffect(() => {
     setSelectedImageIndex(0);
@@ -1000,6 +1124,7 @@ export function ThreeMashProductDetailLive(props: Props) {
         price={variant ? getProductVariantFormattedFinalPrice(variant) : ""}
         compareAtPrice={variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : ""}
         selectedSummary={selectedSummary(data, groups)}
+        relatedProducts={relatedProducts}
       />
     </section>
   );

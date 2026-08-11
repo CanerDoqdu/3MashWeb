@@ -51,14 +51,6 @@ const listingLinks: ListingLink[] = [
     href: "/3d-yazici-yedek-parcalari",
     group: "Kategori",
   },
-  { label: "Sistemler", href: "/sistemler", group: "Kategori" },
-  { label: "Titanyum Diskler", href: "/titanyum-diskler", group: "Kategori" },
-  { label: "MASH", href: "/mash-marka", group: "Marka" },
-  { label: "CRS", href: "/crs", group: "Marka" },
-  { label: "3Shape", href: "/3shape", group: "Marka" },
-  { label: "Creality", href: "/creality", group: "Marka" },
-  { label: "Argen", href: "/argen", group: "Marka" },
-  { label: "Nabertherm", href: "/nabertherm", group: "Marka" },
 ];
 
 function safeVariant(product: IkasProduct): IkasProductVariant | null {
@@ -88,12 +80,6 @@ function isActiveListingLink(
     label === "tüm ürünler" && (page === "ürünler" || page === "tüm ürünler");
   const isBrand = normalizedText(eyebrow).includes("marka") && page === label;
   return isAllProducts || isBrand || page === label;
-}
-
-function activeGroup(pageTitle: string, eyebrow: string | undefined) {
-  if (normalizedText(eyebrow).includes("marka")) return "Marka";
-  if (normalizedText(pageTitle) === "ürünler") return "Kategori";
-  return "Kategori";
 }
 
 function themeToken(
@@ -167,6 +153,57 @@ function filterProducts(products: IkasProduct[], query: string) {
   const key = searchKey(query);
   if (!key) return products;
   return products.filter((product) => productSearchText(product).includes(key));
+}
+
+const listingFilterAliases: Record<string, string[]> = {
+  "3d yazicilar": ["3d yazici", "3d printer", "printer", "yazici"],
+  "dental recineler": ["dental recine", "recine", "resin"],
+  "yikama kurleme": ["yikama", "kurleme", "wash", "cure"],
+  "masaustu tarayicilar": [
+    "masaustu tarayici",
+    "tarayici",
+    "scanner",
+    "3shape",
+  ],
+  "zirkon bloklar": ["zirkon", "zircon", "blok"],
+  "dental firinlar": ["dental firin", "firin", "oven", "furnace"],
+  "yedek parcalar": ["yedek parca", "spare"],
+  sistemler: ["sistem", "system"],
+  "titanyum diskler": ["titanyum", "titanium", "disk"],
+};
+
+function listingFilterTerms(link: ListingLink) {
+  const labelKey = searchKey(link.label);
+
+  return Array.from(
+    new Set([labelKey, ...(listingFilterAliases[labelKey] || [])]),
+  ).filter(Boolean);
+}
+
+function filterProductsByListing(products: IkasProduct[], link: ListingLink) {
+  if (searchKey(link.label) === "tum urunler") return products;
+
+  const terms = listingFilterTerms(link);
+
+  return products.filter((product) => {
+    const categoryText = searchKey(
+      product.categories
+        ?.map((category) => category.name)
+        .filter(Boolean)
+        .join(" ") || "",
+    );
+    const brandText = searchKey(product.brand?.name || "");
+    const haystack =
+      link.group === "Marka"
+        ? brandText
+        : categoryText || productSearchText(product);
+
+    return terms.some(
+      (term) =>
+        haystack.includes(term) ||
+        (term.length > 4 && productSearchText(product).includes(term)),
+    );
+  });
 }
 
 function ProductCard({
@@ -258,6 +295,7 @@ export function ThreeMashProductsPage(props: Props) {
   const [searchValue, setSearchValue] = useState(
     productList?.searchKeyword || "",
   );
+  const [activeFilterLabel, setActiveFilterLabel] = useState("Tüm Ürünler");
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const committedSearchRef = useRef(productList?.searchKeyword || "");
   const appliedUrlSearchRef = useRef(false);
@@ -276,11 +314,15 @@ export function ThreeMashProductsPage(props: Props) {
     productList?.brand?.name ||
     "Ürünler";
   const eyebrowText = props.eyebrowText?.trim() || "";
-  const currentGroup = activeGroup(pageTitle, eyebrowText);
   const categoryLinks = listingLinks.filter(
     (link) => link.group === "Kategori",
   );
-  const brandLinks = listingLinks.filter((link) => link.group === "Marka");
+  const activeListingFilter =
+    listingLinks.find((link) => link.label === activeFilterLabel) ||
+    categoryLinks[0];
+  const isAllProductsFilter =
+    !activeListingFilter ||
+    searchKey(activeListingFilter.label) === "tum urunler";
   const isCategoryProductsPage =
     normalizedText(eyebrowText) === "ürün kategorisi";
   const isDentalResinCategoryPage =
@@ -293,19 +335,22 @@ export function ThreeMashProductsPage(props: Props) {
   const showListControls = showSearchControl || showSortControl;
   const showNavigationControls =
     !isCategoryProductsPage && props.showNavigation !== false;
-  const displayEyebrowText = eyebrowText || (isCategoryProductsPage ? "ÜRÜN KATEGORİSİ" : "CANLI ÜRÜN KATALOĞU");
+  const displayEyebrowText =
+    eyebrowText ||
+    (isCategoryProductsPage ? "ÜRÜN KATEGORİSİ" : "CANLI ÜRÜN KATALOĞU");
   const trimmedSearch = searchValue.trim();
   const fallbackProducts =
     unfilteredProductsRef.current.length > 0
       ? unfilteredProductsRef.current
       : products;
+  const productSource = products.length > 0 ? products : fallbackProducts;
+  const filteredByListing =
+    activeListingFilter && !isAllProductsFilter
+      ? filterProductsByListing(productSource, activeListingFilter)
+      : productSource;
   const displayedProducts = trimmedSearch
-    ? filterProducts(
-        products.length > 0 ? products : fallbackProducts,
-        trimmedSearch,
-      )
-    : products;
-  const resultCount = displayedProducts.length;
+    ? filterProducts(filteredByListing, trimmedSearch)
+    : filteredByListing;
 
   const style = {
     "--tm-products-bg": themeToken(
@@ -409,6 +454,11 @@ export function ThreeMashProductsPage(props: Props) {
 
   function handleSearchKeyDown(event: KeyboardEvent) {
     if (!productList || event.key !== "Enter") return;
+    commitSearch();
+  }
+
+  function commitSearch() {
+    if (!productList) return;
     const nextSearch = searchValue.trim();
     if (nextSearch === committedSearchRef.current) return;
     committedSearchRef.current = nextSearch;
@@ -451,17 +501,6 @@ export function ThreeMashProductsPage(props: Props) {
               </>
             )}
           </div>
-          {!isCategoryProductsPage && productList ? (
-            <div className="tm-products-summary" aria-label="Arama sonuç özeti">
-              <span>Sonuç</span>
-              <strong>{resultCount}</strong>
-              <small>
-                {trimmedSearch
-                  ? "eşleşen ürün"
-                  : props.productCountSuffix || "ürün"}
-              </small>
-            </div>
-          ) : null}
         </div>
 
         {!productList ? (
@@ -486,15 +525,17 @@ export function ThreeMashProductsPage(props: Props) {
                         onInput={handleSearch}
                         onKeyDown={handleSearchKeyDown}
                       />
-                      <span
+                      <button
+                        type="button"
                         className="tm-products-search-icon"
-                        aria-hidden="true"
+                        aria-label="Ara"
+                        onClick={commitSearch}
                       >
                         <svg viewBox="0 0 24 24" focusable="false">
                           <circle cx="11" cy="11" r="7" />
                           <line x1="16.5" y1="16.5" x2="21" y2="21" />
                         </svg>
-                      </span>
+                      </button>
                     </div>
                   </label>
                 ) : (
@@ -561,32 +602,29 @@ export function ThreeMashProductsPage(props: Props) {
             {showNavigationControls ? (
               <div className="tm-products-nav-shell">
                 <div className="tm-products-nav-tabs" aria-label="Liste türü">
-                  <span
-                    className={currentGroup === "Kategori" ? "is-active" : ""}
-                  >
-                    Kategoriler
-                  </span>
-                  <span className={currentGroup === "Marka" ? "is-active" : ""}>
-                    Markalar
-                  </span>
+                  <span className="is-active">Filtreler</span>
                 </div>
                 <nav
                   className="tm-products-nav"
-                  aria-label="Ürün kategori ve marka geçişleri"
+                  aria-label="Ürün kategori ve marka filtreleri"
                 >
-                  {[...categoryLinks, ...brandLinks].map((link) => (
-                    <a
-                      href={link.href}
+                  {categoryLinks.map((link) => (
+                    <button
+                      type="button"
                       className={
-                        isActiveListingLink(link, pageTitle, props.eyebrowText)
+                        activeFilterLabel === link.label ||
+                        (isAllProductsFilter &&
+                          isActiveListingLink(link, pageTitle, props.eyebrowText))
                           ? "is-active"
                           : ""
                       }
                       data-group={link.group}
+                      aria-pressed={activeFilterLabel === link.label}
+                      onClick={() => setActiveFilterLabel(link.label)}
                       key={`${link.group}-${link.label}`}
                     >
                       {link.label}
-                    </a>
+                    </button>
                   ))}
                 </nav>
               </div>

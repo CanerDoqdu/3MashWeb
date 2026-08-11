@@ -300,16 +300,12 @@
   overflow: hidden;
 }
 
+.three-mash-printers-source .pc .ph-halot {
+  background: linear-gradient(160deg, #f3f3ee, #e9e9e2);
+}
+
 .three-mash-printers-source .pc .ph::before {
-  content: "";
-  position: absolute;
-  right: 36px;
-  bottom: 22px;
-  left: 36px;
-  height: 26px;
-  border-radius: 999px;
-  background: rgba(14, 14, 12, 0.08);
-  filter: blur(10px);
+  display: none;
 }
 
 .three-mash-printers-source .pc .printer-img {
@@ -333,8 +329,9 @@
 }
 
 .three-mash-printers-source .pc .printer-img-halot {
-  width: min(78%, 196px);
-  height: 142px;
+  width: min(88%, 232px);
+  height: 164px;
+  mix-blend-mode: multiply;
 }
 
 .three-mash-printers-source .pc .tag {
