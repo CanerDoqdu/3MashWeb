@@ -1,5 +1,7 @@
 import type { CategoryLandingData } from "./index";
-import { curieM1DentalPrintersImage } from "../../assets/curie-m1-dental-media-data";
+
+const curieM1MainImage =
+  "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/302ffc22-20c4-49b7-8d16-b303e079f0cf/1080/1.webp";
 
 function normalizeCategoryKey(value: string | undefined) {
   const decoded = (() => {
@@ -403,7 +405,7 @@ export const printersCategoryData: CategoryLandingData = {
         href: "/mash-curie-m1-dental-3d-yazici",
         tag: "YERLİ · HIZLI",
         status: "Talep üzerine",
-        imageSrc: curieM1DentalPrintersImage,
+        imageSrc: curieM1MainImage,
         imageAlt: "Mash CURIE M1 dental 3D yazıcı",
         specs: [
           { label: "Hassasiyet", value: "±20 µm tekrarlanabilir" },

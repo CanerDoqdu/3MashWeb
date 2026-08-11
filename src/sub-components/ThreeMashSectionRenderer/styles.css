@@ -2232,6 +2232,17 @@
     height: 180px;
   }
 
+  .tmr-solution .tmr-tag {
+    top: 12px;
+    left: 12px;
+    max-width: calc(100% - 24px);
+    padding: 4px 8px;
+    border-radius: 7px;
+    font-size: 8.5px;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+  }
+
   .tmr-product-img,
   .tmr-dark .tmr-product-img {
     max-height: 148px;

@@ -476,6 +476,16 @@
   background: #d3f75c;
 }
 
+.tmpdt-btn.is-disabled,
+.tmpdt-btn.is-disabled:hover {
+  border-color: var(--tmpdt-line2);
+  background: #ecece6;
+  color: #9a9a90;
+  cursor: not-allowed;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
 .tmpdt-btn.tmpdt-line {
   border-color: var(--tmpdt-line2);
   background: transparent;

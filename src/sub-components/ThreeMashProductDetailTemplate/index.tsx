@@ -50,6 +50,7 @@ export type ProductDetailTemplateData = {
     whatsappHref: string;
     whatsappText: string;
     addToCartText: string;
+    disableAddToCart?: boolean;
     addingToCartText: string;
     outOfStockText: string;
     selectedPrefix: string;
@@ -418,6 +419,7 @@ function Configurator(props: Props) {
           className={`tmpdt-btn tmpdt-lime${props.isAddToCartDisabled ? " is-disabled" : ""}`}
           href={buyHref}
           aria-disabled={props.isAddToCartDisabled}
+          tabIndex={props.isAddToCartDisabled ? -1 : undefined}
           onClick={(event) => {
             event.preventDefault();
             if (!props.isAddToCartDisabled) props.onAddToCart();

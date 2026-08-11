@@ -80,7 +80,7 @@ export const defaultCuringHtml = `
     <div class="tmr-index"><span class="tmr-index-number">04</span><span class="tmr-index-text">Kritik Son Adım</span><span class="tmr-index-line"></span></div>
     <div class="tmr-head"><h2>Sadece yazıcı değil. Sonucu <span class="tmr-title-em">kürleme</span> tamamlar.</h2><div class="tmr-side">Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:</div></div>
     <div class="tmr-why-grid"><article><div>SEBEP 01</div><h4>Mekanik dayanım</h4><p>Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.</p></article><article id="piyasada-yaygin-kurulum-250-500" style="scroll-margin-top: 112px;"><div>SEBEP 02</div><h4>Ölçüsel doğruluk</h4><p>Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.</p></article><article><div>SEBEP 03</div><h4>Biyouyumluluk &amp; renk</h4><p>Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.</p></article></div>
-    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashW1eImage}" alt="Mash W1E Ultrasonik Yıkama Cihazı"></div><div class="tmr-product-body"><h3>Mash W1E Ultrasonik Yıkama Cihazı</h3><p>Baskı sonrası parçaların yüzeyindeki reçine kalıntılarını <b>ultrasonik yıkama</b> ile temizler; kürleme öncesi yüzeyi hazırlar.</p><div class="tmr-spec"><div><span>İşlem</span><b>Ultrasonik yıkama</b></div><div><span>Akış</span><b>Baskı sonrası temizlik</b></div></div><a class="tmr-go" href="/mash-w1e-ultrasonik-yikama-cihazi">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${mashC1eImage}" alt="Mash C1E UV Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Mash C1E UV Kürleme Cihazı</h3><p>24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılarda <b>UV post-curing</b> adımını tamamlar.</p><div class="tmr-spec"><div><span>Işık sistemi</span><b>360° / 24 LED</b></div><div><span>Spektrum</span><b>360-530 nm</b></div></div><a class="tmr-go" href="/mash-c1e-uv-kurleme-cihazi">İncele <span>→</span></a></div></article></div>
+    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashW1eImage}" alt="Mash W1E Ultrasonik Yıkama Cihazı"></div><div class="tmr-product-body"><h3>Mash W1E Ultrasonik Yıkama Cihazı</h3><p>Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.</p><div class="tmr-spec"><div><span>İşlem</span><b>Ultrasonik temizleme</b></div><div><span>Akış</span><b>Yıkama → kürleme hazırlığı</b></div></div><a class="tmr-go" href="/mash-w1e-ultrasonik-yikama-cihazi">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${mashC1eImage}" alt="Mash C1E UV Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Mash C1E UV Kürleme Cihazı</h3><p>24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle <b>homojen UV post-curing</b> sağlar; mekanik dayanım, boyutsal doğruluk ve yüzey kalitesi hedefini tamamlar.</p><div class="tmr-spec"><div><span>Işık</span><b>24 LED / 360°</b></div><div><span>Spektrum</span><b>360-530 nm</b></div></div><a class="tmr-go" href="/mash-c1e-uv-kurleme-cihazi">İncele <span>→</span></a></div></article></div>
     <p class="tmr-readmore">Derine inmek isteyenlere, Mash Academy'den: <a href="/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber">Overcure ve Undercure Nedir?</a> · <a href="/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi">385nm mi 405nm mi?</a></p>
   </div>
 </section>`;
@@ -1262,7 +1262,7 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
     curingProduct1DescriptionHtml: {
       legacy:
         "8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.",
-      next: "Baskı sonrası parçaların yüzeyindeki reçine kalıntılarını <b>ultrasonik yıkama</b> ile temizler; kürleme öncesi yüzeyi hazırlar.",
+      next: "Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.",
     },
     curingProduct1ImageAlt: {
       legacy: "Phrozen Wash & Cure Kit",
@@ -1272,12 +1272,12 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
       legacy: "Yıkama hacmi",
       next: "İşlem",
     },
-    curingProduct1Spec1Value: { legacy: "8 L", next: "Ultrasonik yıkama" },
+    curingProduct1Spec1Value: { legacy: "8 L", next: "Ultrasonik temizleme" },
     curingProduct1Spec2Label: {
       legacy: "Kürleme",
       next: "Akış",
     },
-    curingProduct1Spec2Value: { legacy: "405 nm UV", next: "Baskı sonrası temizlik" },
+    curingProduct1Spec2Value: { legacy: "405 nm UV", next: "Yıkama → kürleme hazırlığı" },
     curingProduct1CtaHref: {
       legacy: "https://uk.phrozen3d.com/products/wash-cure-kit",
       next: "/mash-w1e-ultrasonik-yikama-cihazi",
@@ -1290,16 +1290,16 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
     curingProduct2DescriptionHtml: {
       legacy:
         "Baskı sonrası yıkama ve kürleme adımlarını <b>tek kontrollü akışta</b> toplar. P16L ile tamamlayıcı başlangıç seti.",
-      next: "24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılarda <b>UV post-curing</b> adımını tamamlar.",
+      next: "24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle <b>homojen UV post-curing</b> sağlar; mekanik dayanım, boyutsal doğruluk ve yüzey kalitesi hedefini tamamlar.",
     },
     curingProduct2ImageAlt: {
       legacy: "Creality UW02",
       next: "Mash C1E UV Kürleme Cihazı",
     },
-    curingProduct2Spec1Label: { legacy: "Görev", next: "Işık sistemi" },
+    curingProduct2Spec1Label: { legacy: "Görev", next: "Işık" },
     curingProduct2Spec1Value: {
       legacy: "Yıkama + kürleme",
-      next: "360° / 24 LED",
+      next: "24 LED / 360°",
     },
     curingProduct2Spec2Label: { legacy: "Uyum", next: "Spektrum" },
     curingProduct2Spec2Value: {
@@ -1328,10 +1328,10 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
       imageClass: "tmr-machine-phrozen",
       title: "Mash W1E Ultrasonik Yıkama Cihazı",
       descriptionHtml:
-        "Baskı sonrası parçaların yüzeyindeki reçine kalıntılarını <b>ultrasonik yıkama</b> ile temizler; kürleme öncesi yüzeyi hazırlar.",
+        "Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.",
       specs: [
-        ["İşlem", "Ultrasonik yıkama"],
-        ["Akış", "Baskı sonrası temizlik"],
+        ["İşlem", "Ultrasonik temizleme"],
+        ["Akış", "Yıkama → kürleme hazırlığı"],
       ],
       ctaText: "İncele",
       ctaHref: "/mash-w1e-ultrasonik-yikama-cihazi",
@@ -1343,9 +1343,9 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
     imageClass: "tmr-machine-uw02",
     title: "Mash C1E UV Kürleme Cihazı",
     descriptionHtml:
-      "24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılarda <b>UV post-curing</b> adımını tamamlar.",
+      "24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle <b>homojen UV post-curing</b> sağlar; mekanik dayanım, boyutsal doğruluk ve yüzey kalitesi hedefini tamamlar.",
     specs: [
-      ["Işık sistemi", "360° / 24 LED"],
+      ["Işık", "24 LED / 360°"],
       ["Spektrum", "360-530 nm"],
     ],
     ctaText: "İncele",

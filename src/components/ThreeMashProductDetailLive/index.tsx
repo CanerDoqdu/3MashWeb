@@ -968,7 +968,7 @@ export function ThreeMashProductDetailLive(props: Props) {
   const groups = useMemo(() => (product ? variantGroups(product) : previewVariantGroups(previewSelection)), [product?.id, version, previewSelection]);
   const isInStock = !!product && !!variant && hasProductStock(product) && hasProductVariantStock(variant);
   const hasDiscount = !!variant && hasProductVariantDiscount(variant);
-  const addDisabled = !product || !variant || !isInStock || isAdding;
+  const addDisabled = !!data?.hero.disableAddToCart || !product || !variant || !isInStock || isAdding;
 
   useEffect(() => {
     const productList = categoryProductList(product, 12);
@@ -1087,7 +1087,7 @@ export function ThreeMashProductDetailLive(props: Props) {
               setVersion((current) => current + 1);
             }}
             onAddToCart={handleAddToCart}
-            isAddToCartDisabled={product ? addDisabled : false}
+            isAddToCartDisabled={addDisabled}
             isAdding={isAdding}
             message={message || (product && !isInStock ? data.hero.outOfStockText : "")}
             price={variant ? getProductVariantFormattedFinalPrice(variant) : ""}
@@ -1118,7 +1118,7 @@ export function ThreeMashProductDetailLive(props: Props) {
           setVersion((current) => current + 1);
         }}
         onAddToCart={handleAddToCart}
-        isAddToCartDisabled={product ? addDisabled : false}
+        isAddToCartDisabled={addDisabled}
         isAdding={isAdding}
         message={message || (product && !isInStock ? data.hero.outOfStockText : "")}
         price={variant ? getProductVariantFormattedFinalPrice(variant) : ""}

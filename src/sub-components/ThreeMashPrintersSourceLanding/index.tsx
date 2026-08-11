@@ -1,6 +1,8 @@
 import { useEffect } from "preact/hooks";
-import { curieM1DentalPrintersImage } from "../../assets/curie-m1-dental-media-data";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
+
+const curieM1MainImage =
+  "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/302ffc22-20c4-49b7-8d16-b303e079f0cf/1080/1.webp";
 
 const halotSkyPrinterImage =
   "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d5482fea-966e-4198-887b-7a1ffd659ed7/1080/creality-halot-sky-cl-89-recine-3d-yaz--8eb5-.webp";
@@ -125,7 +127,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
               </div>
             </div>
             <div className="pc">
-              <div className="ph"><span className="tag">YERLİ · HIZLI</span><span className="st">Talep üzerine</span><img className="printer-img printer-img-curie" src={curieM1DentalPrintersImage} alt="Mash CURIE M1 dental 3D yazıcı" loading="lazy" /></div>
+              <div className="ph"><span className="tag">YERLİ · HIZLI</span><span className="st">Talep üzerine</span><img className="printer-img printer-img-curie" src={curieM1MainImage} alt="Mash CURIE M1 dental 3D yazıcı" loading="lazy" /></div>
               <div className="bd">
                 <h3>Mash CURIE M1</h3>
                 <div className="ds">Antalya Teknokent'te üretilen <b>tamamen yerli</b> yazıcı. Hız ve düşük toplam maliyet için tasarlandı.</div>

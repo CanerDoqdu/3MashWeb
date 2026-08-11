@@ -5051,6 +5051,7 @@ function labRelatedItems(config: LabProductConfig): NonNullable<ProductDetailTem
 function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
   const gallery = normalizedGallery(config.images, config.productText);
   const mainImage = config.images[0] || gallery[0]?.src || "";
+  const quoteOnly = config.category === PRINTER_CATEGORY || config.category === WASH_CURE_CATEGORY;
   return {
     key: config.slug,
     announcement: {
@@ -5078,8 +5079,9 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       summarySuffix: "— uyumluluk kontrolü ve teknik destek dahil.",
       buyHrefBase: `/${config.slug}`,
       whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
-      whatsappText: "WhatsApp'tan sor",
+      whatsappText: quoteOnly ? "Teklif alın" : "WhatsApp'tan sor",
       addToCartText: "Sepete ekle →",
+      disableAddToCart: quoteOnly,
       addingToCartText: "Ekleniyor...",
       outOfStockText: "Stok yok",
       trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
