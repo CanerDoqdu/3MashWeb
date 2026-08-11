@@ -366,7 +366,7 @@ export function ThreeMashProductAccordionFaq(props: Props) {
                     </span>
                     <span>{item.question}</span>
                   </button>
-                  <div id={panelId} className="tmpaf-panel" hidden={!isOpen}>
+                  <div id={panelId} className="tmpaf-panel">
                     {item.answerHtml ? (
                       <div className="tmpaf-answer" dangerouslySetInnerHTML={{ __html: item.answerHtml }} />
                     ) : (

@@ -73,13 +73,14 @@
   align-self: start;
   justify-self: stretch;
   width: 100%;
-  max-width: min(100%, 520px);
+  max-width: min(100%, var(--tmpdt-gallery-width, 520px));
   min-width: 0;
 }
 
 .tmpdt-gal-main {
   position: relative;
   display: flex;
+  width: 100%;
   overflow: hidden;
   align-items: center;
   justify-content: center;
@@ -115,10 +116,10 @@
 
 .tmpdt-thumbs {
   display: grid;
-  width: calc(100% - 10px);
+  width: 100%;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
-  margin: 12px 10px 0 0;
+  margin: 12px 0 0;
 }
 
 .tmpdt-thumbs button {

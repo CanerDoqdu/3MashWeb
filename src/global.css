@@ -34,6 +34,15 @@ html {
   .three-mash-printers-source .faq,
   .tmpdt-faq,
   .tmfaq-list
+) details {
+  interpolate-size: allow-keywords;
+}
+
+:where(
+  .tmr-faq,
+  .three-mash-printers-source .faq,
+  .tmpdt-faq,
+  .tmfaq-list
 ) details::details-content {
   block-size: 0;
   overflow: hidden;
@@ -49,6 +58,17 @@ html {
   .tmfaq-list
 ) details[open]::details-content {
   block-size: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .tmr-faq,
+    .three-mash-printers-source .faq,
+    .tmpdt-faq,
+    .tmfaq-list
+  ) details::details-content {
+    transition: none;
+  }
 }
 
 :root {

@@ -119,10 +119,24 @@
 }
 
 .tmpaf-panel {
-  padding: var(--tmpaf-answer-pt) var(--tmpaf-row-px) var(--tmpaf-answer-pb) calc(var(--tmpaf-row-px) + 30px);
+  display: grid;
+  grid-template-rows: 0fr;
+  padding: 0 var(--tmpaf-row-px) 0 calc(var(--tmpaf-row-px) + 30px);
+  transition:
+    grid-template-rows 260ms ease,
+    padding-top 260ms ease,
+    padding-bottom 260ms ease;
+}
+
+.tmpaf-item.is-open .tmpaf-panel {
+  grid-template-rows: 1fr;
+  padding-top: var(--tmpaf-answer-pt);
+  padding-bottom: var(--tmpaf-answer-pb);
 }
 
 .tmpaf-answer {
+  min-height: 0;
+  overflow: hidden;
   color: var(--tmpaf-answer);
   font-size: var(--tmpaf-answer-size);
   font-weight: 400;
