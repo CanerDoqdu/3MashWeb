@@ -84,7 +84,17 @@ export type ProductDetailTemplateData = {
     label: string;
     titleHtml: string;
     sideHtml: string;
-    photos: Array<{ src: string; alt: string; title: string; text: string }>;
+    photos: Array<{
+      src: string;
+      alt: string;
+      title: string;
+      text: string;
+      imageFit?: "contain" | "cover";
+      imageOffsetY?: string;
+      imageScale?: string;
+      imageBackground?: "white";
+      mediaType?: "image" | "video";
+    }>;
     cards: Array<{ eyebrow: string; title: string; items: string[]; note?: string }>;
     devices: {
       eyebrow: string;
@@ -125,7 +135,17 @@ export type ProductDetailTemplateData = {
     index: string;
     label: string;
     titleHtml: string;
-    items: Array<{ tag: string; tagVariant?: "ce"; title: string; descriptionHtml: string; href: string; linkText: string; background: string }>;
+    items: Array<{
+      tag: string;
+      tagVariant?: "ce";
+      title: string;
+      descriptionHtml: string;
+      href: string;
+      linkText: string;
+      background: string;
+      image?: string;
+      imageAlt?: string;
+    }>;
   };
   finalCta?: {
     titleHtml: string;
@@ -168,6 +188,7 @@ type Props = {
   price?: string;
   compareAtPrice?: string;
   selectedSummary: string;
+  relatedProducts?: ProductDetailRelatedProduct[];
 };
 
 function templateStyle() {
@@ -322,6 +343,13 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
   );
 }
 
+function photoTransformStyle(photo: { imageOffsetY?: string; imageScale?: string }) {
+  const style: Record<string, string> = {};
+  if (photo.imageOffsetY) style["--tmpdt-photo-y"] = photo.imageOffsetY;
+  if (photo.imageScale) style["--tmpdt-photo-scale"] = photo.imageScale;
+  return Object.keys(style).length ? (style as any) : undefined;
+}
+
 function Configurator(props: Props) {
   const buyHref = productBuyHref(props.data.hero.buyHrefBase, props.variantGroups);
   const hasManySwatches = props.variantGroups.some((group) => group.values.some((value) => value.color) && group.values.length > 12);
@@ -350,8 +378,8 @@ function Configurator(props: Props) {
                     {group.values.map((value) => (
                       <button
                         type="button"
-                        className={value.selected ? "is-on" : ""}
-                        disabled={!value.hasStock}
+                        className={`${value.selected ? "is-on" : ""}${!value.hasStock ? " is-unavailable" : ""}`}
+                        aria-disabled={!value.hasStock}
                         onClick={() => props.onVariantSelect(value.rawValue)}
                         title={value.name}
                         key={value.id}
@@ -366,8 +394,8 @@ function Configurator(props: Props) {
                     {group.values.map((value) => (
                       <button
                         type="button"
-                        className={value.selected ? "is-on" : ""}
-                        disabled={!value.hasStock}
+                        className={`${value.selected ? "is-on" : ""}${!value.hasStock ? " is-unavailable" : ""}`}
+                        aria-disabled={!value.hasStock}
                         onClick={() => props.onVariantSelect(value.rawValue)}
                         key={value.id}
                       >
@@ -622,10 +650,34 @@ export function ProductDetailUseCasesSection({ data }: { data: ProductDetailTemp
         <SectionHead titleHtml={useCases.titleHtml} sideHtml={useCases.sideHtml} wide />
         {useCases.photos.length ? (
           <div className="tmpdt-pstrip">
-            {useCases.photos.map((photo) => (
-              <article className="tmpdt-pshot" key={photo.title}>
+            {useCases.photos.map((photo, index) => (
+              <article
+                className={`tmpdt-pshot tmpdt-pshot-${index + 1}${photo.imageFit === "cover" ? " is-cover" : ""}${photo.imageBackground === "white" ? " is-white-media" : ""}${photo.mediaType === "video" ? " is-video" : ""}`}
+                key={photo.title}
+              >
                 <div className="tmpdt-pshot-im">
-                  <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+                  {photo.mediaType === "video" ? (
+                    <video
+                      src={photo.src}
+                      aria-label={photo.alt}
+                      width="100%"
+                      height="100%"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      style={photoTransformStyle(photo)}
+                    />
+                  ) : (
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      loading="lazy"
+                      decoding="async"
+                      style={photoTransformStyle(photo)}
+                    />
+                  )}
                 </div>
                 <div className="tmpdt-pshot-cp">
                   <b>{photo.title}</b>
@@ -635,20 +687,22 @@ export function ProductDetailUseCasesSection({ data }: { data: ProductDetailTemp
             ))}
           </div>
         ) : null}
-        <div className="tmpdt-open2">
-          {useCases.cards.map((card) => (
-            <article className="tmpdt-ocard" key={card.title}>
-              <div className="tmpdt-oh">{card.eyebrow}</div>
-              <h3>{card.title}</h3>
-              <ul>
-                {card.items.map((item) => (
-                  <li key={item} dangerouslySetInnerHTML={html(item)} />
-                ))}
-              </ul>
-              {card.note ? <div className="tmpdt-onote">{card.note}</div> : null}
-            </article>
-          ))}
-        </div>
+        {useCases.cards.length ? (
+          <div className="tmpdt-open2">
+            {useCases.cards.map((card) => (
+              <article className="tmpdt-ocard" key={card.title}>
+                <div className="tmpdt-oh">{card.eyebrow}</div>
+                <h3>{card.title}</h3>
+                <ul>
+                  {card.items.map((item) => (
+                    <li key={item} dangerouslySetInnerHTML={html(item)} />
+                  ))}
+                </ul>
+                {card.note ? <div className="tmpdt-onote">{card.note}</div> : null}
+              </article>
+            ))}
+          </div>
+        ) : null}
         <div className="tmpdt-devfull">
           <div className="tmpdt-oh">{useCases.devices.eyebrow}</div>
           <h3>{useCases.devices.title}</h3>
@@ -759,9 +813,7 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
           <img src={video.image} alt={video.imageAlt} loading="lazy" decoding="async" />
           <span className="tmpdt-vid-ov">
             <span className="tmpdt-play">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5v14l11-7z" />
-              </svg>
+              <span className="tmpdt-play-icon" aria-hidden="true"></span>
             </span>
             <span className="tmpdt-vt">{video.title}</span>
             <span className="tmpdt-vs">{video.text}</span>
@@ -783,9 +835,11 @@ export function ProductDetailRelatedSection({
   titleHtml?: string;
 }) {
   const related = data.related;
+  const hasLiveProductSource = Array.isArray(products);
   const liveProducts = products?.filter((item) => item.id && item.title && item.href) || [];
   const relatedRailRef = useRef<HTMLDivElement>(null);
-  if (!related?.items.length && !liveProducts.length) return null;
+  if (hasLiveProductSource && !liveProducts.length) return null;
+  if (!hasLiveProductSource && !related?.items.length) return null;
 
   function scrollRelated(direction: -1 | 1) {
     const rail = relatedRailRef.current;
@@ -801,7 +855,7 @@ export function ProductDetailRelatedSection({
       <div className="tmpdt-wrap">
         <SectionIndex index={related?.index || "07"} label={related?.label || "İlgili Ürünler"} />
         <SectionHead titleHtml={titleHtml || related?.titleHtml || 'Aynı kategorideki <span class="em">diğer ürünler.</span>'} wide />
-        {liveProducts.length ? (
+        {hasLiveProductSource ? (
           <div className="tmpdt-rshell">
             {liveProducts.length > 4 ? (
               <button type="button" className="tmpdt-rnav tmpdt-rnav-prev" aria-label="Önceki ilgili ürünler" onClick={() => scrollRelated(-1)}>
@@ -848,23 +902,27 @@ export function ProductDetailRelatedSection({
         ) : (
           <div className="tmpdt-rgrid">
             {related?.items.map((item) => (
-            <article className="tmpdt-rc" key={item.title}>
-              <div className="tmpdt-rc-ph" style={{ background: item.background }}>
-                <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{item.tag}</span>
-                <svg viewBox="0 0 48 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M18 6h12v8l5 7v31a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V21l5-7V6z" />
-                  <line x1="18" y1="6" x2="30" y2="6" />
-                  <line x1="13" y1="35" x2="35" y2="35" />
-                </svg>
-              </div>
-              <div className="tmpdt-rc-bd">
-                <h3>{item.title}</h3>
-                <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
-                <a className="tmpdt-rc-go" href={item.href}>
-                  {item.linkText} <span>→</span>
-                </a>
-              </div>
-            </article>
+              <article className="tmpdt-rc" key={item.title}>
+                <div className="tmpdt-rc-ph" style={{ background: item.background }}>
+                  <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{item.tag}</span>
+                  {item.image ? (
+                    <img className="tmpdt-rc-live-img" src={item.image} alt={item.imageAlt || item.title} loading="lazy" decoding="async" />
+                  ) : (
+                    <svg viewBox="0 0 48 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M18 6h12v8l5 7v31a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V21l5-7V6z" />
+                      <line x1="18" y1="6" x2="30" y2="6" />
+                      <line x1="13" y1="35" x2="35" y2="35" />
+                    </svg>
+                  )}
+                </div>
+                <div className="tmpdt-rc-bd">
+                  <h3>{item.title}</h3>
+                  <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
+                  <a className="tmpdt-rc-go" href={item.href}>
+                    {item.linkText} <span>→</span>
+                  </a>
+                </div>
+              </article>
             ))}
           </div>
         )}
@@ -918,7 +976,7 @@ export function ThreeMashProductDetailTemplate(props: Props) {
       <ProductDetailEcosystemSection data={props.data} />
       <ProductDetailFaqSection data={props.data} />
       <ProductDetailVideoSection data={props.data} />
-      <ProductDetailRelatedSection data={props.data} />
+      <ProductDetailRelatedSection data={props.data} products={props.relatedProducts} />
       <ProductDetailFinalCtaSection data={props.data} />
     </section>
   );

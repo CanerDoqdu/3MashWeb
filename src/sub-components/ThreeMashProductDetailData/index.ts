@@ -1,5 +1,11 @@
 import type { ProductDetailTemplateData, ProductGalleryItem } from "../ThreeMashProductDetailTemplate";
 import { useEffect, useMemo, useState } from "preact/hooks";
+import {
+  p16lDentalModelImage,
+  p16lPrinterOpenImage,
+  p16lPrintPlateImage,
+} from "../../assets/p16l-detail-media-data";
+import { curieM1DentalPrintersImage, curieM1DentalSectionVideo } from "../../assets/curie-m1-dental-media-data";
 
 type PlainObject = Record<string, unknown>;
 const SHARED_PRODUCT_DETAIL_EVENT = "three-mash:product-detail-data";
@@ -3839,13 +3845,8 @@ function thumbUrl(src: string) {
 }
 
 function normalizedGallery(images: string[], alt: string): ProductGalleryItem[] {
-  const source = images.length ? images : [];
+  const source = Array.from(new Set(images.filter(Boolean)));
   const gallery = source.map((src) => ({ src, thumbSrc: thumbUrl(src), alt }));
-  if (!gallery.length) return gallery;
-  while (gallery.length < 5) {
-    const item = gallery[Math.min(gallery.length - 1, Math.max(0, source.length - 1))];
-    gallery.push({ ...item });
-  }
   return gallery;
 }
 
@@ -4008,18 +4009,20 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
       openFirst: true,
       items: config.faqItems,
     },
-    video: {
-      index: "06",
-      label: "Videoda Gör",
-      titleHtml: config.videoTitleHtml,
-      sideHtml: config.videoSideHtml,
-      href: config.videoHref || "/pages/iletisim",
-      image: config.videoHref ? youtubePreview(config.videoHref, mainImage) : mainImage,
-      imageAlt: `${config.productText} video ve teknik destek`,
-      title: config.videoTitle,
-      text: config.videoText,
-      meta: config.videoHref ? "Mash Academy · YouTube'da izle" : "3MASH teknik destek",
-    },
+    video: config.videoHref
+      ? {
+          index: "06",
+          label: "Videoda Gör",
+          titleHtml: config.videoTitleHtml,
+          sideHtml: config.videoSideHtml,
+          href: config.videoHref,
+          image: youtubePreview(config.videoHref, mainImage),
+          imageAlt: `${config.productText} video`,
+          title: config.videoTitle,
+          text: config.videoText,
+          meta: "Mash Academy · YouTube'da izle",
+        }
+      : undefined,
     related: {
       index: "07",
       label: "İlgili Yedek Parçalar",
@@ -4907,7 +4910,18 @@ type LabProductConfig = {
   specDescriptionHtml: string;
   specRows: Array<{ label: string; value: string }>;
   useCaseSideHtml: string;
-  useCasePhotos: Array<{ imageIndex?: number; title: string; text: string; alt: string }>;
+  useCasePhotos: Array<{
+    imageIndex?: number;
+    imageSrc?: string;
+    imageFit?: "contain" | "cover";
+    imageOffsetY?: string;
+    imageScale?: string;
+    imageBackground?: "white";
+    mediaType?: "image" | "video";
+    title: string;
+    text: string;
+    alt: string;
+  }>;
   useCaseCards: Array<{ eyebrow: string; title: string; items: string[]; note?: string }>;
   devicesTitle: string;
   devicesTextHtml: string;
@@ -5011,7 +5025,7 @@ function labPhotoSrc(config: LabProductConfig, index: number | undefined) {
 }
 
 function labRelatedItems(config: LabProductConfig): NonNullable<ProductDetailTemplateData["related"]>["items"] {
-  const related = LAB_PRODUCT_CONFIGS.filter((item) => {
+  return LAB_PRODUCT_CONFIGS.filter((item) => {
     return item.category.href === config.category.href && item.slug !== config.slug;
   }).map((item) => ({
     tag: item.galleryBadge || item.category.label.toLocaleUpperCase("tr"),
@@ -5022,20 +5036,7 @@ function labRelatedItems(config: LabProductConfig): NonNullable<ProductDetailTem
     background: "linear-gradient(160deg,#F1F1EC,#fff)",
     image: item.images[0],
     imageAlt: item.productText,
-  }));
-  return [
-    ...related,
-    {
-      tag: "KATEGORİ",
-      title: config.category.text,
-      descriptionHtml: `${config.category.text} ürünlerini birlikte karşılaştırın.`,
-      href: config.category.href,
-      linkText: "Kategoriye dön",
-      background: "linear-gradient(160deg,#EEF0EA,#fff)",
-      image: config.images[0],
-      imageAlt: config.category.text,
-    },
-  ].slice(0, 4);
+  })).slice(0, 4);
 }
 
 function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
@@ -5108,10 +5109,15 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       titleHtml: 'Nerede kullanılır, <span class="em">neyle çalışır?</span>',
       sideHtml: config.useCaseSideHtml,
       photos: config.useCasePhotos.map((photo) => ({
-        src: labPhotoSrc(config, photo.imageIndex),
+        src: photo.imageSrc || labPhotoSrc(config, photo.imageIndex),
         alt: photo.alt,
         title: photo.title,
         text: photo.text,
+        imageFit: photo.imageFit,
+        imageOffsetY: photo.imageOffsetY,
+        imageScale: photo.imageScale,
+        imageBackground: photo.imageBackground,
+        mediaType: photo.mediaType,
       })),
       cards: config.useCaseCards,
       devices: {
@@ -5140,18 +5146,20 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       openFirst: true,
       items: config.faqItems,
     },
-    video: {
-      index: "06",
-      label: "Videoda Gör",
-      titleHtml: config.videoTitleHtml,
-      sideHtml: config.videoSideHtml,
-      href: config.videoHref || "/pages/iletisim",
-      image: config.videoHref ? youtubePreview(config.videoHref, mainImage) : mainImage,
-      imageAlt: `${config.productText} video ve teknik destek`,
-      title: config.videoTitle,
-      text: config.videoText,
-      meta: config.videoHref ? "Mash Academy · YouTube'da izle" : "3MASH teknik destek",
-    },
+    video: config.videoHref
+      ? {
+          index: "06",
+          label: "Videoda Gör",
+          titleHtml: config.videoTitleHtml,
+          sideHtml: config.videoSideHtml,
+          href: config.videoHref,
+          image: youtubePreview(config.videoHref, mainImage),
+          imageAlt: `${config.productText} video`,
+          title: config.videoTitle,
+          text: config.videoText,
+          meta: "Mash Academy · YouTube'da izle",
+        }
+      : undefined,
     related: {
       index: "07",
       label: config.category.relatedLabel,
@@ -5182,6 +5190,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     images: [
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e47e604b-5052-4935-800f-57d4ead78ced/1080/mash-p16l.webp",
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/b92468e1-e607-46f2-b5fd-c7001c066fd8/1080/mash-p16l.webp",
+      p16lPrinterOpenImage,
     ],
     galleryBadge: "16K",
     metricTitleHtml: 'Mikron hassasiyet için <span class="em">profesyonel LCD.</span>',
@@ -5203,9 +5212,24 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     ],
     useCaseSideHtml: "Dental restorasyon, reçine üretimi ve hassas laboratuvar baskı akışlarında kullanılır.",
     useCasePhotos: [
-      { imageIndex: 1, title: "Dental restorasyon", text: "Mikron hassasiyet isteyen üretimler.", alt: "MASH P16L dental restorasyon" },
-      { imageIndex: 1, title: "16K detay", text: "Yüksek çözünürlüklü LCD baskı akışı.", alt: "MASH P16L 16K baskı" },
-      { imageIndex: 1, title: "385 nm", text: "Dental reçine parametreleriyle uyumlu ışık sistemi.", alt: "MASH P16L 385 nm" },
+      {
+        imageSrc: p16lPrinterOpenImage,
+        title: "Dental restorasyon",
+        text: "Mikron hassasiyet isteyen üretimler.",
+        alt: "MASH P16L dental restorasyon",
+      },
+      {
+        imageSrc: p16lDentalModelImage,
+        title: "16K detay",
+        text: "Yüksek çözünürlüklü LCD baskı akışı.",
+        alt: "MASH P16L 16K baskı",
+      },
+      {
+        imageSrc: p16lPrintPlateImage,
+        title: "385 nm",
+        text: "Dental reçine parametreleriyle uyumlu ışık sistemi.",
+        alt: "MASH P16L 385 nm",
+      },
     ],
     useCaseCards: [
       { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Dental restorasyon baskıları", "Hassas model ve aparey üretimi", "Laboratuvar seri üretim akışı"] },
@@ -5221,7 +5245,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     ],
     videoHref: "https://www.youtube.com/watch?v=dNPHy_sd9aQ",
     videoTitleHtml: 'P16L üretim akışını <span class="em">videoda görün.</span>',
-    videoSideHtml: "Ürün sayfasındaki video ile MASH P16L ve üretim ekosistemi akışını inceleyin.",
+    videoSideHtml: "MASH P16L'in 385 nm ve 16K baskı yaklaşımını kısa videoda görün.",
     videoTitle: "MASH P16L dental 3D yazıcı",
     videoText: "385 nm, 16K ve dental üretim akışına odaklanan ürün videosu.",
   },
@@ -5260,14 +5284,11 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     ],
     useCaseSideHtml: "Geçici kuron, ortodontik model, gece plağı ve implant analog üretimlerinde kullanılır.",
     useCasePhotos: [
-      { imageIndex: 1, title: "Geçici kuron", text: "Klinik hassasiyet isteyen restorasyonlar.", alt: "Curie M1 geçici kuron" },
-      { imageIndex: 2, title: "Ortodontik model", text: "Tekrarlanabilir dental model üretimi.", alt: "Curie M1 ortodontik model" },
-      { imageIndex: 3, title: "Gece plağı", text: "Splint ve aparey üretim akışı.", alt: "Curie M1 gece plağı" },
+      { imageIndex: 1, title: "Curie M1 Dental", text: "Klinik ve laboratuvar işleri için yerli DLP yazıcı.", alt: "Curie M1 Dental 3D yazıcı" },
+      { imageSrc: curieM1DentalSectionVideo, mediaType: "video", title: "Baskı hazırlığı", text: "Baskı tablası ve üretim sürecinden kısa görüntü.", alt: "Curie M1 Dental baskı hazırlığı videosu" },
+      { imageSrc: curieM1DentalPrintersImage, imageFit: "contain", title: "Yan yana üretim", text: "Birden fazla Curie M1 ile seri dental üretim.", alt: "Yan yana çalışan üç Curie M1 Dental yazıcı" },
     ],
-    useCaseCards: [
-      { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Geçici kuron üretimi", "Ortodontik model baskıları", "Gece plağı ve implant analogları"] },
-      { eyebrow: "Kontrol", title: "Neler netleşir?", items: ["Dental reçine uyumu", "Baskı parametreleri", "Klinik uygulama tipi"] },
-    ],
+    useCaseCards: [],
     devicesTitle: "Dental reçine ve klinik/lab üretim akışıyla çalışır",
     devicesTextHtml: "Curie M1 Dental için reçine seçimi, baskı parametresi ve post-process adımları birlikte planlanmalıdır.",
     deviceChips: [{ label: "Dental reçine" }, { label: "DLP" }, { label: "Klinik hassasiyet" }, { label: "Yerli üretim", highlighted: true }],
@@ -5295,7 +5316,6 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a9dc7080-68cc-4114-aa76-a1e99a81c834/1080/3.webp",
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/6fea4dc9-2737-494b-9bc9-100a21ad5824/1080/2.webp",
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/7012539d-d394-4b84-b6d3-fcff9d95bc64/1080/4.webp",
-      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a46d0cdc-0a54-4ce8-8bdc-30d0c2c15425/1080/1.webp",
     ],
     galleryBadge: "JEWELRY",
     metricTitleHtml: 'Kuyumculukta <span class="em">detay ve yüzey kalitesi.</span>',
@@ -5317,8 +5337,14 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     ],
     useCaseSideHtml: "Mücevher tasarımı, döküm masterı ve yüksek detay isteyen kuyumculuk baskılarında kullanılır.",
     useCasePhotos: [
-      { imageIndex: 1, title: "Mücevher tasarımı", text: "Yüksek detay isteyen parçalar.", alt: "Curie M1 Jewelry mücevher tasarımı" },
-      { imageIndex: 2, title: "Yüzey kalitesi", text: "Kusursuz yüzey hedefleyen üretimler.", alt: "Curie M1 Jewelry yüzey kalitesi" },
+      {
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a46d0cdc-0a54-4ce8-8bdc-30d0c2c15425/1080/1.webp",
+        title: "Mücevher tasarımı",
+        text: "Yüksek detay isteyen parçalar.",
+        alt: "Curie M1 Jewelry mücevher tasarımı",
+        imageFit: "cover",
+      },
+      { imageIndex: 1, title: "Yüzey kalitesi", text: "Kusursuz yüzey hedefleyen üretimler.", alt: "Curie M1 Jewelry yüzey kalitesi" },
       { imageIndex: 3, title: "Malzeme uyumu", text: "Kuyumculuk reçine ve materyal akışı.", alt: "Curie M1 Jewelry malzeme uyumu" },
     ],
     useCaseCards: [
@@ -5349,7 +5375,8 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     pills: [{ value: "6K", label: "LCD" }, { label: "Fabrika çıkışlı" }, { label: "Hassasiyeti artırılmış" }, { label: "Creality" }],
     images: [
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d5482fea-966e-4198-887b-7a1ffd659ed7/1080/creality-halot-sky-cl-89-recine-3d-yaz--8eb5-.webp",
-      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d5482fea-966e-4198-887b-7a1ffd659ed7/1080/creality-halot-sky-cl-89-recine-3d-yaz--8eb5-.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/050b4cbc-44eb-4c21-a80d-9e993f43bd9c/1080/creality-halot-sky-cl-89-recine-3d-yaz-fa-283.webp",
+      "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/3f2e9ecc-cda1-42c8-b85e-f9380c335cca/1080/creality-halot-sky-cl-89-recine-3d-yaz-4f83-9.webp",
     ],
     galleryBadge: "6K",
     metricTitleHtml: 'Reçine baskıda <span class="em">6K LCD seçenekleri.</span>',
@@ -5366,14 +5393,41 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Model", value: "Creality Halot-Sky 6K" },
       { label: "Teknoloji", value: "LCD reçine yazıcı" },
       { label: "Seçenek", value: "Fabrika çıkışlı" },
-      { label: "Seçenek", value: "Hassasiyeti arttırılmış" },
+      { label: "Seçenek", value: "Hassasiyeti artırılmış" },
       { label: "Kategori", value: "3D yazıcı" },
     ],
-    useCaseSideHtml: "Reçine baskı, dental üretim ve hassasiyet geliştirmesi isteyen LCD yazıcı akışlarında kullanılır.",
+    useCaseSideHtml: "Halot-Sky 6K; reçine baskı, dental üretime giriş ve hassasiyet ayarı isteyen LCD yazıcı akışlarında konumlanır.",
     useCasePhotos: [
-      { imageIndex: 1, title: "Fabrika çıkışlı", text: "Standart Creality Halot-Sky 6K seçeneği.", alt: "Creality Halot-Sky fabrika çıkışlı" },
-      { imageIndex: 1, title: "Hassasiyet artırımı", text: "Daha kontrollü baskı hedefleyen geliştirilmiş seçenek.", alt: "Creality Halot-Sky hassasiyet arttırılmış" },
-      { imageIndex: 1, title: "Reçine baskı", text: "LCD reçine üretim akışı.", alt: "Creality Halot-Sky reçine baskı" },
+      {
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d5482fea-966e-4198-887b-7a1ffd659ed7/360/creality-halot-sky-cl-89-recine-3d-yaz--8eb5-.webp",
+        imageFit: "contain",
+        imageOffsetY: "-42px",
+        imageScale: "0.76",
+        imageBackground: "white",
+        title: "Cihaz görünümü",
+        text: "Halot-Sky 6K gövde ve ekran düzeni.",
+        alt: "Creality Halot-Sky 6K cihaz görünümü",
+      },
+      {
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/050b4cbc-44eb-4c21-a80d-9e993f43bd9c/360/creality-halot-sky-cl-89-recine-3d-yaz-fa-283.webp",
+        imageFit: "contain",
+        imageOffsetY: "-42px",
+        imageScale: "0.76",
+        imageBackground: "white",
+        title: "LCD reçine baskı",
+        text: "6K ekranla katman ve yüzey detayının kontrolü.",
+        alt: "Creality Halot-Sky 6K LCD reçine baskı",
+      },
+      {
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/3f2e9ecc-cda1-42c8-b85e-f9380c335cca/360/creality-halot-sky-cl-89-recine-3d-yaz-4f83-9.webp",
+        imageFit: "contain",
+        imageOffsetY: "-42px",
+        imageScale: "0.76",
+        imageBackground: "white",
+        title: "Versiyon seçimi",
+        text: "Fabrika çıkışlı veya hassasiyeti artırılmış seçenek.",
+        alt: "Creality Halot-Sky 6K versiyon seçimi",
+      },
     ],
     useCaseCards: [
       { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["LCD reçine baskı", "Dental üretim başlangıç akışı", "Hassasiyet geliştirmesi isteyen uygulamalar"] },
@@ -5384,8 +5438,8 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     deviceChips: [{ label: "LCD reçine yazıcı" }, { label: "6K" }, { label: "Dental reçine" }, { label: "Hassasiyet seçimi", highlighted: true }],
     faqItems: [
       { question: "Halot-Sky 6K kaç seçenekle değerlendiriliyor?", answerHtml: "Fabrika çıkışlı versiyon ve hassasiyeti arttırılmış versiyon olarak iki seçenekle değerlendirilebilir." },
-      { question: "Hangi versiyon seçilmeli?", answerHtml: "Kullanılacak reçine, hassasiyet beklentisi ve üretim tipi birlikte değerlendirilerek seçilmelidir." },
-      { question: "Hangi versiyon seçilmeli?", answerHtml: "Kullanılacak reçine, hassasiyet beklentisi ve üretim tipi birlikte değerlendirilerek seçilmelidir." },
+      { question: "Hangi versiyon seçilmeli?", answerHtml: "Kullanılacak reçine, hedeflenen detay seviyesi ve üretim tipi birlikte değerlendirilerek seçilmelidir." },
+      { question: "Satın alma öncesi ne kontrol edilmeli?", answerHtml: "Cihaz geliştirmesi, reçine parametreleri, yıkama-kürleme akışı ve teknik destek ihtiyacı satın alma öncesi netleştirilmelidir." },
     ],
     videoTitleHtml: 'Halot-Sky seçimini <span class="em">birlikte netleştirin.</span>',
     videoSideHtml: "Bu ürün sayfasında ürün videosu bulunmadığı için cihaz geliştirmesi ve reçine uyumunu teknik destekle kontrol edin.",
