@@ -24,6 +24,8 @@
   font-style: var(--tmhero-word-style);
 }
 
+
+
 .tmhero-wrap {
   width: min(100%, 1240px);
   margin: 0 auto;

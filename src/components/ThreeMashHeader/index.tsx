@@ -1253,12 +1253,13 @@ export function ThreeMashHeader(props: Props) {
                 </div>
               </li>
 
-              <li
-                ref={whyMenuRef}
-                className={activeMenu === "why" ? "is-open" : ""}
-                onMouseEnter={() => openMenu("why")}
-                onFocusIn={() => openMenu("why")}
-              >
+            <li
+  ref={whyMenuRef}
+  className={activeMenu === "why" ? "is-open" : ""}
+  onMouseEnter={() => openMenu("why")}
+  onMouseLeave={() => setActiveMenu(null)}
+  onFocusIn={() => openMenu("why")}
+>
                 <button className="tmh-menu-trigger" type="button">
                   <RichInline value={whyMenuText} wordStyle={props} />
                   <CaretIcon />

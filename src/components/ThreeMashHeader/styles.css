@@ -228,6 +228,9 @@
   flex: 0 0 auto;
   color: var(--tmh-muted);
 }
+.tmh-header-spacer {
+  height: 70px;
+}
 
 .tmh-mega {
   position: absolute;
