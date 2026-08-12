@@ -325,7 +325,7 @@ export function ThreeMashCostDetailPage(props: Props) {
               )}
             />
             <div className="tm-cost-actions">
-              <a href={href(props.primaryButtonHref, "/#hesap")}>
+              <a href={href(props.primaryButtonHref, "/")}>
                 <span
                   dangerouslySetInnerHTML={richHtml(
                     props.primaryButtonText,
@@ -349,7 +349,7 @@ export function ThreeMashCostDetailPage(props: Props) {
             <b>120 x 12 x %10 x $500</b>
             <strong>$72.000</strong>
             <p>
-              Aylık vaka, yıllık dönem, tekrar oranı ve tek tekrar maliyeti.
+              Aylık vaka, yıllık dönem, tekrar oranı ve  tekrar maliyeti.
             </p>
           </aside>
         </section>
@@ -599,7 +599,7 @@ export function ThreeMashCostDetailPage(props: Props) {
               Kendi tekrar oranınızla <em>gerçek tabloyu</em> çıkarın.
             </h2>
           </div>
-          <a href={href(props.primaryButtonHref, "/#hesap")}>
+          <a href={href(props.primaryButtonHref, "/")}>
             <span
               dangerouslySetInnerHTML={richHtml(
                 props.primaryButtonText,

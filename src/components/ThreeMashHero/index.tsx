@@ -160,40 +160,55 @@ function RichInline({
 
 function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
   const target = href(targetHref);
-  const hash = target.startsWith("#")
-    ? target
-    : target.startsWith("/#")
-      ? target.slice(1)
-      : "";
+
+  let hash = "";
+
+  try {
+    const url = new URL(target, window.location.href);
+    hash = url.hash;
+  } catch {
+    if (target.startsWith("#")) hash = target;
+  }
+
   if (!hash || hash.length <= 1) return;
 
+  const targetId = decodeURIComponent(hash.slice(1)).trim();
+  const section = document.getElementById(targetId);
+
+  if (!section) return;
+
   event.preventDefault();
-  window.history.pushState(null, "", hash);
 
-  const scrollToTarget = () => {
-    const targetId = decodeURIComponent(hash.slice(1)).trim();
-    const section = document.getElementById(targetId) || document.querySelector(hash);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-      return true;
+  const startY = window.scrollY;
+  const targetY =
+    section.getBoundingClientRect().top +
+    window.scrollY -
+    80; // header offset
+
+  const distance = targetY - startY;
+  const duration = 700;
+  const startTime = performance.now();
+
+  const easeInOutCubic = (t: number) =>
+    t < 0.5
+      ? 4 * t * t * t
+      : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  const animate = (currentTime: number) => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeInOutCubic(progress);
+
+    window.scrollTo(0, startY + distance * eased);
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      window.history.pushState(null, "", hash);
     }
-
-    try {
-      const section = document.querySelector(hash);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-        return true;
-      }
-    } catch {
-      return false;
-    }
-
-    return false;
   };
 
-  if (!scrollToTarget()) {
-    window.setTimeout(scrollToTarget, 60);
-  }
+  requestAnimationFrame(animate);
 }
 
 function imageSource(value: unknown) {

@@ -277,9 +277,13 @@
 .tmr-side b,
 .tmr-product-body p b,
 .tmr-faq b,
-.tmr-roi b,
-.tmr-final b {
-  color: #fff;
+.tmr-roi b {
+  color: var(--tmr-text);
+  font-weight: 600;
+}
+
+.tmr-final > .tmr-wrap > p > b {
+  color: #fff !important;
   font-weight: 600;
 }
 

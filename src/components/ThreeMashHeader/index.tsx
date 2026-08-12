@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import {
   cartStore,
   createMediaSrcset,
@@ -98,6 +98,313 @@ const defaultWhyMenuText = "Neden 3mash?";
 const defaultReferencesText = "Referanslar";
 const defaultAcademyText = "Academy";
 const defaultMobileMenuLabel = "Menü";
+
+// Critical header styles live with the markup so route changes cannot briefly
+// paint the header in its unstyled/default browser state before the component
+// stylesheet is applied. Keep this intentionally small and structural only.
+const criticalHeaderCss = `
+/*
+ * First-paint header CSS.
+ * This is intentionally emitted before the header markup so the server-rendered
+ * navbar has the same geometry and appearance before the full component CSS arrives.
+ */
+.three-mash-header,
+.three-mash-header * { box-sizing: border-box; }
+
+.three-mash-header {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--tmh-bg);
+  color: var(--tmh-text);
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
+}
+
+.three-mash-header [hidden] { display: none !important; }
+
+.three-mash-header .tmh-wrap {
+  width: min(100%, 1240px);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.three-mash-header .tmh-announcement {
+  width: 100%;
+  background: var(--tmh-ann-bg);
+  color: var(--tmh-ann-text);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.three-mash-header .tmh-announcement-inner {
+  width: min(100%, 1240px);
+  margin: 0 auto;
+  padding: 9px 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.three-mash-header .tmh-announcement-inner > * { margin: 0; }
+.three-mash-header .tmh-announcement b {
+  color: var(--tmh-accent);
+  font-weight: 600;
+}
+.three-mash-header .tmh-announcement a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+ 
+.three-mash-header .tmh-header {
+  position: fixed !important;
+  left: 0;
+  right: 0;
+  top: var(--tmh-sticky-top, 34px);
+  width: 100%;
+  z-index: 99999;
+  background: color-mix(in srgb, var(--tmh-bg) 92%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--tmh-line);
+}
+
+.three-mash-header .tmh-nav {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  overflow: visible;
+}
+
+.three-mash-header .tmh-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  flex: 0 0 116px;
+  width: 116px;
+  min-width: 0;
+  max-width: 116px;
+  margin-right: 6px;
+  color: var(--tmh-text);
+  text-decoration: none;
+  overflow: visible;
+}
+
+.three-mash-header .tmh-logo-image-wrap {
+  position: relative;
+  display: block;
+  width: min(var(--tmh-logo-image-width), 118px);
+  height: min(var(--tmh-logo-image-height), 25px);
+  flex: 0 0 auto;
+  transform: translate(var(--tmh-logo-image-x), var(--tmh-logo-image-y));
+  opacity: var(--tmh-logo-image-opacity);
+}
+
+.three-mash-header .tmh-logo-image-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 34%);
+  background: #0E0E0C;
+  pointer-events: none;
+  -webkit-mask-image: var(--tmh-logo-mask-image);
+  mask-image: var(--tmh-logo-mask-image);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.three-mash-header .tmh-logo-image-wrap img,
+.three-mash-header .tmh-logo > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  flex: 0 0 auto;
+  object-fit: var(--tmh-logo-image-fit);
+  filter:
+    brightness(var(--tmh-logo-image-brightness))
+    contrast(var(--tmh-logo-image-contrast))
+    saturate(var(--tmh-logo-image-saturation))
+    hue-rotate(var(--tmh-logo-image-hue))
+    invert(var(--tmh-logo-image-invert));
+}
+
+.three-mash-header .tmh-desktop-nav {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.three-mash-header .tmh-menu {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.three-mash-header .tmh-menu > li {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.three-mash-header .tmh-menu-trigger,
+.three-mash-header .tmh-plain-link {
+  min-height: 70px;
+  max-width: 180px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 13px;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: var(--tmh-text);
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.three-mash-header .tmh-caret {
+  display: block;
+  width: 10px;
+  height: 8px;
+  flex: 0 0 auto;
+  color: var(--tmh-muted);
+  transform: translateY(1px);
+}
+
+.three-mash-header .tmh-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex: 0 0 auto;
+  min-width: 0;
+  position: relative;
+}
+
+.three-mash-header .tmh-inline-search {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 0 0 auto;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.three-mash-header .tmh-action-wrap {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+}
+
+.three-mash-header .tmh-actions > a,
+.three-mash-header .tmh-icon-button,
+.three-mash-header .tmh-action-button {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tmh-text);
+  position: relative;
+  text-decoration: none;
+}
+
+.three-mash-header .tmh-action-svg {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.three-mash-header .tmh-action-svg > svg,
+.three-mash-header .tmh-action-svg > img {
+  display: block;
+  width: 22px;
+  height: 22px;
+  max-width: 22px;
+  max-height: 22px;
+}
+
+.three-mash-header .tmh-mobile-menu {
+  display: none;
+  position: relative;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  color: var(--tmh-text);
+  cursor: pointer;
+  margin: 0;
+  padding: 6px;
+}
+
+.three-mash-header .tmh-header-spacer { height: 70px; }
+
+@media (max-width: 1000px) {
+  .three-mash-header .tmh-desktop-nav,
+  .three-mash-header .tmh-actions { display: none; }
+  .three-mash-header .tmh-mobile-menu { display: block; margin-left: auto; }
+  .three-mash-header .tmh-nav { gap: 18px; }
+}
+
+@media (max-width: 620px) {
+  .three-mash-header .tmh-wrap,
+  .three-mash-header .tmh-announcement-inner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .three-mash-header .tmh-nav {
+    min-height: 66px;
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+  .three-mash-header .tmh-logo {
+    flex-basis: 112px;
+    width: 112px;
+    max-width: 112px;
+  }
+  .three-mash-header .tmh-logo-image-wrap,
+  .three-mash-header .tmh-logo > img {
+    width: min(var(--tmh-logo-image-width), 112px);
+    height: min(var(--tmh-logo-image-height), 24px);
+  }
+  .three-mash-header .tmh-header-spacer { height: 66px; }
+}
+`;
+
 const defaultAnnouncement = {
   highlightText: "⚡ Fırsatı kaçırmayın.",
   text: "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
@@ -371,7 +678,7 @@ function searchSuggestions(products: IkasProduct[], query: string): SearchSugges
     .map((product) => ({ product, score: fuzzyScore(productSearchText(product), normalizedQuery) }))
     .filter((item) => Number.isFinite(item.score))
     .sort((a, b) => a.score - b.score || a.product.name.length - b.product.name.length)
-    .slice(0, 1);
+    .slice(0, 3);
 }
 
 function text(value: string | undefined, fallback: string) {
@@ -639,7 +946,14 @@ function InlineSvg({ svg, className }: { svg?: unknown; className: string }) {
     return null;
   }
 
-  return <span className={className} aria-hidden="true" dangerouslySetInnerHTML={{ __html: markup }} />;
+  return (
+    <span
+      className={className}
+      aria-hidden="true"
+      style={{ width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}
+      dangerouslySetInnerHTML={{ __html: markup }}
+    />
+  );
 }
 
 function InlineIcon({ image, svg, className }: { image?: unknown; svg?: unknown; className: string }) {
@@ -647,8 +961,12 @@ function InlineIcon({ image, svg, className }: { image?: unknown; svg?: unknown;
 
   if (imageUrl) {
     return (
-      <span className={className} aria-hidden="true">
-        <img src={imageUrl} alt="" loading="lazy" decoding="async" />
+      <span
+        className={className}
+        aria-hidden="true"
+        style={{ width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}
+      >
+        <img src={imageUrl} alt="" width="22" height="22" loading="lazy" decoding="async" />
       </span>
     );
   }
@@ -728,8 +1046,15 @@ function Logo({ props }: { props: Props }) {
 
   return (
     <a className="tmh-logo" href={headerRouteHref(logoHref, "/")} aria-label={logoText}>
-      <span className="tmh-logo-image-wrap" style={{ "--tmh-logo-mask-image": `url("${logoImage}")` } as any}>
-        <img src={logoImage} alt={logoImageAlt || logoText} />
+      <span
+        className="tmh-logo-image-wrap"
+        style={{
+          width: "118px",
+          height: "25px",
+          "--tmh-logo-mask-image": `url("${logoImage}")`,
+        } as any}
+      >
+        <img src={logoImage} alt={logoImageAlt || logoText} width="118" height="25" loading="eager" decoding="sync" />
       </span>
     </a>
   );
@@ -737,7 +1062,7 @@ function Logo({ props }: { props: Props }) {
 
 function CaretIcon() {
   return (
-    <svg className="tmh-caret" viewBox="0 0 12 8" aria-hidden="true" focusable="false">
+    <svg className="tmh-caret" width="10" height="8" viewBox="0 0 12 8" aria-hidden="true" focusable="false">
       <path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -880,22 +1205,17 @@ export function ThreeMashHeader(props: Props) {
       searchInputRef.current?.focus();
     }
   }, [isSearchOpen]);
-  useEffect(() => {
+  useLayoutEffect(() => {
   let frame = 0;
 
-  const updateHeaderPosition = () => {
-    const header = headerRef.current;
-    const announcement = document.querySelector(
-      ".tmh-announcement"
-    ) as HTMLElement | null;
+const updateHeaderPosition = () => {
+  const header = headerRef.current;
 
-    if (!header) return;
+  if (!header) return;
 
-    const announcementHeight = announcement?.offsetHeight || 0;
-    const top = Math.max(0, announcementHeight - window.scrollY);
-
-    header.style.setProperty("--tmh-sticky-top", `${top}px`);
-  };
+  const top = Math.max(0, 34 - window.scrollY);
+  header.style.setProperty("--tmh-sticky-top", `${top}px`);
+};
 
   const onScroll = () => {
     if (frame) return;
@@ -1201,6 +1521,7 @@ export function ThreeMashHeader(props: Props) {
 
   return (
     <section className="three-mash-header" style={themeStyle}>
+      <style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
       {props.showAnnouncement !== false && (
         <div className="tmh-announcement">
           <div className="tmh-announcement-inner">
@@ -1230,6 +1551,7 @@ export function ThreeMashHeader(props: Props) {
                 </button>
                 <div
                   className="tmh-mega tmh-products-mega"
+                  hidden={activeMenu !== "products"}
                   style={productsMenuLeft == null ? undefined : { "--tmh-products-mega-left": `${productsMenuLeft}px`, "--tmh-products-translate-x": "0px" } as any}
                 >
                   <a className="tmh-feature" href={href(c4pRouteHref(text(props.productsFeatureHref, defaultProductsFeature.href)))}>
@@ -1266,6 +1588,7 @@ export function ThreeMashHeader(props: Props) {
                 </button>
                 <div
                   className="tmh-mega tmh-flow-mega"
+                  hidden={activeMenu !== "why"}
                   style={whyMenuLeft == null ? undefined : { "--tmh-flow-mega-left": `${whyMenuLeft}px`, "--tmh-flow-translate-x": "0px" } as any}
                 >
                   <div className="tmh-flow-grid">
@@ -1344,7 +1667,10 @@ export function ThreeMashHeader(props: Props) {
                 >
                   <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
                 </button>
-                <div className={`tmh-action-panel tmh-profile-panel${activeAction === "profile" ? " is-open" : ""}`}>
+                <div
+                  className={`tmh-action-panel tmh-profile-panel${activeAction === "profile" ? " is-open" : ""}`}
+                  hidden={activeAction !== "profile"}
+                >
                   <span className="tmh-action-panel-kicker">{text(props.accountAriaLabel, "HESABIM")}</span>
                   <b dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuTitle, "Hesabım"), props)} />
                   <p dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuDescription, "Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın."), props)} />
@@ -1372,7 +1698,10 @@ export function ThreeMashHeader(props: Props) {
                   <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
                   {cartItemCount > 0 ? <span className="tmh-cart-badge">{cartItemCount}</span> : null}
                 </button>
-                <div className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}>
+                <div
+                  className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}
+                  hidden={activeAction !== "store"}
+                >
                   <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, "SEPETİM")}</span>
                   {isLoggedIn && cartItems.length > 0 ? (
                     <div className="tmh-cart-live">
@@ -1437,14 +1766,17 @@ export function ThreeMashHeader(props: Props) {
               setIsMobileMenuOpen((current) => !current);
             }}
           >
-            <svg className="tmh-hamburger-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true" focusable="false">
+            <svg className="tmh-hamburger-svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true" focusable="false">
               <line x1="3" y1="7" x2="21" y2="7" />
               <line x1="3" y1="12" x2="21" y2="12" />
               <line x1="3" y1="17" x2="21" y2="17" />
             </svg>
           </button>
         </div>
-        <div className={`tmh-mobile-panel${isMobileMenuOpen ? " is-open" : ""}`}>
+        <div
+          className={`tmh-mobile-panel${isMobileMenuOpen ? " is-open" : ""}`}
+          hidden={!isMobileMenuOpen}
+        >
           <nav className="tmh-mobile-list" aria-label={mobileMenuLabel}>
             <a href={mobileSearchHref} dangerouslySetInnerHTML={richText(productsMenuText, props)} />
             <a className="tmh-mobile-accent-link" href={href(productPrimary[2]?.href)} dangerouslySetInnerHTML={richText(productPrimary[2]?.title, props)} />

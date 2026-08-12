@@ -570,7 +570,7 @@ export const washCureCategoryData: CategoryLandingData = {
     anchorId: "cihaz",
     cardCtaText: "İncele",
     number: "01",
-    label: "Cihazlar",
+    label: "CİHAZLAR",
     titlePrefix: "Baskı sonrası için",
     titleEmphasis: "iki tamamlayıcı adım.",
     sideHtml:

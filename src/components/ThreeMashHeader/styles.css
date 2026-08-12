@@ -14,6 +14,10 @@
   box-sizing: border-box;
 }
 
+.three-mash-header [hidden] {
+  display: none !important;
+}
+
 .tmh-wrap {
   width: min(100%, 1240px);
   margin: 0 auto;
@@ -110,22 +114,6 @@
   opacity: var(--tmh-logo-image-opacity);
 }
 
-.tmh-logo-image-wrap::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  clip-path: inset(0 0 0 34%);
-  background: #0E0E0C;
-  pointer-events: none;
-  -webkit-mask-image: var(--tmh-logo-mask-image);
-  mask-image: var(--tmh-logo-mask-image);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-}
 
 .tmh-logo-image-wrap img,
 .tmh-logo > img {
@@ -227,7 +215,9 @@
   height: 8px;
   flex: 0 0 auto;
   color: var(--tmh-muted);
+  transform: translateY(1px);
 }
+
 .tmh-header-spacer {
   height: 70px;
 }
@@ -245,21 +235,16 @@
   border-radius: 18px;
   box-shadow: 0 30px 70px rgba(14, 14, 12, 0.1);
   padding: 26px;
-  display: grid;
   grid-template-columns: minmax(220px, 1.1fr) minmax(0, 1fr) minmax(0, 1fr);
   gap: 10px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  display: none;
   transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
 }
 
 .tmh-menu > li:hover .tmh-mega,
 .tmh-menu > li:focus-within .tmh-mega,
 .tmh-menu > li.is-open .tmh-mega {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+ display: grid;
   transform: translateX(-50%) translateY(0);
 }
 
@@ -751,18 +736,14 @@
   background: var(--tmh-panel);
   box-shadow: 0 18px 42px rgba(14, 14, 12, 0.12);
   color: var(--tmh-text);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  display: none;
   transform: translateY(8px);
   transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
   z-index: 250;
 }
 
 .tmh-action-panel.is-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+   display: block;
   transform: translateY(0);
 }
 
@@ -1277,7 +1258,7 @@
     grid-template-columns: 1fr;
   }
 
-  .tmh-flow-link:nth-child(7) {
+  .tmh-flow-link:nth-child(n+7) {
     grid-column: auto;
   }
 }
