@@ -279,7 +279,7 @@
 .tmr-faq b,
 .tmr-roi b,
 .tmr-final b {
-  color: var(--tmr-text);
+  color: #fff;
   font-weight: 600;
 }
 
