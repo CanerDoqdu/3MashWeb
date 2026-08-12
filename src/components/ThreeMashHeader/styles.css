@@ -64,13 +64,19 @@
 }
 
 .tmh-header {
-  position: relative;
-  z-index: 100;
+  position: fixed !important;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 99999;
+
+  top: var(--tmh-sticky-top, 34px);
+
   background: color-mix(in srgb, var(--tmh-bg) 92%, transparent);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--tmh-line);
-  overflow: visible;
 }
+
 
 .tmh-nav {
   min-height: 70px;

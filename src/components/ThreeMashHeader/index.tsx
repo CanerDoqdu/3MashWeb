@@ -880,6 +880,46 @@ export function ThreeMashHeader(props: Props) {
       searchInputRef.current?.focus();
     }
   }, [isSearchOpen]);
+  useEffect(() => {
+  let frame = 0;
+
+  const updateHeaderPosition = () => {
+    const header = headerRef.current;
+    const announcement = document.querySelector(
+      ".tmh-announcement"
+    ) as HTMLElement | null;
+
+    if (!header) return;
+
+    const announcementHeight = announcement?.offsetHeight || 0;
+    const top = Math.max(0, announcementHeight - window.scrollY);
+
+    header.style.setProperty("--tmh-sticky-top", `${top}px`);
+  };
+
+  const onScroll = () => {
+    if (frame) return;
+
+    frame = window.requestAnimationFrame(() => {
+      frame = 0;
+      updateHeaderPosition();
+    });
+  };
+
+  updateHeaderPosition();
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", updateHeaderPosition);
+
+  return () => {
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", updateHeaderPosition);
+
+    if (frame) {
+      window.cancelAnimationFrame(frame);
+    }
+  };
+}, []);
 
   useEffect(() => {
     const pendingSectionId = consumePendingReferencesScroll();
@@ -1412,7 +1452,7 @@ export function ThreeMashHeader(props: Props) {
           </nav>
         </div>
       </header>
-
+      <div className="tmh-header-spacer" />
     </section>
   );
 }
