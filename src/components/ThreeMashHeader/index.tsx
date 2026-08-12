@@ -1218,11 +1218,12 @@ export function ThreeMashHeader(props: Props) {
           <nav className="tmh-desktop-nav" aria-label={mobileMenuLabel}>
             <ul className="tmh-menu">
               <li
-                ref={productsMenuRef}
-                className={activeMenu === "products" ? "is-open" : ""}
-                onMouseEnter={() => openMenu("products")}
-                onFocusIn={() => openMenu("products")}
-              >
+  ref={productsMenuRef}
+  className={activeMenu === "products" ? "is-open" : ""}
+  onMouseEnter={() => openMenu("products")}
+  onMouseLeave={() => setActiveMenu(null)}
+  onFocusIn={() => openMenu("products")}
+>
                 <button className="tmh-menu-trigger" type="button">
                   <RichInline value={productsMenuText} wordStyle={props} />
                   <CaretIcon />
