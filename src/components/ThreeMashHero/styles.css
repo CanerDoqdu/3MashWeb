@@ -62,9 +62,16 @@
   overflow-wrap: anywhere;
 }
 
+.three-mash-hero .tmhero-micro > span:not(.tmhero-dot) {
+  display: inline-block;
+  transform: scaleX(0.933);
+  transform-origin: left center;
+}
+
 .tmhero-dot {
   width: 7px;
   height: 7px;
+  
   border-radius: 50%;
   background: var(--tmhero-danger);
   flex: 0 0 auto;
@@ -106,12 +113,16 @@
   font-family: var(--tm-theme-font-serif, "Newsreader", serif);
   font-style: italic;
   font-weight: 500;
+
+  display: inline-block;
+  transform: scaleX(0.955);
+  transform-origin: left center;
 }
 
 .tmhero-em-wrap {
   position: relative;
   display: inline-block;
-  padding-bottom: 12px;
+  
 }
 
 .tmhero-title-underline-image {
@@ -298,7 +309,7 @@
   font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 15px;
   font-weight: 700;
-  font-variant-numeric: tabular-nums;
+
 }
 
 .tmhero-slider input[type="range"] {
