@@ -1098,10 +1098,16 @@
   color: #a5a59a;
 }
 
-.tmr-curing .tmr-side b,
+.tmr-curing .tmr-side b {
+  color: #fff;
+}
 .tmr-curing .tmr-product-body p b,
 .tmr-curing .tmr-spec b {
   color: #eaeae2;
+}
+
+.tmr-curing .tmr-side strong {
+  color: #fff !important;
 }
 
 .tmr-curing .tmr-index-text {
@@ -1180,19 +1186,24 @@
   min-width: 0;
   border: 1px solid #26261f;
   border-radius: 18px;
-  padding: 28px;
+  padding: 32px 28px;
   background: #161612;
 }
+.tmr-why-grid article > div {
+  margin-bottom: 12px !important;
+}
+
 
 .tmr-why-grid div {
   color: var(--tmr-accent);
   font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 13px;
   font-weight: 700;
+
 }
 
 .tmr-why-grid h4 {
-  margin: 12px 0 0;
+  margin: 0 !important;
   color: #fff;
   font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 18px;

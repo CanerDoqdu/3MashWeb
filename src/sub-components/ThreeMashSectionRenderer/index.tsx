@@ -1365,7 +1365,7 @@ function curingTitleHtml(props: ThreeMashSectionRenderProps) {
     titleText === "Sadece yazıcı değil. Sonucu" &&
     titleEmphasis === "kürleme tamamlar."
   ) {
-    return `Sadece yazıcı değil. Sonucu <span class="tmr-title-em">kürleme</span> tamamlar.`;
+    return `Sadece yazıcı değil. <span class="tmr-curing-keep">Sonucu <span class="tmr-title-em">kürleme</span></span><br>tamamlar.`;
   }
 
   return heading(titleText, titleEmphasis);
