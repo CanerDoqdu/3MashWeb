@@ -147,43 +147,6 @@
   font-weight: 600;
 }
 
-.tmproblem-glitch {
-  position: relative;
-  display: inline-block;
-  color: inherit;
-  font-weight: inherit;
-  background:
-    linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--tmproblem-text) 22%, transparent) 46%, transparent 74%) 0 100% / 0% 1px no-repeat;
-  animation: tmproblem-glitch-scan 6.4s ease-in-out infinite;
-}
-
-@keyframes tmproblem-glitch-scan {
-  0%,
-  82%,
-  100% {
-    filter: none;
-    background-size: 0% 1px;
-    background-position-x: 0;
-  }
-
-  84% {
-    filter: blur(0.18px);
-    background-size: 42% 1px;
-    background-position-x: 0;
-  }
-
-  86% {
-    filter: none;
-    background-size: 78% 1px;
-    background-position-x: 35%;
-  }
-
-  88% {
-    background-size: 0% 1px;
-    background-position-x: 100%;
-  }
-}
-
 .tmproblem-cards {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

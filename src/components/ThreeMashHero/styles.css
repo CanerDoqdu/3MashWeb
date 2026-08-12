@@ -70,7 +70,7 @@
 
 .tmhero-copy h1 {
   max-width: 840px;
-  margin: 22px 0 0;
+ 
   color: var(--tmhero-text);
   font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 64px;
@@ -78,6 +78,14 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   overflow-wrap: anywhere;
+  
+}
+.tmhero-copy > .tmhero-micro {
+  transform: translateY(-22px);
+}
+
+.tmhero-copy > h1 {
+  margin: 0 !important;
 }
 
 .tmhero-money {
@@ -235,6 +243,15 @@
   min-width: 0;
   flex: 1;
   border: 1px solid var(--tmhero-line);
+
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+
+
   border-radius: 9px;
   padding: 10px;
   background: var(--tmhero-panel);
