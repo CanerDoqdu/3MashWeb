@@ -164,6 +164,7 @@ const criticalHeaderCss = `
 
 .three-mash-header {
   --tmh-announcement-fixed-height: 37px;
+  --tmh-nav-fixed-height: 70px;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -182,8 +183,7 @@ const criticalHeaderCss = `
 
 .three-mash-header .tmh-announcement {
   width: 100%;
-  min-height: var(--tmh-announcement-fixed-height);
-  height: auto;
+  height: var(--tmh-announcement-fixed-height);
   overflow: hidden;
   background: var(--tmh-ann-bg);
   color: var(--tmh-ann-text);
@@ -193,10 +193,9 @@ const criticalHeaderCss = `
 
 .three-mash-header .tmh-announcement-inner {
   width: min(100%, 1240px);
-  min-height: var(--tmh-announcement-fixed-height);
-  height: auto;
+  height: 100%;
   margin: 0 auto;
-  padding: 6px 32px;
+  padding: 0 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -231,18 +230,48 @@ const criticalHeaderCss = `
 
 @media (max-width: 900px) {
   .three-mash-header {
-    --tmh-announcement-fixed-height: 56px;
+    --tmh-announcement-fixed-height: 76px;
+  }
+
+  .three-mash-header .tmh-announcement {
+    font-size: 12.5px;
+    line-height: 1.25;
+  }
+
+  .three-mash-header .tmh-announcement-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-content: center;
+    gap: 3px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .three-mash-header .tmh-announcement-inner > * {
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .three-mash-header .tmh-announcement [data-tmh-ann-text] {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 }
 
 @media (max-width: 620px) {
   .three-mash-header {
     --tmh-announcement-fixed-height: 76px;
+    --tmh-nav-fixed-height: 66px;
   }
 }
 
 .three-mash-header .tmh-nav {
-  min-height: 70px;
+  height: var(--tmh-nav-fixed-height);
+  min-height: var(--tmh-nav-fixed-height);
   display: flex;
   align-items: center;
   gap: 38px;
@@ -434,7 +463,8 @@ const criticalHeaderCss = `
 
 @media (max-width: 620px) {
   .three-mash-header {
-    --tmh-announcement-fixed-height: 56px;
+    --tmh-announcement-fixed-height: 76px;
+    --tmh-nav-fixed-height: 66px;
   }
   .three-mash-header .tmh-wrap,
   .three-mash-header .tmh-announcement-inner {
@@ -442,7 +472,6 @@ const criticalHeaderCss = `
     padding-right: 20px;
   }
   .three-mash-header .tmh-nav {
-    min-height: 66px;
     gap: 12px;
     flex-wrap: nowrap;
   }

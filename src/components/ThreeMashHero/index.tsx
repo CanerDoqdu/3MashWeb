@@ -427,6 +427,15 @@ export function ThreeMashHero(props: Props) {
     setCost(next.costDefault);
   }, [mode, presets]);
 
+  function applyMode(nextMode: Mode) {
+    const next = presets[nextMode];
+    stopHeroAnimation();
+    setMode(nextMode);
+    setWork(next.workDefault);
+    setRpt(next.rptDefault);
+    setCost(next.costDefault);
+  }
+
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
@@ -711,14 +720,14 @@ export function ThreeMashHero(props: Props) {
                 <button
                   className={mode === "clinic" ? "is-active" : ""}
                   type="button"
-                  onClick={() => setMode("clinic")}
+                  onClick={() => applyMode("clinic")}
                 >
                   <RichInline value={props.clinicModeText} wordStyle={props} />
                 </button>
                 <button
                   className={mode === "lab" ? "is-active" : ""}
                   type="button"
-                  onClick={() => setMode("lab")}
+                  onClick={() => applyMode("lab")}
                 >
                   <RichInline value={props.labModeText} wordStyle={props} />
                 </button>

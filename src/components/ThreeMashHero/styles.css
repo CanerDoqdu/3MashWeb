@@ -290,10 +290,10 @@
 }
 
 .tmhero-slider-label {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(86px, max-content);
   align-items: baseline;
-  gap: 18px;
+  column-gap: 18px;
   margin-bottom: 9px;
   color: var(--tmhero-sub);
   font-size: 13px;
@@ -306,12 +306,15 @@
 }
 
 .tmhero-slider-label b {
-  flex: 0 0 auto;
+  justify-self: end;
+  min-width: 86px;
   color: var(--tmhero-text);
   font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 15px;
   font-weight: 700;
-
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .tmhero-slider input[type="range"] {
@@ -619,8 +622,7 @@
   }
 
   .tmhero-calc-head,
-  .tmhero-row,
-  .tmhero-slider-label {
+  .tmhero-row {
     align-items: flex-start;
   }
 
