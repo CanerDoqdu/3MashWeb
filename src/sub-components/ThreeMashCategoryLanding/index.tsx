@@ -302,10 +302,6 @@ function categoryHref(value: string) {
   }
 }
 
-function currentCategoryHref(data: CategoryLandingData) {
-  return categoryRouteAliases[routeKey(data.kind)] || `/${data.kind}`;
-}
-
 function parentCategoryHref(data: CategoryLandingData) {
   const parentLabelKey = routeKey(data.breadcrumb.parentLabel || "");
   if (parentLabelKey === "urunler" || parentLabelKey === "products") {
@@ -313,15 +309,6 @@ function parentCategoryHref(data: CategoryLandingData) {
   }
 
   return categoryHref(data.breadcrumb.parentHref || "/search");
-}
-
-function breadcrumbCurrentHref(data: CategoryLandingData) {
-  const currentHref = categoryHref(data.breadcrumb.currentHref || "");
-  if (!currentHref || currentHref === "#" || currentHref === "/") {
-    return currentCategoryHref(data);
-  }
-
-  return currentHref;
 }
 
 function smoothCategoryClick(event: MouseEvent, rawHref: string) {
@@ -333,7 +320,17 @@ function smoothCategoryClick(event: MouseEvent, rawHref: string) {
   const targetPath = hashIndex > 0 ? target.slice(0, hashIndex) : "";
   const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
   const normalizedTargetPath = targetPath ? targetPath.replace(/\/+$/, "") || "/" : currentPath;
-  if (normalizedTargetPath !== currentPath) return;
+  if (normalizedTargetPath !== currentPath) {
+    event.preventDefault();
+    event.stopPropagation();
+    try {
+      localStorage.setItem("tmcl-pending-anchor-scroll", JSON.stringify({ sectionId: decodeURIComponent(hash.slice(1)).trim(), block: "center", fromTop: true }));
+    } catch {
+      // Storage can be unavailable; the route still works without smooth scroll.
+    }
+    window.location.href = normalizedTargetPath;
+    return;
+  }
 
   const targetId = decodeURIComponent(hash.slice(1)).trim();
   const section = document.getElementById(targetId) || document.querySelector(hash);
@@ -342,6 +339,41 @@ function smoothCategoryClick(event: MouseEvent, rawHref: string) {
   event.preventDefault();
   event.stopPropagation();
   section.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function consumePendingAnchorScroll() {
+  if (typeof window === "undefined") return null;
+
+  try {
+    const raw = localStorage.getItem("tmcl-pending-anchor-scroll");
+    if (!raw) return null;
+    localStorage.removeItem("tmcl-pending-anchor-scroll");
+    const parsed = JSON.parse(raw) as { sectionId?: unknown; block?: unknown };
+    const sectionId = typeof parsed.sectionId === "string" ? parsed.sectionId : "";
+    const block: ScrollLogicalPosition = parsed.block === "center" || parsed.block === "end" || parsed.block === "nearest" ? parsed.block : "start";
+    return sectionId ? { sectionId, block, fromTop: true } : null;
+  } catch {
+    return null;
+  }
+}
+
+function isSrcdocPreview() {
+  return typeof window !== "undefined" && window.location.href.startsWith("about:srcdoc");
+}
+
+function safeHistoryReplace(url: string) {
+  if (typeof window === "undefined") return;
+  if (isSrcdocPreview() && !url.startsWith("#")) return;
+  try {
+    window.history.replaceState(null, "", url);
+  } catch {
+    // Studio srcdoc previews reject normal path URLs; scrolling should still work.
+  }
+}
+
+function anchorScrollTarget(section: HTMLElement, sectionId: string) {
+  if (sectionId !== "neden-gerekli") return section;
+  return section.querySelector(".tmcl-section-head") || section;
 }
 
 function normalizeHtmlLinks(value: string) {
@@ -639,6 +671,46 @@ export default function ThreeMashCategoryLanding(props: Props) {
     };
   }, [data.announcement.ctaText, data.announcement.highlight, data.announcement.href, data.announcement.text, props.eyebrowText]);
 
+  useLayoutEffect(() => {
+    const pending = consumePendingAnchorScroll();
+    if (!pending) return undefined;
+
+    let frame = 0;
+    let attempts = 0;
+    const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    document.documentElement.style.scrollBehavior = "auto";
+    safeHistoryReplace(`${window.location.pathname}${window.location.search}`);
+    window.scrollTo(0, 0);
+
+    const scrollToPending = () => {
+      const section = document.getElementById(pending.sectionId);
+      if (!section) {
+        attempts += 1;
+        if (attempts < 90) frame = window.requestAnimationFrame(scrollToPending);
+        return;
+      }
+
+      const target = anchorScrollTarget(section, pending.sectionId);
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      target.scrollIntoView({ behavior: "smooth", block: pending.block });
+      safeHistoryReplace(`#${pending.sectionId}`);
+    };
+
+    const timeout = window.setTimeout(() => {
+      window.scrollTo(0, 0);
+      frame = window.requestAnimationFrame(scrollToPending);
+    }, 520);
+
+    return () => {
+      window.clearTimeout(timeout);
+      if (frame) window.cancelAnimationFrame(frame);
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
   return (
     <section className={`three-mash-category-landing tmcl-${data.kind}`} style={categoryStyle(props) as any}>
       <div className="tmcl-hero">
@@ -648,7 +720,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
             {" \u00A0/\u00A0 "}
             <a href={parentCategoryHref(data)}>{data.breadcrumb.parentLabel}</a>
             {" \u00A0/\u00A0 "}
-            <a href={breadcrumbCurrentHref(data)}>{data.breadcrumb.currentLabel}</a>
+            <span aria-current="page">{data.breadcrumb.currentLabel}</span>
           </div>
           <h1>{titleWithEmphasis(
             textValue(props.heroTitlePrefix, data.hero.titlePrefix),
@@ -740,7 +812,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
         </div>
       </section>
 
-      <section className="tmcl-section tmcl-section-tight">
+      <section className="tmcl-section tmcl-section-tight" id={routeKey(data.detail.label)}>
         <div className="tmcl-wrap">
           <SectionIndex number={data.feature.number} label={data.feature.label} />
           <div className="tmcl-flag">

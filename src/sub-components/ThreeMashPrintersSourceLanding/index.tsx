@@ -42,6 +42,30 @@ function textValue(value: string | undefined, fallback: string) {
   return trimmed ? trimmed : fallback;
 }
 
+function smoothAnchorClick(event: Event, rawHref: string) {
+  if (typeof window === "undefined" || !rawHref.startsWith("#") || rawHref.length <= 1) return;
+
+  const target = document.getElementById(rawHref.slice(1));
+  if (!target) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+  target.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function crossPageAnchorClick(event: Event, path: string, sectionId: string, block: ScrollLogicalPosition = "center") {
+  if (typeof window === "undefined") return;
+
+  event.preventDefault();
+  event.stopPropagation();
+  try {
+    localStorage.setItem("tmcl-pending-anchor-scroll", JSON.stringify({ sectionId, block }));
+  } catch {
+    // Continue with normal route navigation if storage is unavailable.
+  }
+  window.location.href = path;
+}
+
 export default function ThreeMashPrintersSourceLanding(props: Props) {
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
@@ -51,7 +75,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
       highlightText: textValue(props.eyebrowText, "⚡ Hangi yazıcı size uygun?"),
       text: "Hız, çözünürlük ve bütçeye göre karşılaştırın; emin değilseniz ekibimiz eşleştirir.",
       ctaText: "Karşılaştırmaya git →",
-      href: "#karsilastir",
+      href: "#karsilastirma-tablosu",
     };
     const targetWindow = window as AnnouncementWindow;
     targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__ = payload;
@@ -66,6 +90,8 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
     };
   }, [props.eyebrowText]);
 
+  const compareHref = "#karsilastirma-tablosu";
+
   return (
     <div className="three-mash-printers-source" style={{
       "--p-bg": textValue(props.backgroundColor, "var(--tm-theme-bg, #FAFAF7)"),
@@ -77,14 +103,14 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
       <div className="hero">
         <div className="wrap">
           <div className="crumb">
-            <a href="/">Ana sayfa</a> &nbsp;/&nbsp; Ürünler &nbsp;/&nbsp; 3D Yazıcılar
+            <a href="/">Ana sayfa</a> &nbsp;/&nbsp; <a href="/search">Ürünler</a> &nbsp;/&nbsp; <span aria-current="page">3D Yazıcılar</span>
           </div>
           <h1>
             {textValue(props.heroTitlePrefix, "±20 mikron")} <span className="em">{textValue(props.heroTitleEmphasis, "burada doğar.")}</span>
           </h1>
           <p className="sub" dangerouslySetInnerHTML={{ __html: props.heroDescriptionHtml || "Hassasiyet tesadüf değildir; <b>doğru dalga boyu</b>, termal stabilite ve kalibrasyonla kurulur. 3mash yazıcıları malzemeye göre tasarlanır: <b>385 nm</b> ışık reçinenin kürlenme spektrumuna tam uyar, entegre ısıtma viskoziteyi sabitler. Üstelik <b>gizli lisans veya RFID ücreti yok</b> — istediğiniz reçineyle çalışırsınız." }} />
           <div className="cta">
-            <a className="btn lime" href={props.primaryButtonHref || "#karsilastir"}>{props.primaryButtonText || "Yazıcıları karşılaştır ↓"}</a>
+            <a className="btn lime" href={compareHref} onClick={(event) => smoothAnchorClick(event, compareHref)}>{props.primaryButtonText || "Yazıcıları karşılaştır ↓"}</a>
             <a className="btn line" href={props.secondaryButtonHref || "/pages/iletisim"}>{props.secondaryButtonText || "Bana uygun olanı öner"}</a>
           </div>
           <div className="vstrip">
@@ -157,7 +183,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
             </div>
           </div>
 
-          <div className="cmp">
+          <div className="cmp" id="karsilastirma-tablosu">
             <table>
               <thead><tr>
                 <th>Özellik</th>
@@ -221,7 +247,13 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
             </div>
             <div className="lk">
               <a className="btn" href="/dental-3d-yazici-recineleri">Uyumlu reçineler →</a>
-              <a className="btn line" href="/#kurleme">Kürlemenin önemi →</a>
+              <a
+                className="btn line"
+                href="/yikama-kurleme-cihazlari#neden-gerekli"
+                onClick={(event) => crossPageAnchorClick(event, "/yikama-kurleme-cihazlari", "neden-gerekli")}
+              >
+                Kürlemenin önemi →
+              </a>
             </div>
           </div>
         </div>
@@ -252,7 +284,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
           <p>Hangi işler, hangi hacim, hangi bütçe? Kısa bir görüşmeyle size en uygun cihazı, reçineyi ve doğru parametreleri <b>ücretsiz</b> önerelim — elinizdeki cihazı da değerlendiririz.</p>
           <div className="cta">
             <a className="btn lime" href="/pages/iletisim">Uzmana danış — ücretsiz</a>
-            <a className="btn inv" href="#karsilastir">Karşılaştırmaya dön</a>
+            <a className="btn inv" href={compareHref} onClick={(event) => smoothAnchorClick(event, compareHref)}>Karşılaştırmaya dön</a>
           </div>
         </div>
       </section>

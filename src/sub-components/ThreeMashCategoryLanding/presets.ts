@@ -297,7 +297,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
       titleEmphasis: "kürleme sonucu tamamlar.",
       descriptionHtml:
         "Doğru reçineyi seçseniz bile, yanlış post-curing hassasiyeti ve dayanımı bozar. Her CRS reçinesi bir <b>kürleme protokolüyle</b> gelir; akıllı kürleme cihazımız bu protokolü otomatik uygular.",
-      buttons: [{ label: "Kürlemenin önemini gör →", href: "/#kurleme", variant: "dark" }],
+      buttons: [{ label: "Kürlemenin önemini gör →", href: "/yikama-kurleme-cihazlari#neden-gerekli", variant: "dark" }],
     },
   },
   faq: {
@@ -329,7 +329,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
       {
         question: "Reçine performansını kürleme etkiler mi?",
         answerHtml:
-          'Kesinlikle. <b>Yetersiz kürleme</b> kırılganlık ve monomer salınımı, <b>fazla kürleme</b> deformasyon yaratır. Doğru reçine bile yanlış kürlemeyle başarısız olur; bu yüzden her reçineyi bir kürleme protokolüyle veriyoruz. Detay için <a href="/#kurleme">kürleme bölümüne</a> bakabilirsiniz.',
+          'Kesinlikle. <b>Yetersiz kürleme</b> kırılganlık ve monomer salınımı, <b>fazla kürleme</b> deformasyon yaratır. Doğru reçine bile yanlış kürlemeyle başarısız olur; bu yüzden her reçineyi bir kürleme protokolüyle veriyoruz. Detay için <a href="/yikama-kurleme-cihazlari#neden-gerekli">kürleme bölümüne</a> bakabilirsiniz.',
       },
     ],
   },
@@ -350,7 +350,7 @@ export const printersCategoryData: CategoryLandingData = {
   announcement: {
     highlight: "⚡ Hangi yazıcı size uygun?",
     text: "Hız, çözünürlük ve bütçeye göre karşılaştırın; emin değilseniz ekibimiz eşleştirir.",
-    href: "#karsilastir",
+    href: "#karsilastirma-tablosu",
     ctaText: "Karşılaştırmaya git →",
   },
   breadcrumb: {
@@ -365,7 +365,7 @@ export const printersCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Hassasiyet tesadüf değildir; <b>doğru dalga boyu</b>, termal stabilite ve kalibrasyonla kurulur. 3mash yazıcıları malzemeye göre tasarlanır: <b>385 nm</b> ışık reçinenin kürlenme spektrumuna tam uyar, entegre ısıtma viskoziteyi sabitler. Üstelik <b>gizli lisans veya RFID ücreti yok</b> — istediğiniz reçineyle çalışırsınız.",
     buttons: [
-      { label: "Yazıcıları karşılaştır ↓", href: "#karsilastir", variant: "lime" },
+      { label: "Yazıcıları karşılaştır ↓", href: "#karsilastirma-tablosu", variant: "lime" },
       { label: "Bana uygun olanı öner", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
@@ -487,7 +487,7 @@ export const printersCategoryData: CategoryLandingData = {
         "En iyi cihaz bile yanlış reçine veya yanlış kürlemeyle hassasiyeti kaybeder. Kuronun oturması <b>yazıcı + reçine + kürlemenin</b> senkronuna bağlıdır — biz üçünü birlikte kalibre ediyoruz.",
       buttons: [
         { label: "Uyumlu reçineler →", href: "/dental-3d-yazici-recineleri", variant: "dark" },
-        { label: "Kürlemenin önemi →", href: "/#kurleme", variant: "line" },
+        { label: "Kürlemenin önemi →", href: "/yikama-kurleme-cihazlari#neden-gerekli", variant: "line" },
       ],
     },
   },

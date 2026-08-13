@@ -46,6 +46,10 @@
   text-decoration: none;
 }
 
+.tmcl-crumb [aria-current="page"] {
+  color: var(--tmcl-mut);
+}
+
 .tmcl-crumb a:hover {
   color: var(--tmcl-ink);
 }
@@ -829,7 +833,7 @@
   font-style: normal;
 }
 
-.tmcl-product-card:hover .tmcl-card-link em {
+.tmcl-card-link:hover em {
   text-decoration: underline;
 }
 

@@ -597,6 +597,8 @@
 }
 
 .three-mash-printers-source .why .n {
+  display: block;
+  margin-bottom: 10px;
   font-family: "Space Grotesk", sans-serif;
   color: var(--lime-ink);
   font-weight: 700;
@@ -607,7 +609,7 @@
   font-family: "Space Grotesk", sans-serif;
   font-size: 16px;
   font-weight: 600;
-  margin: 10px 0 0;
+  margin: 0;
 }
 
 .three-mash-printers-source .why p {
@@ -1052,14 +1054,33 @@
   }
 
   .three-mash-printers-source .cmp table {
-    min-width: 560px;
+    min-width: 760px;
   }
 
   .three-mash-printers-source .cmp th,
   .three-mash-printers-source .cmp td {
-    padding: 10px 12px;
-    font-size: 12px;
-    line-height: 1.32;
+    padding: 14px 16px;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  .three-mash-printers-source .cmp thead th {
+    font-size: 13.5px;
+  }
+
+  .three-mash-printers-source .cmp thead th .t {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  .three-mash-printers-source .cmp td:first-child,
+  .three-mash-printers-source .cmp thead th:first-child {
+    width: 150px;
+  }
+
+  .three-mash-printers-source .cmp th:not(:first-child),
+  .three-mash-printers-source .cmp td:not(:first-child) {
+    width: 200px;
   }
 
   .three-mash-printers-source .note {

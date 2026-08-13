@@ -325,16 +325,16 @@
 
 .tmau-auth {
   display: grid;
-  min-height: calc(100vh - 78px);
+  min-height: auto;
 }
 
 .tmau-auth-panel {
   display: grid;
-  align-items: center;
+  align-items: start;
   width: min(100%, 1180px);
-  min-height: inherit;
+  min-height: auto;
   margin: 0 auto;
-  padding: clamp(42px, 5.4vw, 76px) 24px clamp(62px, 7vw, 104px);
+  padding: clamp(28px, 3vw, 42px) 24px clamp(34px, 4vw, 56px);
 }
 
 .tmau-auth-form {
@@ -344,7 +344,7 @@
   row-gap: 14px;
   align-items: stretch;
   width: 100%;
-  min-height: 620px;
+  min-height: 560px;
   padding: 20px;
   border: 1px solid var(--tm-theme-line, #e6e6e0);
   background: #fff;
@@ -356,7 +356,7 @@
   display: grid;
   align-content: end;
   min-width: 0;
-  min-height: 560px;
+  min-height: 520px;
   overflow: hidden;
   margin: 0;
   padding: clamp(30px, 4vw, 48px);

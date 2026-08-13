@@ -444,7 +444,7 @@
           "displayName": "Neden 4 Bağlantısı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#kurleme",
+          "defaultValue": "/yikama-kurleme-cihazlari#neden-gerekli",
           "groupId": "why"
         },
         {
@@ -1608,7 +1608,7 @@
           "displayName": "Profil Menü Başlığı",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Hesabınız",
+          "defaultValue": "Hesabım",
           "groupId": "action-panels"
         },
         {

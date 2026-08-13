@@ -218,11 +218,17 @@ function ProductCard({
   const variant = safeVariant(product);
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image;
+  const imageSrc = image ? getDefaultSrc(image) : "";
+  const [isMediaLoaded, setIsMediaLoaded] = useState(!imageSrc);
   const hasDiscount = variant ? hasProductVariantDiscount(variant) : false;
   const firstCategory = product.categories?.[0]?.name;
   const price = variant ? getProductVariantFormattedFinalPrice(variant) : "";
   const comparePrice =
     variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : "";
+
+  useEffect(() => {
+    setIsMediaLoaded(!imageSrc);
+  }, [imageSrc]);
 
   return (
     <a
@@ -230,19 +236,33 @@ function ProductCard({
       href={getProductHref(product)}
     >
       <div className="tm-products-card-media">
+        {imageSrc && !isMediaLoaded ? <div className="tm-products-card-media-loader" aria-hidden="true" /> : null}
         <div className="tm-products-card-badges">
           {hasDiscount ? <span>{props.discountText || "İndirim"}</span> : null}
         </div>
         {image ? (
           media?.isVideo ? (
-            <video src={getDefaultSrc(image)} muted playsInline loop autoPlay />
+            <video
+              src={imageSrc}
+              muted
+              playsInline
+              loop
+              autoPlay
+              onLoadedData={() => setIsMediaLoaded(true)}
+              onError={() => setIsMediaLoaded(true)}
+            />
           ) : (
             <img
-              src={getDefaultSrc(image)}
+              src={imageSrc}
               srcSet={createMediaSrcset(image)}
               alt={image.altText || product.name}
               loading="lazy"
               decoding="async"
+              ref={(node) => {
+                if (node?.complete) setIsMediaLoaded(true);
+              }}
+              onLoad={() => setIsMediaLoaded(true)}
+              onError={() => setIsMediaLoaded(true)}
             />
           )
         ) : (
@@ -286,6 +306,14 @@ function ProductCard({
         </div>
       </div>
     </a>
+  );
+}
+
+function ProductCardSkeleton({ index }: { index: number }) {
+  return (
+    <div className="tm-products-card tm-products-card-skeleton" aria-hidden="true" key={index}>
+      <div className="tm-products-card-spinner" />
+    </div>
   );
 }
 
@@ -351,6 +379,7 @@ export function ThreeMashProductsPage(props: Props) {
   const displayedProducts = trimmedSearch
     ? filterProducts(filteredByListing, trimmedSearch)
     : filteredByListing;
+  const showProductSkeletons = Boolean(productList?.isLoading) && displayedProducts.length === 0;
 
   const style = {
     "--tm-products-bg": themeToken(
@@ -630,7 +659,13 @@ export function ThreeMashProductsPage(props: Props) {
               </div>
             ) : null}
 
-            {displayedProducts.length > 0 ? (
+            {showProductSkeletons ? (
+              <div className="tm-products-grid" aria-label="Ürünler yükleniyor">
+                {Array.from({ length: 8 }, (_, index) => (
+                  <ProductCardSkeleton index={index} key={index} />
+                ))}
+              </div>
+            ) : displayedProducts.length > 0 ? (
               <div className="tm-products-grid">
                 {displayedProducts.map((product) => (
                   <ProductCard

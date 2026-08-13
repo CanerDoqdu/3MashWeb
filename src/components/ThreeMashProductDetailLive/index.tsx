@@ -227,7 +227,7 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
     chips: ["385 nm optimize baskı", "Doğru post-curing protokolü", "Marka bağımsız kalibrasyon", "7/24 teknik destek"],
     buttons: [
       { text: "3D yazıcıları gör →", href: "/3d-yazicilar" },
-      { text: "Kürlemenin önemini gör →", href: "/#kurleme", variant: "line" },
+      { text: "Kürlemenin önemini gör →", href: "/yikama-kurleme-cihazlari#neden-gerekli", variant: "line" },
     ],
   },
   faq: {

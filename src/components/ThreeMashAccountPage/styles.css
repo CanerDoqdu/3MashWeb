@@ -1,7 +1,7 @@
 .three-mash-auth-page {
   display: grid;
   width: 100%;
-  min-height: calc(100vh - 78px);
+  min-height: auto;
   overflow: hidden;
   background: var(--tma-auth-bg, var(--tm-theme-bg, #fafaf7));
   color: var(--tma-auth-text, var(--tm-theme-text, #0e0e0c));
@@ -18,11 +18,11 @@
   position: relative;
   z-index: 2;
   display: grid;
-  align-items: center;
+  align-items: start;
   width: min(100%, 1180px);
-  min-height: inherit;
+  min-height: auto;
   margin: 0 auto;
-  padding: clamp(42px, 5.4vw, 76px) 24px clamp(62px, 7vw, 104px);
+  padding: clamp(28px, 3vw, 42px) 24px clamp(34px, 4vw, 56px);
 }
 
 .tma-auth-form {
@@ -32,7 +32,7 @@
   row-gap: 16px;
   align-items: stretch;
   width: 100%;
-  min-height: 620px;
+  min-height: 560px;
   padding: 20px;
   border: 1px solid var(--tma-auth-line, var(--tm-theme-line, #e6e6e0));
   background: #fff;
@@ -45,7 +45,7 @@
   display: grid;
   align-content: end;
   min-width: 0;
-  min-height: 560px;
+  min-height: 520px;
   overflow: hidden;
   padding: clamp(30px, 4vw, 48px);
   background: var(--tma-auth-dark, var(--tm-theme-dark, #0e0e0c));
