@@ -182,7 +182,8 @@ const criticalHeaderCss = `
 
 .three-mash-header .tmh-announcement {
   width: 100%;
-  height: var(--tmh-announcement-fixed-height);
+  min-height: var(--tmh-announcement-fixed-height);
+  height: auto;
   overflow: hidden;
   background: var(--tmh-ann-bg);
   color: var(--tmh-ann-text);
@@ -192,13 +193,16 @@ const criticalHeaderCss = `
 
 .three-mash-header .tmh-announcement-inner {
   width: min(100%, 1240px);
-  height: 100%;
+  min-height: var(--tmh-announcement-fixed-height);
+  height: auto;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 6px 32px;
   display: flex;
   justify-content: center;
   align-items: center;
+  align-content: center;
   gap: 8px;
+  row-gap: 3px;
   text-align: center;
   flex-wrap: wrap;
 }
@@ -223,6 +227,18 @@ const criticalHeaderCss = `
   background: color-mix(in srgb, var(--tmh-bg) 92%, transparent);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--tmh-line);
+}
+
+@media (max-width: 900px) {
+  .three-mash-header {
+    --tmh-announcement-fixed-height: 56px;
+  }
+}
+
+@media (max-width: 620px) {
+  .three-mash-header {
+    --tmh-announcement-fixed-height: 76px;
+  }
 }
 
 .three-mash-header .tmh-nav {

@@ -22075,7 +22075,7 @@
           "displayName": "Birincil Buton",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Hesaplayıcıya dön →",
+          "defaultValue": "Ücretsiz danışmanlık al →",
           "groupId": "links"
         },
         {
@@ -22083,7 +22083,7 @@
           "displayName": "Birincil Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "#sebep",
+          "defaultValue": "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum",
           "groupId": "links"
         },
         {
@@ -22091,7 +22091,7 @@
           "displayName": "İkincil Buton",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Ücretsiz analiz iste",
+          "defaultValue": "Ücretsiz danışmanlık al",
           "groupId": "links"
         },
         {
@@ -22099,7 +22099,7 @@
           "displayName": "İkincil Link",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/pages/iletisim",
+          "defaultValue": "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum",
           "groupId": "links"
         },
         {

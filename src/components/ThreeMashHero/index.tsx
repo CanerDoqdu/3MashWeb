@@ -613,8 +613,10 @@ export function ThreeMashHero(props: Props) {
 
             <h1>
               <RichInline value={props.titleBeforeAmount} wordStyle={props} />{" "}
-              <span className="tmhero-money">{formattedLoss}</span>{" "}
-              <RichInline value={props.titleAfterAmount} wordStyle={props} />{" "}
+              <span className="tmhero-loss-line">
+                <span className="tmhero-money">{formattedLoss}</span>{" "}
+                <RichInline value={props.titleAfterAmount} wordStyle={props} />
+              </span>{" "}
               <span className="tmhero-em-wrap">
                 <span
                   className="tmhero-em"

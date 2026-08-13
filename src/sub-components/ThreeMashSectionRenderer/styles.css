@@ -1957,8 +1957,7 @@
   color: var(--tmr-footer-text);
   font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 13px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .tmr-footer a {
@@ -2457,6 +2456,39 @@
 
   .tmr-btn {
     width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .tmr-footer {
+    padding: 44px 0 32px;
+  }
+
+  .tmr-footer-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+    row-gap: 34px;
+  }
+
+  .tmr-footer-cols > div:first-child,
+  .tmr-footer-cols > div:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+
+  .tmr-footer p {
+    max-width: none;
+  }
+
+  .tmr-footer h6 {
+    margin-bottom: 10px;
+  }
+
+  .tmr-footer-payments {
+    gap: 12px;
+  }
+
+  .tmr-base {
+    margin-top: 34px;
   }
 }
 

@@ -99,14 +99,16 @@
 
 .tmhero-money {
   display: inline-block;
-  min-width: 5.8ch;
   color: var(--tmhero-danger);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   line-height: 1;
-  text-align: right;
   vertical-align: baseline;
   white-space: nowrap;
+}
+
+.tmhero-loss-line {
+  display: block;
 }
 
 .tmhero-em {
@@ -520,6 +522,12 @@
 
   .tmhero-calculator-side {
     min-width: 320px;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1100px) {
+  .tmhero-top {
+    align-items: center;
   }
 }
 

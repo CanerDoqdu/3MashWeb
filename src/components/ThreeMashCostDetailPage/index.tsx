@@ -1,6 +1,9 @@
 import { useMemo, useState } from "preact/hooks";
 import { Props } from "./types";
 
+const WHATSAPP_CONSULTATION_HREF =
+  "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum";
+
 type CostItem = {
   number: string;
   title: string;
@@ -325,19 +328,14 @@ export function ThreeMashCostDetailPage(props: Props) {
               )}
             />
             <div className="tm-cost-actions">
-              <a href={href(props.primaryButtonHref, "/")}>
-                <span
-                  dangerouslySetInnerHTML={richHtml(
-                    props.primaryButtonText,
-                    "Hesaplayıcıya dön →",
-                  )}
-                />
-              </a>
-              <a href={href(props.secondaryButtonHref, "/pages/iletisim")}>
+              <a
+                className="tm-cost-secondary-action"
+                href={href(props.secondaryButtonHref, WHATSAPP_CONSULTATION_HREF)}
+              >
                 <span
                   dangerouslySetInnerHTML={richHtml(
                     props.secondaryButtonText,
-                    "Ücretsiz analiz iste",
+                    "Ücretsiz danışmanlık al",
                   )}
                 />
               </a>
@@ -594,16 +592,16 @@ export function ThreeMashCostDetailPage(props: Props) {
 
         <section className="tm-cost-final">
           <div>
-            <span>SONRAKİ ADIM</span>
+            <span>ÜCRETSİZ ANALİZ</span>
             <h2>
               Kendi tekrar oranınızla <em>gerçek tabloyu</em> çıkarın.
             </h2>
           </div>
-          <a href={href(props.primaryButtonHref, "/")}>
+          <a href={WHATSAPP_CONSULTATION_HREF}>
             <span
               dangerouslySetInnerHTML={richHtml(
-                props.primaryButtonText,
-                "Hesaplayıcıya dön →",
+                props.secondaryButtonText,
+                "Ücretsiz analiz iste",
               )}
             />
           </a>
