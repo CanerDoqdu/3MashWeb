@@ -1,4 +1,4 @@
-import { useEffect } from "preact/hooks";
+import { useLayoutEffect } from "preact/hooks";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
 
 const curieM1MainImage =
@@ -43,7 +43,7 @@ function textValue(value: string | undefined, fallback: string) {
 }
 
 export default function ThreeMashPrintersSourceLanding(props: Props) {
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window === "undefined") return;
 
     const payload = {
@@ -58,8 +58,11 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
     window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: payload }));
 
     return () => {
-      delete targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__;
-      window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: { enabled: false } }));
+      window.requestAnimationFrame(() => {
+        if (targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__ !== payload) return;
+        delete targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__;
+        window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: { enabled: false } }));
+      });
     };
   }, [props.eyebrowText]);
 

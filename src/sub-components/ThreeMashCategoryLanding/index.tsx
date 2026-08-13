@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useMemo, useState } from "preact/hooks";
 import {
   createMediaSrcset,
   getDefaultSrc,
@@ -616,7 +616,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
   const productCards = data.selector.products.length ? data.selector.products : liveProductCards(liveProducts);
   const visibleCards = productCards.filter((card) => activeFilter === "all" || card.filterId === activeFilter);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window === "undefined") return;
 
     const payload = {
@@ -631,8 +631,11 @@ export default function ThreeMashCategoryLanding(props: Props) {
     window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: payload }));
 
     return () => {
-      delete targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__;
-      window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: { enabled: false } }));
+      window.requestAnimationFrame(() => {
+        if (targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__ !== payload) return;
+        delete targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__;
+        window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: { enabled: false } }));
+      });
     };
   }, [data.announcement.ctaText, data.announcement.highlight, data.announcement.href, data.announcement.text, props.eyebrowText]);
 

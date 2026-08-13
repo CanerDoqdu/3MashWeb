@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useMemo, useState } from "preact/hooks";
 import {
   addItemToCart,
   getDefaultSrc,
@@ -1004,17 +1004,21 @@ export function ThreeMashProductDetailLive(props: Props) {
     setPreviewSelection({});
   }, [data?.key]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window === "undefined") return undefined;
     publishSharedProductDetailData(data);
     const payload = data ? productAnnouncementPayload(data) : null;
-    (window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown }).__THREE_MASH_PRODUCT_ANNOUNCEMENT__ = payload;
+    const targetWindow = window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown };
+    targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__ = payload;
     window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: payload }));
 
     return () => {
-      (window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown }).__THREE_MASH_PRODUCT_ANNOUNCEMENT__ = null;
       publishSharedProductDetailData(null);
-      window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: null }));
+      window.requestAnimationFrame(() => {
+        if (targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__ !== payload) return;
+        targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__ = null;
+        window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: null }));
+      });
     };
   }, [
     data?.key,

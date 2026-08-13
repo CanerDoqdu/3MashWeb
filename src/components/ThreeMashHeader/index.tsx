@@ -21,6 +21,57 @@ import {
 import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
+import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
+import {
+  ACF_FEP_FILM_SLUG,
+  ARGENZ_HT_MULTILAYER_SLUG,
+  ARGENZ_HT_PLUS_SLUG,
+  ARGENZ_ST_MULTILAYER_SLUG,
+  CREALITY_HALOT_SKY_6K_SLUG,
+  CREALITY_HALOT_SKY_LCD_KIT_SLUG,
+  CREALITY_WASH_CURE_UW03_SLUG,
+  CRS_ALIGNER_SLUG,
+  CRS_CAST_SLUG,
+  CRS_COMPOSITE_SLUG,
+  CRS_DENTURE_SLUG,
+  CRS_FLEXIT_SLUG,
+  CRS_GINGIVA_SLUG,
+  CRS_GUIDE_SLUG,
+  CRS_IBT_SLUG,
+  CRS_MODEL_SLUG,
+  CRS_SPLINT_HARD_SLUG,
+  CRS_SPLINT_SOFT_SLUG,
+  CRS_TRAY_SLUG,
+  LAB_PRODUCT_DETAIL_DATA_BY_SLUG,
+  MASH_C1E_UV_CURING_SLUG,
+  MASH_CLEAR_SLUG,
+  MASH_CURIE_M1_DENTAL_SLUG,
+  MASH_CURIE_M1_JEWELRY_SLUG,
+  MASH_P16L_LARGE_BUILD_PLATE_SLUG,
+  MASH_P16L_LCD_SCREEN_SLUG,
+  MASH_P16L_MAINBOARD_SLUG,
+  MASH_P16L_PRINTER_SLUG,
+  MASH_P16L_RESIN_TANK_SLUG,
+  MASH_P16L_SMALL_BUILD_PLATE_SLUG,
+  MASH_STUDY_SLUG,
+  MASH_TRIAL_PINK_SLUG,
+  MASH_TRIAL_WHITE_SLUG,
+  MASH_W1E_ULTRASONIC_WASH_SLUG,
+  MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG,
+  NABERTHEM_LHT_01_16_TURBO_FIRE_SLUG,
+  NABERTHEM_LHT_02_17_LB_SPEED_SLUG,
+  NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG,
+  NABERTHEM_VL_01_12_LB_PRESS_SLUG,
+  PIOCREAT_C01_LCD_KIT_SLUG,
+  PRINTER_SPARE_PART_DETAIL_DATA_BY_SLUG,
+  resolveProductDetailData,
+  THREESHAPE_E2_SLUG,
+  THREESHAPE_E3_SLUG,
+  THREESHAPE_E4_SLUG,
+  TRASFORMER_COMP_FLOW_SLUG,
+  TRASFORMER_LIGHT_GLASS_SLUG,
+  ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG,
+} from "../../sub-components/ThreeMashProductDetailData";
 import { Props } from "./types";
 
 type MenuItem = {
@@ -112,6 +163,7 @@ const criticalHeaderCss = `
 .three-mash-header * { box-sizing: border-box; }
 
 .three-mash-header {
+  --tmh-announcement-fixed-height: 37px;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -130,6 +182,8 @@ const criticalHeaderCss = `
 
 .three-mash-header .tmh-announcement {
   width: 100%;
+  height: var(--tmh-announcement-fixed-height);
+  overflow: hidden;
   background: var(--tmh-ann-bg);
   color: var(--tmh-ann-text);
   font-size: 13px;
@@ -138,8 +192,9 @@ const criticalHeaderCss = `
 
 .three-mash-header .tmh-announcement-inner {
   width: min(100%, 1240px);
+  height: 100%;
   margin: 0 auto;
-  padding: 9px 32px;
+  padding: 0 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -161,10 +216,8 @@ const criticalHeaderCss = `
 }
  
 .three-mash-header .tmh-header {
-  position: fixed !important;
-  left: 0;
-  right: 0;
-  top: var(--tmh-sticky-top, var(--tmh-announcement-height, 34px));
+  position: sticky !important;
+  top: 0;
   width: 100%;
   z-index: 99999;
   background: color-mix(in srgb, var(--tmh-bg) 92%, transparent);
@@ -354,7 +407,7 @@ const criticalHeaderCss = `
   padding: 6px;
 }
 
-.three-mash-header .tmh-header-spacer { height: 70px; }
+.three-mash-header .tmh-header-spacer { height: 0; }
 
 @media (max-width: 1000px) {
   .three-mash-header .tmh-desktop-nav,
@@ -364,6 +417,9 @@ const criticalHeaderCss = `
 }
 
 @media (max-width: 620px) {
+  .three-mash-header {
+    --tmh-announcement-fixed-height: 56px;
+  }
   .three-mash-header .tmh-wrap,
   .three-mash-header .tmh-announcement-inner {
     padding-left: 20px;
@@ -384,7 +440,7 @@ const criticalHeaderCss = `
     width: min(var(--tmh-logo-image-width), 112px);
     height: min(var(--tmh-logo-image-height), 24px);
   }
-  .three-mash-header .tmh-header-spacer { height: 66px; }
+  .three-mash-header .tmh-header-spacer { height: 0; }
 }
 `;
 
@@ -405,7 +461,142 @@ function announcementOverridePayload(value: unknown): HeaderAnnouncementOverride
 
 function currentProductAnnouncement() {
   if (typeof window === "undefined") return null;
-  return announcementOverridePayload((window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown }).__THREE_MASH_PRODUCT_ANNOUNCEMENT__);
+  return (
+    announcementOverridePayload((window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown }).__THREE_MASH_PRODUCT_ANNOUNCEMENT__) ||
+    routeAnnouncementOverride()
+  );
+}
+
+function currentRouteKey() {
+  if (typeof window === "undefined") return "";
+  return window.location.pathname
+    .toLocaleLowerCase("tr")
+    .replace(/^\/+|\/+$/g, "")
+    .split("/")
+    .pop() || "";
+}
+
+function productAnnouncementFromData(data: ReturnType<typeof resolveProductDetailData>): HeaderAnnouncementOverride | null {
+  const productAnnouncement = data?.announcement;
+  if (!productAnnouncement || productAnnouncement.enabled === false) return null;
+  return {
+    enabled: true,
+    highlightText: productAnnouncement.strongText,
+    text: productAnnouncement.longText || "",
+    ctaText: productAnnouncement.ctaText,
+    href: productAnnouncement.ctaHref,
+  };
+}
+
+function announcementForRouteKey(routeKey: string): HeaderAnnouncementOverride | null {
+  if (!routeKey) return null;
+
+  const productAnnouncement = productAnnouncementFromData(resolveProductDetailData({ slug: routeKey }));
+  if (productAnnouncement) return productAnnouncement;
+
+  const categoryData = categoryLandingDataFromKey(routeKey);
+  if (categoryData) {
+    return {
+      enabled: true,
+      highlightText: categoryData.announcement.highlight,
+      text: categoryData.announcement.text,
+      ctaText: categoryData.announcement.ctaText,
+      href: categoryData.announcement.href,
+    };
+  }
+
+  return null;
+}
+
+function routeAnnouncementOverride(): HeaderAnnouncementOverride | null {
+  return announcementForRouteKey(currentRouteKey());
+}
+
+const firstPaintCategoryRouteKeys = [
+  "3d-yazicilar",
+  "dental-3d-yazici-recineleri",
+  "yikama-kurleme-cihazlari",
+  "masasustu-tarayicilar",
+  "zirkon-bloklar",
+  "dental-firinlar",
+  "3d-yazici-yedek-parcalari",
+  "sistemler",
+  "titanyum-diskler",
+];
+
+const firstPaintProductRouteKeys = [
+  CRS_COMPOSITE_SLUG,
+  CRS_SPLINT_HARD_SLUG,
+  CRS_SPLINT_SOFT_SLUG,
+  CRS_GUIDE_SLUG,
+  CRS_IBT_SLUG,
+  CRS_FLEXIT_SLUG,
+  CRS_ALIGNER_SLUG,
+  CRS_DENTURE_SLUG,
+  CRS_GINGIVA_SLUG,
+  CRS_MODEL_SLUG,
+  CRS_TRAY_SLUG,
+  MASH_CLEAR_SLUG,
+  CRS_CAST_SLUG,
+  MASH_STUDY_SLUG,
+  MASH_TRIAL_PINK_SLUG,
+  MASH_TRIAL_WHITE_SLUG,
+  CREALITY_HALOT_SKY_LCD_KIT_SLUG,
+  PIOCREAT_C01_LCD_KIT_SLUG,
+  ACF_FEP_FILM_SLUG,
+  MASH_P16L_MAINBOARD_SLUG,
+  MASH_P16L_LARGE_BUILD_PLATE_SLUG,
+  MASH_P16L_SMALL_BUILD_PLATE_SLUG,
+  MASH_P16L_LCD_SCREEN_SLUG,
+  MASH_P16L_RESIN_TANK_SLUG,
+  ARGENZ_ST_MULTILAYER_SLUG,
+  ARGENZ_HT_PLUS_SLUG,
+  ARGENZ_HT_MULTILAYER_SLUG,
+  MASH_P16L_PRINTER_SLUG,
+  MASH_CURIE_M1_DENTAL_SLUG,
+  MASH_CURIE_M1_JEWELRY_SLUG,
+  CREALITY_HALOT_SKY_6K_SLUG,
+  MASH_W1E_ULTRASONIC_WASH_SLUG,
+  MASH_C1E_UV_CURING_SLUG,
+  CREALITY_WASH_CURE_UW03_SLUG,
+  THREESHAPE_E2_SLUG,
+  THREESHAPE_E3_SLUG,
+  THREESHAPE_E4_SLUG,
+  NABERTHEM_LHT_02_17_LB_SPEED_SLUG,
+  NABERTHEM_LHT_01_16_TURBO_FIRE_SLUG,
+  NABERTHEM_VL_01_12_LB_PRESS_SLUG,
+  NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG,
+  MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG,
+  TRASFORMER_COMP_FLOW_SLUG,
+  TRASFORMER_LIGHT_GLASS_SLUG,
+  ...Object.keys(PRINTER_SPARE_PART_DETAIL_DATA_BY_SLUG),
+  ...Object.keys(ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG),
+  ...Object.keys(LAB_PRODUCT_DETAIL_DATA_BY_SLUG),
+];
+
+const firstPaintAnnouncementMap = Object.fromEntries(
+  Array.from(new Set([...firstPaintCategoryRouteKeys, ...firstPaintProductRouteKeys]))
+    .map((routeKey) => [routeKey, announcementForRouteKey(routeKey)] as const)
+    .filter((entry): entry is readonly [string, HeaderAnnouncementOverride] => Boolean(entry[1])),
+);
+
+function firstPaintAnnouncementScript() {
+  const payload = JSON.stringify(firstPaintAnnouncementMap).replace(/</g, "\\u003c");
+  return `
+(function(){
+  var map=${payload};
+  var path=(window.location.pathname||"").toLocaleLowerCase("tr").replace(/^\\/+|\\/+$/g,"").split("/").pop()||"";
+  var ann=map[path];
+  if(!ann)return;
+  var root=document.currentScript&&document.currentScript.closest&&document.currentScript.closest(".three-mash-header");
+  if(!root)return;
+  var strong=root.querySelector("[data-tmh-ann-highlight]");
+  var text=root.querySelector("[data-tmh-ann-text]");
+  var link=root.querySelector("[data-tmh-ann-link]");
+  if(strong)strong.textContent=ann.highlightText||"";
+  if(text)text.textContent=ann.text||"";
+  if(link){link.textContent=ann.ctaText||"";if(ann.href)link.setAttribute("href",ann.href);}
+})();`;
 }
 const defaultProductsFeature = {
   eyebrow: "YENİ · DÜNYADA İLK",
@@ -1187,50 +1378,6 @@ export function ThreeMashHeader(props: Props) {
       searchInputRef.current?.focus();
     }
   }, [isSearchOpen]);
-  useLayoutEffect(() => {
-  let frame = 0;
-
-const updateHeaderPosition = () => {
-  const header = headerRef.current;
-
-  if (!header) return;
-
-  const announcement = header.parentElement?.querySelector<HTMLElement>(".tmh-announcement");
-  const announcementHeight = announcement?.offsetHeight || 0;
-  const top = Math.max(0, announcementHeight - window.scrollY);
-
-  header.style.setProperty("--tmh-announcement-height", `${announcementHeight}px`);
-  header.style.setProperty("--tmh-sticky-top", `${top}px`);
-};
-
-  const onScroll = () => {
-    if (frame) return;
-
-    frame = window.requestAnimationFrame(() => {
-      frame = 0;
-      updateHeaderPosition();
-    });
-  };
-
-  updateHeaderPosition();
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", updateHeaderPosition);
-  const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(updateHeaderPosition) : null;
-  const announcement = headerRef.current?.parentElement?.querySelector<HTMLElement>(".tmh-announcement");
-  if (announcement) resizeObserver?.observe(announcement);
-
-  return () => {
-    window.removeEventListener("scroll", onScroll);
-    window.removeEventListener("resize", updateHeaderPosition);
-    resizeObserver?.disconnect();
-
-    if (frame) {
-      window.cancelAnimationFrame(frame);
-    }
-  };
-}, []);
-
   useEffect(() => {
     const pendingSectionId = consumePendingReferencesScroll();
     const pendingHash = pendingSectionId ? sectionHash(pendingSectionId, defaultReferencesSectionId) : window.location.hash;
@@ -1318,11 +1465,11 @@ const updateHeaderPosition = () => {
     return () => document.removeEventListener("mousedown", closeOnOutsideClick);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setProductAnnouncement(currentProductAnnouncement());
 
     function handleProductAnnouncement(event: Event) {
-      setProductAnnouncement(announcementOverridePayload((event as CustomEvent).detail));
+      setProductAnnouncement(announcementOverridePayload((event as CustomEvent).detail) || routeAnnouncementOverride());
     }
 
     window.addEventListener("three-mash:product-announcement", handleProductAnnouncement);
@@ -1513,13 +1660,16 @@ const updateHeaderPosition = () => {
     <section className="three-mash-header" style={themeStyle}>
       <style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
       {props.showAnnouncement !== false && (
-        <div className="tmh-announcement">
-          <div className="tmh-announcement-inner">
-            <b dangerouslySetInnerHTML={announcementRichText(announcementHighlightText, props)} />
-            <span dangerouslySetInnerHTML={announcementRichText(announcementText, props)} />
-            <a href={href(text(announcementHref, defaultAnnouncement.href))} dangerouslySetInnerHTML={announcementRichText(announcementCtaText, props)} />
+        <>
+          <div className="tmh-announcement">
+            <div className="tmh-announcement-inner">
+              <b data-tmh-ann-highlight dangerouslySetInnerHTML={announcementRichText(announcementHighlightText, props)} />
+              <span data-tmh-ann-text dangerouslySetInnerHTML={announcementRichText(announcementText, props)} />
+              <a data-tmh-ann-link href={href(text(announcementHref, defaultAnnouncement.href))} dangerouslySetInnerHTML={announcementRichText(announcementCtaText, props)} />
+            </div>
           </div>
-        </div>
+          <script dangerouslySetInnerHTML={{ __html: firstPaintAnnouncementScript() }} />
+        </>
       )}
 
       <header className="tmh-header" ref={headerRef}>
