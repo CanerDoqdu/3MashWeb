@@ -20,6 +20,7 @@ import {
 } from "@ikas/bp-storefront";
 import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImageUrlCandidates } from "../ThreeMashOrderLineImage";
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
+import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { Props } from "./types";
 
 type MenuItem = {
@@ -87,7 +88,6 @@ function cartItemVariantText(item: IkasOrderLineItem) {
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
-const threeMashHeaderLogoImage = "https://cdn.myikas.com/images/theme-images/4a6af8e2-cb7c-4cc8-ba17-13656d4b8670/image_3840.webp";
 const academyPageHref = "/pages/mash-academy";
 const defaultReferencesHomeHref = "/";
 const defaultReferencesSectionId = "guven";
@@ -164,7 +164,7 @@ const criticalHeaderCss = `
   position: fixed !important;
   left: 0;
   right: 0;
-  top: var(--tmh-sticky-top, 34px);
+  top: var(--tmh-sticky-top, var(--tmh-announcement-height, 34px));
   width: 100%;
   z-index: 99999;
   background: color-mix(in srgb, var(--tmh-bg) 92%, transparent);
@@ -202,23 +202,6 @@ const criticalHeaderCss = `
   flex: 0 0 auto;
   transform: translate(var(--tmh-logo-image-x), var(--tmh-logo-image-y));
   opacity: var(--tmh-logo-image-opacity);
-}
-
-.three-mash-header .tmh-logo-image-wrap::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  clip-path: inset(0 0 0 34%);
-  background: #0E0E0C;
-  pointer-events: none;
-  -webkit-mask-image: var(--tmh-logo-mask-image);
-  mask-image: var(--tmh-logo-mask-image);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
 }
 
 .three-mash-header .tmh-logo-image-wrap img,
@@ -1051,7 +1034,6 @@ function Logo({ props }: { props: Props }) {
         style={{
           width: "118px",
           height: "25px",
-          "--tmh-logo-mask-image": `url("${logoImage}")`,
         } as any}
       >
         <img src={logoImage} alt={logoImageAlt || logoText} width="118" height="25" loading="eager" decoding="sync" />
@@ -1213,7 +1195,11 @@ const updateHeaderPosition = () => {
 
   if (!header) return;
 
-  const top = Math.max(0, 34 - window.scrollY);
+  const announcement = header.parentElement?.querySelector<HTMLElement>(".tmh-announcement");
+  const announcementHeight = announcement?.offsetHeight || 0;
+  const top = Math.max(0, announcementHeight - window.scrollY);
+
+  header.style.setProperty("--tmh-announcement-height", `${announcementHeight}px`);
   header.style.setProperty("--tmh-sticky-top", `${top}px`);
 };
 
@@ -1230,10 +1216,14 @@ const updateHeaderPosition = () => {
 
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", updateHeaderPosition);
+  const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(updateHeaderPosition) : null;
+  const announcement = headerRef.current?.parentElement?.querySelector<HTMLElement>(".tmh-announcement");
+  if (announcement) resizeObserver?.observe(announcement);
 
   return () => {
     window.removeEventListener("scroll", onScroll);
     window.removeEventListener("resize", updateHeaderPosition);
+    resizeObserver?.disconnect();
 
     if (frame) {
       window.cancelAnimationFrame(frame);

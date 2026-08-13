@@ -74,7 +74,7 @@
   width: 100%;
   z-index: 99999;
 
-  top: var(--tmh-sticky-top, 34px);
+  top: var(--tmh-sticky-top, var(--tmh-announcement-height, 34px));
 
   background: color-mix(in srgb, var(--tmh-bg) 92%, transparent);
   backdrop-filter: blur(14px);
