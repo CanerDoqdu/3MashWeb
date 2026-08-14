@@ -415,18 +415,20 @@ function Configurator(props: Props) {
         {props.data.hero.selectedPrefix} <b>{props.selectedSummary}</b> {props.data.hero.summarySuffix}
       </div>
       <div className="tmpdt-act">
-        <a
-          className={`tmpdt-btn tmpdt-lime${props.isAddToCartDisabled ? " is-disabled" : ""}`}
-          href={buyHref}
-          aria-disabled={props.isAddToCartDisabled}
-          tabIndex={props.isAddToCartDisabled ? -1 : undefined}
-          onClick={(event) => {
-            event.preventDefault();
-            if (!props.isAddToCartDisabled) props.onAddToCart();
-          }}
-        >
-          {props.isAdding ? props.data.hero.addingToCartText : props.data.hero.addToCartText}
-        </a>
+       <button
+  type="button"
+  className={`tmpdt-btn tmpdt-lime${props.isAddToCartDisabled ? " is-disabled" : ""}`}
+  disabled={props.isAddToCartDisabled}
+  onClick={() => {
+    if (!props.isAddToCartDisabled) {
+      props.onAddToCart();
+    }
+  }}
+>
+  {props.isAdding
+    ? props.data.hero.addingToCartText
+    : props.data.hero.addToCartText}
+</button>
         <a className="tmpdt-btn tmpdt-line" href={props.data.hero.whatsappHref} target="_blank" rel="noopener noreferrer">
           {props.data.hero.whatsappText}
         </a>
@@ -448,54 +450,6 @@ function Configurator(props: Props) {
 
 export function ProductDetailHeroSection(props: Props) {
   const heroRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero || typeof window === "undefined") return undefined;
-
-    let frame = 0;
-    const balance = () => {
-      frame = 0;
-      const heroWidth = hero.getBoundingClientRect().width;
-      if (heroWidth <= 1000 || window.innerWidth <= 1000) {
-        hero.style.removeProperty("--tmpdt-gallery-main-height");
-        return;
-      }
-
-      const buy = hero.querySelector<HTMLElement>(".tmpdt-buy");
-      const gallery = hero.querySelector<HTMLElement>(".tmpdt-gal");
-      const thumbs = hero.querySelector<HTMLElement>(".tmpdt-thumbs");
-      if (!buy || !gallery || !thumbs) return;
-
-      const buyHeight = buy.getBoundingClientRect().height;
-      const galleryWidth = gallery.getBoundingClientRect().width || 520;
-      const thumbsHeight = thumbs.getBoundingClientRect().height;
-      const thumbsMargin = Number.parseFloat(window.getComputedStyle(thumbs).marginTop) || 0;
-      const maxMainHeight = Math.min(520, Math.max(320, galleryWidth));
-      const targetMainHeight = Math.min(maxMainHeight, Math.max(280, buyHeight - thumbsHeight - thumbsMargin));
-
-      hero.style.setProperty("--tmpdt-gallery-main-height", `${Math.round(targetMainHeight)}px`);
-    };
-
-    const schedule = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(balance);
-    };
-
-    schedule();
-    window.addEventListener("resize", schedule);
-    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(schedule);
-    observer?.observe(hero);
-    hero.querySelectorAll("img").forEach((image) => {
-      if (!image.complete) image.addEventListener("load", schedule, { once: true });
-    });
-
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("resize", schedule);
-      observer?.disconnect();
-    };
-  }, [props.data.key, props.variantGroups.length, props.selectedSummary, props.price, props.compareAtPrice]);
 
   return (
     <>

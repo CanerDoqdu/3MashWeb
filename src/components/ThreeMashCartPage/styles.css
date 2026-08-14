@@ -505,3 +505,98 @@
     width: 100%;
   }
 }
+.tmcart-coupon-slot {
+  width: 100%;
+  height: 52px;
+}
+
+/* İlk görünüm */
+
+.tmcart-coupon-start {
+  width: 100% !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  margin: 0 !important;
+  padding: 0 16px !important;
+  border: 0;
+  background: var(--tm-theme-accent, #c7f136) !important;
+  color: var(--tm-theme-text, #0e0e0c) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  cursor: pointer;
+}
+
+
+/* Kod giriş görünümü */
+
+.tmcart-coupon-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  width: 100%;
+  height: 52px;
+  border: 1px solid rgba(250, 250, 247, 0.25);
+  background: #fff;
+}
+
+.tmcart-coupon-entry input {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  padding: 0 14px;
+  background: #fff;
+  color: #0e0e0c;
+  font: inherit;
+  font-size: 13px;
+}
+
+.tmcart-coupon-entry input::placeholder {
+  color: #8f8f86;
+}
+
+.tmcart-coupon-entry button {
+  width: auto !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 16px !important;
+  border: 0 !important;
+  background: #0e0e0c !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+
+/* Kod uygulanmış görünüm */
+
+.tmcart-coupon-applied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 52px;
+  padding-left: 16px;
+  border: 1px solid var(--tm-theme-accent, #c7f136);
+}
+
+.tmcart-coupon-applied span {
+  color: #fff;
+  font-size: 13px;
+}
+
+.tmcart-coupon-applied b {
+  color: var(--tm-theme-accent, #c7f136);
+}
+
+.tmcart-coupon-applied button {
+  width: 52px !important;
+  height: 50px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  color: #fff !important;
+  font-size: 22px !important;
+}

@@ -11,7 +11,8 @@ import {
 } from "@ikas/bp-storefront";
 
 const threeMashMerchantId = "cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2";
-const orderLineImageFallbackStorageKey = "threeMashOrderLineImageFallbacks";
+const orderLineImageFallbackStorageKey =
+  "threeMashOrderLineImageFallbacks_v2";
 
 const knownOrderLineImageIds: Array<{ pattern: RegExp; imageId: string }> = [
   { pattern: /crs\s+composite/i, imageId: "d875a523-2228-44a7-818d-022312b0a44d" },
@@ -66,8 +67,9 @@ export function rememberOrderLineImageFallback(product: IkasProduct, variant: Ik
 }
 
 export async function hydrateMissingOrderLineImageFallbacks(items: IkasOrderLineItem[]) {
-  const missingItems = items.filter((item) => !item.deleted && orderLineImageUrlCandidates(item, 180).length === 0);
-  const productIds = unique(missingItems.map((item) => item.variant?.productId?.trim() || ""));
+const missingItems = items.filter(
+  (item) => !item.deleted
+);  const productIds = unique(missingItems.map((item) => item.variant?.productId?.trim() || ""));
 
   try {
     const result = productIds.length ? await bs_searchProductsById(baseStore, { productIds }) : null;
@@ -203,8 +205,17 @@ function imageRef(value: unknown): string {
     image?: unknown;
     file?: unknown;
   };
-  const nestedImage = data.image && typeof data.image === "object" ? imageRef(data.image) : "";
-  const nestedFile = data.file && typeof data.file === "object" ? imageRef(data.file) : "";
+
+  const nestedImage =
+    data.image && typeof data.image === "object"
+      ? imageRef(data.image)
+      : "";
+
+  const nestedFile =
+    data.file && typeof data.file === "object"
+      ? imageRef(data.file)
+      : "";
+
   const candidates = [
     data.url,
     data.src,
@@ -212,23 +223,58 @@ function imageRef(value: unknown): string {
     data.imageId,
     data.thumbnailUrl,
     data.thumbnailImageId,
-    data.value,
-    data.id,
     data.mainImageId,
+
+    // Actual nested image before generic object ID.
     nestedImage,
     nestedFile,
+
+    data.value,
+
+    // Generic id MUST be last.
+    data.id,
   ];
-  const found = candidates.find((candidate) => typeof candidate === "string" && candidate.trim());
+
+  const found = candidates.find(
+    (candidate) =>
+      typeof candidate === "string" &&
+      candidate.trim()
+  );
+
   return typeof found === "string" ? found.trim() : "";
+}
+
+function imageRefsFromImageLike(value: unknown): string[] {
+  if (!value || typeof value !== "object") {
+    const ref = imageRef(value);
+    return ref ? [ref] : [];
+  }
+
+  const data = value as {
+    image?: unknown;
+    file?: unknown;
+  };
+
+  return unique([
+    imageRef(data.image),
+    imageRef(data.file),
+    imageRef(value),
+  ]);
 }
 
 function imageRefsFromOrderLine(item: IkasOrderLineItem) {
   const data = item as unknown as {
     image?: unknown;
     images?: unknown;
-    product?: unknown;
-    variant?: unknown;
+    product?: {
+      image?: unknown;
+      images?: unknown;
+      mainImage?: unknown;
+      mainImageId?: unknown;
+      thumbnailImage?: unknown;
+    };
   };
+
   const variant = item.variant as unknown as {
     image?: unknown;
     images?: unknown;
@@ -236,15 +282,31 @@ function imageRefsFromOrderLine(item: IkasOrderLineItem) {
     mainImageId?: unknown;
     thumbnailImage?: unknown;
   };
+
   return [
     imageRef(data.image),
-    ...(Array.isArray(data.images) ? data.images.map(imageRef) : []),
-    imageRef(data.product),
-    imageRef(variant.mainImageId),
+
+    ...(Array.isArray(data.images)
+      ? data.images.flatMap((image) => imageRefsFromImageLike(image))
+      : []),
+
+    imageRef(data.product?.mainImage),
+    imageRef(data.product?.mainImageId),
+    imageRef(data.product?.thumbnailImage),
+    imageRef(data.product?.image),
+
+    ...(Array.isArray(data.product?.images)
+      ? data.product.images.flatMap((image) => imageRefsFromImageLike(image))
+      : []),
+
     imageRef(variant.mainImage),
+    imageRef(variant.mainImageId),
     imageRef(variant.thumbnailImage),
     imageRef(variant.image),
-    ...(Array.isArray(variant.images) ? variant.images.map(imageRef) : []),
+
+    ...(Array.isArray(variant.images)
+      ? variant.images.flatMap((image) => imageRefsFromImageLike(image))
+      : []),
   ].filter(Boolean);
 }
 

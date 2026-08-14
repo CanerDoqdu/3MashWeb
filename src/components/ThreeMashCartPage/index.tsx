@@ -4,6 +4,8 @@ import {
   changeItemQuantity,
   customerStore,
   getCart,
+  saveCouponCode,
+removeCouponCode,
   getCheckoutUrlFromCartStore,
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getOrderLineItemFormattedFinalUnitPrice,
@@ -243,6 +245,10 @@ export function ThreeMashCartPage(props: Props) {
   );
   const [cart, setCartState] = useState<IkasCart | null>(cartStore.cart);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+const [couponCode, setCouponCode] = useState("");
+const [couponLoading, setCouponLoading] = useState(false);
+const [couponMessage, setCouponMessage] = useState("");
+const [couponOpen, setCouponOpen] = useState(false);
 
   function refreshState() {
     setCustomer(customerStore.customer);
@@ -292,7 +298,48 @@ export function ThreeMashCartPage(props: Props) {
       "var(--tm-theme-text, #0e0e0c)",
     ),
   } as any;
+async function applyCoupon() {
+  const code = couponCode.trim();
 
+  if (!code || !cartStore.cart || couponLoading) return;
+
+  setCouponLoading(true);
+  setCouponMessage("");
+
+  try {
+    await saveCouponCode(cartStore.cart, code);
+    await getCart();
+    refreshState();
+
+    if (cartStore.cart?.couponCode) {
+      setCouponMessage("İndirim kodu uygulandı.");
+    } else {
+      setCouponMessage("Geçersiz indirim kodu.");
+    }
+  } catch {
+    setCouponMessage("Geçersiz indirim kodu.");
+  } finally {
+    setCouponLoading(false);
+  }
+}
+
+async function deleteCoupon() {
+  if (!cartStore.cart || couponLoading) return;
+
+  setCouponLoading(true);
+  setCouponMessage("");
+
+  try {
+    await removeCouponCode(cartStore.cart);
+    await getCart();
+    refreshState();
+
+    setCouponCode("");
+    setCouponMessage("");
+  } finally {
+    setCouponLoading(false);
+  }
+}
   async function checkout() {
     if (isCheckingOut) return;
     setIsCheckingOut(true);
@@ -352,10 +399,73 @@ export function ThreeMashCartPage(props: Props) {
               <span>{text(props.subtotalText, "Ara Toplam")}</span>
               <strong>{money(cart?.totalFinalPrice, cart)}</strong>
             </div>
+
             <div className="tmcart-summary-row tmcart-summary-total">
               <span>Toplam</span>
               <strong>{money(cart?.totalFinalPrice, cart)}</strong>
             </div>
+             <div className="tmcart-coupon-slot">
+  {cart?.couponCode ? (
+    <div className="tmcart-coupon-applied">
+      <span>
+        <b>{cart.couponCode}</b> uygulandı
+      </span>
+
+      <button
+        type="button"
+        aria-label="Promosyon kodunu kaldır"
+        onClick={() => void deleteCoupon()}
+        disabled={couponLoading}
+      >
+        ×
+      </button>
+    </div>
+  ) : couponOpen ? (
+    <div className="tmcart-coupon-entry">
+      <input
+        autoFocus
+        type="text"
+        value={couponCode}
+        placeholder="Promosyon kodu giriniz"
+        onInput={(event) =>
+          setCouponCode(
+            (event.currentTarget as HTMLInputElement).value
+          )
+        }
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            void applyCoupon();
+          }
+
+          if (event.key === "Escape") {
+            setCouponOpen(false);
+            setCouponCode("");
+            setCouponMessage("");
+          }
+        }}
+      />
+
+      <button
+        type="button"
+        onClick={() => void applyCoupon()}
+        disabled={couponLoading || !couponCode.trim()}
+      >
+        {couponLoading ? "..." : "KULLAN"}
+      </button>
+    </div>
+  ) : (
+    <button
+      type="button"
+      className="tmcart-coupon-start"
+      onClick={() => setCouponOpen(true)}
+    >
+      Promosyon kodu ekle
+    </button>
+  )}
+</div>
+            
+            
             <button type="button" onClick={checkout} disabled={isCheckingOut}>
               <span>
                 {text(props.checkoutButtonText, "ALIŞVERİŞİ TAMAMLA")}
