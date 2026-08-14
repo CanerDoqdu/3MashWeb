@@ -647,6 +647,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
   }, [liveProducts]);
   const productCards = data.selector.products.length ? data.selector.products : liveProductCards(liveProducts);
   const visibleCards = productCards.filter((card) => activeFilter === "all" || card.filterId === activeFilter);
+  const compare = data.selector.compare;
 
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
@@ -780,35 +781,71 @@ export default function ThreeMashCategoryLanding(props: Props) {
             ) : null}
           </div>
 
-          {data.selector.compare ? (
-            <>
-              <div className="tmcl-compare">
-                <table>
-                  <thead>
-                    <tr>
-                      {data.selector.compare.columns.map((column) => (
-                        <th key={column.title}>
-                          {column.title}
-                          {column.subtitle ? <span>{column.subtitle}</span> : null}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.selector.compare.rows.map((row) => (
-                      <tr key={row.label}>
-                        <td>{row.label}</td>
-                        {row.values.map((value, index) => (
-                          <td dangerouslySetInnerHTML={rich(value)} key={`${row.label}-${index}`} />
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+       {compare ? (
+  <>
+    <div className="tmcl-compare tmcl-compare-desktop">
+      <table>
+        <thead>
+          <tr>
+            {compare.columns.map((column) => (
+              <th key={column.title}>
+                {column.title}
+                {column.subtitle ? <span>{column.subtitle}</span> : null}
+              </th>
+            ))}
+          </tr>
+        </thead>
+
+        <tbody>
+          {compare.rows.map((row) => (
+            <tr key={row.label}>
+              <td>{row.label}</td>
+
+              {row.values.map((value, index) => (
+                <td
+                  dangerouslySetInnerHTML={rich(value)}
+                  key={`${row.label}-${index}`}
+                />
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div className="tmcl-compare-mobile">
+      {compare.columns.slice(1).map((column, columnIndex) => (
+        <div className="tmcl-compare-mobile-card" key={column.title}>
+          <div className="tmcl-compare-mobile-head">
+            <strong>{column.title}</strong>
+            {column.subtitle ? <span>{column.subtitle}</span> : null}
+          </div>
+
+          <div className="tmcl-compare-mobile-rows">
+            {compare.rows.map((row) => (
+              <div className="tmcl-compare-mobile-row" key={row.label}>
+                <span>{row.label}</span>
+
+                <div
+                  dangerouslySetInnerHTML={rich(
+                    row.values[columnIndex] || ""
+                  )}
+                />
               </div>
-              {data.selector.compare.noteHtml ? <p className="tmcl-note" dangerouslySetInnerHTML={rich(data.selector.compare.noteHtml)} /> : null}
-            </>
-          ) : null}
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {compare.noteHtml ? (
+      <p
+        className="tmcl-note"
+        dangerouslySetInnerHTML={rich(compare.noteHtml)}
+      />
+    ) : null}
+  </>
+) : null}
         </div>
       </section>
 

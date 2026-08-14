@@ -265,8 +265,7 @@
 .tmcl-section-head {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
-  align-items: flex-end;
+
 }
 
 .tmcl-section-head h2 {

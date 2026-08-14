@@ -260,7 +260,6 @@
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
 }
 
 .tmcl-index-line {
@@ -272,8 +271,7 @@
 .tmcl-section-head {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
-  align-items: flex-end;
+ 
 }
 
 .tmcl-section-head h2 {
@@ -619,7 +617,6 @@
   font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .tmcl-card-tag {
@@ -1732,10 +1729,7 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  .tmcl-compare table {
-    min-width: 560px;
-  }
-
+ 
   .tmcl-compare th,
   .tmcl-compare td {
     padding: 10px 12px;
@@ -2056,10 +2050,10 @@
     display: list-item;
   }
 
-  .tmcl-faq-panel > div {
-    max-height: none;
-    overflow: visible;
-  }
+.tmcl-faq-panel > div {
+  max-height: none;
+  overflow: hidden;
+}
 }
 
 @media (max-width: 420px) {
@@ -2140,5 +2134,75 @@
     margin: 2px 0 0;
     font-size: 17px;
     line-height: 1.22;
+  }
+}
+
+
+
+.tmcl-compare-mobile {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .tmcl-compare-desktop {
+    display: none;
+  }
+
+  .tmcl-compare-mobile {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .tmcl-compare-mobile-card {
+    overflow: hidden;
+    border: 1px solid var(--tmcl-line);
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  .tmcl-compare-mobile-head {
+    padding: 14px 14px 12px;
+    background: var(--tmcl-panel);
+  }
+
+  .tmcl-compare-mobile-head strong {
+    display: block;
+    color: var(--tmcl-ink);
+    font-family: "Space Grotesk", var(--tm-theme-font-heading, sans-serif);
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  .tmcl-compare-mobile-head span {
+    display: block;
+    margin-top: 3px;
+    color: var(--tmcl-lime-ink);
+    font-size: 10.5px;
+    font-weight: 600;
+  }
+
+  .tmcl-compare-mobile-row {
+    display: grid;
+    grid-template-columns: 105px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 14px;
+    border-top: 1px solid var(--tmcl-line);
+  }
+
+  .tmcl-compare-mobile-row > span {
+    color: var(--tmcl-ink);
+    font-family: "Space Grotesk", var(--tm-theme-font-heading, sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .tmcl-compare-mobile-row > div {
+    min-width: 0;
+    color: var(--tmcl-sub);
+    font-size: 12px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
   }
 }

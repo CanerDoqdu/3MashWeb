@@ -136,7 +136,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
 
       <section id="karsilastir">
         <div className="wrap">
-          <div className="idx"><span className="n">01</span><span className="t">Cihazlar</span><span className="ln" /></div>
+          <div className="idx"><span className="n">01</span>          <span className="t">CİHAZLAR</span><span className="ln" /></div>
           <div className="shead">
             <h2>İhtiyacınıza göre <span className="em">üç yol.</span></h2>
             <div className="side">En yüksek çözünürlük, en yüksek hız ya da en uygun giriş — üçü de aynı 3mash desteğiyle ve <b>gizli ücret olmadan</b> gelir.</div>
@@ -208,7 +208,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
 
       <section className="section-no-top">
         <div className="wrap">
-          <div className="idx"><span className="n">02</span><span className="t">Öne Çıkan</span><span className="ln" /></div>
+          <div className="idx"><span className="n">02</span>          <span className="t">ÖNE ÇIKAN</span><span className="ln" /></div>
           <div className="flag">
             <div>
               <div className="tag">MASH P16L · 385nm · 16K</div>
@@ -228,7 +228,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
 
       <section className="section-no-top">
         <div className="wrap">
-          <div className="idx"><span className="n">03</span><span className="t">Neden 3mash Yazıcıları Farklı</span><span className="ln" /></div>
+          <div className="idx"><span className="n">03</span>          <span className="t">NEDEN 3MASH YAZICILARI FARKLI</span><span className="ln" /></div>
           <div className="shead">
             <h2>İyi cihaz değil, <span className="em">doğru sistem.</span></h2>
             <div className="side">Hassasiyet dört şeyin bir araya gelmesiyle çıkar. 3mash yazıcıları bunları baştan düşünülerek tasarlanır.</div>
@@ -261,7 +261,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
 
       <section className="section-no-top" id="sss">
         <div className="wrap">
-          <div className="idx"><span className="n">04</span><span className="t">Sık Sorulanlar</span><span className="ln" /></div>
+          <div className="idx"><span className="n">04</span>          <span className="t">SIK SORULANLAR</span><span className="ln" /></div>
           <div className="shead"><h2>Yazıcı seçerken merak edilenler.</h2><div className="side">Diş hekimleri ve laboratuvarların en çok sorduğu sorular, net cevaplarla.</div></div>
           <div className="faq">
             <div className="qa"><details open><summary>Hangi dental 3D yazıcıyı seçmeliyim?<span className="pl">+</span></summary>

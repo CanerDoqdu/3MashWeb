@@ -65,7 +65,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
     anchorId: "secici",
     cardCtaText: "İncele",
     number: "01",
-    label: "Reçine Seçici",
+    label: "REÇİNİ SEÇİCİ",
     titlePrefix: "Hangi işe",
     titleEmphasis: "hangi reçine?",
     sideHtml:
@@ -249,7 +249,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "Öne Çıkan",
+    label: "ÖNE ÇIKAN",
     content: {
       eyebrow: "CRS COMPOSITE · CE CLASS IIa",
       titlePrefix: "Daimi kron artık",
@@ -269,7 +269,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
   },
   detail: {
     number: "03",
-    label: "İki Hat, Tek Standart",
+    label: "İKİ HAT, TEK STANDART",
     titlePrefix: "Bütçenize göre hat,",
     titleEmphasis: "kaliteye göre değil.",
     sideHtml:
@@ -302,7 +302,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
   },
   faq: {
     number: "04",
-    label: "Sık Sorulanlar",
+    label: "SIK SORULANLAR",
     title: "Reçine seçerken merak edilenler.",
     sideHtml: "Diş hekimleri ve laboratuvarların en çok sorduğu sorular, net cevaplarla.",
     items: [
@@ -379,7 +379,7 @@ export const printersCategoryData: CategoryLandingData = {
     anchorId: "karsilastir",
     cardCtaText: "İncele",
     number: "01",
-    label: "Cihazlar",
+    label: "CİHAZLAR",
     titlePrefix: "İhtiyacınıza göre",
     titleEmphasis: "üç yol.",
     sideHtml:
@@ -451,7 +451,7 @@ export const printersCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "Öne Çıkan",
+    label: "ÖNE ÇIKAN",
     content: {
       eyebrow: "MASH P16L · 385nm · 16K",
       titlePrefix: "Marjin hattı,",
@@ -470,7 +470,7 @@ export const printersCategoryData: CategoryLandingData = {
   },
   detail: {
     number: "03",
-    label: "Neden 3mash Yazıcıları Farklı",
+    label: "NEDEN 3MASH YAZICILARI FARKLI",
     titlePrefix: "İyi cihaz değil,",
     titleEmphasis: "doğru sistem.",
     sideHtml: "Hassasiyet dört şeyin bir araya gelmesiyle çıkar. 3mash yazıcıları bunları baştan düşünülerek tasarlanır.",
@@ -493,7 +493,7 @@ export const printersCategoryData: CategoryLandingData = {
   },
   faq: {
     number: "04",
-    label: "Sık Sorulanlar",
+    label: "SIK SORULANLAR",
     title: "Yazıcı seçerken merak edilenler.",
     sideHtml: "Diş hekimleri ve laboratuvarların en çok sorduğu sorular, net cevaplarla.",
     items: [
@@ -644,7 +644,7 @@ export const washCureCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "Öne Çıkan",
+    label: "ÖNE ÇIKAN",
     content: {
       eyebrow: "MASH W1E + MASH C1E",
       titlePrefix: "Yıkama ve kürleme",
@@ -663,7 +663,7 @@ export const washCureCategoryData: CategoryLandingData = {
   },
   detail: {
     number: "03",
-    label: "Neden Gerekli",
+    label: "NEDEN GEREKLİ",
     titlePrefix: "Kürleme,",
     titleEmphasis: "sonucu tamamlar.",
     sideHtml:
@@ -687,7 +687,7 @@ export const washCureCategoryData: CategoryLandingData = {
   },
   faq: {
     number: "04",
-    label: "Sık Sorulanlar",
+    label: "SIK SORULANLAR",
     title: "Yıkama ve kürleme seçerken merak edilenler.",
     sideHtml: "Baskı sonrası işlemin dental sonuç üzerindeki etkisini net cevaplarla özetledik.",
     items: [
@@ -765,7 +765,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
     anchorId: "zirkonlar",
     cardCtaText: "İncele",
     number: "01",
-    label: "Zirkon Seçici",
+    label: "ZİRKON SEÇİCİ",
     titlePrefix: "Estetik, dayanım,",
     titleEmphasis: "gradient.",
     sideHtml:
@@ -839,7 +839,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "Öne Çıkan",
+    label: "ÖNE ÇIKAN",
     content: {
       eyebrow: "ARGENZ HT+ · 1250 MPa · 45%",
       titlePrefix: "Dayanım ve estetik",
@@ -858,7 +858,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
   },
   detail: {
     number: "03",
-    label: "Seçim Mantığı",
+    label: "SEÇİM MANTIĞI",
     titlePrefix: "Zirkon blok,",
     titleEmphasis: "tek başına karar değildir.",
     sideHtml:
@@ -882,7 +882,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
   },
   faq: {
     number: "04",
-    label: "Sık Sorulanlar",
+    label: "SIK SORULANLAR",
     title: "Zirkon blok seçerken merak edilenler.",
     sideHtml: "Renk, kalınlık, materyal tipi ve sinterleme protokolü için temel karar noktaları.",
     items: [
@@ -960,7 +960,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
     anchorId: "firinlar",
     cardCtaText: "İncele",
     number: "01",
-    label: "Fırın Seçici",
+    label: "FIRIN SEÇİCİ",
     titlePrefix: "Sinterleme, press,",
     titleEmphasis: "porselen.",
     sideHtml:
@@ -1050,7 +1050,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "Öne Çıkan",
+    label: "ÖNE ÇIKAN",
     content: {
       eyebrow: "NABERTHEM LHT 02/17 LB SPEED",
       titlePrefix: "Zirkon sinterleme için",
@@ -1070,7 +1070,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
   },
   detail: {
     number: "03",
-    label: "Seçim Mantığı",
+    label: "SEÇİM MANTIĞI",
     titlePrefix: "Fırın seçimi,",
     titleEmphasis: "malzemeyle başlar.",
     sideHtml:
@@ -1094,7 +1094,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
   },
   faq: {
     number: "04",
-    label: "Sık Sorulanlar",
+    label: "SIK SORULANLAR",
     title: "Dental fırın seçerken merak edilenler.",
     sideHtml: "Sinterleme, press ve porselen akışı için temel seçim noktaları.",
     items: [
@@ -1172,7 +1172,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
     anchorId: "tarayicilar",
     cardCtaText: "İncele",
     number: "01",
-    label: "Tarayıcı Seçici",
+    label: "TARAYICI SEÇİCİ",
     titlePrefix: "Doku, implant bar,",
     titleEmphasis: "hız.",
     sideHtml:
@@ -1247,7 +1247,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "Öne Çıkan",
+    label: "ÖNE ÇIKAN",
     content: {
       eyebrow: "3SHAPE E4 · 4 μM · 9 SN",
       titlePrefix: "Hız ve hassasiyet",
@@ -1266,7 +1266,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
   },
   detail: {
     number: "03",
-    label: "Seçim Mantığı",
+    label: "TARAYICI SEÇİM",
     titlePrefix: "Tarayıcı seçimi,",
     titleEmphasis: "iş tipine bağlıdır.",
     sideHtml:
@@ -1290,7 +1290,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
   },
   faq: {
     number: "04",
-    label: "Sık Sorulanlar",
+    label: "SIK SORULANLAR",
     title: "Masaüstü tarayıcı seçerken merak edilenler.",
     sideHtml: "E2, E3 ve E4 arasında karar verirken bakılması gereken temel noktalar.",
     items: [
@@ -1368,7 +1368,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
     anchorId: "yedek-parcalar",
     cardCtaText: "İncele",
     number: "01",
-    label: "Parça Listesi",
+    label: "PARÇA LİSTESİ",
     titlePrefix: "Elektronik, tabla,",
     titleEmphasis: "tank ve film.",
     sideHtml:
@@ -1522,7 +1522,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "Öne Çıkan",
+    label: "ÖNE ÇIKAN",
     content: {
       eyebrow: "MASH P16L · 16K LCD · 385 nm",
       titlePrefix: "Mikron detay",
@@ -1542,7 +1542,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
   },
   detail: {
     number: "03",
-    label: "Servis Mantığı",
+    label: "SERVİS MANTIĞI",
     titlePrefix: "Parça değişimi,",
     titleEmphasis: "kalibrasyonla biter.",
     sideHtml:
@@ -1566,7 +1566,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
   },
   faq: {
     number: "04",
-    label: "Sık Sorulanlar",
+    label: "SIK SORULANLAR",
     title: "Yedek parça seçerken merak edilenler.",
     sideHtml: "Cihaz uyumu, kurulum ve test baskısı için temel kontrol noktaları.",
     items: [
@@ -1624,7 +1624,7 @@ export const systemsCategoryData: CategoryLandingData = {
     anchorId: "sistemler",
     cardCtaText: "İncele",
     number: "01",
-    label: "Sistem Seçici",
+    label: "SİSTEM SEÇİCİ",
     titlePrefix: "Kompozit materyal,",
     titleEmphasis: "mufla sistemi.",
     sideHtml:
@@ -1683,7 +1683,7 @@ export const systemsCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "Öne Çıkan",
+    label: "ÖNE ÇIKAN",
     content: {
       eyebrow: "TRASFORMER LIGHT GLASS",
       titlePrefix: "Kompozit restorasyonda",
@@ -1702,7 +1702,7 @@ export const systemsCategoryData: CategoryLandingData = {
   },
   detail: {
     number: "03",
-    label: "Akış Mantığı",
+    label: "AKIŞ MANTIĞI",
     titlePrefix: "Sistem ürünü,",
     titleEmphasis: "tek parça değildir.",
     sideHtml:
@@ -1726,7 +1726,7 @@ export const systemsCategoryData: CategoryLandingData = {
   },
   faq: {
     number: "04",
-    label: "Sık Sorulanlar",
+    label: "SIK SORULANLAR",
     title: "Sistem ürünleri hakkında merak edilenler.",
     sideHtml: "Trasformer Comp Flow ve Light Glass arasındaki rol ayrımı.",
     items: [
@@ -1784,7 +1784,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
     anchorId: "titanyum",
     cardCtaText: "İncele",
     number: "01",
-    label: "Titanyum Disk",
+    label: "TİTANYUM DİSK",
     titlePrefix: "Grade 5 ELI,",
     titleEmphasis: "implant üstü.",
     sideHtml:
@@ -1826,7 +1826,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "Öne Çıkan",
+    label: "ÖNE ÇIKAN",
     content: {
       eyebrow: "MESA · GRADE 5 ELI · Ø98.5 MM",
       titlePrefix: "CAD/CAM frezeleme için",
@@ -1845,7 +1845,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
   },
   detail: {
     number: "03",
-    label: "Seçim Mantığı",
+    label: "SEÇİM MANTIĞI",
     titlePrefix: "Titanyum disk,",
     titleEmphasis: "CAM akışıyla",
     titleSuffix: "seçilir.",
@@ -1870,7 +1870,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
   },
   faq: {
     number: "04",
-    label: "Sık Sorulanlar",
+    label: "SIK SORULANLAR",
     title: "Titanyum disk seçerken merak edilenler.",
     sideHtml: "Materyal, çap, CAD/CAM uyumu ve implant üstü kullanım için temel sorular.",
     items: [
