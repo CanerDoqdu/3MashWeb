@@ -1347,10 +1347,26 @@ function flowSectionId(item: FlowItem) {
 }
 
 function FlowLink({ item, wordStyle }: { item: FlowItem; wordStyle: Props }) {
+  const itemHref = href(item.href);
   const sectionId = flowSectionId(item);
+
   return (
-    <a href={href(item.href)} className="tmh-flow-link" onClick={(event) => handleReferencesClick(event, "/", sectionId)}>
-      <span className="tmh-flow-number" dangerouslySetInnerHTML={richText(item.number, wordStyle)} />
+    <a
+      href={itemHref}
+      className="tmh-flow-link"
+      onClick={(event) => {
+        if (itemHref === "/") {
+          handleHeaderAnchorNavigation(event, "/");
+          return;
+        }
+
+        handleReferencesClick(event, "/", sectionId);
+      }}
+    >
+      <span
+        className="tmh-flow-number"
+        dangerouslySetInnerHTML={richText(item.number, wordStyle)}
+      />
       <span className="tmh-flow-copy">
         <b dangerouslySetInnerHTML={richText(item.title, wordStyle)} />
         <span dangerouslySetInnerHTML={richText(item.description, wordStyle)} />
@@ -1405,21 +1421,12 @@ function scrollToHeaderAnchor(section: Element, sectionId: string, behavior: Scr
   scrollElementToCenter(headerAnchorTarget(section, sectionId), behavior);
 }
 
-function scrollToPendingHeaderAnchor(section: Element, sectionId: string, behavior: ScrollBehavior = "smooth") {
-  const target = headerAnchorTarget(section, sectionId);
-  if (sectionId === "sebep") {
-    const rect = target.getBoundingClientRect();
-    const targetTop = Math.max(0, window.scrollY + rect.top - Math.max(120, window.innerHeight * 0.42));
-    window.scrollTo({ top: targetTop, left: 0, behavior });
-    return;
-  }
-
-  if (sectionId === "cozum" || sectionId === "kurleme") {
-    scrollElementToHeaderStart(target, behavior);
-    return;
-  }
-
-  scrollElementToCenter(target, behavior);
+function scrollToPendingHeaderAnchor(
+  section: Element,
+  sectionId: string,
+  behavior: ScrollBehavior = "smooth"
+) {
+  scrollToHeaderAnchor(section, sectionId, behavior);
 }
 
 function handleHeaderAnchorNavigation(event: MouseEvent, rawHref: string | undefined) {
@@ -1573,7 +1580,7 @@ export function ThreeMashHeader(props: Props) {
   ];
 
   const whyItems: FlowItem[] = [
-    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Yılda $126K'ya varan görünmez kayıp"), description: text(props.why1Description, "Tekrarlanan işlerin kliniğinize gerçek maliyeti"), href: whyMenuHref("/#sebep") },
+    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Yılda $126K'ya varan görünmez kayıp"), description: text(props.why1Description, "Tekrarlanan işlerin kliniğinize gerçek maliyeti"), href: "/" },
     { number: text(props.why2Number, "02"), title: text(props.why2Title, "Sebep: ölçüsel hassasiyet"), description: text(props.why2Description, "250–500µm sapma bandı vs ±20µm güvenli bölge"), href: whyMenuHref("/#sebep") },
     { number: text(props.why3Number, "03"), title: text(props.why3Title, "Çözüm: uyumlu ekosistem"), description: text(props.why3Description, "Yazıcı + reçine + parametre bilgisi, birlikte kalibre"), href: whyMenuHref("/#cozum") },
     { number: text(props.why4Number, "04"), title: text(props.why4Title, "Ve kürleme — son %20'lik fark"), description: text(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"), href: whyMenuHref("/#kurleme") },
@@ -1700,9 +1707,7 @@ export function ThreeMashHeader(props: Props) {
       document.documentElement.style.scrollBehavior = "auto";
       safeHistoryReplace(`${window.location.pathname}${window.location.search}`);
       window.scrollTo(0, 0);
-      window.requestAnimationFrame(() => window.scrollTo(0, 0));
-      window.setTimeout(() => window.scrollTo(0, 0), 120);
-      window.setTimeout(() => window.scrollTo(0, 0), 360);
+     
     }
 
     const scrollToPendingSection = () => {
@@ -1716,20 +1721,20 @@ export function ThreeMashHeader(props: Props) {
         return;
       }
 
-      if (pendingSectionId) document.documentElement.style.scrollBehavior = previousScrollBehavior;
-      if (pendingSectionId) {
-        scrollToPendingHeaderAnchor(section, sectionId);
-        window.setTimeout(() => scrollToPendingHeaderAnchor(section, sectionId, "auto"), 420);
-      } else {
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+    if (pendingSectionId) {
+  scrollToPendingHeaderAnchor(section, sectionId, "smooth");
+} else {
+  section.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}
       if (pendingSectionId) safeHistoryReplace(pendingHash);
     };
 
     const timeout = window.setTimeout(() => {
-      if (pendingSectionId) window.scrollTo(0, 0);
-      frame = window.requestAnimationFrame(scrollToPendingSection);
-    }, pendingSectionId ? 1100 : 120);
+  frame = window.requestAnimationFrame(scrollToPendingSection);
+}, pendingSectionId ? 300 : 120);
 
     return () => {
       window.clearTimeout(timeout);

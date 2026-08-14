@@ -1,4 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import {
+  useEffect,
+
+  useMemo,
+  useRef,
+  useState,
+} from "preact/hooks";
 import { Props } from "./types";
 
 type Mode = "clinic" | "lab";
@@ -328,6 +334,9 @@ function StatBlock({
 }
 
 export function ThreeMashHero(props: Props) {
+  const [heroReady, setHeroReady] = useState(false);
+
+
   const presets = useMemo<Record<Mode, Preset>>(
     () => ({
       clinic: {
@@ -416,7 +425,7 @@ export function ThreeMashHero(props: Props) {
   const [work, setWork] = useState(active.workDefault);
   const [rpt, setRpt] = useState(active.rptDefault);
   const [cost, setCost] = useState(active.costDefault);
-  const [animatedLoss, setAnimatedLoss] = useState(0);
+  const [animatedLoss, setAnimatedLoss] = useState(10000);
   const heroAnimatingRef = useRef(true);
   const currentLossRef = useRef(0);
 
@@ -464,6 +473,7 @@ export function ThreeMashHero(props: Props) {
   const negative = props.negativePrefix || "";
   const positive = props.positivePrefix || "";
   const titleLoss = heroAnimatingRef.current ? animatedLoss : currentLoss;
+  
   const formattedLoss = `${currency}${formatPlain(titleLoss, props.locale)}`;
   const titleUnderlineImage = imageSource(props.titleUnderlineImageUrl);
   const showDesktopTitleUnderline = props.showTitleUnderline !== false;
@@ -496,6 +506,7 @@ export function ThreeMashHero(props: Props) {
     let animationFrame = 0;
     let startTime: number | null = null;
     const targetLoss = currentLossRef.current;
+    const startLoss = 10000;
 
     const animate = (timestamp: number) => {
       if (!heroAnimatingRef.current) return;
@@ -503,7 +514,7 @@ export function ThreeMashHero(props: Props) {
 
       const progress = Math.min((timestamp - startTime) / 1500, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setAnimatedLoss(targetLoss * eased);
+      setAnimatedLoss(startLoss + (targetLoss - startLoss) * eased);
 
       if (progress < 1) {
         animationFrame = window.requestAnimationFrame(animate);
@@ -611,7 +622,7 @@ export function ThreeMashHero(props: Props) {
   } as any;
 
   return (
-    <section className="three-mash-hero" style={themeStyle}>
+   <section className="three-mash-hero" style={themeStyle}>
       <div className="tmhero-wrap">
         <div className="tmhero-top">
           <div className="tmhero-copy">
@@ -622,10 +633,10 @@ export function ThreeMashHero(props: Props) {
 
             <h1>
               <RichInline value={props.titleBeforeAmount} wordStyle={props} />{" "}
-              <span className="tmhero-loss-line">
-                <span className="tmhero-money">{formattedLoss}</span>{" "}
-                <RichInline value={props.titleAfterAmount} wordStyle={props} />
-              </span>{" "}
+             <span className="tmhero-loss-line" style={{ display: "block" }}>
+  <span className="tmhero-money">{formattedLoss}</span>{" "}
+  <RichInline value={props.titleAfterAmount} wordStyle={props} />
+</span>{" "}
               <span className="tmhero-em-wrap">
                 <span
                   className="tmhero-em"

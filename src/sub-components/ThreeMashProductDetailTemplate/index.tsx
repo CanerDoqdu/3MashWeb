@@ -213,7 +213,7 @@ function templateStyle() {
 export function ProductDetailSectionScope({ data, children }: { data: ProductDetailTemplateData; children: ComponentChildren }) {
   const style = useMemo(templateStyle, []);
   return (
-    <section className="three-mash-product-detail-template" style={style} data-product-template-key={data.key}>
+    <section lang="tr" className="three-mash-product-detail-template" style={style} data-product-template-key={data.key}>
       {children}
     </section>
   );

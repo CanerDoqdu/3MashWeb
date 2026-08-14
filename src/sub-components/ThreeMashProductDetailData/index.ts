@@ -609,7 +609,7 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         note: "Vakanıza uygun tasarım parametrelerini ücretsiz paylaşıyoruz.",
       },
       {
-        eyebrow: "Öne Çıkan Özellikler",
+        eyebrow: "ÖNE ÇIKAN ÖZELLİKLER",
         title: "Neden CRS Composite?",
         items: [
           "Yarı saydamlık-opaklık arasında dengeli <b>translüsentlik</b>",

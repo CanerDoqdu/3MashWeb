@@ -236,8 +236,7 @@
 
 .three-mash-printers-source .shead {
   display: flex;
-  gap: 40px;
-  align-items: flex-end;
+  
   justify-content: space-between;
 }
 
