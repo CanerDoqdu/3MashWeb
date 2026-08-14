@@ -243,8 +243,11 @@ export function ThreeMashCartPage(props: Props) {
   const [customer, setCustomer] = useState<IkasCustomer | null>(
     customerStore.customer,
   );
-  const [cart, setCartState] = useState<IkasCart | null>(cartStore.cart);
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
+ const [cart, setCartState] = useState<IkasCart | null>(cartStore.cart);
+
+const [isCheckingOut, setIsCheckingOut] = useState(false);
+const [isCartReady, setIsCartReady] = useState(false);
+
 const [couponCode, setCouponCode] = useState("");
 const [couponLoading, setCouponLoading] = useState(false);
 const [couponMessage, setCouponMessage] = useState("");
@@ -267,11 +270,12 @@ const [couponOpen, setCouponOpen] = useState(false);
           cartStore.cart?.orderLineItems || [],
         );
       })
-      .finally(() => {
-        if (!mounted) return;
-        refreshState();
-      });
+     .finally(() => {
+  if (!mounted) return;
 
+  refreshState();
+  setIsCartReady(true);
+});
     return () => {
       mounted = false;
     };
@@ -357,18 +361,17 @@ async function deleteCoupon() {
       setIsCheckingOut(false);
     }
   }
-
-  if (!hasItems) {
-    return (
-      <section className="three-mash-cart-page" style={style}>
-        <EmptyCart
-          props={props}
-          count={itemCount}
-          isLoggedIn={Boolean(customer)}
-        />
-      </section>
-    );
-  }
+if (isCartReady && !hasItems) {
+  return (
+    <section className="three-mash-cart-page" style={style}>
+      <EmptyCart
+        props={props}
+        count={itemCount}
+        isLoggedIn={Boolean(customer)}
+      />
+    </section>
+  );
+}
 
   return (
     <section className="three-mash-cart-page" style={style}>
