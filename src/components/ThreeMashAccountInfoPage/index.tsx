@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
+
 import {
   customerStore,
   initCustomerStore,
@@ -7,7 +8,12 @@ import {
   saveCustomer,
   type IkasCustomer,
 } from "@ikas/bp-storefront";
+
 import { Props } from "./types";
+
+
+
+
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -107,11 +113,47 @@ function getFormFromCustomer(customer: IkasCustomer | null): AccountForm {
   };
 }
 
-export function ThreeMashAccountInfoPage(props: Props) {
+function useAccountCustomer() {
   const [isReady, setIsReady] = useState(customerStore._initialized);
+
   const [customer, setCustomer] = useState<IkasCustomer | null>(
     customerStore.customer,
   );
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (customerStore._initialized) {
+      setCustomer(customerStore.customer);
+      setIsReady(true);
+
+      return () => {
+        mounted = false;
+      };
+    }
+
+    initCustomerStore(customerStore).finally(() => {
+      if (!mounted) return;
+
+      setCustomer(customerStore.customer);
+      setIsReady(true);
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  return {
+    isReady,
+    customer,
+    setCustomer,
+  };
+}
+
+
+export function ThreeMashAccountInfoPage(props: Props) {
+ const { isReady, customer, setCustomer } = useAccountCustomer();
   const [form, setForm] = useState<AccountForm>(() =>
     getFormFromCustomer(customerStore.customer),
   );
@@ -120,21 +162,13 @@ export function ThreeMashAccountInfoPage(props: Props) {
   );
   const [status, setStatus] = useState<Status>("idle");
 
-  useEffect(() => {
-    let mounted = true;
+useEffect(() => {
+  
+  if (!isReady || !customer) return;
 
-    initCustomerStore(customerStore).finally(() => {
-      if (!mounted) return;
-      setIsReady(true);
-      setCustomer(customerStore.customer);
-      setForm(getFormFromCustomer(customerStore.customer));
-      setPhoneCountryIso(detectPhoneCountry(customerStore.customer?.phone).iso);
-    });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  setForm(getFormFromCustomer(customer));
+  setPhoneCountryIso(detectPhoneCountry(customer.phone).iso);
+}, [isReady, customer]);
 
 const fullName = useMemo(() => {
   const composed = `${form.firstName} ${form.lastName}`.trim();
@@ -247,8 +281,46 @@ const links = [
 const phoneCountry =
   phoneCountries.find((country) => country.iso === phoneCountryIso) ||
   phoneCountries[0];
+if (!isReady) {
+  return (
+    <section className="three-mash-account-info-page" style={themeStyle}>
+      <div className="tmai-shell">
+        <aside className="tmai-sidebar">
+          <span className="tmai-kicker">HESABIM</span>
 
-if (isReady && !customer) {
+          <div className="tmai-user">
+            <span className="tmai-user-name-skeleton" />
+            <span className="tmai-user-action-skeleton" />
+          </div>
+
+          <nav className="tmai-menu">
+            <h2>{text(props.profileTitle, "Kişisel Bilgilerim")}</h2>
+            {links.slice(0, 3).map((item) => (
+              <a className={item.active ? "is-active" : ""} href={item.href}>
+                {item.label}
+              </a>
+            ))}
+
+            <h2>Sipariş Bilgilerim</h2>
+            <a href="/account/orders">Siparişlerim</a>
+          </nav>
+        </aside>
+
+        <main className="tmai-main">
+          <div className="tmai-form-loading">
+            <div className="tmai-loading-title" />
+            <div className="tmai-loading-line" />
+            <div className="tmai-loading-fields" />
+          </div>
+        </main>
+      </div>
+    </section>
+  );
+}
+
+
+
+if (!customer) {
   return (
     <section
       className="three-mash-account-info-page"

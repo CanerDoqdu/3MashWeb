@@ -1,9 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import {
-  cartStore,
+ 
   createMediaSrcset,
   customerStore,
-  getCart,
+ 
   getDefaultSrc,
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getProductHref,
@@ -14,7 +14,7 @@ import {
   initCustomerStore,
   removeItem,
   searchProductList as updateProductSearchList,
-  waitForCartStoreInit,
+  
   type IkasCart,
   type IkasOrderLineItem,
   type IkasProduct,
@@ -711,6 +711,8 @@ function firstPaintAnnouncementScript() {
   if(link){link.textContent=ann.ctaText||"";if(ann.href)link.setAttribute("href",ann.href);}
 })();`;
 }
+
+
 const defaultProductsFeature = {
   eyebrow: "YENİ · DÜNYADA İLK",
   title: "MASH C1E<br>Akıllı Kürleme Cihazı",
@@ -1521,10 +1523,9 @@ export function ThreeMashHeader(props: Props) {
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
   const [activeAction, setActiveAction] = useState<ActiveAction>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-const [cart, setCart] =
-  useState<IkasCart | null>(() =>
-    getCurrentCart()
-  );
+const [cart, setCart] = useState<IkasCart | null>(
+  () => getCurrentCart()
+);
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(customerStore.customer));
   const [removingCartItemId, setRemovingCartItemId] = useState("");
   const [productsMenuLeft, setProductsMenuLeft] = useState<number | null>(null);
@@ -1550,7 +1551,7 @@ const cartItems =
     (item) =>
       !item.deleted &&
       Number(item.quantity || 0) > 0
-  ) || [];  const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
+  ) || []; const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
   const visibleCartItems = cartItems.slice(0, 4);
   const productsMenuText = sourceRichText(props.productsMenuText, defaultProductsMenuText);
   const whyMenuText = sourceRichText(props.whyMenuText, defaultWhyMenuText);
@@ -1605,12 +1606,47 @@ const cartItems =
     { number: text(props.why4Number, "04"), title: text(props.why4Title, "Ve kürleme — son %20'lik fark"), description: text(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"), href: whyMenuHref("/#kurleme") },
   ];
 
-  const profileLinks = [
-    { label: richTextValue(props.profileLink1Text, "Siparişlerim"), link: text(props.profileLink1Href, "/account/orders") },
-    { label: richTextValue(props.profileLink2Text, "Adreslerim"), link: text(props.profileLink2Href, "/account/addresses") },
-    { label: richTextValue(props.profileLink5Text, "Mash Academy"), link: academyPageTarget(props.profileLink5Href) },
-    { label: richTextValue(props.profileLink6Text, "Çıkış yap"), link: text(props.profileLink6Href, "/account/logout") },
-  ];
+const profileLinks = [
+  {
+    label: richTextValue(
+      props.profileLink1Text,
+      "Siparişlerim"
+    ),
+    link: headerRouteHref(
+      props.profileLink1Href,
+      "/account/orders"
+    ),
+  },
+  {
+    label: richTextValue(
+      props.profileLink2Text,
+      "Adreslerim"
+    ),
+    link: headerRouteHref(
+      props.profileLink2Href,
+      "/account/addresses"
+    ),
+  },
+  {
+    label: richTextValue(
+      props.profileLink5Text,
+      "Mash Academy"
+    ),
+    link: academyPageTarget(
+      props.profileLink5Href
+    ),
+  },
+  {
+    label: richTextValue(
+      props.profileLink6Text,
+      "Çıkış yap"
+    ),
+    link: headerRouteHref(
+      props.profileLink6Href,
+      "/account/logout"
+    ),
+  },
+];
   const accountMenuTitle = "Hesabım";
 
   const themeStyle = {
@@ -2001,99 +2037,18 @@ async function removeCartItem(
   setRemovingCartItemId(item.id);
 
   try {
-  await removeItem(item);
+    await removeItem(item);
 
-  publishCartFromIkasStore();
+    // IKAS store değiştiyse anında tüm siteye yayınla.
+    publishCartFromIkasStore();
 
-  void refreshGlobalCart();
-} finally {
-  setRemovingCartItemId("");
-}
-}
-useEffect(() => {
-  let mounted = true;
-
-  const applyCartState = () => {
-    if (!mounted) return;
-
-    setIsLoggedIn(Boolean(customerStore.customer));
-
-    setCart(
-      cartStore.cart
-        ? ({ ...cartStore.cart } as IkasCart)
-        : null
-    );
-  };
-
-const syncCart = async () => {
-  try {
-    await waitForCartStoreInit(cartStore);
-    await getCart();
-
-    // Önce cart UI
-    applyCartState();
-
-    // Resim fallback işlemleri arkada
-    void hydrateMissingOrderLineImageFallbacks(
-      cartStore.cart?.orderLineItems || []
-    ).then(() => {
-      applyCartState();
-    });
-  } catch {
-    applyCartState();
+    // Server doğrulaması arkada.
+    void refreshGlobalCart();
+  } finally {
+    setRemovingCartItemId("");
   }
-};
+}
 
-  void Promise.all([
-    initCustomerStore(customerStore),
-    waitForCartStoreInit(cartStore),
-  ]).then(() => syncCart());
-
-const handleCartUpdate = () => {
-  // Biz zaten cart mutation sonrası getCart() yaptık.
-  // Tekrar network isteği atma, direkt render et.
-  applyCartState();
-};
-
-const handleExternalCartSync = () => {
-  // Sayfaya geri dönüldüğünde gerçek cart'ı yeniden çek.
-  void syncCart();
-};
-
-window.addEventListener(
-  "focus",
-  handleExternalCartSync
-);
-
-window.addEventListener(
-  "ikas:open-cart-sidebar",
-  handleCartUpdate
-);
-
-window.addEventListener(
-  "3mash-cart-updated",
-  handleCartUpdate
-);
-
-  return () => {
-  mounted = false;
-
-  window.removeEventListener(
-    "focus",
-    handleExternalCartSync
-  );
-
-  window.removeEventListener(
-    "ikas:open-cart-sidebar",
-    handleCartUpdate
-  );
-
-  window.removeEventListener(
-    "3mash-cart-updated",
-    handleCartUpdate
-  );
-};
-}, []);
 
 
   return (
@@ -2281,8 +2236,11 @@ window.addEventListener(
                   onClick={() => toggleAction("store")}
                 >
                   <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
-                  {cartItemCount > 0 ? <span className="tmh-cart-badge">{cartItemCount}</span> : null}
-                </button>
+ {cartItemCount > 0 ? (
+  <span className="tmh-cart-badge">
+    {cartItemCount}
+  </span>
+) : null}         </button>
                 <div
                   className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}
                   hidden={activeAction !== "store"}
@@ -2378,6 +2336,9 @@ const image = imageCandidates[0];
         </div>
       </header>
       <div className="tmh-header-spacer" />
+      
+
+      
     </section>
   );
 }

@@ -24,6 +24,7 @@ import {
 import forgotPasswordBgImage from "../../assets/forgot-password-bg-data";
 import { Props } from "./types";
 
+
 const defaultAuthImage = forgotPasswordBgImage;
 
 function text(value: string | undefined, fallback: string) {
@@ -138,27 +139,40 @@ const personalLinks = [
     <aside className="tmau-sidebar">
       <span className="tmau-kicker">HESABIM</span>
       <div className="tmau-user">
-        <strong>{customerName(customer)}</strong>
-        <a href="/account/logout" onClick={handleLogout}>
+<strong>
+  {customer ? (
+    customerName(customer)
+  ) : (
+    <span className="tmau-user-name-skeleton" aria-hidden="true" />
+  )}
+</strong>       <a href="/account/logout" onClick={handleLogout}>
           Çıkış yap
         </a>
       </div>
 
       <nav className="tmau-menu">
         <h2>Kişisel Bilgilerim</h2>
-        {personalLinks.map((item) => (
-          <a
-            key={item.key}
-            className={active === item.key ? "is-active" : ""}
-            href={item.href}
-          >
-            {item.label}
-          </a>
-        ))}
+      {personalLinks.map((item) => (
+  <a
+    key={item.key}
+    className={active === item.key ? "is-active" : ""}
+    href={item.href}
+    onClick={(event) => {
+      event.preventDefault();
+      Router.navigate(item.href);
+    }}
+  >
+    {item.label}
+  </a>
+))}
         <h2>Sipariş Bilgilerim</h2>
      <a
   className={active === "orders" ? "is-active" : ""}
   href="/account/orders"
+  onClick={(event) => {
+    event.preventDefault();
+    Router.navigate("/account/orders");
+  }}
 >
   Siparişlerim
 </a>
@@ -423,20 +437,37 @@ const mode =
   const [ready, setReady] = useState(customerStore._initialized);
 
   useEffect(() => {
-    let mounted = true;
-    initCustomerStore(customerStore).then(async () => {
-      if (!mounted) return;
-      setCustomer(customerStore.customer);
-      setReady(true);
-      if (!customerStore.customer) return;
-      if (mode === "orders") setOrders(await getOrders(customerStore));
-      if (mode === "favorites")
-        setFavorites(await getFavoriteProducts(customerStore));
-    });
-    return () => {
-      mounted = false;
-    };
-  }, [mode]);
+  let mounted = true;
+
+  async function load() {
+    if (!customerStore._initialized) {
+      await initCustomerStore(customerStore);
+    }
+
+    if (!mounted) return;
+
+    const currentCustomer = customerStore.customer;
+
+    setCustomer(currentCustomer);
+    setReady(true);
+
+    if (!currentCustomer) return;
+
+    if (mode === "orders") {
+      setOrders(await getOrders(customerStore));
+    }
+
+    if (mode === "favorites") {
+      setFavorites(await getFavoriteProducts(customerStore));
+    }
+  }
+
+  load();
+
+  return () => {
+    mounted = false;
+  };
+}, [mode]);
 
   const addresses = customer?.addresses || [];
   const title = useMemo(() => {

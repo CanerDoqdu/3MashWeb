@@ -1080,12 +1080,15 @@ const result = await addItemToCart(
 );
 
 if (result.success) {
+  // IKAS store'u anında global state'e yayınla.
   publishCartFromIkasStore();
 
+  // Header cart panelini aç.
   window.dispatchEvent(
     new CustomEvent("ikas:open-cart-sidebar")
   );
 
+  // Server'dan arkada doğrula.
   void refreshGlobalCart();
 } else {
   setMessage(

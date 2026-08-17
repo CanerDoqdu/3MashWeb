@@ -145,7 +145,44 @@
   padding-bottom: 24px;
   border-bottom: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
 }
+.tmai-user-name-skeleton {
+  display: block;
+  width: 170px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.12);
+}
 
+.tmai-user-action-skeleton {
+  display: block;
+  width: 70px;
+  height: 16px;
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tmai-form-loading {
+  display: grid;
+  gap: 18px;
+}
+
+.tmai-loading-title {
+  width: min(360px, 70%);
+  height: 56px;
+  background: var(--tmai-sidebar, #f1f1ec);
+}
+
+.tmai-loading-line {
+  width: min(620px, 90%);
+  height: 18px;
+  background: var(--tmai-sidebar, #f1f1ec);
+}
+
+.tmai-loading-fields {
+  width: 100%;
+  height: 250px;
+  margin-top: 28px;
+  background: var(--tmai-sidebar, #f1f1ec);
+}
 .tmai-form-head h1,
 .tmai-login-required h1 {
   margin: 0;

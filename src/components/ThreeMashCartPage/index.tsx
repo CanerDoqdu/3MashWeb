@@ -25,6 +25,8 @@ import type { Props } from "./types";
 import {
   getCurrentCart,
   initGlobalCart,
+   publishCartFromIkasStore,
+  refreshGlobalCart,
   subscribeCart,
 } from "../cartState";
 
@@ -172,14 +174,14 @@ async function updateQuantity(quantity: number) {
   setIsUpdating(true);
 
   try {
-    await changeItemQuantity(item, quantity);
-    await getCart();
-
-    onChanged();
-
-    window.dispatchEvent(
-      new Event("3mash-cart-updated")
+    await changeItemQuantity(
+      item,
+      quantity
     );
+
+    publishCartFromIkasStore();
+
+    void refreshGlobalCart();
   } finally {
     setIsUpdating(false);
   }
@@ -192,18 +194,15 @@ async function updateQuantity(quantity: number) {
 
   setIsUpdating(true);
 
-  try {
-    await removeItem(item);
-    await getCart();
+try {
+  await removeItem(item);
 
-    onChanged();
+  publishCartFromIkasStore();
 
-    window.dispatchEvent(
-      new Event("3mash-cart-updated")
-    );
-  } finally {
-    setIsUpdating(false);
-  }
+  void refreshGlobalCart();
+} finally {
+  setIsUpdating(false);
+}
 }
 
   return (
@@ -264,9 +263,10 @@ export function ThreeMashCartPage(props: Props) {
   const [customer, setCustomer] = useState<IkasCustomer | null>(
     customerStore.customer,
   );
-const [cart, setCartState] = useState<IkasCart | null>(() =>
-  getCurrentCart()
-);
+const [cart, setCartState] =
+  useState<IkasCart | null>(
+    () => getCurrentCart()
+  );
 
 const [isCheckingOut, setIsCheckingOut] = useState(false);
 const [isCartReady, setIsCartReady] = useState(false);
@@ -284,21 +284,30 @@ const [couponOpen, setCouponOpen] = useState(false);
   useEffect(() => {
   let mounted = true;
 
-  const unsubscribe = subscribeCart((nextCart) => {
-    if (!mounted) return;
+  const unsubscribe = subscribeCart(
+    (nextCart) => {
+      if (!mounted) return;
 
-    setCartState(nextCart);
-    setIsCartReady(true);
-  });
+      setCartState(nextCart);
+      setIsCartReady(true);
+    }
+  );
 
+  // Cached/global cart zaten ilk render'da hazır.
   setIsCartReady(true);
 
-  void initCustomerStore(customerStore).then(() => {
+  // Customer ayrı initialize olsun.
+  void initCustomerStore(
+    customerStore
+  ).then(() => {
     if (!mounted) return;
 
-    setCustomer(customerStore.customer);
+    setCustomer(
+      customerStore.customer
+    );
   });
 
+  // Server cart arkada doğrulansın.
   void initGlobalCart();
 
   return () => {
