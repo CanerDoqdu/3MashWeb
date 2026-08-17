@@ -22,6 +22,11 @@ import {
   orderLineImageUrlCandidates,
 } from "../ThreeMashOrderLineImage";
 import type { Props } from "./types";
+import {
+  getCurrentCart,
+  initGlobalCart,
+  subscribeCart,
+} from "../cartState";
 
 const categoryProductsPageHref = "/dental-3d-yazici-recineleri";
 const legacyContinueShoppingHrefs = new Set([
@@ -259,7 +264,9 @@ export function ThreeMashCartPage(props: Props) {
   const [customer, setCustomer] = useState<IkasCustomer | null>(
     customerStore.customer,
   );
- const [cart, setCartState] = useState<IkasCart | null>(cartStore.cart);
+const [cart, setCartState] = useState<IkasCart | null>(() =>
+  getCurrentCart()
+);
 
 const [isCheckingOut, setIsCheckingOut] = useState(false);
 const [isCartReady, setIsCartReady] = useState(false);
@@ -275,27 +282,30 @@ const [couponOpen, setCouponOpen] = useState(false);
   }
 
   useEffect(() => {
-    let mounted = true;
-    Promise.all([
-      initCustomerStore(customerStore),
-      waitForCartStoreInit(cartStore),
-    ])
-      .then(async () => {
-        await getCart();
-        await hydrateMissingOrderLineImageFallbacks(
-          cartStore.cart?.orderLineItems || [],
-        );
-      })
-     .finally(() => {
-  if (!mounted) return;
+  let mounted = true;
 
-  refreshState();
+  const unsubscribe = subscribeCart((nextCart) => {
+    if (!mounted) return;
+
+    setCartState(nextCart);
+    setIsCartReady(true);
+  });
+
   setIsCartReady(true);
-});
-    return () => {
-      mounted = false;
-    };
-  }, []);
+
+  void initCustomerStore(customerStore).then(() => {
+    if (!mounted) return;
+
+    setCustomer(customerStore.customer);
+  });
+
+  void initGlobalCart();
+
+  return () => {
+    mounted = false;
+    unsubscribe();
+  };
+}, []);
 
   useEffect(() => {
   const syncCart = () => {
@@ -318,8 +328,12 @@ const [couponOpen, setCouponOpen] = useState(false);
     );
   };
 }, []);
-
-  const items = cart?.orderLineItems?.filter((item) => !item.deleted) || [];
+const items =
+  cart?.orderLineItems?.filter(
+    (item) =>
+      !item.deleted &&
+      Number(item.quantity || 0) > 0
+  ) || [];
   const itemCount = cartItemCount(items);
   const hasItems = items.length > 0;
 
