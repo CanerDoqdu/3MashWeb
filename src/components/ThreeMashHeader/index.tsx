@@ -76,6 +76,13 @@ import {
   ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG,
 } from "../../sub-components/ThreeMashProductDetailData";
 import { Props } from "./types";
+import {
+  getCurrentCart,
+  initGlobalCart,
+  publishCartFromIkasStore,
+  refreshGlobalCart,
+  subscribeCart,
+} from "../cartState";
 
 type MenuItem = {
   title?: string;
@@ -1514,7 +1521,10 @@ export function ThreeMashHeader(props: Props) {
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
   const [activeAction, setActiveAction] = useState<ActiveAction>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-const [cart, setCart] = useState<IkasCart | null>(cartStore.cart);
+const [cart, setCart] =
+  useState<IkasCart | null>(() =>
+    getCurrentCart()
+  );
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(customerStore.customer));
   const [removingCartItemId, setRemovingCartItemId] = useState("");
   const [productsMenuLeft, setProductsMenuLeft] = useState<number | null>(null);
@@ -1535,8 +1545,12 @@ const [cart, setCart] = useState<IkasCart | null>(cartStore.cart);
   const searchProductList = resolvedSearchProductList || normalizeSearchProductList(props.searchProductList);
   const searchSuggestionItems = searchSuggestions(searchProductList?.data || [], searchQuery);
   const hasSearchSuggestions = isSearchOpen && searchQuery.trim().length > 0 && searchSuggestionItems.length > 0;
-  const cartItems = isLoggedIn ? cart?.orderLineItems?.filter((item) => !item.deleted) || [] : [];
-  const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
+const cartItems =
+  cart?.orderLineItems?.filter(
+    (item) =>
+      !item.deleted &&
+      Number(item.quantity || 0) > 0
+  ) || [];  const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
   const visibleCartItems = cartItems.slice(0, 4);
   const productsMenuText = sourceRichText(props.productsMenuText, defaultProductsMenuText);
   const whyMenuText = sourceRichText(props.whyMenuText, defaultWhyMenuText);
@@ -1753,32 +1767,7 @@ const [cart, setCart] = useState<IkasCart | null>(cartStore.cart);
     };
   }, []);
 
-  useEffect(() => {
-    let mounted = true;
-    const refreshCartState = () => {
-      if (!mounted) return;
-      setIsLoggedIn(Boolean(customerStore.customer));
-   
-    };
-    const syncCartState = async () => {
-      await getCart();
-      await hydrateMissingOrderLineImageFallbacks(cartStore.cart?.orderLineItems || []);
-      refreshCartState();
-    };
-
-    Promise.all([initCustomerStore(customerStore), waitForCartStoreInit(cartStore)])
-      .then(syncCartState)
-      .catch(refreshCartState);
-
-    window.addEventListener("focus", syncCartState);
-    window.addEventListener("ikas:open-cart-sidebar", syncCartState as EventListener);
-
-    return () => {
-      mounted = false;
-      window.removeEventListener("focus", syncCartState);
-      window.removeEventListener("ikas:open-cart-sidebar", syncCartState as EventListener);
-    };
-  }, []);
+  
 
   useEffect(() => {
     const productList = searchProductList;
@@ -1821,6 +1810,18 @@ const [cart, setCart] = useState<IkasCart | null>(cartStore.cart);
     return () => window.removeEventListener("three-mash:product-announcement", handleProductAnnouncement);
   }, []);
 
+
+ useEffect(() => {
+  const unsubscribe = subscribeCart(
+    (nextCart) => {
+      setCart(nextCart);
+    }
+  );
+
+  void initGlobalCart();
+
+  return unsubscribe;
+}, []);
   useEffect(() => {
     function smoothSamePageAnchor(event: MouseEvent) {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -2000,44 +2001,100 @@ async function removeCartItem(
   setRemovingCartItemId(item.id);
 
   try {
-    await removeItem(item);
+  await removeItem(item);
+
+  publishCartFromIkasStore();
+
+  void refreshGlobalCart();
+} finally {
+  setRemovingCartItemId("");
+}
+}
+useEffect(() => {
+  let mounted = true;
+
+  const applyCartState = () => {
+    if (!mounted) return;
+
+    setIsLoggedIn(Boolean(customerStore.customer));
+
+    setCart(
+      cartStore.cart
+        ? ({ ...cartStore.cart } as IkasCart)
+        : null
+    );
+  };
+
+const syncCart = async () => {
+  try {
+    await waitForCartStoreInit(cartStore);
     await getCart();
 
-    setCart(
-      cartStore.cart
-        ? ({ ...cartStore.cart } as IkasCart)
-        : null
-    );
+    // Önce cart UI
+    applyCartState();
 
-    window.dispatchEvent(
-      new Event("3mash-cart-updated")
-    );
-  } finally {
-    setRemovingCartItemId("");
+    // Resim fallback işlemleri arkada
+    void hydrateMissingOrderLineImageFallbacks(
+      cartStore.cart?.orderLineItems || []
+    ).then(() => {
+      applyCartState();
+    });
+  } catch {
+    applyCartState();
   }
-}
+};
 
-useEffect(() => {
-  const syncCart = () => {
-    setCart(
-      cartStore.cart
-        ? ({ ...cartStore.cart } as IkasCart)
-        : null
-    );
-  };
+  void Promise.all([
+    initCustomerStore(customerStore),
+    waitForCartStoreInit(cartStore),
+  ]).then(() => syncCart());
 
-  window.addEventListener(
-    "3mash-cart-updated",
-    syncCart
-  );
+const handleCartUpdate = () => {
+  // Biz zaten cart mutation sonrası getCart() yaptık.
+  // Tekrar network isteği atma, direkt render et.
+  applyCartState();
+};
+
+const handleExternalCartSync = () => {
+  // Sayfaya geri dönüldüğünde gerçek cart'ı yeniden çek.
+  void syncCart();
+};
+
+window.addEventListener(
+  "focus",
+  handleExternalCartSync
+);
+
+window.addEventListener(
+  "ikas:open-cart-sidebar",
+  handleCartUpdate
+);
+
+window.addEventListener(
+  "3mash-cart-updated",
+  handleCartUpdate
+);
 
   return () => {
-    window.removeEventListener(
-      "3mash-cart-updated",
-      syncCart
-    );
-  };
+  mounted = false;
+
+  window.removeEventListener(
+    "focus",
+    handleExternalCartSync
+  );
+
+  window.removeEventListener(
+    "ikas:open-cart-sidebar",
+    handleCartUpdate
+  );
+
+  window.removeEventListener(
+    "3mash-cart-updated",
+    handleCartUpdate
+  );
+};
 }, []);
+
 
   return (
     <section className="three-mash-header" style={themeStyle}>
@@ -2231,7 +2288,7 @@ useEffect(() => {
                   hidden={activeAction !== "store"}
                 >
                   <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, "SEPETİM")}</span>
-                  {isLoggedIn && cartItems.length > 0 ? (
+                  {cartItems.length > 0 ? (
                     <div className="tmh-cart-live">
                       <div className="tmh-cart-count">{cartItemCount} ürün sepetinizde</div>
                       <div className="tmh-cart-live-list">

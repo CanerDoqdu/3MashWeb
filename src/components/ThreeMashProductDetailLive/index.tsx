@@ -1,5 +1,10 @@
 import { useEffect, useLayoutEffect, useMemo, useState } from "preact/hooks";
 import {
+  publishCartFromIkasStore,
+  refreshGlobalCart,
+} from "../cartState";
+
+import {
   addItemToCart,
   getDefaultSrc,
   getDisplayedProductVariantTypes,
@@ -1068,28 +1073,26 @@ async function handleAddToCart() {
       image ? [getDefaultSrc(image)] : []
     );
 
-    const result = await addItemToCart(
-      variant,
-      product,
-      1
-    );
+const result = await addItemToCart(
+  variant,
+  product,
+  1
+);
 
-    if (result.success) {
-      await getCart();
+if (result.success) {
+  publishCartFromIkasStore();
 
-      window.dispatchEvent(
-        new Event("3mash-cart-updated")
-      );
+  window.dispatchEvent(
+    new CustomEvent("ikas:open-cart-sidebar")
+  );
 
-      window.dispatchEvent(
-        new CustomEvent("ikas:open-cart-sidebar")
-      );
-    } else {
-      setMessage(
-        props.addToCartErrorMessage ||
-          "Ürün sepete eklenemedi."
-      );
-    }
+  void refreshGlobalCart();
+} else {
+  setMessage(
+    props.addToCartErrorMessage ||
+      "Ürün sepete eklenemedi."
+  );
+}
   } finally {
     setIsAdding(false);
   }

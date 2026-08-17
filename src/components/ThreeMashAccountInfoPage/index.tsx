@@ -244,32 +244,40 @@ const links = [
     href: "/account/orders",
   },
 ];
-  const phoneCountry =
-    phoneCountries.find((country) => country.iso === phoneCountryIso) ||
-    phoneCountries[0];
-if (!isReady) {
-  return null;
-}
-  if (!customer) {
-    return (
-      <section className="three-mash-account-info-page" style={themeStyle}>
-        <div className="tmai-login-required">
-          <span>HESAP</span>
-          <h1>{text(props.loginRequiredTitle, "Hesabınıza giriş yapın")}</h1>
-          <p>
-            {text(
-              props.loginRequiredText,
-              "Kişisel bilgiler, adresler, favoriler ve siparişler giriş yapan müşterinin ikas hesabından çekilir.",
-            )}
-          </p>
-          <a href={normalizeHref(props.loginHref, "/account/login")}>
-            {text(props.loginButtonText, "Giriş Yap")}
-          </a>
-        </div>
-      </section>
-    );
-  }
+const phoneCountry =
+  phoneCountries.find((country) => country.iso === phoneCountryIso) ||
+  phoneCountries[0];
 
+if (isReady && !customer) {
+  return (
+    <section
+      className="three-mash-account-info-page"
+      style={themeStyle}
+    >
+      <div className="tmai-login-required">
+        <span>HESAP</span>
+
+        <h1>
+          {text(
+            props.loginRequiredTitle,
+            "Hesabınıza giriş yapın"
+          )}
+        </h1>
+
+        <p>
+          {text(
+            props.loginRequiredText,
+            "Kişisel bilgiler, adresler, favoriler ve siparişler giriş yapan müşterinin ikas hesabından çekilir."
+          )}
+        </p>
+
+        <a href={normalizeHref(props.loginHref, "/account/login")}>
+          {text(props.loginButtonText, "Giriş Yap")}
+        </a>
+      </div>
+    </section>
+  );
+}
   return (
     <section className="three-mash-account-info-page" style={themeStyle}>
       <div className="tmai-shell">
