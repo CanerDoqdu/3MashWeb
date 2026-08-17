@@ -599,4 +599,33 @@
   background: transparent !important;
   color: #fff !important;
   font-size: 22px !important;
+}.tmcart-is-empty .tmcart-list {
+  min-height: 340px;
+  border: 1px solid var(--tmcart-line);
+  background: #fff;
+  display: grid;
+  place-items: center;
+}
+
+.tmcart-empty-message {
+  color: var(--tmcart-muted);
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  );
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  text-align: center;
+}
+
+.tmcart-is-empty .tmcart-summary button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.tmcart-is-empty .tmcart-coupon-start:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }

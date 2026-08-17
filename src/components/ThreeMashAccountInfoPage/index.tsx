@@ -136,10 +136,16 @@ export function ThreeMashAccountInfoPage(props: Props) {
     };
   }, []);
 
-  const fullName = useMemo(() => {
-    const composed = `${form.firstName} ${form.lastName}`.trim();
-    return composed || customer?.fullName || customer?.email || "Hesabım";
-  }, [customer, form.firstName, form.lastName]);
+const fullName = useMemo(() => {
+  const composed = `${form.firstName} ${form.lastName}`.trim();
+
+  return (
+    composed ||
+    customer?.fullName ||
+    customer?.email ||
+    ""
+  );
+}, [customer, form.firstName, form.lastName]);
 
   const themeStyle = {
     "--tmai-bg": themeColor(props.backgroundColor, "#FAFAF7", "--tm-theme-bg", [
@@ -219,30 +225,32 @@ export function ThreeMashAccountInfoPage(props: Props) {
     Router.navigateToPage("LOGIN");
   }
 
-  const links = [
-    {
-      label: text(props.profileTitle, "Kişisel Bilgilerim"),
-      href: "/account",
-      active: true,
-    },
-    {
-      label: text(props.addressesTitle, "Adreslerim"),
-      href: normalizeHref(props.addressesHref, "/account/addresses"),
-    },
-    {
-      label: text(props.favoritesTitle, "Beğendiğim Ürünler"),
-      href: normalizeHref(props.favoritesHref, "/account/favorites"),
-    },
-    {
-      label: text(props.ordersTitle, "Siparişlerim"),
-      href: normalizeHref(props.ordersHref, "/account/orders"),
-    },
-  ];
+const links = [
+  {
+    label: text(props.profileTitle, "Kişisel Bilgilerim"),
+    href: "/account",
+    active: true,
+  },
+  {
+    label: "Adreslerim",
+    href: "/account/addresses",
+  },
+  {
+    label: "Beğendiğim Ürünler",
+    href: "/account/favorite-products",
+  },
+  {
+    label: "Siparişlerim",
+    href: "/account/orders",
+  },
+];
   const phoneCountry =
     phoneCountries.find((country) => country.iso === phoneCountryIso) ||
     phoneCountries[0];
-
-  if (isReady && !customer) {
+if (!isReady) {
+  return null;
+}
+  if (!customer) {
     return (
       <section className="three-mash-account-info-page" style={themeStyle}>
         <div className="tmai-login-required">
@@ -268,7 +276,7 @@ export function ThreeMashAccountInfoPage(props: Props) {
         <aside className="tmai-sidebar" aria-label="Hesap menüsü">
           <span className="tmai-kicker">HESABIM</span>
           <div className="tmai-user">
-            <strong>{isReady ? fullName : "Yükleniyor..."}</strong>
+<strong>{fullName}</strong>
             <a href="/account/logout" onClick={handleLogout}>
               {text(props.logoutText, "Çıkış yap")}
             </a>
@@ -282,10 +290,11 @@ export function ThreeMashAccountInfoPage(props: Props) {
               </a>
             ))}
 
-            <h2>{text(props.ordersTitle, "Sipariş Bilgilerim")}</h2>
-            <a href={normalizeHref(props.ordersHref, "/account/orders")}>
-              {text(props.ordersTitle, "Siparişlerim")}
-            </a>
+        <h2>Sipariş Bilgilerim</h2>
+
+<a href="/account/orders">
+  Siparişlerim
+</a>
           </nav>
         </aside>
 

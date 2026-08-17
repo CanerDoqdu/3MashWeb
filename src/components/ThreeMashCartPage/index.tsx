@@ -40,6 +40,7 @@ function href(value: string | undefined, fallback: string) {
   return next && next !== "#" ? next : fallback;
 }
 
+
 function continueShoppingTarget(value: string | undefined) {
   const next = href(value, categoryProductsPageHref);
   return legacyContinueShoppingHrefs.has(next)
@@ -160,30 +161,45 @@ function CartLine({
   const image = imageCandidates[0] || imageUrl(item);
   const detail = variantText(item);
 
-  async function updateQuantity(quantity: number) {
-    if (isUpdating) return;
-    setIsUpdating(true);
-    try {
-      await changeItemQuantity(item, quantity);
-      await getCart();
-      onChanged();
-    } finally {
-      setIsUpdating(false);
-    }
-  }
+async function updateQuantity(quantity: number) {
+  if (isUpdating) return;
 
-  async function remove(event: Event) {
-    event.preventDefault();
-    if (isUpdating) return;
-    setIsUpdating(true);
-    try {
-      await removeItem(item);
-      await getCart();
-      onChanged();
-    } finally {
-      setIsUpdating(false);
-    }
+  setIsUpdating(true);
+
+  try {
+    await changeItemQuantity(item, quantity);
+    await getCart();
+
+    onChanged();
+
+    window.dispatchEvent(
+      new Event("3mash-cart-updated")
+    );
+  } finally {
+    setIsUpdating(false);
   }
+}
+
+ async function remove(event: Event) {
+  event.preventDefault();
+
+  if (isUpdating) return;
+
+  setIsUpdating(true);
+
+  try {
+    await removeItem(item);
+    await getCart();
+
+    onChanged();
+
+    window.dispatchEvent(
+      new Event("3mash-cart-updated")
+    );
+  } finally {
+    setIsUpdating(false);
+  }
+}
 
   return (
     <article className="tmcart-item">
@@ -281,6 +297,28 @@ const [couponOpen, setCouponOpen] = useState(false);
     };
   }, []);
 
+  useEffect(() => {
+  const syncCart = () => {
+    setCartState(
+      cartStore.cart
+        ? ({ ...cartStore.cart } as IkasCart)
+        : null
+    );
+  };
+
+  window.addEventListener(
+    "3mash-cart-updated",
+    syncCart
+  );
+
+  return () => {
+    window.removeEventListener(
+      "3mash-cart-updated",
+      syncCart
+    );
+  };
+}, []);
+
   const items = cart?.orderLineItems?.filter((item) => !item.deleted) || [];
   const itemCount = cartItemCount(items);
   const hasItems = items.length > 0;
@@ -363,12 +401,68 @@ async function deleteCoupon() {
   }
 if (isCartReady && !hasItems) {
   return (
-    <section className="three-mash-cart-page" style={style}>
-      <EmptyCart
-        props={props}
-        count={itemCount}
-        isLoggedIn={Boolean(customer)}
-      />
+    <section
+      className="three-mash-cart-page tmcart-is-empty"
+      style={style}
+    >
+      <div className="tmcart-wrap">
+        <header className="tmcart-head">
+          <span>SEPET</span>
+
+          <h1>{text(props.titleText, "Sepetim")}</h1>
+
+          <p>
+            0 ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve
+            adetleri kontrol edin.
+          </p>
+        </header>
+
+        <div className="tmcart-shell">
+          <div className="tmcart-list">
+            <div className="tmcart-empty-message">
+              Sepetiniz boş.
+            </div>
+          </div>
+
+          <aside className="tmcart-summary">
+            <h2>Sipariş Özeti</h2>
+
+            <div className="tmcart-summary-row">
+              <span>{text(props.subtotalText, "Ara Toplam")}</span>
+              <strong>{money(0, cart)}</strong>
+            </div>
+
+            <div className="tmcart-summary-row tmcart-summary-total">
+              <span>Toplam</span>
+              <strong>{money(0, cart)}</strong>
+            </div>
+
+            <div className="tmcart-coupon-slot">
+              <button
+                type="button"
+                className="tmcart-coupon-start"
+                disabled
+              >
+                Promosyon kodu ekle
+              </button>
+            </div>
+
+            <button type="button" disabled>
+              <span>
+                {text(props.checkoutButtonText, "SATIN AL")}
+              </span>
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" />
+              </svg>
+            </button>
+
+            <a href={continueShoppingTarget(props.continueShoppingHref)}>
+              {text(props.continueShoppingText, "Alışverişe devam et")}
+            </a>
+          </aside>
+        </div>
+      </div>
     </section>
   );
 }

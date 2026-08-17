@@ -324,8 +324,15 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
     <div className="tmpdt-gal">
       <div className="tmpdt-gal-main">
         {data.hero.galleryBadge ? <span className="tmpdt-cebadge">{data.hero.galleryBadge}</span> : null}
-        {selected ? <img src={selected.src} alt={selected.alt || data.breadcrumb.productText} loading="eager" decoding="async" /> : null}
-      </div>
+{selected ? (
+  <img
+    src={selected.src}
+    alt={selected.alt || data.breadcrumb.productText}
+    loading="eager"
+    fetchPriority="high"
+    decoding="async"
+  />
+) : null}      </div>
       {gallery.length > 1 ? (
         <div className="tmpdt-thumbs" style={{ "--tmpdt-thumb-cols": thumbColumns } as any}>
           {gallery.map((item, index) => (
@@ -336,8 +343,11 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
               aria-label={`${data.breadcrumb.productText} görsel ${index + 1}`}
               key={`${item.src}-${index}`}
             >
-              <img src={item.thumbSrc || item.src} alt="" loading="lazy" decoding="async" />
-            </button>
+<img
+  src={item.thumbSrc || item.src}
+  alt=""
+  decoding="async"
+/>            </button>
           ))}
         </div>
       ) : null}
@@ -826,7 +836,7 @@ export function ProductDetailRelatedSection({
                 <article className="tmpdt-rc tmpdt-rc-live" key={item.id}>
                   <a className="tmpdt-rc-live-link" href={item.href}>
                     <div className="tmpdt-rc-ph tmpdt-rc-live-ph">
-                      {item.category ? <span className="tmpdt-rc-tag">{item.category}</span> : null}
+                      
                       {item.image ? (
                         <img className="tmpdt-rc-live-img" src={item.image} alt={item.imageAlt || item.title} loading="lazy" decoding="async" />
                       ) : (

@@ -23,6 +23,7 @@ import {
   type IkasProduct,
   type IkasProductList,
   type IkasProductVariant,
+  getCart,
 } from "@ikas/bp-storefront";
 import ThreeMashProductDetailTemplate, {
   ProductDetailHeroSection,
@@ -1038,27 +1039,61 @@ export function ThreeMashProductDetailLive(props: Props) {
     "--tmpdt-lime": themeToken(props.accentColor, "#C7F136", "--tm-theme-accent"),
   } as any;
 
-  async function handleAddToCart() {
-    if (!product || !variant || !isInStock || isAdding) return;
-    if (!hasProductValidOptionValues(product)) {
-      setMessage(props.optionRequiredMessage || "Lütfen gerekli ürün seçeneklerini tamamlayın.");
-      return;
-    }
-    if (!isAddToCartEnabled(product)) {
-      setMessage(props.addToCartErrorMessage || "Ürün sepete eklenemiyor.");
-      return;
-    }
-    setIsAdding(true);
-    setMessage("");
-    try {
-      rememberOrderLineImageFallback(product, variant, image ? [getDefaultSrc(image)] : []);
-      const result = await addItemToCart(variant, product, 1);
-      if (result.success) window.dispatchEvent(new CustomEvent("ikas:open-cart-sidebar"));
-      else setMessage(props.addToCartErrorMessage || "Ürün sepete eklenemedi.");
-    } finally {
-      setIsAdding(false);
-    }
+async function handleAddToCart() {
+  if (!product || !variant || !isInStock || isAdding) return;
+
+  if (!hasProductValidOptionValues(product)) {
+    setMessage(
+      props.optionRequiredMessage ||
+        "Lütfen gerekli ürün seçeneklerini tamamlayın."
+    );
+    return;
   }
+
+  if (!isAddToCartEnabled(product)) {
+    setMessage(
+      props.addToCartErrorMessage ||
+        "Ürün sepete eklenemiyor."
+    );
+    return;
+  }
+
+  setIsAdding(true);
+  setMessage("");
+
+  try {
+    rememberOrderLineImageFallback(
+      product,
+      variant,
+      image ? [getDefaultSrc(image)] : []
+    );
+
+    const result = await addItemToCart(
+      variant,
+      product,
+      1
+    );
+
+    if (result.success) {
+      await getCart();
+
+      window.dispatchEvent(
+        new Event("3mash-cart-updated")
+      );
+
+      window.dispatchEvent(
+        new CustomEvent("ikas:open-cart-sidebar")
+      );
+    } else {
+      setMessage(
+        props.addToCartErrorMessage ||
+          "Ürün sepete eklenemedi."
+      );
+    }
+  } finally {
+    setIsAdding(false);
+  }
+}
 
   if (!data) {
     return (

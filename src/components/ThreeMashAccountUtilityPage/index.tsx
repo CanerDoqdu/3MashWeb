@@ -92,7 +92,7 @@ function formatOrderTotal(order: IkasOrder) {
 }
 
 function customerName(customer: IkasCustomer | null) {
-  if (!customer) return "Hesabım";
+  if (!customer) return "";
   return (
     customer.fullName ||
     `${customer.firstName || ""} ${customer.lastName || ""}`.trim() ||
@@ -116,23 +116,23 @@ function AccountSidebar({
     Router.navigateToPage("LOGIN");
   }
 
-  const personalLinks = [
-    {
-      key: "account",
-      label: "Kişisel Bilgilerim",
-      href: href(props.accountHref, "/account"),
-    },
-    {
-      key: "addresses",
-      label: "Adreslerim",
-      href: href(props.addressesHref, "/account/addresses"),
-    },
-    {
-      key: "favorites",
-      label: "Beğendiğim Ürünler",
-      href: href(props.favoritesHref, "/account/favorites"),
-    },
-  ];
+const personalLinks = [
+  {
+    key: "account",
+    label: "Kişisel Bilgilerim",
+    href: "/account",
+  },
+  {
+    key: "addresses",
+    label: "Adreslerim",
+    href: "/account/addresses",
+  },
+  {
+    key: "favorites",
+    label: "Beğendiğim Ürünler",
+    href: "/account/favorite-products",
+  },
+];
 
   return (
     <aside className="tmau-sidebar">
@@ -156,12 +156,12 @@ function AccountSidebar({
           </a>
         ))}
         <h2>Sipariş Bilgilerim</h2>
-        <a
-          className={active === "orders" ? "is-active" : ""}
-          href={href(props.ordersHref, "/account/orders")}
-        >
-          Siparişlerim
-        </a>
+     <a
+  className={active === "orders" ? "is-active" : ""}
+  href="/account/orders"
+>
+  Siparişlerim
+</a>
       </nav>
     </aside>
   );
@@ -398,7 +398,23 @@ function ProductCard({ product }: { product: IkasProduct }) {
 }
 
 export function ThreeMashAccountUtilityPage(props: Props) {
-  const mode = props.mode || "orders";
+  const pathname =
+  typeof window !== "undefined"
+    ? window.location.pathname.replace(/\/+$/, "")
+    : "";
+
+const mode =
+  pathname === "/account/addresses"
+    ? "addresses"
+    : pathname === "/account/favorite-products"
+      ? "favorites"
+      : pathname === "/account/orders"
+        ? "orders"
+        : pathname === "/account/forgot-password"
+          ? "forgot-password"
+          : pathname === "/account/recover-password"
+            ? "recover-password"
+            : props.mode || "orders";
   const [customer, setCustomer] = useState<IkasCustomer | null>(
     customerStore.customer,
   );
@@ -458,7 +474,7 @@ export function ThreeMashAccountUtilityPage(props: Props) {
             <span>
               {mode === "addresses" ? "01" : mode === "orders" ? "02" : "03"}
             </span>
-            <h1>{ready ? title : "Yükleniyor..."}</h1>
+          <h1>{title}</h1>
             <p>{pageDescription(mode)}</p>
           </header>
 

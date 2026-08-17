@@ -164,9 +164,14 @@ function cartImageUrl(item: IkasOrderLineItem) {
   return orderLineImageUrl(item, 180);
 }
 
-function handleOrderLineImageError(event: Event, candidates: string[]) {
+function handleOrderLineImageError(
+  event: Event,
+  candidates: string[]
+) {
   const image = event.currentTarget as HTMLImageElement;
-  const nextIndex = Number(image.dataset.imageIndex || 0) + 1;
+  const nextIndex =
+    Number(image.dataset.imageIndex || 0) + 1;
+
   const next = candidates[nextIndex];
 
   if (next) {
@@ -1509,7 +1514,7 @@ export function ThreeMashHeader(props: Props) {
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
   const [activeAction, setActiveAction] = useState<ActiveAction>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [cart, setCart] = useState<IkasCart | null>(cartStore.cart);
+const [cart, setCart] = useState<IkasCart | null>(cartStore.cart);
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(customerStore.customer));
   const [removingCartItemId, setRemovingCartItemId] = useState("");
   const [productsMenuLeft, setProductsMenuLeft] = useState<number | null>(null);
@@ -1646,6 +1651,8 @@ export function ThreeMashHeader(props: Props) {
     }
   }, [isSearchOpen]);
 
+  
+
   useEffect(() => {
     const productList = normalizeSearchProductList(props.searchProductList);
     setResolvedSearchProductList(productList);
@@ -1751,7 +1758,7 @@ export function ThreeMashHeader(props: Props) {
     const refreshCartState = () => {
       if (!mounted) return;
       setIsLoggedIn(Boolean(customerStore.customer));
-      setCart(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
+   
     };
     const syncCartState = async () => {
       await getCart();
@@ -1981,20 +1988,56 @@ export function ThreeMashHeader(props: Props) {
     goToSearchMatch();
   }
 
-  async function removeCartItem(event: Event, item: IkasOrderLineItem) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (removingCartItemId) return;
+async function removeCartItem(
+  event: Event,
+  item: IkasOrderLineItem
+) {
+  event.preventDefault();
+  event.stopPropagation();
 
-    setRemovingCartItemId(item.id);
-    try {
-      await removeItem(item);
-      await getCart();
-      setCart(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
-    } finally {
-      setRemovingCartItemId("");
-    }
+  if (removingCartItemId) return;
+
+  setRemovingCartItemId(item.id);
+
+  try {
+    await removeItem(item);
+    await getCart();
+
+    setCart(
+      cartStore.cart
+        ? ({ ...cartStore.cart } as IkasCart)
+        : null
+    );
+
+    window.dispatchEvent(
+      new Event("3mash-cart-updated")
+    );
+  } finally {
+    setRemovingCartItemId("");
   }
+}
+
+useEffect(() => {
+  const syncCart = () => {
+    setCart(
+      cartStore.cart
+        ? ({ ...cartStore.cart } as IkasCart)
+        : null
+    );
+  };
+
+  window.addEventListener(
+    "3mash-cart-updated",
+    syncCart
+  );
+
+  return () => {
+    window.removeEventListener(
+      "3mash-cart-updated",
+      syncCart
+    );
+  };
+}, []);
 
   return (
     <section className="three-mash-header" style={themeStyle}>
@@ -2193,8 +2236,14 @@ export function ThreeMashHeader(props: Props) {
                       <div className="tmh-cart-count">{cartItemCount} ürün sepetinizde</div>
                       <div className="tmh-cart-live-list">
                         {visibleCartItems.map((item) => {
-                          const imageCandidates = orderLineImageUrlCandidates(item, 180);
-                          const image = imageCandidates[0] || cartImageUrl(item);
+                    const imageCandidates = Array.from(
+  new Set([
+    cartImageUrl(item),
+    ...orderLineImageUrlCandidates(item, 180),
+  ].filter(Boolean))
+) as string[];
+
+const image = imageCandidates[0];
                           const variant = cartItemVariantText(item);
                           return (
                             <div className="tmh-cart-live-item" key={item.id}>

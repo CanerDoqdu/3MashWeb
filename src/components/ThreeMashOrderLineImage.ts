@@ -37,17 +37,48 @@ export function orderLineImageUrl(item: IkasOrderLineItem, size: number) {
   return orderLineImageUrlCandidates(item, size)[0] || "";
 }
 
-export function orderLineImageUrlCandidates(item: IkasOrderLineItem, size: number) {
+export function orderLineImageUrlCandidates(
+  item: IkasOrderLineItem,
+  size: number
+) {
   const knownImage = knownProductImageUrl(item, size);
-  if (knownImage) return [knownImage];
 
-  const refs = [
+  if (knownImage) {
+    return [knownImage];
+  }
+
+  const refs = unique([
     imageRef(getIkasOrderLineVariantMainImage(item.variant)),
     ...imageRefsFromOrderLine(item),
     ...storedImageRefsForOrderLine(item),
-  ];
+  ].filter(Boolean));
 
-  return unique(refs.flatMap((ref) => imageRefCandidates(ref, size)));
+  // First try the actual URLs/references directly.
+  const directUrls = refs
+    .map((ref) => {
+      if (typeof ref !== "string") return null;
+
+      // Already a usable URL
+      if (
+        ref.startsWith("http://") ||
+        ref.startsWith("https://") ||
+        ref.startsWith("//")
+      ) {
+        return ref;
+      }
+
+      return null;
+    })
+    .filter(Boolean) as string[];
+
+  if (directUrls.length) {
+    return unique(directUrls);
+  }
+
+  // Only use URL guessing as a last resort.
+  return unique(
+    refs.flatMap((ref) => imageRefCandidates(ref, size)).slice(0, 3)
+  );
 }
 
 export function rememberOrderLineImageFallback(product: IkasProduct, variant: IkasProductVariant, extraRefs: string[] = []) {
@@ -332,20 +363,40 @@ function storedImageRefsForOrderLine(item: IkasOrderLineItem) {
 
 function imageRefCandidates(ref: string, size: number) {
   const trimmed = ref.trim();
+
   if (!trimmed) return [];
-  if (/^https?:\/\//i.test(trimmed)) return [trimmed];
-  if (trimmed.startsWith("theme-images/")) return [`https://cdn.myikas.com/images/${trimmed}/image_${size}.webp`, `https://cdn.myikas.com/images/${trimmed}/image_1080.webp`];
-  if (isBareImageId(trimmed)) {
+
+  // Already a complete image URL — use it directly.
+  if (/^https?:\/\//i.test(trimmed)) {
+    return [trimmed];
+  }
+
+  // Theme images already have a known CDN structure.
+  if (trimmed.startsWith("theme-images/")) {
     return [
-      merchantImageUrl(trimmed, size),
-      merchantImageUrl(trimmed, 1080),
       `https://cdn.myikas.com/images/${trimmed}/image_${size}.webp`,
-      `https://cdn.myikas.com/images/${trimmed}/image_1080.webp`,
     ];
   }
 
+  // Ikas image ID: let getSrc generate the canonical URL.
   const src = getSrc({ id: trimmed }, size);
-  return src.includes("/undefined/") || src.includes("/null/") ? [`https://cdn.myikas.com/images/${trimmed}/image_${size}.webp`] : [src];
+
+  if (
+    src &&
+    !src.includes("/undefined/") &&
+    !src.includes("/null/")
+  ) {
+    return [src];
+  }
+
+  // Last-resort fallback only.
+  if (isBareImageId(trimmed)) {
+    return [
+      `https://cdn.myikas.com/images/${trimmed}/image_${size}.webp`,
+    ];
+  }
+
+  return [];
 }
 
 function unique(values: string[]) {
