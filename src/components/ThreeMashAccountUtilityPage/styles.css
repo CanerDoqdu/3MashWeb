@@ -3,8 +3,8 @@
   width: 100%;
   min-height: calc(100vh - 78px);
   overflow-x: hidden;
-  background: var(--tm-theme-bg, #fafaf7);
-  color: var(--tm-theme-text, #0e0e0c);
+  background: var(--tmau-bg, var(--tm-theme-bg, #fafaf7));
+  color: var(--tmau-text, var(--tm-theme-text, #0e0e0c));
   font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
 }
 
@@ -18,15 +18,17 @@
 }
 
 .tmau-shell {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
-  gap: 24px;
-  align-items: stretch;
-  width: 100%;
-  max-width: 1180px;
-  min-height: inherit;
-  margin: 0 auto;
-  padding: clamp(42px, 5.4vw, 76px) 24px clamp(62px, 7vw, 104px);
+  display:grid;
+  grid-template-columns:minmax(280px,0.42fr) minmax(0,1fr);
+  gap:24px;
+  align-items:start;
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+  padding:
+    clamp(42px,5.4vw,76px)
+    24px
+    clamp(62px,7vw,104px);
 }
 .tmau-user-name-skeleton {
   display: inline-block;
@@ -47,6 +49,7 @@
   align-content: start;
   gap: 28px;
   padding: clamp(30px, 4vw, 44px);
+  border: 0;
   background: var(--tm-theme-dark, #0e0e0c);
   color: var(--tm-theme-bg, #fafaf7);
 }
@@ -177,6 +180,146 @@
   color: var(--tm-theme-sub, #55554e);
   font-size: 15px;
   line-height: 1.62;
+}
+
+.tmai-form,
+.tmau-form {
+  width: 100%;
+}
+
+.tmai-fields,
+.tmau-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.tmai-field,
+.tmau-field {
+  display: grid;
+  gap: 8px;
+}
+
+.tmai-field span,
+.tmau-field span {
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.tmai-field span.is-required::first-letter,
+.tmau-field span.is-required::first-letter {
+  color: #dc2626;
+}
+
+.tmai-field input,
+.tmau-field input {
+  width: 100%;
+  height: 48px;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  border-radius: 0;
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  padding: 0 14px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+}
+
+.tmai-field input:focus,
+.tmau-field input:focus {
+  border-color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  background: #fff;
+}
+
+.tmai-phone-input,
+.tmau-phone-input {
+  display: grid;
+  grid-template-columns: 62px 58px minmax(0, 1fr);
+  align-items: center;
+  min-height: 48px;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+}
+
+.tmai-phone-country,
+.tmau-phone-country {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 14px;
+  align-items: center;
+  gap: 4px;
+  width: 48px;
+  height: 24px;
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+.tmai-phone-country img,
+.tmau-phone-country img {
+  display: block;
+  width: 28px;
+  height: 19px;
+  object-fit: cover;
+}
+
+.tmai-phone-country select,
+.tmau-phone-country select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.tmai-phone-input b,
+.tmau-phone-input b {
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.tmai-phone-input input,
+.tmau-phone-input input {
+  height: 46px;
+  border: 0;
+  background: transparent;
+  padding: 0 12px 0 0;
+}
+
+.tmai-field input:disabled,
+.tmau-field input:disabled {
+  background: #eef0ec;
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  opacity: 1;
+}
+
+.tmai-submit,
+.tmau-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 338px);
+  min-height: 52px;
+  margin: 30px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--tmai-accent, var(--tm-theme-accent, #c7f136));
+  color: var(--tmai-button-text, var(--tm-theme-text, #0e0e0c));
+  font: inherit;
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .tmau-list {
@@ -328,6 +471,10 @@
   font-size: 15px;
   font-weight: 800;
   text-decoration: none;
+}
+
+.tmau-account-pending {
+  min-height: clamp(320px, 44vw, 560px);
 }
 
 .tmau-auth {
@@ -648,6 +795,12 @@
     padding: 18px;
   }
 
+  .tmai-fields,
+  .tmau-fields {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
   .tmau-products {
     gap: 12px;
   }
@@ -668,7 +821,9 @@
   }
 
   .tmau-login-required a,
-  .tmau-auth-submit {
+  .tmau-auth-submit,
+  .tmai-submit,
+  .tmau-submit {
     width: 100%;
   }
 }

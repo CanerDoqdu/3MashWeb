@@ -12,9 +12,9 @@ import {
   getProductVariantMainImage,
   getSelectedProductVariant,
   initCustomerStore,
-  logout,
   recoverPassword,
   Router,
+  saveCustomer,
   type IkasCustomer,
   type IkasCustomerAddress,
   type IkasImage,
@@ -22,10 +22,39 @@ import {
   type IkasProduct,
 } from "@ikas/bp-storefront";
 import forgotPasswordBgImage from "../../assets/forgot-password-bg-data";
+import ThreeMashAccountLayout from "../ThreeMashAccountLayout";
 import { Props } from "./types";
+import type { Props as AccountInfoProps } from "../ThreeMashAccountInfoPage/types";
 
 
 const defaultAuthImage = forgotPasswordBgImage;
+
+type DashboardProps = Props & Partial<AccountInfoProps>;
+
+type AccountForm = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+};
+
+type FormStatus = "idle" | "loading" | "success" | "error";
+
+const phoneCountries = [
+  { iso: "TR", name: "Türkiye", dialCode: "+90" },
+  { iso: "US", name: "United States", dialCode: "+1" },
+  { iso: "GB", name: "United Kingdom", dialCode: "+44" },
+  { iso: "DE", name: "Germany", dialCode: "+49" },
+  { iso: "FR", name: "France", dialCode: "+33" },
+  { iso: "NL", name: "Netherlands", dialCode: "+31" },
+  { iso: "IT", name: "Italy", dialCode: "+39" },
+  { iso: "ES", name: "Spain", dialCode: "+34" },
+  { iso: "AE", name: "United Arab Emirates", dialCode: "+971" },
+  { iso: "SA", name: "Saudi Arabia", dialCode: "+966" },
+  { iso: "IQ", name: "Iraq", dialCode: "+964" },
+  { iso: "AZ", name: "Azerbaijan", dialCode: "+994" },
+  { iso: "SL", name: "Sierra Leone", dialCode: "+232" },
+];
 
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
@@ -34,6 +63,116 @@ function text(value: string | undefined, fallback: string) {
 function href(value: string | undefined, fallback: string) {
   const next = value?.trim();
   return next && next !== "#" ? next : fallback;
+}
+
+function numeric(
+  value: number | undefined,
+  fallback: number,
+  min: number,
+  max: number,
+) {
+  const next = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(next)) return fallback;
+  return Math.min(max, Math.max(min, next));
+}
+
+function themeColor(
+  input: string | undefined,
+  fallback: string,
+  token: string,
+  legacyDefaults: string[] = [],
+) {
+  const trimmed = input?.trim();
+  const normalized = trimmed?.toLowerCase();
+  const defaults = [fallback, ...legacyDefaults].map((item) =>
+    item.toLowerCase(),
+  );
+
+  if (!trimmed || (normalized && defaults.includes(normalized))) {
+    return `var(${token}, ${fallback})`;
+  }
+
+  return trimmed;
+}
+
+function detectPhoneCountry(value: string | null | undefined) {
+  const phone = value?.trim() || "";
+  return (
+    [...phoneCountries]
+      .sort((a, b) => b.dialCode.length - a.dialCode.length)
+      .find((country) => phone.startsWith(country.dialCode)) ||
+    phoneCountries[0]
+  );
+}
+
+function stripPhoneDialCode(value: string | null | undefined) {
+  const phone = value?.trim() || "";
+  const country = detectPhoneCountry(phone);
+  return phone.startsWith(country.dialCode)
+    ? phone.slice(country.dialCode.length).trim()
+    : phone;
+}
+
+function phoneForSave(localPhone: string, dialCode: string) {
+  const trimmed = localPhone.trim();
+  if (!trimmed) return null;
+  if (trimmed.startsWith("+")) return trimmed;
+  return `${dialCode}${trimmed.replace(/\s+/g, "")}`;
+}
+
+function getFormFromCustomer(customer: IkasCustomer | null): AccountForm {
+  return {
+    firstName: customer?.firstName || "",
+    lastName: customer?.lastName || "",
+    phone: stripPhoneDialCode(customer?.phone),
+    email: customer?.email || "",
+  };
+}
+
+function dashboardStyle(props: DashboardProps) {
+  return {
+    "--tmai-bg": themeColor(props.backgroundColor, "#FAFAF7", "--tm-theme-bg", [
+      "#ffffff",
+      "#fff",
+    ]),
+    "--tmai-sidebar": themeColor(
+      props.sidebarColor,
+      "#F1F1EC",
+      "--tm-theme-panel",
+      ["#f7f7f5", "#ffffff", "#fff"],
+    ),
+    "--tmai-text": themeColor(props.textColor, "#0E0E0C", "--tm-theme-text", [
+      "#050505",
+      "#000000",
+      "#111111",
+    ]),
+    "--tmai-muted": themeColor(
+      props.mutedTextColor,
+      "#55554e",
+      "--tm-theme-sub",
+      ["#9698a3", "#777777"],
+    ),
+    "--tmai-line": themeColor(props.lineColor, "#E6E6E0", "--tm-theme-line", [
+      "#e6e6e1",
+      "#e5e5e5",
+    ]),
+    "--tmai-accent": themeColor(
+      props.accentColor,
+      "#C7F136",
+      "--tm-theme-accent",
+      ["#dbfa37"],
+    ),
+    "--tmai-button-text": themeColor(
+      props.buttonTextColor,
+      "#0E0E0C",
+      "--tm-theme-text",
+      ["#ffffff", "#fff"],
+    ),
+    "--tmai-dark": "var(--tm-theme-dark, #0E0E0C)",
+    "--tmai-max": `${numeric(props.maxWidth, 1180, 960, 1760)}px`,
+    "--tmai-pad-top": `${numeric(props.sectionPaddingTop, 52, 0, 180)}px`,
+    "--tmai-pad-bottom": `${numeric(props.sectionPaddingBottom, 86, 24, 240)}px`,
+  };
 }
 
 function imageIdToUrl(value: string) {
@@ -92,96 +231,9 @@ function formatOrderTotal(order: IkasOrder) {
   return `${symbol} ${Number(order.totalFinalPrice || 0).toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-function customerName(customer: IkasCustomer | null) {
-  if (!customer) return "";
-  return (
-    customer.fullName ||
-    `${customer.firstName || ""} ${customer.lastName || ""}`.trim() ||
-    customer.email ||
-    "Hesabım"
-  );
-}
-
-function AccountSidebar({
-  customer,
-  props,
-  active,
-}: {
-  customer: IkasCustomer | null;
-  props: Props;
-  active: string;
-}) {
-  async function handleLogout(event: Event) {
-    event.preventDefault();
-    await logout(customerStore);
-    Router.navigateToPage("LOGIN");
-  }
-
-const personalLinks = [
-  {
-    key: "account",
-    label: "Kişisel Bilgilerim",
-    href: "/account",
-  },
-  {
-    key: "addresses",
-    label: "Adreslerim",
-    href: "/account/addresses",
-  },
-  {
-    key: "favorites",
-    label: "Beğendiğim Ürünler",
-    href: "/account/favorite-products",
-  },
-];
-
-  return (
-    <aside className="tmau-sidebar">
-      <span className="tmau-kicker">HESABIM</span>
-      <div className="tmau-user">
-<strong>
-  {customer ? (
-    customerName(customer)
-  ) : (
-    <span className="tmau-user-name-skeleton" aria-hidden="true" />
-  )}
-</strong>       <a href="/account/logout" onClick={handleLogout}>
-          Çıkış yap
-        </a>
-      </div>
-
-      <nav className="tmau-menu">
-        <h2>Kişisel Bilgilerim</h2>
-      {personalLinks.map((item) => (
-  <a
-    key={item.key}
-    className={active === item.key ? "is-active" : ""}
-    href={item.href}
-    onClick={(event) => {
-      event.preventDefault();
-      Router.navigate(item.href);
-    }}
-  >
-    {item.label}
-  </a>
-))}
-        <h2>Sipariş Bilgilerim</h2>
-     <a
-  className={active === "orders" ? "is-active" : ""}
-  href="/account/orders"
-  onClick={(event) => {
-    event.preventDefault();
-    Router.navigate("/account/orders");
-  }}
->
-  Siparişlerim
-</a>
-      </nav>
-    </aside>
-  );
-}
-
 function pageDescription(mode: string) {
+  if (mode === "account")
+    return "Hesap bilgileriniz, sipariş ve destek süreçlerinde kullanılan müşteri kaydınızla eşleşir.";
   if (mode === "addresses")
     return "Teslimat ve fatura adreslerinizi hesabınıza bağlı olarak görüntüleyin.";
   if (mode === "favorites")
@@ -189,12 +241,210 @@ function pageDescription(mode: string) {
   return "Sipariş geçmişinizi, tarih ve toplam bilgileriyle birlikte kontrol edin.";
 }
 
+function modeFromPathname(pathname: string, fallback: string) {
+  if (pathname === "/account") return "account";
+  if (pathname === "/account/addresses") return "addresses";
+  if (pathname === "/account/favorites" || pathname === "/account/favorite-products")
+    return "favorites";
+  if (pathname === "/account/orders") return "orders";
+  if (pathname === "/account/forgot-password") return "forgot-password";
+  if (pathname === "/account/recover-password") return "recover-password";
+  return fallback || "orders";
+}
+
+function AccountProfileForm({
+  customer,
+  ready,
+  setCustomer,
+  props,
+}: {
+  customer: IkasCustomer;
+  ready: boolean;
+  setCustomer: (customer: IkasCustomer | null) => void;
+  props: DashboardProps;
+}) {
+  const [form, setForm] = useState<AccountForm>(() =>
+    getFormFromCustomer(customer),
+  );
+  const [phoneCountryIso, setPhoneCountryIso] = useState(
+    () => detectPhoneCountry(customer.phone).iso,
+  );
+  const [status, setStatus] = useState<FormStatus>("idle");
+
+  useEffect(() => {
+    setForm(getFormFromCustomer(customer));
+    setPhoneCountryIso(detectPhoneCountry(customer.phone).iso);
+  }, [customer]);
+
+  const phoneCountry =
+    phoneCountries.find((country) => country.iso === phoneCountryIso) ||
+    phoneCountries[0];
+
+  function updateField(field: keyof AccountForm, value: string) {
+    setForm((current) => ({ ...current, [field]: value }));
+    if (status !== "idle") setStatus("idle");
+  }
+
+  async function submit(event: Event) {
+    event.preventDefault();
+    if (status === "loading") return;
+
+    setStatus("loading");
+
+    const nextCustomer: IkasCustomer = {
+      ...customer,
+      firstName: form.firstName.trim(),
+      lastName: form.lastName.trim() || null,
+      phone: phoneForSave(form.phone, phoneCountry.dialCode),
+    };
+
+    const success = await saveCustomer(customerStore, nextCustomer);
+
+    if (success) {
+      setCustomer(customerStore.customer || nextCustomer);
+      setForm(getFormFromCustomer(customerStore.customer || nextCustomer));
+      setStatus("success");
+      return;
+    }
+
+    setStatus("error");
+  }
+
+  return (
+    <form className="tmai-form tmau-form" onSubmit={submit}>
+      <header className="tmai-form-head tmau-main-head">
+        <span>01</span>
+        <h1>{text(props.formTitle, "Kişisel Bilgilerim")}</h1>
+        <p>{pageDescription("account")}</p>
+      </header>
+
+      <div className="tmai-fields tmau-fields">
+        <label className="tmai-field tmau-field">
+          <span className="is-required">
+            * {text(props.firstNameLabel, "Ad")}
+          </span>
+          <input
+            value={form.firstName}
+            autoComplete="given-name"
+            required
+            onInput={(event) =>
+              updateField(
+                "firstName",
+                (event.currentTarget as HTMLInputElement).value,
+              )
+            }
+          />
+        </label>
+
+        <label className="tmai-field tmau-field">
+          <span className="is-required">
+            * {text(props.lastNameLabel, "Soyad")}
+          </span>
+          <input
+            value={form.lastName}
+            autoComplete="family-name"
+            required
+            onInput={(event) =>
+              updateField(
+                "lastName",
+                (event.currentTarget as HTMLInputElement).value,
+              )
+            }
+          />
+        </label>
+
+        <label className="tmai-field tmau-field">
+          <span>{text(props.phoneLabel, "Telefon")}</span>
+          <div className="tmai-phone-input tmau-phone-input">
+            <label
+              className="tmai-phone-country tmau-phone-country"
+              aria-label="Telefon ülke kodu"
+            >
+              <img
+                src={`https://cdn.myikas.com/sf/assets/flags/3x2/${phoneCountry.iso}.svg`}
+                alt={phoneCountry.iso}
+              />
+              <span aria-hidden="true">⌄</span>
+              <select
+                value={phoneCountry.iso}
+                onChange={(event) =>
+                  setPhoneCountryIso(
+                    (event.currentTarget as HTMLSelectElement).value,
+                  )
+                }
+              >
+                {phoneCountries.map((country) => (
+                  <option
+                    value={country.iso}
+                  >{`${country.name} ${country.dialCode}`}</option>
+                ))}
+              </select>
+            </label>
+            <b>{phoneCountry.dialCode}</b>
+            <input
+              value={form.phone}
+              autoComplete="tel"
+              inputMode="tel"
+              pattern="\\d{7,14}"
+              onInput={(event) =>
+                updateField(
+                  "phone",
+                  (event.currentTarget as HTMLInputElement).value,
+                )
+              }
+            />
+          </div>
+        </label>
+
+        <label className="tmai-field tmau-field">
+          <span className="is-required">
+            * {text(props.emailLabel, "Email")}
+          </span>
+          <input value={form.email} autoComplete="email" type="email" disabled />
+        </label>
+      </div>
+
+      <button
+        className="tmai-submit tmau-submit"
+        type="submit"
+        disabled={!ready || status === "loading"}
+      >
+        {status === "loading"
+          ? text(props.savingText, "Kaydediliyor...")
+          : text(props.saveButtonText, "Kaydet")}
+      </button>
+
+      {status !== "idle" && (
+        <p className={`tmai-status tmau-status is-${status}`}>
+          {status === "success"
+            ? text(props.successMessage, "Bilgileriniz güncellendi.")
+            : status === "error"
+              ? text(
+                  props.errorMessage,
+                  "Bilgiler kaydedilemedi. Lütfen tekrar deneyin.",
+                )
+              : text(props.savingText, "Kaydediliyor...")}
+        </p>
+      )}
+    </form>
+  );
+}
+
+function modeFromHref(nextHref: string, fallback: string) {
+  const pathname =
+    typeof window !== "undefined"
+      ? new URL(nextHref, window.location.origin).pathname.replace(/\/+$/, "")
+      : nextHref.replace(/\/+$/, "");
+
+  return modeFromPathname(pathname, fallback);
+}
+
 function AuthShell({
   props,
   active,
   children,
 }: {
-  props: Props;
+  props: DashboardProps;
   active: "forgot" | "recover";
   children: preact.ComponentChildren;
 }) {
@@ -238,7 +488,7 @@ function AuthShell({
   );
 }
 
-function ForgotPasswordView({ props }: { props: Props }) {
+function ForgotPasswordView({ props }: { props: DashboardProps }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -296,7 +546,7 @@ function ForgotPasswordView({ props }: { props: Props }) {
   );
 }
 
-function RecoverPasswordView({ props }: { props: Props }) {
+function RecoverPasswordView({ props }: { props: DashboardProps }) {
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
   const [status, setStatus] = useState<
@@ -411,30 +661,52 @@ function ProductCard({ product }: { product: IkasProduct }) {
   );
 }
 
-export function ThreeMashAccountUtilityPage(props: Props) {
-  const pathname =
-  typeof window !== "undefined"
-    ? window.location.pathname.replace(/\/+$/, "")
-    : "";
-
-const mode =
-  pathname === "/account/addresses"
-    ? "addresses"
-    : pathname === "/account/favorite-products"
-      ? "favorites"
-      : pathname === "/account/orders"
-        ? "orders"
-        : pathname === "/account/forgot-password"
-          ? "forgot-password"
-          : pathname === "/account/recover-password"
-            ? "recover-password"
-            : props.mode || "orders";
+export function ThreeMashAccountUtilityPage(props: DashboardProps) {
+  const [mode, setMode] = useState(() =>
+    modeFromPathname(
+      typeof window !== "undefined"
+        ? window.location.pathname.replace(/\/+$/, "")
+        : "",
+      props.mode,
+    ),
+  );
   const [customer, setCustomer] = useState<IkasCustomer | null>(
     customerStore.customer,
   );
   const [orders, setOrders] = useState<IkasOrder[]>([]);
   const [favorites, setFavorites] = useState<IkasProduct[]>([]);
   const [ready, setReady] = useState(customerStore._initialized);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    function handlePopState() {
+      setMode(
+        modeFromPathname(
+          window.location.pathname.replace(/\/+$/, ""),
+          props.mode,
+        ),
+      );
+    }
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [props.mode]);
+
+  function handleAccountNavigate(nextHref: string) {
+    const nextMode = modeFromHref(nextHref, props.mode);
+
+    if (nextMode === "forgot-password" || nextMode === "recover-password") {
+      Router.navigate(nextHref);
+      return;
+    }
+
+    setMode(nextMode);
+
+    if (typeof window !== "undefined") {
+      window.history.pushState({}, "", nextHref);
+    }
+  }
 
   useEffect(() => {
   let mounted = true;
@@ -480,10 +752,24 @@ const mode =
   if (mode === "forgot-password") return <ForgotPasswordView props={props} />;
   if (mode === "recover-password") return <RecoverPasswordView props={props} />;
 
+  if (!ready && !customer) {
+    return (
+      <section
+        className="tmau-page three-mash-account-info-page"
+        style={dashboardStyle(props)}
+      >
+        <div className="tmau-account-pending" aria-hidden="true" />
+      </section>
+    );
+  }
+
   if (ready && !customer) {
     return (
-      <section className="tmau-page">
-        <div className="tmau-login-required">
+      <section
+        className="tmau-page three-mash-account-info-page"
+        style={dashboardStyle(props)}
+      >
+        <div className="tmau-login-required tmai-login-required">
           <span>HESAP</span>
           <h1>Hesabınıza giriş yapın</h1>
           <p>
@@ -497,17 +783,35 @@ const mode =
   }
 
   return (
-    <section className={`tmau-page is-${mode}`}>
-      <div className="tmau-shell">
-        <AccountSidebar customer={customer} props={props} active={mode} />
-        <main className="tmau-main">
-          <header className="tmau-main-head">
+    <section
+      className={`tmau-page three-mash-account-info-page is-${mode}`}
+      style={dashboardStyle(props)}
+    >
+      <ThreeMashAccountLayout
+        props={props}
+        active={mode}
+        customer={customer}
+        isReady={ready}
+        onNavigate={handleAccountNavigate}
+      >
+          {mode === "account" && customer && (
+            <AccountProfileForm
+              customer={customer}
+              ready={ready}
+              setCustomer={setCustomer}
+              props={props}
+            />
+          )}
+
+          {mode !== "account" && (
+            <header className="tmau-main-head">
             <span>
               {mode === "addresses" ? "01" : mode === "orders" ? "02" : "03"}
             </span>
           <h1>{title}</h1>
             <p>{pageDescription(mode)}</p>
           </header>
+          )}
 
           {mode === "addresses" && (
             <div className="tmau-list">
@@ -554,8 +858,7 @@ const mode =
               )}
             </div>
           )}
-        </main>
-      </div>
+      </ThreeMashAccountLayout>
     </section>
   );
 }
