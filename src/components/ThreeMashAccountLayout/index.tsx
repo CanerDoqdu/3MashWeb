@@ -148,8 +148,8 @@ export default function ThreeMashAccountLayout({
 
           <h2>
             {text(
-              props?.profileTitle,
-              "Kişisel Bilgilerim",
+              props?.accountGroupTitle,
+              "Hesap Yönetimi",
             )}
           </h2>
 
