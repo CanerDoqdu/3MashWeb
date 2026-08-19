@@ -8416,7 +8416,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "ÜRÜN ARAMA",
-          "groupId": "content"
+          "groupId": "header"
         },
         {
           "name": "titleText",
@@ -8424,7 +8424,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Arama",
-          "groupId": "content"
+          "groupId": "header"
         },
         {
           "name": "descriptionText",
@@ -8432,7 +8432,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Güncel ürün kataloğunu keşfedin; yayındaki ürünleri tek yerden inceleyin.",
-          "groupId": "content"
+          "groupId": "header"
         },
         {
           "name": "searchPlaceholder",
@@ -8440,7 +8440,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ürün adı, kategori, marka",
-          "groupId": "content"
+          "groupId": "search-filter"
         },
         {
           "name": "searchLabel",
@@ -8448,7 +8448,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Arama",
-          "groupId": "content"
+          "groupId": "search-filter"
         },
         {
           "name": "searchQueryParam",
@@ -8456,7 +8456,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "q",
-          "groupId": "content"
+          "groupId": "search-filter"
         },
         {
           "name": "sortLabel",
@@ -8464,7 +8464,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Sırala",
-          "groupId": "content"
+          "groupId": "search-filter"
         },
         {
           "name": "productCountSuffix",
@@ -8472,7 +8472,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "ürün",
-          "groupId": "content"
+          "groupId": "search-filter"
         },
         {
           "name": "stockedCountSuffix",
@@ -8480,7 +8480,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "stokta",
-          "groupId": "content"
+          "groupId": "search-filter"
         },
         {
           "name": "emptyTitle",
@@ -8488,7 +8488,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ürün bulunamadı",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "emptyMessage",
@@ -8496,7 +8496,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Bu listeye bağlı aktif ürün yok veya filtreler sonucu ürün kalmadı.",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "setupMessage",
@@ -8504,7 +8504,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Arama sayfasının çalışması için Ürün Listesi alanını Tüm Ürünler olarak bağlayın.",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "viewProductText",
@@ -8512,7 +8512,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ürünü İncele",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "discountText",
@@ -8520,7 +8520,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "İndirim",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "fallbackCategoryText",
@@ -8528,7 +8528,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "3MASH",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "priceRequestText",
@@ -8536,7 +8536,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Teklif Alın",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "prevPageText",
@@ -8544,7 +8544,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Önceki",
-          "groupId": "content"
+          "groupId": "pagination"
         },
         {
           "name": "nextPageText",
@@ -8552,7 +8552,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Sonraki",
-          "groupId": "content"
+          "groupId": "pagination"
         },
         {
           "name": "inStockText",
@@ -8560,7 +8560,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Stokta",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "outOfStockText",
@@ -8568,7 +8568,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Stok Yok",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "skuText",
@@ -8576,7 +8576,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "SKU",
-          "groupId": "content"
+          "groupId": "cards-empty"
         },
         {
           "name": "showSearch",
@@ -8624,7 +8624,7 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#f6f7f3",
-          "groupId": "style"
+          "groupId": "appearance"
         },
         {
           "name": "textColor",
@@ -8632,7 +8632,7 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#11130f",
-          "groupId": "style"
+          "groupId": "appearance"
         },
         {
           "name": "mutedTextColor",
@@ -8640,7 +8640,7 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#62675d",
-          "groupId": "style"
+          "groupId": "appearance"
         },
         {
           "name": "cardColor",
@@ -8648,7 +8648,7 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#ffffff",
-          "groupId": "style"
+          "groupId": "appearance"
         },
         {
           "name": "lineColor",
@@ -8656,7 +8656,7 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#dfe3da",
-          "groupId": "style"
+          "groupId": "appearance"
         },
         {
           "name": "accentColor",
@@ -8664,26 +8664,44 @@
           "type": "COLOR",
           "required": false,
           "defaultValue": "#c7f136",
-          "groupId": "style"
+          "groupId": "appearance"
         }
       ],
       "propGroups": [
         {
           "id": "data",
-          "name": "Data",
-          "description": "ikas ürün listesi veri kaynağı"
+          "name": "Veri",
+          "description": "Canlı ürün listesi"
         },
         {
-          "id": "content",
-          "name": "Content"
+          "id": "header",
+          "name": "01. Başlık ve Açıklama",
+          "description": "Sayfa üstü etiket, ana başlık ve açıklama"
+        },
+        {
+          "id": "search-filter",
+          "name": "02. Arama ve Sıralama",
+          "description": "Arama kutusu, sıralama ve ürün sayıları"
+        },
+        {
+          "id": "cards-empty",
+          "name": "03. Ürün Kartları ve Boş Durum",
+          "description": "Kart metinleri, butonlar ve boş durum mesajları"
+        },
+        {
+          "id": "pagination",
+          "name": "04. Sayfalama",
+          "description": "Önceki/Sonraki sayfa buton metinleri"
         },
         {
           "id": "layout",
-          "name": "Yerleşim"
+          "name": "05. Gösterim Ayarları",
+          "description": "Arama, stok, SKU ve navigasyon gösterim anahtarları"
         },
         {
-          "id": "style",
-          "name": "Style"
+          "id": "appearance",
+          "name": "Renk & Görünüm",
+          "description": "Arka plan, kart, yazı ve çizgi renkleri"
         }
       ]
     },
@@ -28456,7 +28474,7 @@
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": false,
-          "groupId": "content"
+          "groupId": "header"
         },
         {
           "name": "titleText",
@@ -28464,7 +28482,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Sık Sorulan Sorular",
-          "groupId": "content"
+          "groupId": "header"
         },
         {
           "name": "resinSectionTitle",
@@ -28472,7 +28490,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "3D Yazıcı Reçineleri",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion1",
@@ -28480,7 +28498,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "1 kg Custom Composite (Kompozit) reçinesinden kaç üye iş alabiliriz ?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer1",
@@ -28488,7 +28506,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>1000-1200 üye arasında iş alabilirsiniz.</p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion2",
@@ -28496,7 +28514,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Kompozit reçinesinin kırılma direnci nedir ?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer2",
@@ -28504,7 +28522,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>Kompozit reçinesinin kırılma direnci, baskılar 3D Printer’dan çıkartılıp alkol ile yıkandıktan sonra 135-145 Mpa arasındadır. Baskı sonrası yapılan post kürleme işleminden sonra ise bu değer 150-155 Mpa ‘a kadar çıkmaktadır.</p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion3",
@@ -28512,7 +28530,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Kompozit reçinesi hasta ağzında tat veya koku bırakır mı ?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer3",
@@ -28520,7 +28538,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>Kompozit reçinesi hasta ağız da tat ve koku bırakmaz. Ayrıca Custom Composite Resin biyouyumludur.</p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion4",
@@ -28528,7 +28546,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Kompozit reçinesinin dirençli olması için tavsiye edilen tasarım parametreleri nelerdir ?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer4",
@@ -28536,7 +28554,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>Kompozit reçinesinin dirençli olması için tavsiye ettiğimiz en önemli parametre duvar kalınlığıdır. Tasarlanan işin duvar kalınlığının minimum 0,08 mm olması gerekmektedir. Hasta ağzına yapılacak geçici işler eğer 5 üyenin üzerinde ise 2 parça halinde gönderilmesi hasta ağzında oluşabilecek basıncı azaltacak ve dayanımı arttıracaktır. Full işlerde hasta ağzına uygulanacak geçicinin 3-4 üyelik parçalara bölünmesini tavsiye ederiz.</p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion5",
@@ -28544,7 +28562,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Kompozit reçinesi klinik uygulamalar için şırınga kompozitler ile uyumlu mudur ?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer5",
@@ -28552,7 +28570,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>Kompozit reçinesi klinik uygulamalarında kullanılan şırınga kompozitler ile birebir uyumludur. Yapılan geçici işlerin üzerine şırınga kompozitler ile istenilen ekleme yapılabilir.</p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion6",
@@ -28560,7 +28578,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Kompozit reçinesi vakaya özgü olarak daimi amaç ile kullanılabilir mi?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer6",
@@ -28568,7 +28586,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>Kompozit reçinemiz; tek üyelerde, laminelerde, inley, onley ve overlay işlemlerinde daimi olarak kullanılabilir.</p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion7",
@@ -28576,7 +28594,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "1 kg Custom Model reçinesinden kaç model baskısı alabiliriz ?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer7",
@@ -28584,7 +28602,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>40-50 model arasında baskı alabilirsiniz. </p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion8",
@@ -28592,7 +28610,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Model reçinesi ile implant kütüphanelerini uyumlayabilir miyiz ?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer8",
@@ -28600,7 +28618,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>İmplant kütüphaneleri tasarım programlarının içindedir. Üreteceğiniz güdüklü veya analoglu modellerde, kullandığınız 3D yazıcıya özgü parametreler ile model reçinesini uyumlayabilirsiniz.</p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion9",
@@ -28608,7 +28626,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Güdüklü model üretimi için tavsiye ettiğiniz parametreleriniz bulunuyor mu ?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer9",
@@ -28616,7 +28634,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>Güdüklü model üretimi için parametrelerimiz hazırdır.</p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinQuestion10",
@@ -28624,7 +28642,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "1 kg Custom Cast (Döküm) reçinesinden kaç üye iş alabiliriz ?",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "resinAnswer10",
@@ -28632,7 +28650,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>2000 – 2500 üye arasında iş alabilirsiniz. </p>",
-          "groupId": "content"
+          "groupId": "resins-faq"
         },
         {
           "name": "printerSectionTitle",
@@ -28640,7 +28658,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "3D Yazıcılar",
-          "groupId": "content"
+          "groupId": "printers-faq"
         },
         {
           "name": "printerQuestion1",
@@ -28648,7 +28666,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "3D yazıcı teknolojileri nelerdir ?",
-          "groupId": "content"
+          "groupId": "printers-faq"
         },
         {
           "name": "printerAnswer1",
@@ -28656,7 +28674,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>SLA (Stereolitografi) teknolojisi reçineyi ışıkla sertleştirerek çalışan bir 3D Printer teknolojisidir. Reçineyi kürleyecek ışık kaynağı lazerdir.&nbsp; &nbsp; &nbsp; </p><p><br></p><p>DLP (Digital Light Processing) Stereolitografi’ye benzer bir sürecin olduğu,&nbsp; fotopolimer reçinenin kullanıldığı katmanlı imalat teknolojisidir.En büyük fark ışık kaynağının (projeksiyon) olmasıdır.&nbsp; &nbsp; &nbsp;</p><p><br></p><p>LCD (Liquid Crystal Display) 3D yazıcı teknolojisi DLP 3D yazıcı teknolojisi ie aynı şekilde çalışır. Tek farkı ışık kaynağı olarak LCD ve LED kullanır. Maliyet olarak uygundur ve yüksek kalitede baskılar verebilirler.</p>",
-          "groupId": "content"
+          "groupId": "printers-faq"
         },
         {
           "name": "printerQuestion2",
@@ -28664,7 +28682,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Model ya da üye sayısı ile baskı süresi nasıl değişir ?",
-          "groupId": "content"
+          "groupId": "printers-faq"
         },
         {
           "name": "printerAnswer2",
@@ -28672,7 +28690,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>Kullandığınız 3D yazıcı teknolojisi ile doğru orantılı olarak değişkenlik gösterir. Eğer SLA (Lazer Teknolojisi) bir 3D yazıcısı kullanıyorsanız üye sayısı ile doğru orantılı olarak baskı süreniz de artacaktır. Fakat DLP (Projektör veya LCD Teknolojisi) bir 3D yazıcı kullanıyorsanız üye sayısının hiçbir önemi yoktur. Model yüksekliği en fazla olan .stl datası baskı sürenizi belirleyecektir.&nbsp; &nbsp; &nbsp;</p><p><br></p><p>Örneğin; 3 adet yazıcıda 51 üye bir iş başlatacağınızı varsayalım. Baskınız 50 üye kron (1-2 cm uzunluğunda) ve 1 üye de implant üstü (3-4 cm uzunluğunda) olsun. Cihazınız yüksekliği en fazla olan implant üstü işinizin baskı süresini hesaplayacaktır.</p>",
-          "groupId": "content"
+          "groupId": "printers-faq"
         },
         {
           "name": "printerQuestion3",
@@ -28680,7 +28698,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Tasarım programları ile ilgili eğitim veriyor musunuz ?",
-          "groupId": "content"
+          "groupId": "printers-faq"
         },
         {
           "name": "printerAnswer3",
@@ -28688,7 +28706,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>Tasarım programları ile ilgili ücretli eğitim vermiyoruz. Fakat düzenli olarak yaptığımız Webinar’lar ile bizi takip eden bütün teknisyen arkadaşlarımıza tasarım programları ile ilgili bilgilerimizi aktarıyoruz.</p>",
-          "groupId": "content"
+          "groupId": "printers-faq"
         },
         {
           "name": "backgroundColor",
@@ -28741,14 +28759,24 @@
       ],
       "propGroups": [
         {
-          "id": "content",
-          "name": "İçerik",
-          "description": "SSS sayfası başlık, soru ve cevapları"
+          "id": "header",
+          "name": "01. Sayfa Başlığı",
+          "description": "SSS sayfası üst başlığı"
+        },
+        {
+          "id": "resins-faq",
+          "name": "02. Reçine Sıkça Sorulan Sorular (1 - 10)",
+          "description": "Dental reçineler hakkında 10 adet soru ve zengin metin cevabı"
+        },
+        {
+          "id": "printers-faq",
+          "name": "03. 3D Yazıcı Sıkça Sorulan Sorular (1 - 3)",
+          "description": "3D yazıcılar hakkında 3 adet soru ve zengin metin cevabı"
         },
         {
           "id": "appearance",
-          "name": "Görünüm",
-          "description": "Renk ve genişlik ayarları"
+          "name": "Görünüm & Renkler",
+          "description": "Renkler ve yerleşim ayarları"
         }
       ]
     },
@@ -28765,7 +28793,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<h4><strong>Biz Kimiz</strong></h4>",
-          "groupId": "content"
+          "groupId": "intro"
         },
         {
           "name": "introContentHtml",
@@ -28773,7 +28801,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p><i style=\"color: rgb(7, 7, 7); font-family: &quot;DM Sans&quot;; font-size: 19px; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; text-align: center;\">\"Çalışmak demek, boşuna yorulmak, terlemek değildir. Zamanın gereklerine göre bilim ve teknik ve her türlü uygar buluşlardan azami derecede istifade etmek zorunludur.\"</i><span style=\"color: rgb(7, 7, 7); font-family: &quot;DM Sans&quot;; font-size: 19px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; text-align: center;\">&nbsp;&nbsp;</span></p><p><span style=\"color: rgb(7, 7, 7); font-family: &quot;DM Sans&quot;; font-size: 19px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; text-align: center;\"><br><div style=\"text-align: right;\"><b style=\"color: rgba(0, 0, 0, 0.88); background-color: transparent;\">M. Kemal Atatürk</b></div></span><b style=\"color: rgb(7, 7, 7); font-family: &quot;DM Sans&quot;; font-size: 19px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: center; background-color: transparent;\"></b></p>",
-          "groupId": "content"
+          "groupId": "intro"
         },
         {
           "name": "block1Html",
@@ -28781,7 +28809,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<h1>3mash,</h1><p><br></p><p>Her biri kendi alanında <b>uzman</b> bir grup tutkulu insanın, kişisel kariyerlerindeki hızlı yükselişin getirdiği konfor alanlarından çıkarak, ülkelerinin ilerlemesine ve insanlığın ortak mirasına azami katkıda bulunmak amacıyla başlattıkları bir oluşumdur.</p><p><br></p><p>Bu oluşum, para kazanmanın bir amaç değil <b>sonuç</b> olduğu bilinciyle bir yola çıkmıştır ve tüm kararlarını bu doğrultuda vermektedir. Yolculuğun ancak beraber yüründüğünde anlamlı olduğunun farkındalığıyla, tüm paydaşların <b>birlikte yükselerek </b>kazandığı bir ekosistem yaratmayı amaçlamaktadır.</p><p><br></p><p>Mevcut durumda, <b>ağız ve diş sağlığı, kuyumculuk, odyoloji</b> sektörleri iyileştirmeyi ve dönüştürmeyi arzuladığımız hizmet alanlarıdır.</p>",
-          "groupId": "content"
+          "groupId": "block1"
         },
         {
           "name": "block1ImageUrl",
@@ -28789,7 +28817,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://cdn.myikas.com/images/theme-images/d6b26bde-3d40-4476-8e4e-46c416a898bd/image_1080.webp",
-          "groupId": "content"
+          "groupId": "block1"
         },
         {
           "name": "block1ImageAlt",
@@ -28797,7 +28825,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "müsteri-memnuniyeti",
-          "groupId": "content"
+          "groupId": "block1"
         },
         {
           "name": "block2Html",
@@ -28805,7 +28833,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<h3>Misyonumuz&nbsp; 🧭<span style=\"background-color: rgb(255, 255, 255); font-size: 1.5rem; font-weight: 500;\">&nbsp;</span></h3><p><span style=\"background-color: transparent;\"><br></span></p><p>Amacımız, <b>kaliteli diş tedavilerini</b>, insanların nerede yaşadığından bağımsız olarak <b>herkes için erişilebilir</b> hâle getirmektir.</p><p><br></p><h3>Vizyonumuz 🔭<span style=\"background-color: rgb(255, 255, 255); font-size: 1.75rem; font-weight: 500;\">&nbsp;</span></h3><p><br></p><p><span style=\"background-color: transparent;\"></span></p><p>Vizyonumuz; yalnızca 3D baskının değil, dijital üretimin sunduğu tüm imkânlardan yararlanarak yeniden üretimleri azaltmak, diş tedavilerinin kalitesini artırırken maliyetlerini düşürmek ve dünyanın en müşteri odaklı dental 3D baskı firması olmaktır.</p>",
-          "groupId": "content"
+          "groupId": "block2"
         },
         {
           "name": "block2ImageUrl",
@@ -28813,7 +28841,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://cdn.myikas.com/images/theme-images/a8845c4b-ba47-464a-95ea-1e5803cd4bdd/image_1080.webp",
-          "groupId": "content"
+          "groupId": "block2"
         },
         {
           "name": "block2ImageAlt",
@@ -28821,7 +28849,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "vizyon-misyon",
-          "groupId": "content"
+          "groupId": "block2"
         },
         {
           "name": "valuesTitle",
@@ -28829,7 +28857,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Değerlerimiz ⚖️",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value1Title",
@@ -28837,7 +28865,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "1. Müşteri Odaklı Olmak",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value1SubTitle",
@@ -28845,7 +28873,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Mash'in her bir ferdi tüm aksiyonlarını alırken önce müşteri memnuniyetini düşünür.",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value1ImageUrl",
@@ -28853,7 +28881,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://cdn.myikas.com/images/theme-images/ceff18c9-0e08-4b04-a53a-f6349ef2917f/image_1080.webp",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value1ImageAlt",
@@ -28861,7 +28889,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "müsteri-odaklılık-logo",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value2Title",
@@ -28869,7 +28897,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "2. Sürekli Öğrenmek",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value2SubTitle",
@@ -28877,7 +28905,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Mash'in her bir ferdi bilgiye açtır, gücünün bilgisinden geldiğinin farkındadır.",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value2ImageUrl",
@@ -28885,7 +28913,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://cdn.myikas.com/images/theme-images/4fb68c13-d36c-41f2-8d67-c6669de12630/image_1080.webp",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value2ImageAlt",
@@ -28893,7 +28921,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "sürekli-ögrenmek-logo",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value3Title",
@@ -28901,7 +28929,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "3. Bilgiyi Paylaşmak",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value3SubTitle",
@@ -28909,7 +28937,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Mash'in hiç bir ferdi bildiklerini paylaşmaktan korkmaz. Bilginin paylaştıkça çoğalacağını bilir.",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value3ImageUrl",
@@ -28917,7 +28945,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://cdn.myikas.com/images/theme-images/1a162235-3d28-42fe-a8e5-d068b65d8ccd/image_1080.webp",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value3ImageAlt",
@@ -28925,7 +28953,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "bilgiyi-paylasan-logo",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value4Title",
@@ -28933,7 +28961,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "4. İlham Verici Olmak",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value4SubTitle",
@@ -28941,7 +28969,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Mash bitmek bilmeyen iyileştirme isteği ve yenilikçi yaklaşımı ile etrafındaki kişi ve kuruluşlara ilham kaynağı olmayı amaçlar.",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value4ImageUrl",
@@ -28949,7 +28977,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://cdn.myikas.com/images/theme-images/8c96f6c6-67f4-4d5e-bad9-8c46804e816a/image_1080.webp",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "value4ImageAlt",
@@ -28957,7 +28985,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "ilham-verici-logo",
-          "groupId": "content"
+          "groupId": "values"
         },
         {
           "name": "backgroundColor",
@@ -29002,14 +29030,29 @@
       ],
       "propGroups": [
         {
-          "id": "content",
-          "name": "İçerik",
-          "description": "Hakkımızda sayfası metin ve görselleri"
+          "id": "intro",
+          "name": "01. Giriş & Hikayemiz",
+          "description": "Hakkımızda sayfası ana giriş başlığı ve metni"
+        },
+        {
+          "id": "block1",
+          "name": "02. Misyon Bloğu",
+          "description": "1. blok metni ve görseli"
+        },
+        {
+          "id": "block2",
+          "name": "03. Vizyon & Teknoloji",
+          "description": "2. blok metni ve görseli"
+        },
+        {
+          "id": "values",
+          "name": "04. Değerlerimiz (4 Kart)",
+          "description": "4 adet değer kartı başlıkları, metinleri ve görselleri"
         },
         {
           "id": "appearance",
-          "name": "Görünüm",
-          "description": "Renk ve genişlik ayarları"
+          "name": "Görünüm & Yerleşim",
+          "description": "Renkler ve maksimum genişlik ayarları"
         }
       ]
     },
@@ -29402,7 +29445,7 @@
           "type": "TEXT",
           "required": true,
           "defaultValue": "uyelik",
-          "groupId": "content"
+          "groupId": "general"
         },
         {
           "name": "titleText",
@@ -29410,7 +29453,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Üyelik Sözleşmesi",
-          "groupId": "content"
+          "groupId": "general"
         },
         {
           "name": "contentHtml",
@@ -29418,7 +29461,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "",
-          "groupId": "content",
+          "groupId": "general",
           "description": "Boş bırakıldığında üyelik sözleşmesi parçalı prop alanlarından oluşturulur."
         },
         {
@@ -29475,7 +29518,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "ÜYELİK SÖZLEŞMESİ",
-          "groupId": "content"
+          "groupId": "general"
         },
         {
           "name": "partiesTitleText",
@@ -29483,7 +29526,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Taraflar",
-          "groupId": "content"
+          "groupId": "parties"
         },
         {
           "name": "partyCompanyHtml",
@@ -29491,7 +29534,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>a)3mash.com internet sitesinin faaliyetlerini yürüten Kızıltoprak Mah. 919 Sok. No: 19A Muratpaşa, Antalya adresinde mukim 3 MASH TEKNOLOJİ A.Ş. (Bundan böyle “3 MASH” olarak anılacaktır).</p>",
-          "groupId": "content"
+          "groupId": "parties"
         },
         {
           "name": "partyMemberHtml",
@@ -29499,7 +29542,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>b)3mash.com internet sitesine üye olan internet kullanıcısı (\"Üye\")</p>",
-          "groupId": "content"
+          "groupId": "parties"
         },
         {
           "name": "subjectTitleText",
@@ -29507,7 +29550,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Sözleşmenin Konusu",
-          "groupId": "content"
+          "groupId": "subject-rights"
         },
         {
           "name": "subjectHtml",
@@ -29515,7 +29558,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>İşbu Sözleşme’nin konusu 3 MASH'in sahip olduğu internet sitesi www.3mash.com ‘den üyenin faydalanma şartlarının belirlenmesidir.</p>",
-          "groupId": "content"
+          "groupId": "subject-rights"
         },
         {
           "name": "rightsTitleText",
@@ -29523,7 +29566,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Tarafların Hak ve Yükümlülükleri",
-          "groupId": "content"
+          "groupId": "subject-rights"
         },
         {
           "name": "rightsHtml",
@@ -29531,7 +29574,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>3.1. Üye, www.3mash.com internet sitesine üye olurken verdiği kişisel ve diğer sair bilgilerin kanunlar önünde doğru olduğunu, 3 MASH'in bu bilgilerin gerçeğe aykırılığı nedeniyle uğrayacağı tüm zararları aynen ve derhal tazmin edeceğini beyan ve taahhüt eder.</p><p>3.2. Üye, 3 MASH tarafından kendisine verilmiş olan şifreyi başka kişi ya da kuruluşlara veremez, üyenin söz konusu şifreyi kullanma hakkı bizzat kendisine aittir.</p><p>3.3. Üye www.3mash.com internet sitesini kullanırken yasal mevzuat hükümlerine riayet etmeyi ve bunları ihlal etmemeyi baştan kabul ve taahhüt eder.</p><p>3.4. Üye, www.3mash.com internet sitesini hiçbir şekilde kamu düzenini bozucu, genel ahlaka aykırı, başkalarını rahatsız ve taciz edici şekilde, yasalara aykırı bir amaç için kullanamaz.</p><p>3.5. www.3mash.com internet sitesinde üyeler tarafından beyan edilen fikir ve düşünceler tamamen üyelerin kendi kişisel görüşleridir ve görüş sahibini bağlar.</p><p>3.6. 3 MASH, üye verilerinin yetkisiz kişilerce okunmasından ve üye yazılım ve verilerine gelebilecek zararlardan dolayı sorumlu olmayacaktır.</p><p>3.7. Üye, diğer internet kullanıcılarının yazılımlarına ve verilerine izinsiz olarak ulaşmamayı veya bunları kullanmamayı kabul etmiştir.</p><p>3.8. İşbu üyelik sözleşmesi içerisinde sayılan maddelerden bir ya da birkaçını ihlal eden üye işbu ihlal nedeniyle cezai ve hukuki olarak şahsen sorumludur.</p><p>3.9. 3 MASH'in her zaman tek taraflı olarak gerektiğinde üyenin üyeliğini silme, müşteriye ait dosya, belge ve bilgileri silme hakkı vardır.</p><p>3.10. www.3mash.com internet sitesi yazılım ve tasarımı 3 MASH mülkiyetinde olup, ilgili haklar kanunlarca korunmaktadır.</p><p>3.11. 3 MASH tarafından siteye erişim ve kullanım bilgileri iyileştirme, geliştirme ve yasal mevzuat kapsamında toplanabilir.</p><p>3.12. 3 MASH kullanıcılarına daha iyi hizmet sunmak, ürünlerini ve hizmetlerini iyileştirmek ve sitenin kullanımını kolaylaştırmak için üyelerin kişisel bilgilerini kullanabilir.</p><p>3.13. 3 MASH'e üye olan kişi, yürürlükte bulunan uygulamalar kapsamında ürün ve hizmet tanıtımları, kampanyalar ve müşteri memnuniyeti uygulamaları sunulmasına izin verdiğini beyan ve kabul eder. Üye, kişisel verileri ile ilgili detaylı bilgiye https://3mash.com/pages/kvkk adresinden ulaşabilir.</p><p>3.14. 3 MASH, üyenin kişisel bilgilerini yasal bir zorunluluk olarak istendiğinde veya haklarını ve mülkiyetini korumak için gerekli olduğuna iyi niyetle kanaat getirdiği hallerde açıklayabilir.</p><p>3.15. 3 MASH web sitesinin virüs ve benzeri amaçlı yazılımlardan arındırılmış olması için mevcut imkanlar dahilinde tedbir alınmıştır.</p><p>3.16. 3 MASH, sitenin içeriğini dilediği zaman değiştirme, kullanıcılara sağlanan hizmeti değiştirme ya da sona erdirme hakkını saklı tutar.</p><p>3.17. 3 MASH, üyelik sözleşmesinin koşullarını ön ihbara gerek kalmaksızın her zaman değiştirebilir, güncelleyebilir veya iptal edebilir.</p><p>3.18. Taraflar, 3 MASH'e ait tüm bilgisayar kayıtlarının tek ve gerçek münhasır delil olarak esas alınacağını kabul ve beyan eder.</p><p>3.19. 3 MASH, işbu üyelik sözleşmesi uyarınca üyelerine bilgilendirme e-postaları ve SMS’leri gönderme yetkisine sahiptir. Üye mail ve/veya SMS almaktan vazgeçmek istemesi durumunda info@3mash.com adresine elektronik posta göndererek iptal işlemini gerçekleştirebilecektir.</p>",
-          "groupId": "content"
+          "groupId": "subject-rights"
         },
         {
           "name": "terminationTitleText",
@@ -29539,7 +29582,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Sözleşmenin Feshi",
-          "groupId": "content"
+          "groupId": "termination-disputes"
         },
         {
           "name": "terminationHtml",
@@ -29547,7 +29590,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>İşbu sözleşme üyenin üyeliğini iptal etmesi veya 3 MASH tarafından üyeliğinin iptal edilmesine kadar yürürlükte kalacaktır. 3 MASH üyenin üyelik sözleşmesinin herhangi bir hükmünü ihlal etmesi durumunda üyenin üyeliğini iptal ederek sözleşmeyi tek taraflı olarak feshedebilecektir.</p>",
-          "groupId": "content"
+          "groupId": "termination-disputes"
         },
         {
           "name": "disputeTitleText",
@@ -29555,7 +29598,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "İhtilaflerin Halli",
-          "groupId": "content"
+          "groupId": "termination-disputes"
         },
         {
           "name": "disputeHtml",
@@ -29563,7 +29606,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>İşbu sözleşmeye ilişkin ihtilaflerde Antalya Mahkemeleri ve İcra Daireleri yetkilidir.</p>",
-          "groupId": "content"
+          "groupId": "termination-disputes"
         },
         {
           "name": "enforcementTitleText",
@@ -29571,7 +29614,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Yürürlük",
-          "groupId": "content"
+          "groupId": "termination-disputes"
         },
         {
           "name": "enforcementHtml",
@@ -29579,19 +29622,34 @@
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "<p>Üyenin, üyelik kaydı yapması üyenin üyelik sözleşmesinde yer alan tüm maddeleri okuduğu ve üyelik sözleşmesinde yer alan maddeleri kabul ettiği anlamına gelir. İşbu Sözleşme üyenin üye olması anında akdedilmiş ve karşılıklı olarak yürürlülüğe girmiştir.</p>",
-          "groupId": "content"
+          "groupId": "termination-disputes"
         }
       ],
       "propGroups": [
         {
-          "id": "content",
-          "name": "İçerik",
-          "description": "Sayfa başlığı ve içerik modu"
+          "id": "general",
+          "name": "01. Genel Başlık ve Override",
+          "description": "Sözleşme tipi, başlık ve tam içerik geçersiz kılma"
+        },
+        {
+          "id": "parties",
+          "name": "02. Taraflar",
+          "description": "Şirket ve üye taraf tanımları"
+        },
+        {
+          "id": "subject-rights",
+          "name": "03. Konu ve Haklar",
+          "description": "Sözleşme konusu, hak ve yükümlülükler"
+        },
+        {
+          "id": "termination-disputes",
+          "name": "04. Fesih ve İhtilaf",
+          "description": "Fesih şartları, ihtilaf çözümü ve yürürlük"
         },
         {
           "id": "appearance",
-          "name": "Görünüm",
-          "description": "Renk ve genişlik ayarları"
+          "name": "Görünüm & Boşluklar",
+          "description": "Renk ve boşluk ayarları"
         }
       ]
     },
