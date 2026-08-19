@@ -167,7 +167,13 @@ export type CategoryLandingData = {
 };
 
 export type CategoryLandingOverrides = {
+  // announcement
   eyebrowText?: string;
+  announcementText?: string;
+  announcementCtaText?: string;
+  announcementHref?: string;
+
+  // hero
   heroTitlePrefix?: string;
   heroTitleEmphasis?: string;
   heroTitleSuffix?: string;
@@ -176,17 +182,70 @@ export type CategoryLandingOverrides = {
   primaryButtonHref?: string;
   secondaryButtonText?: string;
   secondaryButtonHref?: string;
+
+  // metrics
   metric1Value?: string;
+  metric1Emphasis?: string;
   metric1Label?: string;
   metric2Value?: string;
+  metric2Emphasis?: string;
   metric2Label?: string;
+  metric3Value?: string;
+  metric3Emphasis?: string;
+  metric3Label?: string;
+  metric4Value?: string;
+  metric4Emphasis?: string;
+  metric4Label?: string;
+
+  // selector
+  selectorNumber?: string;
+  selectorLabel?: string;
+  selectorTitlePrefix?: string;
+  selectorTitleEmphasis?: string;
+  selectorTitleSuffix?: string;
+  selectorSideHtml?: string;
+  selectorCardCtaText?: string;
+
+  // feature
+  featureNumber?: string;
+  featureLabel?: string;
+  featureEyebrow?: string;
+  featureTitlePrefix?: string;
+  featureTitleEmphasis?: string;
+  featureTitleSuffix?: string;
+  featureDescriptionHtml?: string;
+  featureHref?: string;
+  featureCtaText?: string;
+
+  // detail
+  detailNumber?: string;
+  detailLabel?: string;
+  detailTitlePrefix?: string;
+  detailTitleEmphasis?: string;
+  detailTitleSuffix?: string;
+  detailSideHtml?: string;
+  detailCalloutTitlePrefix?: string;
+  detailCalloutTitleEmphasis?: string;
+  detailCalloutTitleSuffix?: string;
+  detailCalloutDescriptionHtml?: string;
+
+  // faq
+  faqNumber?: string;
+  faqLabel?: string;
+  faqTitle?: string;
+  faqSideHtml?: string;
+
+  // final CTA
   finalTitlePrefix?: string;
   finalTitleEmphasis?: string;
+  finalTitleSuffix?: string;
   finalDescriptionHtml?: string;
   finalPrimaryButtonText?: string;
   finalPrimaryButtonHref?: string;
   finalSecondaryButtonText?: string;
   finalSecondaryButtonHref?: string;
+
+  // appearance
   backgroundColor?: string;
   textColor?: string;
   mutedTextColor?: string;
@@ -239,15 +298,6 @@ function routeKey(value: string) {
 }
 
 const categoryRouteAliases: Record<string, string> = {
-  "": "/",
-  "anasayfa": "/",
-  "home": "/",
-  "search": "/search",
-  "arama": "/search",
-  "arama-sayfasi": "/search",
-  "tum-urunler": "/search",
-  "urunler": "/search",
-  "products": "/search",
   "resins": "/dental-3d-yazici-recineleri",
   "printers": "/3d-yazicilar",
   "wash-cure": "/yikama-kurleme-cihazlari",
@@ -420,7 +470,7 @@ function findLiveProduct(products: IkasProduct[], title: string) {
 function liveProductDescription(product: IkasProduct) {
   const categoryName = product.categories?.[0]?.name;
   const brandName = product.brand?.name;
-  if (categoryName && brandName) return `${categoryName} · <b>${brandName}</b>`;
+  if (categoryName && brandName) return `${categoryName} • <b>${brandName}</b>`;
   if (categoryName) return categoryName;
   if (brandName) return `<b>${brandName}</b>`;
   return product.name;
@@ -587,6 +637,7 @@ function FaqItem({ item, defaultOpen }: { item: CategoryFaq; defaultOpen: boolea
 
 export default function ThreeMashCategoryLanding(props: Props) {
   const { data, productList } = props;
+
   const heroButtons = data.hero.buttons.map((button, index) => {
     if (index === 0) {
       return {
@@ -604,11 +655,13 @@ export default function ThreeMashCategoryLanding(props: Props) {
     }
     return button;
   });
+
   const heroMetrics = data.hero.metrics.map((metric, index) => {
     if (index === 0) {
       return {
         ...metric,
         value: textValue(props.metric1Value, metric.value),
+        emphasis: props.metric1Emphasis !== undefined ? props.metric1Emphasis : metric.emphasis,
         label: textValue(props.metric1Label, metric.label),
       };
     }
@@ -616,11 +669,29 @@ export default function ThreeMashCategoryLanding(props: Props) {
       return {
         ...metric,
         value: textValue(props.metric2Value, metric.value),
+        emphasis: props.metric2Emphasis !== undefined ? props.metric2Emphasis : metric.emphasis,
         label: textValue(props.metric2Label, metric.label),
+      };
+    }
+    if (index === 2) {
+      return {
+        ...metric,
+        value: textValue(props.metric3Value, metric.value),
+        emphasis: props.metric3Emphasis !== undefined ? props.metric3Emphasis : metric.emphasis,
+        label: textValue(props.metric3Label, metric.label),
+      };
+    }
+    if (index === 3) {
+      return {
+        ...metric,
+        value: textValue(props.metric4Value, metric.value),
+        emphasis: props.metric4Emphasis !== undefined ? props.metric4Emphasis : metric.emphasis,
+        label: textValue(props.metric4Label, metric.label),
       };
     }
     return metric;
   });
+
   const finalButtons = data.finalCta.buttons.map((button, index) => {
     if (index === 0) {
       return {
@@ -638,6 +709,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
     }
     return button;
   });
+
   const [activeFilter, setActiveFilter] = useState(data.selector.filters?.[0]?.id || "all");
   const liveProducts = productList?.data || [];
   const liveProductsByTitle = useMemo(() => {
@@ -649,15 +721,16 @@ export default function ThreeMashCategoryLanding(props: Props) {
   const visibleCards = productCards.filter((card) => activeFilter === "all" || card.filterId === activeFilter);
   const compare = data.selector.compare;
 
+  // Announcement bar payload
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
 
     const payload = {
       enabled: true,
       highlightText: textValue(props.eyebrowText, data.announcement.highlight),
-      text: data.announcement.text,
-      ctaText: data.announcement.ctaText,
-      href: data.announcement.href,
+      text: textValue(props.announcementText, data.announcement.text),
+      ctaText: textValue(props.announcementCtaText, data.announcement.ctaText),
+      href: textValue(props.announcementHref, data.announcement.href),
     };
     const targetWindow = window as CategoryAnnouncementWindow;
     targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__ = payload;
@@ -670,8 +743,18 @@ export default function ThreeMashCategoryLanding(props: Props) {
         window.dispatchEvent(new CustomEvent("three-mash:product-announcement", { detail: { enabled: false } }));
       });
     };
-  }, [data.announcement.ctaText, data.announcement.highlight, data.announcement.href, data.announcement.text, props.eyebrowText]);
+  }, [
+    data.announcement.ctaText,
+    data.announcement.highlight,
+    data.announcement.href,
+    data.announcement.text,
+    props.eyebrowText,
+    props.announcementText,
+    props.announcementCtaText,
+    props.announcementHref,
+  ]);
 
+  // Smooth scroll logic
   useLayoutEffect(() => {
     const pending = consumePendingAnchorScroll();
     if (!pending) return undefined;
@@ -714,6 +797,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
 
   return (
     <section className={`three-mash-category-landing tmcl-${data.kind}`} style={categoryStyle(props) as any}>
+      {/* HERO SECTION */}
       <div className="tmcl-hero">
         <div className="tmcl-wrap">
           <div className="tmcl-crumb">
@@ -723,11 +807,13 @@ export default function ThreeMashCategoryLanding(props: Props) {
             {" \u00A0/\u00A0 "}
             <span aria-current="page">{data.breadcrumb.currentLabel}</span>
           </div>
-          <h1>{titleWithEmphasis(
-            textValue(props.heroTitlePrefix, data.hero.titlePrefix),
-            textValue(props.heroTitleEmphasis, data.hero.titleEmphasis),
-            props.heroTitleSuffix !== undefined ? props.heroTitleSuffix : data.hero.titleSuffix,
-          )}</h1>
+          <h1>
+            {titleWithEmphasis(
+              textValue(props.heroTitlePrefix, data.hero.titlePrefix),
+              textValue(props.heroTitleEmphasis, data.hero.titleEmphasis),
+              props.heroTitleSuffix !== undefined ? props.heroTitleSuffix : data.hero.titleSuffix
+            )}
+          </h1>
           <p dangerouslySetInnerHTML={rich(richValue(props.heroDescriptionHtml, data.hero.descriptionHtml))} />
           <div className="tmcl-actions">
             {heroButtons.map((button) => (
@@ -748,11 +834,21 @@ export default function ThreeMashCategoryLanding(props: Props) {
         </div>
       </div>
 
+      {/* SECTION 01: SELECTOR & PRODUCTS */}
       <section className="tmcl-section" id={data.selector.anchorId}>
         <div className="tmcl-wrap">
-          <SectionHead section={data.selector} />
+          <SectionHead
+            section={{
+              number: textValue(props.selectorNumber, data.selector.number),
+              label: textValue(props.selectorLabel, data.selector.label),
+              titlePrefix: textValue(props.selectorTitlePrefix, data.selector.titlePrefix),
+              titleEmphasis: textValue(props.selectorTitleEmphasis, data.selector.titleEmphasis),
+              titleSuffix: props.selectorTitleSuffix !== undefined ? props.selectorTitleSuffix : data.selector.titleSuffix,
+              sideHtml: richValue(props.selectorSideHtml, data.selector.sideHtml),
+            }}
+          />
           {data.selector.filters?.length ? (
-            <div className="tmcl-filter-chips" aria-label={data.selector.label}>
+            <div className="tmcl-filter-chips" aria-label={textValue(props.selectorLabel, data.selector.label)}>
               {data.selector.filters.map((filter) => (
                 <button
                   type="button"
@@ -770,7 +866,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
             {visibleCards.map((card) => (
               <ProductCard
                 card={card}
-                cardCtaText={data.selector.cardCtaText}
+                cardCtaText={textValue(props.selectorCardCtaText, data.selector.cardCtaText)}
                 kind={data.kind}
                 product={liveProductsByTitle.get(normalize(card.title)) || findLiveProduct(liveProducts, card.title)}
                 key={card.title}
@@ -781,86 +877,85 @@ export default function ThreeMashCategoryLanding(props: Props) {
             ) : null}
           </div>
 
-       {compare ? (
-  <>
-    <div className="tmcl-compare tmcl-compare-desktop">
-      <table>
-        <thead>
-          <tr>
-            {compare.columns.map((column) => (
-              <th key={column.title}>
-                {column.title}
-                {column.subtitle ? <span>{column.subtitle}</span> : null}
-              </th>
-            ))}
-          </tr>
-        </thead>
+          {compare ? (
+            <>
+              <div className="tmcl-compare tmcl-compare-desktop">
+                <table>
+                  <thead>
+                    <tr>
+                      {compare.columns.map((column) => (
+                        <th key={column.title}>
+                          {column.title}
+                          {column.subtitle ? <span>{column.subtitle}</span> : null}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
 
-        <tbody>
-          {compare.rows.map((row) => (
-            <tr key={row.label}>
-              <td>{row.label}</td>
+                  <tbody>
+                    {compare.rows.map((row) => (
+                      <tr key={row.label}>
+                        <td>{row.label}</td>
 
-              {row.values.map((value, index) => (
-                <td
-                  dangerouslySetInnerHTML={rich(value)}
-                  key={`${row.label}-${index}`}
-                />
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-    <div className="tmcl-compare-mobile">
-      {compare.columns.slice(1).map((column, columnIndex) => (
-        <div className="tmcl-compare-mobile-card" key={column.title}>
-          <div className="tmcl-compare-mobile-head">
-            <strong>{column.title}</strong>
-            {column.subtitle ? <span>{column.subtitle}</span> : null}
-          </div>
-
-          <div className="tmcl-compare-mobile-rows">
-            {compare.rows.map((row) => (
-              <div className="tmcl-compare-mobile-row" key={row.label}>
-                <span>{row.label}</span>
-
-                <div
-                  dangerouslySetInnerHTML={rich(
-                    row.values[columnIndex] || ""
-                  )}
-                />
+                        {row.values.map((value, index) => (
+                          <td dangerouslySetInnerHTML={rich(value)} key={`${row.label}-${index}`} />
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
 
-    {compare.noteHtml ? (
-      <p
-        className="tmcl-note"
-        dangerouslySetInnerHTML={rich(compare.noteHtml)}
-      />
-    ) : null}
-  </>
-) : null}
+              <div className="tmcl-compare-mobile">
+                {compare.columns.slice(1).map((column, columnIndex) => (
+                  <div className="tmcl-compare-mobile-card" key={column.title}>
+                    <div className="tmcl-compare-mobile-head">
+                      <strong>{column.title}</strong>
+                      {column.subtitle ? <span>{column.subtitle}</span> : null}
+                    </div>
+
+                    <div className="tmcl-compare-mobile-rows">
+                      {compare.rows.map((row) => (
+                        <div className="tmcl-compare-mobile-row" key={row.label}>
+                          <span>{row.label}</span>
+
+                          <div dangerouslySetInnerHTML={rich(row.values[columnIndex] || "")} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {compare.noteHtml ? (
+                <p className="tmcl-note" dangerouslySetInnerHTML={rich(compare.noteHtml)} />
+              ) : null}
+            </>
+          ) : null}
         </div>
       </section>
 
+      {/* SECTION 02: FEATURE / HIGHLIGHT */}
       <section className="tmcl-section tmcl-section-tight" id={routeKey(data.detail.label)}>
         <div className="tmcl-wrap">
-          <SectionIndex number={data.feature.number} label={data.feature.label} />
+          <SectionIndex
+            number={textValue(props.featureNumber, data.feature.number)}
+            label={textValue(props.featureLabel, data.feature.label)}
+          />
           <div className="tmcl-flag">
             <div>
-              <div className="tmcl-flag-tag">{data.feature.content.eyebrow}</div>
+              <div className="tmcl-flag-tag">{textValue(props.featureEyebrow, data.feature.content.eyebrow)}</div>
               <h3>
-                {data.feature.content.titlePrefix} <em>{data.feature.content.titleEmphasis}</em>
-                {data.feature.content.titleSuffix ? ` ${data.feature.content.titleSuffix}` : null}
+                {titleWithEmphasis(
+                  textValue(props.featureTitlePrefix, data.feature.content.titlePrefix),
+                  textValue(props.featureTitleEmphasis, data.feature.content.titleEmphasis),
+                  props.featureTitleSuffix !== undefined ? props.featureTitleSuffix : data.feature.content.titleSuffix
+                )}
               </h3>
-              <p dangerouslySetInnerHTML={rich(data.feature.content.descriptionHtml)} />
-              <a href={categoryHref(data.feature.content.href)}>{data.feature.content.ctaText}</a>
+              <p dangerouslySetInnerHTML={rich(richValue(props.featureDescriptionHtml, data.feature.content.descriptionHtml))} />
+              <a href={categoryHref(textValue(props.featureHref, data.feature.content.href))}>
+                {textValue(props.featureCtaText, data.feature.content.ctaText)}
+              </a>
             </div>
             <div className="tmcl-spec-table">
               {data.feature.content.specs.map((spec) => (
@@ -874,9 +969,19 @@ export default function ThreeMashCategoryLanding(props: Props) {
         </div>
       </section>
 
+      {/* SECTION 03: DETAIL / WHY NEEDED */}
       <section className="tmcl-section tmcl-section-tight">
         <div className="tmcl-wrap">
-          <SectionHead section={data.detail} />
+          <SectionHead
+            section={{
+              number: textValue(props.detailNumber, data.detail.number),
+              label: textValue(props.detailLabel, data.detail.label),
+              titlePrefix: textValue(props.detailTitlePrefix, data.detail.titlePrefix),
+              titleEmphasis: textValue(props.detailTitleEmphasis, data.detail.titleEmphasis),
+              titleSuffix: props.detailTitleSuffix !== undefined ? props.detailTitleSuffix : data.detail.titleSuffix,
+              sideHtml: richValue(props.detailSideHtml, data.detail.sideHtml),
+            }}
+          />
           {data.detail.lineCards?.length ? (
             <div className="tmcl-line-cards">
               {data.detail.lineCards.map((card) => (
@@ -909,8 +1014,14 @@ export default function ThreeMashCategoryLanding(props: Props) {
           {data.detail.callout ? (
             <div className="tmcl-callout">
               <div>
-                <h3>{titleWithEmphasis(data.detail.callout.titlePrefix, data.detail.callout.titleEmphasis, data.detail.callout.titleSuffix)}</h3>
-                <p dangerouslySetInnerHTML={rich(data.detail.callout.descriptionHtml)} />
+                <h3>
+                  {titleWithEmphasis(
+                    textValue(props.detailCalloutTitlePrefix, data.detail.callout.titlePrefix),
+                    textValue(props.detailCalloutTitleEmphasis, data.detail.callout.titleEmphasis),
+                    props.detailCalloutTitleSuffix !== undefined ? props.detailCalloutTitleSuffix : data.detail.callout.titleSuffix
+                  )}
+                </h3>
+                <p dangerouslySetInnerHTML={rich(richValue(props.detailCalloutDescriptionHtml, data.detail.callout.descriptionHtml))} />
               </div>
               <div className="tmcl-callout-actions">
                 {data.detail.callout.buttons.map((button) => (
@@ -922,12 +1033,16 @@ export default function ThreeMashCategoryLanding(props: Props) {
         </div>
       </section>
 
+      {/* SECTION 04: FAQ */}
       <section className="tmcl-section tmcl-section-tight" id="sss">
         <div className="tmcl-wrap">
-          <SectionIndex number={data.faq.number} label={data.faq.label} />
+          <SectionIndex
+            number={textValue(props.faqNumber, data.faq.number)}
+            label={textValue(props.faqLabel, data.faq.label)}
+          />
           <div className="tmcl-section-head">
-            <h2>{data.faq.title}</h2>
-            <div className="tmcl-section-side" dangerouslySetInnerHTML={rich(data.faq.sideHtml)} />
+            <h2>{textValue(props.faqTitle, data.faq.title)}</h2>
+            <div className="tmcl-section-side" dangerouslySetInnerHTML={rich(richValue(props.faqSideHtml, data.faq.sideHtml))} />
           </div>
           <div className="tmcl-faq">
             {data.faq.items.map((item, index) => (
@@ -937,13 +1052,16 @@ export default function ThreeMashCategoryLanding(props: Props) {
         </div>
       </section>
 
+      {/* FINAL CTA SECTION */}
       <section className="tmcl-final">
         <div className="tmcl-wrap">
-          <h2>{titleWithEmphasis(
-            textValue(props.finalTitlePrefix, data.finalCta.titlePrefix),
-            textValue(props.finalTitleEmphasis, data.finalCta.titleEmphasis),
-            data.finalCta.titleSuffix,
-          )}</h2>
+          <h2>
+            {titleWithEmphasis(
+              textValue(props.finalTitlePrefix, data.finalCta.titlePrefix),
+              textValue(props.finalTitleEmphasis, data.finalCta.titleEmphasis),
+              props.finalTitleSuffix !== undefined ? props.finalTitleSuffix : data.finalCta.titleSuffix
+            )}
+          </h2>
           <p dangerouslySetInnerHTML={rich(richValue(props.finalDescriptionHtml, data.finalCta.descriptionHtml))} />
           <div className="tmcl-actions tmcl-final-actions">
             {finalButtons.map((button) => (
