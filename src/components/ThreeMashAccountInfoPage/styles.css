@@ -1,10 +1,12 @@
 .three-mash-account-info-page {
-  width:100%;
-  min-height:calc(100vh - 78px);
-  overflow-x:hidden;
-  background:var(--tmai-bg,var(--tm-theme-bg,#fafaf7));
-  color:var(--tmai-text,var(--tm-theme-text,#0e0e0c));
-  font-family:var(--tm-theme-font-body,"Inter",system-ui,sans-serif);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  overflow-x: hidden;
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
 }
 
 
@@ -20,34 +22,40 @@
   display: grid;
   grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
   gap: 24px;
-  align-items: start;
+  align-items: stretch;
   width: 100%;
   max-width: min(var(--tmai-max, 1180px), 1180px);
   margin: 0 auto;
-  padding: var(--tmai-pad-top, clamp(48px, 6vw, 76px)) 24px var(--tmai-pad-bottom, clamp(140px, 18vw, 260px));
+  flex: 1;
+  min-height: 560px;
+  padding: var(--tmai-pad-top, clamp(40px, 5vw, 64px)) 24px var(--tmai-pad-bottom, clamp(64px, 8vw, 110px));
 }
 
 
 .tmai-sidebar {
-  display: grid;
-  align-content: start;
+  display: flex;
+  flex-direction: column;
   gap: 28px;
-  min-height: 400px;
+  height: 100%;
+  min-height: 100%;
   padding: clamp(34px, 4vw, 48px);
   background: var(--tmai-dark, var(--tm-theme-dark, #0e0e0c));
   color: var(--tm-theme-bg, #fafaf7);
   min-width: 0;
+  box-sizing: border-box;
 }
 
 
 .tmai-main {
-  display: grid;
-  align-content: start;
-  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
   padding: clamp(34px, 4vw, 48px);
   background: #fff;
   min-width: 0;
   border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  box-sizing: border-box;
 }
 
 .tmai-kicker,
