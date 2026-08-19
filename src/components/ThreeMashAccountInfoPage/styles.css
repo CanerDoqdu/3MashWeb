@@ -17,35 +17,38 @@
 
 .tmai-shell,
 .three-mash-account-layout {
-  display:grid;
-  grid-template-columns:minmax(280px,0.42fr) minmax(0,1fr);
-  gap:24px;
-  align-items:start;
-  width:100%;
-  max-width:min(var(--tmai-max,1180px),1180px);
-  margin:0 auto;
-  padding:var(--tmai-pad-top,52px) 24px var(--tmai-pad-bottom,86px);
+  display: grid;
+  grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+  width: 100%;
+  max-width: min(var(--tmai-max, 1180px), 1180px);
+  min-height: clamp(520px, 60vh, 740px);
+  margin: 0 auto;
+  padding: var(--tmai-pad-top, clamp(48px, 6vw, 76px)) 24px var(--tmai-pad-bottom, clamp(100px, 12vw, 160px));
 }
 
 
 .tmai-sidebar {
-  display:grid;
-  align-content:start;
-  gap:28px;
-  padding:clamp(30px,4vw,44px);
-  background:var(--tmai-dark,var(--tm-theme-dark,#0e0e0c));
-  color:var(--tm-theme-bg,#fafaf7);
-  min-width:0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: clamp(30px, 4vw, 44px);
+  background: var(--tmai-dark, var(--tm-theme-dark, #0e0e0c));
+  color: var(--tm-theme-bg, #fafaf7);
+  min-width: 0;
+  min-height: 100%;
 }
 
 
 .tmai-main {
-  display:grid;
-  align-content:start;
-  padding:clamp(30px,4vw,48px);
-  background:#fff;
-  min-width:0;
-  border:1px solid var(--tmai-line,var(--tm-theme-line,#e6e6e0));
+  display: flex;
+  flex-direction: column;
+  padding: clamp(30px, 4vw, 48px);
+  background: #fff;
+  min-width: 0;
+  min-height: 100%;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
 }
 
 .tmai-kicker,
