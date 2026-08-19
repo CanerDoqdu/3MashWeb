@@ -217,6 +217,16 @@ export type CategoryLandingOverrides = {
   featureHref?: string;
   featureCtaText?: string;
 
+  // feature specs
+  featureSpec1Label?: string;
+  featureSpec1Value?: string;
+  featureSpec2Label?: string;
+  featureSpec2Value?: string;
+  featureSpec3Label?: string;
+  featureSpec3Value?: string;
+  featureSpec4Label?: string;
+  featureSpec4Value?: string;
+
   // detail
   detailNumber?: string;
   detailLabel?: string;
@@ -224,16 +234,44 @@ export type CategoryLandingOverrides = {
   detailTitleEmphasis?: string;
   detailTitleSuffix?: string;
   detailSideHtml?: string;
+
+  // detail cards
+  detailCard1Title?: string;
+  detailCard1DescriptionHtml?: string;
+  detailCard2Title?: string;
+  detailCard2DescriptionHtml?: string;
+  detailCard3Title?: string;
+  detailCard3DescriptionHtml?: string;
+  detailCard4Title?: string;
+  detailCard4DescriptionHtml?: string;
+
+  // detail callout
   detailCalloutTitlePrefix?: string;
   detailCalloutTitleEmphasis?: string;
   detailCalloutTitleSuffix?: string;
   detailCalloutDescriptionHtml?: string;
+  detailCalloutButton1Text?: string;
+  detailCalloutButton1Href?: string;
+  detailCalloutButton2Text?: string;
+  detailCalloutButton2Href?: string;
 
-  // faq
+  // faq header
   faqNumber?: string;
   faqLabel?: string;
   faqTitle?: string;
   faqSideHtml?: string;
+
+  // faq items
+  faq1Question?: string;
+  faq1AnswerHtml?: string;
+  faq2Question?: string;
+  faq2AnswerHtml?: string;
+  faq3Question?: string;
+  faq3AnswerHtml?: string;
+  faq4Question?: string;
+  faq4AnswerHtml?: string;
+  faq5Question?: string;
+  faq5AnswerHtml?: string;
 
   // final CTA
   finalTitlePrefix?: string;
@@ -376,7 +414,7 @@ function smoothCategoryClick(event: MouseEvent, rawHref: string) {
     try {
       localStorage.setItem("tmcl-pending-anchor-scroll", JSON.stringify({ sectionId: decodeURIComponent(hash.slice(1)).trim(), block: "center", fromTop: true }));
     } catch {
-      // Storage can be unavailable; the route still works without smooth scroll.
+      // Storage can be unavailable
     }
     window.location.href = normalizedTargetPath;
     return;
@@ -417,7 +455,7 @@ function safeHistoryReplace(url: string) {
   try {
     window.history.replaceState(null, "", url);
   } catch {
-    // Studio srcdoc previews reject normal path URLs; scrolling should still work.
+    // Studio preview safe ignore
   }
 }
 
@@ -692,6 +730,54 @@ export default function ThreeMashCategoryLanding(props: Props) {
     return metric;
   });
 
+  const featureSpecs = (data.feature.content.specs || []).map((spec, index) => {
+    const lKey = `featureSpec${index + 1}Label` as keyof CategoryLandingOverrides;
+    const vKey = `featureSpec${index + 1}Value` as keyof CategoryLandingOverrides;
+    return {
+      label: textValue(props[lKey] as string | undefined, spec.label),
+      value: textValue(props[vKey] as string | undefined, spec.value),
+    };
+  });
+
+  const detailLineCards = data.detail.lineCards?.map((card, index) => {
+    const tKey = `detailCard${index + 1}Title` as keyof CategoryLandingOverrides;
+    const dKey = `detailCard${index + 1}DescriptionHtml` as keyof CategoryLandingOverrides;
+    return {
+      ...card,
+      title: textValue(props[tKey] as string | undefined, card.title),
+      descriptionHtml: richValue(props[dKey] as string | undefined, card.descriptionHtml),
+    };
+  });
+
+  const detailWhyCards = data.detail.whyCards?.map((card, index) => {
+    const tKey = `detailCard${index + 1}Title` as keyof CategoryLandingOverrides;
+    const dKey = `detailCard${index + 1}DescriptionHtml` as keyof CategoryLandingOverrides;
+    return {
+      ...card,
+      title: textValue(props[tKey] as string | undefined, card.title),
+      descriptionHtml: richValue(props[dKey] as string | undefined, card.descriptionHtml),
+    };
+  });
+
+  const detailCalloutButtons = (data.detail.callout?.buttons || []).map((btn, index) => {
+    const tKey = `detailCalloutButton${index + 1}Text` as keyof CategoryLandingOverrides;
+    const hKey = `detailCalloutButton${index + 1}Href` as keyof CategoryLandingOverrides;
+    return {
+      ...btn,
+      label: textValue(props[tKey] as string | undefined, btn.label),
+      href: textValue(props[hKey] as string | undefined, btn.href),
+    };
+  });
+
+  const faqItems = (data.faq.items || []).map((item, index) => {
+    const qKey = `faq${index + 1}Question` as keyof CategoryLandingOverrides;
+    const aKey = `faq${index + 1}AnswerHtml` as keyof CategoryLandingOverrides;
+    return {
+      question: textValue(props[qKey] as string | undefined, item.question),
+      answerHtml: richValue(props[aKey] as string | undefined, item.answerHtml),
+    };
+  });
+
   const finalButtons = data.finalCta.buttons.map((button, index) => {
     if (index === 0) {
       return {
@@ -802,9 +888,9 @@ export default function ThreeMashCategoryLanding(props: Props) {
         <div className="tmcl-wrap">
           <div className="tmcl-crumb">
             <a href={categoryHref(data.breadcrumb.homeHref)}>{data.breadcrumb.homeLabel}</a>
-            {" \u00A0/\u00A0 "}
+            {"  /  "}
             <a href={parentCategoryHref(data)}>{data.breadcrumb.parentLabel}</a>
-            {" \u00A0/\u00A0 "}
+            {"  /  "}
             <span aria-current="page">{data.breadcrumb.currentLabel}</span>
           </div>
           <h1>
@@ -958,7 +1044,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
               </a>
             </div>
             <div className="tmcl-spec-table">
-              {data.feature.content.specs.map((spec) => (
+              {featureSpecs.map((spec) => (
                 <div key={`${spec.label}-${spec.value}`}>
                   <span>{spec.label}</span>
                   <b>{spec.value}</b>
@@ -982,9 +1068,9 @@ export default function ThreeMashCategoryLanding(props: Props) {
               sideHtml: richValue(props.detailSideHtml, data.detail.sideHtml),
             }}
           />
-          {data.detail.lineCards?.length ? (
+          {detailLineCards?.length ? (
             <div className="tmcl-line-cards">
-              {data.detail.lineCards.map((card) => (
+              {detailLineCards.map((card) => (
                 <div className={`tmcl-line-card tmcl-line-card-${card.variant || "plain"}`} key={card.title}>
                   <div className="tmcl-line-title">
                     <span>{card.marker}</span>
@@ -1000,9 +1086,9 @@ export default function ThreeMashCategoryLanding(props: Props) {
               ))}
             </div>
           ) : null}
-          {data.detail.whyCards?.length ? (
+          {detailWhyCards?.length ? (
             <div className="tmcl-why-grid">
-              {data.detail.whyCards.map((card) => (
+              {detailWhyCards.map((card) => (
                 <div className="tmcl-why-card" key={card.number}>
                   <span>{card.number}</span>
                   <h3>{card.title}</h3>
@@ -1024,7 +1110,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
                 <p dangerouslySetInnerHTML={rich(richValue(props.detailCalloutDescriptionHtml, data.detail.callout.descriptionHtml))} />
               </div>
               <div className="tmcl-callout-actions">
-                {data.detail.callout.buttons.map((button) => (
+                {detailCalloutButtons.map((button) => (
                   <ButtonLink button={button} key={`${button.label}-${button.href}`} />
                 ))}
               </div>
@@ -1045,7 +1131,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
             <div className="tmcl-section-side" dangerouslySetInnerHTML={rich(richValue(props.faqSideHtml, data.faq.sideHtml))} />
           </div>
           <div className="tmcl-faq">
-            {data.faq.items.map((item, index) => (
+            {faqItems.map((item, index) => (
               <FaqItem item={item} defaultOpen={index === 0} key={item.question} />
             ))}
           </div>
