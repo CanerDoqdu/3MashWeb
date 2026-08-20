@@ -9019,15 +9019,168 @@
           "displayName": "Ürün",
           "type": "PRODUCT",
           "required": false,
-          "groupId": "data"
+          "groupId": "data",
+          "description": "Geçerli ikas ürün verisi bağlantısı"
         },
         {
-          "name": "eyebrowText",
-          "displayName": "Üst Etiket Metni",
+          "name": "announcementStrongText",
+          "displayName": "Duyuru Vurgulu Metin",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "ÜRÜN DETAYI",
-          "groupId": "content"
+          "groupId": "announcement",
+          "description": "Üst bant sol kalın vurgulu metin (Örn: Fırsatı kaçırmayın.)"
+        },
+        {
+          "name": "announcementText",
+          "displayName": "Duyuru Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "announcement",
+          "description": "Üst bant kampanya ve kalibrasyon açıklama metni"
+        },
+        {
+          "name": "announcementButtonText",
+          "displayName": "Duyuru Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "announcement",
+          "description": "Üst bant sağ buton metni (Örn: Ücretsiz parametre uyumlaması →)"
+        },
+        {
+          "name": "announcementButtonHref",
+          "displayName": "Duyuru Buton Linki",
+          "type": "LINK",
+          "required": false,
+          "groupId": "announcement",
+          "description": "Duyuru butonu hedef bağlantısı"
+        },
+        {
+          "name": "breadcrumbCategoryText",
+          "displayName": "Kategori Adı Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "breadcrumb",
+          "description": "Breadcrumb kategori adı (Örn: Dental Reçineler)"
+        },
+        {
+          "name": "breadcrumbCategoryHref",
+          "displayName": "Kategori Sayfası Linki",
+          "type": "LINK",
+          "required": false,
+          "groupId": "breadcrumb",
+          "description": "Breadcrumb kategori bağlantısı"
+        },
+        {
+          "name": "heroKicker",
+          "displayName": "Üst Etiket / Kicker",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-header",
+          "description": "Başlığın hemen üstündeki kategori ve ürün üst etiketi"
+        },
+        {
+          "name": "heroTitleHtml",
+          "displayName": "Ana Başlık (HTML Destekli)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "hero-header",
+          "description": "Ürün ana başlığı (vurgu için <em> veya <b> kullanabilirsiniz)"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "Detaylı Açıklama (HTML Destekli)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "hero-header",
+          "description": "Başlığın altındaki zengin ürün tanıtım açıklaması"
+        },
+        {
+          "name": "heroPill1Value",
+          "displayName": "1. Rozet Değeri (Örn: 144 MPa)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-pills",
+          "description": "1. teknik özellik rozetinin kalın değeri"
+        },
+        {
+          "name": "heroPill1Label",
+          "displayName": "1. Rozet Etiketi (Örn: eğilme mukavemeti)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-pills",
+          "description": "1. teknik özellik rozetinin açıklama etiketi"
+        },
+        {
+          "name": "heroPill2Value",
+          "displayName": "2. Rozet Değeri (Örn: 5000 MPa)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-pills",
+          "description": "2. teknik özellik rozetinin kalın değeri"
+        },
+        {
+          "name": "heroPill2Label",
+          "displayName": "2. Rozet Etiketi (Örn: eğilme modülü)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-pills",
+          "description": "2. teknik özellik rozetinin açıklama etiketi"
+        },
+        {
+          "name": "heroPill3Value",
+          "displayName": "3. Rozet Değeri (Örn: CE)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-pills",
+          "description": "3. teknik özellik rozetinin kalın değeri"
+        },
+        {
+          "name": "heroPill3Label",
+          "displayName": "3. Rozet Etiketi (Örn: Class IIa)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-pills",
+          "description": "3. teknik özellik rozetinin açıklama etiketi"
+        },
+        {
+          "name": "heroPill4Value",
+          "displayName": "4. Rozet Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-pills",
+          "description": "4. teknik özellik rozetinin kalın değeri"
+        },
+        {
+          "name": "heroPill4Label",
+          "displayName": "4. Rozet Etiketi (Örn: Sararma yapmaz)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-pills",
+          "description": "4. teknik özellik rozetinin açıklama etiketi"
+        },
+        {
+          "name": "galleryBadge",
+          "displayName": "Görsel Rozeti (Örn: CE CLASS IIa)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero-pills",
+          "description": "Ürün görselinin üzerinde yer alan sertifika rozeti"
+        },
+        {
+          "name": "selectedPrefix",
+          "displayName": "Seçim Başlığı (Örn: Seçiminiz:)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "selection-summary",
+          "description": "Varyant seçim özetinin sol başlığı"
+        },
+        {
+          "name": "summarySuffix",
+          "displayName": "Seçim Alt Notu",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "selection-summary",
+          "description": "Varyant seçim özetinin sağındaki teknik destek notu"
         },
         {
           "name": "addToCartText",
@@ -9035,7 +9188,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "SEPETE EKLE",
-          "groupId": "content"
+          "groupId": "actions"
         },
         {
           "name": "addingToCartText",
@@ -9043,15 +9196,55 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ekleniyor...",
-          "groupId": "content"
+          "groupId": "actions"
         },
         {
           "name": "outOfStockText",
-          "displayName": "Stok Yok Metni",
+          "displayName": "Stok Yok Buton Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Stok Yok",
-          "groupId": "content"
+          "groupId": "actions"
+        },
+        {
+          "name": "whatsappButtonText",
+          "displayName": "WhatsApp Danışma Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "WhatsApp'tan sor",
+          "groupId": "actions"
+        },
+        {
+          "name": "whatsappButtonHref",
+          "displayName": "WhatsApp Linki / Özel URL",
+          "type": "LINK",
+          "required": false,
+          "groupId": "actions",
+          "description": "Boş bırakılırsa ürün adına özel otomatik WhatsApp mesajı oluşturulur"
+        },
+        {
+          "name": "trustBadge1",
+          "displayName": "Güven Rozeti 1",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ücretsiz kargo",
+          "groupId": "trust"
+        },
+        {
+          "name": "trustBadge2",
+          "displayName": "Güven Rozeti 2",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Koşulsuz iade",
+          "groupId": "trust"
+        },
+        {
+          "name": "trustBadge3",
+          "displayName": "Güven Rozeti 3",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Güvenli ödeme",
+          "groupId": "trust"
         },
         {
           "name": "inStockText",
@@ -9059,7 +9252,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Stokta",
-          "groupId": "content"
+          "groupId": "ecommerce"
         },
         {
           "name": "quantityText",
@@ -9067,39 +9260,39 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Adet",
-          "groupId": "content"
+          "groupId": "ecommerce"
         },
         {
           "name": "skuText",
-          "displayName": "SKU Metin",
+          "displayName": "SKU Etiketi",
           "type": "TEXT",
           "required": false,
           "defaultValue": "SKU",
-          "groupId": "content"
+          "groupId": "ecommerce"
         },
         {
           "name": "brandText",
-          "displayName": "Marka Metni",
+          "displayName": "Marka Etiketi",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Marka",
-          "groupId": "content"
+          "groupId": "ecommerce"
         },
         {
           "name": "categoryText",
-          "displayName": "Kategori Metni",
+          "displayName": "Kategori Etiketi",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Kategori",
-          "groupId": "content"
+          "groupId": "ecommerce"
         },
         {
           "name": "descriptionTitle",
-          "displayName": "Açıklama Başlık",
+          "displayName": "Açıklama Başlığı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ürün Açıklaması",
-          "groupId": "content"
+          "groupId": "ecommerce"
         },
         {
           "name": "setupMessage",
@@ -9107,15 +9300,15 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Bu bölüm Ürün Sayfası için tasarlandı. Ürün alanını ikas ürün verisine bağlayın.",
-          "groupId": "content"
+          "groupId": "messages"
         },
         {
           "name": "optionRequiredMessage",
-          "displayName": "Seçenek Uyarı Mesajı",
+          "displayName": "Seçenek Zorunlu Uyarı Mesajı",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Lütfen gerekli ürün seçeneklerini tamamlayın.",
-          "groupId": "content"
+          "groupId": "messages"
         },
         {
           "name": "addToCartErrorMessage",
@@ -9123,7 +9316,7 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "Ürün sepete eklenemedi.",
-          "groupId": "content"
+          "groupId": "messages"
         },
         {
           "name": "backgroundColor",
@@ -9143,7 +9336,7 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "İkincil Yazı Rengi",
+          "displayName": "İkincil / Soluk Yazı Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#55554e",
@@ -9167,7 +9360,7 @@
         },
         {
           "name": "accentColor",
-          "displayName": "Vurgu Rengi",
+          "displayName": "Vurgu Rengi (Lime)",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -9186,126 +9379,70 @@
           "displayName": "Gelişmiş Ürün Datası JSON",
           "type": "TEXT",
           "required": false,
-          "description": "CRS Composite kaynak yapısındaki reusable template datası. Boş bırakılırsa CRS Composite default datası kullanılır.",
+          "description": "CRS Composite kaynak yapısındaki reusable template datası. Boş bırakılırsa ürünün varsayılan şablon datası kullanılır.",
           "groupId": "template"
-        },
-        {
-          "name": "announcementStrongText",
-          "displayName": "Üst Bant Kalın Metin",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "announcementText",
-          "displayName": "Üst Bant Açıklama",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "announcementButtonText",
-          "displayName": "Üst Bant Buton Metni",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "announcementButtonHref",
-          "displayName": "Üst Bant Buton Linki",
-          "type": "LINK",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "breadcrumbCategoryText",
-          "displayName": "Breadcrumb Kategori Metni",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "breadcrumbCategoryHref",
-          "displayName": "Breadcrumb Kategori Linki",
-          "type": "LINK",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "heroKicker",
-          "displayName": "Hero Üst Metin",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "heroTitleHtml",
-          "displayName": "Hero Başlık",
-          "type": "RICH_TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "heroDescriptionHtml",
-          "displayName": "Hero Açıklama",
-          "type": "RICH_TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "whatsappButtonText",
-          "displayName": "WhatsApp Buton Metni",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "whatsappButtonHref",
-          "displayName": "WhatsApp Linki",
-          "type": "LINK",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "trustBadge1",
-          "displayName": "Güven Rozeti 1",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "trustBadge2",
-          "displayName": "Güven Rozeti 2",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
-        },
-        {
-          "name": "trustBadge3",
-          "displayName": "Güven Rozeti 3",
-          "type": "TEXT",
-          "required": false,
-          "groupId": "content"
         }
       ],
       "propGroups": [
         {
           "id": "data",
-          "name": "Data",
+          "name": "01. Ürün Veri Kaynağı",
           "description": "Geçerli ikas ürün veri kaynağı"
         },
         {
-          "id": "content",
-          "name": "Content"
+          "id": "announcement",
+          "name": "02. Üst Duyuru Bandı",
+          "description": "Sayfa üstündeki fırsat ve duyuru bandı metinleri"
+        },
+        {
+          "id": "breadcrumb",
+          "name": "03. Gezinme (Breadcrumb)",
+          "description": "Kategori adı ve sayfa yolu bağlantıları"
+        },
+        {
+          "id": "hero-header",
+          "name": "04. Başlık ve Açıklama",
+          "description": "Ürün üst etiketi, ana başlık ve detay açıklaması"
+        },
+        {
+          "id": "hero-pills",
+          "name": "05. Öne Çıkan Özellik Rozetleri (Haplar)",
+          "description": "Başlığın altındaki teknik özellik ve sertifika rozetleri"
+        },
+        {
+          "id": "selection-summary",
+          "name": "06. Seçim ve Özet Metinleri",
+          "description": "Varyant seçiminde gösterilen özet metinleri"
+        },
+        {
+          "id": "actions",
+          "name": "07. Butonlar ve İletişim (CTA)",
+          "description": "Sepete ekle ve WhatsApp danışma butonları"
+        },
+        {
+          "id": "trust",
+          "name": "08. Güven Rozetleri ve Avantajlar",
+          "description": "Sepet butonunun altındaki kargo, iade ve garanti rozetleri"
+        },
+        {
+          "id": "ecommerce",
+          "name": "09. E-Ticaret ve Stok Etiketleri",
+          "description": "Adet, stok, SKU ve marka etiket metinleri"
+        },
+        {
+          "id": "messages",
+          "name": "10. Uyarı ve Bildirim Mesajları",
+          "description": "Seçenek tamamlama ve sepet hata uyarıları"
         },
         {
           "id": "style",
-          "name": "Style"
+          "name": "11. Görünüm ve Renkler",
+          "description": "Arka plan, yazı, panel ve vurgu renkleri"
         },
         {
           "id": "template",
-          "name": "Ürün Template",
-          "description": "CRS kaynaklı tekli ürün template datası ve Studio preview ayarları"
+          "name": "12. Gelişmiş Şablon ve JSON",
+          "description": "Studio önizleme ve ham JSON şablon ayarları"
         }
       ]
     },

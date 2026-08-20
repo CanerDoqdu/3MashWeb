@@ -34,9 +34,21 @@ export interface Props {
   heroKicker?: string;
   heroTitleHtml?: string;
   heroDescriptionHtml?: string;
+  heroPill1Value?: string;
+  heroPill1Label?: string;
+  heroPill2Value?: string;
+  heroPill2Label?: string;
+  heroPill3Value?: string;
+  heroPill3Label?: string;
+  heroPill4Value?: string;
+  heroPill4Label?: string;
+  galleryBadge?: string;
+  selectedPrefix?: string;
+  summarySuffix?: string;
   whatsappButtonText?: string;
   whatsappButtonHref?: IkasNavigationLink | null;
   trustBadge1?: string;
   trustBadge2?: string;
   trustBadge3?: string;
 }
+

@@ -737,6 +737,31 @@ function productDetailPropOverrides(props: Props) {
   const heroDescriptionHtml = trimmedText(props.heroDescriptionHtml);
   if (heroDescriptionHtml) hero.leadHtml = heroDescriptionHtml;
 
+  const heroPill1Label = trimmedText(props.heroPill1Label);
+  const heroPill1Value = trimmedText(props.heroPill1Value);
+  const heroPill2Label = trimmedText(props.heroPill2Label);
+  const heroPill2Value = trimmedText(props.heroPill2Value);
+  const heroPill3Label = trimmedText(props.heroPill3Label);
+  const heroPill3Value = trimmedText(props.heroPill3Value);
+  const heroPill4Label = trimmedText(props.heroPill4Label);
+  const heroPill4Value = trimmedText(props.heroPill4Value);
+
+  const pills: Array<{ label: string; value?: string }> = [];
+  if (heroPill1Label || heroPill1Value) pills.push({ label: heroPill1Label, value: heroPill1Value || undefined });
+  if (heroPill2Label || heroPill2Value) pills.push({ label: heroPill2Label, value: heroPill2Value || undefined });
+  if (heroPill3Label || heroPill3Value) pills.push({ label: heroPill3Label, value: heroPill3Value || undefined });
+  if (heroPill4Label || heroPill4Value) pills.push({ label: heroPill4Label, value: heroPill4Value || undefined });
+  if (pills.length) hero.pills = pills;
+
+  const galleryBadge = trimmedText(props.galleryBadge);
+  if (galleryBadge) hero.galleryBadge = galleryBadge;
+
+  const selectedPrefix = trimmedText(props.selectedPrefix);
+  if (selectedPrefix) hero.selectedPrefix = selectedPrefix;
+
+  const summarySuffix = trimmedText(props.summarySuffix);
+  if (summarySuffix) hero.summarySuffix = summarySuffix;
+
   const whatsappButtonText = trimmedText(props.whatsappButtonText);
   if (whatsappButtonText) hero.whatsappText = whatsappButtonText;
 
@@ -764,6 +789,17 @@ function productDetailPropKey(props: Props) {
     props.heroKicker,
     props.heroTitleHtml,
     props.heroDescriptionHtml,
+    props.heroPill1Label,
+    props.heroPill1Value,
+    props.heroPill2Label,
+    props.heroPill2Value,
+    props.heroPill3Label,
+    props.heroPill3Value,
+    props.heroPill4Label,
+    props.heroPill4Value,
+    props.galleryBadge,
+    props.selectedPrefix,
+    props.summarySuffix,
     props.whatsappButtonText,
     linkValue(props.whatsappButtonHref),
     props.trustBadge1,
