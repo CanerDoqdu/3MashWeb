@@ -3,6 +3,9 @@ import type { IkasProduct } from "@ikas/bp-storefront";
 
 export interface Props {
   product?: IkasProduct | null;
+  targetProduct?: IkasProduct | null;
+  targetSlug?: string;
+  applyToAllProducts?: boolean;
   sectionIndex?: string;
   sectionLabel?: string;
   titleHtml?: string;

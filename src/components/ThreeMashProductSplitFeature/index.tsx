@@ -19,9 +19,59 @@ function numberValue(value: unknown): number | undefined {
   return undefined;
 }
 
+function cleanSlug(value: unknown): string {
+  return trimmedText(value)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i")
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function shouldApplyOverrides(data: ProductDetailTemplateData, props: Props): boolean {
+  // 1. If global override switch is explicitly ON, apply to all products
+  if (props.applyToAllProducts === true) {
+    return true;
+  }
+
+  const currentKey = cleanSlug(data.key);
+
+  // 2. If targetSlug is specified, check if current product key matches
+  const targetSlug = cleanSlug(props.targetSlug);
+  if (targetSlug) {
+    return currentKey.includes(targetSlug) || targetSlug.includes(currentKey);
+  }
+
+  // 3. If targetProduct is selected, check if current product matches
+  if (props.targetProduct) {
+    const metaSlug = (props.targetProduct as any).metaData?.slug;
+    const name = (props.targetProduct as any).name;
+    const id = (props.targetProduct as any).id;
+    const targetKey = cleanSlug(metaSlug || name || id);
+    if (targetKey) {
+      return currentKey.includes(targetKey) || targetKey.includes(currentKey);
+    }
+  }
+
+  // 4. Default: false (protect each product's authentic handcrafted data)
+  return false;
+}
+
 function overrideRatingsData(baseData: ProductDetailTemplateData, props: Props): ProductDetailTemplateData {
+  if (!shouldApplyOverrides(baseData, props)) {
+    return baseData;
+  }
+
   const currentRatings = baseData.ratings;
-  if (!currentRatings && !props.titleHtml && !props.panelTitleHtml) return baseData;
+  if (!currentRatings && !props.titleHtml && !props.panelTitleHtml) {
+    return baseData;
+  }
 
   const ratings = {
     index: trimmedText(props.sectionIndex) || currentRatings?.index || "01",

@@ -9635,6 +9635,31 @@
           "description": "Geçerli ikas ürün verisi bağlantısı"
         },
         {
+          "name": "targetProduct",
+          "displayName": "Hedef Ürün (Sadece Bu Ürüne Uygula)",
+          "type": "PRODUCT",
+          "required": false,
+          "groupId": "data",
+          "description": "Bu section'daki metinlerin sadece seçilen üründe geçerli olmasını istiyorsanız ürünü seçin."
+        },
+        {
+          "name": "targetSlug",
+          "displayName": "Hedef Ürün Slug (Örn: crs-model)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "data",
+          "description": "Ürün seçmek yerine URL slug da yazabilirsiniz (Örn: crs-model)."
+        },
+        {
+          "name": "applyToAllProducts",
+          "displayName": "Tüm Ürünlere Genel Uygula (Global)",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": false,
+          "groupId": "data",
+          "description": "Açılırsa girilen metinler tüm ürünlerde geçerli olur. Kapalıyken sadece hedef ürüne uygulanır ve diğer ürünler kendi özel verilerini korur."
+        },
+        {
           "name": "sectionIndex",
           "displayName": "Bölüm Sıra Numarası",
           "type": "TEXT",
@@ -9774,8 +9799,8 @@
       "propGroups": [
         {
           "id": "data",
-          "name": "01. Ürün Veri Kaynağı",
-          "description": "Geçerli ikas ürün verisi bağlantısı"
+          "name": "01. Ürün Veri Kaynağı & Hedef",
+          "description": "Hedef ürün seçimi ve kapsam ayarları"
         },
         {
           "id": "header",
