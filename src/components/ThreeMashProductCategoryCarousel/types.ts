@@ -1,47 +1,30 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProduct, IkasProductList } from "@ikas/bp-storefront";
+import type { IkasProduct } from "@ikas/bp-storefront";
 
 export interface Props {
-  /** Otomatik mod için sayfa ürününe bağlayın. */
   product?: IkasProduct | null;
-  /** Manuel modda kategori veya ürün listesi seçmek için kullanılır. */
-  productList?: IkasProductList;
-  /** auto veya manual. auto ürünün ilk kategorisini kullanır. */
-  sourceMode?: string;
-  sectionAnchorId?: string;
-  showHeader?: boolean;
-  titleText?: string;
-  descriptionHtml?: string;
-  setupMessage?: string;
-  showArrows?: boolean;
-  showCurrentProduct?: boolean;
-  showCategoryName?: boolean;
-  showPrice?: boolean;
-  openLinksInNewTab?: boolean;
-  productLimit?: number;
-  scrollByCards?: number;
-  maxWidth?: number;
-  paddingTop?: number;
-  paddingBottom?: number;
-  cardGap?: number;
-  visibleCardsDesktop?: number;
-  visibleCardsTablet?: number;
-  visibleCardsMobile?: number;
-  imageHeight?: number;
-  /** contain, cover, fill veya scale-down. */
-  imageFit?: string;
-  imageScale?: number;
-  imageYOffset?: number;
-  titleMaxLines?: number;
-  titleFontSize?: number;
-  cardTitleFontSize?: number;
-  priceFontSize?: number;
+  /** Sarı kutudaki numara (Örn: 07) */
+  relatedIndex?: string;
+  /** Numaranın yanındaki büyük harf etiket */
+  relatedLabel?: string;
+  /** Karuselın üstündeki geniş h2 başlığı */
+  relatedTitleHtml?: string;
+  /** Sayfanın en altındaki siyah bandın h2 başlığı */
+  finalCtaTitleHtml?: string;
+  /** Başlığın altındaki açıklama paragrafı */
+  finalCtaTextHtml?: string;
+  /** Sol büyük lime buton (a.tmpdt-lime) */
+  primaryButtonText?: string;
+  /** WhatsApp linki veya herhangi bir URL */
+  primaryButtonHref?: string;
+  /** Sağ çerçeveli buton (a.tmpdt-inv) */
+  secondaryButtonText?: string;
+  /** İletişim sayfası veya herhangi bir URL */
+  secondaryButtonHref?: string;
   backgroundColor?: string;
-  textColor?: string;
-  mutedTextColor?: string;
-  cardBackgroundColor?: string;
-  arrowBackgroundColor?: string;
-  arrowColor?: string;
-  /** CRS kaynaklı reusable ürün template datası. Doluysa bu section kendi karşılık gelen bölümünü bu datadan render eder. */
+  finalCtaBackground?: string;
+  finalCtaTextColor?: string;
+  accentColor?: string;
+  /** CRS Composite kaynak yapısındaki reusable template datası. Boş bırakılırsa ürünün varsayılan şablon datası kullanılır. */
   productTemplateJson?: string;
 }
