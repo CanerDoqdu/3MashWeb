@@ -15062,8 +15062,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Duyuru bandı sol vurgulu metin",
-          "groupId": "announcement",
-          "defaultValue": "⚡ Doğru reçineyi mi arıyorsunuz?"
+          "groupId": "announcement"
         },
         {
           "name": "announcementText",
@@ -15071,8 +15070,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Duyuru bandı açıklama",
-          "groupId": "announcement",
-          "defaultValue": "Uygulamanıza göre filtreleyin; emin değilseniz ekibimiz sizin için eşleştirir."
+          "groupId": "announcement"
         },
         {
           "name": "announcementCtaText",
@@ -15080,8 +15078,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Duyuru bandı buton metni",
-          "groupId": "announcement",
-          "defaultValue": "Reçine seçiciye git →"
+          "groupId": "announcement"
         },
         {
           "name": "announcementHref",
@@ -15089,8 +15086,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Duyuru buton linki",
-          "groupId": "announcement",
-          "defaultValue": "#secici"
+          "groupId": "announcement"
         },
         {
           "name": "heroTitlePrefix",
@@ -15098,8 +15094,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Hero ana başlık ilk kısım",
-          "groupId": "hero",
-          "defaultValue": "Sonucun yarısı"
+          "groupId": "hero"
         },
         {
           "name": "heroTitleEmphasis",
@@ -15107,8 +15102,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Hero vurgulu eğik kelime",
-          "groupId": "hero",
-          "defaultValue": "reçinede"
+          "groupId": "hero"
         },
         {
           "name": "heroTitleSuffix",
@@ -15116,8 +15110,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Hero ana başlık son kısım",
-          "groupId": "hero",
-          "defaultValue": "saklı."
+          "groupId": "hero"
         },
         {
           "name": "heroDescriptionHtml",
@@ -15125,8 +15118,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "Hero zengin metin açıklaması",
-          "groupId": "hero",
-          "defaultValue": "Ana sayfada gördüğümüz gibi hassasiyet tek bir cihazdan çıkmaz. Doğru reçine, <b>doğru işe eşleştiğinde</b> ve cihazınızın parametreleriyle <b>birlikte kalibre edildiğinde</b> ortaya çıkar. CE Class IIa sertifikalı <b>CRS</b> hattı ve ekonomik <b>Mash</b> hattıyla, her uygulama için doğru bir reçine var."
+          "groupId": "hero"
         },
         {
           "name": "primaryButtonText",
@@ -15134,8 +15126,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Hero ana buton metni",
-          "groupId": "hero",
-          "defaultValue": "Reçineni seç ↓"
+          "groupId": "hero"
         },
         {
           "name": "primaryButtonHref",
@@ -15143,8 +15134,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Hero ana buton linki",
-          "groupId": "hero",
-          "defaultValue": "#secici"
+          "groupId": "hero"
         },
         {
           "name": "secondaryButtonText",
@@ -15152,8 +15142,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Hero ikinci buton metni",
-          "groupId": "hero",
-          "defaultValue": "Emin değil misiniz? Ekibe sorun"
+          "groupId": "hero"
         },
         {
           "name": "secondaryButtonHref",
@@ -15161,8 +15150,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Hero ikinci buton linki",
-          "groupId": "hero",
-          "defaultValue": "/pages/iletisim"
+          "groupId": "hero"
         },
         {
           "name": "metric1Value",
@@ -15170,8 +15158,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. metrik başlığı (Örn: CE)",
-          "groupId": "metrics",
-          "defaultValue": "CE"
+          "groupId": "metrics"
         },
         {
           "name": "metric1Emphasis",
@@ -15179,8 +15166,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. metrik vurgulu kelime (Örn: Class IIa)",
-          "groupId": "metrics",
-          "defaultValue": "Class IIa"
+          "groupId": "metrics"
         },
         {
           "name": "metric1Label",
@@ -15188,8 +15174,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. metrik alt açıklaması",
-          "groupId": "metrics",
-          "defaultValue": "biyouyumlu CRS hattı · sertifikalı"
+          "groupId": "metrics"
         },
         {
           "name": "metric2Value",
@@ -15197,8 +15182,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. metrik başlığı (Örn: 16)",
-          "groupId": "metrics",
-          "defaultValue": "16"
+          "groupId": "metrics"
         },
         {
           "name": "metric2Emphasis",
@@ -15206,8 +15190,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. metrik vurgulu kelime (Örn: reçine)",
-          "groupId": "metrics",
-          "defaultValue": "reçine"
+          "groupId": "metrics"
         },
         {
           "name": "metric2Label",
@@ -15215,8 +15198,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. metrik alt açıklaması",
-          "groupId": "metrics",
-          "defaultValue": "model, kron, protez, diş eti, splint, aligner, guide…"
+          "groupId": "metrics"
         },
         {
           "name": "metric3Value",
@@ -15224,8 +15206,7 @@
           "type": "TEXT",
           "required": false,
           "description": "3. metrik başlığı (Örn: Marka)",
-          "groupId": "metrics",
-          "defaultValue": "Marka"
+          "groupId": "metrics"
         },
         {
           "name": "metric3Emphasis",
@@ -15233,8 +15214,7 @@
           "type": "TEXT",
           "required": false,
           "description": "3. metrik vurgulu kelime (Örn: bağımsız)",
-          "groupId": "metrics",
-          "defaultValue": "bağımsız"
+          "groupId": "metrics"
         },
         {
           "name": "metric3Label",
@@ -15242,8 +15222,7 @@
           "type": "TEXT",
           "required": false,
           "description": "3. metrik alt açıklaması",
-          "groupId": "metrics",
-          "defaultValue": "tüm DLP & LCD 3D yazıcılarla uyumlu"
+          "groupId": "metrics"
         },
         {
           "name": "metric4Value",
@@ -15251,8 +15230,7 @@
           "type": "TEXT",
           "required": false,
           "description": "4. metrik başlığı (Örn: Birlikte)",
-          "groupId": "metrics",
-          "defaultValue": "Birlikte"
+          "groupId": "metrics"
         },
         {
           "name": "metric4Emphasis",
@@ -15260,8 +15238,7 @@
           "type": "TEXT",
           "required": false,
           "description": "4. metrik vurgulu kelime (Örn: kalibre)",
-          "groupId": "metrics",
-          "defaultValue": "kalibre"
+          "groupId": "metrics"
         },
         {
           "name": "metric4Label",
@@ -15269,8 +15246,7 @@
           "type": "TEXT",
           "required": false,
           "description": "4. metrik alt açıklaması",
-          "groupId": "metrics",
-          "defaultValue": "cihaz parametrelerinizle eşleştirilerek teslim"
+          "groupId": "metrics"
         },
         {
           "name": "selectorNumber",
@@ -15278,8 +15254,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Bölüm numarası (01)",
-          "groupId": "selector",
-          "defaultValue": "01"
+          "groupId": "selector"
         },
         {
           "name": "selectorLabel",
@@ -15287,8 +15262,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Bölüm etiketi (REÇİNE SEÇİCİ)",
-          "groupId": "selector",
-          "defaultValue": "REÇİNİ SEÇİCİ"
+          "groupId": "selector"
         },
         {
           "name": "selectorTitlePrefix",
@@ -15296,8 +15270,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Seçici başlık ilk kısım",
-          "groupId": "selector",
-          "defaultValue": "Hangi işe"
+          "groupId": "selector"
         },
         {
           "name": "selectorTitleEmphasis",
@@ -15305,8 +15278,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Seçici başlık vurgulu kısım",
-          "groupId": "selector",
-          "defaultValue": "hangi reçine?"
+          "groupId": "selector"
         },
         {
           "name": "selectorTitleSuffix",
@@ -15314,8 +15286,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Seçici başlık son kısım",
-          "groupId": "selector",
-          "defaultValue": ""
+          "groupId": "selector"
         },
         {
           "name": "selectorSideHtml",
@@ -15323,8 +15294,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "Seçici sağ yan zengin metin",
-          "groupId": "selector",
-          "defaultValue": "Uygulamanızı seçin, doğru reçineyi görün. Hepsi tüm DLP/LCD yazıcılarla çalışır; CRS hattı ayrıca <b>CE Class IIa</b> biyouyumludur."
+          "groupId": "selector"
         },
         {
           "name": "selectorCardCtaText",
@@ -15332,8 +15302,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Kart link metni (İncele)",
-          "groupId": "selector",
-          "defaultValue": "İncele"
+          "groupId": "selector"
         },
         {
           "name": "featureNumber",
@@ -15341,8 +15310,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Bölüm numarası (02)",
-          "groupId": "feature",
-          "defaultValue": "02"
+          "groupId": "feature"
         },
         {
           "name": "featureLabel",
@@ -15350,8 +15318,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Bölüm etiketi",
-          "groupId": "feature",
-          "defaultValue": "ÖNE ÇIKAN"
+          "groupId": "feature"
         },
         {
           "name": "featureEyebrow",
@@ -15359,8 +15326,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Öne çıkan blok rozet metni",
-          "groupId": "feature",
-          "defaultValue": "CRS COMPOSITE · CE CLASS IIa"
+          "groupId": "feature"
         },
         {
           "name": "featureTitlePrefix",
@@ -15368,8 +15334,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Öne çıkan kart başlık ilk kısım",
-          "groupId": "feature",
-          "defaultValue": "Daimi kron artık"
+          "groupId": "feature"
         },
         {
           "name": "featureTitleEmphasis",
@@ -15377,8 +15342,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Öne çıkan kart vurgulu başlık",
-          "groupId": "feature",
-          "defaultValue": "baskıdan"
+          "groupId": "feature"
         },
         {
           "name": "featureTitleSuffix",
@@ -15386,8 +15350,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Öne çıkan kart başlık son kısım",
-          "groupId": "feature",
-          "defaultValue": "çıkıyor."
+          "groupId": "feature"
         },
         {
           "name": "featureDescriptionHtml",
@@ -15395,8 +15358,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "Öne çıkan kart açıklama",
-          "groupId": "feature",
-          "defaultValue": "Geçici ve daimi kron-köprülerin katmanlı üretimi için biyouyumlu reçine. Rakiplerine kıyasla <b>daha yüksek bükülme mukavemeti</b> ve hassas marjinal uyum; yarı saydamlık–opaklık arasında dengeli translüsentlik. Ağız koşullarına dayanıklı, tat/koku yapmaz."
+          "groupId": "feature"
         },
         {
           "name": "featureHref",
@@ -15404,8 +15366,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Öne çıkan kart buton linki",
-          "groupId": "feature",
-          "defaultValue": "/crs-composite-mukemmel-dayanimli-gecici-recinesi"
+          "groupId": "feature"
         },
         {
           "name": "featureCtaText",
@@ -15413,8 +15374,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Öne çıkan kart buton metni",
-          "groupId": "feature",
-          "defaultValue": "Ürün detayına git →"
+          "groupId": "feature"
         },
         {
           "name": "featureSpec1Label",
@@ -15422,8 +15382,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. teknik özellik adı (Örn: Bükülme Mukavemeti)",
-          "groupId": "feature-specs",
-          "defaultValue": "Eğilme mukavemeti (ISO 10477)"
+          "groupId": "feature-specs"
         },
         {
           "name": "featureSpec1Value",
@@ -15431,8 +15390,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. teknik özellik değeri (Örn: 144 MPa)",
-          "groupId": "feature-specs",
-          "defaultValue": "144 MPa"
+          "groupId": "feature-specs"
         },
         {
           "name": "featureSpec2Label",
@@ -15440,8 +15398,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. teknik özellik adı",
-          "groupId": "feature-specs",
-          "defaultValue": "Eğilme modülü (ISO 10477)"
+          "groupId": "feature-specs"
         },
         {
           "name": "featureSpec2Value",
@@ -15449,8 +15406,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. teknik özellik değeri",
-          "groupId": "feature-specs",
-          "defaultValue": "5000 MPa"
+          "groupId": "feature-specs"
         },
         {
           "name": "featureSpec3Label",
@@ -15458,8 +15414,7 @@
           "type": "TEXT",
           "required": false,
           "description": "3. teknik özellik adı",
-          "groupId": "feature-specs",
-          "defaultValue": "Uygulama"
+          "groupId": "feature-specs"
         },
         {
           "name": "featureSpec3Value",
@@ -15467,8 +15422,7 @@
           "type": "TEXT",
           "required": false,
           "description": "3. teknik özellik değeri",
-          "groupId": "feature-specs",
-          "defaultValue": "Geçici + daimi kron-köprü"
+          "groupId": "feature-specs"
         },
         {
           "name": "featureSpec4Label",
@@ -15476,8 +15430,7 @@
           "type": "TEXT",
           "required": false,
           "description": "4. teknik özellik adı",
-          "groupId": "feature-specs",
-          "defaultValue": "Uyum"
+          "groupId": "feature-specs"
         },
         {
           "name": "featureSpec4Value",
@@ -15485,8 +15438,7 @@
           "type": "TEXT",
           "required": false,
           "description": "4. teknik özellik değeri",
-          "groupId": "feature-specs",
-          "defaultValue": "Tüm DLP / LCD yazıcılar"
+          "groupId": "feature-specs"
         },
         {
           "name": "detailNumber",
@@ -15494,8 +15446,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Bölüm numarası (03)",
-          "groupId": "detail",
-          "defaultValue": "03"
+          "groupId": "detail"
         },
         {
           "name": "detailLabel",
@@ -15503,8 +15454,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Bölüm etiketi",
-          "groupId": "detail",
-          "defaultValue": "İKİ HAT, TEK STANDART"
+          "groupId": "detail"
         },
         {
           "name": "detailTitlePrefix",
@@ -15512,8 +15462,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Detay başlık ilk kısım",
-          "groupId": "detail",
-          "defaultValue": "Bütçenize göre hat,"
+          "groupId": "detail"
         },
         {
           "name": "detailTitleEmphasis",
@@ -15521,8 +15470,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Detay vurgulu başlık",
-          "groupId": "detail",
-          "defaultValue": "kaliteye göre değil."
+          "groupId": "detail"
         },
         {
           "name": "detailTitleSuffix",
@@ -15530,8 +15478,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Detay başlık son kısım",
-          "groupId": "detail",
-          "defaultValue": ""
+          "groupId": "detail"
         },
         {
           "name": "detailSideHtml",
@@ -15539,8 +15486,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "Detay sağ yan açıklama metni",
-          "groupId": "detail",
-          "defaultValue": "İster premium ister ekonomik seçin; ikisi de <b>tüm marka yazıcılarla</b> çalışır ve teknik ekibimizin parametre desteğiyle gelir."
+          "groupId": "detail"
         },
         {
           "name": "detailCard1Title",
@@ -15548,8 +15494,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. segment / neden kartı başlığı",
-          "groupId": "detail-cards",
-          "defaultValue": "CRS — Biyouyumlu premium hat"
+          "groupId": "detail-cards"
         },
         {
           "name": "detailCard1DescriptionHtml",
@@ -15557,8 +15502,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "1. kart açıklama metni",
-          "groupId": "detail-cards",
-          "defaultValue": "CRSCAM üretimi, <b>CE Class IIa</b> sertifikalı; hassasiyet, dayanım ve biyouyumluluğun kritik olduğu işler için. Ağız içinde kalan tüm uygulamaların adresi."
+          "groupId": "detail-cards"
         },
         {
           "name": "detailCard2Title",
@@ -15566,8 +15510,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. segment / neden kartı başlığı",
-          "groupId": "detail-cards",
-          "defaultValue": "Mash — Ekonomik hat"
+          "groupId": "detail-cards"
         },
         {
           "name": "detailCard2DescriptionHtml",
@@ -15575,8 +15518,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "2. kart açıklama metni",
-          "groupId": "detail-cards",
-          "defaultValue": "Yüksek hacimli, ağız dışı ve deneme işleri için <b>uygun maliyetli</b> alternatif. Model, try-in ve ekonomik guide ihtiyaçlarını karşılar."
+          "groupId": "detail-cards"
         },
         {
           "name": "detailCard3Title",
@@ -15584,8 +15526,7 @@
           "type": "TEXT",
           "required": false,
           "description": "3. segment / neden kartı başlığı",
-          "groupId": "detail-cards",
-          "defaultValue": ""
+          "groupId": "detail-cards"
         },
         {
           "name": "detailCard3DescriptionHtml",
@@ -15593,8 +15534,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "3. kart açıklama metni",
-          "groupId": "detail-cards",
-          "defaultValue": ""
+          "groupId": "detail-cards"
         },
         {
           "name": "detailCard4Title",
@@ -15602,8 +15542,7 @@
           "type": "TEXT",
           "required": false,
           "description": "4. segment / neden kartı başlığı",
-          "groupId": "detail-cards",
-          "defaultValue": ""
+          "groupId": "detail-cards"
         },
         {
           "name": "detailCard4DescriptionHtml",
@@ -15611,8 +15550,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "4. kart açıklama metni",
-          "groupId": "detail-cards",
-          "defaultValue": ""
+          "groupId": "detail-cards"
         },
         {
           "name": "detailCalloutTitlePrefix",
@@ -15620,8 +15558,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Alt çağrı kutusu başlık",
-          "groupId": "detail-callout",
-          "defaultValue": "Reçine tek başına yeterli değil:"
+          "groupId": "detail-callout"
         },
         {
           "name": "detailCalloutTitleEmphasis",
@@ -15629,8 +15566,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Alt çağrı kutusu vurgulu başlık",
-          "groupId": "detail-callout",
-          "defaultValue": "kürleme sonucu tamamlar."
+          "groupId": "detail-callout"
         },
         {
           "name": "detailCalloutTitleSuffix",
@@ -15638,8 +15574,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Alt çağrı kutusu son başlık",
-          "groupId": "detail-callout",
-          "defaultValue": ""
+          "groupId": "detail-callout"
         },
         {
           "name": "detailCalloutDescriptionHtml",
@@ -15647,8 +15582,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "Alt çağrı kutusu açıklama metni",
-          "groupId": "detail-callout",
-          "defaultValue": "Doğru reçineyi seçseniz bile, yanlış post-curing hassasiyeti ve dayanımı bozar. Her CRS reçinesi bir <b>kürleme protokolüyle</b> gelir; akıllı kürleme cihazımız bu protokolü otomatik uygular."
+          "groupId": "detail-callout"
         },
         {
           "name": "detailCalloutButton1Text",
@@ -15656,8 +15590,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. buton metni",
-          "groupId": "detail-callout",
-          "defaultValue": "Kürlemenin önemini gör →"
+          "groupId": "detail-callout"
         },
         {
           "name": "detailCalloutButton1Href",
@@ -15665,8 +15598,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. buton linki",
-          "groupId": "detail-callout",
-          "defaultValue": "/yikama-kurleme-cihazlari#neden-gerekli"
+          "groupId": "detail-callout"
         },
         {
           "name": "detailCalloutButton2Text",
@@ -15674,8 +15606,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. buton metni",
-          "groupId": "detail-callout",
-          "defaultValue": ""
+          "groupId": "detail-callout"
         },
         {
           "name": "detailCalloutButton2Href",
@@ -15683,8 +15614,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. buton linki",
-          "groupId": "detail-callout",
-          "defaultValue": ""
+          "groupId": "detail-callout"
         },
         {
           "name": "faqNumber",
@@ -15692,8 +15622,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Bölüm sıra numarası (04)",
-          "groupId": "faq-header",
-          "defaultValue": "04"
+          "groupId": "faq-header"
         },
         {
           "name": "faqLabel",
@@ -15701,8 +15630,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Bölüm başlık etiketi",
-          "groupId": "faq-header",
-          "defaultValue": "SIK SORULANLAR"
+          "groupId": "faq-header"
         },
         {
           "name": "faqTitle",
@@ -15710,8 +15638,7 @@
           "type": "TEXT",
           "required": false,
           "description": "SSS bölümü ana başlığı",
-          "groupId": "faq-header",
-          "defaultValue": "Reçine seçerken merak edilenler."
+          "groupId": "faq-header"
         },
         {
           "name": "faqSideHtml",
@@ -15719,8 +15646,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "SSS başlığının yanındaki açıklama",
-          "groupId": "faq-header",
-          "defaultValue": "Diş hekimleri ve laboratuvarların en çok sorduğu sorular, net cevaplarla."
+          "groupId": "faq-header"
         },
         {
           "name": "faq1Question",
@@ -15728,8 +15654,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. sıkça sorulan soru başlığı",
-          "groupId": "faq-items",
-          "defaultValue": "Hangi dental reçineyi seçmeliyim?"
+          "groupId": "faq-items"
         },
         {
           "name": "faq1AnswerHtml",
@@ -15737,8 +15662,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "1. soru için zengin metin cevabı",
-          "groupId": "faq-items",
-          "defaultValue": "Reçineyi <b>uygulamaya göre</b> seçmelisiniz: model için <b>CRS Model</b> ya da ekonomik <b>Mash Study</b>; geçici/daimi kron-köprü için <b>CRS Composite</b>; protez tabanı için <b>CRS Denture</b>; diş eti için <b>CRS Gingiva</b>; gece plağı için <b>CRS Splint Hard/Soft</b>; şeffaf hizalayıcı için <b>CRS Aligner</b>; cerrahi rehber için <b>CRS Guide</b>. Emin değilseniz yukarıdaki <a href=\"#secici\">reçine seçiciyi</a> kullanın veya ekibimize danışın."
+          "groupId": "faq-items"
         },
         {
           "name": "faq2Question",
@@ -15746,8 +15670,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. sıkça sorulan soru başlığı",
-          "groupId": "faq-items",
-          "defaultValue": "CE Class IIa biyouyumluluk ne anlama geliyor?"
+          "groupId": "faq-items"
         },
         {
           "name": "faq2AnswerHtml",
@@ -15755,8 +15678,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "2. soru için zengin metin cevabı",
-          "groupId": "faq-items",
-          "defaultValue": "CE Class IIa, ağız içinde belirli bir süre temas eden tıbbi cihaz sınıfıdır; reçinenin <b>hasta güvenliği ve biyouyumluluk</b> standartlarını karşıladığını gösterir. CRS hattımız CE Class IIa sertifikalıdır ve MDR süreçleri üretici ortağımız CRSCAM tarafından yürütülür."
+          "groupId": "faq-items"
         },
         {
           "name": "faq3Question",
@@ -15764,8 +15686,7 @@
           "type": "TEXT",
           "required": false,
           "description": "3. sıkça sorulan soru başlığı",
-          "groupId": "faq-items",
-          "defaultValue": "Reçineleriniz başka marka 3D yazıcılarla çalışır mı?"
+          "groupId": "faq-items"
         },
         {
           "name": "faq3AnswerHtml",
@@ -15773,8 +15694,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "3. soru için zengin metin cevabı",
-          "groupId": "faq-items",
-          "defaultValue": "Evet. Tüm CRS ve Mash reçineleri <b>tüm DLP ve LCD marka</b> yazıcılarla uyumludur. Ayrıca teknik ekibimiz, reçineyi <b>cihazınızın parametreleriyle birlikte kalibre ederek</b> teslim eder — böylece marka fark etmeden aynı sonucu alırsınız."
+          "groupId": "faq-items"
         },
         {
           "name": "faq4Question",
@@ -15782,8 +15702,7 @@
           "type": "TEXT",
           "required": false,
           "description": "4. sıkça sorulan soru başlığı",
-          "groupId": "faq-items",
-          "defaultValue": "Model reçinesinde nelere dikkat etmeliyim?"
+          "groupId": "faq-items"
         },
         {
           "name": "faq4AnswerHtml",
@@ -15791,8 +15710,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "4. soru için zengin metin cevabı",
-          "groupId": "faq-items",
-          "defaultValue": "İyi bir model reçinesinde <b>boyutsal doğruluk</b>, yüksek detay çözünürlüğü, belirgin kole hatları ve mat/lekesiz yüzey aranır. CRS Model kum ve gri renk seçenekleriyle optik tespit için yüksek görsel detay sunar."
+          "groupId": "faq-items"
         },
         {
           "name": "faq5Question",
@@ -15800,8 +15718,7 @@
           "type": "TEXT",
           "required": false,
           "description": "5. sıkça sorulan soru başlığı",
-          "groupId": "faq-items",
-          "defaultValue": "Reçine performansını kürleme etkiler mi?"
+          "groupId": "faq-items"
         },
         {
           "name": "faq5AnswerHtml",
@@ -15809,8 +15726,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "5. soru için zengin metin cevabı",
-          "groupId": "faq-items",
-          "defaultValue": "Kesinlikle. <b>Yetersiz kürleme</b> kırılganlık ve monomer salınımı, <b>fazla kürleme</b> deformasyon yaratır. Doğru reçine bile yanlış kürlemeyle başarısız olur; bu yüzden her reçineyi bir kürleme protokolüyle veriyoruz. Detay için <a href=\"/yikama-kurleme-cihazlari#neden-gerekli\">kürleme bölümüne</a> bakabilirsiniz."
+          "groupId": "faq-items"
         },
         {
           "name": "finalTitlePrefix",
@@ -15818,8 +15734,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Kapanış başlığı ilk kısım",
-          "groupId": "finalCta",
-          "defaultValue": "İşinize uygun reçineyi"
+          "groupId": "finalCta"
         },
         {
           "name": "finalTitleEmphasis",
@@ -15827,8 +15742,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Kapanış başlığı vurgulu kısım",
-          "groupId": "finalCta",
-          "defaultValue": "birlikte seçelim."
+          "groupId": "finalCta"
         },
         {
           "name": "finalTitleSuffix",
@@ -15836,8 +15750,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Kapanış başlığı son kısım",
-          "groupId": "finalCta",
-          "defaultValue": ""
+          "groupId": "finalCta"
         },
         {
           "name": "finalDescriptionHtml",
@@ -15845,8 +15758,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "Kapanış açıklama metni",
-          "groupId": "finalCta",
-          "defaultValue": "Hangi uygulama, hangi cihaz, hangi bütçe? Kısa bir görüşmeyle size en uygun CRS veya Mash reçinesini ve doğru parametreleri <b>ücretsiz</b> önerelim."
+          "groupId": "finalCta"
         },
         {
           "name": "finalPrimaryButtonText",
@@ -15854,8 +15766,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Kapanış ana buton metni",
-          "groupId": "finalCta",
-          "defaultValue": "Uzmana danış — ücretsiz"
+          "groupId": "finalCta"
         },
         {
           "name": "finalPrimaryButtonHref",
@@ -15863,8 +15774,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Kapanış ana buton linki",
-          "groupId": "finalCta",
-          "defaultValue": "/pages/iletisim"
+          "groupId": "finalCta"
         },
         {
           "name": "finalSecondaryButtonText",
@@ -15872,8 +15782,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Kapanış ikincil buton metni",
-          "groupId": "finalCta",
-          "defaultValue": "Reçine seçiciye dön"
+          "groupId": "finalCta"
         },
         {
           "name": "finalSecondaryButtonHref",
@@ -15881,8 +15790,7 @@
           "type": "TEXT",
           "required": false,
           "description": "Kapanış ikincil buton linki",
-          "groupId": "finalCta",
-          "defaultValue": "#secici"
+          "groupId": "finalCta"
         },
         {
           "name": "backgroundColor",
