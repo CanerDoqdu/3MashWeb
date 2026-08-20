@@ -325,21 +325,7 @@ export function ThreeMashCategoryProductsPage(props: Props) {
   }
 
   if (detectedCategoryData) {
-    // Only pass productList + appearance overrides; do NOT spread text props.
-    // Text content always comes from the auto-detected preset so that Studio-saved
-    // values from a different category (e.g. resin) cannot bleed into this page.
-    return (
-      <ThreeMashCategoryLanding
-        data={detectedCategoryData}
-        productList={props.productList}
-        backgroundColor={props.backgroundColor}
-        textColor={props.textColor}
-        mutedTextColor={props.mutedTextColor}
-        panelColor={props.panelColor}
-        accentColor={props.accentColor}
-        lineColor={props.lineColor}
-      />
-    );
+    return <ThreeMashCategoryLanding {...props} data={detectedCategoryData} productList={props.productList} />;
   }
 
   return (
