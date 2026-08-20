@@ -458,11 +458,66 @@ function Configurator(props: Props) {
   );
 }
 
+function productJsonLd(props: Props): string {
+  const { data, price } = props;
+  const rawTitle = (data.hero.titleHtml || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  const rawDescription = (data.hero.leadHtml || data.hero.kicker || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  const images = (data.hero.gallery || []).map((g) => g.src).filter(Boolean);
+  const numericPrice = price ? price.replace(/[^0-9.,]/g, "").replace(",", ".") : "";
+
+  const productSchema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: rawTitle,
+    description: rawDescription,
+    image: images.length ? images : undefined,
+    brand: {
+      "@type": "Brand",
+      name: "3MASH",
+    },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "TRY",
+      price: numericPrice || undefined,
+      availability: props.isAddToCartDisabled ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+      url: typeof window !== "undefined" ? window.location.href : undefined,
+    },
+  };
+
+  const breadcrumbSchema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: data.breadcrumb.homeText || "Anasayfa",
+        item: data.breadcrumb.homeHref || "/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: data.breadcrumb.categoryText || "Kategori",
+        item: data.breadcrumb.categoryHref || "/kategori",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: data.breadcrumb.productText || rawTitle,
+      },
+    ],
+  };
+
+  return JSON.stringify([productSchema, breadcrumbSchema]);
+}
+
 export function ProductDetailHeroSection(props: Props) {
   const heroRef = useRef<HTMLDivElement>(null);
+  const jsonLd = useMemo(() => productJsonLd(props), [props.data.key, props.price, props.isAddToCartDisabled]);
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <div className="tmpdt-wrap">
         <div className="tmpdt-crumb">
           <a href={props.data.breadcrumb.homeHref}>{props.data.breadcrumb.homeText}</a>
@@ -740,12 +795,32 @@ export function ProductDetailEcosystemSection({ data }: { data: ProductDetailTem
   );
 }
 
+function faqJsonLd(faq: ProductDetailTemplateData["faq"]): string | null {
+  if (!faq?.items?.length) return null;
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answerHtml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(),
+      },
+    })),
+  };
+  return JSON.stringify(faqSchema);
+}
+
 export function ProductDetailFaqSection({ data }: { data: ProductDetailTemplateData }) {
   const faq = data.faq;
   if (!faq?.items.length) return null;
 
+  const jsonLd = useMemo(() => faqJsonLd(faq), [data.key, faq.items]);
+
   return (
     <section className="tmpdt-section tmpdt-section-tight" id="sss">
+      {jsonLd ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} /> : null}
       <div className="tmpdt-wrap">
         <SectionIndex index={faq.index} label={faq.label} />
         <SectionHead titleHtml={faq.titleHtml} sideHtml={faq.sideHtml} wide />

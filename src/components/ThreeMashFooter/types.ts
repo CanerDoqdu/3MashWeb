@@ -33,7 +33,7 @@ export interface Props {
   /** Email için mailto: formatı kullanılır. */
   contactLink1Href?: string;
   contactLink2Text?: string;
-  /** Harita linki dış bağlantıdır. */
+  /** Harita linki dış Linkidır. */
   contactLink2Href?: string;
   contactLink3Text?: string;
   contactLink3Href?: string;
@@ -48,13 +48,13 @@ export interface Props {
   contactColumnTitle?: string;
   /** Tüm Kategoriler ya da seçili kategorilere bağlayın. Ayarlandığında alt bilgi Ürünler sütunu canlı ikas kategorilerini okur. */
   productCategoryList?: IkasCategoryList;
-  /** Alt bilgi Ürünler sütunu için editörden yönetilen isteğe bağlı bağlantılar. Ürün alt bilgi kategorileri boş olduğunda kullanılır. */
+  /** Alt bilgi Ürünler sütunu için editörden yönetilen isteğe bağlı Bağlantılar. Ürün alt bilgi kategorileri boş olduğunda kullanılır. */
   productFooterLinks?: IkasNavigationLinkList;
   /** Alt bilgi Ürünler sütununda gösterilecek maksimum canlı ikas kategori sayısı. */
   footerCategoryLimit?: number;
-  /** Alt bilgi Şirket sütunu için editörden yönetilen isteğe bağlı bağlantılar. */
+  /** Alt bilgi Şirket sütunu için editörden yönetilen isteğe bağlı Bağlantılar. */
   companyFooterLinks?: IkasNavigationLinkList;
-  /** Alt bilgi İletişim sütunu için editörden yönetilen isteğe bağlı bağlantılar. */
+  /** Alt bilgi İletişim sütunu için editörden yönetilen isteğe bağlı Bağlantılar. */
   contactFooterLinks?: IkasNavigationLinkList;
   /** Tam domain kullanmayın; anasayfa için / girin. */
   logoHref?: string;

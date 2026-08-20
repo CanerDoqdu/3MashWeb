@@ -45,7 +45,7 @@
         },
         {
           "name": "announcementHref",
-          "displayName": "Duyuru Bağlantısı",
+          "displayName": "Duyuru Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "#hesap",
@@ -61,7 +61,7 @@
         },
         {
           "name": "logoHref",
-          "displayName": "Logo Bağlantısı",
+          "displayName": "Logo Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/",
@@ -86,7 +86,7 @@
         },
         {
           "name": "allProductsHref",
-          "displayName": "Tüm Ürünler Bağlantısı",
+          "displayName": "Tüm Ürünler Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/search",
@@ -126,7 +126,7 @@
         },
         {
           "name": "productsFeatureHref",
-          "displayName": "Öne Çıkan Ürün Bağlantısı",
+          "displayName": "Öne Çıkan Ürün Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/yikama-kurleme-cihazlari",
@@ -345,7 +345,7 @@
         },
         {
           "name": "why1Href",
-          "displayName": "Neden 1 Bağlantısı",
+          "displayName": "Neden 1 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "#sorun",
@@ -377,7 +377,7 @@
         },
         {
           "name": "why2Href",
-          "displayName": "Neden 2 Bağlantısı",
+          "displayName": "Neden 2 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "#piyasada-yaygin-kurulum-250-500",
@@ -409,7 +409,7 @@
         },
         {
           "name": "why3Href",
-          "displayName": "Neden 3 Bağlantısı",
+          "displayName": "Neden 3 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "#cozum",
@@ -441,7 +441,7 @@
         },
         {
           "name": "why4Href",
-          "displayName": "Neden 4 Bağlantısı",
+          "displayName": "Neden 4 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/yikama-kurleme-cihazlari#neden-gerekli",
@@ -457,7 +457,7 @@
         },
         {
           "name": "referencesHref",
-          "displayName": "Referanslar Bağlantısı",
+          "displayName": "Referanslar Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/#guven",
@@ -474,7 +474,7 @@
         },
         {
           "name": "academyHref",
-          "displayName": "Akademi Bağlantısı",
+          "displayName": "Akademi Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/pages/mash-academy",
@@ -482,7 +482,7 @@
         },
         {
           "name": "searchHref",
-          "displayName": "Arama Bağlantısı",
+          "displayName": "Arama Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/search",
@@ -519,7 +519,7 @@
         },
         {
           "name": "accountHref",
-          "displayName": "Hesap Bağlantısı",
+          "displayName": "Hesap Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/account/login",
@@ -536,7 +536,7 @@
         },
         {
           "name": "cartHref",
-          "displayName": "Sepet Bağlantısı",
+          "displayName": "Sepet Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/cart",
@@ -1501,7 +1501,7 @@
         },
         {
           "name": "why5Href",
-          "displayName": "Neden 5 Bağlantısı",
+          "displayName": "Neden 5 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "#ekosistem",
@@ -1533,7 +1533,7 @@
         },
         {
           "name": "why6Href",
-          "displayName": "Neden 6 Bağlantısı",
+          "displayName": "Neden 6 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/#guven",
@@ -1565,7 +1565,7 @@
         },
         {
           "name": "why7Href",
-          "displayName": "Neden 7 Bağlantısı",
+          "displayName": "Neden 7 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "#sss",
@@ -1621,7 +1621,7 @@
         },
         {
           "name": "profilePrimaryText",
-          "displayName": "Profil Birincil Buton Metni",
+          "displayName": "Profil 1. Buton Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Giriş yap",
@@ -1629,7 +1629,7 @@
         },
         {
           "name": "profilePrimaryHref",
-          "displayName": "Profil Birincil Buton Bağlantı",
+          "displayName": "Profil 1. Buton Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/account/login",
@@ -1685,7 +1685,7 @@
         },
         {
           "name": "storePanelButtonHref",
-          "displayName": "Mağaza Buton Bağlantısı",
+          "displayName": "Mağaza Buton Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/search",
@@ -1782,7 +1782,7 @@
         },
         {
           "name": "profileLink1Text",
-          "displayName": "Profil Bağlantısı 1 Metni",
+          "displayName": "Profil Linki 1 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Siparişlerim",
@@ -1790,7 +1790,7 @@
         },
         {
           "name": "profileLink2Text",
-          "displayName": "Profil Bağlantısı 2 Metni",
+          "displayName": "Profil Linki 2 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Adreslerim",
@@ -1798,7 +1798,7 @@
         },
         {
           "name": "profileLink2Href",
-          "displayName": "Profil Bağlantısı 2 Adresi",
+          "displayName": "Profil Linki 2 Adresi",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/account/addresses",
@@ -1806,7 +1806,7 @@
         },
         {
           "name": "profileLink3Text",
-          "displayName": "Profil Bağlantısı 3 Metni",
+          "displayName": "Profil Linki 3 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Destek talebi",
@@ -1814,7 +1814,7 @@
         },
         {
           "name": "profileLink3Href",
-          "displayName": "Profil Bağlantısı 3 Adresi",
+          "displayName": "Profil Linki 3 Adresi",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/pages/iletisim",
@@ -1862,7 +1862,7 @@
         },
         {
           "name": "profileLink1Href",
-          "displayName": "Profil Bağlantısı 1 Adresi",
+          "displayName": "Profil Linki 1 Adresi",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/account/orders",
@@ -1870,7 +1870,7 @@
         },
         {
           "name": "profileLink4Text",
-          "displayName": "Profil Bağlantısı 4 Metni",
+          "displayName": "Profil Linki 4 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "groupId": "action-panels",
@@ -1878,7 +1878,7 @@
         },
         {
           "name": "profileLink4Href",
-          "displayName": "Profil Bağlantısı 4 Adresi",
+          "displayName": "Profil Linki 4 Adresi",
           "type": "TEXT",
           "required": false,
           "groupId": "action-panels",
@@ -1886,7 +1886,7 @@
         },
         {
           "name": "profileLink5Text",
-          "displayName": "Profil Bağlantısı 5 Metni",
+          "displayName": "Profil Linki 5 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "groupId": "action-panels",
@@ -1894,7 +1894,7 @@
         },
         {
           "name": "profileLink5Href",
-          "displayName": "Profil Bağlantısı 5 Adresi",
+          "displayName": "Profil Linki 5 Adresi",
           "type": "TEXT",
           "required": false,
           "groupId": "action-panels",
@@ -1902,7 +1902,7 @@
         },
         {
           "name": "profileLink6Text",
-          "displayName": "Profil Bağlantısı 6 Metni",
+          "displayName": "Profil Linki 6 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "groupId": "action-panels",
@@ -1910,7 +1910,7 @@
         },
         {
           "name": "profileLink6Href",
-          "displayName": "Profil Bağlantısı 6 Adresi",
+          "displayName": "Profil Linki 6 Adresi",
           "type": "TEXT",
           "required": false,
           "groupId": "action-panels",
@@ -1918,7 +1918,7 @@
         },
         {
           "name": "referencesHomeHref",
-          "displayName": "Referanslar Anasayfa Bağlantısı",
+          "displayName": "Referanslar Anasayfa Linki",
           "type": "TEXT",
           "required": false,
           "description": "Referanslar linkinin anasayfa routeu.",
@@ -1938,12 +1938,12 @@
       "propGroups": [
         {
           "id": "data",
-          "name": "Arama Ürün Verisi",
+          "name": "01. Arama ve Canlı Ürün Arama",
           "description": "Üst menü arama önerileri için Tüm Ürünler listesini buradan bağlayın."
         },
         {
           "id": "announcement",
-          "name": "Duyuru",
+          "name": "02. Üst Duyuru Bandı",
           "description": "Top black promotion bar",
           "children": [
             {
@@ -1955,8 +1955,8 @@
         },
         {
           "id": "brand",
-          "name": "Brand",
-          "description": "Logo ve anasayfa bağlantısı",
+          "name": "03. Marka ve Logo",
+          "description": "Logo ve anasayfa Linki",
           "children": [
             {
               "id": "logoImageControls",
@@ -1972,7 +1972,7 @@
         },
         {
           "id": "products",
-          "name": "Ürünler Menü",
+          "name": "04. Ürünler Açılır Menüsü",
           "description": "Ürün mega menü içeriği",
           "children": [
             {
@@ -1994,13 +1994,13 @@
         },
         {
           "id": "why",
-          "name": "Neden Menü",
+          "name": "05. Neden 3MASH Açılır Menüsü",
           "description": "Sorun ve çözüm mega menü içeriği"
         },
         {
           "id": "links",
-          "name": "Bağlantılar",
-          "description": "Üst menü bağlantıları ve ikon etiketleri",
+          "name": "06. Navigasyon Bağlantıları",
+          "description": "Üst menü Bağlantıları ve ikon etiketleri",
           "children": [
             {
               "id": "actionIconImageControls",
@@ -2016,13 +2016,13 @@
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "07. Görünüm ve Renkler",
           "description": "Üst menü renkleri"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "08. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
@@ -2033,7 +2033,7 @@
         },
         {
           "id": "action-panels",
-          "name": "Aksiyon Panels",
+          "name": "09. Hızlı Aksiyon ve İletişim Panelleri",
           "description": "Profil ve mağaza açılır panelleri"
         }
       ]
@@ -2079,7 +2079,7 @@
         },
         {
           "name": "subtitleStart",
-          "displayName": "Subtitle Start",
+          "displayName": "Alt Başlık Giriş Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bu para reklama gitmiyor, yeni cihaza da gitmiyor. Hastanın ağzına",
@@ -2087,7 +2087,7 @@
         },
         {
           "name": "subtitleStrongOne",
-          "displayName": "Subtitle Strong One",
+          "displayName": "Alt Başlık 1. Vurgu (Kalın)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "ilk seferde oturmayan işler",
@@ -2095,7 +2095,7 @@
         },
         {
           "name": "subtitleMiddle",
-          "displayName": "Subtitle Middle",
+          "displayName": "Alt Başlık Orta Metin",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "yüzünden, sessizce üretim maliyetine dönüşüyor. Yandaki değerleri",
@@ -2103,7 +2103,7 @@
         },
         {
           "name": "subtitleStrongTwo",
-          "displayName": "Subtitle Strong Two",
+          "displayName": "Alt Başlık 2. Vurgu (Kalın)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "kendinize göre ayarlayın",
@@ -2111,7 +2111,7 @@
         },
         {
           "name": "subtitleEnd",
-          "displayName": "Subtitle End",
+          "displayName": "Alt Başlık Bitiş Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "— yukarıdaki rakam anında sizin kliniğinize göre güncellenir.",
@@ -2119,7 +2119,7 @@
         },
         {
           "name": "primaryButtonText",
-          "displayName": "Birincil Buton Metni",
+          "displayName": "1. Buton Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sebebini görün ↓",
@@ -2127,7 +2127,7 @@
         },
         {
           "name": "primaryButtonHref",
-          "displayName": "Birincil Buton Bağlantı",
+          "displayName": "1. Buton Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "#sorun",
@@ -2263,7 +2263,7 @@
         },
         {
           "name": "fineTextBeforeLink",
-          "displayName": "Bağlantı Öncesi İnce Metin",
+          "displayName": "Bağlantı Öncesi İnce Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Basitleştirilmiş bir tahmindir; sonuçlar iş akışınıza göre değişir. Kesin analiz için",
@@ -2287,7 +2287,7 @@
         },
         {
           "name": "fineTextAfterLink",
-          "displayName": "Bağlantı Sonrası İnce Metin",
+          "displayName": "Bağlantı Sonrası İnce Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "alın.",
@@ -2599,7 +2599,7 @@
         },
         {
           "name": "subTextColor",
-          "displayName": "Alternatif Metin Yazı Rengi",
+          "displayName": "Alternatif Metni Yazı Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#55554E",
@@ -2777,7 +2777,7 @@
         },
         {
           "name": "labAccentTextColor",
-          "displayName": "Lab Vurgu Metin Rengi",
+          "displayName": "Lab Vurgu Metni Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#4F2FCF",
@@ -2825,7 +2825,7 @@
         },
         {
           "name": "clinicCostDetailText",
-          "displayName": "Cost Detail Metin",
+          "displayName": "Cost Detail Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →",
@@ -2881,7 +2881,7 @@
         },
         {
           "name": "labCostDetailText",
-          "displayName": "Cost Detail Metin",
+          "displayName": "Cost Detail Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →",
@@ -3033,7 +3033,7 @@
         },
         {
           "name": "primaryButtonTextColor",
-          "displayName": "Birincil Buton Metin Rengi",
+          "displayName": "1. Buton Metni Rengi",
           "type": "COLOR",
           "required": false,
           "groupId": "buttons",
@@ -3041,7 +3041,7 @@
         },
         {
           "name": "secondaryButtonTextColor",
-          "displayName": "İkincil Buton Metin Rengi",
+          "displayName": "İkincil Buton Metni Rengi",
           "type": "COLOR",
           "required": false,
           "groupId": "buttons",
@@ -3051,8 +3051,8 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Content",
-          "description": "Giriş metin içeriği",
+          "name": "01. Bölüm Başlığı ve Ana Metinler",
+          "description": "Giriş Metni içeriği",
           "children": [
             {
               "id": "titleUnderlineImageControls",
@@ -3078,22 +3078,22 @@
         },
         {
           "id": "buttons",
-          "name": "Buttons",
-          "description": "Giriş çağrı bağlantıları"
+          "name": "02. Butonlar ve Eylem Linkleri",
+          "description": "Giriş çağrı Bağlantıları"
         },
         {
           "id": "stats",
-          "name": "Stats",
+          "name": "03. İstatistik ve Metrik Alanları",
           "description": "Bottom metric strip"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "04. Görünüm ve Renkler",
           "description": "Giriş renkleri"
         },
         {
           "id": "calculator",
-          "name": "Hesaplayıcı",
+          "name": "05. Hesaplayıcı",
           "description": "Klinik ve Laboratuvar hesaplayıcı ayarları",
           "children": [
             {
@@ -3129,7 +3129,7 @@
       "props": [
         {
           "name": "sectionAnchorId",
-          "displayName": "Bölüm Anchor ID",
+          "displayName": "Bölüm Çapa / Anchor ID",
           "type": "TEXT",
           "required": false,
           "defaultValue": "sebep",
@@ -3168,7 +3168,7 @@
         },
         {
           "name": "sideHtml",
-          "displayName": "Side Metin HTML",
+          "displayName": "Sağ Açıklama Metni (HTML)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Diş hekimliği dijitalleşti; herkes benzer cihazlara erişiyor. Asıl fark, ürettiğiniz işin <b>ilk seferde</b> oturup oturmadığı.",
@@ -3192,7 +3192,7 @@
         },
         {
           "name": "badDescriptionHtml",
-          "displayName": "Bad Card Açıklama HTML",
+          "displayName": "Bad Card Açıklama Metni (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yanlış parametre, reçine uyumsuzluğu ve eksik kalibrasyonla sapma <b>güvenli sınırın 2–5 katına</b> çıkar. Tekrar oranı yükselir (bazı pratiklerde <b>%42'ye</b>) → yüksek hacimli bir işletmede yılda <b>−$126K'ya varan</b> kayıp.",
@@ -3216,7 +3216,7 @@
         },
         {
           "name": "goodDescriptionHtml",
-          "displayName": "Good Card Açıklama HTML",
+          "displayName": "Good Card Açıklama Metni (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yazıcı, reçine ve kürleme <b>birlikte kalibre</b> edildiğinde: her baskıda tekrar edilebilir hassasiyet → <b>≤%3 remake</b> → yılda <b>$72–162K'ya varan</b> tasarruf potansiyeli.",
@@ -3240,7 +3240,7 @@
         },
         {
           "name": "showReference",
-          "displayName": "Göster Reference Metin",
+          "displayName": "Göster Reference Metni",
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": true,
@@ -3272,7 +3272,7 @@
         },
         {
           "name": "subTextColor",
-          "displayName": "Alternatif Metin Yazı Rengi",
+          "displayName": "Alternatif Metni Yazı Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#55554E",
@@ -3515,17 +3515,17 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Content",
+          "name": "01. Bölüm Başlığı ve Ana Metinler",
           "description": "Sorun bölümü başlığı ve giriş metni"
         },
         {
           "id": "cards",
-          "name": "Cards",
-          "description": "Loss comparison cards and metin"
+          "name": "02. Sorun Kartları (3 Adet)",
+          "description": "Loss comparison Kartlar and Metni"
         },
         {
           "id": "notes",
-          "name": "Notes",
+          "name": "03. Dipnotlar ve Uyarı Notları",
           "children": [
             {
               "id": "hairImageControls",
@@ -3533,17 +3533,17 @@
               "description": "Hair image size, position and effects"
             }
           ],
-          "description": "Not görseli, yardımcı metin ve referans"
+          "description": "Not görseli, yardımcı Metni ve referans"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "04. Görünüm ve Renkler",
           "description": "Sorun bölümü renkleri"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "05. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
@@ -3583,7 +3583,7 @@
         },
         {
           "name": "sectionAnchorId",
-          "displayName": "Bölüm Anchor ID",
+          "displayName": "Bölüm Çapa / Anchor ID",
           "type": "TEXT",
           "required": false,
           "defaultValue": "cozum",
@@ -3599,7 +3599,7 @@
         },
         {
           "name": "indexText",
-          "displayName": "Bölüm Etiket",
+          "displayName": "Bölüm Üst Etiketi",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Çözüm · Üretim Ekosistemi",
@@ -3615,7 +3615,7 @@
         },
         {
           "name": "titleEmphasis",
-          "displayName": "Italic Başlık Metin",
+          "displayName": "Vurgulu / İtalik Başlık Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "uyumdan çıkar.",
@@ -3623,7 +3623,7 @@
         },
         {
           "name": "sideHtml",
-          "displayName": "Side Metin HTML",
+          "displayName": "Sağ Açıklama Metni (HTML)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kuronun oturması üç şeyin senkronuna bağlı: <b>yazıcı, reçine, kürleme.</b> Biz üçünü birlikte kalibre edip saha birikimiyle teslim ediyoruz — elinizdeki başka marka cihaza bile.",
@@ -3631,7 +3631,7 @@
         },
         {
           "name": "carouselAriaLabel",
-          "displayName": "Carousel Etiket",
+          "displayName": "Karusel Erişilebilirlik Etiketi",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Çözüm ürünleri",
@@ -3639,7 +3639,7 @@
         },
         {
           "name": "carouselDurationSeconds",
-          "displayName": "Slide Duration Seconds",
+          "displayName": "Slayt Geçiş Süresi (Saniye)",
           "type": "NUMBER",
           "required": false,
           "defaultValue": 24,
@@ -3647,7 +3647,7 @@
         },
         {
           "name": "pauseOnHover",
-          "displayName": "Pause On Hover",
+          "displayName": "Üzerine Gelince Duraklat",
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": true,
@@ -3776,7 +3776,7 @@
         },
         {
           "name": "subTextColor",
-          "displayName": "Alternatif Metin Yazı Rengi",
+          "displayName": "Alternatif Metni Yazı Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#55554E",
@@ -3922,38 +3922,38 @@
       "propGroups": [
         {
           "id": "data",
-          "name": "Data",
+          "name": "01. Ürün Veri Kaynağı (ikas)",
           "description": "Bölüm 3 için ikas ürün listesi veri kaynağı"
         },
         {
           "id": "content",
-          "name": "Content",
+          "name": "02. Bölüm Başlığı ve Ana Metinler",
           "description": "Bölüm etiketi, başlığı ve yan metni"
         },
         {
           "id": "cards",
-          "name": "Ürün Cards",
-          "description": "Karusel kart metinleri, yüklemeleri, bağlantıları ve özellikleri"
+          "name": "03. Ürün Kartları ve Fiyatlar",
+          "description": "Karusel kart metinleri, yüklemeleri, Bağlantıları ve özellikleri"
         },
         {
           "id": "carousel",
-          "name": "Carousel Settings",
+          "name": "04. Karusel ve Kaydırma Ayarları",
           "description": "Slider timing, gap and edge fade"
         },
         {
           "id": "productImageControls",
-          "name": "Ürün Görsel Kontrolleri",
+          "name": "05. Ürün Görsel Kontrolleri",
           "description": "Bölüm 3 karusel kartları için görsel yerleşim ve efektler"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "06. Görünüm ve Renkler",
           "description": "Bölüm colors and card styling"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "07. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
@@ -3989,7 +3989,7 @@
         },
         {
           "name": "sectionAnchorId",
-          "displayName": "Bölüm Anchor ID",
+          "displayName": "Bölüm Çapa / Anchor ID",
           "type": "TEXT",
           "required": false,
           "defaultValue": "kurleme",
@@ -4005,7 +4005,7 @@
         },
         {
           "name": "indexText",
-          "displayName": "Bölüm Etiket",
+          "displayName": "Bölüm Üst Etiketi",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kritik Son Adım",
@@ -4021,7 +4021,7 @@
         },
         {
           "name": "titleEmphasis",
-          "displayName": "Italic Başlık Metin",
+          "displayName": "Vurgulu / İtalik Başlık Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "kürleme tamamlar.",
@@ -4029,7 +4029,7 @@
         },
         {
           "name": "sideHtml",
-          "displayName": "Side Metin HTML",
+          "displayName": "Sağ Açıklama Metni (HTML)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:",
@@ -4037,7 +4037,7 @@
         },
         {
           "name": "reason1Eyebrow",
-          "displayName": "Reason 1 Üst Etiket",
+          "displayName": "1. Neden Üst Etiketi",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "SEBEP 01",
@@ -4045,7 +4045,7 @@
         },
         {
           "name": "reason1Title",
-          "displayName": "Reason 1 Başlık",
+          "displayName": "1. Neden Başlığı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mekanik dayanım",
@@ -4053,7 +4053,7 @@
         },
         {
           "name": "reason1DescriptionHtml",
-          "displayName": "Reason 1 Açıklama HTML",
+          "displayName": "Reason 1 Açıklama Metni (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.",
@@ -4061,7 +4061,7 @@
         },
         {
           "name": "reason2Eyebrow",
-          "displayName": "Reason 2 Üst Etiket",
+          "displayName": "2. Neden Üst Etiketi",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "SEBEP 02",
@@ -4069,7 +4069,7 @@
         },
         {
           "name": "reason2Title",
-          "displayName": "Reason 2 Başlık",
+          "displayName": "2. Neden Başlığı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Ölçüsel doğruluk",
@@ -4077,7 +4077,7 @@
         },
         {
           "name": "reason2DescriptionHtml",
-          "displayName": "Reason 2 Açıklama HTML",
+          "displayName": "Reason 2 Açıklama Metni (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.",
@@ -4085,7 +4085,7 @@
         },
         {
           "name": "reason3Eyebrow",
-          "displayName": "Reason 3 Üst Etiket",
+          "displayName": "3. Neden Üst Etiketi",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "SEBEP 03",
@@ -4093,7 +4093,7 @@
         },
         {
           "name": "reason3Title",
-          "displayName": "Reason 3 Başlık",
+          "displayName": "3. Neden Başlığı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Biyouyumluluk & renk",
@@ -4101,7 +4101,7 @@
         },
         {
           "name": "reason3DescriptionHtml",
-          "displayName": "Reason 3 Açıklama HTML",
+          "displayName": "Reason 3 Açıklama Metni (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.",
@@ -4125,7 +4125,7 @@
         },
         {
           "name": "curingProduct1DescriptionHtml",
-          "displayName": "Ürün 1 Açıklama HTML",
+          "displayName": "Ürün 1 Açıklama Metni (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.",
@@ -4181,7 +4181,7 @@
         },
         {
           "name": "curingProduct1CtaText",
-          "displayName": "Ürün 1 Çağrı Metin",
+          "displayName": "Ürün 1 Aksiyon Butonu Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İncele",
@@ -4189,7 +4189,7 @@
         },
         {
           "name": "curingProduct1CtaHref",
-          "displayName": "Ürün 1 Çağrı Bağlantı",
+          "displayName": "Ürün 1 Aksiyon Butonu Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://uk.phrozen3d.com/products/wash-cure-kit",
@@ -4213,7 +4213,7 @@
         },
         {
           "name": "curingProduct2DescriptionHtml",
-          "displayName": "Ürün 2 Açıklama HTML",
+          "displayName": "Ürün 2 Açıklama Metni (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Baskı sonrası yıkama ve kürleme adımlarını <b>tek kontrollü akışta</b> toplar. P16L ile tamamlayıcı başlangıç seti.",
@@ -4269,7 +4269,7 @@
         },
         {
           "name": "curingProduct2CtaText",
-          "displayName": "Ürün 2 Çağrı Metin",
+          "displayName": "Ürün 2 Aksiyon Butonu Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İncele",
@@ -4277,7 +4277,7 @@
         },
         {
           "name": "curingProduct2CtaHref",
-          "displayName": "Ürün 2 Çağrı Bağlantı",
+          "displayName": "Ürün 2 Aksiyon Butonu Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/yikama-kurleme-cihazlari",
@@ -4374,7 +4374,7 @@
         },
         {
           "name": "readMoreText",
-          "displayName": "Read More Metin",
+          "displayName": "Read More Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Derine inmek isteyenlere, Mash Academy'den:",
@@ -4382,7 +4382,7 @@
         },
         {
           "name": "readMoreLink1Text",
-          "displayName": "Bağlantı 1 Metin",
+          "displayName": "Bağlantı 1 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Overcure ve Undercure Nedir?",
@@ -4398,7 +4398,7 @@
         },
         {
           "name": "readMoreLink2Text",
-          "displayName": "Bağlantı 2 Metin",
+          "displayName": "Bağlantı 2 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "385nm mi 405nm mi?",
@@ -4430,7 +4430,7 @@
         },
         {
           "name": "subTextColor",
-          "displayName": "Alternatif Metin Yazı Rengi",
+          "displayName": "Alternatif Metni Yazı Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#A5A59A",
@@ -4592,43 +4592,43 @@
       "propGroups": [
         {
           "id": "data",
-          "name": "Data",
+          "name": "01. Ürün Veri Kaynağı (ikas)",
           "description": "İki sabit Bölüm 4 ürün kartı için ikas ürünleri"
         },
         {
           "id": "content",
-          "name": "Content",
+          "name": "02. Bölüm Başlığı ve Ana Metinler",
           "description": "Bölüm etiketi, başlığı ve yan metni"
         },
         {
           "id": "reasonCards",
-          "name": "Reason Cards",
-          "description": "Three curing risk cards"
+          "name": "03. Kürleme Risk Kartları (3 Adet)",
+          "description": "Three curing risk Kartlar"
         },
         {
           "id": "productCards",
-          "name": "Ürün Cards",
-          "description": "Kürleme ürün kartı metinleri, yüklemeleri, bağlantıları ve özellikleri"
+          "name": "04. Ürün Kartları ve Fiyatlar",
+          "description": "Kürleme ürün kartı metinleri, yüklemeleri, Bağlantıları ve özellikleri"
         },
         {
           "id": "productImageControls",
-          "name": "Ürün Görsel Kontrolleri",
+          "name": "05. Ürün Görsel Kontrolleri",
           "description": "Kürleme ürün kartları için görsel yerleşim ve efektler"
         },
         {
           "id": "readMore",
-          "name": "Read More Bağlantılar",
-          "description": "Akademi devamını oku metni ve bağlantıları"
+          "name": "06. Akademi / Devamını Oku Bağlantıları",
+          "description": "Akademi devamını oku metni ve Bağlantıları"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "07. Görünüm ve Renkler",
           "description": "Bölüm colors and card styling"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "08. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
@@ -4648,7 +4648,7 @@
       "props": [
         {
           "name": "sectionAnchorId",
-          "displayName": "Bölüm Anchor ID",
+          "displayName": "Bölüm Çapa / Anchor ID",
           "type": "TEXT",
           "required": false,
           "defaultValue": "yatirim",
@@ -4664,7 +4664,7 @@
         },
         {
           "name": "valueText",
-          "displayName": "Value Metin",
+          "displayName": "Değer / Vurgu Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "&lt; 6 ay",
@@ -4672,7 +4672,7 @@
         },
         {
           "name": "descriptionHtml",
-          "displayName": "Açıklama HTML",
+          "displayName": "Açıklama Metni (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b>",
@@ -4680,7 +4680,7 @@
         },
         {
           "name": "ctaText",
-          "displayName": "Çağrı Metin",
+          "displayName": "Aksiyon Butonu Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kliniğiniz için hesaplayalım →",
@@ -4688,7 +4688,7 @@
         },
         {
           "name": "ctaHref",
-          "displayName": "Çağrı Bağlantı",
+          "displayName": "Aksiyon Butonu Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "#hesap",
@@ -4712,7 +4712,7 @@
         },
         {
           "name": "subTextColor",
-          "displayName": "Alternatif Metin Yazı Rengi",
+          "displayName": "Alternatif Metni Yazı Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#2C3A09",
@@ -4802,18 +4802,18 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Content",
+          "name": "01. Bölüm Başlığı ve Ana Metinler",
           "description": "Yatırım getirisi metni ve çağrı alanı"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "02. Görünüm ve Renkler",
           "description": "Yatırım getirisi renkleri ve buton stili"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "03. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
@@ -4833,7 +4833,7 @@
       "props": [
         {
           "name": "sectionAnchorId",
-          "displayName": "Bölüm Anchor ID",
+          "displayName": "Bölüm Çapa / Anchor ID",
           "type": "TEXT",
           "required": false,
           "defaultValue": "ekosistem",
@@ -4849,7 +4849,7 @@
         },
         {
           "name": "indexText",
-          "displayName": "Bölüm Etiket",
+          "displayName": "Bölüm Üst Etiketi",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Uçtan Uca",
@@ -4865,7 +4865,7 @@
         },
         {
           "name": "titleEmphasis",
-          "displayName": "Italic Başlık Metin",
+          "displayName": "Vurgulu / İtalik Başlık Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "tek çatı altında.",
@@ -4873,7 +4873,7 @@
         },
         {
           "name": "sideHtml",
-          "displayName": "Side Metin HTML",
+          "displayName": "Sağ Açıklama Metni (HTML)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Cihaz satıp gitmiyoruz: doğru ürün için <b>danışmanlık</b>, sürdürülebilirlik için <b>Akademi eğitimleri</b>, satış sonrasında teknisyen + mühendis <b>teknik destek.</b>",
@@ -4881,7 +4881,7 @@
         },
         {
           "name": "showIcons",
-          "displayName": "Göster Icons",
+          "displayName": "İkonları Göster",
           "type": "BOOLEAN",
           "required": false,
           "defaultValue": true,
@@ -4889,7 +4889,7 @@
         },
         {
           "name": "ecosystemItem1IconImageUrl",
-          "displayName": "Item 1 İkon Görsel",
+          "displayName": "1. Madde İkonu Görsel",
           "type": "IMAGE",
           "required": false,
           "description": "Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır.",
@@ -4897,7 +4897,7 @@
         },
         {
           "name": "ecosystemItem1Title",
-          "displayName": "Item 1 Başlık",
+          "displayName": "1. Madde Başlığı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3D Yazıcılar",
@@ -4905,7 +4905,7 @@
         },
         {
           "name": "ecosystemItem1Href",
-          "displayName": "Item 1 Bağlantı",
+          "displayName": "1. Madde Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/3d-yazicilar",
@@ -4913,7 +4913,7 @@
         },
         {
           "name": "ecosystemItem2IconImageUrl",
-          "displayName": "Item 2 İkon Görsel",
+          "displayName": "2. Madde İkonu Görsel",
           "type": "IMAGE",
           "required": false,
           "description": "Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır.",
@@ -4921,7 +4921,7 @@
         },
         {
           "name": "ecosystemItem2Title",
-          "displayName": "Item 2 Başlık",
+          "displayName": "2. Madde Başlığı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Reçineler",
@@ -4929,7 +4929,7 @@
         },
         {
           "name": "ecosystemItem2Href",
-          "displayName": "Item 2 Bağlantı",
+          "displayName": "2. Madde Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/dental-3d-yazici-recineleri",
@@ -4937,7 +4937,7 @@
         },
         {
           "name": "ecosystemItem3IconImageUrl",
-          "displayName": "Item 3 İkon Görsel",
+          "displayName": "3. Madde İkonu Görsel",
           "type": "IMAGE",
           "required": false,
           "description": "Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır.",
@@ -4945,7 +4945,7 @@
         },
         {
           "name": "ecosystemItem3Title",
-          "displayName": "Item 3 Başlık",
+          "displayName": "3. Madde Başlığı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yıkama & Kürleme",
@@ -4953,7 +4953,7 @@
         },
         {
           "name": "ecosystemItem3Href",
-          "displayName": "Item 3 Bağlantı",
+          "displayName": "3. Madde Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/yikama-kurleme-cihazlari",
@@ -4961,7 +4961,7 @@
         },
         {
           "name": "ecosystemItem4IconImageUrl",
-          "displayName": "Item 4 İkon Görsel",
+          "displayName": "4. Madde İkonu Görsel",
           "type": "IMAGE",
           "required": false,
           "description": "Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır.",
@@ -4969,7 +4969,7 @@
         },
         {
           "name": "ecosystemItem4Title",
-          "displayName": "Item 4 Başlık",
+          "displayName": "4. Madde Başlığı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Masaüstü Tarayıcılar",
@@ -4977,7 +4977,7 @@
         },
         {
           "name": "ecosystemItem4Href",
-          "displayName": "Item 4 Bağlantı",
+          "displayName": "4. Madde Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/masasustu-tarayicilar",
@@ -4985,7 +4985,7 @@
         },
         {
           "name": "ecosystemItem5IconImageUrl",
-          "displayName": "Item 5 İkon Görsel",
+          "displayName": "5. Madde İkonu Görsel",
           "type": "IMAGE",
           "required": false,
           "description": "Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır.",
@@ -4993,7 +4993,7 @@
         },
         {
           "name": "ecosystemItem5Title",
-          "displayName": "Item 5 Başlık",
+          "displayName": "5. Madde Başlığı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Zirkon Bloklar",
@@ -5001,7 +5001,7 @@
         },
         {
           "name": "ecosystemItem5Href",
-          "displayName": "Item 5 Bağlantı",
+          "displayName": "5. Madde Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/zirkon-bloklar",
@@ -5009,7 +5009,7 @@
         },
         {
           "name": "ecosystemItem6IconImageUrl",
-          "displayName": "Item 6 İkon Görsel",
+          "displayName": "6. Madde İkonu Görsel",
           "type": "IMAGE",
           "required": false,
           "description": "Yedek ikon görseli yükleyin. Boşsa paketli ikon kullanılır.",
@@ -5017,7 +5017,7 @@
         },
         {
           "name": "ecosystemItem6Title",
-          "displayName": "Item 6 Başlık",
+          "displayName": "6. Madde Başlığı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental Fırınlar",
@@ -5025,7 +5025,7 @@
         },
         {
           "name": "ecosystemItem6Href",
-          "displayName": "Item 6 Bağlantı",
+          "displayName": "6. Madde Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/dental-firinlar",
@@ -5138,7 +5138,7 @@
         },
         {
           "name": "subTextColor",
-          "displayName": "Alternatif Metin Yazı Rengi",
+          "displayName": "Alternatif Metni Yazı Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#55554E",
@@ -5218,14 +5218,14 @@
         },
         {
           "name": "diagramImageUrl",
-          "displayName": "Diagram Görsel",
+          "displayName": "Diyagram Görseli",
           "type": "IMAGE",
           "required": false,
           "groupId": "diagram"
         },
         {
           "name": "diagramImageAlt",
-          "displayName": "Diagram Görsel Alternatif Metni",
+          "displayName": "Diyagram Görseli Alternatif Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "3mash ekosistem diagramı",
@@ -5372,28 +5372,28 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Content",
+          "name": "01. Bölüm Başlığı ve Ana Metinler",
           "description": "Bölüm etiketi, başlığı ve yan metni"
         },
         {
           "id": "items",
-          "name": "Ecosystem Items",
+          "name": "02. Ekosistem Maddeleri",
           "description": "Grid item uploads, titles and links"
         },
         {
           "id": "iconImageControls",
-          "name": "İkon Görsel Kontrolleri",
+          "name": "03. İkon Görsel Kontrolleri",
           "description": "İkon görsel yerleşimi ve efektleri"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "04. Görünüm ve Renkler",
           "description": "Bölüm colors and grid styling"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "05. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
@@ -5404,7 +5404,7 @@
         },
         {
           "id": "diagram",
-          "name": "Diagram Görsel",
+          "name": "06. Diyagram Görseli",
           "description": "Orta diyagram görseli yükleme, yerleşim ve efektleri"
         }
       ]
@@ -5418,7 +5418,7 @@
       "props": [
         {
           "name": "sectionAnchorId",
-          "displayName": "Bölüm Anchor ID",
+          "displayName": "Bölüm Çapa / Anchor ID",
           "type": "TEXT",
           "required": false,
           "defaultValue": "guven",
@@ -5434,7 +5434,7 @@
         },
         {
           "name": "indexText",
-          "displayName": "Bölüm Etiket",
+          "displayName": "Bölüm Üst Etiketi",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Referanslar",
@@ -5450,7 +5450,7 @@
         },
         {
           "name": "titleEmphasis",
-          "displayName": "Italic Başlık Metin",
+          "displayName": "Vurgulu / İtalik Başlık Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "bizimle üretiyor?",
@@ -5458,7 +5458,7 @@
         },
         {
           "name": "sideHtml",
-          "displayName": "Side Metin HTML",
+          "displayName": "Sağ Açıklama Metni (HTML)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Kısa cevap hep aynı: tutarlılık. <b>580+</b> dental laboratuvar ve klinik bu sistemle üretiyor, çünkü sonuç <b>her seferinde</b> aynı çıkıyor.",
@@ -5466,7 +5466,7 @@
         },
         {
           "name": "testimonial1Text",
-          "displayName": "Testimonial 1 Metin",
+          "displayName": "Testimonial 1 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.",
@@ -5474,7 +5474,7 @@
         },
         {
           "name": "testimonial1ImageUrl",
-          "displayName": "Testimonial 1 Görsel",
+          "displayName": "1. Müşteri Profil Fotoğrafı",
           "type": "IMAGE",
           "required": false,
           "description": "Yedek profil fotoğrafı yükleyin. Boşsa paketli profil fotoğrafı kullanılır.",
@@ -5482,7 +5482,7 @@
         },
         {
           "name": "testimonial1ImageAlt",
-          "displayName": "Testimonial 1 Görsel Alternatif Metni",
+          "displayName": "1. Müşteri Profil Fotoğrafı Alternatif Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Mehmet İşlek",
@@ -5490,7 +5490,7 @@
         },
         {
           "name": "testimonial1Name",
-          "displayName": "Testimonial 1 Name",
+          "displayName": "1. Müşteri / Doktor Adı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mehmet İşlek",
@@ -5498,7 +5498,7 @@
         },
         {
           "name": "testimonial1Role",
-          "displayName": "Testimonial 1 Role",
+          "displayName": "1. Müşteri Unvanı / Kurumu",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik",
@@ -5506,7 +5506,7 @@
         },
         {
           "name": "testimonial2Text",
-          "displayName": "Testimonial 2 Metin",
+          "displayName": "Testimonial 2 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.",
@@ -5514,7 +5514,7 @@
         },
         {
           "name": "testimonial2ImageUrl",
-          "displayName": "Testimonial 2 Görsel",
+          "displayName": "2. Müşteri Profil Fotoğrafı",
           "type": "IMAGE",
           "required": false,
           "description": "Yedek profil fotoğrafı yükleyin. Boşsa paketli profil fotoğrafı kullanılır.",
@@ -5522,7 +5522,7 @@
         },
         {
           "name": "testimonial2ImageAlt",
-          "displayName": "Testimonial 2 Görsel Alternatif Metni",
+          "displayName": "2. Müşteri Profil Fotoğrafı Alternatif Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Berkan Öztaş",
@@ -5530,7 +5530,7 @@
         },
         {
           "name": "testimonial2Name",
-          "displayName": "Testimonial 2 Name",
+          "displayName": "2. Müşteri / Doktor Adı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Berkan Öztaş",
@@ -5538,7 +5538,7 @@
         },
         {
           "name": "testimonial2Role",
-          "displayName": "Testimonial 2 Role",
+          "displayName": "2. Müşteri Unvanı / Kurumu",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "DENTEK · Genel Müd. Yard.",
@@ -5546,7 +5546,7 @@
         },
         {
           "name": "testimonial3Text",
-          "displayName": "Testimonial 3 Metin",
+          "displayName": "Testimonial 3 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.",
@@ -5554,7 +5554,7 @@
         },
         {
           "name": "testimonial3ImageUrl",
-          "displayName": "Testimonial 3 Görsel",
+          "displayName": "3. Müşteri Profil Fotoğrafı",
           "type": "IMAGE",
           "required": false,
           "description": "Yedek profil fotoğrafı yükleyin. Boşsa paketli profil fotoğrafı kullanılır.",
@@ -5562,7 +5562,7 @@
         },
         {
           "name": "testimonial3ImageAlt",
-          "displayName": "Testimonial 3 Görsel Alternatif Metni",
+          "displayName": "3. Müşteri Profil Fotoğrafı Alternatif Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Göksel Pişkin",
@@ -5570,7 +5570,7 @@
         },
         {
           "name": "testimonial3Name",
-          "displayName": "Testimonial 3 Name",
+          "displayName": "3. Müşteri / Doktor Adı",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Göksel Pişkin",
@@ -5578,7 +5578,7 @@
         },
         {
           "name": "testimonial3Role",
-          "displayName": "Testimonial 3 Role",
+          "displayName": "3. Müşteri Unvanı / Kurumu",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "MIKRO LAB · Kurucu Ortak",
@@ -5675,7 +5675,7 @@
         },
         {
           "name": "trustedLabel",
-          "displayName": "Trusted Logos Etiket",
+          "displayName": "Güvenilen Marka Logoları Etiket",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Güvenenler",
@@ -5723,7 +5723,7 @@
         },
         {
           "name": "subTextColor",
-          "displayName": "Alternatif Metin Yazı Rengi",
+          "displayName": "Alternatif Metni Yazı Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#55554E",
@@ -5803,7 +5803,7 @@
         },
         {
           "name": "trustedLogo1ImageAlt",
-          "displayName": "Logo 1 Alternatif Metin",
+          "displayName": "Logo 1 Alternatif Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Güvenen marka 1",
@@ -5827,7 +5827,7 @@
         },
         {
           "name": "trustedLogo2ImageAlt",
-          "displayName": "Logo 2 Alternatif Metin",
+          "displayName": "Logo 2 Alternatif Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Güvenen marka 2",
@@ -5851,7 +5851,7 @@
         },
         {
           "name": "trustedLogo3ImageAlt",
-          "displayName": "Logo 3 Alternatif Metin",
+          "displayName": "Logo 3 Alternatif Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Güvenen marka 3",
@@ -5875,7 +5875,7 @@
         },
         {
           "name": "trustedLogo4ImageAlt",
-          "displayName": "Logo 4 Alternatif Metin",
+          "displayName": "Logo 4 Alternatif Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Güvenen marka 4",
@@ -5899,7 +5899,7 @@
         },
         {
           "name": "trustedLogo5ImageAlt",
-          "displayName": "Logo 5 Alternatif Metin",
+          "displayName": "Logo 5 Alternatif Metni",
           "type": "TEXT",
           "required": false,
           "defaultValue": "Güvenen marka 5",
@@ -5957,38 +5957,38 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Content",
+          "name": "01. Bölüm Başlığı ve Ana Metinler",
           "description": "Bölüm etiketi, başlığı ve yan metni"
         },
         {
           "id": "testimonials",
-          "name": "Testimonials",
+          "name": "02. Müşteri Değerlendirmeleri ve Yorumlar",
           "description": "Profil photos, quotes and people details"
         },
         {
           "id": "profileImageControls",
-          "name": "Profil Görsel Kontrolleri",
+          "name": "03. Profil Görsel Kontrolleri",
           "description": "Profil fotoğrafı yerleşimi ve efektleri"
         },
         {
           "id": "trustedLogos",
-          "name": "Trusted Logos",
+          "name": "04. Güvenilen Marka Logoları",
           "description": "Güvenilen marka logo şeridi"
         },
         {
           "id": "trustedLogoControls",
-          "name": "Güvenilen Marka Logosu Görsel Kontrolleri",
+          "name": "05. Güvenilen Marka Logosu Görsel Kontrolleri",
           "description": "Güvenilen marka logosu görsel yerleşimi ve efektleri"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "06. Görünüm ve Renkler",
           "description": "Bölüm colors and card styling"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "07. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
@@ -6008,7 +6008,7 @@
       "props": [
         {
           "name": "sectionAnchorId",
-          "displayName": "Bölüm Anchor ID",
+          "displayName": "Bölüm Çapa / Anchor ID",
           "type": "TEXT",
           "required": false,
           "defaultValue": "sss",
@@ -6024,7 +6024,7 @@
         },
         {
           "name": "indexText",
-          "displayName": "Bölüm Etiket",
+          "displayName": "Bölüm Üst Etiketi",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Sık Sorulanlar",
@@ -6040,7 +6040,7 @@
         },
         {
           "name": "titleEmphasis",
-          "displayName": "Italic Başlık Metin",
+          "displayName": "Vurgulu / İtalik Başlık Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "",
@@ -6048,7 +6048,7 @@
         },
         {
           "name": "sideHtml",
-          "displayName": "Side Metin HTML",
+          "displayName": "Sağ Açıklama Metni (HTML)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "En kritik kararları hızlı vermeniz için, klinik ve laboratuvarlardan gelen soruları net cevaplarla topladık.",
@@ -6056,7 +6056,7 @@
         },
         {
           "name": "faq1Question",
-          "displayName": "FAQ 1 Soru",
+          "displayName": "1. SSS Sorusu",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?",
@@ -6064,7 +6064,7 @@
         },
         {
           "name": "faq1AnswerHtml",
-          "displayName": "FAQ 1 Cevap HTML",
+          "displayName": "1. SSS Cevabı (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.",
@@ -6072,7 +6072,7 @@
         },
         {
           "name": "faq2Question",
-          "displayName": "FAQ 2 Soru",
+          "displayName": "2. SSS Sorusu",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?",
@@ -6080,7 +6080,7 @@
         },
         {
           "name": "faq2AnswerHtml",
-          "displayName": "FAQ 2 Cevap HTML",
+          "displayName": "2. SSS Cevabı (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"/pages/hesaplama\">maliyet detay sayfamıza</a> bakabilirsiniz.",
@@ -6088,7 +6088,7 @@
         },
         {
           "name": "faq3Question",
-          "displayName": "FAQ 3 Soru",
+          "displayName": "3. SSS Sorusu",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3D baskıda kürleme (post-curing) neden kritik?",
@@ -6096,7 +6096,7 @@
         },
         {
           "name": "faq3AnswerHtml",
-          "displayName": "FAQ 3 Cevap HTML",
+          "displayName": "3. SSS Cevabı (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.",
@@ -6104,7 +6104,7 @@
         },
         {
           "name": "faq4Question",
-          "displayName": "FAQ 4 Soru",
+          "displayName": "4. SSS Sorusu",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "3mash yalnızca cihaz mı satıyor?",
@@ -6112,7 +6112,7 @@
         },
         {
           "name": "faq4AnswerHtml",
-          "displayName": "FAQ 4 Cevap HTML",
+          "displayName": "4. SSS Cevabı (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.",
@@ -6120,7 +6120,7 @@
         },
         {
           "name": "faq5Question",
-          "displayName": "FAQ 5 Soru",
+          "displayName": "5. SSS Sorusu",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Elimdeki başka marka yazıcıyla çalışır mısınız?",
@@ -6128,7 +6128,7 @@
         },
         {
           "name": "faq5AnswerHtml",
-          "displayName": "FAQ 5 Cevap HTML",
+          "displayName": "5. SSS Cevabı (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.",
@@ -6160,7 +6160,7 @@
         },
         {
           "name": "subTextColor",
-          "displayName": "Cevap Metin Rengi",
+          "displayName": "Cevap Metni Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#55554E",
@@ -6250,28 +6250,28 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Content",
+          "name": "01. Bölüm Başlığı ve Ana Metinler",
           "description": "Bölüm etiketi, başlığı ve yan metni"
         },
         {
           "id": "questions",
-          "name": "FAQ Items",
+          "name": "02. SSS Maddeleri",
           "description": "Questions and answers"
         },
         {
           "id": "behavior",
-          "name": "Behavior",
-          "description": "FAQ open state behavior"
+          "name": "03. Davranış ve Etkileşim",
+          "description": "FAQ open state Davranış ve Etkileşim"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "04. Görünüm ve Renkler",
           "description": "FAQ colors and spacing"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "05. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
@@ -6291,7 +6291,7 @@
       "props": [
         {
           "name": "sectionAnchorId",
-          "displayName": "Bölüm Anchor ID",
+          "displayName": "Bölüm Çapa / Anchor ID",
           "type": "TEXT",
           "required": false,
           "defaultValue": "iletisim-cta",
@@ -6307,7 +6307,7 @@
         },
         {
           "name": "titleEmphasis",
-          "displayName": "Italic Başlık Metin",
+          "displayName": "Vurgulu / İtalik Başlık Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "birlikte azaltalım.",
@@ -6315,7 +6315,7 @@
         },
         {
           "name": "descriptionHtml",
-          "displayName": "Açıklama HTML",
+          "displayName": "Açıklama Metni (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b>elinizdeki cihazlarla bile.</b>",
@@ -6323,7 +6323,7 @@
         },
         {
           "name": "primaryButtonText",
-          "displayName": "Birincil Buton Metni",
+          "displayName": "1. Buton Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Uzmana danış — ücretsiz",
@@ -6331,7 +6331,7 @@
         },
         {
           "name": "primaryButtonHref",
-          "displayName": "Birincil Buton Bağlantı",
+          "displayName": "1. Buton Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum",
@@ -6387,7 +6387,7 @@
         },
         {
           "name": "primaryButtonBackgroundColor",
-          "displayName": "Birincil Buton Arka Plan",
+          "displayName": "1. Buton Arka Plan",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#C7F136",
@@ -6395,7 +6395,7 @@
         },
         {
           "name": "primaryButtonTextColor",
-          "displayName": "Birincil Buton Metin Rengi",
+          "displayName": "1. Buton Metni Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#0E0E0C",
@@ -6403,7 +6403,7 @@
         },
         {
           "name": "secondaryButtonTextColor",
-          "displayName": "İkincil Buton Metin Rengi",
+          "displayName": "İkincil Buton Metni Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FFFFFF",
@@ -6469,23 +6469,23 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Content",
-          "description": "Son çağrı metni ve bağlantıları"
+          "name": "01. Bölüm Başlığı ve Ana Metinler",
+          "description": "Son çağrı metni ve Bağlantıları"
         },
         {
           "id": "buttons",
-          "name": "Buttons",
+          "name": "02. Butonlar ve Eylem Linkleri",
           "description": "Son çağrı buton etiketleri ve bağlantı adresleri"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "03. Görünüm ve Renkler",
           "description": "Son bölüm renkleri ve buton stili"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "04. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
@@ -6513,7 +6513,7 @@
         },
         {
           "name": "descriptionText",
-          "displayName": "Açıklama Metin",
+          "displayName": "Açıklama Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada.",
@@ -6529,7 +6529,7 @@
         },
         {
           "name": "productLink1Href",
-          "displayName": "Ürün Linki 1 Bağlantısı",
+          "displayName": "Ürün Linki 1 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/3d-yazicilar",
@@ -6546,7 +6546,7 @@
         },
         {
           "name": "productLink2Href",
-          "displayName": "Ürün Linki 2 Bağlantısı",
+          "displayName": "Ürün Linki 2 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/dental-3d-yazici-recineleri",
@@ -6563,7 +6563,7 @@
         },
         {
           "name": "productLink3Href",
-          "displayName": "Ürün Linki 3 Bağlantısı",
+          "displayName": "Ürün Linki 3 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/yikama-kurleme-cihazlari",
@@ -6580,7 +6580,7 @@
         },
         {
           "name": "productLink4Href",
-          "displayName": "Ürün Linki 4 Bağlantısı",
+          "displayName": "Ürün Linki 4 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/zirkon-bloklar",
@@ -6597,7 +6597,7 @@
         },
         {
           "name": "companyLink1Href",
-          "displayName": "Şirket Linki 1 Bağlantısı",
+          "displayName": "Şirket Linki 1 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/pages/hakkimizda",
@@ -6614,7 +6614,7 @@
         },
         {
           "name": "companyLink2Href",
-          "displayName": "Şirket Linki 2 Bağlantısı",
+          "displayName": "Şirket Linki 2 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/pages/mash-academy",
@@ -6631,7 +6631,7 @@
         },
         {
           "name": "companyLink3Href",
-          "displayName": "Şirket Linki 3 Bağlantısı",
+          "displayName": "Şirket Linki 3 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/blog",
@@ -6648,7 +6648,7 @@
         },
         {
           "name": "companyLink4Href",
-          "displayName": "Şirket Linki 4 Bağlantısı",
+          "displayName": "Şirket Linki 4 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/pages/iletisim",
@@ -6665,7 +6665,7 @@
         },
         {
           "name": "contactLink1Href",
-          "displayName": "İletişim Linki 1 Bağlantısı",
+          "displayName": "İletişim Linki 1 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "mailto:info@3mash.com",
@@ -6682,12 +6682,12 @@
         },
         {
           "name": "contactLink2Href",
-          "displayName": "İletişim Linki 2 Bağlantısı",
+          "displayName": "İletişim Linki 2 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "https://www.google.com/maps/search/?api=1&query=Antalya%20Teknokent%2C%20Konyaalt%C4%B1",
           "groupId": "contactLinks",
-          "description": "Harita linki dış bağlantıdır."
+          "description": "Harita linki dış Linkidır."
         },
         {
           "name": "contactLink3Text",
@@ -6699,7 +6699,7 @@
         },
         {
           "name": "contactLink3Href",
-          "displayName": "İletişim Linki 3 Bağlantısı",
+          "displayName": "İletişim Linki 3 Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "",
@@ -6707,7 +6707,7 @@
         },
         {
           "name": "copyrightText",
-          "displayName": "Copyright Metin",
+          "displayName": "Copyright Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.",
@@ -6796,7 +6796,7 @@
           "displayName": "Ürün Alt Bilgisi Bağlantıları",
           "type": "LIST_OF_LINK",
           "required": false,
-          "description": "Alt bilgi Ürünler sütunu için editörden yönetilen isteğe bağlı bağlantılar. Ürün alt bilgi kategorileri boş olduğunda kullanılır.",
+          "description": "Alt bilgi Ürünler sütunu için editörden yönetilen isteğe bağlı Bağlantılar. Ürün alt bilgi kategorileri boş olduğunda kullanılır.",
           "groupId": "productLinks"
         },
         {
@@ -6813,18 +6813,18 @@
           "displayName": "Şirket Alt Bilgisi Bağlantıları",
           "type": "LIST_OF_LINK",
           "required": false,
-          "description": "Alt bilgi Şirket sütunu için editörden yönetilen isteğe bağlı bağlantılar."
+          "description": "Alt bilgi Şirket sütunu için editörden yönetilen isteğe bağlı Bağlantılar."
         },
         {
           "name": "contactFooterLinks",
           "displayName": "İletişim Alt Bilgisi Bağlantıları",
           "type": "LIST_OF_LINK",
           "required": false,
-          "description": "Alt bilgi İletişim sütunu için editörden yönetilen isteğe bağlı bağlantılar."
+          "description": "Alt bilgi İletişim sütunu için editörden yönetilen isteğe bağlı Bağlantılar."
         },
         {
           "name": "logoHref",
-          "displayName": "Logo Bağlantısı",
+          "displayName": "Logo Linki",
           "type": "TEXT",
           "required": false,
           "defaultValue": "/",
@@ -7074,7 +7074,7 @@
         },
         {
           "name": "productLink5Href",
-          "displayName": "Ürün Linki 5 Bağlantısı",
+          "displayName": "Ürün Linki 5 Linki",
           "type": "TEXT",
           "required": false,
           "description": "Tam domain kullanmayın; kategori routeunu /dental-firinlar olarak girin.",
@@ -7091,7 +7091,7 @@
         },
         {
           "name": "productLink6Href",
-          "displayName": "Ürün Linki 6 Bağlantısı",
+          "displayName": "Ürün Linki 6 Linki",
           "type": "TEXT",
           "required": false,
           "description": "Beş ürün linki yeterliyse boş bırakın.",
@@ -7100,7 +7100,7 @@
         },
         {
           "name": "legalLink1Text",
-          "displayName": "Yasal Link 1 Metni",
+          "displayName": "Yasal Linki 1 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "KVKK",
@@ -7108,7 +7108,7 @@
         },
         {
           "name": "legalLink1Href",
-          "displayName": "Yasal Link 1 Bağlantısı",
+          "displayName": "Yasal Linki 1 Linki",
           "type": "TEXT",
           "required": false,
           "description": "KVKK sayfası için yayın routeu: /pages/kvkk.",
@@ -7117,7 +7117,7 @@
         },
         {
           "name": "legalLink2Text",
-          "displayName": "Yasal Link 2 Metni",
+          "displayName": "Yasal Linki 2 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "İade & Garanti",
@@ -7125,7 +7125,7 @@
         },
         {
           "name": "legalLink2Href",
-          "displayName": "Yasal Link 2 Bağlantısı",
+          "displayName": "Yasal Linki 2 Linki",
           "type": "TEXT",
           "required": false,
           "description": "İade ve garanti sayfası için yayın routeu: /pages/iade-ve-garanti.",
@@ -7134,7 +7134,7 @@
         },
         {
           "name": "legalLink3Text",
-          "displayName": "Yasal Link 3 Metni",
+          "displayName": "Yasal Linki 3 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Mesafeli Satış",
@@ -7142,7 +7142,7 @@
         },
         {
           "name": "legalLink3Href",
-          "displayName": "Yasal Link 3 Bağlantısı",
+          "displayName": "Yasal Linki 3 Linki",
           "type": "TEXT",
           "required": false,
           "description": "Mesafeli satış sayfası için yayın routeu: /pages/mesafeli-satis-sozlesmesi.",
@@ -7151,7 +7151,7 @@
         },
         {
           "name": "legalLink4Text",
-          "displayName": "Yasal Link 4 Metni",
+          "displayName": "Yasal Linki 4 Metni",
           "type": "RICH_TEXT",
           "required": false,
           "defaultValue": "Üyelik Sözleşmesi",
@@ -7159,7 +7159,7 @@
         },
         {
           "name": "legalLink4Href",
-          "displayName": "Yasal Link 4 Bağlantısı",
+          "displayName": "Yasal Linki 4 Linki",
           "type": "TEXT",
           "required": false,
           "description": "Üyelik sözleşmesi sayfası için yayın routeu: /pages/uyelik-sozlesmesi.",
@@ -7170,7 +7170,7 @@
       "propGroups": [
         {
           "id": "brand",
-          "name": "Brand",
+          "name": "01. Marka ve Logo",
           "description": "Alt bilgi marka ve açıklama alanı",
           "children": [
             {
@@ -7187,33 +7187,33 @@
         },
         {
           "id": "productLinks",
-          "name": "Ürün Bağlantılar",
-          "description": "Alt bilgi ürün sütunu bağlantıları"
+          "name": "02. Ürünler Sütunu Linkleri",
+          "description": "Alt bilgi ürün sütunu Bağlantıları"
         },
         {
           "id": "companyLinks",
-          "name": "Şirket Bağlantılar",
-          "description": "Alt bilgi şirket sütunu bağlantıları"
+          "name": "03. Kurumsal / Şirket Sütunu Linkleri",
+          "description": "Alt bilgi şirket sütunu Bağlantıları"
         },
         {
           "id": "contactLinks",
-          "name": "İletişim Bağlantılar",
-          "description": "Alt bilgi iletişim sütunu bağlantıları"
+          "name": "04. İletişim Sütunu Linkleri",
+          "description": "Alt bilgi iletişim sütunu Bağlantıları"
         },
         {
           "id": "legal",
-          "name": "Legal Bar",
+          "name": "05. Yasal Bilgi ve Telif Bandı",
           "description": "Alt bilgi alt yasal metni"
         },
         {
           "id": "appearance",
-          "name": "Appearance",
+          "name": "06. Görünüm ve Renkler",
           "description": "Alt bilgi renkleri"
         },
         {
           "id": "text-customization",
-          "name": "Metin Özelleştirme",
-          "description": "Kalın, italik ve satır içi biçimlendirme için zengin metin alanları",
+          "name": "07. Metin ve Yazı Tipi Özelleştirme",
+          "description": "Kalın, italik ve satır içi biçimlendirme için zengin Metni alanları",
           "children": [
             {
               "id": "wordStyle",
