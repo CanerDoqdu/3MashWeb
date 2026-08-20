@@ -9621,1325 +9621,121 @@
     },
     {
       "id": "2tplvqpo-product-split-feature",
-      "name": "Ürün İkili Özellik",
+      "name": "Ürün Kullanıcı Deneyimi",
       "entry": "./src/components/ThreeMashProductSplitFeature/index.tsx",
       "styles": "./src/components/ThreeMashProductSplitFeature/styles.css",
       "type": "section",
       "props": [
         {
-          "name": "productBasedEnabled",
-          "displayName": "Ürün Bazlı Ayarları Aktif Et",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "productBasedSettings",
-          "description": "Aktif olduğunda bu bölüm seçili ürün için ürün bazlı alanları kullanır. Canlı sitede seçili ürün/slug eşleşmesine göre uygulanır."
-        },
-        {
           "name": "product",
           "displayName": "Ürün",
           "type": "PRODUCT",
           "required": false,
-          "defaultValue": null,
-          "groupId": "productBasedSettings",
-          "description": "Spesifik ürün seçebilir veya bu alanın kendi Sayfanın ürününü kullan seçeneğini açarak mevcut ürün sayfasına otomatik bağlayabilirsin."
+          "groupId": "data",
+          "description": "Geçerli ikas ürün verisi bağlantısı"
         },
         {
-          "name": "productBasedTargetSlugs",
-          "displayName": "Hedef Ürün URL Anahtarları",
+          "name": "sectionIndex",
+          "displayName": "Bölüm Sıra Numarası",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedSettings",
-          "description": "İsteğe bağlı. Virgülle ürün URL slug yazarsan ürün bazlı ayarlar sadece o URL’lerde çalışır. Boşsa seçili Ürün prop’u üzerinden eşleşir."
+          "groupId": "header",
+          "description": "Bölüm numarası (Örn: 01)"
         },
         {
-          "name": "productBasedHiddenSlugs",
-          "displayName": "Bu Sluglarda Section Gizle",
+          "name": "sectionLabel",
+          "displayName": "Bölüm Etiketi",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedSettings",
-          "description": "Virgülle ürün URL slug yaz. Eşleşen sluglarda section gizlenir; diğer ürünler etkilenmez."
-        },
-        {
-          "name": "productBasedVisibilityProduct1",
-          "displayName": "Görünürlük Ürünü 1",
-          "type": "PRODUCT",
-          "required": false,
-          "defaultValue": null,
-          "groupId": "productBasedSettings",
-          "description": "Slug yazmadan spesifik ürün seç. Ürün seçilmezse yanındaki switch yok sayılır."
-        },
-        {
-          "name": "productBasedVisibilityShow1",
-          "displayName": "Bu Üründe Göster 1",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "productBasedSettings",
-          "description": "Açıksa seçilen üründe section görünür. Kapalıysa sadece seçilen üründe gizlenir. Ürün seçilmemişse bu switch yok sayılır."
-        },
-        {
-          "name": "productBasedVisibilityProduct2",
-          "displayName": "Görünürlük Ürünü 2",
-          "type": "PRODUCT",
-          "required": false,
-          "defaultValue": null,
-          "groupId": "productBasedSettings",
-          "description": "Slug yazmadan spesifik ürün seç. Ürün seçilmezse yanındaki switch yok sayılır."
-        },
-        {
-          "name": "productBasedVisibilityShow2",
-          "displayName": "Bu Üründe Göster 2",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "productBasedSettings",
-          "description": "Açıksa seçilen üründe section görünür. Kapalıysa sadece seçilen üründe gizlenir. Ürün seçilmemişse bu switch yok sayılır."
-        },
-        {
-          "name": "productBasedVisibilityProduct3",
-          "displayName": "Görünürlük Ürünü 3",
-          "type": "PRODUCT",
-          "required": false,
-          "defaultValue": null,
-          "groupId": "productBasedSettings",
-          "description": "Slug yazmadan spesifik ürün seç. Ürün seçilmezse yanındaki switch yok sayılır."
-        },
-        {
-          "name": "productBasedVisibilityShow3",
-          "displayName": "Bu Üründe Göster 3",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "productBasedSettings",
-          "description": "Açıksa seçilen üründe section görünür. Kapalıysa sadece seçilen üründe gizlenir. Ürün seçilmemişse bu switch yok sayılır."
-        },
-        {
-          "name": "productBasedVisibilityProduct4",
-          "displayName": "Görünürlük Ürünü 4",
-          "type": "PRODUCT",
-          "required": false,
-          "defaultValue": null,
-          "groupId": "productBasedSettings",
-          "description": "Slug yazmadan spesifik ürün seç. Ürün seçilmezse yanındaki switch yok sayılır."
-        },
-        {
-          "name": "productBasedVisibilityShow4",
-          "displayName": "Bu Üründe Göster 4",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "productBasedSettings",
-          "description": "Açıksa seçilen üründe section görünür. Kapalıysa sadece seçilen üründe gizlenir. Ürün seçilmemişse bu switch yok sayılır."
-        },
-        {
-          "name": "productBasedVisibilityProduct5",
-          "displayName": "Görünürlük Ürünü 5",
-          "type": "PRODUCT",
-          "required": false,
-          "defaultValue": null,
-          "groupId": "productBasedSettings",
-          "description": "Slug yazmadan spesifik ürün seç. Ürün seçilmezse yanındaki switch yok sayılır."
-        },
-        {
-          "name": "productBasedVisibilityShow5",
-          "displayName": "Bu Üründe Göster 5",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "productBasedSettings",
-          "description": "Açıksa seçilen üründe section görünür. Kapalıysa sadece seçilen üründe gizlenir. Ürün seçilmemişse bu switch yok sayılır."
-        },
-        {
-          "name": "productBasedSectionVisible",
-          "displayName": "Bu Üründe Section Göster",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": true,
-          "groupId": "productBasedSettings",
-          "description": "Kapalıysa sadece eşleşen ürün için ikili özellik section render edilmez."
-        },
-        {
-          "name": "productBasedSectionAnchorId",
-          "displayName": "Section Anchor ID",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedLayout",
-          "description": "Sayfa içi link için id. Boş bırakılabilir."
-        },
-        {
-          "name": "productBasedTitleHtml",
-          "displayName": "Başlık HTML Override",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedTitle",
-          "description": "Boş değilse satırlı başlık propları yerine bu alan kullanılır. Vurgu için <mark>...</mark> kullanın."
-        },
-        {
-          "name": "productBasedTitleLine1Before",
-          "displayName": "Başlık 1 Öncesi",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedTitle"
-        },
-        {
-          "name": "productBasedTitleLine1Highlight",
-          "displayName": "Başlık 1 Vurgu",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Katman Çizgileri",
-          "groupId": "productBasedTitle"
-        },
-        {
-          "name": "productBasedTitleLine1After",
-          "displayName": "Başlık 1 Sonrası",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedTitle"
-        },
-        {
-          "name": "productBasedTitleLine2Before",
-          "displayName": "Başlık 2 Öncesi",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedTitle"
-        },
-        {
-          "name": "productBasedTitleLine2Highlight",
-          "displayName": "Başlık 2 Vurgu",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Olmadan",
-          "groupId": "productBasedTitle"
-        },
-        {
-          "name": "productBasedTitleLine2After",
-          "displayName": "Başlık 2 Sonrası",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": " Doğal Diş",
-          "groupId": "productBasedTitle"
-        },
-        {
-          "name": "productBasedTitleLine3Before",
-          "displayName": "Başlık 3 Öncesi",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Görünümü",
-          "groupId": "productBasedTitle"
-        },
-        {
-          "name": "productBasedTitleLine3Highlight",
-          "displayName": "Başlık 3 Vurgu",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedTitle"
-        },
-        {
-          "name": "productBasedTitleLine3After",
-          "displayName": "Başlık 3 Sonrası",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedTitle"
-        },
-        {
-          "name": "productBasedIntroHtml",
-          "displayName": "Ana Açıklama",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<p>ArgenZ HT+ Multilayer Zirkonyum Blokları, dişin doğal gradyanını katman çizgileri olmaksızın yansıtarak benzersiz dayanıklılık ve renk doğruluğu sağlar. ABD'de izostatik presleme yöntemiyle üretilen bu yüksek kalite bloklar <b>FDA 510(k)</b> onayına sahiptir.</p>",
-          "groupId": "productBasedContent"
-        },
-        {
-          "name": "productBasedDetailHtml",
-          "displayName": "Ek Açıklama",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedContent"
-        },
-        {
-          "name": "productBasedProofTitle",
-          "displayName": "Kanıt / Referans Başlığı",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Argen bloklarını kullananlar nasıl değerlendirdi?",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedQuote1Text",
-          "displayName": "Yorum 1 Metni",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<p>Koleden insizale renk geçişleri çok başarılı. Doğala özdeş renk geçişini yakalamak diğer bloklara nazaran daha az müdahale ile mümkün oluyor.</p>",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedQuote1Name",
-          "displayName": "Yorum 1 İsim",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Robert",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedQuote1Role",
-          "displayName": "Yorum 1 Ünvan",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "CadCrowns, CA Inc.",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedQuote2Text",
-          "displayName": "Yorum 2 Metni",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<p>ArgenZ HT+, zirkonyum blok konusundaki tercihimiz. Şeffaflığı tam yerinde ve rengi harika. Dayanıklılığı da tam anlamıyla mükemmel.</p>",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedQuote2Name",
-          "displayName": "Yorum 2 İsim",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Tokuma Tanizaki",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedQuote2Role",
-          "displayName": "Yorum 2 Ünvan",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "ACL Hawaii, Inc",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedQuote3Text",
-          "displayName": "Yorum 3 Metni",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedQuote3Name",
-          "displayName": "Yorum 3 İsim",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedQuote3Role",
-          "displayName": "Yorum 3 Ünvan",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedProof"
-        },
-        {
-          "name": "productBasedShowScoreBars",
-          "displayName": "Skor Barlarını Göster",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": false,
-          "groupId": "productBasedScores",
-          "description": "Açıldığında yorumların yerine yüzde barları gösterilir."
-        },
-        {
-          "name": "productBasedScore1Text",
-          "displayName": "Skor 1 Metni",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<p>Ölçü kaşıklarının baskı sonrası formunu koruduğu ve stabil sonuçlar sunduğu belirtiliyor.</p>",
-          "groupId": "productBasedScores"
-        },
-        {
-          "name": "productBasedScore1Value",
-          "displayName": "Skor 1 Değeri",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 99,
-          "groupId": "productBasedScores"
-        },
-        {
-          "name": "productBasedScore2Text",
-          "displayName": "Skor 2 Metni",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<p>Tekrarlanabilir üretim sayesinde dijital iş akışına kolayca entegre edildiği ifade ediliyor.</p>",
-          "groupId": "productBasedScores"
-        },
-        {
-          "name": "productBasedScore2Value",
-          "displayName": "Skor 2 Değeri",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 96,
-          "groupId": "productBasedScores"
-        },
-        {
-          "name": "productBasedScore3Text",
-          "displayName": "Skor 3 Metni",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<p>Farklı dental ölçü uygulamalarında güvenle tercih edildiği görülüyor.</p>",
-          "groupId": "productBasedScores"
-        },
-        {
-          "name": "productBasedScore3Value",
-          "displayName": "Skor 3 Değeri",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 95,
-          "groupId": "productBasedScores"
-        },
-        {
-          "name": "productBasedMediaLayout",
-          "displayName": "Medya Layout",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "single",
-          "groupId": "productBasedMedia",
-          "description": "single veya grid yazın."
-        },
-        {
-          "name": "productBasedImageUrl",
-          "displayName": "Görsel 1",
-          "type": "IMAGE",
-          "required": false,
-          "defaultValue": "https://cdn.myikas.com/images/theme-images/5574c72d-1874-42b8-9512-c20987744b5c/image_1080.webp",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImageAlt",
-          "displayName": "Görsel 1 Alt Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "ArgenZ HT+ Multilayer zirkonyum blok doğal diş görünümü",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImageLabel",
-          "displayName": "Görsel 1 Etiket",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImage2Url",
-          "displayName": "Görsel 2",
-          "type": "IMAGE",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImage2Alt",
-          "displayName": "Görsel 2 Alt Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImage2Label",
-          "displayName": "Görsel 2 Etiket",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImage3Url",
-          "displayName": "Görsel 3",
-          "type": "IMAGE",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImage3Alt",
-          "displayName": "Görsel 3 Alt Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImage3Label",
-          "displayName": "Görsel 3 Etiket",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImage4Url",
-          "displayName": "Görsel 4",
-          "type": "IMAGE",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImage4Alt",
-          "displayName": "Görsel 4 Alt Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedImage4Label",
-          "displayName": "Görsel 4 Etiket",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "productBasedMedia"
-        },
-        {
-          "name": "productBasedReverseLayout",
-          "displayName": "Layout Ters Çevir",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": false,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedMaxWidth",
-          "displayName": "Maksimum Genişlik",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 1900,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedPaddingTop",
-          "displayName": "Üst Boşluk",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 118,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedPaddingBottom",
-          "displayName": "Alt Boşluk",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 88,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedColumnGap",
-          "displayName": "Kolon Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 140,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedTextColumnWidth",
-          "displayName": "Yazı Kolon Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 460,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedContentWidth",
-          "displayName": "Yazı İçerik Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 460,
-          "groupId": "productBasedLayout",
-          "description": "Sol taraftaki başlık, açıklama ve skor metinlerinin maksimum genişliği."
-        },
-        {
-          "name": "productBasedMediaColumnWidth",
-          "displayName": "Görsel Kolon Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 1080,
-          "groupId": "productBasedLayout",
-          "description": "Sağ tarafta görsele ayrılan toplam kolon alanı. Kutunun sığması için Görsel Kutusu Genişliği ile beraber kullan."
-        },
-        {
-          "name": "productBasedTitleFontSize",
-          "displayName": "Başlık Font Boyutu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 28,
-          "groupId": "productBasedTypography"
-        },
-        {
-          "name": "productBasedBodyFontSize",
-          "displayName": "Gövde Font Boyutu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 15,
-          "groupId": "productBasedTypography"
-        },
-        {
-          "name": "productBasedTitleMarginBottom",
-          "displayName": "Başlık Alt Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 42,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedIntroMarginBottom",
-          "displayName": "Ana Metin Alt Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedProofTitleMarginTop",
-          "displayName": "Kanıt Başlığı Üst Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 36,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedProofTitleMarginBottom",
-          "displayName": "Kanıt Başlığı Alt Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 20,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedScoreGap",
-          "displayName": "Skor Blokları Arası Boşluk",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 34,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedScoreBarMarginTop",
-          "displayName": "Skor Bar Üst Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 34,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedScoreBarWidth",
-          "displayName": "Skor Bar Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 429,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedScoreBarHeight",
-          "displayName": "Skor Bar Yüksekliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 18,
-          "groupId": "productBasedLayout"
-        },
-        {
-          "name": "productBasedMediaDisplayWidth",
-          "displayName": "Görsel Kutusu Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 1080,
-          "groupId": "productBasedMediaStyle",
-          "description": "Görselin dış kutu genişliği. Resim alanını büyütmek/küçültmek için bunu değiştir."
-        },
-        {
-          "name": "productBasedMediaTopMargin",
-          "displayName": "Görsel Üst Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "productBasedMediaStyle"
-        },
-        {
-          "name": "productBasedMediaAspectRatio",
-          "displayName": "Görsel Oranı",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "1.42 / 1",
-          "groupId": "productBasedMediaStyle",
-          "description": "CSS aspect-ratio değeri. Örn: 1.5 / 1, 16 / 9, 1 / 1."
-        },
-        {
-          "name": "productBasedMediaBorderRadius",
-          "displayName": "Görsel Köşe Yuvarlaklığı",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 28,
-          "groupId": "productBasedMediaStyle"
-        },
-        {
-          "name": "productBasedImageObjectFit",
-          "displayName": "Görsel Yerleşimi",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "contain",
-          "groupId": "productBasedMediaStyle",
-          "description": "contain, cover, fill veya scale-down."
-        },
-        {
-          "name": "productBasedImageScale",
-          "displayName": "İç Görsel Ölçeği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 1,
-          "groupId": "productBasedMediaStyle",
-          "description": "Sadece kutunun içindeki resmi yakınlaştırır. Dış kutu boyutu için Görsel Kutusu Genişliği değerini değiştir."
-        },
-        {
-          "name": "productBasedImageXOffset",
-          "displayName": "Görsel X Kaydırma",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "productBasedMediaStyle"
-        },
-        {
-          "name": "productBasedImageYOffset",
-          "displayName": "Görsel Y Kaydırma",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "productBasedMediaStyle"
-        },
-        {
-          "name": "productBasedBackgroundColor",
-          "displayName": "Arka Plan Rengi",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#ffffff",
-          "groupId": "productBasedAppearance"
-        },
-        {
-          "name": "productBasedTextColor",
-          "displayName": "Yazı Rengi",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#000000",
-          "groupId": "productBasedAppearance"
-        },
-        {
-          "name": "productBasedMutedTextColor",
-          "displayName": "Metin Rengi",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#000000",
-          "groupId": "productBasedAppearance"
-        },
-        {
-          "name": "productBasedAccentColor",
-          "displayName": "Vurgu Rengi",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#dbfa37",
-          "groupId": "productBasedAppearance"
-        },
-        {
-          "name": "productBasedMediaBackgroundColor",
-          "displayName": "Görsel Arka Planı",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#eeeeee",
-          "groupId": "productBasedAppearance"
-        },
-        {
-          "name": "productBasedScoreTrackColor",
-          "displayName": "Skor Bar Rengi",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#050505",
-          "groupId": "productBasedAppearance"
-        },
-        {
-          "name": "sectionAnchorId",
-          "displayName": "Section Anchor ID",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "layout",
-          "description": "Sayfa içi link için id. Boş bırakılabilir."
+          "groupId": "header",
+          "description": "Bölüm üst etiketi (Örn: KULLANICI DENEYİMİ)"
         },
         {
           "name": "titleHtml",
-          "displayName": "Başlık HTML Override",
+          "displayName": "Ana Başlık (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "",
-          "groupId": "title",
-          "description": "Boş değilse satırlı başlık propları yerine bu alan kullanılır. Vurgu için <mark>...</mark> kullanın."
+          "groupId": "header",
+          "description": "Vurgulu kelimeler için <span class=\"hl\">...</span> veya <b> kullanabilirsiniz"
         },
         {
-          "name": "titleLine1Before",
-          "displayName": "Başlık 1 Öncesi",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "title"
-        },
-        {
-          "name": "titleLine1Highlight",
-          "displayName": "Başlık 1 Vurgu",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Süper Işık Geçirgenliği(ST)",
-          "groupId": "title"
-        },
-        {
-          "name": "titleLine1After",
-          "displayName": "Başlık 1 Sonrası",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": " ile",
-          "groupId": "title"
-        },
-        {
-          "name": "titleLine2Before",
-          "displayName": "Başlık 2 Öncesi",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "Üst Düzey Uyum",
-          "groupId": "title"
-        },
-        {
-          "name": "titleLine2Highlight",
-          "displayName": "Başlık 2 Vurgu",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "title"
-        },
-        {
-          "name": "titleLine2After",
-          "displayName": "Başlık 2 Sonrası",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "title"
-        },
-        {
-          "name": "titleLine3Before",
-          "displayName": "Başlık 3 Öncesi",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "title"
-        },
-        {
-          "name": "titleLine3Highlight",
-          "displayName": "Başlık 3 Vurgu",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "title"
-        },
-        {
-          "name": "titleLine3After",
-          "displayName": "Başlık 3 Sonrası",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "title"
-        },
-        {
-          "name": "introHtml",
-          "displayName": "Ana Açıklama",
+          "name": "sideHtml",
+          "displayName": "Sağ Yan Açıklama (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "<p>Anterior kron ve köprü uygulamalarında, yüksek ışık geçirgenliği ile yandaki diş rengine en üst düzeyde uyum aranır.</p><p>ArgenZ ST Multilayer Zirkon Blok, doğal dentindeki renk geçişlerini katman çizgileri olmadan taklit eder ve süper şeffaflığıyla klinik ile laboratuvarlara büyük avantaj sağlar.</p><p>Makyaj gerektirmez; <b>sadece glaze uygulayıp</b> protezi bitime gönderebilirsiniz.</p>",
-          "groupId": "content"
+          "groupId": "header",
+          "description": "Başlığın sağındaki açıklama metni"
         },
         {
-          "name": "detailHtml",
-          "displayName": "Ek Açıklama",
+          "name": "panelTitleHtml",
+          "displayName": "Panel Başlığı (HTML Destekli)",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "",
-          "groupId": "content"
+          "groupId": "panel",
+          "description": "Siyah panelin ana başlığı (Örn: CRS Model Reçinesi'ni satın alanlar nasıl değerlendirdi?)"
         },
         {
-          "name": "proofTitle",
-          "displayName": "Kanıt / Referans Başlığı",
+          "name": "panelNote",
+          "displayName": "Panel Alt Açıklama Notu",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
+          "groupId": "panel",
+          "description": "Panel başlığının altındaki kısa açıklama notu"
         },
         {
-          "name": "quote1Text",
-          "displayName": "Yorum 1 Metni",
+          "name": "item1DescriptionHtml",
+          "displayName": "1. Değerlendirme Maddesi",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
+          "groupId": "items",
+          "description": "1. kullanıcı geri bildirim metni"
         },
         {
-          "name": "quote1Name",
-          "displayName": "Yorum 1 İsim",
-          "type": "TEXT",
+          "name": "item1Percent",
+          "displayName": "1. Yüzde Oranı (0 - 100)",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
+          "groupId": "items",
+          "description": "1. barın doluluk yüzdesi (Örn: 99)"
         },
         {
-          "name": "quote1Role",
-          "displayName": "Yorum 1 Ünvan",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
-        },
-        {
-          "name": "quote2Text",
-          "displayName": "Yorum 2 Metni",
+          "name": "item2DescriptionHtml",
+          "displayName": "2. Değerlendirme Maddesi",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
+          "groupId": "items",
+          "description": "2. kullanıcı geri bildirim metni"
         },
         {
-          "name": "quote2Name",
-          "displayName": "Yorum 2 İsim",
-          "type": "TEXT",
+          "name": "item2Percent",
+          "displayName": "2. Yüzde Oranı (0 - 100)",
+          "type": "NUMBER",
           "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
+          "groupId": "items",
+          "description": "2. barın doluluk yüzdesi (Örn: 97)"
         },
         {
-          "name": "quote2Role",
-          "displayName": "Yorum 2 Ünvan",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
-        },
-        {
-          "name": "quote3Text",
-          "displayName": "Yorum 3 Metni",
+          "name": "item3DescriptionHtml",
+          "displayName": "3. Değerlendirme Maddesi",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
+          "groupId": "items",
+          "description": "3. kullanıcı geri bildirim metni"
         },
         {
-          "name": "quote3Name",
-          "displayName": "Yorum 3 İsim",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
-        },
-        {
-          "name": "quote3Role",
-          "displayName": "Yorum 3 Ünvan",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "proof"
-        },
-        {
-          "name": "showScoreBars",
-          "displayName": "Skor Barlarını Göster",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": false,
-          "groupId": "scores",
-          "description": "Açıldığında yorumların yerine yüzde barları gösterilir."
-        },
-        {
-          "name": "score1Text",
-          "displayName": "Skor 1 Metni",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<p>Baskı sonrası <b>boyut değiştirmemesi</b> sayesinde herhangi bir uyum sorunu yaşamadığını söyledi.</p>",
-          "groupId": "scores"
-        },
-        {
-          "name": "score1Value",
-          "displayName": "Skor 1 Değeri",
+          "name": "item3Percent",
+          "displayName": "3. Yüzde Oranı (0 - 100)",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 99,
-          "groupId": "scores"
-        },
-        {
-          "name": "score2Text",
-          "displayName": "Skor 2 Metni",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<p>Yüksek doğruluğu sayesinde tüm <b>implant analogları ile mükemmel uyumlu</b> olduğu söyledi.</p>",
-          "groupId": "scores"
-        },
-        {
-          "name": "score2Value",
-          "displayName": "Skor 2 Değeri",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 97,
-          "groupId": "scores"
-        },
-        {
-          "name": "score3Text",
-          "displayName": "Skor 3 Metni",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "<p>Renk seçenekleri sayesinde hasta ve hekimlere kron renklerini göstermeyi kolaylaştırdığını söyledi.</p>",
-          "groupId": "scores"
-        },
-        {
-          "name": "score3Value",
-          "displayName": "Skor 3 Değeri",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 96,
-          "groupId": "scores"
-        },
-        {
-          "name": "mediaLayout",
-          "displayName": "Medya Layout",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "single",
-          "groupId": "media",
-          "description": "single veya grid yazın."
-        },
-        {
-          "name": "imageUrl",
-          "displayName": "Görsel 1",
-          "type": "IMAGE",
-          "required": false,
-          "defaultValue": "https://cdn.myikas.com/images/theme-images/5574c72d-1874-42b8-9512-c20987744b5c/image_1080.webp",
-          "groupId": "media"
-        },
-        {
-          "name": "imageAlt",
-          "displayName": "Görsel 1 Alt Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "ArgenZ ST Multilayer zirkon blok ile doğal diş görünümü",
-          "groupId": "media"
-        },
-        {
-          "name": "imageLabel",
-          "displayName": "Görsel 1 Etiket",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "image2Url",
-          "displayName": "Görsel 2",
-          "type": "IMAGE",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "image2Alt",
-          "displayName": "Görsel 2 Alt Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "image2Label",
-          "displayName": "Görsel 2 Etiket",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "image3Url",
-          "displayName": "Görsel 3",
-          "type": "IMAGE",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "image3Alt",
-          "displayName": "Görsel 3 Alt Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "image3Label",
-          "displayName": "Görsel 3 Etiket",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "image4Url",
-          "displayName": "Görsel 4",
-          "type": "IMAGE",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "image4Alt",
-          "displayName": "Görsel 4 Alt Metin",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "image4Label",
-          "displayName": "Görsel 4 Etiket",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "",
-          "groupId": "media"
-        },
-        {
-          "name": "reverseLayout",
-          "displayName": "Layout Ters Çevir",
-          "type": "BOOLEAN",
-          "required": false,
-          "defaultValue": false,
-          "groupId": "layout"
-        },
-        {
-          "name": "maxWidth",
-          "displayName": "Maksimum Genişlik",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 1900,
-          "groupId": "layout"
-        },
-        {
-          "name": "paddingTop",
-          "displayName": "Üst Boşluk",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 118,
-          "groupId": "layout"
-        },
-        {
-          "name": "paddingBottom",
-          "displayName": "Alt Boşluk",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 88,
-          "groupId": "layout"
-        },
-        {
-          "name": "columnGap",
-          "displayName": "Kolon Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 140,
-          "groupId": "layout"
-        },
-        {
-          "name": "textColumnWidth",
-          "displayName": "Yazı Kolon Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 460,
-          "groupId": "layout"
-        },
-        {
-          "name": "contentWidth",
-          "displayName": "Yazı İçerik Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 460,
-          "groupId": "layout",
-          "description": "Sol taraftaki başlık, açıklama ve skor metinlerinin maksimum genişliği."
-        },
-        {
-          "name": "mediaColumnWidth",
-          "displayName": "Görsel Kolon Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 1080,
-          "groupId": "layout",
-          "description": "Sağ tarafta görsele ayrılan toplam kolon alanı. Kutunun sığması için Görsel Kutusu Genişliği ile beraber kullan."
-        },
-        {
-          "name": "titleFontSize",
-          "displayName": "Başlık Font Boyutu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 28,
-          "groupId": "typography"
-        },
-        {
-          "name": "bodyFontSize",
-          "displayName": "Gövde Font Boyutu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 15,
-          "groupId": "typography"
-        },
-        {
-          "name": "titleMarginBottom",
-          "displayName": "Başlık Alt Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 42,
-          "groupId": "layout"
-        },
-        {
-          "name": "introMarginBottom",
-          "displayName": "Ana Metin Alt Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "layout"
-        },
-        {
-          "name": "proofTitleMarginTop",
-          "displayName": "Kanıt Başlığı Üst Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 36,
-          "groupId": "layout"
-        },
-        {
-          "name": "proofTitleMarginBottom",
-          "displayName": "Kanıt Başlığı Alt Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 20,
-          "groupId": "layout"
-        },
-        {
-          "name": "scoreGap",
-          "displayName": "Skor Blokları Arası Boşluk",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 34,
-          "groupId": "layout"
-        },
-        {
-          "name": "scoreBarMarginTop",
-          "displayName": "Skor Bar Üst Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 34,
-          "groupId": "layout"
-        },
-        {
-          "name": "scoreBarWidth",
-          "displayName": "Skor Bar Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 429,
-          "groupId": "layout",
-          "description": "0 bırakılırsa mevcut alanı kullanır."
-        },
-        {
-          "name": "scoreBarHeight",
-          "displayName": "Skor Bar Yüksekliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 18,
-          "groupId": "layout"
-        },
-        {
-          "name": "mediaDisplayWidth",
-          "displayName": "Görsel Kutusu Genişliği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 1080,
-          "groupId": "mediaStyle",
-          "description": "Görselin dış kutu genişliği. Resim alanını büyütmek/küçültmek için bunu değiştir."
-        },
-        {
-          "name": "mediaTopMargin",
-          "displayName": "Görsel Üst Boşluğu",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "mediaStyle"
-        },
-        {
-          "name": "mediaAspectRatio",
-          "displayName": "Görsel Oranı",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "1.42 / 1",
-          "groupId": "mediaStyle",
-          "description": "CSS aspect-ratio değeri. Örn: 1.5 / 1, 16 / 9, 1 / 1."
-        },
-        {
-          "name": "mediaBorderRadius",
-          "displayName": "Görsel Köşe Yuvarlaklığı",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 28,
-          "groupId": "mediaStyle"
-        },
-        {
-          "name": "imageObjectFit",
-          "displayName": "Görsel Yerleşimi",
-          "type": "TEXT",
-          "required": false,
-          "defaultValue": "cover",
-          "groupId": "mediaStyle",
-          "description": "contain, cover, fill veya scale-down."
-        },
-        {
-          "name": "imageScale",
-          "displayName": "İç Görsel Ölçeği",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 1,
-          "groupId": "mediaStyle",
-          "description": "Sadece kutunun içindeki resmi yakınlaştırır. Dış kutu boyutu için Görsel Kutusu Genişliği değerini değiştir."
-        },
-        {
-          "name": "imageXOffset",
-          "displayName": "Görsel X Kaydırma",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "mediaStyle"
-        },
-        {
-          "name": "imageYOffset",
-          "displayName": "Görsel Y Kaydırma",
-          "type": "NUMBER",
-          "required": false,
-          "defaultValue": 0,
-          "groupId": "mediaStyle"
+          "groupId": "items",
+          "description": "3. barın doluluk yüzdesi (Örn: 95)"
         },
         {
           "name": "backgroundColor",
           "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#ffffff",
+          "defaultValue": "#FAFAF7",
           "groupId": "appearance"
         },
         {
@@ -10947,147 +9743,59 @@
           "displayName": "Yazı Rengi",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#000000",
+          "defaultValue": "#0E0E0C",
           "groupId": "appearance"
         },
         {
           "name": "mutedTextColor",
-          "displayName": "Metin Rengi",
+          "displayName": "İkincil / Soluk Yazı Rengi",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#000000",
+          "defaultValue": "#55554e",
+          "groupId": "appearance"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
           "groupId": "appearance"
         },
         {
           "name": "accentColor",
-          "displayName": "Vurgu Rengi",
+          "displayName": "Vurgu Rengi (Lime)",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#dbfa37",
+          "defaultValue": "#C7F136",
           "groupId": "appearance"
-        },
-        {
-          "name": "mediaBackgroundColor",
-          "displayName": "Görsel Arka Planı",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#eeeeee",
-          "groupId": "appearance"
-        },
-        {
-          "name": "scoreTrackColor",
-          "displayName": "Skor Bar Rengi",
-          "type": "COLOR",
-          "required": false,
-          "defaultValue": "#050505",
-          "groupId": "appearance"
-        },
-        {
-          "name": "productTemplateJson",
-          "displayName": "Ürün Template JSON",
-          "type": "TEXT",
-          "required": false,
-          "description": "CRS kaynaklı reusable ürün template datası. Doluysa bu section kendi karşılık gelen bölümünü bu datadan render eder.",
-          "groupId": "productBasedSettings"
         }
       ],
       "propGroups": [
         {
-          "id": "productBasedSettings",
-          "name": "01. Ürün Bazlı Ayarlar & Filtre",
-          "description": "Ürün seçimi ve seçili ürün için özel şablon ayarları",
-          "children": [
-            {
-              "id": "productBasedTitle",
-              "name": "Başlık",
-              "description": "Satırlı başlık ve vurgulu kelimeler"
-            },
-            {
-              "id": "productBasedContent",
-              "name": "İçerik",
-              "description": "Ana metin alanları"
-            },
-            {
-              "id": "productBasedProof",
-              "name": "Yorumlar",
-              "description": "Referans metinleri"
-            },
-            {
-              "id": "productBasedScores",
-              "name": "Skor Barları",
-              "description": "Yüzde barlı alternatif kanıt alanı"
-            },
-            {
-              "id": "productBasedMedia",
-              "name": "Görseller",
-              "description": "Tek görsel veya 2x2 grid görselleri"
-            },
-            {
-              "id": "productBasedLayout",
-              "name": "Layout",
-              "description": "Genişlik, boşluk ve kolon ayarları"
-            },
-            {
-              "id": "productBasedTypography",
-              "name": "Tipografi",
-              "description": "Başlık ve gövde boyutları"
-            },
-            {
-              "id": "productBasedMediaStyle",
-              "name": "Görsel Stili",
-              "description": "Kart, oran ve görsel yerleşimi"
-            },
-            {
-              "id": "productBasedAppearance",
-              "name": "Görünüm",
-              "description": "Renk ayarları"
-            }
-          ]
+          "id": "data",
+          "name": "01. Ürün Veri Kaynağı",
+          "description": "Geçerli ikas ürün verisi bağlantısı"
         },
         {
-          "id": "title",
-          "name": "02. Başlık ve Vurgulu Kelimeler",
-          "description": "Satırlı başlık ve vurgulu kelimeler"
+          "id": "header",
+          "name": "02. Bölüm Başlığı ve Numarası",
+          "description": "Bölüm numarası (01), etiketi ve ana başlık alanları"
         },
         {
-          "id": "content",
-          "name": "03. Ana Açıklama ve Detay Metinleri",
-          "description": "Giriş ve detay açıklama metinleri"
+          "id": "panel",
+          "name": "03. Değerlendirme Paneli Başlığı",
+          "description": "Siyah panel başlığı ve açıklama notu"
         },
         {
-          "id": "proof",
-          "name": "04. Kullanıcı Yorumları ve Referanslar",
-          "description": "Referans ve kullanıcı alıntıları"
-        },
-        {
-          "id": "scores",
-          "name": "05. Değerlendirme Skor Barları (% Barlar)",
-          "description": "Yüzde barlı alternatif değerlendirme alanı"
-        },
-        {
-          "id": "media",
-          "name": "06. Ürün Görselleri (Tek / Grid)",
-          "description": "Tek görsel veya 2x2 grid görselleri"
-        },
-        {
-          "id": "layout",
-          "name": "07. Yerleşim ve Kolon Genişlikleri",
-          "description": "Genişlik, boşluk ve kolon ayarları"
-        },
-        {
-          "id": "typography",
-          "name": "08. Tipografi ve Yazı Boyutları",
-          "description": "Başlık ve gövde boyutları"
-        },
-        {
-          "id": "mediaStyle",
-          "name": "09. Görsel Oranı ve Yerleşimi",
-          "description": "Kart, oran ve görsel yerleşimi"
+          "id": "items",
+          "name": "04. Kullanıcı Değerlendirmeleri ve Barlar",
+          "description": "Yüzde barlı kullanıcı geri bildirim maddeleri"
         },
         {
           "id": "appearance",
-          "name": "10. Görünüm ve Renkler",
-          "description": "Arka plan ve yazı renk ayarları"
+          "name": "05. Görünüm ve Renkler",
+          "description": "Arka plan, yazı, panel ve vurgu renkleri"
         }
       ]
     },
