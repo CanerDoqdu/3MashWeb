@@ -51,4 +51,3 @@ export interface Props {
   trustBadge2?: string;
   trustBadge3?: string;
 }
-
