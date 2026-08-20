@@ -10994,8 +10994,8 @@
       "propGroups": [
         {
           "id": "productBasedSettings",
-          "name": "Ürün Bazlı Ayarlar",
-          "description": "Ürün seçimi ve seçili ürün için normal şablon ayarlarının birebir kopyası",
+          "name": "01. Ürün Bazlı Ayarlar & Filtre",
+          "description": "Ürün seçimi ve seçili ürün için özel şablon ayarları",
           "children": [
             {
               "id": "productBasedTitle",
@@ -11046,48 +11046,48 @@
         },
         {
           "id": "title",
-          "name": "Başlık",
+          "name": "02. Başlık ve Vurgulu Kelimeler",
           "description": "Satırlı başlık ve vurgulu kelimeler"
         },
         {
           "id": "content",
-          "name": "İçerik",
-          "description": "Ana metin alanları"
+          "name": "03. Ana Açıklama ve Detay Metinleri",
+          "description": "Giriş ve detay açıklama metinleri"
         },
         {
           "id": "proof",
-          "name": "Yorumlar",
-          "description": "Referans metinleri"
+          "name": "04. Kullanıcı Yorumları ve Referanslar",
+          "description": "Referans ve kullanıcı alıntıları"
         },
         {
           "id": "scores",
-          "name": "Skor Barları",
-          "description": "Yüzde barlı alternatif kanıt alanı"
+          "name": "05. Değerlendirme Skor Barları (% Barlar)",
+          "description": "Yüzde barlı alternatif değerlendirme alanı"
         },
         {
           "id": "media",
-          "name": "Görseller",
+          "name": "06. Ürün Görselleri (Tek / Grid)",
           "description": "Tek görsel veya 2x2 grid görselleri"
         },
         {
           "id": "layout",
-          "name": "Layout",
+          "name": "07. Yerleşim ve Kolon Genişlikleri",
           "description": "Genişlik, boşluk ve kolon ayarları"
         },
         {
           "id": "typography",
-          "name": "Tipografi",
+          "name": "08. Tipografi ve Yazı Boyutları",
           "description": "Başlık ve gövde boyutları"
         },
         {
           "id": "mediaStyle",
-          "name": "Görsel Stili",
+          "name": "09. Görsel Oranı ve Yerleşimi",
           "description": "Kart, oran ve görsel yerleşimi"
         },
         {
           "id": "appearance",
-          "name": "Görünüm",
-          "description": "Renk ayarları"
+          "name": "10. Görünüm ve Renkler",
+          "description": "Arka plan ve yazı renk ayarları"
         }
       ]
     },
@@ -12271,8 +12271,8 @@
       "propGroups": [
         {
           "id": "productBasedSettings",
-          "name": "Ürün Bazlı Ayarlar",
-          "description": "Ürün seçimi ve seçili ürün için normal şablon ayarlarının birebir kopyası",
+          "name": "01. Ürün Bazlı Ayarlar & Filtre",
+          "description": "Ürün seçimi ve seçili ürün için özel metrik ayarları",
           "children": [
             {
               "id": "productBasedContent",
@@ -12328,53 +12328,53 @@
         },
         {
           "id": "content",
-          "name": "Genel",
-          "description": "Anchor ve kaç metrik gösterileceği"
+          "name": "02. Bölüm Başlığı ve Genel Ayarlar",
+          "description": "Bölüm ID ve kaç metrik gösterileceği"
         },
         {
           "id": "metric1",
-          "name": "Metrik 1",
-          "description": "İlk metrik içeriği"
+          "name": "03. 1. Metrik Dairesi (Ana Değer)",
+          "description": "İlk metrik değeri, birimi ve açıklaması"
         },
         {
           "id": "metric2",
-          "name": "Metrik 2",
-          "description": "İkinci metrik içeriği"
+          "name": "04. 2. Metrik Dairesi (Ana Değer)",
+          "description": "İkinci metrik değeri, birimi ve açıklaması"
         },
         {
           "id": "metric3",
-          "name": "Metrik 3",
-          "description": "Üçüncü metrik içeriği"
+          "name": "05. 3. Metrik Dairesi (Ana Değer)",
+          "description": "Üçüncü metrik değeri, birimi ve açıklaması"
         },
         {
           "id": "metric4",
-          "name": "Metrik 4",
-          "description": "Opsiyonel metrik içeriği"
+          "name": "06. 4. Metrik Dairesi (Opsiyonel)",
+          "description": "4. metrik değeri, birimi ve açıklaması"
         },
         {
           "id": "metric5",
-          "name": "Metrik 5",
-          "description": "Opsiyonel metrik içeriği"
+          "name": "07. 5. Metrik Dairesi (Opsiyonel)",
+          "description": "5. metrik değeri, birimi ve açıklaması"
         },
         {
           "id": "metric6",
-          "name": "Metrik 6",
-          "description": "Opsiyonel metrik içeriği"
+          "name": "08. 6. Metrik Dairesi (Opsiyonel)",
+          "description": "6. metrik değeri, birimi ve açıklaması"
         },
         {
           "id": "layout",
-          "name": "Layout",
-          "description": "Container, boşluk ve daire ölçüleri"
+          "name": "09. Yerleşim, Boşluk ve Daire Ölçüleri",
+          "description": "Container, boşluk ve daire çap ölçüleri"
         },
         {
           "id": "typography",
-          "name": "Tipografi",
-          "description": "Font boyutları"
+          "name": "10. Tipografi ve Yazı Boyutları",
+          "description": "Değer, birim ve açıklama font boyutları"
         },
         {
           "id": "appearance",
-          "name": "Görünüm",
-          "description": "Renk ayarları"
+          "name": "11. Görünüm ve Renkler",
+          "description": "Daire, çizgi, yazı ve vurgu renkleri"
         }
       ]
     },
@@ -13071,90 +13071,90 @@
       "propGroups": [
         {
           "id": "productBasedSettings",
-          "name": "Ürün Bazlı İçerik ve Görsel",
-          "description": "Bu ürün sayfasında görünen başlık, sağ metin, maddeler, sol görsel ve görünüm ayarları.",
+          "name": "01. Ürün Bazlı İçerik ve Görsel",
+          "description": "Bu ürün sayfasında görünen başlık, sağ metin, maddeler, sol görsel ve görünüm ayarları",
           "children": [
             {
               "id": "productBasedTitle",
               "name": "1. Başlık",
-              "description": "Sağ taraftaki ana başlık."
+              "description": "Sağ taraftaki ana başlık"
             },
             {
               "id": "productBasedContent",
               "name": "2. Sağ Metin",
-              "description": "Başlığın altında görünen HTML metin ve PDF linki."
+              "description": "Başlığın altında görünen HTML metin ve PDF linki"
             },
             {
               "id": "productBasedBullets",
               "name": "3. Maddeler",
-              "description": "Madde listesi kullanılan tasarımlarda görünen kısa satırlar."
+              "description": "Madde listesi kullanılan tasarımlarda görünen kısa satırlar"
             },
             {
               "id": "productBasedImage",
               "name": "4. Sol Görsel",
-              "description": "Sol kolondaki ürün görseli ve alt metni."
+              "description": "Sol kolondaki ürün görseli ve alt metni"
             },
             {
               "id": "productBasedLayout",
               "name": "5. Yerleşim",
-              "description": "Bölüm genişliği, kolonlar ve boşluklar."
+              "description": "Bölüm genişliği, kolonlar ve boşluklar"
             },
             {
               "id": "productBasedImageStyle",
               "name": "6. Görsel Ayarı",
-              "description": "Görsel oranı, sığdırma, ölçek ve pozisyon."
+              "description": "Görsel oranı, sığdırma, ölçek ve pozisyon"
             },
             {
               "id": "productBasedTypography",
               "name": "7. Yazı Boyutları",
-              "description": "Başlık ve metin punto ayarları."
+              "description": "Başlık ve metin punto ayarları"
             },
             {
               "id": "productBasedAppearance",
               "name": "8. Renkler",
-              "description": "Bölüm ve yazı renkleri."
+              "description": "Bölüm ve yazı renkleri"
             }
           ]
         },
         {
           "id": "title",
-          "name": "Varsayılan Başlık",
-          "description": "Ürün bazlı ayarlar kapalıysa kullanılan başlık."
+          "name": "02. Genel Başlık",
+          "description": "Ürün bazlı ayarlar kapalıysa kullanılan başlık"
         },
         {
           "id": "content",
-          "name": "Varsayılan Sağ Metin",
-          "description": "Ürün bazlı ayarlar kapalıysa kullanılan açıklama ve madde başlığı."
+          "name": "03. Sağ Açıklama Metni",
+          "description": "Ürün bazlı ayarlar kapalıysa kullanılan açıklama ve link"
         },
         {
           "id": "bullets",
-          "name": "Varsayılan Maddeler",
-          "description": "Ürün bazlı ayarlar kapalıysa kullanılan madde listesi."
+          "name": "04. Özellik Maddeleri Listesi",
+          "description": "Ürün bazlı ayarlar kapalıysa kullanılan madde listesi"
         },
         {
           "id": "image",
-          "name": "Varsayılan Sol Görsel",
-          "description": "Ürün bazlı ayarlar kapalıysa kullanılan görsel."
+          "name": "05. Sol Ürün Görseli",
+          "description": "Ürün bazlı ayarlar kapalıysa kullanılan görsel"
         },
         {
           "id": "layout",
-          "name": "Varsayılan Yerleşim",
-          "description": "Genel bölüm genişliği, kolonlar ve boşluklar."
+          "name": "06. Yerleşim ve Kolonlar",
+          "description": "Genel bölüm genişliği, kolonlar ve boşluklar"
         },
         {
           "id": "imageStyle",
-          "name": "Varsayılan Görsel Ayarı",
-          "description": "Genel görsel oranı, sığdırma, ölçek ve pozisyon."
+          "name": "07. Görsel Oranı ve Pozisyon",
+          "description": "Genel görsel oranı, sığdırma, ölçek ve pozisyon"
         },
         {
           "id": "typography",
-          "name": "Varsayılan Yazı Boyutları",
-          "description": "Genel başlık ve metin punto ayarları."
+          "name": "08. Tipografi ve Yazı Boyutları",
+          "description": "Genel başlık ve metin punto ayarları"
         },
         {
           "id": "appearance",
-          "name": "Varsayılan Renkler",
-          "description": "Genel bölüm ve yazı renkleri."
+          "name": "09. Görünüm ve Renkler",
+          "description": "Genel bölüm ve yazı renkleri"
         }
       ]
     },
@@ -13709,92 +13709,92 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Genel",
+          "name": "01. Genel ve Bölüm ID",
           "description": "Section id ve erişilebilirlik metinleri"
         },
         {
           "id": "intro",
-          "name": "Üst Metin",
-          "description": "Slider üstündeki başlık ve açıklama"
+          "name": "02. Üst Başlık ve Açıklama",
+          "description": "Slider üstündeki başlık ve açıklama metni"
         },
         {
           "id": "introTypography",
-          "name": "Üst Metin Tipografi",
+          "name": "03. Başlık Tipografisi",
           "description": "Başlık ve açıklama font boyutları"
         },
         {
           "id": "images",
-          "name": "Görseller Genel",
-          "description": "Gösterilecek görsel sayısı"
+          "name": "04. Gösterilecek Görsel Sayısı",
+          "description": "Slider içinde gösterilecek aktif görsel sayısı"
         },
         {
           "id": "image1",
-          "name": "Görsel 1",
-          "description": "Slider görseli 1"
+          "name": "05. 1. Slider Görseli",
+          "description": "1. slider görseli, alt metni ve başlığı"
         },
         {
           "id": "image2",
-          "name": "Görsel 2",
-          "description": "Slider görseli 2"
+          "name": "06. 2. Slider Görseli",
+          "description": "2. slider görseli, alt metni ve başlığı"
         },
         {
           "id": "image3",
-          "name": "Görsel 3",
-          "description": "Slider görseli 3"
+          "name": "07. 3. Slider Görseli",
+          "description": "3. slider görseli, alt metni ve başlığı"
         },
         {
           "id": "image4",
-          "name": "Görsel 4",
-          "description": "Slider görseli 4"
+          "name": "08. 4. Slider Görseli",
+          "description": "4. slider görseli, alt metni ve başlığı"
         },
         {
           "id": "image5",
-          "name": "Görsel 5",
-          "description": "Slider görseli 5"
+          "name": "09. 5. Slider Görseli",
+          "description": "5. slider görseli, alt metni ve başlığı"
         },
         {
           "id": "image6",
-          "name": "Görsel 6",
-          "description": "Slider görseli 6"
+          "name": "10. 6. Slider Görseli",
+          "description": "6. slider görseli, alt metni ve başlığı"
         },
         {
           "id": "image7",
-          "name": "Görsel 7",
-          "description": "Slider görseli 7"
+          "name": "11. 7. Slider Görseli",
+          "description": "7. slider görseli, alt metni ve başlığı"
         },
         {
           "id": "image8",
-          "name": "Görsel 8",
-          "description": "Slider görseli 8"
+          "name": "12. 8. Slider Görseli",
+          "description": "8. slider görseli, alt metni ve başlığı"
         },
         {
           "id": "image9",
-          "name": "Görsel 9",
-          "description": "Slider görseli 9"
+          "name": "13. 9. Slider Görseli",
+          "description": "9. slider görseli, alt metni ve başlığı"
         },
         {
           "id": "layout",
-          "name": "Layout",
-          "description": "Container, boşluk ve görünen görsel sayısı"
+          "name": "14. Yerleşim ve Görsel Sayısı",
+          "description": "Container, boşluk ve aynı anda görünen görsel sayısı"
         },
         {
           "id": "slider",
-          "name": "Slider",
-          "description": "Hız, durma ve kenar fade ayarları"
+          "name": "15. Slider Davranışı ve Hız",
+          "description": "Otomatik akış hızı, durma ve kenar fade ayarları"
         },
         {
           "id": "imageStyle",
-          "name": "Görsel Stili",
-          "description": "Boyut, yerleşim, ölçek ve pozisyon"
+          "name": "16. Görsel Stili ve Oran",
+          "description": "Boyut, yerleşim, ölçek ve border radius"
         },
         {
           "id": "imageFilter",
-          "name": "Görsel Filtreleri",
-          "description": "Opacity, brightness, contrast ve renk filtreleri"
+          "name": "17. Görsel Efekt ve Filtreleri",
+          "description": "Opacity, parlaklık ve kontrast filtreleri"
         },
         {
           "id": "appearance",
-          "name": "Görünüm",
+          "name": "18. Görünüm ve Renkler",
           "description": "Arka plan ve metin renkleri"
         }
       ]
@@ -14176,38 +14176,38 @@
       "propGroups": [
         {
           "id": "productBasedVideo",
-          "name": "Ürün Bazlı Video",
-          "description": "Belirli ürün veya slug için kullanılacak video URL"
+          "name": "01. Ürün Bazlı Video Eşleştirme",
+          "description": "Belirli ürün veya slug için kullanılacak özel video URL"
         },
         {
           "id": "video",
-          "name": "Video Kaynağı",
-          "description": "Video linki ve poster görseli"
+          "name": "02. Video Kaynağı ve Poster Görseli",
+          "description": "Ana video linki, MP4 dosyası ve kapak görseli"
         },
         {
           "id": "content",
-          "name": "Üst Metin",
+          "name": "03. Üst Başlık ve Açıklama",
           "description": "Video üstündeki opsiyonel başlık ve açıklama"
         },
         {
           "id": "behavior",
-          "name": "Oynatma",
-          "description": "Kontrol, autoplay, sessiz ve loop ayarları"
+          "name": "04. Oynatma Davranışı",
+          "description": "Kontrol, autoplay, sessiz oynatma ve loop ayarları"
         },
         {
           "id": "layout",
-          "name": "Layout",
-          "description": "Container, video oranı ve boşluklar"
+          "name": "05. Yerleşim ve Video Oranı",
+          "description": "Container genişliği, video en-boy oranı ve boşluklar"
         },
         {
           "id": "typography",
-          "name": "Tipografi",
-          "description": "Metin boyutu ve metin-video boşluğu"
+          "name": "06. Tipografi ve Metin Boşluğu",
+          "description": "Metin boyutu ve metin-video arasındaki boşluk"
         },
         {
           "id": "appearance",
-          "name": "Görünüm",
-          "description": "Renkler ve boş durum metni"
+          "name": "07. Görünüm ve Renkler",
+          "description": "Arka plan ve metin renkleri"
         }
       ]
     },
@@ -14736,93 +14736,93 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Başlık",
-          "description": "Başlık ve opsiyonel açıklama"
+          "name": "01. Başlık ve Açıklama",
+          "description": "SSS bölümü ana başlığı ve sağ yan açıklaması"
         },
         {
           "id": "behavior",
-          "name": "Davranış",
-          "description": "Açık başlama ve çoklu açık satır ayarları"
+          "name": "02. Davranış ve Açık Satır Ayarları",
+          "description": "İlk sorunun açık başlama ve çoklu açık satır ayarı"
         },
         {
           "id": "faq1",
-          "name": "FAQ 1",
-          "description": "Soru 1 ve cevabı"
+          "name": "03. SSS 1 (Soru & Cevap)",
+          "description": "1. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq2",
-          "name": "FAQ 2",
-          "description": "Soru 2 ve cevabı"
+          "name": "04. SSS 2 (Soru & Cevap)",
+          "description": "2. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq3",
-          "name": "FAQ 3",
-          "description": "Soru 3 ve cevabı"
+          "name": "05. SSS 3 (Soru & Cevap)",
+          "description": "3. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq4",
-          "name": "FAQ 4",
-          "description": "Soru 4 ve cevabı"
+          "name": "06. SSS 4 (Soru & Cevap)",
+          "description": "4. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq5",
-          "name": "FAQ 5",
-          "description": "Soru 5 ve cevabı"
+          "name": "07. SSS 5 (Soru & Cevap)",
+          "description": "5. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq6",
-          "name": "FAQ 6",
-          "description": "Soru 6 ve cevabı"
+          "name": "08. SSS 6 (Soru & Cevap)",
+          "description": "6. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq7",
-          "name": "FAQ 7",
-          "description": "Soru 7 ve cevabı"
+          "name": "09. SSS 7 (Soru & Cevap)",
+          "description": "7. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq8",
-          "name": "FAQ 8",
-          "description": "Soru 8 ve cevabı"
+          "name": "10. SSS 8 (Soru & Cevap)",
+          "description": "8. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq9",
-          "name": "FAQ 9",
-          "description": "Soru 9 ve cevabı"
+          "name": "11. SSS 9 (Soru & Cevap)",
+          "description": "9. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq10",
-          "name": "FAQ 10",
-          "description": "Soru 10 ve cevabı"
+          "name": "12. SSS 10 (Soru & Cevap)",
+          "description": "10. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq11",
-          "name": "FAQ 11",
-          "description": "Soru 11 ve cevabı"
+          "name": "13. SSS 11 (Soru & Cevap)",
+          "description": "11. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "faq12",
-          "name": "FAQ 12",
-          "description": "Soru 12 ve cevabı"
+          "name": "14. SSS 12 (Soru & Cevap)",
+          "description": "12. sıkça sorulan soru ve detaylı cevabı"
         },
         {
           "id": "extra",
-          "name": "Ek FAQ",
-          "description": "12 satırdan fazlası için JSON alanı"
+          "name": "15. Ek SSS (Gelişmiş JSON)",
+          "description": "12 sorudan fazlası için JSON veri alanı"
         },
         {
           "id": "layout",
-          "name": "Layout",
+          "name": "16. Yerleşim ve Boşluklar",
           "description": "Container, liste ve satır boşlukları"
         },
         {
           "id": "typography",
-          "name": "Tipografi",
+          "name": "17. Tipografi ve Yazı Boyutları",
           "description": "Başlık, soru ve cevap font boyutları"
         },
         {
           "id": "appearance",
-          "name": "Görünüm",
-          "description": "Renkler ve boş durum metni"
+          "name": "18. Görünüm ve Renkler",
+          "description": "Arka plan, çizgi ve metin renkleri"
         }
       ]
     },
@@ -15147,38 +15147,38 @@
       "propGroups": [
         {
           "id": "data",
-          "name": "Data / Kategori",
+          "name": "01. Ürün / Kategori Veri Kaynağı",
           "description": "Otomatik ürün kategorisi veya manuel ürün listesi"
         },
         {
           "id": "content",
-          "name": "Başlık",
-          "description": "Opsiyonel başlık ve açıklama"
+          "name": "02. Başlık ve Açıklama",
+          "description": "Carousel üstündeki başlık ve açıklama"
         },
         {
           "id": "behavior",
-          "name": "Davranış",
-          "description": "Oklar, mevcut ürün, fiyat ve link davranışı"
+          "name": "03. Carousel Davranışı ve Butonlar",
+          "description": "Oklar, mevcut ürünü gizleme, fiyat ve link davranışı"
         },
         {
           "id": "layout",
-          "name": "Layout",
-          "description": "Container, boşluk ve görünen kart sayısı"
+          "name": "04. Yerleşim ve Görünen Kart Sayısı",
+          "description": "Container, boşluk ve aynı anda görünen kart sayısı"
         },
         {
           "id": "image",
-          "name": "Görsel",
-          "description": "Ürün görsel alanı ve yerleşimi"
+          "name": "05. Görsel Oranı ve Alanı",
+          "description": "Ürün görsel alanı, en-boy oranı ve yerleşimi"
         },
         {
           "id": "typography",
-          "name": "Tipografi",
-          "description": "Başlık ve kart metin boyutları"
+          "name": "06. Tipografi ve Metin Boyutları",
+          "description": "Başlık ve ürün kart metin boyutları"
         },
         {
           "id": "appearance",
-          "name": "Görünüm",
-          "description": "Renkler"
+          "name": "07. Görünüm ve Renkler",
+          "description": "Arka plan ve kart renkleri"
         }
       ]
     },

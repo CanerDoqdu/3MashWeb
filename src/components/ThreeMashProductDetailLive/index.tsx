@@ -728,8 +728,8 @@ function productDetailPropOverrides(props: Props) {
   const breadcrumbCategoryHref = linkValue(props.breadcrumbCategoryHref);
   if (breadcrumbCategoryHref) breadcrumb.categoryHref = breadcrumbCategoryHref;
 
-  const heroKicker = trimmedText(props.heroKicker || props.eyebrowText);
-  if (heroKicker && heroKicker !== "ÜRÜN DETAYI") hero.kicker = heroKicker;
+  const heroKicker = trimmedText(props.heroKicker);
+  if (heroKicker) hero.kicker = heroKicker;
 
   const heroTitleHtml = trimmedText(props.heroTitleHtml);
   if (heroTitleHtml) hero.titleHtml = heroTitleHtml;
@@ -805,7 +805,6 @@ function productDetailPropKey(props: Props) {
     props.trustBadge1,
     props.trustBadge2,
     props.trustBadge3,
-    props.eyebrowText,
     props.categoryText,
   ]
     .map((item) => trimmedText(item))
