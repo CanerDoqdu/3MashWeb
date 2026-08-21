@@ -8,6 +8,8 @@ import {
   systemsCategoryData,
   titaniumDiscsCategoryData,
   washCureCategoryData,
+  washingCategoryData,
+  curingCategoryData,
   zirconBlocksCategoryData,
   categoryLandingDataFromKey,
 } from "./presets";
@@ -88,6 +90,16 @@ const WASH_CURE_PRODUCT_KEYS = new Set([
   "creality-washcure-uw-03",
   "creality-wash-cure-uw-02",
   "creality-wash-cure-uw-03",
+]);
+
+const WASHING_PRODUCT_KEYS = new Set([
+  "mash-w1e-ultrasonik-yikama-cihazi",
+  "mash-w1e",
+]);
+
+const CURING_PRODUCT_KEYS = new Set([
+  "mash-c1e-uv-kurleme-cihazi",
+  "mash-c1e",
 ]);
 
 const ZIRCON_PRODUCT_KEYS = new Set([
@@ -197,6 +209,8 @@ function productDataFromProduct(product: unknown) {
     const key = lastPathKey(value);
     if (PRINTER_PRODUCT_KEYS.has(key)) return printersCategoryData;
     if (RESIN_PRODUCT_KEYS.has(key)) return dentalResinsCategoryData;
+    if (WASHING_PRODUCT_KEYS.has(key)) return washingCategoryData;
+    if (CURING_PRODUCT_KEYS.has(key)) return curingCategoryData;
     if (WASH_CURE_PRODUCT_KEYS.has(key)) return washCureCategoryData;
     if (ZIRCON_PRODUCT_KEYS.has(key)) return zirconBlocksCategoryData;
     if (FURNACE_PRODUCT_KEYS.has(key)) return dentalFurnacesCategoryData;
@@ -228,6 +242,8 @@ export function productListCategoryData(productList: IkasProductList | undefined
   let printerMatches = 0;
   let resinMatches = 0;
   let washCureMatches = 0;
+  let washingMatches = 0;
+  let curingMatches = 0;
   let zirconMatches = 0;
   let furnaceMatches = 0;
   let scannerMatches = 0;
@@ -240,6 +256,8 @@ export function productListCategoryData(productList: IkasProductList | undefined
     if (data === printersCategoryData) printerMatches += 1;
     if (data === dentalResinsCategoryData) resinMatches += 1;
     if (data === washCureCategoryData) washCureMatches += 1;
+    if (data === washingCategoryData) washingMatches += 1;
+    if (data === curingCategoryData) curingMatches += 1;
     if (data === zirconBlocksCategoryData) zirconMatches += 1;
     if (data === dentalFurnacesCategoryData) furnaceMatches += 1;
     if (data === desktopScannersCategoryData) scannerMatches += 1;
@@ -249,19 +267,23 @@ export function productListCategoryData(productList: IkasProductList | undefined
   });
 
   const otherMatches = {
-    printer: resinMatches + washCureMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
-    resin: printerMatches + washCureMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
-    washCure: printerMatches + resinMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
-    zircon: printerMatches + resinMatches + washCureMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
-    furnace: printerMatches + resinMatches + washCureMatches + zirconMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
-    scanner: printerMatches + resinMatches + washCureMatches + zirconMatches + furnaceMatches + spareMatches + systemMatches + titaniumMatches,
-    spare: printerMatches + resinMatches + washCureMatches + zirconMatches + furnaceMatches + scannerMatches + systemMatches + titaniumMatches,
-    system: printerMatches + resinMatches + washCureMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + titaniumMatches,
-    titanium: printerMatches + resinMatches + washCureMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches,
+    printer: resinMatches + washCureMatches + washingMatches + curingMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
+    resin: printerMatches + washCureMatches + washingMatches + curingMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
+    washCure: printerMatches + resinMatches + washingMatches + curingMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
+    washing: printerMatches + resinMatches + washCureMatches + curingMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
+    curing: printerMatches + resinMatches + washCureMatches + washingMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
+    zircon: printerMatches + resinMatches + washCureMatches + washingMatches + curingMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
+    furnace: printerMatches + resinMatches + washCureMatches + washingMatches + curingMatches + zirconMatches + scannerMatches + spareMatches + systemMatches + titaniumMatches,
+    scanner: printerMatches + resinMatches + washCureMatches + washingMatches + curingMatches + zirconMatches + furnaceMatches + spareMatches + systemMatches + titaniumMatches,
+    spare: printerMatches + resinMatches + washCureMatches + washingMatches + curingMatches + zirconMatches + furnaceMatches + scannerMatches + systemMatches + titaniumMatches,
+    system: printerMatches + resinMatches + washCureMatches + washingMatches + curingMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + titaniumMatches,
+    titanium: printerMatches + resinMatches + washCureMatches + washingMatches + curingMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches,
   };
 
   if (printerMatches > 0 && otherMatches.printer === 0) return printersCategoryData;
   if (resinMatches > 0 && otherMatches.resin === 0) return dentalResinsCategoryData;
+  if (washingMatches > 0 && otherMatches.washing === 0) return washingCategoryData;
+  if (curingMatches > 0 && otherMatches.curing === 0) return curingCategoryData;
   if (washCureMatches > 0 && otherMatches.washCure === 0) return washCureCategoryData;
   if (zirconMatches > 0 && otherMatches.zircon === 0) return zirconBlocksCategoryData;
   if (furnaceMatches > 0 && otherMatches.furnace === 0) return dentalFurnacesCategoryData;

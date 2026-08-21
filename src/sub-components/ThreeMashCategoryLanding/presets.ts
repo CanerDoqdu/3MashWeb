@@ -730,6 +730,353 @@ export const washCureCategoryData: CategoryLandingData = {
   },
 };
 
+export const washingCategoryData: CategoryLandingData = {
+  kind: "washing",
+  announcement: {
+    highlight: "⚡ Baskı sonrası temizlikte kayıp yaşamayın",
+    text: "Reçine baskı sonrası yüzey temizliği için W1E Ultrasonik Yıkama Cihazı ile hassas ve hızlı arındırma.",
+    href: "#cihaz",
+    ctaText: "Yıkama cihazını incele →",
+  },
+  breadcrumb: {
+    homeLabel: "Ana sayfa",
+    homeHref: "/",
+    parentLabel: "Ürünler",
+    currentLabel: "Dental Yıkama Cihazları",
+  },
+  hero: {
+    titlePrefix: "Baskı sonrası",
+    titleEmphasis: "kusursuz yüzey,",
+    titleSuffix: "yıkamayla başlar.",
+    descriptionHtml:
+      "Dental 3D baskıdan çıkan parçaların yüzeyinde kalan fazla sıvı reçineyi ultrasonik titreşimlerle mikro detaylardan uzaklaştırır. Kürleme öncesi homojen, temiz ve yapışkanlıktan arınmış yüzey kalitesi sağlar.",
+    buttons: [
+      { label: "Yıkama cihazını incele ↓", href: "#cihaz", variant: "lime" },
+      { label: "İş akışına danış", href: "/pages/iletisim", variant: "line" },
+    ],
+    metrics: [
+      { value: "Ultrasonik", emphasis: "yıkama", label: "mikro boşluklarda derinlemesine temizlik" },
+      { value: "16.453", emphasis: "TRY", label: "W1E başlangıç fiyatı" },
+      { value: "Hassas", emphasis: "arındırma", label: "parça geometrisine zarar vermez" },
+      { value: "Kürleme", emphasis: "öncesi", label: "homojen post-curing için hazır yüzey" },
+    ],
+  },
+  selector: {
+    anchorId: "cihaz",
+    cardCtaText: "İncele",
+    number: "01",
+    label: "YIKAMA CİHAZLARI",
+    titlePrefix: "Baskı sonrası için",
+    titleEmphasis: "ultrasonik temizleme gücü.",
+    sideHtml:
+      "<b>Mash W1E</b>, baskı sonrası yıkama adımını kontrol altına alarak yüzeydeki fazla reçineyi hızlı ve güvenli biçimde temizler.",
+    products: [
+      {
+        title: "Mash W1E Ultrasonik Yıkama Cihazı",
+        descriptionHtml:
+          "3D baskı sonrası parçaların yüzeyindeki reçine kalıntılarını temizlemek için konumlanan <b>ultrasonik yıkama</b> cihazı.",
+        href: "/mash-w1e-ultrasonik-yikama-cihazi",
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp",
+        imageAlt: "Mash W1E ultrasonik yıkama cihazı",
+        tag: "YIKAMA",
+        status: "16.453 TRY",
+        hot: true,
+        tone: "#F1F1EC",
+        specs: [
+          { label: "İşlem", value: "Ultrasonik yıkama" },
+          { label: "Akış", value: "Baskı sonrası temizlik" },
+          { label: "Kategori", value: "Yıkama" },
+        ],
+      },
+      {
+        title: "Creality UW02 - Yıkama & Kürleme Cihazı",
+        descriptionHtml:
+          "Reçine 3D baskılar için yıkama ve UV kürleme adımlarını <b>tek post-process akışında</b> toplayan cihaz.",
+        href: "/creality-washcure-uw-02",
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
+        imageAlt: "Creality UW02 yıkama ve kürleme cihazı",
+        tag: "YIKAMA SEÇENEĞİ",
+        status: "17.506 TRY",
+        tone: "#F1F1EC",
+        specs: [
+          { label: "İşlem", value: "Geniş yıkama haznesi" },
+          { label: "Uyumluluk", value: "Büyük tablalarla uyumlu" },
+          { label: "Kategori", value: "Yıkama" },
+        ],
+      },
+    ],
+    compare: {
+      columns: [
+        { title: "Özellik" },
+        { title: "Mash W1E", subtitle: "Ultrasonik Yıkama" },
+        { title: "Creality UW02", subtitle: "Kombine Yıkama" },
+      ],
+      rows: [
+        { label: "Temizleme Teknolojisi", values: ["<b>Ultrasonik kavitasyon</b>", "Pervaneli girdap akışı"] },
+        { label: "Mikro Boşluk Temizliği", values: ["<b>Çok yüksek</b> (kole & marjin)", "Standart"] },
+        { label: "Yüzey Bütünlüğü", values: ["Hassas parçalara zarar vermez", "Girdap hareketli"] },
+        { label: "En Uygun Akış", values: ["Hassas kron, köprü, model ve rehber", "Büyük modeller ve genel akış"] },
+      ],
+      noteHtml:
+        "Yıkama cihazını laboratuvarınızın baskı hacmi ve hassasiyet ihtiyacına göre değerlendirin.",
+    },
+  },
+  feature: {
+    number: "02",
+    label: "ÖNE ÇIKAN",
+    content: {
+      eyebrow: "MASH W1E · ULTRASONİK YIKAMA",
+      titlePrefix: "Kürleme öncesi,",
+      titleEmphasis: "mikron seviyesinde temizlik.",
+      descriptionHtml:
+        "Parça üzerindeki kürlenmemiş reçine kalıntıları giderilmezse, kürleme anında marjin detayları kaybolur ve boyutsal sapmalar oluşur. W1E ultrasonik kavitasyon dalgalarıyla en dar aralıklara kadar homojen temizlik sağlar.",
+      href: "/mash-w1e-ultrasonik-yikama-cihazi",
+      ctaText: "W1E detayına git →",
+      specs: [
+        { label: "İşlem", value: "Ultrasonik yıkama" },
+        { label: "Akış", value: "Baskı sonrası temizlik" },
+        { label: "Temizlik", value: "Mikron hassasiyetinde" },
+        { label: "Hazırlık", value: "Post-curing öncesi" },
+      ],
+    },
+  },
+  detail: {
+    number: "03",
+    label: "NEDEN YIKAMA KRİTİK",
+    titlePrefix: "Yüzey temizliği,",
+    titleEmphasis: "sonucun temelidir.",
+    sideHtml:
+      "Doğru yıkanmamış bir parça, en iyi kürleme cihazına girse bile optik ve mekanik kalitesini kaybeder.",
+    whyCards: [
+      { number: "01", title: "Marjin netliği", descriptionHtml: "Fazla reçine marjin basamaklarında birikmez; kron ve köprülerin ağıza tam oturmasını güvenceye alır." },
+      { number: "02", title: "Kürleme verimi", descriptionHtml: "Kürlenmemiş sıvı film tabakasını uzaklaştırarak UV ışığının doğrudan parça yüzeyine nüfuz etmesini sağlar." },
+      { number: "03", title: "Yüzey pürüzsüzlüğü", descriptionHtml: "Yapışkanlık hissini ortadan kaldırır, pürüzsüz ve temiz dental restorasyon yüzeyleri oluşturur." },
+      { number: "04", title: "Süre tasarrufu", descriptionHtml: "Manuel fırçalama veya uzun süreli solvent temasını azaltır, tekrarlanabilir iş akışı sunar." },
+    ],
+    callout: {
+      titlePrefix: "Yıkama tamamlandıktan sonra:",
+      titleEmphasis: "akıllı kürleme adımı.",
+      descriptionHtml:
+        "Temizlenen parçalar hedef mekanik dayanım ve biyouyumluluk değerine ulaşmak için UV kürleme cihazına aktarılır.",
+      buttons: [
+        { label: "Kürleme cihazlarını gör →", href: "/kurleme-cihazlari", variant: "dark" },
+      ],
+    },
+  },
+  faq: {
+    number: "04",
+    label: "SIK SORULANLAR",
+    title: "Yıkama cihazları hakkında merak edilenler.",
+    sideHtml: "Ultrasonik yıkamanın dental iş akışındaki önemini net cevaplarla yanıtladık.",
+    items: [
+      {
+        question: "Dental 3D baskıda ultrasonik yıkama neden gereklidir?",
+        answerHtml:
+          "Ultrasonik kavitasyon, manuel temizliğin ulaşamadığı ince kole hatları, interdental boşluklar ve kanal içlerindeki sıvı reçineyi parçaya zarar vermeden tamamen söker.",
+      },
+      {
+        question: "W1E ile hangi yıkama sıvıları kullanılabilir?",
+        answerHtml:
+          "İzopropil Alkol (IPA), etanol veya özel dental reçine temizleme solüsyonlarıyla tam uyumlu olarak kullanılabilir.",
+      },
+      {
+        question: "Yıkama süresi ne kadar olmalıdır?",
+        answerHtml:
+          "Kullanılan reçine tipine göre genellikle 2 ila 5 dakika arası ultrasonik banyo yüzey temizliği için yeterlidir.",
+      },
+      {
+        question: "Yıkamadan sonra doğrudan kürlemeye geçilebilir mi?",
+        answerHtml:
+          "Yıkama sonrası parçanın yüzeyindeki solventin tamamen buharlaşması ve parçanın kuruması beklendikten sonra kürleme adımına geçilmelidir.",
+      },
+    ],
+  },
+  finalCta: {
+    titlePrefix: "Laboratuvarınız için doğru yıkama akışını",
+    titleEmphasis: "birlikte kuralım.",
+    descriptionHtml:
+      "Hangi reçineleri kullanıyorsunuz, günlük baskı hacminiz ne kadar? İhtiyacınıza en uygun yıkama protokolünü ücretsiz belirleyelim.",
+    buttons: [
+      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: "Cihazlara dön", href: "#cihaz", variant: "inverse" },
+    ],
+  },
+};
+
+export const curingCategoryData: CategoryLandingData = {
+  kind: "curing",
+  announcement: {
+    highlight: "⚡ Mekanik dayanım ve biyouyumluluğu tamamlayın",
+    text: "Mash C1E 24 LED 360° homojen ışık sistemi ile reçinenizin hedef klinik değerlerine ulaşmasını sağlayın.",
+    href: "#cihaz",
+    ctaText: "Kürleme cihazını incele →",
+  },
+  breadcrumb: {
+    homeLabel: "Ana sayfa",
+    homeHref: "/",
+    parentLabel: "Ürünler",
+    currentLabel: "Dental Kürleme Cihazları",
+  },
+  hero: {
+    titlePrefix: "Reçinenin gerçek gücü",
+    titleEmphasis: "doğru kürlemeyle",
+    titleSuffix: "ortaya çıkar.",
+    descriptionHtml:
+      "Dental 3D baskıda polimerizasyonun tamamlanması, biyouyumluluk sertifikasyonu ve 140+ MPa bükülme mukavemeti ancak kontrollü <b>UV post-curing</b> ile elde edilir. 24 LED'li 360° ışık düzeni ve 360-530 nm geniş spektrumuyla Mash C1E, parçayı her açıdan eşit sertleştirir.",
+    buttons: [
+      { label: "Kürleme cihazını incele ↓", href: "#cihaz", variant: "lime" },
+      { label: "Kürleme protokolü danış", href: "/pages/iletisim", variant: "line" },
+    ],
+    metrics: [
+      { value: "360", emphasis: "°", label: "C1E homojen ışık sistemi · gölgesiz" },
+      { value: "24", emphasis: "LED", label: "yüksek güçlü UV kürleme matrisi" },
+      { value: "360-530", emphasis: "nm", label: "tüm dental reçinelerle uyumlu geniş spektrum" },
+      { value: "76.782", emphasis: "TRY", label: "C1E profesyonel post-curing fiyatı" },
+    ],
+  },
+  selector: {
+    anchorId: "cihaz",
+    cardCtaText: "İncele",
+    number: "01",
+    label: "KÜRLEME CİHAZLARI",
+    titlePrefix: "Dental reçineler için",
+    titleEmphasis: "ileri UV polimerizasyon.",
+    sideHtml:
+      "<b>Mash C1E</b>, 24 LED'li 360° ışık sistemi ve 360-530 nm spektrum desteğiyle dental restorasyonların mekanik dayanımını, şeffaflığını ve biyouyumluluğunu zirveye taşır.",
+    products: [
+      {
+        title: "Mash C1E UV Kürleme Cihazı",
+        descriptionHtml:
+          "24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılar için <b>UV post-curing</b> cihazı.",
+        href: "/mash-c1e-uv-kurleme-cihazi",
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e7c22c86-93e4-4c53-92f8-969d358e0c0f/1080/mash-c1e-dental-post-cure-cihazi.webp",
+        imageAlt: "Mash C1E UV kürleme cihazı",
+        tag: "AKILLI KÜRLEME",
+        status: "76.782 TRY",
+        hot: true,
+        tone: "#F2F8DC",
+        specs: [
+          { label: "Işık", value: "360° / 24 LED" },
+          { label: "Spektrum", value: "360-530 nm" },
+          { label: "Kategori", value: "Kürleme" },
+        ],
+      },
+      {
+        title: "Creality UW02 - Yıkama & Kürleme Cihazı",
+        descriptionHtml:
+          "Reçine 3D baskılar için yıkama ve UV kürleme adımlarını <b>tek post-process akışında</b> toplayan cihaz.",
+        href: "/creality-washcure-uw-02",
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
+        imageAlt: "Creality UW02 yıkama ve kürleme cihazı",
+        tag: "KOMBİNE POST-PROCESS",
+        status: "17.506 TRY",
+        tone: "#F1F1EC",
+        specs: [
+          { label: "İşlem", value: "Döner tablalı kürleme" },
+          { label: "UV", value: "365 / 405 nm" },
+          { label: "Kategori", value: "Kürleme" },
+        ],
+      },
+    ],
+    compare: {
+      columns: [
+        { title: "Özellik" },
+        { title: "Mash C1E", subtitle: "Profesyonel Akıllı Kürleme" },
+        { title: "Creality UW02", subtitle: "Kombine Cihaz" },
+      ],
+      rows: [
+        { label: "LED Dizilimi", values: ["<b>24 LED / 360° tam çevreleme</b>", "Çift sıra dikey LED"] },
+        { label: "Spektrum Aralığı", values: ["<b>360 - 530 nm (Geniş bant)</b>", "385 / 405 nm"] },
+        { label: "Biyouyumluluk Uyumu", values: ["<b>CE Class IIa protokollerine tam uyum</b>", "Standart"] },
+        { label: "Kürleme Homojenliği", values: ["Alt, üst ve yanlardan gölgesiz 360°", "Tabladan yansımalı"] },
+      ],
+      noteHtml:
+        "Doğru UV kürleme cihazı, dental reçinenin tüm mekanik ve biyouyumluluk potansiyelini ortaya çıkarır.",
+    },
+  },
+  feature: {
+    number: "02",
+    label: "ÖNE ÇIKAN",
+    content: {
+      eyebrow: "MASH C1E · 360° UV POST-CURING",
+      titlePrefix: "24 LED ile",
+      titleEmphasis: "gölgesiz ve homojen",
+      titleSuffix: "polimerizasyon.",
+      descriptionHtml:
+        "Geleneksel kürleme kutularında tabanın altı veya iç kaviteler eksik kürlenir. C1E, 360 derece yerleştirilmiş 24 adet yüksek çıkışlı LED ile tüm yüzeyleri eşit sürede kürler; artık monomer salınımını sıfıra indirir.",
+      href: "/mash-c1e-uv-kurleme-cihazi",
+      ctaText: "C1E ürün detayına git →",
+      specs: [
+        { label: "LED Sayısı", value: "24 Adet Yüksek Güçlü" },
+        { label: "Işık Açısı", value: "360° Çepeçevre" },
+        { label: "Dalga Boyu", value: "360 - 530 nm" },
+        { label: "Sonuç", value: "Maksimum Bükülme Dayanımı" },
+      ],
+    },
+  },
+  detail: {
+    number: "03",
+    label: "NEDEN KÜRLEME KRİTİK",
+    titlePrefix: "Doğru kürlenmeyen parça,",
+    titleEmphasis: "ağızda kırıma uğrar.",
+    sideHtml:
+      "Baskıdan çıkan parça henüz %70-80 polimerizedir. Son %20-30'luk mukavemet ve stabilite farkını doğru post-curing tamamlar.",
+    whyCards: [
+      { number: "01", title: "Maksimum mukavemet", descriptionHtml: "CRS Composite gibi reçinelerde 144 MPa bükülme direncine ulaşmak için doğru süre ve UV dozu şarttır." },
+      { number: "02", title: "Biyouyumluluk güvencesi", descriptionHtml: "Ağız içinde kalacak protez ve splintlerde artık monomer kalıntısını yok ederek hasta güvenliği sağlar." },
+      { number: "03", title: "Boyutsal kararlılık", descriptionHtml: "Homojen kürleme, parçanın bir tarafının fazla çekip deforme olmasını önler; oklüzyon uyumunu korur." },
+      { number: "04", title: "Optik translüsentlik", descriptionHtml: "Doğru dalga boyunda kürlenen restorasyonlar sararma yapmaz, doğal diş translüsentliğini korur." },
+    ],
+    callout: {
+      titlePrefix: "Uyumlu reçineler ve parametreler:",
+      titleEmphasis: "üretim uzmanlığı.",
+      descriptionHtml:
+        "Her reçinenin kürlenme süresi farklıdır. 3mash ekibi olarak sattığımız tüm reçinelerin C1E kürleme parametrelerini kalibre edilmiş olarak teslim ediyoruz.",
+      buttons: [
+        { label: "Dental reçineleri incele →", href: "/dental-3d-yazici-recineleri", variant: "dark" },
+      ],
+    },
+  },
+  faq: {
+    number: "04",
+    label: "SIK SORULANLAR",
+    title: "Kürleme cihazları hakkında merak edilenler.",
+    sideHtml: "Dental post-curing adımının klinik başarısına dair merak edilen cevaplar.",
+    items: [
+      {
+        question: "UV kürleme cihazı neden bu kadar önemlidir?",
+        answerHtml:
+          "Reçine 3D yazıcıdan çıkan modeller tam mekanik dayanımına henüz ulaşmamıştır. UV post-curing işlemi reçine zincirlerini tamamen bağlayarak sertlik, biyouyumluluk ve elastikiyet değerlerini tamamlar.",
+      },
+      {
+        question: "Mash C1E hangi dalga boylarını destekler?",
+        answerHtml:
+          "Mash C1E, 360 nm ile 530 nm arasındaki geniş spektrumu destekler; piyasadaki tüm DLP, SLA ve LCD dental reçineleriyle tam uyumludur.",
+      },
+      {
+        question: "Gölgesiz 360° kürleme neden gereklidir?",
+        answerHtml:
+          "Işık tek bir yönden gelirse parçanın altı veya iç kısımları yumuşak kalır, bu da ağızda erken kırılmalara yol açar. 360° dizilim her yüzeyin aynı anda tam sertleşmesini sağlar.",
+      },
+      {
+        question: "Kürleme süresi nasıl belirlenir?",
+        answerHtml:
+          "Kullanılan reçinenin üretici protokolüne göre genellikle 5 ila 20 dakika arasında değişir. C1E üzerinde süre hassas şekilde ayarlanabilir.",
+      },
+    ],
+  },
+  finalCta: {
+    titlePrefix: "Kürleme sürecinizi",
+    titleEmphasis: "standarda bağlayalım.",
+    descriptionHtml:
+      "Hangi reçineleri kullanıyorsunuz, hangi endikasyonları basıyorsunuz? C1E akıllı kürleme cihazı ile kliniğinizin/laboratuvarınızın kalite standardını sabitleyelim.",
+    buttons: [
+      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: "Cihazlara dön", href: "#cihaz", variant: "inverse" },
+    ],
+  },
+};
+
 export const zirconBlocksCategoryData: CategoryLandingData = {
   kind: "zircon",
   announcement: {
@@ -1898,7 +2245,9 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
   if (!key) return null;
   const dentalKeys = ["dental 3d yazici recineleri", "3d yazici recineleri", "dental recineler", "dental recine"];
   const printerKeys = ["3d yazicilar", "dental 3d yazicilar", "mash p16l", "curie m1", "halot sky", "creality halot"];
-  const washCureKeys = ["yikama kurleme cihazlari", "kurleme cihazlari", "yikama kurleme", "wash cure", "washcure", "mash c1e", "mash w1e", "uw 03", "uw 02"];
+  const washingKeys = ["yikama cihazlari", "dental yikama", "yikama", "washing", "mash w1e"];
+  const curingKeys = ["kurleme cihazlari", "dental kurleme", "kurleme", "curing", "mash c1e"];
+  const washCureKeys = ["yikama kurleme cihazlari", "yikama kurleme", "wash cure", "washcure", "uw 03", "uw 02"];
   const zirconKeys = ["zirkon bloklar", "zirkon blok", "zircon blocks", "argenz ht plus", "argenz st multilayer", "argenz ht multilayer"];
   const furnaceKeys = [
     "dental firinlar",
@@ -1952,6 +2301,12 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
 
   if (dentalKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return dentalResinsCategoryData;
+  }
+  if (washingKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
+    return washingCategoryData;
+  }
+  if (curingKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
+    return curingCategoryData;
   }
   if (washCureKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return washCureCategoryData;

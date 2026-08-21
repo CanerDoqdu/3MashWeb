@@ -1,0 +1,43 @@
+@import "../ThreeMashHeader/styles.css";
+
+/* V2 Layout Specific: Side-by-side items in the bottom row of Right Column */
+.tmh-mega-row-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.tmh-mega-row-split .tmh-mega-link {
+  padding: 8px 6px;
+  gap: 6px;
+}
+
+.tmh-mega-row-split .tmh-mega-link-icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 6px;
+}
+
+.tmh-mega-row-split .tmh-mega-link-copy b {
+  font-size: 13.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tmh-mega-row-split .tmh-mega-link-copy span {
+  font-size: 11.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 991px) {
+  .tmh-mega-row-split {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

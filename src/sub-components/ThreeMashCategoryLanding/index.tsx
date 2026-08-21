@@ -105,7 +105,7 @@ export type CategorySectionHead = {
 };
 
 export type CategoryLandingData = {
-  kind: "resins" | "printers" | "wash-cure" | "zircon" | "furnaces" | "scanners" | "spares" | "systems" | "titanium";
+  kind: "resins" | "printers" | "wash-cure" | "washing" | "curing" | "zircon" | "furnaces" | "scanners" | "spares" | "systems" | "titanium";
   announcement: {
     highlight: string;
     text: string;
@@ -339,6 +339,16 @@ const categoryRouteAliases: Record<string, string> = {
   "resins": "/dental-3d-yazici-recineleri",
   "printers": "/3d-yazicilar",
   "wash-cure": "/yikama-kurleme-cihazlari",
+  "washing": "/yikama-cihazlari",
+  "curing": "/kurleme-cihazlari",
+  "yikama-cihazlari": "/yikama-cihazlari",
+  "yikama": "/yikama-cihazlari",
+  "urunler-yikama": "/yikama-cihazlari",
+  "urunler-yikama-cihazlari": "/yikama-cihazlari",
+  "kurleme-cihazlari": "/kurleme-cihazlari",
+  "kurleme": "/kurleme-cihazlari",
+  "urunler-kurleme": "/kurleme-cihazlari",
+  "urunler-kurleme-cihazlari": "/kurleme-cihazlari",
   "zircon": "/zirkon-bloklar",
   "furnaces": "/dental-firinlar",
   "scanners": "/masasustu-tarayicilar",
@@ -355,8 +365,6 @@ const categoryRouteAliases: Record<string, string> = {
   "yikama-kurleme-cihazlari": "/yikama-kurleme-cihazlari",
   "yikama-kurleme": "/yikama-kurleme-cihazlari",
   "urunler-yikama-kurleme": "/yikama-kurleme-cihazlari",
-  "kurleme-cihazlari": "/yikama-kurleme-cihazlari",
-  "urunler-kurleme-cihazlari": "/yikama-kurleme-cihazlari",
   "masasustu-tarayicilar": "/masasustu-tarayicilar",
   "masaustu-tarayicilar": "/masasustu-tarayicilar",
   "urunler-masasustu-tarayicilar": "/masasustu-tarayicilar",
