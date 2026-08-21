@@ -63,30 +63,32 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(48px, 5.2vw, 76px);
-  align-items: start;
+  align-items: stretch;
   border-bottom: 1px solid var(--tmpdt-line);
   padding: 24px 0 64px;
 }
 
 .tmpdt-gal {
   position: static;
-  align-self: start;
+  align-self: stretch;
   justify-self: stretch;
   width: 100%;
   max-width: min(100%, var(--tmpdt-gallery-width, 520px));
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .tmpdt-gal-main {
   position: relative;
   display: flex;
   width: 100%;
+  flex: 1 1 0;
+  min-height: 380px;
   overflow: hidden;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1 / 1;
-height: auto;
-  max-height: none;
   border: 1px solid var(--tmpdt-line);
   border-radius: 22px;
   background: #fff;
@@ -95,6 +97,7 @@ height: auto;
 .tmpdt-gal-main img {
   width: calc(100% - 36px);
   height: calc(100% - 36px);
+  max-height: 100%;
   display: block;
   object-fit: contain;
 }
@@ -119,7 +122,8 @@ height: auto;
   width: 100%;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
-  margin: 12px 0 0;
+  margin: 14px 0 0;
+  flex-shrink: 0;
 }
 
 .tmpdt-thumbs button {
@@ -1571,9 +1575,17 @@ height: auto;
 
   .tmpdt-gal {
     position: static;
-       justify-self: center;
+    justify-self: center;
     margin-left: auto;
     margin-right: auto;
+    height: auto;
+  }
+
+  .tmpdt-gal-main {
+    flex: unset;
+    min-height: unset;
+    aspect-ratio: 1 / 1;
+    height: auto;
   }
 
   .tmpdt-buy h1 {

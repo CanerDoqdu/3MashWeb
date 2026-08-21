@@ -1,4 +1,5 @@
-import type { IkasImage, IkasProduct } from "@ikas/bp-storefront";
+// This file is auto-generated — do not edit manually.
+import type { IkasProduct, IkasImage } from "@ikas/bp-storefront";
 
 export interface Props {
   product?: IkasProduct | null;
@@ -8,7 +9,7 @@ export interface Props {
   sideHtml?: string;
   showImages?: boolean;
   cert1ShowImage?: boolean;
-  cert1Image?: IkasImage | string | null;
+  cert1Image?: IkasImage | null;
   cert1Badge?: string;
   cert1Title?: string;
   cert1Subtitle?: string;
@@ -17,7 +18,7 @@ export interface Props {
   cert1ActionText?: string;
   cert1ActionHref?: string;
   cert2ShowImage?: boolean;
-  cert2Image?: IkasImage | string | null;
+  cert2Image?: IkasImage | null;
   cert2Badge?: string;
   cert2Title?: string;
   cert2Subtitle?: string;
@@ -26,7 +27,7 @@ export interface Props {
   cert2ActionText?: string;
   cert2ActionHref?: string;
   cert3ShowImage?: boolean;
-  cert3Image?: IkasImage | string | null;
+  cert3Image?: IkasImage | null;
   cert3Badge?: string;
   cert3Title?: string;
   cert3Subtitle?: string;
@@ -35,7 +36,7 @@ export interface Props {
   cert3ActionText?: string;
   cert3ActionHref?: string;
   cert4ShowImage?: boolean;
-  cert4Image?: IkasImage | string | null;
+  cert4Image?: IkasImage | null;
   cert4Badge?: string;
   cert4Title?: string;
   cert4Subtitle?: string;
