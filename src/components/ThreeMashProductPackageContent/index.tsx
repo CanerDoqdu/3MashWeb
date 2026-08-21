@@ -17,76 +17,76 @@ function imageSource(value: unknown, fallback = ""): string {
 
 export function ThreeMashProductPackageContent(props: Props) {
   const index = trimmedText(props.sectionIndex, "06");
-  const label = trimmedText(props.sectionLabel, "PAKET İÇERİĞİ");
+  const label = trimmedText(props.sectionLabel, "BÖLÜM ETİKETİ");
   const titleHtml = trimmedText(
     props.titleHtml,
-    'Kutudan çıktığı an <span class="em">üretime hazır.</span>'
+    'Paket ve kutu içeriği <span class="em">başlığı buraya gelecek.</span>'
   );
   const sideHtml = trimmedText(
     props.sideHtml,
-    "İhtiyacınız olan tüm donanım, kalibrasyon araçları, başlangıç sarfları ve teknik eğitim pakete dahildir."
+    "Kutu ve paket içeriği bölümünün sağ üst genel açıklama metni buraya gelecek."
   );
 
   const packageImage = imageSource(
     props.packageImage,
     "https://cdn.myikas.com/images/theme-images/4a6af8e2-cb7c-4cc8-ba17-13656d4b8670/image_3840.webp"
   );
-  const packageBadge = trimmedText(props.packageBadge, "HER ŞEY DAHİL SET");
-  const packageTitle = trimmedText(props.packageTitle, "Eksiksiz Üretim Kiti");
+  const packageBadge = trimmedText(props.packageBadge, "ÖNE ÇIKAN SET");
+  const packageTitle = trimmedText(props.packageTitle, "Paket Ana Başlığı");
   const packageSubtitle = trimmedText(
     props.packageSubtitle,
-    "Cihaz, aksesuarlar, kalibrasyon araçları ve 1 yıllık sınırsız Mash Academy desteği tek pakette."
+    "Paket veya setin genel kapsamı ve avantajlarını anlatan kısa açıklama metni."
   );
 
   const items = [
     {
       num: trimmedText(props.item1Number, "01"),
       title: trimmedText(props.item1Title, "1. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item1Description, "Paket içeriğine dahil olan 1. ana ürün veya donanım açıklaması."),
+      desc: trimmedText(props.item1Description, "Paket içeriğine dahil olan 1. ana ürün veya donanım açıklaması buraya gelecek."),
       tag: trimmedText(props.item1Tag, "ANA DONANIM"),
     },
     {
       num: trimmedText(props.item2Number, "02"),
       title: trimmedText(props.item2Title, "2. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item2Description, "Paket içeriğine dahil olan 2. sarf veya aksesuar açıklaması."),
-      tag: trimmedText(props.item2Tag, "SARF / REÇİNE"),
+      desc: trimmedText(props.item2Description, "Paket içeriğine dahil olan 2. sarf veya aksesuar açıklaması buraya gelecek."),
+      tag: trimmedText(props.item2Tag, "SARF MALZEME"),
     },
     {
       num: trimmedText(props.item3Number, "03"),
       title: trimmedText(props.item3Title, "3. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item3Description, "Paket içeriğine dahil olan 3. alet veya kalibrasyon seti açıklaması."),
+      desc: trimmedText(props.item3Description, "Paket içeriğine dahil olan 3. alet veya kalibrasyon seti açıklaması buraya gelecek."),
       tag: trimmedText(props.item3Tag, "KALİBRASYON"),
     },
     {
       num: trimmedText(props.item4Number, "04"),
       title: trimmedText(props.item4Title, "4. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item4Description, "Paket içeriğine dahil olan 4. yedek parça veya tank açıklaması."),
+      desc: trimmedText(props.item4Description, "Paket içeriğine dahil olan 4. yedek parça veya aksesuar açıklaması buraya gelecek."),
       tag: trimmedText(props.item4Tag, "YEDEK PARÇA"),
     },
     {
       num: trimmedText(props.item5Number, "05"),
       title: trimmedText(props.item5Title, "5. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item5Description, "Klinik veya laboratuvara özel canlı kurulum ve eğitim desteği."),
-      tag: trimmedText(props.item5Tag, "MASH ACADEMY"),
+      desc: trimmedText(props.item5Description, "Paket içeriğine dahil olan 5. eğitim veya danışmanlık hizmeti açıklaması buraya gelecek."),
+      tag: trimmedText(props.item5Tag, "EĞİTİM"),
     },
     {
       num: trimmedText(props.item6Number, "06"),
       title: trimmedText(props.item6Title, "6. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item6Description, "2 Yıl resmi garanti, parça temini ve mühendis destek hattı."),
-      tag: trimmedText(props.item6Tag, "TEKNİK DESTEK"),
+      desc: trimmedText(props.item6Description, "Paket içeriğine dahil olan 6. teknik destek veya garanti kapsamı açıklaması buraya gelecek."),
+      tag: trimmedText(props.item6Tag, "GARANTİ"),
     },
   ];
 
-  const bannerTitle = trimmedText(props.bottomBannerTitle, "Kurulum & Entegrasyon Garantisi");
-  const bannerBadge = trimmedText(props.bottomBannerBadge, "ÜCRETSİZ DESTEK");
+  const bannerTitle = trimmedText(props.bottomBannerTitle, "Alt Garanti Bandı Başlığı");
+  const bannerBadge = trimmedText(props.bottomBannerBadge, "ÖZEL ROZET");
   const bannerText = trimmedText(
     props.bottomBannerText,
-    "Siparişiniz ulaştığında uzman teknisyenlerimiz cihazınızı uzaktan veya yerinde kurup ilk baskıyı sizinle birlikte alır."
+    "Kutu içeriği veya teslimat garantisi ile ilgili alt bilgilendirme metni buraya gelecek."
   );
-  const ctaText = trimmedText(props.ctaText, "Uzmana Danışın →");
+  const ctaText = trimmedText(props.ctaText, "Aksiyon Butonu Metni →");
   const ctaHref = trimmedText(
     props.ctaHref,
-    "https://wa.me/905314326577?text=Paket%20icerigi%20hakkinda%20bilgi%20almak%20istiyorum"
+    "#"
   );
 
   return (

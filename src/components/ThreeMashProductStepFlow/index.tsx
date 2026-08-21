@@ -6,52 +6,52 @@ function trimmedText(value: unknown, fallback = ""): string {
 
 export function ThreeMashProductStepFlow(props: Props) {
   const index = trimmedText(props.sectionIndex, "07");
-  const label = trimmedText(props.sectionLabel, "DİJİTAL İŞ AKIŞI");
+  const label = trimmedText(props.sectionLabel, "BÖLÜM ETİKETİ");
   const titleHtml = trimmedText(
     props.titleHtml,
-    '4 adımda hatasız <span class="em">üretim süreci.</span>'
+    'Adım adım iş akışı <span class="em">başlığı buraya gelecek.</span>'
   );
   const sideHtml = trimmedText(
     props.sideHtml,
-    "CAD tasarımından son hasta teslimine kadar tam entegre, tekrarlanabilir ve hızlı akış."
+    "İş akışı ve üretim süreçlerinin aşamalarını anlatan genel açıklama metni buraya gelecek."
   );
 
   const steps = [
     {
       num: trimmedText(props.step1Number, "01"),
-      title: trimmedText(props.step1Title, "1. Adım Başlığı"),
-      desc: trimmedText(props.step1Description, "İş akışının 1. aşaması (örn: CAD tarama ve dilimleme hazırlığı)."),
-      tag: trimmedText(props.step1Tag, "TASARIM"),
+      title: trimmedText(props.step1Title, "1. Aşama Başlığı"),
+      desc: trimmedText(props.step1Description, "İş akışının 1. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek."),
+      tag: trimmedText(props.step1Tag, "1. AŞAMA"),
     },
     {
       num: trimmedText(props.step2Number, "02"),
-      title: trimmedText(props.step2Title, "2. Adım Başlığı"),
-      desc: trimmedText(props.step2Description, "İş akışının 2. aşaması (örn: Yüksek hassasiyetli 3D baskı işlemi)."),
-      tag: trimmedText(props.step2Tag, "BASKI"),
+      title: trimmedText(props.step2Title, "2. Aşama Başlığı"),
+      desc: trimmedText(props.step2Description, "İş akışının 2. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek."),
+      tag: trimmedText(props.step2Tag, "2. AŞAMA"),
     },
     {
       num: trimmedText(props.step3Number, "03"),
-      title: trimmedText(props.step3Title, "3. Adım Başlığı"),
-      desc: trimmedText(props.step3Description, "İş akışının 3. aşaması (örn: Ultrasonik yıkama ve 360° homojen UV kürleme)."),
-      tag: trimmedText(props.step3Tag, "POST-CURE"),
+      title: trimmedText(props.step3Title, "3. Aşama Başlığı"),
+      desc: trimmedText(props.step3Description, "İş akışının 3. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek."),
+      tag: trimmedText(props.step3Tag, "3. AŞAMA"),
     },
     {
       num: trimmedText(props.step4Number, "04"),
-      title: trimmedText(props.step4Title, "4. Adım Başlığı"),
-      desc: trimmedText(props.step4Description, "İş akışının 4. aşaması (örn: Polisaj, simantasyon ve hasta teslimi)."),
-      tag: trimmedText(props.step4Tag, "TESLİMAT"),
+      title: trimmedText(props.step4Title, "4. Aşama Başlığı"),
+      desc: trimmedText(props.step4Description, "İş akışının 4. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek."),
+      tag: trimmedText(props.step4Tag, "4. AŞAMA"),
     },
   ];
 
-  const ctaTitle = trimmedText(props.ctaTitle, "İş Akışınızı Birlikte Optimize Edelim");
+  const ctaTitle = trimmedText(props.ctaTitle, "Alt Aksiyon Kartı Başlığı");
   const ctaDesc = trimmedText(
     props.ctaDescription,
-    "Mevcut klinik ve laboratuvar donanımınızla bu akışı nasıl kurabileceğinizi uzmanlarımıza danışın."
+    "İş akışı ile ilgili danışmanlık veya teklif almak isteyenler için alt açıklama metni."
   );
-  const ctaBtnText = trimmedText(props.ctaButtonText, "Ücretsiz Danışmanlık Alın →");
+  const ctaBtnText = trimmedText(props.ctaButtonText, "Aksiyon Buton Metni →");
   const ctaBtnHref = trimmedText(
     props.ctaButtonHref,
-    "https://wa.me/905314326577?text=Dijital%20is%20akisi%20hakkinda%20bilgi%20almak%20istiyorum"
+    "#"
   );
 
   return (

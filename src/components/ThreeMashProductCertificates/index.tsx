@@ -17,14 +17,14 @@ function imageSource(value: unknown, fallback = ""): string {
 
 export function ThreeMashProductCertificates(props: Props) {
   const index = trimmedText(props.sectionIndex, "08");
-  const label = trimmedText(props.sectionLabel, "SERTİFİKALAR & RAPORLAR");
+  const label = trimmedText(props.sectionLabel, "BÖLÜM ETİKETİ");
   const titleHtml = trimmedText(
     props.titleHtml,
-    'Uluslararası standartlar ve <span class="em">klinik onaylar.</span>'
+    'Sertifikalar ve raporlar <span class="em">başlığı buraya gelecek.</span>'
   );
   const sideHtml = trimmedText(
     props.sideHtml,
-    "Tüm ürünlerimiz akredite bağımsız laboratuvarlar ve medikal otoriteler tarafından test edilip sertifikalandırılmıştır."
+    "Sertifikalar ve test raporları bölümü için sağ taraftaki detaylı açıklama metni buraya gelecek."
   );
 
   const globalShowImages = props.showImages !== false;
@@ -36,12 +36,12 @@ export function ThreeMashProductCertificates(props: Props) {
         props.cert1Image,
         "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d875a523-2228-44a7-818d-022312b0a44d/1080/composite-resin-ce.webp"
       ),
-      badge: trimmedText(props.cert1Badge, "CE CLASS IIa"),
-      title: trimmedText(props.cert1Title, "MDR Tıbbi Cihaz Uygunluğu"),
-      sub: trimmedText(props.cert1Subtitle, "Avrupa Birliği Tıbbi Cihaz Direktifi (MDR) onaylı biyouyumlu üretim sertifikası."),
-      reportNo: trimmedText(props.cert1ReportNo, "CE-2024-MDR-098"),
-      issuer: trimmedText(props.cert1Issuer, "TÜV SÜD / CE Notified Body"),
-      actionText: trimmedText(props.cert1ActionText, "Sertifikayı İncele (PDF) →"),
+      badge: trimmedText(props.cert1Badge, "1. SERTİFİKA ROZETİ"),
+      title: trimmedText(props.cert1Title, "1. Sertifika / Rapor Başlığı"),
+      sub: trimmedText(props.cert1Subtitle, "1. Sertifika veya test raporuna ait standart ve açıklama metni buraya gelecek."),
+      reportNo: trimmedText(props.cert1ReportNo, "RAPOR-NO-01"),
+      issuer: trimmedText(props.cert1Issuer, "Akredite Test Kurumu 1"),
+      actionText: trimmedText(props.cert1ActionText, "Raporu İncele (PDF) →"),
       actionHref: trimmedText(props.cert1ActionHref, "#"),
     },
     {
@@ -50,11 +50,11 @@ export function ThreeMashProductCertificates(props: Props) {
         props.cert2Image,
         "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/deb67f5e-a02a-4fa6-9cb8-595a277d69fd/1080/composite-apps-10.webp"
       ),
-      badge: trimmedText(props.cert2Badge, "ISO 13485:2016"),
-      title: trimmedText(props.cert2Title, "Medikal Kalite Yönetimi"),
-      sub: trimmedText(props.cert2Subtitle, "Dental ve medikal üretim süreçlerinin uluslararası kalite ve güvenlik standardı."),
-      reportNo: trimmedText(props.cert2ReportNo, "ISO-13485-TR-2024"),
-      issuer: trimmedText(props.cert2Issuer, "BSI Group International"),
+      badge: trimmedText(props.cert2Badge, "2. SERTİFİKA ROZETİ"),
+      title: trimmedText(props.cert2Title, "2. Sertifika / Rapor Başlığı"),
+      sub: trimmedText(props.cert2Subtitle, "2. Sertifika veya test raporuna ait standart ve açıklama metni buraya gelecek."),
+      reportNo: trimmedText(props.cert2ReportNo, "RAPOR-NO-02"),
+      issuer: trimmedText(props.cert2Issuer, "Akredite Test Kurumu 2"),
       actionText: trimmedText(props.cert2ActionText, "Standardı Görüntüle →"),
       actionHref: trimmedText(props.cert2ActionHref, "#"),
     },
@@ -64,11 +64,11 @@ export function ThreeMashProductCertificates(props: Props) {
         props.cert3Image,
         "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/9d7bb34c-1f0d-4b36-8f0e-ce9a41863d55/1080/composite-apps-11.webp"
       ),
-      badge: trimmedText(props.cert3Badge, "ISO 10993"),
-      title: trimmedText(props.cert3Title, "Biyouyumluluk & Sitotoksisite"),
-      sub: trimmedText(props.cert3Subtitle, "Ağız içi mukoza temasına uygun, monomer salınımı yapmayan güvenli yapı testi."),
-      reportNo: trimmedText(props.cert3ReportNo, "BIO-LAB-88421"),
-      issuer: trimmedText(props.cert3Issuer, "Akredite Biyomedikal Lab"),
+      badge: trimmedText(props.cert3Badge, "3. SERTİFİKA ROZETİ"),
+      title: trimmedText(props.cert3Title, "3. Sertifika / Rapor Başlığı"),
+      sub: trimmedText(props.cert3Subtitle, "3. Sertifika veya test raporuna ait standart ve açıklama metni buraya gelecek."),
+      reportNo: trimmedText(props.cert3ReportNo, "RAPOR-NO-03"),
+      issuer: trimmedText(props.cert3Issuer, "Akredite Test Kurumu 3"),
       actionText: trimmedText(props.cert3ActionText, "Test Raporu Detayı →"),
       actionHref: trimmedText(props.cert3ActionHref, "#"),
     },
@@ -78,11 +78,11 @@ export function ThreeMashProductCertificates(props: Props) {
         props.cert4Image,
         "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/1080/composite-apps-12.webp"
       ),
-      badge: trimmedText(props.cert4Badge, "KLİNİK TEST"),
-      title: trimmedText(props.cert4Title, "Üniversite Araştırma Raporu"),
-      sub: trimmedText(props.cert4Subtitle, "Diş hekimliği fakültelerinde yapılan mekanik dayanım ve marjinal uyum analizleri."),
-      reportNo: trimmedText(props.cert4ReportNo, "UNI-DENT-2024-77"),
-      issuer: trimmedText(props.cert4Issuer, "Dental Araştırma Enstitüsü"),
+      badge: trimmedText(props.cert4Badge, "4. SERTİFİKA ROZETİ"),
+      title: trimmedText(props.cert4Title, "4. Sertifika / Rapor Başlığı"),
+      sub: trimmedText(props.cert4Subtitle, "4. Sertifika veya test raporuna ait standart ve açıklama metni buraya gelecek."),
+      reportNo: trimmedText(props.cert4ReportNo, "RAPOR-NO-04"),
+      issuer: trimmedText(props.cert4Issuer, "Akredite Test Kurumu 4"),
       actionText: trimmedText(props.cert4ActionText, "Klinik Raporu İncele →"),
       actionHref: trimmedText(props.cert4ActionHref, "#"),
     },
@@ -90,7 +90,7 @@ export function ThreeMashProductCertificates(props: Props) {
 
   const complianceNotice = trimmedText(
     props.complianceNotice,
-    "Tüm sertifika ve test raporlarının orijinalleri talep edilmesi durumunda klinik ve laboratuvarlarımıza PDF olarak iletilmektedir."
+    "Sertifikalar ve test raporları hakkında genel yasal bilgilendirme notu buraya gelecek."
   );
 
   return (

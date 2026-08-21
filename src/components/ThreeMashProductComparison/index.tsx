@@ -6,64 +6,64 @@ function trimmedText(value: unknown, fallback = ""): string {
 
 export function ThreeMashProductComparison(props: Props) {
   const index = trimmedText(props.sectionIndex, "05");
-  const label = trimmedText(props.sectionLabel, "KARŞILAŞTIRMA");
+  const label = trimmedText(props.sectionLabel, "BÖLÜM ETİKETİ");
   const titleHtml = trimmedText(
     props.titleHtml,
-    'Geleneksel yöntemler ile <span class="em">3MASH farkı.</span>'
+    'Karşılaştırma tablosu <span class="em">başlığı buraya gelecek.</span>'
   );
   const sideHtml = trimmedText(
     props.sideHtml,
-    "Dental üretim süreçlerinde zaman, maliyet ve ölçüsel doğruluk karşılaştırması."
+    "Karşılaştırma bölümü için sağ tarafta yer alan detaylı açıklama metni buraya gelecek."
   );
 
-  const col1Title = trimmedText(props.column1Title, "Geleneksel / Alternatif");
-  const col1Sub = trimmedText(props.column1Subtitle, "Klasik laboratuvar & freze akışı");
-  const col1Badge = trimmedText(props.column1Badge, "KLASİK");
+  const col1Title = trimmedText(props.column1Title, "1. Karşılaştırılan Seçenek");
+  const col1Sub = trimmedText(props.column1Subtitle, "1. Seçenek kısa alt açıklama metni");
+  const col1Badge = trimmedText(props.column1Badge, "SEÇENEK 1");
 
-  const col2Title = trimmedText(props.column2Title, "3MASH Ekosistemi");
-  const col2Sub = trimmedText(props.column2Subtitle, "Entegre 3D üretim & kürleme");
-  const col2Badge = trimmedText(props.column2Badge, "ÖNERİLEN");
+  const col2Title = trimmedText(props.column2Title, "2. Karşılaştırılan Seçenek");
+  const col2Sub = trimmedText(props.column2Subtitle, "2. Seçenek kısa alt açıklama metni");
+  const col2Badge = trimmedText(props.column2Badge, "ÖNE ÇIKAN");
 
   const rows = [
     {
-      feature: trimmedText(props.row1Feature, "Ölçüsel Doğruluk & Marjinal Uyum"),
-      col1: trimmedText(props.row1Col1Value, "±80–120 µm (Değişken)"),
-      col2: trimmedText(props.row1Col2Value, "±20 µm (Her baskıda tutarlı)"),
+      feature: trimmedText(props.row1Feature, "1. Karşılaştırma Kriteri"),
+      col1: trimmedText(props.row1Col1Value, "1. Kriter 1. Seçenek Değeri"),
+      col2: trimmedText(props.row1Col2Value, "1. Kriter 2. Seçenek Değeri"),
       col1Pos: props.row1Col1Positive ?? false,
       col2Pos: props.row1Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row2Feature, "Birim Üretim Süresi (Kuron)"),
-      col1: trimmedText(props.row2Col1Value, "45 – 90 dakika"),
-      col2: trimmedText(props.row2Col2Value, "12 – 18 dakika (Çoklu tabla)"),
+      feature: trimmedText(props.row2Feature, "2. Karşılaştırma Kriteri"),
+      col1: trimmedText(props.row2Col1Value, "2. Kriter 1. Seçenek Değeri"),
+      col2: trimmedText(props.row2Col2Value, "2. Kriter 2. Seçenek Değeri"),
       col1Pos: props.row2Col1Positive ?? false,
       col2Pos: props.row2Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row3Feature, "Biyouyumluluk & CE Standardı"),
-      col1: trimmedText(props.row3Col1Value, "Sınırlı sertifikasyon"),
-      col2: trimmedText(props.row3Col2Value, "CE Class IIa / Biyouyumlu"),
+      feature: trimmedText(props.row3Feature, "3. Karşılaştırma Kriteri"),
+      col1: trimmedText(props.row3Col1Value, "3. Kriter 1. Seçenek Değeri"),
+      col2: trimmedText(props.row3Col2Value, "3. Kriter 2. Seçenek Değeri"),
       col1Pos: props.row3Col1Positive ?? false,
       col2Pos: props.row3Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row4Feature, "Kürleme & Dönüşüm Derecesi"),
-      col1: trimmedText(props.row4Col1Value, "Manuel UV lambası (Dengesiz)"),
-      col2: trimmedText(props.row4Col2Value, "24 LED 360° homojen UV kürleme"),
+      feature: trimmedText(props.row4Feature, "4. Karşılaştırma Kriteri"),
+      col1: trimmedText(props.row4Col1Value, "4. Kriter 1. Seçenek Değeri"),
+      col2: trimmedText(props.row4Col2Value, "4. Kriter 2. Seçenek Değeri"),
       col1Pos: props.row4Col1Positive ?? false,
       col2Pos: props.row4Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row5Feature, "Teknik Destek & Parametre Ayarı"),
-      col1: trimmedText(props.row5Col1Value, "Yalnızca cihaz satışı"),
-      col2: trimmedText(props.row5Col2Value, "Mash Academy + Canlı Mühendis Desteği"),
+      feature: trimmedText(props.row5Feature, "5. Karşılaştırma Kriteri"),
+      col1: trimmedText(props.row5Col1Value, "5. Kriter 1. Seçenek Değeri"),
+      col2: trimmedText(props.row5Col2Value, "5. Kriter 2. Seçenek Değeri"),
       col1Pos: props.row5Col1Positive ?? false,
       col2Pos: props.row5Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row6Feature, "Tekrar (Remake) Maliyet Oranı"),
-      col1: trimmedText(props.row6Col1Value, "%8 – 14 görünmez kayıp"),
-      col2: trimmedText(props.row6Col2Value, "< %2 minimum hata payı"),
+      feature: trimmedText(props.row6Feature, "6. Karşılaştırma Kriteri"),
+      col1: trimmedText(props.row6Col1Value, "6. Kriter 1. Seçenek Değeri"),
+      col2: trimmedText(props.row6Col2Value, "6. Kriter 2. Seçenek Değeri"),
       col1Pos: props.row6Col1Positive ?? false,
       col2Pos: props.row6Col2Positive ?? true,
     },
@@ -71,12 +71,12 @@ export function ThreeMashProductComparison(props: Props) {
 
   const bottomNote = trimmedText(
     props.bottomNote,
-    "* 580+ klinik ve laboratuvarın üretim verileri baz alınarak modellenmiştir."
+    "* Tablo altı açıklama veya bilgilendirme notu buraya gelecek."
   );
-  const ctaText = trimmedText(props.ctaText, "Kliniğinize Özel Analiz Alın →");
+  const ctaText = trimmedText(props.ctaText, "Aksiyon Butonu Metni →");
   const ctaHref = trimmedText(
     props.ctaHref,
-    "https://wa.me/905314326577?text=Urun%20karsilastirmasi%20hakkinda%20bilgi%20almak%20istiyorum"
+    "#"
   );
 
   return (
