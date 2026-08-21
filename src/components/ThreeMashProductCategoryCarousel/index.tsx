@@ -331,10 +331,50 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     "--tmpcc-price-size": cssLength((p as any).priceFontSize, 13, 10, 24),
   } as any;
 
+  const liveList = products.map(sourceRelatedProduct);
+  const effectiveProducts = liveList.length > 0 ? liveList : [
+    {
+      id: "p-rel-1",
+      title: "MASH P16L Dental 3D Yazıcı",
+      href: "/3d-yazicilar",
+      image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/deb67f5e-a02a-4fa6-9cb8-595a277d69fd/1080/composite-apps-10.webp",
+      imageAlt: "MASH P16L Dental 3D Yazıcı",
+      category: "3D Yazıcılar",
+      descriptionHtml: "385nm 16K ultra hassas dental 3D yazıcı çözümü.",
+    },
+    {
+      id: "p-rel-2",
+      title: "MASH C1E UV Kürleme Cihazı",
+      href: "/yikama-kurleme",
+      image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/9d7bb34c-1f0d-4b36-8f0e-ce9a41863d55/1080/composite-apps-11.webp",
+      imageAlt: "MASH C1E UV Kürleme Cihazı",
+      category: "Yıkama & Kürleme",
+      descriptionHtml: "24 LED 360° homojen UV polimerizasyon ünitesi.",
+    },
+    {
+      id: "p-rel-3",
+      title: "MASH W1E Ultrasonik Yıkama",
+      href: "/yikama-kurleme",
+      image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/1080/composite-apps-12.webp",
+      imageAlt: "MASH W1E Ultrasonik Yıkama",
+      category: "Yıkama & Kürleme",
+      descriptionHtml: "Çift tanklı otomatik vortex yıkama sistemi.",
+    },
+    {
+      id: "p-rel-4",
+      title: "CRS Composite Geçici Reçine",
+      href: "/dental-recineler",
+      image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d875a523-2228-44a7-818d-022312b0a44d/1080/composite-resin-ce.webp",
+      imageAlt: "CRS Composite Geçici Reçine",
+      category: "Dental Reçineler",
+      descriptionHtml: "CE Class IIa sertifikalı kuron ve köprü reçinesi.",
+    },
+  ];
+
   if (sourceData) {
     return (
       <ProductDetailSectionScope data={sourceData}>
-        <ProductDetailRelatedSection data={sourceData} products={products.map(sourceRelatedProduct)} />
+        <ProductDetailRelatedSection data={sourceData} products={effectiveProducts} />
         <ProductDetailFinalCtaSection data={sourceData} />
       </ProductDetailSectionScope>
     );

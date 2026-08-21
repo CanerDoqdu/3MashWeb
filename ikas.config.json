@@ -27818,6 +27818,29 @@
           "groupId": "header"
         },
         {
+          "name": "showImages",
+          "displayName": "Tüm Kart Görsellerini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "header",
+          "defaultValue": true
+        },
+        {
+          "name": "cert1ShowImage",
+          "displayName": "1. Kart Görseli Açık",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "cert1",
+          "defaultValue": true
+        },
+        {
+          "name": "cert1Image",
+          "displayName": "1. Sertifika / Belge Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "cert1"
+        },
+        {
           "name": "cert1Badge",
           "displayName": "1. Sertifika Rozeti",
           "type": "TEXT",
@@ -27867,6 +27890,21 @@
           "type": "TEXT",
           "required": false,
           "groupId": "cert1"
+        },
+        {
+          "name": "cert2ShowImage",
+          "displayName": "2. Kart Görseli Açık",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "cert2",
+          "defaultValue": true
+        },
+        {
+          "name": "cert2Image",
+          "displayName": "2. Sertifika / Belge Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "cert2"
         },
         {
           "name": "cert2Badge",
@@ -27920,6 +27958,21 @@
           "groupId": "cert2"
         },
         {
+          "name": "cert3ShowImage",
+          "displayName": "3. Kart Görseli Açık",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "cert3",
+          "defaultValue": true
+        },
+        {
+          "name": "cert3Image",
+          "displayName": "3. Sertifika / Belge Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "cert3"
+        },
+        {
           "name": "cert3Badge",
           "displayName": "3. Sertifika Rozeti",
           "type": "TEXT",
@@ -27969,6 +28022,21 @@
           "type": "TEXT",
           "required": false,
           "groupId": "cert3"
+        },
+        {
+          "name": "cert4ShowImage",
+          "displayName": "4. Kart Görseli Açık",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "cert4",
+          "defaultValue": true
+        },
+        {
+          "name": "cert4Image",
+          "displayName": "4. Sertifika / Belge Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "cert4"
         },
         {
           "name": "cert4Badge",
