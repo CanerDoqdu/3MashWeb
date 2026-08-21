@@ -7,6 +7,7 @@ import {
   ProductDetailUseCasesSection,
   type ProductDetailTemplateData,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
+import { makePlaceholderUseCases } from "../../sub-components/ThreeMashProductSectionPlaceholder";
 
 function trimmedText(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -162,13 +163,9 @@ function overrideUseCasesData(baseData: ProductDetailTemplateData | null, props:
 export function ThreeMashProductImageText(props: Props) {
   const sharedData = useSharedProductDetailData(props.product);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
-  const rawData = sharedData || fallbackData;
+  const rawData = sharedData || fallbackData || makePlaceholderUseCases();
 
-  const data = overrideUseCasesData(rawData, props);
-
-  if (!data?.useCases) {
-    return null;
-  }
+  const data = overrideUseCasesData(rawData, props) || makePlaceholderUseCases();
 
   return (
     <ProductDetailSectionScope data={data}>

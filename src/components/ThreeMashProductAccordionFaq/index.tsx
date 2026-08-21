@@ -2,6 +2,7 @@ import { useState } from "preact/hooks";
 import { Props } from "./types";
 import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailFaqSection, ProductDetailSectionScope, type ProductDetailTemplateData } from "../../sub-components/ThreeMashProductDetailTemplate";
+import { makePlaceholderFaq } from "../../sub-components/ThreeMashProductSectionPlaceholder";
 
 type FaqItem = {
   question: string;
@@ -44,13 +45,9 @@ function overrideFaqData(baseData: ProductDetailTemplateData | null, props: Prop
 export function ThreeMashProductAccordionFaq(props: Props) {
   const sharedData = useSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
-  const rawData = sharedData || fallbackData;
+  const rawData = sharedData || fallbackData || makePlaceholderFaq();
 
-  const data = overrideFaqData(rawData, props);
-
-  if (!data?.faq || !data.faq.items.length) {
-    return null;
-  }
+  const data = overrideFaqData(rawData, props) || makePlaceholderFaq();
 
   return (
     <ProductDetailSectionScope data={data}>
