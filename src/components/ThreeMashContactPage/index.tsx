@@ -325,7 +325,7 @@ export function ThreeMashContactPage(props: Props) {
                   "Kişisel verilerin korunması kanunu",
                 )}{" "}
                 <a
-                  href={href(props.kvkkHref, "/pages/kvkk")}
+                  href={href(props.kvkkHref, "/pages/gizlilik-politikasi-ve-kvkk")}
                   target="_blank"
                   rel="noreferrer"
                 >

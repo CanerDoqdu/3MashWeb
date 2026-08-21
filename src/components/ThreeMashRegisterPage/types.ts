@@ -65,6 +65,6 @@ export interface Props {
   backgroundImageUrl?: IkasImage | null;
   /** Ticari elektronik ileti onayı için yayın routeu: /pages/ticari-elektronik-ileti. */
   marketingHref?: string;
-  /** KVKK sayfası için yayın routeu: /pages/kvkk. */
+  /** KVKK sayfası için yayın routeu: /pages/gizlilik-politikasi-ve-kvkk. */
   kvkkHref?: string;
 }

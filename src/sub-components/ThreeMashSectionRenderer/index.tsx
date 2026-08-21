@@ -96,7 +96,7 @@ export const defaultFaqHtml = `<section id="sss" class="tmr-section tmr-section-
 export const defaultFinalHtml = `<section id="iletisim-cta" class="tmr-final"><div class="tmr-wrap"><h2>Bu görünmez kaybı <span>birlikte azaltalım.</span></h2><p>Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b class="tmr-final-white">elinizdeki cihazlarla bile.</b></p><div><a class="tmr-btn tmr-btn-lime" href="${consultationWhatsappHref}">Uzmana danış — ücretsiz</a><a class="tmr-btn tmr-btn-invert" href="${academyPageHref}">Mash Academy'yi keşfet</a></div></div></section>`;
 
 const defaultFooterLegalLinks: Array<[string, string]> = [
-  ["KVKK", "/pages/kvkk"],
+  ["KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
   ["İade &amp; Garanti", "/pages/iade-ve-garanti"],
   ["Mesafeli Satış", "/pages/mesafeli-satis-sozlesmesi"],
 ];
@@ -486,7 +486,7 @@ function linkHref(source: unknown, fallback: string) {
     if (typeof link.fileUrl === "string" && link.fileUrl.trim())
       return link.fileUrl.trim();
     if (link.pageId === "2tplvqpo-about-us-page") return "/pages/hakkimizda";
-    if (link.pageId === "2tplvqpo-kvkk-page") return "/pages/kvkk";
+    if (link.pageId === "2tplvqpo-kvkk-page") return "/pages/gizlilik-politikasi-ve-kvkk";
     if (link.pageId === "2tplvqpo-return-warranty-page")
       return "/pages/iade-ve-garanti";
     if (link.pageId === "2tplvqpo-distance-sales-page")
@@ -542,10 +542,10 @@ function normalizedInternalRouteHref(href: string) {
     "/pages/hakkimizda": "/pages/hakkimizda",
     "/about-us": "/pages/hakkimizda",
     "/hakkimizda": "/pages/hakkimizda",
-    "/2tplvqpo-kvkk-page": "/pages/kvkk",
-    "/pages/gizlilik-politikasi-ve-kvkk": "/pages/kvkk",
-    "/pages/kvkk": "/pages/kvkk",
-    "/pages/kvkk-aydinlatma-metni": "/pages/kvkk",
+    "/2tplvqpo-kvkk-page": "/pages/gizlilik-politikasi-ve-kvkk",
+    "/pages/gizlilik-politikasi-ve-kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
+    "/pages/kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
+    "/pages/kvkk-aydinlatma-metni": "/pages/gizlilik-politikasi-ve-kvkk",
     "/2tplvqpo-return-warranty-page": "/pages/iade-ve-garanti",
     "/pages/iade-ve-garanti": "/pages/iade-ve-garanti",
     "/pages/iade-ve-garanti-kosullari": "/pages/iade-ve-garanti",
@@ -1715,9 +1715,9 @@ function footerHrefForLabel(label: unknown, href: string) {
   const labelRoutes: Record<string, string> = {
     hakkımızda: "/pages/hakkimizda",
     hakkimizda: "/pages/hakkimizda",
-    kvkk: "/pages/kvkk",
-    "gizlilik politikası ve kvkk": "/pages/kvkk",
-    "gizlilik politikası ve kvkk aydınlatma metni": "/pages/kvkk",
+    kvkk: "/pages/gizlilik-politikasi-ve-kvkk",
+    "gizlilik politikası ve kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
+    "gizlilik politikası ve kvkk aydınlatma metni": "/pages/gizlilik-politikasi-ve-kvkk",
     "iade & garanti": "/pages/iade-ve-garanti",
     "iade ve garanti": "/pages/iade-ve-garanti",
     "iade ve garanti koşulları": "/pages/iade-ve-garanti",

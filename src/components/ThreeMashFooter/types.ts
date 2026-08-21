@@ -96,7 +96,7 @@ export interface Props {
   /** Beş ürün linki yeterliyse boş bırakın. */
   productLink6Href?: string;
   legalLink1Text?: string;
-  /** KVKK sayfası için yayın routeu: /pages/kvkk. */
+  /** KVKK sayfası için yayın routeu: /pages/gizlilik-politikasi-ve-kvkk. */
   legalLink1Href?: string;
   legalLink2Text?: string;
   /** İade ve garanti sayfası için yayın routeu: /pages/iade-ve-garanti. */

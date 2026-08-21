@@ -296,7 +296,7 @@ export function ThreeMashRegisterPage(props: Props) {
                 Üyelik Sözleşmesi
               </a>{" "}
               ve{" "}
-              <a href={href(props.kvkkHref, "/pages/kvkk")}>
+              <a href={href(props.kvkkHref, "/pages/gizlilik-politikasi-ve-kvkk")}>
                 KVKK Aydınlatma Metni
               </a>
               ni okudum, kabul ediyorum.
