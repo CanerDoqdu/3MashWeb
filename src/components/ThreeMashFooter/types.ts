@@ -18,7 +18,7 @@ export interface Props {
   /** Tam domain kullanmayın; kategori routeunu /zirkon-bloklar olarak girin. */
   productLink4Href?: string;
   companyLink1Text?: string;
-  /** Hakkımızda sayfası için yayın routeu: /pages/about-us. */
+  /** Hakkımızda sayfası için yayın routeu: /pages/hakkimizda. */
   companyLink1Href?: string;
   companyLink2Text?: string;
   /** Doğru Academy routeu /pages/mash-academy. */

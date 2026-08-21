@@ -63,7 +63,7 @@ export interface Props {
   passwordMismatchMessage?: string;
   /** Canlı 3mash login/register ekranındaki sağ görsel. */
   backgroundImageUrl?: IkasImage | null;
-  /** Ticari elektronik ileti onayı için yayın routeu: /pages/ticari-elektronik-ileti-onayi. */
+  /** Ticari elektronik ileti onayı için yayın routeu: /pages/ticari-elektronik-ileti. */
   marketingHref?: string;
   /** KVKK sayfası için yayın routeu: /pages/kvkk. */
   kvkkHref?: string;
