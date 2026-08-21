@@ -109,7 +109,7 @@ export function ThreeMashProductPackageContent(props: Props) {
             <div className="tm-pkg-hero-media">
               <img
                 src={packageImage}
-                alt={props.packageImageAlt || "Paket İçeriği Görseli"}
+                alt={packageTitle || "Paket İçeriği Görseli"}
                 loading="lazy"
                 decoding="async"
               />

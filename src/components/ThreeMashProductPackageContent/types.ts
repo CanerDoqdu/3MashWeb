@@ -1,13 +1,13 @@
-import type { IkasImage, IkasProduct } from "@ikas/bp-storefront";
+// This file is auto-generated — do not edit manually.
+import type { IkasProduct, IkasImage } from "@ikas/bp-storefront";
 
-export type Props = {
-  product?: IkasProduct;
+export interface Props {
+  product?: IkasProduct | null;
   sectionIndex?: string;
   sectionLabel?: string;
   titleHtml?: string;
   sideHtml?: string;
-  packageImage?: IkasImage | string;
-  packageImageAlt?: string;
+  packageImage?: IkasImage | null;
   packageBadge?: string;
   packageTitle?: string;
   packageSubtitle?: string;
@@ -36,8 +36,8 @@ export type Props = {
   item6Description?: string;
   item6Tag?: string;
   bottomBannerTitle?: string;
-  bottomBannerText?: string;
   bottomBannerBadge?: string;
+  bottomBannerText?: string;
   ctaText?: string;
   ctaHref?: string;
-};
+}

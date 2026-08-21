@@ -1,6 +1,6 @@
 .tm-pkg-section {
   width: 100%;
-  padding: 80px 0;
+  padding: 84px 0;
   background: var(--tm-theme-bg, #fafaf7);
   color: var(--tm-theme-text, #0e0e0c);
   box-sizing: border-box;
@@ -16,26 +16,27 @@
 .tm-pkg-idx {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 22px;
 }
 
 .tm-pkg-idx-n {
-  font-family: var(--tm-theme-font-mono, monospace);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--tm-theme-accent, #c7f136);
-  background: #0e0e0c;
+  border-radius: 7px;
   padding: 4px 10px;
-  border-radius: 4px;
+  background: var(--tm-theme-accent, #c7f136);
+  color: #3d4d0e;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .tm-pkg-idx-t {
+  color: var(--tm-theme-muted, #8f8f86);
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--tm-theme-sub, #55554e);
 }
 
 .tm-pkg-idx-ln {
@@ -46,31 +47,35 @@
 
 .tm-pkg-head {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: end;
-  margin-bottom: 48px;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 30px;
+  margin-bottom: 34px;
 }
 
 .tm-pkg-head h2 {
-  font-size: clamp(28px, 3.5vw, 42px);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
+  max-width: 18ch;
   margin: 0;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.16;
   color: var(--tm-theme-text, #0e0e0c);
 }
 
-.tm-pkg-head h2 .em {
-  color: #0e0e0c;
-  background: linear-gradient(180deg, transparent 65%, color-mix(in srgb, var(--tm-theme-accent, #c7f136) 75%, transparent) 65%);
-  padding: 0 4px;
+.tm-pkg-head h2 .em,
+.tm-pkg-head h2 em {
+  font-style: italic;
+  font-weight: 400;
+  font-family: var(--tm-theme-font-serif, "Playfair Display", Georgia, serif);
+  color: inherit;
+  background: none;
 }
 
 .tm-pkg-side {
-  font-size: 16px;
-  line-height: 1.6;
+  border-top: 1px solid var(--tm-theme-line, #e6e6e0);
+  padding-top: 14px;
   color: var(--tm-theme-sub, #55554e);
+  font-size: 14.5px;
+  line-height: 1.62;
   margin: 0;
 }
 

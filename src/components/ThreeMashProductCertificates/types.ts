@@ -1,38 +1,39 @@
+// This file is auto-generated — do not edit manually.
 import type { IkasProduct } from "@ikas/bp-storefront";
 
-export type Props = {
-  product?: IkasProduct;
+export interface Props {
+  product?: IkasProduct | null;
   sectionIndex?: string;
   sectionLabel?: string;
   titleHtml?: string;
   sideHtml?: string;
+  cert1Badge?: string;
   cert1Title?: string;
   cert1Subtitle?: string;
-  cert1Badge?: string;
   cert1ReportNo?: string;
   cert1Issuer?: string;
   cert1ActionText?: string;
   cert1ActionHref?: string;
+  cert2Badge?: string;
   cert2Title?: string;
   cert2Subtitle?: string;
-  cert2Badge?: string;
   cert2ReportNo?: string;
   cert2Issuer?: string;
   cert2ActionText?: string;
   cert2ActionHref?: string;
+  cert3Badge?: string;
   cert3Title?: string;
   cert3Subtitle?: string;
-  cert3Badge?: string;
   cert3ReportNo?: string;
   cert3Issuer?: string;
   cert3ActionText?: string;
   cert3ActionHref?: string;
+  cert4Badge?: string;
   cert4Title?: string;
   cert4Subtitle?: string;
-  cert4Badge?: string;
   cert4ReportNo?: string;
   cert4Issuer?: string;
   cert4ActionText?: string;
   cert4ActionHref?: string;
   complianceNotice?: string;
-};
+}

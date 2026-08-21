@@ -1,7 +1,8 @@
+// This file is auto-generated — do not edit manually.
 import type { IkasProduct } from "@ikas/bp-storefront";
 
-export type Props = {
-  product?: IkasProduct;
+export interface Props {
+  product?: IkasProduct | null;
   sectionIndex?: string;
   sectionLabel?: string;
   titleHtml?: string;
@@ -26,4 +27,4 @@ export type Props = {
   ctaDescription?: string;
   ctaButtonText?: string;
   ctaButtonHref?: string;
-};
+}
