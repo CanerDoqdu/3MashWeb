@@ -62,3 +62,7 @@ export { ThreeMashWashingListingPage } from "./ThreeMashWashingListingPage";
 export { ThreeMashWashingPage } from "./ThreeMashWashingPage";
 export { ThreeMashCuringListingPage } from "./ThreeMashCuringListingPage";
 export { ThreeMashCuringPage } from "./ThreeMashCuringPage";
+export { ThreeMashProductComparison } from "./ThreeMashProductComparison";
+export { ThreeMashProductPackageContent } from "./ThreeMashProductPackageContent";
+export { ThreeMashProductStepFlow } from "./ThreeMashProductStepFlow";
+export { ThreeMashProductCertificates } from "./ThreeMashProductCertificates";

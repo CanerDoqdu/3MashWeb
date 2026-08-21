@@ -1,0 +1,214 @@
+.tm-cert-section {
+  width: 100%;
+  padding: 80px 0;
+  background: var(--tm-theme-bg, #fafaf7);
+  color: var(--tm-theme-text, #0e0e0c);
+  box-sizing: border-box;
+}
+
+.tm-cert-wrap {
+  width: min(100%, 1240px);
+  margin: 0 auto;
+  padding: 0 32px;
+  box-sizing: border-box;
+}
+
+.tm-cert-idx {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tm-cert-idx-n {
+  font-family: var(--tm-theme-font-mono, monospace);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tm-theme-accent, #c7f136);
+  background: #0e0e0c;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.tm-cert-idx-t {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tm-theme-sub, #55554e);
+}
+
+.tm-cert-idx-ln {
+  flex: 1;
+  height: 1px;
+  background: var(--tm-theme-line, #e6e6e0);
+}
+
+.tm-cert-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: end;
+  margin-bottom: 48px;
+}
+
+.tm-cert-head h2 {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--tm-theme-text, #0e0e0c);
+}
+
+.tm-cert-head h2 .em {
+  color: #0e0e0c;
+  background: linear-gradient(180deg, transparent 65%, color-mix(in srgb, var(--tm-theme-accent, #c7f136) 75%, transparent) 65%);
+  padding: 0 4px;
+}
+
+.tm-cert-side {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tm-theme-sub, #55554e);
+  margin: 0;
+}
+
+.tm-cert-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.tm-cert-card {
+  background: var(--tm-theme-panel, #f1f1ec);
+  border: 1px solid var(--tm-theme-line, #e6e6e0);
+  border-radius: 18px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.tm-cert-card:hover {
+  transform: translateY(-4px);
+  border-color: #0e0e0c;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
+}
+
+.tm-cert-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.tm-cert-badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: #0e0e0c;
+  color: var(--tm-theme-accent, #c7f136);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.tm-cert-icon-seal {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(199, 241, 54, 0.25);
+  color: #0e0e0c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.tm-cert-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--tm-theme-text, #0e0e0c);
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.tm-cert-card p {
+  font-size: 13px;
+  color: var(--tm-theme-sub, #55554e);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.tm-cert-meta {
+  border-top: 1px solid var(--tm-theme-line, #e6e6e0);
+  padding-top: 14px;
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+
+.tm-cert-meta-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  color: var(--tm-theme-sub, #55554e);
+}
+
+.tm-cert-meta-row b {
+  color: var(--tm-theme-text, #0e0e0c);
+}
+
+.tm-cert-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0e0e0c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.tm-cert-action:hover {
+  color: var(--tm-theme-sub, #55554e);
+}
+
+.tm-cert-notice {
+  margin-top: 36px;
+  padding: 16px 24px;
+  background: #0e0e0c;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tm-cert-notice svg {
+  width: 20px;
+  height: 20px;
+  color: var(--tm-theme-accent, #c7f136);
+  flex-shrink: 0;
+}
+
+@media (max-width: 1024px) {
+  .tm-cert-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .tm-cert-head {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .tm-cert-grid {
+    grid-template-columns: 1fr;
+  }
+}

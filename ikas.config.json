@@ -26783,6 +26783,1272 @@
           "name": "Appearance"
         }
       ]
+    },
+    {
+      "id": "2tplvqpo-product-comparison",
+      "name": "Ürün Karşılaştırma Tablosu",
+      "entry": "./src/components/ThreeMashProductComparison/index.tsx",
+      "styles": "./src/components/ThreeMashProductComparison/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "groupId": "data"
+        },
+        {
+          "name": "sectionIndex",
+          "displayName": "Bölüm Sıra No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "header",
+          "defaultValue": "05"
+        },
+        {
+          "name": "sectionLabel",
+          "displayName": "Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "header",
+          "defaultValue": "KARŞILAŞTIRMA"
+        },
+        {
+          "name": "titleHtml",
+          "displayName": "Ana Başlık (HTML)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "header"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Sağ Yan Açıklama (HTML)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "header"
+        },
+        {
+          "name": "column1Title",
+          "displayName": "1. Kolon Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "col1",
+          "defaultValue": "Geleneksel / Alternatif"
+        },
+        {
+          "name": "column1Subtitle",
+          "displayName": "1. Kolon Alt Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "col1"
+        },
+        {
+          "name": "column1Badge",
+          "displayName": "1. Kolon Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "col1",
+          "defaultValue": "KLASİK"
+        },
+        {
+          "name": "column2Title",
+          "displayName": "2. Kolon Başlığı (3MASH)",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "col2",
+          "defaultValue": "3MASH Ekosistemi"
+        },
+        {
+          "name": "column2Subtitle",
+          "displayName": "2. Kolon Alt Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "col2"
+        },
+        {
+          "name": "column2Badge",
+          "displayName": "2. Kolon Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "col2",
+          "defaultValue": "ÖNERİLEN"
+        },
+        {
+          "name": "row1Feature",
+          "displayName": "1. Kriter Adı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row1"
+        },
+        {
+          "name": "row1Col1Value",
+          "displayName": "1. Kriter 1. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row1"
+        },
+        {
+          "name": "row1Col2Value",
+          "displayName": "1. Kriter 2. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row1"
+        },
+        {
+          "name": "row1Col1Positive",
+          "displayName": "1. Kriter 1. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row1",
+          "defaultValue": false
+        },
+        {
+          "name": "row1Col2Positive",
+          "displayName": "1. Kriter 2. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row1",
+          "defaultValue": true
+        },
+        {
+          "name": "row2Feature",
+          "displayName": "2. Kriter Adı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row2"
+        },
+        {
+          "name": "row2Col1Value",
+          "displayName": "2. Kriter 1. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row2"
+        },
+        {
+          "name": "row2Col2Value",
+          "displayName": "2. Kriter 2. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row2"
+        },
+        {
+          "name": "row2Col1Positive",
+          "displayName": "2. Kriter 1. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row2",
+          "defaultValue": false
+        },
+        {
+          "name": "row2Col2Positive",
+          "displayName": "2. Kriter 2. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row2",
+          "defaultValue": true
+        },
+        {
+          "name": "row3Feature",
+          "displayName": "3. Kriter Adı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row3"
+        },
+        {
+          "name": "row3Col1Value",
+          "displayName": "3. Kriter 1. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row3"
+        },
+        {
+          "name": "row3Col2Value",
+          "displayName": "3. Kriter 2. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row3"
+        },
+        {
+          "name": "row3Col1Positive",
+          "displayName": "3. Kriter 1. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row3",
+          "defaultValue": false
+        },
+        {
+          "name": "row3Col2Positive",
+          "displayName": "3. Kriter 2. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row3",
+          "defaultValue": true
+        },
+        {
+          "name": "row4Feature",
+          "displayName": "4. Kriter Adı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row4"
+        },
+        {
+          "name": "row4Col1Value",
+          "displayName": "4. Kriter 1. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row4"
+        },
+        {
+          "name": "row4Col2Value",
+          "displayName": "4. Kriter 2. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row4"
+        },
+        {
+          "name": "row4Col1Positive",
+          "displayName": "4. Kriter 1. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row4",
+          "defaultValue": false
+        },
+        {
+          "name": "row4Col2Positive",
+          "displayName": "4. Kriter 2. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row4",
+          "defaultValue": true
+        },
+        {
+          "name": "row5Feature",
+          "displayName": "5. Kriter Adı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row5"
+        },
+        {
+          "name": "row5Col1Value",
+          "displayName": "5. Kriter 1. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row5"
+        },
+        {
+          "name": "row5Col2Value",
+          "displayName": "5. Kriter 2. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row5"
+        },
+        {
+          "name": "row5Col1Positive",
+          "displayName": "5. Kriter 1. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row5",
+          "defaultValue": false
+        },
+        {
+          "name": "row5Col2Positive",
+          "displayName": "5. Kriter 2. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row5",
+          "defaultValue": true
+        },
+        {
+          "name": "row6Feature",
+          "displayName": "6. Kriter Adı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row6"
+        },
+        {
+          "name": "row6Col1Value",
+          "displayName": "6. Kriter 1. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row6"
+        },
+        {
+          "name": "row6Col2Value",
+          "displayName": "6. Kriter 2. Kolon Değeri",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "row6"
+        },
+        {
+          "name": "row6Col1Positive",
+          "displayName": "6. Kriter 1. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row6",
+          "defaultValue": false
+        },
+        {
+          "name": "row6Col2Positive",
+          "displayName": "6. Kriter 2. Kolon Onay İkonu",
+          "type": "BOOLEAN",
+          "required": false,
+          "groupId": "row6",
+          "defaultValue": true
+        },
+        {
+          "name": "bottomNote",
+          "displayName": "Tablo Alt Notu",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "footer"
+        },
+        {
+          "name": "ctaText",
+          "displayName": "Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "footer",
+          "defaultValue": "Kliniğinize Özel Analiz Alın →"
+        },
+        {
+          "name": "ctaHref",
+          "displayName": "Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "footer"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "data",
+          "name": "00. Ürün Veri Kaynağı",
+          "description": "Bağlı ikas ürün kaydı"
+        },
+        {
+          "id": "header",
+          "name": "01. Bölüm Başlığı",
+          "description": "Sıra no, etiket, ana başlık ve yan açıklama"
+        },
+        {
+          "id": "col1",
+          "name": "02. 1. Kolon (Geleneksel)",
+          "description": "Sol taraf kolon başlığı ve rozeti"
+        },
+        {
+          "id": "col2",
+          "name": "03. 2. Kolon (3MASH)",
+          "description": "Sağ taraf öne çıkan kolon başlığı ve rozeti"
+        },
+        {
+          "id": "row1",
+          "name": "04. 1. Karşılaştırma Kriteri",
+          "description": "1. satır değerleri ve durum ikonları"
+        },
+        {
+          "id": "row2",
+          "name": "05. 2. Karşılaştırma Kriteri",
+          "description": "2. satır değerleri ve durum ikonları"
+        },
+        {
+          "id": "row3",
+          "name": "06. 3. Karşılaştırma Kriteri",
+          "description": "3. satır değerleri ve durum ikonları"
+        },
+        {
+          "id": "row4",
+          "name": "07. 4. Karşılaştırma Kriteri",
+          "description": "4. satır değerleri ve durum ikonları"
+        },
+        {
+          "id": "row5",
+          "name": "08. 5. Karşılaştırma Kriteri",
+          "description": "5. satır değerleri ve durum ikonları"
+        },
+        {
+          "id": "row6",
+          "name": "09. 6. Karşılaştırma Kriteri",
+          "description": "6. satır değerleri ve durum ikonları"
+        },
+        {
+          "id": "footer",
+          "name": "10. Alt Not ve Aksiyon Butonu",
+          "description": "Tablo altındaki not ve danışmanlık butonu"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-product-package-content",
+      "name": "Ürün Kutu ve Paket İçeriği",
+      "entry": "./src/components/ThreeMashProductPackageContent/index.tsx",
+      "styles": "./src/components/ThreeMashProductPackageContent/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "groupId": "data"
+        },
+        {
+          "name": "sectionIndex",
+          "displayName": "Bölüm Sıra No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "header",
+          "defaultValue": "06"
+        },
+        {
+          "name": "sectionLabel",
+          "displayName": "Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "header",
+          "defaultValue": "PAKET İÇERİĞİ"
+        },
+        {
+          "name": "titleHtml",
+          "displayName": "Ana Başlık (HTML)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "header"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Sağ Yan Açıklama (HTML)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "header"
+        },
+        {
+          "name": "packageImage",
+          "displayName": "Paket / Kutu Görseli",
+          "type": "IMAGE",
+          "required": false,
+          "groupId": "hero"
+        },
+        {
+          "name": "packageBadge",
+          "displayName": "Paket Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero",
+          "defaultValue": "HER ŞEY DAHİL SET"
+        },
+        {
+          "name": "packageTitle",
+          "displayName": "Paket Kartı Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero",
+          "defaultValue": "Eksiksiz Üretim Kiti"
+        },
+        {
+          "name": "packageSubtitle",
+          "displayName": "Paket Kartı Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "hero"
+        },
+        {
+          "name": "item1Number",
+          "displayName": "1. Madde No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item1",
+          "defaultValue": "01"
+        },
+        {
+          "name": "item1Title",
+          "displayName": "1. Madde Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item1"
+        },
+        {
+          "name": "item1Description",
+          "displayName": "1. Madde Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item1"
+        },
+        {
+          "name": "item1Tag",
+          "displayName": "1. Madde Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item1",
+          "defaultValue": "ANA DONANIM"
+        },
+        {
+          "name": "item2Number",
+          "displayName": "2. Madde No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item2",
+          "defaultValue": "02"
+        },
+        {
+          "name": "item2Title",
+          "displayName": "2. Madde Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item2"
+        },
+        {
+          "name": "item2Description",
+          "displayName": "2. Madde Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item2"
+        },
+        {
+          "name": "item2Tag",
+          "displayName": "2. Madde Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item2",
+          "defaultValue": "SARF / REÇİNE"
+        },
+        {
+          "name": "item3Number",
+          "displayName": "3. Madde No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item3",
+          "defaultValue": "03"
+        },
+        {
+          "name": "item3Title",
+          "displayName": "3. Madde Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item3"
+        },
+        {
+          "name": "item3Description",
+          "displayName": "3. Madde Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item3"
+        },
+        {
+          "name": "item3Tag",
+          "displayName": "3. Madde Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item3",
+          "defaultValue": "KALİBRASYON"
+        },
+        {
+          "name": "item4Number",
+          "displayName": "4. Madde No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item4",
+          "defaultValue": "04"
+        },
+        {
+          "name": "item4Title",
+          "displayName": "4. Madde Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item4"
+        },
+        {
+          "name": "item4Description",
+          "displayName": "4. Madde Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item4"
+        },
+        {
+          "name": "item4Tag",
+          "displayName": "4. Madde Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item4",
+          "defaultValue": "YEDEK PARÇA"
+        },
+        {
+          "name": "item5Number",
+          "displayName": "5. Madde No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item5",
+          "defaultValue": "05"
+        },
+        {
+          "name": "item5Title",
+          "displayName": "5. Madde Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item5"
+        },
+        {
+          "name": "item5Description",
+          "displayName": "5. Madde Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item5"
+        },
+        {
+          "name": "item5Tag",
+          "displayName": "5. Madde Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item5",
+          "defaultValue": "MASH ACADEMY"
+        },
+        {
+          "name": "item6Number",
+          "displayName": "6. Madde No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item6",
+          "defaultValue": "06"
+        },
+        {
+          "name": "item6Title",
+          "displayName": "6. Madde Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item6"
+        },
+        {
+          "name": "item6Description",
+          "displayName": "6. Madde Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item6"
+        },
+        {
+          "name": "item6Tag",
+          "displayName": "6. Madde Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "item6",
+          "defaultValue": "TEKNİK DESTEK"
+        },
+        {
+          "name": "bottomBannerTitle",
+          "displayName": "Alt Bant Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "banner",
+          "defaultValue": "Kurulum & Entegrasyon Garantisi"
+        },
+        {
+          "name": "bottomBannerBadge",
+          "displayName": "Alt Bant Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "banner",
+          "defaultValue": "ÜCRETSİZ DESTEK"
+        },
+        {
+          "name": "bottomBannerText",
+          "displayName": "Alt Bant Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "banner"
+        },
+        {
+          "name": "ctaText",
+          "displayName": "Alt Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "banner",
+          "defaultValue": "Uzmana Danışın →"
+        },
+        {
+          "name": "ctaHref",
+          "displayName": "Alt Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "banner"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "data",
+          "name": "00. Ürün Veri Kaynağı",
+          "description": "Bağlı ikas ürün kaydı"
+        },
+        {
+          "id": "header",
+          "name": "01. Bölüm Başlığı",
+          "description": "Sıra no, etiket, ana başlık ve yan açıklama"
+        },
+        {
+          "id": "hero",
+          "name": "02. Sol Öne Çıkan Paket Kartı",
+          "description": "Kutu görseli, rozet ve genel açıklama"
+        },
+        {
+          "id": "item1",
+          "name": "03. 1. Paket Maddesi",
+          "description": "Ana cihaz veya birinci parça"
+        },
+        {
+          "id": "item2",
+          "name": "04. 2. Paket Maddesi",
+          "description": "Sarf veya ikinci parça"
+        },
+        {
+          "id": "item3",
+          "name": "05. 3. Paket Maddesi",
+          "description": "Alet veya kalibrasyon seti"
+        },
+        {
+          "id": "item4",
+          "name": "06. 4. Paket Maddesi",
+          "description": "Yedek parça veya tank"
+        },
+        {
+          "id": "item5",
+          "name": "07. 5. Paket Maddesi",
+          "description": "Mash Academy eğitimi"
+        },
+        {
+          "id": "item6",
+          "name": "08. 6. Paket Maddesi",
+          "description": "Teknik destek ve garanti"
+        },
+        {
+          "id": "banner",
+          "name": "09. Alt Garanti Bandı",
+          "description": "Kurulum garantisi ve danışmanlık butonu"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-product-step-flow",
+      "name": "Ürün Dijital İş Akışı",
+      "entry": "./src/components/ThreeMashProductStepFlow/index.tsx",
+      "styles": "./src/components/ThreeMashProductStepFlow/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "groupId": "data"
+        },
+        {
+          "name": "sectionIndex",
+          "displayName": "Bölüm Sıra No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "header",
+          "defaultValue": "07"
+        },
+        {
+          "name": "sectionLabel",
+          "displayName": "Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "header",
+          "defaultValue": "DİJİTAL İŞ AKIŞI"
+        },
+        {
+          "name": "titleHtml",
+          "displayName": "Ana Başlık (HTML)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "header"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Sağ Yan Açıklama (HTML)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "header"
+        },
+        {
+          "name": "step1Number",
+          "displayName": "1. Adım No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step1",
+          "defaultValue": "01"
+        },
+        {
+          "name": "step1Title",
+          "displayName": "1. Adım Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step1"
+        },
+        {
+          "name": "step1Description",
+          "displayName": "1. Adım Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step1"
+        },
+        {
+          "name": "step1Tag",
+          "displayName": "1. Adım Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step1",
+          "defaultValue": "TASARIM"
+        },
+        {
+          "name": "step2Number",
+          "displayName": "2. Adım No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step2",
+          "defaultValue": "02"
+        },
+        {
+          "name": "step2Title",
+          "displayName": "2. Adım Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step2"
+        },
+        {
+          "name": "step2Description",
+          "displayName": "2. Adım Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step2"
+        },
+        {
+          "name": "step2Tag",
+          "displayName": "2. Adım Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step2",
+          "defaultValue": "BASKI"
+        },
+        {
+          "name": "step3Number",
+          "displayName": "3. Adım No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step3",
+          "defaultValue": "03"
+        },
+        {
+          "name": "step3Title",
+          "displayName": "3. Adım Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step3"
+        },
+        {
+          "name": "step3Description",
+          "displayName": "3. Adım Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step3"
+        },
+        {
+          "name": "step3Tag",
+          "displayName": "3. Adım Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step3",
+          "defaultValue": "POST-CURE"
+        },
+        {
+          "name": "step4Number",
+          "displayName": "4. Adım No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step4",
+          "defaultValue": "04"
+        },
+        {
+          "name": "step4Title",
+          "displayName": "4. Adım Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step4"
+        },
+        {
+          "name": "step4Description",
+          "displayName": "4. Adım Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step4"
+        },
+        {
+          "name": "step4Tag",
+          "displayName": "4. Adım Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "step4",
+          "defaultValue": "TESLİMAT"
+        },
+        {
+          "name": "ctaTitle",
+          "displayName": "Aksiyon Kartı Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cta",
+          "defaultValue": "İş Akışınızı Birlikte Optimize Edelim"
+        },
+        {
+          "name": "ctaDescription",
+          "displayName": "Aksiyon Kartı Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cta"
+        },
+        {
+          "name": "ctaButtonText",
+          "displayName": "Aksiyon Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cta",
+          "defaultValue": "Ücretsiz Danışmanlık Alın →"
+        },
+        {
+          "name": "ctaButtonHref",
+          "displayName": "Aksiyon Buton Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cta"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "data",
+          "name": "00. Ürün Veri Kaynağı",
+          "description": "Bağlı ikas ürün kaydı"
+        },
+        {
+          "id": "header",
+          "name": "01. Bölüm Başlığı",
+          "description": "Sıra no, etiket, ana başlık ve yan açıklama"
+        },
+        {
+          "id": "step1",
+          "name": "02. 1. Adım Kartı",
+          "description": "1. üretim aşaması"
+        },
+        {
+          "id": "step2",
+          "name": "03. 2. Adım Kartı",
+          "description": "2. üretim aşaması"
+        },
+        {
+          "id": "step3",
+          "name": "04. 3. Adım Kartı",
+          "description": "3. üretim aşaması"
+        },
+        {
+          "id": "step4",
+          "name": "05. 4. Adım Kartı",
+          "description": "4. üretim aşaması"
+        },
+        {
+          "id": "cta",
+          "name": "06. Alt Aksiyon Alanı",
+          "description": "Danışmanlık kartı ve butonu"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-product-certificates",
+      "name": "Ürün Sertifikalar ve Raporlar",
+      "entry": "./src/components/ThreeMashProductCertificates/index.tsx",
+      "styles": "./src/components/ThreeMashProductCertificates/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "product",
+          "displayName": "Ürün",
+          "type": "PRODUCT",
+          "required": false,
+          "groupId": "data"
+        },
+        {
+          "name": "sectionIndex",
+          "displayName": "Bölüm Sıra No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "header",
+          "defaultValue": "08"
+        },
+        {
+          "name": "sectionLabel",
+          "displayName": "Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "header",
+          "defaultValue": "SERTİFİKALAR & RAPORLAR"
+        },
+        {
+          "name": "titleHtml",
+          "displayName": "Ana Başlık (HTML)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "header"
+        },
+        {
+          "name": "sideHtml",
+          "displayName": "Sağ Yan Açıklama (HTML)",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "header"
+        },
+        {
+          "name": "cert1Badge",
+          "displayName": "1. Sertifika Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert1",
+          "defaultValue": "CE CLASS IIa"
+        },
+        {
+          "name": "cert1Title",
+          "displayName": "1. Sertifika Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert1"
+        },
+        {
+          "name": "cert1Subtitle",
+          "displayName": "1. Sertifika Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert1"
+        },
+        {
+          "name": "cert1ReportNo",
+          "displayName": "1. Sertifika Rapor No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert1"
+        },
+        {
+          "name": "cert1Issuer",
+          "displayName": "1. Sertifika Veren Kurum",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert1"
+        },
+        {
+          "name": "cert1ActionText",
+          "displayName": "1. Sertifika Link Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert1",
+          "defaultValue": "Sertifikayı İncele (PDF) →"
+        },
+        {
+          "name": "cert1ActionHref",
+          "displayName": "1. Sertifika Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert1"
+        },
+        {
+          "name": "cert2Badge",
+          "displayName": "2. Sertifika Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert2",
+          "defaultValue": "ISO 13485:2016"
+        },
+        {
+          "name": "cert2Title",
+          "displayName": "2. Sertifika Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert2"
+        },
+        {
+          "name": "cert2Subtitle",
+          "displayName": "2. Sertifika Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert2"
+        },
+        {
+          "name": "cert2ReportNo",
+          "displayName": "2. Sertifika Rapor No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert2"
+        },
+        {
+          "name": "cert2Issuer",
+          "displayName": "2. Sertifika Veren Kurum",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert2"
+        },
+        {
+          "name": "cert2ActionText",
+          "displayName": "2. Sertifika Link Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert2",
+          "defaultValue": "Standardı Görüntüle →"
+        },
+        {
+          "name": "cert2ActionHref",
+          "displayName": "2. Sertifika Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert2"
+        },
+        {
+          "name": "cert3Badge",
+          "displayName": "3. Sertifika Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert3",
+          "defaultValue": "ISO 10993"
+        },
+        {
+          "name": "cert3Title",
+          "displayName": "3. Sertifika Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert3"
+        },
+        {
+          "name": "cert3Subtitle",
+          "displayName": "3. Sertifika Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert3"
+        },
+        {
+          "name": "cert3ReportNo",
+          "displayName": "3. Sertifika Rapor No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert3"
+        },
+        {
+          "name": "cert3Issuer",
+          "displayName": "3. Sertifika Veren Kurum",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert3"
+        },
+        {
+          "name": "cert3ActionText",
+          "displayName": "3. Sertifika Link Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert3",
+          "defaultValue": "Test Raporu Detayı →"
+        },
+        {
+          "name": "cert3ActionHref",
+          "displayName": "3. Sertifika Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert3"
+        },
+        {
+          "name": "cert4Badge",
+          "displayName": "4. Sertifika Rozeti",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert4",
+          "defaultValue": "KLİNİK TEST"
+        },
+        {
+          "name": "cert4Title",
+          "displayName": "4. Sertifika Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert4"
+        },
+        {
+          "name": "cert4Subtitle",
+          "displayName": "4. Sertifika Açıklaması",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert4"
+        },
+        {
+          "name": "cert4ReportNo",
+          "displayName": "4. Sertifika Rapor No",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert4"
+        },
+        {
+          "name": "cert4Issuer",
+          "displayName": "4. Sertifika Veren Kurum",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert4"
+        },
+        {
+          "name": "cert4ActionText",
+          "displayName": "4. Sertifika Link Metni",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert4",
+          "defaultValue": "Klinik Raporu İncele →"
+        },
+        {
+          "name": "cert4ActionHref",
+          "displayName": "4. Sertifika Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "cert4"
+        },
+        {
+          "name": "complianceNotice",
+          "displayName": "Alt Bilgilendirme Notu",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "footer"
+        }
+      ],
+      "propGroups": [
+        {
+          "id": "data",
+          "name": "00. Ürün Veri Kaynağı",
+          "description": "Bağlı ikas ürün kaydı"
+        },
+        {
+          "id": "header",
+          "name": "01. Bölüm Başlığı",
+          "description": "Sıra no, etiket, ana başlık ve yan açıklama"
+        },
+        {
+          "id": "cert1",
+          "name": "02. 1. Sertifika Kartı (CE)",
+          "description": "CE uygunluk sertifikası ve linki"
+        },
+        {
+          "id": "cert2",
+          "name": "03. 2. Sertifika Kartı (ISO)",
+          "description": "ISO medikal kalite standardı"
+        },
+        {
+          "id": "cert3",
+          "name": "04. 3. Sertifika Kartı (Biyouyumluluk)",
+          "description": "Laboratuvar sitotoksisite testi"
+        },
+        {
+          "id": "cert4",
+          "name": "05. 4. Sertifika Kartı (Klinik Rapor)",
+          "description": "Üniversite klinik araştırma raporu"
+        },
+        {
+          "id": "footer",
+          "name": "06. Alt Yasal / Güven Notu",
+          "description": "Orijinal doküman temin bilgilendirmesi"
+        }
+      ]
     }
   ],
   "customTypes": [
