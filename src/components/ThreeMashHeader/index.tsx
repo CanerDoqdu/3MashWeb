@@ -1360,21 +1360,136 @@ function flowSectionId(item: FlowItem) {
   return cleanSectionId(rawHash, defaultReferencesSectionId);
 }
 
-function FlowLink({ item, wordStyle }: { item: FlowItem; wordStyle: Props }) {
+function headerScrollOffset() {
+  const header = document.querySelector(".three-mash-header .tmh-header");
+  const headerHeight = header instanceof HTMLElement ? header.getBoundingClientRect().height : 70;
+  return Math.max(68, Math.ceil(headerHeight + 14));
+}
+
+function scrollToSectionWithOffset(sectionId: string, onAlreadyAtSection?: () => void) {
+  if (typeof window === "undefined") return;
+
+  const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+  const isTopTarget = !sectionId || sectionId === "__top__" || sectionId === "giris" || sectionId === "/" || sectionId === "top";
+
+  if (currentPath !== "/") {
+    if (isTopTarget) {
+      savePendingReferencesScroll("__top__");
+      window.location.href = "/";
+      return;
+    }
+    savePendingReferencesScroll(sectionId);
+    window.location.href = `/#${sectionId}`;
+    return;
+  }
+
+  // If target is top / hero (Item 1)
+  if (isTopTarget) {
+    if (window.scrollY <= 120) {
+      if (onAlreadyAtSection) onAlreadyAtSection();
+      return;
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    if (onAlreadyAtSection) {
+      setTimeout(onAlreadyAtSection, 350);
+    }
+    safeHistoryReplace(`${window.location.pathname}${window.location.search}`);
+    return;
+  }
+
+  // Find target DOM element
+  let targetEl: HTMLElement | null = document.getElementById(sectionId);
+  if (!targetEl) {
+    if (sectionId === "sebep" || sectionId === "sorun") {
+      targetEl = document.querySelector("#sorun, #sebep, .tmproblem, .tmproblem-head");
+    } else if (sectionId === "cozum") {
+      targetEl = document.querySelector("#cozum, .tmr-solution, .tmr-head");
+    } else if (sectionId === "kurleme") {
+      targetEl = document.querySelector("#kurleme, .tmr-curing");
+    } else if (sectionId === "ekosistem") {
+      targetEl = document.querySelector("#ekosistem, .tmr-ecosystem");
+    } else if (sectionId === "guven" || sectionId === "referanslar") {
+      targetEl = document.querySelector("#guven, #referanslar, .tmr-testimonials");
+    } else if (sectionId === "sss") {
+      targetEl = document.querySelector("#sss, .tmr-faq");
+    } else if (sectionId === "iletisim-cta") {
+      targetEl = document.querySelector("#iletisim-cta, .tmr-final");
+    } else {
+      targetEl = document.querySelector(`#${sectionId}`);
+    }
+  }
+
+  if (!targetEl) return;
+
+  const headerHeight = headerScrollOffset();
+  const isMobile = window.innerWidth <= 768;
+  const rect = targetEl.getBoundingClientRect();
+  const elementAbsoluteTop = window.scrollY + rect.top;
+
+  let targetTop = 0;
+
+  if (sectionId === "cozum") {
+    // 03. Çözüm Ekosistemi — Perfectly frame index "03", title and carousel
+    targetTop = Math.max(0, elementAbsoluteTop - headerHeight - (isMobile ? 10 : 20));
+  } else if (sectionId === "sebep" || sectionId === "sorun") {
+    // 02. Sebep / Sorun
+    targetTop = Math.max(0, elementAbsoluteTop - headerHeight - (isMobile ? 12 : 24));
+  } else if (sectionId === "kurleme") {
+    // 04. Kürleme
+    targetTop = Math.max(0, elementAbsoluteTop - headerHeight - (isMobile ? 10 : 18));
+  } else {
+    targetTop = Math.max(0, elementAbsoluteTop - headerHeight - (isMobile ? 12 : 20));
+  }
+
+  // If already at the target scroll position (within 35px tolerance)
+  if (Math.abs(window.scrollY - targetTop) < 35) {
+    if (onAlreadyAtSection) onAlreadyAtSection();
+    return;
+  }
+
+  window.scrollTo({
+    top: targetTop,
+    left: 0,
+    behavior: "smooth",
+  });
+
+  safeHistoryPush(`#${sectionId}`);
+}
+
+function FlowLink({
+  item,
+  wordStyle,
+  onToast,
+  onCloseMenu,
+}: {
+  item: FlowItem;
+  wordStyle: Props;
+  onToast?: (msg: string) => void;
+  onCloseMenu?: () => void;
+}) {
   const itemHref = href(item.href);
   const sectionId = flowSectionId(item);
+  const isFirstItem = item.number === "01" || itemHref === "/" || !sectionId || sectionId === "giris";
 
   return (
     <a
       href={itemHref}
       className="tmh-flow-link"
       onClick={(event) => {
-        if (itemHref === "/") {
-          handleHeaderAnchorNavigation(event, "/");
+        event.preventDefault();
+        event.stopPropagation();
+        if (onCloseMenu) onCloseMenu();
+
+        if (isFirstItem) {
+          scrollToSectionWithOffset("__top__", () => {
+            if (onToast) onToast("Zaten ilgili bölümdesiniz");
+          });
           return;
         }
 
-        handleReferencesClick(event, "/", sectionId);
+        scrollToSectionWithOffset(sectionId, () => {
+          if (onToast) onToast("Zaten ilgili bölümdesiniz");
+        });
       }}
     >
       <span
@@ -1401,38 +1516,8 @@ function whyMenuHref(fallback: string) {
   return target.startsWith("#") ? `/${target}` : target;
 }
 
-function scrollElementToCenter(element: Element, behavior: ScrollBehavior = "smooth") {
-  const rect = element.getBoundingClientRect();
-  const targetTop = Math.max(0, window.scrollY + rect.top - Math.max(24, (window.innerHeight - Math.min(rect.height, window.innerHeight * 0.72)) / 2));
-  window.scrollTo({ top: targetTop, left: 0, behavior });
-}
-
-function headerScrollOffset() {
-  const header = document.querySelector(".three-mash-header .tmh-header");
-  const headerHeight = header instanceof HTMLElement ? header.getBoundingClientRect().height : 70;
-  return Math.max(78, Math.ceil(headerHeight + 18));
-}
-
-function scrollElementToHeaderStart(element: Element, behavior: ScrollBehavior = "smooth") {
-  const rect = element.getBoundingClientRect();
-  const targetTop = Math.max(0, window.scrollY + rect.top - headerScrollOffset());
-  window.scrollTo({ top: targetTop, left: 0, behavior });
-}
-
-function headerAnchorTarget(section: Element, sectionId: string) {
-  if (sectionId === "sebep") return section.querySelector(".tmproblem-head") || section;
-  if (sectionId === "cozum" || sectionId === "kurleme") return section.querySelector(".tmr-head") || section;
-  if (sectionId === "neden-gerekli") return section.querySelector(".tmcl-section-head") || section;
-  return section;
-}
-
 function scrollToHeaderAnchor(section: Element, sectionId: string, behavior: ScrollBehavior = "smooth") {
-  if (sectionId === "cozum" || sectionId === "kurleme") {
-    scrollElementToHeaderStart(section, behavior);
-    return;
-  }
-
-  scrollElementToCenter(headerAnchorTarget(section, sectionId), behavior);
+  scrollToSectionWithOffset(sectionId);
 }
 
 function scrollToPendingHeaderAnchor(
@@ -1440,7 +1525,7 @@ function scrollToPendingHeaderAnchor(
   sectionId: string,
   behavior: ScrollBehavior = "smooth"
 ) {
-  scrollToHeaderAnchor(section, sectionId, behavior);
+  scrollToSectionWithOffset(sectionId);
 }
 
 function handleHeaderAnchorNavigation(event: MouseEvent, rawHref: string | undefined) {
@@ -1450,14 +1535,7 @@ function handleHeaderAnchorNavigation(event: MouseEvent, rawHref: string | undef
   if (targetHref === "/") {
     event.preventDefault();
     event.stopPropagation();
-    const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
-    if (currentPath !== "/") {
-      savePendingReferencesScroll("__top__");
-      window.location.href = "/";
-      return;
-    }
-    safeHistoryReplace(`${window.location.pathname}${window.location.search}`);
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    scrollToSectionWithOffset("__top__");
     return;
   }
 
@@ -1471,23 +1549,9 @@ function handleHeaderAnchorNavigation(event: MouseEvent, rawHref: string | undef
   if (url.origin !== window.location.origin || !url.hash || url.hash.length <= 1) return;
 
   const sectionId = decodeURIComponent(url.hash.slice(1)).trim();
-  const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
-  const targetPath = url.pathname.replace(/\/+$/, "") || "/";
-
   event.preventDefault();
   event.stopPropagation();
-
-  if (targetPath !== currentPath) {
-    savePendingReferencesScroll(sectionId);
-    window.location.href = targetPath;
-    return;
-  }
-
-  const section = document.getElementById(sectionId) || document.querySelector(url.hash);
-  if (!section) return;
-
-  scrollToHeaderAnchor(section, sectionId);
-  safeHistoryPush(url.hash);
+  scrollToSectionWithOffset(sectionId);
 }
 
 function Logo({ props }: { props: Props }) {
