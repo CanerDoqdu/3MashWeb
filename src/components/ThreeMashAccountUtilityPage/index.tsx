@@ -56,6 +56,53 @@ const phoneCountries = [
   { iso: "SL", name: "Sierra Leone", dialCode: "+232" },
 ];
 
+function isStudioEnvironment() {
+  if (typeof window === "undefined") return false;
+  return (
+    window.location.hostname.includes("ikasapps.com") ||
+    window.location.hostname.includes("myikas.com") ||
+    window.location.search.includes("studio=") ||
+    window.location.search.includes("preview=") ||
+    document.referrer.includes("ikasapps.com") ||
+    document.referrer.includes("myikas.com") ||
+    (typeof window.parent !== "undefined" && window.parent !== window)
+  );
+}
+
+const mockStudioCustomer: IkasCustomer = {
+  id: "studio-preview-customer",
+  firstName: "Caner",
+  lastName: "Doğdu",
+  email: "info@3mash.com",
+  phone: "+905321234567",
+  addresses: [
+    {
+      id: "addr-studio-1",
+      title: "Ofis Adresi",
+      address: "Antalya Teknokent, Ar-Ge 2 Binası, Konyaaltı",
+      city: { name: "Antalya" } as any,
+      district: { name: "Konyaaltı" } as any,
+      country: { name: "Türkiye" } as any,
+      postalCode: "07070",
+      firstName: "Caner",
+      lastName: "Doğdu",
+      phone: "+905321234567",
+    } as any,
+  ],
+  favoriteProducts: [],
+} as any;
+
+const mockStudioOrders: IkasOrder[] = [
+  {
+    id: "ord-studio-1",
+    orderNumber: "3M-892410",
+    orderedAt: Date.now() - 86400000 * 2,
+    totalFinalPrice: 18750,
+    currencySymbol: "₺",
+    currencyCode: "TRY",
+  } as any,
+];
+
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
 }
@@ -249,7 +296,7 @@ function modeFromPathname(pathname: string, fallback: string) {
   if (pathname === "/account/orders") return "orders";
   if (pathname === "/account/forgot-password") return "forgot-password";
   if (pathname === "/account/recover-password") return "recover-password";
-  return fallback || "orders";
+  return fallback || "account";
 }
 
 function AccountProfileForm({
@@ -298,13 +345,24 @@ function AccountProfileForm({
       phone: phoneForSave(form.phone, phoneCountry.dialCode),
     };
 
-    const success = await saveCustomer(customerStore, nextCustomer);
-
-    if (success) {
-      setCustomer(customerStore.customer || nextCustomer);
-      setForm(getFormFromCustomer(customerStore.customer || nextCustomer));
-      setStatus("success");
+    if (isStudioEnvironment()) {
+      setTimeout(() => {
+        setCustomer(nextCustomer);
+        setStatus("success");
+      }, 400);
       return;
+    }
+
+    try {
+      const success = await saveCustomer(customerStore, nextCustomer);
+      if (success) {
+        setCustomer(customerStore.customer || nextCustomer);
+        setForm(getFormFromCustomer(customerStore.customer || nextCustomer));
+        setStatus("success");
+        return;
+      }
+    } catch {
+      // fallback
     }
 
     setStatus("error");
@@ -662,20 +720,23 @@ function ProductCard({ product }: { product: IkasProduct }) {
 }
 
 export function ThreeMashAccountUtilityPage(props: DashboardProps) {
+  const isStudio = isStudioEnvironment();
   const [mode, setMode] = useState(() =>
-    modeFromPathname(
-      typeof window !== "undefined"
-        ? window.location.pathname.replace(/\/+$/, "")
-        : "",
-      props.mode,
-    ),
+    props.mode
+      ? props.mode
+      : modeFromPathname(
+          typeof window !== "undefined"
+            ? window.location.pathname.replace(/\/+$/, "")
+            : "",
+          "account",
+        ),
   );
   const [customer, setCustomer] = useState<IkasCustomer | null>(
-    customerStore.customer,
+    () => customerStore.customer || (isStudio ? mockStudioCustomer : null),
   );
-  const [orders, setOrders] = useState<IkasOrder[]>([]);
+  const [orders, setOrders] = useState<IkasOrder[]>(() => (isStudio ? mockStudioOrders : []));
   const [favorites, setFavorites] = useState<IkasProduct[]>([]);
-  const [ready, setReady] = useState(customerStore._initialized);
+  const [ready, setReady] = useState(isStudio || customerStore._initialized);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -684,7 +745,7 @@ export function ThreeMashAccountUtilityPage(props: DashboardProps) {
       setMode(
         modeFromPathname(
           window.location.pathname.replace(/\/+$/, ""),
-          props.mode,
+          props.mode || "account",
         ),
       );
     }
@@ -694,7 +755,7 @@ export function ThreeMashAccountUtilityPage(props: DashboardProps) {
   }, [props.mode]);
 
   function handleAccountNavigate(nextHref: string) {
-    const nextMode = modeFromHref(nextHref, props.mode);
+    const nextMode = modeFromHref(nextHref, props.mode || "account");
 
     if (nextMode === "forgot-password" || nextMode === "recover-password") {
       Router.navigate(nextHref);
@@ -703,45 +764,59 @@ export function ThreeMashAccountUtilityPage(props: DashboardProps) {
 
     setMode(nextMode);
 
-    if (typeof window !== "undefined") {
-      window.history.pushState({}, "", nextHref);
+    if (typeof window !== "undefined" && !isStudio) {
+      try {
+        window.history.pushState({}, "", nextHref);
+      } catch {
+        // iframe safe
+      }
     }
   }
 
   useEffect(() => {
-  let mounted = true;
+    let mounted = true;
 
-  async function load() {
-    if (!customerStore._initialized) {
-      await initCustomerStore(customerStore);
+    async function load() {
+      if (!customerStore._initialized) {
+        await initCustomerStore(customerStore);
+      }
+
+      if (!mounted) return;
+
+      const currentCustomer = customerStore.customer;
+
+      if (currentCustomer) {
+        setCustomer(currentCustomer);
+      } else if (isStudio) {
+        setCustomer(mockStudioCustomer);
+      }
+      setReady(true);
+
+      if (!currentCustomer) {
+        if (isStudio && mode === "orders") {
+          setOrders(mockStudioOrders);
+        }
+        return;
+      }
+
+      if (mode === "orders") {
+        setOrders(await getOrders(customerStore));
+      }
+
+      if (mode === "favorites") {
+        setFavorites(await getFavoriteProducts(customerStore));
+      }
     }
 
-    if (!mounted) return;
+    load();
 
-    const currentCustomer = customerStore.customer;
+    return () => {
+      mounted = false;
+    };
+  }, [mode, isStudio]);
 
-    setCustomer(currentCustomer);
-    setReady(true);
-
-    if (!currentCustomer) return;
-
-    if (mode === "orders") {
-      setOrders(await getOrders(customerStore));
-    }
-
-    if (mode === "favorites") {
-      setFavorites(await getFavoriteProducts(customerStore));
-    }
-  }
-
-  load();
-
-  return () => {
-    mounted = false;
-  };
-}, [mode]);
-
-  const addresses = customer?.addresses || [];
+  const effectiveCustomer = customer || (isStudio ? mockStudioCustomer : null);
+  const addresses = effectiveCustomer?.addresses || [];
   const title = useMemo(() => {
     if (mode === "addresses") return text(props.titleText, "Adreslerim");
     if (mode === "favorites")
@@ -752,7 +827,7 @@ export function ThreeMashAccountUtilityPage(props: DashboardProps) {
   if (mode === "forgot-password") return <ForgotPasswordView props={props} />;
   if (mode === "recover-password") return <RecoverPasswordView props={props} />;
 
-  if (!ready && !customer) {
+  if (!ready && !effectiveCustomer) {
     return (
       <section
         className="tmau-page three-mash-account-info-page"
@@ -763,7 +838,7 @@ export function ThreeMashAccountUtilityPage(props: DashboardProps) {
     );
   }
 
-  if (ready && !customer) {
+  if (ready && !effectiveCustomer) {
     return (
       <section
         className="tmau-page three-mash-account-info-page"
@@ -790,13 +865,13 @@ export function ThreeMashAccountUtilityPage(props: DashboardProps) {
       <ThreeMashAccountLayout
         props={props}
         active={mode}
-        customer={customer}
+        customer={effectiveCustomer}
         isReady={ready}
         onNavigate={handleAccountNavigate}
       >
-          {mode === "account" && customer && (
+          {mode === "account" && effectiveCustomer && (
             <AccountProfileForm
-              customer={customer}
+              customer={effectiveCustomer}
               ready={ready}
               setCustomer={setCustomer}
               props={props}

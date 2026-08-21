@@ -1366,11 +1366,61 @@ function headerScrollOffset() {
   return Math.max(68, Math.ceil(headerHeight + 14));
 }
 
+function getElementHeaderScrollTop(targetEl: HTMLElement, sectionId?: string): number {
+  const headerOffset = headerScrollOffset();
+  const innerHead = targetEl.querySelector(".tmproblem-head, .tmproblem-index, .tmr-head, .tmr-index, .tmr-why-grid, h2") as HTMLElement | null;
+  const refEl = innerHead && innerHead.getBoundingClientRect().top < targetEl.getBoundingClientRect().top + 160
+    ? innerHead
+    : targetEl;
+
+  const rect = refEl.getBoundingClientRect();
+  const elementAbsoluteTop = window.scrollY + rect.top;
+  const isMobile = window.innerWidth <= 768;
+
+  if (sectionId === "cozum") {
+    return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 10 : 20));
+  } else if (sectionId === "sebep" || sectionId === "sorun") {
+    return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 12 : 24));
+  } else if (sectionId === "kurleme") {
+    return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 10 : 18));
+  }
+  return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 12 : 20));
+}
+
+function findSectionTargetElement(sectionId: string): HTMLElement | null {
+  const cleanId = sectionId.replace(/^#+/, "").trim();
+  if (!cleanId) return null;
+
+  if (cleanId === "sebep" || cleanId === "sorun") {
+    return document.querySelector("#sebep, #sorun, .three-mash-problem, .tmproblem-head, .tmproblem");
+  }
+  if (cleanId === "cozum") {
+    return document.querySelector("#cozum, .three-mash-solution, .tmr-solution, .tmr-head");
+  }
+  if (cleanId === "kurleme") {
+    return document.querySelector("#kurleme, .three-mash-curing, .tmr-curing");
+  }
+  if (cleanId === "ekosistem") {
+    return document.querySelector("#ekosistem, .three-mash-ecosystem, .tmr-ecosystem");
+  }
+  if (cleanId === "guven" || cleanId === "referanslar") {
+    return document.querySelector("#guven, #referanslar, .three-mash-trust, .tmr-testimonials");
+  }
+  if (cleanId === "sss") {
+    return document.querySelector("#sss, .three-mash-faq, .tmr-faq");
+  }
+  if (cleanId === "iletisim-cta") {
+    return document.querySelector("#iletisim-cta, .three-mash-final, .tmr-final");
+  }
+  return document.getElementById(cleanId) || document.querySelector(`#${cleanId}`);
+}
+
 function scrollToSectionWithOffset(sectionId: string, onAlreadyAtSection?: () => void) {
   if (typeof window === "undefined") return;
 
   const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
-  const isTopTarget = !sectionId || sectionId === "__top__" || sectionId === "giris" || sectionId === "/" || sectionId === "top";
+  const cleanId = sectionId.replace(/^#+/, "").trim();
+  const isTopTarget = !cleanId || cleanId === "__top__" || cleanId === "giris" || cleanId === "/" || cleanId === "top";
 
   if (currentPath !== "/") {
     if (isTopTarget) {
@@ -1378,14 +1428,13 @@ function scrollToSectionWithOffset(sectionId: string, onAlreadyAtSection?: () =>
       window.location.href = "/";
       return;
     }
-    savePendingReferencesScroll(sectionId);
-    window.location.href = `/#${sectionId}`;
+    savePendingReferencesScroll(cleanId);
+    window.location.href = `/#${cleanId}`;
     return;
   }
 
-  // If target is top / hero (Item 1)
   if (isTopTarget) {
-    if (window.scrollY <= 120) {
+    if (window.scrollY <= 80) {
       if (onAlreadyAtSection) onAlreadyAtSection();
       return;
     }
@@ -1397,51 +1446,11 @@ function scrollToSectionWithOffset(sectionId: string, onAlreadyAtSection?: () =>
     return;
   }
 
-  // Find target DOM element
-  let targetEl: HTMLElement | null = document.getElementById(sectionId);
-  if (!targetEl) {
-    if (sectionId === "sebep" || sectionId === "sorun") {
-      targetEl = document.querySelector("#sorun, #sebep, .tmproblem, .tmproblem-head");
-    } else if (sectionId === "cozum") {
-      targetEl = document.querySelector("#cozum, .tmr-solution, .tmr-head");
-    } else if (sectionId === "kurleme") {
-      targetEl = document.querySelector("#kurleme, .tmr-curing");
-    } else if (sectionId === "ekosistem") {
-      targetEl = document.querySelector("#ekosistem, .tmr-ecosystem");
-    } else if (sectionId === "guven" || sectionId === "referanslar") {
-      targetEl = document.querySelector("#guven, #referanslar, .tmr-testimonials");
-    } else if (sectionId === "sss") {
-      targetEl = document.querySelector("#sss, .tmr-faq");
-    } else if (sectionId === "iletisim-cta") {
-      targetEl = document.querySelector("#iletisim-cta, .tmr-final");
-    } else {
-      targetEl = document.querySelector(`#${sectionId}`);
-    }
-  }
-
+  const targetEl = findSectionTargetElement(cleanId);
   if (!targetEl) return;
 
-  const headerHeight = headerScrollOffset();
-  const isMobile = window.innerWidth <= 768;
-  const rect = targetEl.getBoundingClientRect();
-  const elementAbsoluteTop = window.scrollY + rect.top;
+  const targetTop = getElementHeaderScrollTop(targetEl, cleanId);
 
-  let targetTop = 0;
-
-  if (sectionId === "cozum") {
-    // 03. Çözüm Ekosistemi — Perfectly frame index "03", title and carousel
-    targetTop = Math.max(0, elementAbsoluteTop - headerHeight - (isMobile ? 10 : 20));
-  } else if (sectionId === "sebep" || sectionId === "sorun") {
-    // 02. Sebep / Sorun
-    targetTop = Math.max(0, elementAbsoluteTop - headerHeight - (isMobile ? 12 : 24));
-  } else if (sectionId === "kurleme") {
-    // 04. Kürleme
-    targetTop = Math.max(0, elementAbsoluteTop - headerHeight - (isMobile ? 10 : 18));
-  } else {
-    targetTop = Math.max(0, elementAbsoluteTop - headerHeight - (isMobile ? 12 : 20));
-  }
-
-  // If already at the target scroll position (within 35px tolerance)
   if (Math.abs(window.scrollY - targetTop) < 35) {
     if (onAlreadyAtSection) onAlreadyAtSection();
     return;
@@ -1453,7 +1462,7 @@ function scrollToSectionWithOffset(sectionId: string, onAlreadyAtSection?: () =>
     behavior: "smooth",
   });
 
-  safeHistoryPush(`#${sectionId}`);
+  safeHistoryPush(`#${cleanId}`);
 }
 
 function FlowLink({
@@ -1516,14 +1525,14 @@ function whyMenuHref(fallback: string) {
   return target.startsWith("#") ? `/${target}` : target;
 }
 
-function scrollToHeaderAnchor(section: Element, sectionId: string, behavior: ScrollBehavior = "smooth") {
+function scrollToHeaderAnchor(section: Element, sectionId: string, _behavior: ScrollBehavior = "smooth") {
   scrollToSectionWithOffset(sectionId);
 }
 
 function scrollToPendingHeaderAnchor(
   section: Element,
   sectionId: string,
-  behavior: ScrollBehavior = "smooth"
+  _behavior: ScrollBehavior = "smooth"
 ) {
   scrollToSectionWithOffset(sectionId);
 }
@@ -1670,47 +1679,80 @@ const cartItems =
     { number: text(props.why4Number, "04"), title: text(props.why4Title, "Ve kürleme — son %20'lik fark"), description: text(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"), href: whyMenuHref("/#kurleme") },
   ];
 
-const profileLinks = [
-  {
-    label: richTextValue(
-      props.profileLink1Text,
-      "Siparişlerim"
-    ),
-    link: headerRouteHref(
-      props.profileLink1Href,
-      "/account/orders"
-    ),
-  },
-  {
-    label: richTextValue(
-      props.profileLink2Text,
-      "Adreslerim"
-    ),
-    link: headerRouteHref(
-      props.profileLink2Href,
-      "/account/addresses"
-    ),
-  },
-  {
-    label: richTextValue(
-      props.profileLink5Text,
-      "Mash Academy"
-    ),
-    link: academyPageTarget(
-      props.profileLink5Href
-    ),
-  },
-  {
-    label: richTextValue(
-      props.profileLink6Text,
-      "Çıkış yap"
-    ),
-    link: headerRouteHref(
-      props.profileLink6Href,
-      "/account/logout"
-    ),
-  },
-];
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
+
+  function showToast(message: string) {
+    if (toastTimerRef.current) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+    setToastMessage(message);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToastMessage(null);
+    }, 2200);
+  }
+
+  const profileLinks = [
+    {
+      label: richTextValue(
+        props.profileLink3Text,
+        "Kişisel Bilgilerim"
+      ),
+      link: headerRouteHref(
+        props.accountHref,
+        "/account"
+      ),
+    },
+    {
+      label: richTextValue(
+        props.profileLink1Text,
+        "Siparişlerim"
+      ),
+      link: headerRouteHref(
+        props.profileLink1Href,
+        "/account/orders"
+      ),
+    },
+    {
+      label: richTextValue(
+        props.profileLink2Text,
+        "Adreslerim"
+      ),
+      link: headerRouteHref(
+        props.profileLink2Href,
+        "/account/addresses"
+      ),
+    },
+    {
+      label: richTextValue(
+        props.profileLink4Text,
+        "Beğendiğim Ürünler"
+      ),
+      link: headerRouteHref(
+        props.profileLink4Href,
+        "/account/favorites"
+      ),
+    },
+    {
+      label: richTextValue(
+        props.profileLink5Text,
+        "Mash Academy"
+      ),
+      link: academyPageTarget(
+        props.profileLink5Href
+      ),
+    },
+    {
+      label: richTextValue(
+        props.profileLink6Text,
+        "Çıkış yap"
+      ),
+      link: headerRouteHref(
+        props.profileLink6Href,
+        "/account/logout"
+      ),
+    },
+  ];
   const accountMenuTitle = "Hesabım";
 
   const themeStyle = {
@@ -1842,14 +1884,7 @@ const profileLinks = [
         return;
       }
 
-    if (pendingSectionId) {
-  scrollToPendingHeaderAnchor(section, sectionId, "smooth");
-} else {
-  section.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  });
-}
+      scrollToSectionWithOffset(sectionId);
       if (pendingSectionId) safeHistoryReplace(pendingHash);
     };
 
@@ -2197,7 +2232,13 @@ async function removeCartItem(
                 >
                   <div className="tmh-flow-grid">
                     {whyItems.map((item, index) => (
-                      <FlowLink item={item} wordStyle={props} key={index} />
+                      <FlowLink
+                        item={item}
+                        wordStyle={props}
+                        key={index}
+                        onToast={showToast}
+                        onCloseMenu={() => setActiveMenu(null)}
+                      />
                     ))}
                   </div>
                 </div>
@@ -2400,9 +2441,12 @@ const image = imageCandidates[0];
         </div>
       </header>
       <div className="tmh-header-spacer" />
-      
-
-      
+      {toastMessage && (
+        <div className="tmh-toast-notification" role="status" aria-live="polite">
+          <span className="tmh-toast-dot" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </section>
   );
 }
