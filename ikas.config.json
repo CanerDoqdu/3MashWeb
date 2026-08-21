@@ -7589,6 +7589,11 @@
               "description": "Style a matching word or phrase inside this section"
             }
           ]
+        },
+        {
+          "id": "wordStyle",
+          "name": "07. Vurgulu Kelime Stilleri",
+          "description": "Başlık içindeki özel kelime renklendirme ve stil ayarları"
         }
       ]
     },
@@ -11312,13 +11317,15 @@
           "displayName": "Ürün",
           "description": "Ürün sayfasındaki mevcut ürünü bağla. Component sadece ArgenZ zirkon blok ürünlerinde render eder.",
           "type": "PRODUCT",
-          "required": false
+          "required": false,
+          "groupId": "data"
         },
         {
           "name": "image",
           "displayName": "Görsel",
           "description": "Sadece zirkon blok ürün sayfalarında gösterilecek büyük görsel.",
-          "type": "IMAGE"
+          "type": "IMAGE",
+          "groupId": "media"
         },
         {
           "name": "productTemplateJson",
@@ -11331,9 +11338,19 @@
       ],
       "propGroups": [
         {
+          "id": "data",
+          "name": "00. Ürün Veri Kaynağı",
+          "description": "Bağlı ikas ürün kaydı"
+        },
+        {
+          "id": "media",
+          "name": "01. Görsel Ayarları",
+          "description": "Görüntülenecek büyük görsel"
+        },
+        {
           "id": "template",
-          "name": "Ürün Template",
-          "description": "Reusable ürün template datası"
+          "name": "02. Gelişmiş Şablon JSON",
+          "description": "Özel JSON şablon verisi"
         }
       ],
       "groups": [

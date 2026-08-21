@@ -97,12 +97,16 @@ export function ThreeMashProductComparison(props: Props) {
           <div className="tm-cmp-grid-head">
             <div className="tm-cmp-th-feature">KARŞILAŞTIRMA KRİTERİ</div>
             <div className="tm-cmp-th-col">
-              <span className="tm-cmp-col-badge">{col1Badge}</span>
+              <div className="tm-cmp-col-badge-wrap">
+                <span className="tm-cmp-col-badge">{col1Badge}</span>
+              </div>
               <h3 className="tm-cmp-col-title">{col1Title}</h3>
               <p className="tm-cmp-col-sub">{col1Sub}</p>
             </div>
             <div className="tm-cmp-th-col is-featured">
-              <span className="tm-cmp-col-badge">{col2Badge}</span>
+              <div className="tm-cmp-col-badge-wrap">
+                <span className="tm-cmp-col-badge">{col2Badge}</span>
+              </div>
               <h3 className="tm-cmp-col-title">{col2Title}</h3>
               <p className="tm-cmp-col-sub">{col2Sub}</p>
             </div>
