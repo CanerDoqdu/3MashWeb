@@ -184,6 +184,211 @@
   line-height: 1.62;
 }
 
+/* Profile Form & Inputs */
+.tmau-form,
+.tmai-form {
+  width: 100%;
+}
+
+.tmau-fields,
+.tmai-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 28px;
+}
+
+@media (max-width: 768px) {
+  .tmau-fields,
+  .tmai-fields {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+.tmau-field,
+.tmai-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tmau-field span,
+.tmai-field span {
+  color: var(--tmai-muted, var(--tmau-muted, var(--tm-theme-sub, #55554e)));
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.tmau-field span.is-required::first-letter,
+.tmai-field span.is-required::first-letter {
+  color: #dc2626;
+}
+
+.tmau-field input,
+.tmai-field input {
+  width: 100%;
+  height: 48px;
+  border: 1px solid var(--tmai-line, var(--tmau-line, var(--tm-theme-line, #e6e6e0)));
+  border-radius: 0;
+  background: var(--tmai-bg, var(--tmau-bg, var(--tm-theme-bg, #fafaf7)));
+  color: var(--tmai-text, var(--tmau-text, var(--tm-theme-text, #0e0e0c)));
+  padding: 0 14px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.tmau-field input:focus,
+.tmai-field input:focus {
+  border-color: var(--tmai-text, var(--tmau-text, var(--tm-theme-text, #0e0e0c)));
+  background: #fff;
+}
+
+.tmau-phone-input,
+.tmai-phone-input {
+  display: grid;
+  grid-template-columns: 56px 48px minmax(0, 1fr);
+  align-items: center;
+  min-height: 48px;
+  border: 1px solid var(--tmai-line, var(--tmau-line, var(--tm-theme-line, #e6e6e0)));
+  background: var(--tmai-bg, var(--tmau-bg, var(--tm-theme-bg, #fafaf7)));
+  box-sizing: border-box;
+}
+
+.tmau-phone-country,
+.tmai-phone-country {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: 48px;
+  height: 24px;
+  margin-left: 8px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.tmau-phone-country img,
+.tmai-phone-country img {
+  display: block !important;
+  width: 24px !important;
+  max-width: 24px !important;
+  height: 16px !important;
+  max-height: 16px !important;
+  object-fit: cover !important;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.tmau-phone-country span,
+.tmai-phone-country span {
+  color: var(--tmai-text, var(--tmau-text, var(--tm-theme-text, #0e0e0c)));
+  font-size: 11px;
+  line-height: 1;
+}
+
+.tmau-phone-country select,
+.tmai-phone-country select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.tmau-phone-input b,
+.tmai-phone-input b {
+  color: var(--tmai-text, var(--tmau-text, var(--tm-theme-text, #0e0e0c)));
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.tmau-phone-input input,
+.tmai-phone-input input {
+  height: 46px;
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 12px 0 4px !important;
+  width: 100%;
+  outline: none;
+}
+
+.tmau-phone-input:focus-within,
+.tmai-phone-input:focus-within {
+  border-color: var(--tmai-text, var(--tmau-text, var(--tm-theme-text, #0e0e0c)));
+  background: #fff;
+}
+
+.tmau-field input:disabled,
+.tmai-field input:disabled {
+  background: #eef0ec;
+  color: var(--tmai-muted, var(--tmau-muted, var(--tm-theme-sub, #55554e)));
+  opacity: 1;
+}
+
+.tmau-submit,
+.tmai-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  width: min(100%, 280px);
+  margin: 30px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--tmai-accent, var(--tmau-accent, var(--tm-theme-accent, #c7f136)));
+  color: var(--tmai-button-text, var(--tmau-button-text, var(--tm-theme-text, #0e0e0c)));
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", "Inter", sans-serif) !important;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.tmau-submit:hover,
+.tmai-submit:hover {
+  opacity: 0.92;
+}
+
+.tmau-submit:disabled,
+.tmai-submit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.tmau-status,
+.tmai-status {
+  width: min(100%, 460px);
+  margin: 18px 0 0;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  border-radius: 4px;
+}
+
+.tmau-status.is-success,
+.tmai-status.is-success {
+  background: color-mix(in srgb, var(--tm-theme-accent, #c7f136) 24%, #fff);
+  color: #263800;
+  border: 1px solid color-mix(in srgb, var(--tm-theme-accent, #c7f136) 60%, transparent);
+}
+
+.tmau-status.is-error,
+.tmai-status.is-error {
+  background: #fff1ee;
+  color: #9a1d12;
+  border: 1px solid #ffcfc8;
+}
+
 .tmau-list {
   margin-top: 28px;
   flex: 1;

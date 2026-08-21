@@ -377,7 +377,7 @@ function AccountProfileForm({
       </header>
 
       <div className="tmai-fields tmau-fields">
-        <label className="tmai-field tmau-field">
+        <div className="tmai-field tmau-field">
           <span className="is-required">
             * {text(props.firstNameLabel, "Ad")}
           </span>
@@ -392,9 +392,9 @@ function AccountProfileForm({
               )
             }
           />
-        </label>
+        </div>
 
-        <label className="tmai-field tmau-field">
+        <div className="tmai-field tmau-field">
           <span className="is-required">
             * {text(props.lastNameLabel, "Soyad")}
           </span>
@@ -409,9 +409,9 @@ function AccountProfileForm({
               )
             }
           />
-        </label>
+        </div>
 
-        <label className="tmai-field tmau-field">
+        <div className="tmai-field tmau-field">
           <span>{text(props.phoneLabel, "Telefon")}</span>
           <div className="tmai-phone-input tmau-phone-input">
             <label
@@ -421,6 +421,9 @@ function AccountProfileForm({
               <img
                 src={`https://cdn.myikas.com/sf/assets/flags/3x2/${phoneCountry.iso}.svg`}
                 alt={phoneCountry.iso}
+                width="24"
+                height="16"
+                style={{ width: "24px", height: "16px", objectFit: "cover", display: "block", flexShrink: 0 }}
               />
               <span aria-hidden="true">⌄</span>
               <select
@@ -433,6 +436,7 @@ function AccountProfileForm({
               >
                 {phoneCountries.map((country) => (
                   <option
+                    key={country.iso}
                     value={country.iso}
                   >{`${country.name} ${country.dialCode}`}</option>
                 ))}
@@ -443,7 +447,6 @@ function AccountProfileForm({
               value={form.phone}
               autoComplete="tel"
               inputMode="tel"
-              pattern="\\d{7,14}"
               onInput={(event) =>
                 updateField(
                   "phone",
@@ -452,14 +455,14 @@ function AccountProfileForm({
               }
             />
           </div>
-        </label>
+        </div>
 
-        <label className="tmai-field tmau-field">
+        <div className="tmai-field tmau-field">
           <span className="is-required">
             * {text(props.emailLabel, "Email")}
           </span>
           <input value={form.email} autoComplete="email" type="email" disabled />
-        </label>
+        </div>
       </div>
 
       <button

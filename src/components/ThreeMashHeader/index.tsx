@@ -1695,16 +1695,6 @@ const cartItems =
   const profileLinks = [
     {
       label: richTextValue(
-        props.profileLink3Text,
-        "Kişisel Bilgilerim"
-      ),
-      link: headerRouteHref(
-        props.accountHref,
-        "/account"
-      ),
-    },
-    {
-      label: richTextValue(
         props.profileLink1Text,
         "Siparişlerim"
       ),
@@ -1721,16 +1711,6 @@ const cartItems =
       link: headerRouteHref(
         props.profileLink2Href,
         "/account/addresses"
-      ),
-    },
-    {
-      label: richTextValue(
-        props.profileLink4Text,
-        "Beğendiğim Ürünler"
-      ),
-      link: headerRouteHref(
-        props.profileLink4Href,
-        "/account/favorites"
       ),
     },
     {
