@@ -111,9 +111,10 @@ const defaultFooterProductLinks: Array<[string, string]> = [
   ["Dental Fırınlar", "/dental-firinlar"],
 ];
 const defaultFooterCompanyLinks: Array<[string, string]> = [
-  ["Hakkımızda", "/pages/hakkimizda"],
+  ["Hakkımızda", "/pages/about-us"],
   ["Mash Academy", academyPageHref],
   ["Blog", "/blog"],
+  ["Sıkça Sorulan Sorular", "/pages/sss"],
 ];
 const defaultFooterContactLinks: Array<[string, string]> = [
   ["info@3mash.com", "mailto:info@3mash.com"],
@@ -485,7 +486,7 @@ function linkHref(source: unknown, fallback: string) {
       return link.externalLink.trim();
     if (typeof link.fileUrl === "string" && link.fileUrl.trim())
       return link.fileUrl.trim();
-    if (link.pageId === "2tplvqpo-about-us-page") return "/pages/hakkimizda";
+    if (link.pageId === "2tplvqpo-about-us-page") return "/pages/about-us";
     if (link.pageId === "2tplvqpo-kvkk-page") return "/pages/gizlilik-politikasi-ve-kvkk";
     if (link.pageId === "2tplvqpo-return-warranty-page")
       return "/pages/iade-ve-garanti";
@@ -494,7 +495,7 @@ function linkHref(source: unknown, fallback: string) {
     if (link.pageId === "2tplvqpo-membership-agreement-page")
       return "/pages/uyelik-sozlesmesi";
     if (link.pageId === "2tplvqpo-commercial-electronic-page")
-      return "/pages/ticari-elektronik-ileti";
+      return "/pages/ticari-elektronik-ileti-onayi";
     if (link.pageId === "egF4vDuOju") return "/pages/mash-p1d";
     if (link.pageId === "NCjIeO1nu4") return "/pages/mash-p16l";
     if (link.pageId === "hw1iKDxUMY") return "/pages/crs-recineler";
@@ -537,11 +538,11 @@ function normalizedInternalRouteHref(href: string) {
     "/mash-academy": academyPageHref,
     "/pages/academy": academyPageHref,
     "/2tplvqpo-rovtvwz53h": academyPageHref,
-    "/2tplvqpo-about-us-page": "/pages/hakkimizda",
-    "/pages/about-us": "/pages/hakkimizda",
-    "/pages/hakkimizda": "/pages/hakkimizda",
-    "/about-us": "/pages/hakkimizda",
-    "/hakkimizda": "/pages/hakkimizda",
+    "/2tplvqpo-about-us-page": "/pages/about-us",
+    "/pages/about-us": "/pages/about-us",
+    "/pages/hakkimizda": "/pages/about-us",
+    "/about-us": "/pages/about-us",
+    "/hakkimizda": "/pages/about-us",
     "/2tplvqpo-kvkk-page": "/pages/gizlilik-politikasi-ve-kvkk",
     "/pages/gizlilik-politikasi-ve-kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
     "/pages/kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
@@ -553,9 +554,11 @@ function normalizedInternalRouteHref(href: string) {
     "/pages/mesafeli-satis-sozlesmesi": "/pages/mesafeli-satis-sozlesmesi",
     "/2tplvqpo-membership-agreement-page": "/pages/uyelik-sozlesmesi",
     "/pages/uyelik-sozlesmesi": "/pages/uyelik-sozlesmesi",
-    "/2tplvqpo-commercial-electronic-page": "/pages/ticari-elektronik-ileti",
-    "/pages/ticari-elektronik-ileti-onayi": "/pages/ticari-elektronik-ileti",
-    "/pages/ticari-elektronik-ileti": "/pages/ticari-elektronik-ileti",
+    "/2tplvqpo-commercial-electronic-page": "/pages/ticari-elektronik-ileti-onayi",
+    "/pages/ticari-elektronik-ileti-onayi": "/pages/ticari-elektronik-ileti-onayi",
+    "/pages/ticari-elektronik-ileti": "/pages/ticari-elektronik-ileti-onayi",
+    "/pages/sss": "/pages/sss",
+    "/pages/faq": "/pages/sss",
     "/urunler/3d-yazicilar": "/3d-yazicilar",
     "/urunler/dental-recineler": "/dental-3d-yazici-recineleri",
     "/urunler/yikama-kurleme": "/yikama-kurleme-cihazlari",
@@ -1713,8 +1716,9 @@ function isFooterMapsLabel(label: unknown) {
 function footerHrefForLabel(label: unknown, href: string) {
   const normalizedLabel = plainText(label).toLocaleLowerCase("tr-TR");
   const labelRoutes: Record<string, string> = {
-    hakkımızda: "/pages/hakkimizda",
-    hakkimizda: "/pages/hakkimizda",
+    hakkımızda: "/pages/about-us",
+    hakkimizda: "/pages/about-us",
+    "about us": "/pages/about-us",
     kvkk: "/pages/gizlilik-politikasi-ve-kvkk",
     "gizlilik politikası ve kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
     "gizlilik politikası ve kvkk aydınlatma metni": "/pages/gizlilik-politikasi-ve-kvkk",
@@ -1729,9 +1733,13 @@ function footerHrefForLabel(label: unknown, href: string) {
     "mesafeli satis sozlesmesi": "/pages/mesafeli-satis-sozlesmesi",
     "üyelik sözleşmesi": "/pages/uyelik-sozlesmesi",
     "uyelik sozlesmesi": "/pages/uyelik-sozlesmesi",
-    "ticari elektronik ileti": "/pages/ticari-elektronik-ileti",
-    "ticari elektronik ileti onayı": "/pages/ticari-elektronik-ileti",
-    "ticari elektronik ileti onayi": "/pages/ticari-elektronik-ileti",
+    "ticari elektronik ileti": "/pages/ticari-elektronik-ileti-onayi",
+    "ticari elektronik ileti onayı": "/pages/ticari-elektronik-ileti-onayi",
+    "ticari elektronik ileti onayi": "/pages/ticari-elektronik-ileti-onayi",
+    "sıkça sorulan sorular": "/pages/sss",
+    "sikca sorulan sorular": "/pages/sss",
+    sss: "/pages/sss",
+    faq: "/pages/sss",
   };
 
   if (labelRoutes[normalizedLabel]) return labelRoutes[normalizedLabel];

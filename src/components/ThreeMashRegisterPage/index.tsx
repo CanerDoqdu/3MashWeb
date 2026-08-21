@@ -268,7 +268,7 @@ export function ThreeMashRegisterPage(props: Props) {
               <a
                 href={href(
                   props.marketingHref,
-                  "/pages/ticari-elektronik-ileti",
+                  "/pages/ticari-elektronik-ileti-onayi",
                 )}
               >
                 Ticari Elektronik İleti Onayı

@@ -9,7 +9,7 @@ export interface Props {
   messageLabel?: string;
   kvkkTextBefore?: string;
   kvkkLinkText?: string;
-  /** KVKK sayfası için yayın routeu: /pages/gizlilik-politikasi-ve-kvkk. */
+  /** KVKK sayfası için yayın routeu: /pages/kvkk. */
   kvkkHref?: string;
   buttonText?: string;
   recipientEmail?: string;

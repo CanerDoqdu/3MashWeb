@@ -18,7 +18,7 @@ export interface Props {
   /** Tam domain kullanmayın; kategori routeunu /zirkon-bloklar olarak girin. */
   productLink4Href?: string;
   companyLink1Text?: string;
-  /** Hakkımızda sayfası için yayın routeu: /pages/hakkimizda. */
+  /** Hakkımızda sayfası için yayın routeu: /pages/about-us. */
   companyLink1Href?: string;
   companyLink2Text?: string;
   /** Doğru Academy routeu /pages/mash-academy. */
@@ -96,7 +96,7 @@ export interface Props {
   /** Beş ürün linki yeterliyse boş bırakın. */
   productLink6Href?: string;
   legalLink1Text?: string;
-  /** KVKK sayfası için yayın routeu: /pages/gizlilik-politikasi-ve-kvkk. */
+  /** KVKK sayfası için yayın routeu: /pages/kvkk. */
   legalLink1Href?: string;
   legalLink2Text?: string;
   /** İade ve garanti sayfası için yayın routeu: /pages/iade-ve-garanti. */
