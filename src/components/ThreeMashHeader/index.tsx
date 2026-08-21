@@ -2132,6 +2132,9 @@ async function removeCartItem(
 
   return (
     <section className="three-mash-header" style={themeStyle}>
+      {/* Preconnect to Google Fonts to reduce render-blocking font load time */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
       {props.showAnnouncement !== false && (
         <>

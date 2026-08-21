@@ -1951,12 +1951,14 @@
   line-height: 1.7;
 }
 
-.tmr-footer h6 {
+.tmr-footer h6,
+.tmr-footer .tmr-footer-col-title {
   margin: 0 0 16px;
   color: var(--tmr-footer-text);
   font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
   font-size: 13px;
   letter-spacing: 0.02em;
+  font-weight: 600;
 }
 
 .tmr-footer a {
@@ -2478,7 +2480,8 @@
     max-width: none;
   }
 
-  .tmr-footer h6 {
+  .tmr-footer h6,
+  .tmr-footer .tmr-footer-col-title {
     margin-bottom: 10px;
   }
 

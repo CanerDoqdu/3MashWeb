@@ -536,7 +536,7 @@ export function ThreeMashHero(props: Props) {
   const themeStyle = {
     "--tmhero-bg": "var(--bg, #FAFAF7)",
     "--tmhero-text": "var(--ink, #0E0E0C)",
-    "--tmhero-muted": "var(--mut, #8F8F86)",
+    "--tmhero-muted": "var(--mut, #6B6B63)",
     "--tmhero-sub": "var(--sub, #55554E)",
     "--tmhero-line": "var(--line, #E6E6E0)",
     "--tmhero-line-strong": "var(--line2, #D5D5CD)",
