@@ -208,7 +208,7 @@ export function ThreeMashCostDetailPage(props: Props) {
     }
   };
 
-  const baseHomeUrl = props.useButtonHref || "3MASH-Anasayfa-Konsept-v2.html";
+  const baseHomeUrl = props.useButtonHref || "/";
   const homeHref = baseHomeUrl.includes("?")
     ? `${baseHomeUrl}&rc=${Math.round(total)}#hesap`
     : `${baseHomeUrl}?rc=${Math.round(total)}#hesap`;
@@ -228,11 +228,11 @@ export function ThreeMashCostDetailPage(props: Props) {
       <div className="top">
         <div className="wrap">
           <div className="crumb">
-            <a href={props.useButtonHref || "3MASH-Anasayfa-Konsept-v2.html"}>
+            <a href={props.useButtonHref || "/"}>
               {props.breadcrumbHomeText || "Ana sayfa"}
             </a>{" "}
             &nbsp;/&nbsp;{" "}
-            <a href={(props.useButtonHref || "3MASH-Anasayfa-Konsept-v2.html") + "#hesap"}>
+            <a href={(props.useButtonHref || "/") + "#hesap"}>
               {props.breadcrumbParentText || "Tasarruf hesaplayıcı"}
             </a>{" "}
             &nbsp;/&nbsp; {props.breadcrumbCurrentText || "Bir tekrarın maliyeti"}
