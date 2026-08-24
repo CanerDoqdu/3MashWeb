@@ -2594,7 +2594,7 @@
           "displayName": "İkincil Yazı Rengi",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#8F8F86",
+          "defaultValue": "#55554E",
           "groupId": "appearance"
         },
         {
@@ -2650,7 +2650,7 @@
           "displayName": "Danger Rengi",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#E2492F",
+          "defaultValue": "#B52E1E",
           "groupId": "appearance"
         },
         {
@@ -3046,6 +3046,13 @@
           "required": false,
           "groupId": "buttons",
           "defaultValue": "#0E0E0C"
+        },
+        {
+          "name": "labTitleBeforeAmount",
+          "displayName": "Laboratuvar Tutar Öncesi Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "content"
         }
       ],
       "propGroups": [
@@ -22957,6 +22964,83 @@
           "required": false,
           "defaultValue": "#c7f136",
           "groupId": "appearance"
+        },
+        {
+          "name": "bodyFontSize",
+          "displayName": "Yazı Boyutu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "19px",
+          "groupId": "typography",
+          "description": "Makale gövde yazı boyutu. Örnek: 18px, 20px."
+        },
+        {
+          "name": "contentWidth",
+          "displayName": "Okuma Kolonu Genişliği",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "720px",
+          "groupId": "typography",
+          "description": "Makale metninin maksimum genişliği. Örnek: 680px, 760px."
+        },
+        {
+          "name": "heroImageWidth",
+          "displayName": "Kapak Görseli Genişliği",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "wide",
+          "groupId": "layout",
+          "description": "column: metin sütunuyla sınırlı · wide: daha geniş (varsayılan) · full: tam ekran genişliği"
+        },
+        {
+          "name": "titleAlign",
+          "displayName": "Başlık Hizalaması",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "left",
+          "groupId": "layout",
+          "description": "left: sola hizalı (varsayılan) · center: ortalı"
+        },
+        {
+          "name": "headerSpacing",
+          "displayName": "Başlık Üst Boşluk",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "generous",
+          "groupId": "layout",
+          "description": "compact: dar · normal · generous: geniş (varsayılan)"
+        },
+        {
+          "name": "showPublicationLabel",
+          "displayName": "Yayın Etiketini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "showCategory",
+          "displayName": "Kategoriyi Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "showReadingTime",
+          "displayName": "Okuma Süresini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "showAuthor",
+          "displayName": "Meta Bilgilerini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
         }
       ],
       "propGroups": [
@@ -22974,6 +23058,21 @@
           "id": "appearance",
           "name": "Görünüm",
           "description": "Renk ve stil ayarları"
+        },
+        {
+          "id": "typography",
+          "name": "Tipografi",
+          "description": "Yazı boyutu ve okuma kolonu genişliği"
+        },
+        {
+          "id": "layout",
+          "name": "Düzen",
+          "description": "Kapak görseli genişliği, başlık hizalaması ve üst boşluk"
+        },
+        {
+          "id": "visibility",
+          "name": "Görünürlük",
+          "description": "Yayın etiketi, kategori, okuma süresi ve meta bilgilerinin gösterimi"
         }
       ]
     },
@@ -23055,6 +23154,83 @@
           "required": false,
           "defaultValue": "#c7f136",
           "groupId": "appearance"
+        },
+        {
+          "name": "bodyFontSize",
+          "displayName": "Yazı Boyutu",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "19px",
+          "groupId": "typography",
+          "description": "Makale gövde yazı boyutu. Örnek: 18px, 20px."
+        },
+        {
+          "name": "contentWidth",
+          "displayName": "Okuma Kolonu Genişliği",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "720px",
+          "groupId": "typography",
+          "description": "Makale metninin maksimum genişliği. Örnek: 680px, 760px."
+        },
+        {
+          "name": "heroImageWidth",
+          "displayName": "Kapak Görseli Genişliği",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "wide",
+          "groupId": "layout",
+          "description": "column: metin sütunuyla sınırlı · wide: daha geniş (varsayılan) · full: tam ekran genişliği"
+        },
+        {
+          "name": "titleAlign",
+          "displayName": "Başlık Hizalaması",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "left",
+          "groupId": "layout",
+          "description": "left: sola hizalı (varsayılan) · center: ortalı"
+        },
+        {
+          "name": "headerSpacing",
+          "displayName": "Başlık Üst Boşluk",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "generous",
+          "groupId": "layout",
+          "description": "compact: dar · normal · generous: geniş (varsayılan)"
+        },
+        {
+          "name": "showPublicationLabel",
+          "displayName": "Yayın Etiketini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "showCategory",
+          "displayName": "Kategoriyi Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "showReadingTime",
+          "displayName": "Okuma Süresini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
+        },
+        {
+          "name": "showAuthor",
+          "displayName": "Meta Bilgilerini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "visibility"
         }
       ],
       "propGroups": [
@@ -23072,6 +23248,21 @@
           "id": "appearance",
           "name": "Görünüm",
           "description": "Renk ve stil ayarları"
+        },
+        {
+          "id": "typography",
+          "name": "Tipografi",
+          "description": "Yazı boyutu ve okuma kolonu genişliği"
+        },
+        {
+          "id": "layout",
+          "name": "Düzen",
+          "description": "Kapak görseli genişliği, başlık hizalaması ve üst boşluk"
+        },
+        {
+          "id": "visibility",
+          "name": "Görünürlük",
+          "description": "Yayın etiketi, kategori, okuma süresi ve meta bilgilerinin gösterimi"
         }
       ]
     },

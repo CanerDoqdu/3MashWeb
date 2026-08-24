@@ -1,10 +1,58 @@
+/* ============================================================
+   ThreeMashBlogDetailPage — Medium-style editorial reading system
+   ============================================================
+   Design principles
+   · Content-first, typography-driven
+   · Narrow reading column (~720 px) with generous whitespace
+   · No boxed cards, borders, or decorative containers around prose
+   · Visual hierarchy via type scale and spacing, not colour blocks
+   · Three-Mash identity preserved through accent colour and font tokens
+   ============================================================ */
+
+/* ── CSS custom properties ─────────────────────────────────────────────── */
 .three-mash-blog-detail {
+  /* Colour tokens – set via inline style from props */
+  --tm-bda-bg: var(--tm-theme-bg, #f6f7f3);
+  --tm-bda-text: var(--tm-theme-text, #10120f);
+  --tm-bda-muted: var(--tm-theme-muted, #64695f);
+  --tm-bda-line: var(--tm-theme-line, #dfe3da);
+  --tm-bda-accent: var(--tm-theme-accent, #c7f136);
+
+  /* Typography tokens */
+  --tm-bda-content-width: 720px;
+  --tm-bda-body-size: 19px;
+
+  /* Internal spacing scale */
+  --tm-bda-side-pad: clamp(20px, 5vw, 48px);
+  --tm-bda-top-pad: clamp(48px, 7vw, 96px);
+  --tm-bda-gap-xs: 0.45em;
+  --tm-bda-gap-sm: 0.9em;
+  --tm-bda-gap-md: 1.5em;
+  --tm-bda-gap-lg: 2.8em;
+  --tm-bda-gap-xl: 3.6em;
+
+  /* Internal layout */
+  display: block;
   min-height: calc(100vh - 78px);
   overflow-x: hidden;
-  padding: clamp(42px, 5.6vw, 78px) 18px clamp(72px, 8vw, 118px);
-  background: var(--tm-blog-detail-bg);
-  color: var(--tm-blog-detail-text);
+  background: var(--tm-bda-bg);
+  color: var(--tm-bda-text);
   font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
+  padding:
+    var(--tm-bda-top-pad) var(--tm-bda-side-pad) clamp(80px, 10vw, 140px);
+}
+
+/* Header spacing modifiers */
+.three-mash-blog-detail.tm-bda-spacing-compact {
+  --tm-bda-top-pad: clamp(32px, 4vw, 56px);
+}
+
+.three-mash-blog-detail.tm-bda-spacing-normal {
+  --tm-bda-top-pad: clamp(40px, 5.5vw, 72px);
+}
+
+.three-mash-blog-detail.tm-bda-spacing-generous {
+  --tm-bda-top-pad: clamp(48px, 7vw, 96px);
 }
 
 .three-mash-blog-detail,
@@ -12,273 +60,513 @@
   box-sizing: border-box;
 }
 
-.tm-blog-detail-wrap {
-  display: grid;
-  gap: clamp(20px, 3vw, 30px);
-  width: min(1080px, 100%);
-  margin: 0 auto;
-}
-
-.tm-blog-detail-back {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  min-height: 34px;
-  padding: 0 12px;
-  border: 1px solid var(--tm-blog-detail-line);
-  background: #fff;
-  color: inherit;
-  font-family: var(
-    --tm-theme-font-heading,
-    "Space Grotesk",
-    "Inter",
-    sans-serif
-  ) !important;
-  font-size: 13px;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.tm-blog-detail-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 14px clamp(24px, 4vw, 48px);
-  align-items: end;
-  min-height: 0;
-  padding: clamp(28px, 4vw, 46px);
-  border: 1px solid var(--tm-blog-detail-line);
-  background: var(--tm-theme-dark, #0e0e0c);
-  color: var(--tm-theme-bg, #fafaf7);
-}
-
-.tm-blog-detail-kicker {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  min-height: 26px;
-  padding: 0 11px;
-  background: var(--tm-blog-detail-accent);
-  color: var(--tm-theme-accent-text, #3d4d0e);
-  font-family: var(
-    --tm-theme-font-heading,
-    "Space Grotesk",
-    "Inter",
-    sans-serif
-  ) !important;
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.tm-blog-detail-meta {
+/* ── Outer wrapper ─────────────────────────────────────────────────────── */
+/*
+ * Everything is centred and capped at the reading column width.
+ * Hero images use a negative-margin escape hatch to be wider.
+ */
+.tm-bda-wrap {
   display: flex;
-  flex-wrap: wrap;
-  grid-column: 2;
-  grid-row: 1 / span 3;
-  align-self: start;
-  justify-self: end;
-  gap: 8px 14px;
-  max-width: 220px;
-  color: #d8d8d0;
-  font-size: 12px;
+  flex-direction: column;
+  width: min(var(--tm-bda-content-width), 100%);
+  margin: 0 auto;
+  gap: 0;
+  /* spacing handled per-element below */
+}
+
+/* ── Back link ─────────────────────────────────────────────────────────── */
+.tm-bda-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-bottom: clamp(28px, 4vw, 48px);
+  color: var(--tm-bda-muted);
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: color 200ms ease;
+  width: fit-content;
+}
+
+.tm-bda-back:hover {
+  color: var(--tm-bda-text);
+}
+
+.tm-bda-back:hover span:first-child {
+  transform: translateX(-3px);
+  transition: transform 200ms ease;
+}
+
+.tm-bda-back span:first-child {
+  transition: transform 200ms ease;
+  display: inline-block;
+}
+
+/* ── Article header ────────────────────────────────────────────────────── */
+.tm-bda-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  /* controlled individually */
+  margin-bottom: clamp(32px, 5vw, 56px);
+}
+
+/* Title alignment modifier */
+.tm-bda-align-center .tm-bda-eyebrow,
+.tm-bda-align-center .tm-bda-category,
+.tm-bda-align-center .tm-bda-title,
+.tm-bda-align-center .tm-bda-subtitle,
+.tm-bda-align-center .tm-bda-meta {
+  text-align: center;
+  align-self: center;
+}
+
+/* Eyebrow — publication label (MASH ACADEMY) */
+.tm-bda-eyebrow {
+  display: inline-block;
+  margin-bottom: clamp(14px, 2vw, 22px);
+  padding-left: 0;
+
+
+  color: #3d4d0e;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif) !important;
+  font-size: 11px;
   font-weight: 800;
-  line-height: 1.35;
-  text-align: right;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+/* Category label — clearly above the title */
+.tm-bda-category {
+  display: block;
+  margin-bottom: clamp(10px, 1.5vw, 16px);
+  color: var(--tm-bda-accent);
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif) !important;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.tm-blog-detail-head h1 {
-  grid-column: 1;
-  max-width: 920px;
-  margin: 0;
-  color: var(--tm-blog-detail-accent);
-  font-family: var(
-    --tm-theme-font-heading,
-    "Space Grotesk",
-    "Inter",
-    sans-serif
-  ) !important;
-  font-size: clamp(40px, 5.6vw, 72px);
-  line-height: 0.98;
-  font-weight: 800;
-  letter-spacing: 0;
+/* Dominant article title */
+.tm-bda-title {
+  margin: 0 0 clamp(12px, 2vw, 20px);
+  color: var(--tm-bda-text);
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
+  font-size: clamp(32px, 5vw, 58px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   overflow-wrap: anywhere;
 }
 
-.tm-blog-detail-head p {
-  grid-column: 1;
-  max-width: 760px;
-  margin: 0;
-  color: #d8d8d0;
-  font-size: 18px;
-  line-height: 1.58;
+/* Subtitle / excerpt */
+.tm-bda-subtitle {
+  margin: 0 0 clamp(18px, 2.5vw, 28px);
+  color: var(--tm-bda-muted);
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-weight: 400;
+  line-height: 1.5;
 }
 
-.tm-blog-detail-media {
-  position: relative;
-  aspect-ratio: 16 / 8.5;
-  overflow: hidden;
-  border: 1px solid var(--tm-blog-detail-line);
-  background: var(--tm-theme-panel, #f1f1ec);
+/* Meta strip — date · reading time */
+.tm-bda-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  color: var(--tm-bda-muted);
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
 }
 
-.tm-blog-detail-media img {
-  position: absolute;
-  inset: 0;
+.tm-bda-meta-sep {
+  color: var(--tm-bda-line);
+  font-size: 16px;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ── Divider between header and hero ───────────────────────────────────── */
+.tm-bda-header::after {
+  content: "";
   display: block;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none;
-  max-height: none;
-  object-fit: cover !important;
-  transform: translateZ(0) scale(1.16);
-  transform-origin: center center;
+  margin-top: clamp(24px, 3.5vw, 40px);
+  height: 1px;
+  background: var(--tm-bda-line);
+  width: 100%;
 }
 
-.tm-blog-detail-content {
-  width: min(820px, 100%);
-  margin: 0 auto;
-  color: var(--tm-blog-detail-text);
-  font-size: 18px;
-  line-height: 1.74;
+/* ── Hero image ─────────────────────────────────────────────────────────── */
+.tm-bda-hero {
+  margin-bottom: clamp(40px, 6vw, 72px);
+  overflow: hidden;
+  line-height: 0;
+  /* eliminate inline-block gap */
 }
 
-.tm-blog-detail-content :where(h2, h3, h4) {
-  margin: 1.9em 0 0.7em;
-  color: var(--tm-blog-detail-text);
-  font-family: var(
-    --tm-theme-font-heading,
-    "Space Grotesk",
-    "Inter",
-    sans-serif
-  ) !important;
-  line-height: 1.12;
-  font-weight: 800;
+.tm-bda-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  /* Force remove any border-radius the IKAS host page applies */
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Hero width modifiers
+ * We can't use negative margins here because we're inside a flex column
+ * with a capped wrapper. We instead override the wrapper width using CSS
+ * calc from within the element itself via margin trick.
+ */
+
+/* column: stays within reading column — default already */
+.tm-bda-hero--column {
+  /* no override needed */
+}
+
+/* ── Hero image: always aligned with article content ── */
+.tm-bda-hero,
+.tm-bda-hero--column,
+.tm-bda-hero--wide,
+.tm-bda-hero--full {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  transform: none;
+  overflow: hidden;
+}
+
+.tm-bda-hero img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tm-bda-hero--full img {
+  aspect-ratio: 16 / 8;
+}
+
+/* ── Article body (prose) ───────────────────────────────────────────────── */
+.tm-bda-body {
+  color: var(--tm-bda-text);
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
+  font-size: var(--tm-bda-body-size);
+  line-height: 1.78;
+}
+
+/* Paragraphs */
+.tm-bda-body p {
+  margin: 0 0 1.45em;
+}
+
+/* ── Headings ── */
+.tm-bda-body :where(h2, h3, h4) {
+  margin: 2.2em 0 0.6em;
+  color: var(--tm-bda-text);
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+}
+
+.tm-bda-body h2 {
+  font-size: clamp(24px, 3.2vw, 34px);
+  margin-top: 2.4em;
+}
+
+.tm-bda-body h3 {
+  font-size: clamp(20px, 2.4vw, 26px);
+}
+
+.tm-bda-body h4 {
+  font-size: clamp(17px, 1.8vw, 21px);
   letter-spacing: 0;
 }
 
-.tm-blog-detail-content h2 {
-  font-size: clamp(30px, 4vw, 46px);
+/* ── Lists ── */
+.tm-bda-body ul,
+.tm-bda-body ol {
+  margin: 0 0 1.45em;
+  padding-left: 1.6em;
 }
 
-.tm-blog-detail-content h3 {
-  font-size: clamp(24px, 3vw, 34px);
+.tm-bda-body li {
+  margin-bottom: 0.5em;
+  line-height: 1.7;
 }
 
-.tm-blog-detail-content p,
-.tm-blog-detail-content ul,
-.tm-blog-detail-content ol,
-.tm-blog-detail-content blockquote {
-  margin: 0 0 1.15em;
+.tm-bda-body li:last-child {
+  margin-bottom: 0;
 }
 
-.tm-blog-detail-content ul,
-.tm-blog-detail-content ol {
-  padding-left: 1.3em;
+/* ── Blockquotes — editorial pull-quote treatment ── */
+.tm-bda-body blockquote {
+  margin: 2em 0;
+  padding: 0 0 0 1.5em;
+  border-left: 2px solid var(--tm-bda-accent);
+  color: var(--tm-bda-muted);
+  font-size: 1.08em;
+  font-style: normal;
+  line-height: 1.68;
 }
 
-.tm-blog-detail-content li {
-  margin-bottom: 0.45em;
+.tm-bda-body blockquote p {
+  margin: 0 0 0.8em;
 }
 
-.tm-blog-detail-content img {
+.tm-bda-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Inline images ── */
+.tm-bda-body img {
   display: block;
   max-width: 100%;
+  width: auto;
+  /* do NOT stretch to 100% — honour natural width */
   height: auto;
-  margin: 1.4em auto;
-  border: 1px solid var(--tm-blog-detail-line);
+  margin: 1.8em auto;
+  /* Hard reset of any host-page card styling */
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  background: transparent !important;
 }
 
-.tm-blog-detail-content a {
+/* If the CMS wraps images in <figure> or <p>, keep them clean */
+.tm-bda-body figure {
+  margin: 1.8em 0;
+  padding: 0;
+}
+
+.tm-bda-body figure img {
+  margin: 0 auto;
+}
+
+.tm-bda-body figcaption {
+  margin-top: 0.5em;
+  color: var(--tm-bda-muted);
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ── Inline links ── */
+.tm-bda-body a {
   color: inherit;
-  font-weight: 800;
-  text-decoration-color: var(--tm-blog-detail-accent);
-  text-decoration-thickness: 2px;
+  text-decoration: underline;
+  text-decoration-color: var(--tm-bda-accent);
   text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: text-decoration-color 180ms ease;
 }
 
-.tm-blog-detail-content blockquote {
-  padding: 20px;
-  border-left: 4px solid var(--tm-blog-detail-accent);
-  background: #fff;
-  color: var(--tm-blog-detail-muted);
+.tm-bda-body a:hover {
+  text-decoration-color: var(--tm-bda-text);
 }
 
-.tm-blog-detail-content table {
+/* ── Horizontal rules ── */
+.tm-bda-body hr {
+  margin: 2.5em 0;
+  border: none;
+  border-top: 1px solid var(--tm-bda-line);
+}
+
+/* ── Code ── */
+.tm-bda-body code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.87em;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+.tm-bda-body pre {
+  background: #1a1a18;
+  color: #e8e8e4;
+  padding: 1.2em 1.4em;
+  overflow-x: auto;
+  margin: 1.8em 0;
+  font-size: 0.84em;
+  line-height: 1.65;
+}
+
+.tm-bda-body pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ── Tables ── */
+.tm-bda-body table {
   display: block;
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
   border-collapse: collapse;
+  margin: 1.8em 0;
+  font-size: 0.93em;
 }
 
-.tm-blog-detail-content :where(th, td) {
-  padding: 10px 12px;
-  border: 1px solid var(--tm-blog-detail-line);
+.tm-bda-body :where(th, td) {
+  padding: 10px 14px;
+  border: 1px solid var(--tm-bda-line);
   text-align: left;
+  line-height: 1.4;
 }
 
-.tm-blog-detail-setup {
+.tm-bda-body th {
+  background: rgba(0, 0, 0, 0.03);
+  font-weight: 600;
+}
+
+/* ── Setup / empty state ─────────────────────────────────────────────────── */
+.tm-bda-setup {
   display: grid;
   min-height: 240px;
   place-items: center;
   padding: clamp(28px, 5vw, 52px);
-  border: 1px dashed var(--tm-blog-detail-line);
-  background: #fff;
-  color: var(--tm-blog-detail-muted);
+  border: 1px dashed var(--tm-bda-line);
+  color: var(--tm-bda-muted);
   text-align: center;
 }
 
-@media (max-width: 720px) {
-  .three-mash-blog-detail {
-    padding: 34px 14px 72px;
-  }
+/* ══════════════════════════════════════════════════════════════════════════
+   Responsive breakpoints
+   ══════════════════════════════════════════════════════════════════════════ */
 
-  .tm-blog-detail-head {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 28px 20px;
-  }
-
-  .tm-blog-detail-meta {
-    grid-column: auto;
-    grid-row: auto;
-    justify-self: start;
-    max-width: none;
-    text-align: left;
-  }
-
-  .tm-blog-detail-head h1 {
-    grid-column: auto;
-    font-size: clamp(34px, 11vw, 48px);
-    line-height: 1;
-  }
-
-  .tm-blog-detail-head p {
-    grid-column: auto;
-  }
-
-  .tm-blog-detail-head p,
-  .tm-blog-detail-content {
-    font-size: 16px;
-  }
-
-  .tm-blog-detail-media {
-    aspect-ratio: 4 / 3;
-  }
-
-  .tm-blog-detail-media img {
-    transform: translateZ(0) scale(1.12);
+/* ── Tablet ≤ 1024 ─── */
+@media (max-width: 1024px) {
+  .tm-bda-hero--wide {
+    width: calc(100vw - 2 * var(--tm-bda-side-pad));
   }
 }
 
-@media (max-width: 480px) {
-  .tm-blog-detail-head {
-    padding: 24px 18px;
+/* ── Large mobile / small tablet ≤ 768 ─── */
+@media (max-width: 768px) {
+  .tm-bda-title {
+    font-size: clamp(28px, 7.5vw, 42px);
+    letter-spacing: -0.015em;
   }
 
-  .tm-blog-detail-content {
+  .tm-bda-subtitle {
+    font-size: 17px;
+  }
+
+  .tm-bda-body {
+    font-size: clamp(16px, 4.2vw, 18px);
+    line-height: 1.72;
+  }
+
+  .tm-bda-body h2 {
+    font-size: clamp(22px, 5.5vw, 30px);
+  }
+
+  .tm-bda-body h3 {
+    font-size: clamp(18px, 4.5vw, 24px);
+  }
+
+  .tm-bda-hero--wide,
+  .tm-bda-hero--full {
+    width: calc(100% + 2 * var(--tm-bda-side-pad));
+    margin-left: calc(-1 * var(--tm-bda-side-pad));
+    transform: none;
+  }
+
+  /* Inline images: never exceed viewport on mobile */
+  .tm-bda-body img {
+    max-width: 100% !important;
+    width: auto !important;
+  }
+}
+
+/* ── Mobile ≤ 640 ─── */
+@media (max-width: 640px) {
+  .three-mash-blog-detail {
+    --tm-bda-side-pad: 22px;
+  }
+
+  .tm-bda-title {
+    font-size: clamp(26px, 8vw, 38px);
+  }
+
+  .tm-bda-hero img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .tm-bda-hero--full img {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+/* ── Small mobile ≤ 480 ─── */
+@media (max-width: 480px) {
+  .three-mash-blog-detail {
+    --tm-bda-side-pad: 20px;
+    --tm-bda-body-size: 16px;
+  }
+
+  .tm-bda-title {
+    font-size: clamp(24px, 8.5vw, 34px);
+    letter-spacing: -0.01em;
+  }
+
+  .tm-bda-subtitle {
     font-size: 15px;
+  }
+
+  .tm-bda-body {
     line-height: 1.68;
+  }
+
+  .tm-bda-body h2 {
+    font-size: clamp(20px, 6.5vw, 26px);
+    margin-top: 2em;
+  }
+
+  .tm-bda-body h3 {
+    font-size: clamp(17px, 5.5vw, 22px);
+  }
+}
+
+/* ── Extra-small mobile ≤ 375 ─── */
+@media (max-width: 375px) {
+  .three-mash-blog-detail {
+    --tm-bda-side-pad: 18px;
+  }
+
+  .tm-bda-title {
+    font-size: clamp(22px, 8vw, 30px);
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+
+  .tm-bda-back,
+  .tm-bda-back span {
+    transition: none;
   }
 }

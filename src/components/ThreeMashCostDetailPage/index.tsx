@@ -203,6 +203,7 @@ export function ThreeMashCostDetailPage(props: Props) {
       (window as any)._remakeTotal = rounded;
       try {
         localStorage.setItem("mash_remake_cost", String(rounded));
+        localStorage.setItem("mash_calculator_mode", mode);
       } catch (_) {}
       setSaved(true);
     }
@@ -210,8 +211,8 @@ export function ThreeMashCostDetailPage(props: Props) {
 
   const baseHomeUrl = props.useButtonHref || "/";
   const homeHref = baseHomeUrl.includes("?")
-    ? `${baseHomeUrl}&rc=${Math.round(total)}#hesap`
-    : `${baseHomeUrl}?rc=${Math.round(total)}#hesap`;
+    ? `${baseHomeUrl}&rc=${Math.round(total)}&mode=${mode}#hesap`
+    : `${baseHomeUrl}?rc=${Math.round(total)}&mode=${mode}#hesap`;
 
   const d = modelData[mode];
 

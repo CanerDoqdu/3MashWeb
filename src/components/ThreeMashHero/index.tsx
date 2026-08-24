@@ -295,6 +295,35 @@ function percentage(
   return `${numberInRange(value, fallback, min, max)}%`;
 }
 
+function importedCalculatorState() {
+  if (typeof window === "undefined") {
+    return { mode: "clinic" as Mode, cost: 0 };
+  }
+
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const urlMode = params.get("mode");
+    const storedMode = window.localStorage.getItem("mash_calculator_mode");
+    const mode =
+      urlMode === "lab" || urlMode === "clinic"
+        ? urlMode
+        : storedMode === "lab" || storedMode === "clinic"
+          ? storedMode
+          : "clinic";
+    const urlCost = Number(params.get("rc"));
+    const storedCost = Number(
+      window.localStorage.getItem("mash_remake_cost"),
+    );
+
+    return {
+      mode: mode as Mode,
+      cost: urlCost > 0 ? urlCost : storedCost > 0 ? storedCost : 0,
+    };
+  } catch {
+    return { mode: "clinic" as Mode, cost: 0 };
+  }
+}
+
 function rangeProgress(value: number, min: number, max: number) {
   if (max <= min) return 0;
   return clamp(((value - min) / (max - min)) * 100, 0, 100);
@@ -420,16 +449,29 @@ export function ThreeMashHero(props: Props) {
     ],
   );
 
-  const [mode, setMode] = useState<Mode>("clinic");
+  const importedState = importedCalculatorState();
+  const [mode, setMode] = useState<Mode>(importedState.mode);
   const active = presets[mode];
   const [work, setWork] = useState(active.workDefault);
   const [rpt, setRpt] = useState(active.rptDefault);
-  const [cost, setCost] = useState(active.costDefault);
-  const [animatedLoss, setAnimatedLoss] = useState(10000);
-  const heroAnimatingRef = useRef(true);
+  const [cost, setCost] = useState(
+    importedState.cost > 0 ? importedState.cost : active.costDefault,
+  );
+  const initialCost =
+    importedState.cost > 0 ? importedState.cost : active.costDefault;
+  const initialLoss =
+    active.workDefault * 12 * (active.rptDefault / 100) * initialCost;
+  const initialAnimatedLoss = initialLoss > 100000 ? 100000 : 10000;
+  const [animatedLoss, setAnimatedLoss] = useState(initialAnimatedLoss);
+  const preserveImportedValuesRef = useRef(importedState.cost > 0);
+  const animatedLossRef = useRef(initialAnimatedLoss);
   const currentLossRef = useRef(0);
 
   useEffect(() => {
+    if (preserveImportedValuesRef.current) {
+      preserveImportedValuesRef.current = false;
+      return;
+    }
     const next = presets[mode];
     setWork(next.workDefault);
     setRpt(next.rptDefault);
@@ -438,29 +480,11 @@ export function ThreeMashHero(props: Props) {
 
   function applyMode(nextMode: Mode) {
     const next = presets[nextMode];
-    stopHeroAnimation();
     setMode(nextMode);
     setWork(next.workDefault);
     setRpt(next.rptDefault);
     setCost(next.costDefault);
   }
-
-  useEffect(() => {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const urlCost = Number(params.get("rc"));
-      const storedCost = Number(
-        window.localStorage.getItem("mash_remake_cost"),
-      );
-      const externalCost =
-        urlCost > 0 ? urlCost : storedCost > 0 ? storedCost : 0;
-      if (externalCost > 0) {
-        setCost(externalCost);
-      }
-    } catch {
-      // External cost handoff is optional.
-    }
-  }, []);
 
   const yearly = work * 12;
   const currentLoss = yearly * (rpt / 100) * cost;
@@ -472,7 +496,7 @@ export function ThreeMashHero(props: Props) {
   const percent = props.percentPrefix || "";
   const negative = props.negativePrefix || "";
   const positive = props.positivePrefix || "";
-  const titleLoss = heroAnimatingRef.current ? animatedLoss : currentLoss;
+  const titleLoss = animatedLoss;
   
   const formattedLoss = `${currency}${formatPlain(titleLoss, props.locale)}`;
   const titleUnderlineImage = imageSource(props.titleUnderlineImageUrl);
@@ -486,19 +510,18 @@ export function ThreeMashHero(props: Props) {
   const isAtTarget = rpt <= active.targetRepeatRate;
   const secondaryButtonHref = consultationHref(props.secondaryButtonHref);
   const secondaryButtonExternal = /^https?:\/\//i.test(secondaryButtonHref);
-
-  useEffect(() => {
-    if (!heroAnimatingRef.current) {
-      setAnimatedLoss(currentLoss);
-    }
-  }, [currentLoss]);
+  const titleBeforeAmount =
+    mode === "lab"
+      ? props.labTitleBeforeAmount ||
+        props.titleBeforeAmount?.replace("Kliniğiniz", "Laboratuvarınız")
+      : props.titleBeforeAmount;
 
   useEffect(() => {
     if (
       typeof window === "undefined" ||
       typeof window.requestAnimationFrame !== "function"
     ) {
-      heroAnimatingRef.current = false;
+      animatedLossRef.current = currentLoss;
       setAnimatedLoss(currentLossRef.current);
       return;
     }
@@ -506,37 +529,34 @@ export function ThreeMashHero(props: Props) {
     let animationFrame = 0;
     let startTime: number | null = null;
     const targetLoss = currentLossRef.current;
-    const startLoss = 10000;
+    const startLoss = animatedLossRef.current;
 
     const animate = (timestamp: number) => {
-      if (!heroAnimatingRef.current) return;
       if (startTime === null) startTime = timestamp;
 
       const progress = Math.min((timestamp - startTime) / 1500, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setAnimatedLoss(startLoss + (targetLoss - startLoss) * eased);
+      const nextLoss = startLoss + (targetLoss - startLoss) * eased;
+      animatedLossRef.current = nextLoss;
+      setAnimatedLoss(nextLoss);
 
       if (progress < 1) {
         animationFrame = window.requestAnimationFrame(animate);
         return;
       }
 
-      heroAnimatingRef.current = false;
+      animatedLossRef.current = currentLossRef.current;
       setAnimatedLoss(currentLossRef.current);
     };
 
     animationFrame = window.requestAnimationFrame(animate);
     return () => window.cancelAnimationFrame(animationFrame);
-  }, []);
-
-  const stopHeroAnimation = () => {
-    heroAnimatingRef.current = false;
-  };
+  }, [currentLoss, importedState.cost]);
 
   const themeStyle = {
     "--tmhero-bg": "var(--bg, #FAFAF7)",
     "--tmhero-text": "var(--ink, #0E0E0C)",
-    "--tmhero-muted": "var(--mut, #6B6B63)",
+    "--tmhero-muted": props.mutedTextColor || "#55554E",
     "--tmhero-sub": "var(--sub, #55554E)",
     "--tmhero-line": "var(--line, #E6E6E0)",
     "--tmhero-line-strong": "var(--line2, #D5D5CD)",
@@ -548,7 +568,7 @@ export function ThreeMashHero(props: Props) {
     "--tmhero-secondary-button-text": "var(--ink, #0E0E0C)",
     "--tmhero-lab-accent": "var(--lime, #C7F136)",
     "--tmhero-lab-accent-text": "var(--lime-ink, #3D4D0E)",
-    "--tmhero-danger": "var(--red, #E2492F)",
+    "--tmhero-danger": props.dangerColor || "#B52E1E",
     "--tmhero-word-color": "var(--lime, #C7F136)",
     "--tmhero-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmhero-word-style": props.styledPhraseItalic ? "italic" : "inherit",
@@ -632,7 +652,7 @@ export function ThreeMashHero(props: Props) {
             </div>
 
             <h1>
-              <RichInline value={props.titleBeforeAmount} wordStyle={props} />{" "}
+              <RichInline value={titleBeforeAmount} wordStyle={props} />{" "}
              <span className="tmhero-loss-line" style={{ display: "block" }}>
   <span className="tmhero-money">{formattedLoss}</span>{" "}
   <RichInline value={props.titleAfterAmount} wordStyle={props} />
@@ -763,7 +783,6 @@ export function ThreeMashHero(props: Props) {
                     } as any
                   }
                   onInput={(event) => {
-                    stopHeroAnimation();
                     setWork(
                       Number((event.currentTarget as HTMLInputElement).value),
                     );
@@ -794,7 +813,6 @@ export function ThreeMashHero(props: Props) {
                     } as any
                   }
                   onInput={(event) => {
-                    stopHeroAnimation();
                     setRpt(
                       Number((event.currentTarget as HTMLInputElement).value),
                     );
@@ -825,7 +843,6 @@ export function ThreeMashHero(props: Props) {
                     } as any
                   }
                   onInput={(event) => {
-                    stopHeroAnimation();
                     setCost(
                       Number((event.currentTarget as HTMLInputElement).value),
                     );

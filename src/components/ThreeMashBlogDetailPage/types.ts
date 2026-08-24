@@ -12,4 +12,18 @@ export interface Props {
   mutedTextColor?: string;
   lineColor?: string;
   accentColor?: string;
+  /** Makale gövde yazı boyutu. Örnek: 18px, 20px. */
+  bodyFontSize?: string;
+  /** Makale metninin maksimum genişliği. Örnek: 680px, 760px. */
+  contentWidth?: string;
+  /** column: metin sütunuyla sınırlı · wide: daha geniş (varsayılan) · full: tam ekran genişliği */
+  heroImageWidth?: string;
+  /** left: sola hizalı (varsayılan) · center: ortalı */
+  titleAlign?: string;
+  /** compact: dar · normal · generous: geniş (varsayılan) */
+  headerSpacing?: string;
+  showPublicationLabel?: boolean;
+  showCategory?: boolean;
+  showReadingTime?: boolean;
+  showAuthor?: boolean;
 }

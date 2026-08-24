@@ -130,4 +130,5 @@ export interface Props {
   styledPhraseItalic?: boolean;
   primaryButtonTextColor?: string;
   secondaryButtonTextColor?: string;
+  labTitleBeforeAmount?: string;
 }
