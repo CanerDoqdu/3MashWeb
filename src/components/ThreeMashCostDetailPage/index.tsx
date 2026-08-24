@@ -231,8 +231,11 @@ export function ThreeMashCostDetailPage(props: Props) {
             <a href={props.useButtonHref || "3MASH-Anasayfa-Konsept-v2.html"}>
               {props.breadcrumbHomeText || "Ana sayfa"}
             </a>{" "}
-            &nbsp;/&nbsp; {props.breadcrumbParentText || "Tasarruf hesaplayıcı"} &nbsp;/&nbsp;{" "}
-            {props.breadcrumbCurrentText || "Bir tekrarın maliyeti"}
+            &nbsp;/&nbsp;{" "}
+            <a href={(props.useButtonHref || "3MASH-Anasayfa-Konsept-v2.html") + "#hesap"}>
+              {props.breadcrumbParentText || "Tasarruf hesaplayıcı"}
+            </a>{" "}
+            &nbsp;/&nbsp; {props.breadcrumbCurrentText || "Bir tekrarın maliyeti"}
           </div>
           {props.heroTitle ? (
             <h1 dangerouslySetInnerHTML={{ __html: props.heroTitle }} />
