@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bir tekrarın (remake) gerçek maliyeti nedir? | 3mash</title>
+<meta name="description" content="Dental bir remake ortalama ~500 dolara mal olur — ve bu maliyetin çoğu lab ücreti değil, koltuk süresidir. Ulusal PBRN çalışması (3.750 kron) ve maliyet kalemleriyle kendi rakamınızı hesaplayın.">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 2 L88 24 V76 L50 98 L12 76 V24 Z" fill="%2322221E"/><g fill="none" stroke="%23C7F136" stroke-width="9"><circle cx="37" cy="50" r="15"/><circle cx="63" cy="50" r="15"/></g></svg>'>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@1,500;1,600&family=Baloo+2:wght@800&display=swap');
+:root{--bg:#FAFAF7;--ink:#0E0E0C;--sub:#55554e;--mut:#8f8f86;--line:#E6E6E0;--line2:#d5d5cd;--lime:#C7F136;--lime-ink:#3d4d0e;--lime-soft:#F2F8DC;--red:#E2492F;--panel:#F1F1EC;--dark:#0E0E0C}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 32px}
+h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em}
+.serif{font-family:'Newsreader',serif;font-style:italic;font-weight:500}
+.micro{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-weight:600;font-size:15px;border-radius:10px;padding:13px 24px;text-decoration:none;border:1.5px solid var(--ink);transition:.16s;cursor:pointer}
+.btn:hover{background:#2a2a26}
+.btn.lime{background:var(--lime);border-color:var(--lime);color:var(--ink)}
+.btn.line{background:transparent;color:var(--ink);border-color:var(--line2)}
+.btn.line:hover{border-color:var(--ink)}
+/* header */
+header{position:sticky;top:0;z-index:60;background:rgba(250,250,247,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--ink)}
+.logo svg{height:22px}.logo span{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:23px;transform:translateY(-2px);color:var(--ink)}
+.back{font-size:14px;color:var(--sub);text-decoration:none;font-weight:500}
+.back:hover{color:var(--ink)}
+/* hero */
+.top{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:20px;display:block}
+.crumb a{color:var(--mut);text-decoration:none}.crumb a:hover{color:var(--ink)}
+.top h1{font-size:46px;font-weight:600;line-height:1.15;margin-top:0;max-width:760px}
+.top h1 .em{font-family:'Newsreader',serif;font-style:italic;font-weight:500}
+.answer{font-size:19px;line-height:1.6;color:var(--sub);max-width:720px;margin-top:24px}
+.answer b{color:var(--ink);font-weight:600}
+.answer .k{background:var(--lime);padding:1px 7px;border-radius:4px;font-weight:600;color:var(--ink)}
+/* layout */
+.cols{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;padding:56px 0;align-items:start}
+/* calculator */
+.calc{border:1px solid var(--line);background:#fff;border-radius:20px;overflow:hidden;position:sticky;top:86px;z-index:20;box-shadow:0 24px 60px rgba(14,14,12,.07)}
+.calc .h{padding:16px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.seg{display:flex;gap:8px;padding:18px 24px 6px}
+.seg button{flex:1;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:11px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--sub);cursor:pointer;transition:.15s}
+.seg button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.li{padding:14px 24px 6px}
+.li .lab{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:var(--sub);margin-bottom:9px}
+.li .lab .hint{font-size:11.5px;color:var(--mut)}
+.li .lab b{font-family:'Space Grotesk',sans-serif;color:var(--ink);font-size:15px;font-weight:700}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--lime) var(--p,40%),#e8e8e1 var(--p,40%));outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3.5px solid var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.18);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:#fff;border:3.5px solid var(--ink);cursor:pointer}
+.calc .bar{margin:16px 24px 0;height:16px;border-radius:8px;overflow:hidden;display:flex;border:1px solid var(--line)}
+.calc .bar span{height:100%}
+.calc .legend{padding:12px 24px 4px;display:flex;flex-wrap:wrap;gap:8px 16px}
+.calc .legend div{font-size:11.5px;color:var(--sub);display:flex;align-items:center;gap:6px}
+.calc .legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.calc .tot{margin:14px 24px 0;padding:18px 22px;background:var(--lime-soft);border-radius:14px;display:flex;justify-content:space-between;align-items:center}
+.calc .tot .micro{color:var(--lime-ink)}
+.calc .tot .v{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;letter-spacing:-.02em}
+.calc .use{margin:16px 24px 22px;display:flex;gap:10px}
+.calc .use .btn{flex:1;justify-content:center;font-size:14px;padding:12px}
+.saved{font-size:12px;color:var(--lime-ink);text-align:center;padding:0 24px 18px;display:none}
+/* explanatory */
+.explain h2{font-size:26px;font-weight:600;margin-bottom:6px}
+.explain>p{font-size:15.5px;line-height:1.75;color:var(--sub);margin-top:12px}
+.explain>p b{color:var(--ink);font-weight:600}
+.study{border:1px solid var(--line);background:#fff;border-radius:18px;padding:26px 28px;margin-top:26px}
+.study .tag{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--lime-ink);background:var(--lime-soft);padding:5px 11px;border-radius:6px;display:inline-block;margin-bottom:12px}
+.study h3{font-size:18.5px;font-weight:600;margin-top:0;line-height:1.45;display:block}
+.study .meta{font-size:12.5px;color:var(--mut);margin-top:8px;line-height:1.5}
+.study ul{list-style:none;margin-top:16px;display:grid;gap:8px}
+.study li{position:relative;padding:4px 0 4px 26px;font-size:14px;color:var(--sub);line-height:1.6}
+.study li:before{content:'';position:absolute;left:0;top:11px;width:8px;height:8px;border-radius:2px;background:var(--lime)}
+.study li b{color:var(--ink);font-weight:600}
+.study .link{display:inline-block;margin-top:14px;font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--lime)}
+.callout{border-left:4px solid var(--lime);background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin-top:22px}
+.callout p{font-size:14.5px;line-height:1.7;color:var(--sub)}.callout b{color:var(--ink)}
+.mini-src{font-size:12px;color:var(--mut);margin-top:26px;line-height:1.7}
+.mini-src a{color:var(--lime-ink)}
+footer{background:var(--dark);color:#8b8b80;padding:32px 0;font-size:13px;margin-top:40px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer a{color:#c9c9c9;text-decoration:none}
+@media(max-width:920px){
+  .cols{grid-template-columns:1fr;gap:40px;padding:36px 0 48px}
+  .calc{position:static}
+  .top{padding:40px 0 28px}
+  .top h1{font-size:33px;line-height:1.2}
+  .top h1 .em{font-size:1.12em;display:inline-block;margin-top:3px}
+  .answer{font-size:16.5px;line-height:1.6;margin-top:18px}
+  .wrap{padding:0 20px}
+}
+@media(max-width:600px){
+  .top{padding:32px 0 24px}
+  .crumb{font-size:12px;margin-bottom:16px;line-height:1.4}
+  .top h1{font-size:27px;line-height:1.25}
+  .top h1 .em{font-size:1.18em;display:inline-block;margin-top:4px}
+  .answer{font-size:15.5px;line-height:1.65;margin-top:16px}
+  .calc .h{padding:14px 18px}
+  .seg{padding:14px 18px 8px}
+  .li{padding:12px 18px 6px}
+  .calc .bar, .calc .legend, .calc .tot, .calc .use{margin-left:18px;margin-right:18px}
+  .study{padding:20px}
+  .callout{padding:18px 20px}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="logo" href="3MASH-Anasayfa-Konsept-v2.html"><svg viewBox="0 0 60 32" fill="none"><g stroke="#C7F136" stroke-width="8"><circle cx="16" cy="16" r="11"/><circle cx="38" cy="16" r="11"/></g></svg><span>mash</span></a>
+  <a class="back" href="3MASH-Anasayfa-Konsept-v2.html#hesap">← Hesaplayıcıya dön</a>
+</div></header>
+
+<div class="top"><div class="wrap">
+  <div class="crumb"><a href="3MASH-Anasayfa-Konsept-v2.html">Ana sayfa</a> &nbsp;/&nbsp; Tasarruf hesaplayıcı &nbsp;/&nbsp; Bir tekrarın maliyeti</div>
+  <h1>Bir tekrarın gerçek maliyeti neden<br><span class="em">~500 dolar?</span></h1>
+  <p class="answer">Kısa cevap: çünkü bir remake'in maliyeti <b>lab ücretinden ibaret değildir.</b> Asıl yükü <span class="k">koltuk süresi</span> oluşturur — yeniden prep, yeniden ölçü/tarama ve yeniden yapıştırma randevusu. Ulusal ölçekli klinik veriler tekrar oranını ortalama <b>%3,8</b>, ama hekimden hekime <b>%0–42</b> aralığında gösteriyor. Aşağıda kendi kalemlerinizle gerçek rakamınızı çıkarabilirsiniz.</p>
+</div></div>
+
+<div class="wrap cols">
+  <!-- SOL: hesaplayıcı (sticky) -->
+  <div class="calc">
+    <div class="h"><span class="micro">TEKRAR MALİYETİ · KALEM KALEM</span><span class="micro" id="perLabel">KLİNİK</span></div>
+    <div class="seg" id="seg">
+      <button class="on" data-m="klinik">Klinik</button>
+      <button data-m="lab">Laboratuvar</button>
+    </div>
+    <div id="fields"></div>
+    <div class="bar" id="bar"></div>
+    <div class="legend" id="legend"></div>
+    <div class="tot"><span class="micro">BİR TEKRARIN TOPLAM MALİYETİ</span><span class="v" id="total">$0</span></div>
+    <div class="use">
+      <a class="btn lime" id="useBtn" href="3MASH-Anasayfa-Konsept-v2.html?rc=499#hesap">Bu değeri ana sayfada kullan →</a>
+    </div>
+    <div class="saved" id="saved">✓ Değer kaydedildi — ana sayfadaki hesaplayıcıya taşındı.</div>
+  </div>
+
+  <!-- SAĞ: açıklama + bilim -->
+  <div class="explain">
+    <h2>Maliyet nereden geliyor?</h2>
+    <p>Sektördeki yaygın yanılgı, bir tekrarın maliyetini yalnızca <b>yeniden lab ücreti</b> olarak görmektir. Oysa bir kron reddedildiğinde asıl kaybı yaratan üç kalem vardır ve en büyüğü ilk sırada:</p>
+    <p><b>1. Koltuk süresi (en büyük kalem).</b> Hastayı geri çağırmak, yeniden prep/ölçü almak ve yeni işi yapıştırmak ortalama 45–75 dakika alır. Bir kliniğin ortalama işletme gideri saatte <b>~$375</b> olarak modellenir; bu tek başına $280–470 demektir.</p>
+    <p><b>2. Yeniden üretim + lojistik.</b> Yeni birimin lab ücreti, iki yönlü kargo ve varsa acele (rush) farkı.</p>
+    <p><b>3. Görünmeyenler.</b> İskonto/jest, boşa giden randevu slotu, malzeme israfı ve hasta güveninde aşınma.</p>
+
+    <div class="study">
+      <span class="tag">HAKEMLİ KLİNİK VERİ</span>
+      <h3>Tekrar oranı gerçekte ne kadar? Ulusal PBRN, 3.750 kron üzerinde ölçtü.</h3>
+      <div class="meta">McCracken M.S. ve ark. (National Dental PBRN Collaborative Group) · <i>Journal of Prosthodontics</i>, 2019;28(2):122–130</div>
+      <ul>
+        <li><b>205 diş hekimi</b>, gerçek klinik pratiğinde <b>3.750 tek-ünite kron</b> değerlendirdi.</li>
+        <li>Ortalama tekrar (remake) oranı <b>%3,8</b> — fakat hekimden hekime <b>%0 ile %42</b> arasında değişiyor.</li>
+        <li>Hekimlerin %58'i hiç kron reddetmezken, tüm reddetmeler %42'lik gruptan geldi — yani sorun <b>tekil, çözülebilir</b> bir uygulama farkı.</li>
+        <li>En sık ret sebepleri: <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlık</b> — üçü de doğrudan <b>ölçüsel hassasiyet</b> problemi.</li>
+      </ul>
+      <a class="link" href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener">DOI: 10.1111/jopr.12995 · Kaynağı aç →</a>
+    </div>
+
+    <div class="study">
+      <span class="tag">HAKEMLİ · ÖLÇÜSEL DOĞRULUK</span>
+      <h3>Peki sapma neden oluşuyor? Doğruluk, kullanılan sisteme göre uçtan uca değişiyor.</h3>
+      <div class="meta">Etemad-Shahidi Y. ve ark. · <i>J Clin Med</i> 2020 (sistematik derleme) &nbsp;·&nbsp; Németh A. ve ark. · <i>J Dentistry</i> 2023 (ağ meta-analizi)</div>
+      <ul>
+        <li>Sistematik derlemede full-arch model doğruluğu en iyi sistemde <b>3,3 µm</b>'ye inerken, bazı cihazlarda <b>130–190 µm</b>'ye çıkıyor — yani doğru sonucu cihaz ve parametre belirliyor.</li>
+        <li>Ağ meta-analizi <b>SLA, DLP ve PolyJet</b>'i en doğru teknolojiler olarak gösteriyor (SLA ~<b>86,7 µm</b>, DLP ~<b>97,9 µm</b> ortalama trueness).</li>
+        <li>Yani sapma tesadüf değil, yönetilebilir bir değişken. <b>3mash bu değişkenleri birlikte kalibre ederek ±20 µm'yi her baskıda</b> sabitler; tekrar oranı ve maliyet de bu sayede düşer.</li>
+      </ul>
+      <a class="link" href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener">DOI: 10.3390/jcm9103357 →</a>
+      &nbsp;&nbsp;<a class="link" href="https://doi.org/10.1016/j.jdent.2023.104532" target="_blank" rel="noopener">DOI: 10.1016/j.jdent.2023.104532 →</a>
+    </div>
+
+    <div class="callout">
+      <p><b>3mash bağlantısı:</b> çalışmanın işaret ettiği üç sebep de (proksimal uyum, marjin, estetik) <b>±20 µm tekrar edilebilir hassasiyetle</b> doğrudan azalır. Tekrar oranınızı %42'lerden ya da %10'lardan <b>≤%3'e</b> çektiğinizde, yukarıdaki kalem-kalem maliyet aynı oranda düşer.</p>
+    </div>
+
+    <p class="mini-src">Kaynaklar: Tekrar oranı ve ret sebepleri — McCracken ve ark., <a href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener">J Prosthodont 2019 (10.1111/jopr.12995)</a>. Ölçüsel doğruluk — Etemad-Shahidi ve ark., <a href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener">J Clin Med 2020 (10.3390/jcm9103357)</a> ve Németh ve ark., <a href="https://doi.org/10.1016/j.jdent.2023.104532" target="_blank" rel="noopener">J Dentistry 2023 (10.1016/j.jdent.2023.104532)</a>. Maliyet modeli (koltuk süresi/işletme gideri) — Spear Education, “The Cost of Laboratory Remakes.” Rakamlar tahminî olup iş akışınıza göre değişir.</p>
+  </div>
+</div>
+
+<footer><div class="wrap">
+  <div>© 2026 3MASH Teknoloji A.Ş. — Antalya Teknokent</div>
+  <div><a href="3MASH-Anasayfa-Konsept-v2.html#hesap">← Ana sayfa</a> · <a href="https://3mash.com/pages/iletisim">Ücretsiz danışmanlık</a></div>
+</div></footer>
+
+<script>
+const STORAGE_KEY = 'mash_cost_detail_state';
+
+const modelData={
+  klinik:{ per:'KLİNİK', fields:[
+    {id:'chairRate', label:'Hekim + koltuk maliyeti', hint:'işletme gideri, $/saat', min:150,max:700,step:25,val:375,color:'#E2492F',kind:'rate'},
+    {id:'chairMin',  label:'Bir tekrara harcanan süre',hint:'prep + ölçü + yapıştırma, dk',min:20,max:120,step:5,val:55,color:'#E2492F',kind:'min',pairsWith:'chairRate'},
+    {id:'units',     label:'İşteki ünite sayısı',      hint:'birim',min:1,max:6,step:1,val:1,color:'#7C9C36',kind:'mult'},
+    {id:'labFee',    label:'Yeniden lab ücreti',       hint:'ünite başına, $',min:0,max:400,step:10,val:110,color:'#7C9C36',kind:'perUnit'},
+    {id:'ship',      label:'Kargo / lojistik',         hint:'gidiş-dönüş, $',min:0,max:120,step:5,val:25,color:'#B7B7AE',kind:'flat'},
+    {id:'misc',      label:'İskonto / jest / israf',   hint:'$',min:0,max:200,step:5,val:20,color:'#B7B7AE',kind:'flat'}
+  ]},
+  lab:{ per:'LAB', fields:[
+    {id:'matUnit',   label:'Yeniden üretim malzemesi', hint:'reçine/disk, ünite başına $',min:0,max:200,step:5,val:35,color:'#E2492F',kind:'perUnit'},
+    {id:'unitsL',    label:'İşteki ünite sayısı',      hint:'birim',min:1,max:12,step:1,val:3,color:'#7C9C36',kind:'mult'},
+    {id:'labRate',   label:'Üretim iş gücü',           hint:'baskı+kürleme+QC, $/saat',min:20,max:200,step:10,val:60,color:'#E2492F',kind:'rate'},
+    {id:'labMin',    label:'Yeniden üretim süresi',    hint:'dk',min:10,max:180,step:10,val:70,color:'#E2492F',kind:'min',pairsWith:'labRate'},
+    {id:'shipL',     label:'Kargo (iki yön)',          hint:'$',min:0,max:150,step:5,val:35,color:'#B7B7AE',kind:'flat'},
+    {id:'goodwill',  label:'İskonto / müşteri jesti',  hint:'$',min:0,max:250,step:10,val:40,color:'#B7B7AE',kind:'flat'}
+  ]}
+};
+
+let mode='klinik';
+const $=id=>document.getElementById(id);
+const fmt=n=>'$'+Math.round(n).toLocaleString('tr-TR');
+
+function loadSavedState(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (data.mode && modelData[data.mode]) {
+        mode = data.mode;
+        document.querySelectorAll('#seg button').forEach(b => {
+          b.classList.toggle('on', b.dataset.m === mode);
+        });
+      }
+      if (data.values) {
+        Object.keys(modelData).forEach(m => {
+          modelData[m].fields.forEach(f => {
+            if (typeof data.values[f.id] === 'number') {
+              f.val = data.values[f.id];
+            }
+          });
+        });
+      }
+    }
+  } catch(e) {}
+}
+
+function saveCurrentState(){
+  try {
+    const values = {};
+    Object.keys(modelData).forEach(m => {
+      modelData[m].fields.forEach(f => {
+        const inp = $(f.id);
+        if (inp) values[f.id] = Number(inp.value);
+        else values[f.id] = f.val;
+      });
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      mode: mode,
+      values: values
+    }));
+    localStorage.setItem('mash_remake_cost', window._remakeTotal);
+  } catch(e) {}
+}
+
+function build(){
+  const d=modelData[mode];
+  $('perLabel').textContent=d.per;
+  const wrap=$('fields'); wrap.innerHTML='';
+  d.fields.forEach(f=>{
+    const div=document.createElement('div'); div.className='li';
+    div.innerHTML=`<div class="lab"><span>${f.label} <span class="hint">· ${f.hint}</span></span><b id="lb_${f.id}"></b></div>
+      <input type="range" id="${f.id}" min="${f.min}" max="${f.max}" step="${f.step}" value="${f.val}">`;
+    wrap.appendChild(div);
+    div.querySelector('input').addEventListener('input',()=>{
+      f.val = Number($(f.id).value);
+      calc();
+      saveCurrentState();
+    });
+  });
+  calc();
+}
+
+function paint(inp){const p=(inp.value-inp.min)/(inp.max-inp.min)*100;inp.style.setProperty('--p',p+'%');}
+
+function calc(){
+  const d=modelData[mode];
+  const get=id=>Number($(id).value);
+  // etiketler
+  d.fields.forEach(f=>{
+    const el=$('lb_'+f.id); const v=get(f.id);
+    if(f.kind==='rate') el.textContent=fmt(v)+'/sa';
+    else if(f.kind==='min') el.textContent=v+' dk';
+    else if(f.kind==='mult') el.textContent=v+' ünite';
+    else el.textContent=fmt(v);
+    paint($(f.id));
+  });
+  // maliyet kalemleri
+  let parts=[];
+  if(mode==='klinik'){
+    const chair=get('chairRate')*get('chairMin')/60;
+    const production=get('labFee')*get('units');
+    const logi=get('ship')+get('misc');
+    parts=[{n:'Koltuk süresi',v:chair,c:'#E2492F'},{n:'Yeniden üretim',v:production,c:'#7C9C36'},{n:'Lojistik + diğer',v:logi,c:'#B7B7AE'}];
+  } else {
+    const prod=get('matUnit')*get('unitsL') + get('labRate')*get('labMin')/60;
+    const logi=get('shipL')+get('goodwill');
+    parts=[{n:'Üretim (malzeme+işçilik)',v:prod,c:'#E2492F'},{n:'Kargo + jest',v:logi,c:'#B7B7AE'}];
+  }
+  const total=parts.reduce((s,p)=>s+p.v,0);
+  // bar + legend
+  $('bar').innerHTML=parts.map(p=>`<span style="width:${total? (p.v/total*100):0}%;background:${p.c}"></span>`).join('');
+  $('legend').innerHTML=parts.map(p=>`<div><i style="background:${p.c}"></i>${p.n} · <b style="font-family:'Space Grotesk'">${fmt(p.v)}</b></div>`).join('');
+  $('total').textContent=fmt(total);
+  window._remakeTotal=Math.round(total);
+  // butonun linkini her zaman güncel değerle kur
+  const homeTarget = '3MASH-Anasayfa-Konsept-v2.html?rc=' + window._remakeTotal + '#hesap';
+  $('useBtn').setAttribute('href', homeTarget);
+}
+
+$('seg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  document.querySelectorAll('#seg button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); mode=b.dataset.m;
+  saveCurrentState();
+  build();
+});
+
+$('useBtn').addEventListener('click',()=>{
+  saveCurrentState();
+  const s = $('saved'); if(s){ s.style.display = 'block'; }
+});
+
+loadSavedState();
+build();
+</script>
+</body>
+</html>

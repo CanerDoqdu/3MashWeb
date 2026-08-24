@@ -26555,64 +26555,192 @@
       "type": "section",
       "props": [
         {
-          "name": "titleText",
-          "displayName": "Başlık",
+          "name": "heroTitle",
+          "displayName": "Hero Başlık",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Bir tekrarın gerçek maliyeti <em>kalem kalem.</em>",
+          "defaultValue": "Bir tekrarın gerçek maliyeti neden<br><span class=\"em\">~500 dolar?</span>",
           "groupId": "content"
         },
         {
-          "name": "eyebrowText",
-          "displayName": "Üst Etiket",
+          "name": "heroAnswer",
+          "displayName": "Hero Açıklama Metni",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "MALİYET DETAYI",
+          "defaultValue": "Kısa cevap: çünkü bir remake'in maliyeti <b>lab ücretinden ibaret değildir.</b> Asıl yükü <span class=\"k\">koltuk süresi</span> oluşturur — yeniden prep, yeniden ölçü/tarama ve yeniden yapıştırma randevusu. Ulusal ölçekli klinik veriler tekrar oranını ortalama <b>%3,8</b>, ama hekimden hekime <b>%0–42</b> aralığında gösteriyor. Aşağıda kendi kalemlerinizle gerçek rakamınızı çıkarabilirsiniz.",
           "groupId": "content"
         },
         {
-          "name": "descriptionText",
-          "displayName": "Açıklama",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Kron, splint veya model tekrarları sadece malzeme firelerinden oluşmaz. Asıl fark; koltuk süresi, yeniden ölçü, üretim zamanı ve hasta memnuniyeti gibi görünmeyen kalemlerde birikir.",
-          "groupId": "content"
-        },
-        {
-          "name": "primaryButtonText",
-          "displayName": "Birincil Buton",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Ücretsiz danışmanlık al →",
-          "groupId": "links"
-        },
-        {
-          "name": "primaryButtonHref",
-          "displayName": "Birincil Link",
+          "name": "breadcrumbHomeText",
+          "displayName": "Breadcrumb Ana Sayfa",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum",
-          "groupId": "links"
+          "defaultValue": "Ana sayfa",
+          "groupId": "content"
         },
         {
-          "name": "secondaryButtonText",
-          "displayName": "İkincil Buton",
-          "type": "RICH_TEXT",
-          "required": false,
-          "defaultValue": "Ücretsiz danışmanlık al",
-          "groupId": "links"
-        },
-        {
-          "name": "secondaryButtonHref",
-          "displayName": "İkincil Link",
+          "name": "breadcrumbParentText",
+          "displayName": "Breadcrumb Üst Başlık",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum",
-          "groupId": "links"
+          "defaultValue": "Tasarruf hesaplayıcı",
+          "groupId": "content"
+        },
+        {
+          "name": "breadcrumbCurrentText",
+          "displayName": "Breadcrumb Mevcut Sayfa",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bir tekrarın maliyeti",
+          "groupId": "content"
+        },
+        {
+          "name": "defaultChairRate",
+          "displayName": "Klinik: Saatlik Koltuk Maliyeti ($/saat)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 375,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "defaultChairMin",
+          "displayName": "Klinik: Tekrara Harcanan Süre (dk)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 55,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "defaultUnits",
+          "displayName": "Klinik: Ünite Sayısı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "defaultLabFee",
+          "displayName": "Klinik: Lab Ücreti ($/ünite)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 110,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "defaultShip",
+          "displayName": "Klinik: Kargo / Lojistik ($)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 25,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "defaultMisc",
+          "displayName": "Klinik: İskonto / Jest / İsraf ($)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 20,
+          "groupId": "clinicCalculator"
+        },
+        {
+          "name": "defaultMatUnit",
+          "displayName": "Lab: Malzeme Maliyeti ($/ünite)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 35,
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "defaultUnitsL",
+          "displayName": "Lab: Ünite Sayısı",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "defaultLabRate",
+          "displayName": "Lab: Üretim İş Gücü ($/saat)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 60,
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "defaultLabMin",
+          "displayName": "Lab: Üretim Süresi (dk)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 70,
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "defaultShipL",
+          "displayName": "Lab: Kargo İki Yön ($)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 35,
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "defaultGoodwill",
+          "displayName": "Lab: İskonto / Müşteri Jesti ($)",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 40,
+          "groupId": "labCalculator"
+        },
+        {
+          "name": "useButtonText",
+          "displayName": "Ana Sayfada Kullan Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Bu değeri ana sayfada kullan →",
+          "groupId": "buttons"
+        },
+        {
+          "name": "useButtonHref",
+          "displayName": "Ana Sayfa Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3MASH-Anasayfa-Konsept-v2.html",
+          "groupId": "buttons"
+        },
+        {
+          "name": "backButtonText",
+          "displayName": "Geri Dön Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "← Hesaplayıcıya dön",
+          "groupId": "buttons"
+        },
+        {
+          "name": "backButtonHref",
+          "displayName": "Geri Dön Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "3MASH-Anasayfa-Konsept-v2.html#hesap",
+          "groupId": "buttons"
+        },
+        {
+          "name": "consultButtonText",
+          "displayName": "Danışmanlık Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ücretsiz danışmanlık",
+          "groupId": "buttons"
+        },
+        {
+          "name": "consultButtonHref",
+          "displayName": "Danışmanlık Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "https://3mash.com/pages/iletisim",
+          "groupId": "buttons"
         },
         {
           "name": "backgroundColor",
-          "displayName": "Arka Plan",
+          "displayName": "Arka Plan Rengi",
           "type": "COLOR",
           "required": false,
           "defaultValue": "#FAFAF7",
@@ -26628,10 +26756,18 @@
         },
         {
           "name": "mutedTextColor",
-          "displayName": "İkincil Metin",
+          "displayName": "İkincil Metin Rengi",
           "type": "COLOR",
           "required": false,
-          "defaultValue": "#55554e",
+          "defaultValue": "#55554E",
+          "groupId": "appearance"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "Vurgu / Lime Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
           "groupId": "appearance"
         },
         {
@@ -26646,15 +26782,28 @@
       "propGroups": [
         {
           "id": "content",
-          "name": "Content"
+          "name": "Hero & Başlık İçerikleri",
+          "description": "Sayfa başlığı, açıklaması ve gezinti metinleri"
         },
         {
-          "id": "links",
-          "name": "Links"
+          "id": "clinicCalculator",
+          "name": "Klinik Hesaplayıcı Ayarları",
+          "description": "Klinik modu varsayılan saatlik gider, süre ve birim lab ücretleri"
+        },
+        {
+          "id": "labCalculator",
+          "name": "Laboratuvar Hesaplayıcı Ayarları",
+          "description": "Laboratuvar modu varsayılan malzeme, üretim süresi ve kargo ücretleri"
+        },
+        {
+          "id": "buttons",
+          "name": "Butonlar & Yönlendirmeler",
+          "description": "Ana sayfa aktarım, geri dönüş ve danışmanlık buton ayarları"
         },
         {
           "id": "appearance",
-          "name": "Appearance"
+          "name": "Görünüm & Renkler",
+          "description": "Arka plan, metin, vurgu ve kenarlık renkleri"
         }
       ]
     },

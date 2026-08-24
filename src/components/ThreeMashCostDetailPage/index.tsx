@@ -1,613 +1,474 @@
-import { useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { Props } from "./types";
 
-const WHATSAPP_CONSULTATION_HREF =
-  "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum";
+type CostMode = "klinik" | "lab";
 
-type CostItem = {
-  number: string;
-  title: string;
-  value: string;
-  description: string;
-};
-
-type Scenario = {
+type FieldDef = {
+  id: string;
   label: string;
-  value: string;
-  note: string;
-};
-
-type CostMode = "clinic" | "lab";
-
-type CalculatorPreset = {
-  monthlyVolume: number;
-  repeatRate: number;
-  timeHours: number;
-  hourlyCost: number;
-  productionCost: number;
-  adminCost: number;
-};
-
-const clinicCosts: CostItem[] = [
-  {
-    number: "01",
-    title: "Koltuk süresi",
-    value: "$375 / saat",
-    description:
-      "Yeniden çağırma, prova, düzeltme ve yapıştırma randevusu klinikteki en pahalı kalemdir.",
-  },
-  {
-    number: "02",
-    title: "Tekrar ölçü",
-    value: "1 ekstra akış",
-    description:
-      "Tarama veya ölçü yenilendiğinde hekim, asistan ve hasta takvimi aynı vaka için tekrar kullanılır.",
-  },
-  {
-    number: "03",
-    title: "Üretim tekrarı",
-    value: "malzeme + zaman",
-    description:
-      "Reçine, baskı süresi, yıkama, kürleme ve post-process adımları ikinci kez çalışır.",
-  },
-  {
-    number: "04",
-    title: "Hasta deneyimi",
-    value: "güven kaybı",
-    description:
-      "İlk seferde oturmayan restorasyon hasta algısında görünmeyen ama uzun vadeli bir maliyet oluşturur.",
-  },
-];
-
-const labCosts: CostItem[] = [
-  {
-    number: "01",
-    title: "Operatör zamanı",
-    value: "planlama + takip",
-    description:
-      "Dosyanın yeniden hazırlanması, cihaz sırası ve kontrol adımları üretim kapasitesinden yer alır.",
-  },
-  {
-    number: "02",
-    title: "Cihaz kapasitesi",
-    value: "boş slot kaybı",
-    description:
-      "Tekrar baskı, aynı makinede yeni işlerin başlamasını geciktirir ve teslim sürelerini sıkıştırır.",
-  },
-  {
-    number: "03",
-    title: "Sarf tüketimi",
-    value: "reçine + aksesuar",
-    description:
-      "Reçine, film, platform temizliği ve kürleme döngüsü her tekrar için yeniden tüketilir.",
-  },
-  {
-    number: "04",
-    title: "Teslimat baskısı",
-    value: "acil iş",
-    description:
-      "Tekrar üretilen vaka, normal iş akışını keserek hızlandırılmış kontrol ve sevkiyat ihtiyacı doğurur.",
-  },
-];
-
-const presets: Record<CostMode, CalculatorPreset> = {
-  clinic: {
-    monthlyVolume: 120,
-    repeatRate: 10,
-    timeHours: 1,
-    hourlyCost: 375,
-    productionCost: 95,
-    adminCost: 30,
-  },
-  lab: {
-    monthlyVolume: 300,
-    repeatRate: 8,
-    timeHours: 0.6,
-    hourlyCost: 90,
-    productionCost: 120,
-    adminCost: 26,
-  },
-};
-
-function text(value: string | undefined, fallback: string) {
-  return value?.trim() || fallback;
-}
-
-function href(value: string | undefined, fallback: string) {
-  const next = value?.trim();
-  return next && next !== "#" ? next : fallback;
-}
-
-function themeColor(
-  input: string | undefined,
-  fallback: string,
-  token: string,
-  legacyDefaults: string[] = [],
-) {
-  const trimmed = input?.trim();
-  const normalized = trimmed?.toLowerCase();
-  const defaults = [fallback, ...legacyDefaults].map((item) =>
-    item.toLowerCase(),
-  );
-
-  if (!trimmed || (normalized && defaults.includes(normalized))) {
-    return `var(${token}, ${fallback})`;
-  }
-
-  return trimmed;
-}
-
-function richHtml(value: string | undefined, fallback: string) {
-  return {
-    __html: text(value, fallback)
-      .replace(/\sstyle=("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
-      .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
-      .replace(/^<p[^>]*>/i, "")
-      .replace(/<\/p>$/i, ""),
-  };
-}
-
-function formatCurrency(value: number) {
-  return `$${Math.round(value).toLocaleString("tr-TR")}`;
-}
-
-function formatNumber(value: number) {
-  return Math.round(value).toLocaleString("tr-TR");
-}
-
-function formatControlValue(value: number, step: number) {
-  if (step < 1) {
-    return value.toLocaleString("tr-TR", {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: value % 1 === 0 ? 0 : 2,
-    });
-  }
-
-  return formatNumber(value);
-}
-
-function rangeProgress(value: number, min: number, max: number) {
-  if (max <= min) return "0%";
-  return `${Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100))}%`;
-}
-
-function SliderControl({
-  label,
-  value,
-  suffix,
-  min,
-  max,
-  step,
-  onInput,
-}: {
-  label: string;
-  value: number;
-  suffix?: string;
+  hint: string;
   min: number;
   max: number;
   step: number;
-  onInput: (value: number) => void;
-}) {
-  return (
-    <label className="tm-cost-control">
-      <span>
-        {label}
-        <b>
-          {suffix === "$" ? "$" : ""}
-          {formatControlValue(value, step)}
-          {suffix && suffix !== "$" ? ` ${suffix}` : ""}
-        </b>
-      </span>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        style={{ "--tm-cost-range": rangeProgress(value, min, max) } as any}
-        onInput={(event) =>
-          onInput(Number((event.currentTarget as HTMLInputElement).value))
-        }
-      />
-    </label>
-  );
+  val: number;
+  color: string;
+  kind: "rate" | "min" | "mult" | "perUnit" | "flat";
+  pairsWith?: string;
+};
+
+const STORAGE_KEY = "mash_cost_detail_state";
+const fmt = (n: number) => "$" + Math.round(n).toLocaleString("tr-TR");
+
+function rangeProgress(val: number, min: number, max: number) {
+  if (max <= min) return "0%";
+  return `${Math.min(100, Math.max(0, ((val - min) / (max - min)) * 100))}%`;
 }
 
 export function ThreeMashCostDetailPage(props: Props) {
-  const [mode, setMode] = useState<CostMode>("clinic");
-  const [monthlyVolume, setMonthlyVolume] = useState(
-    presets.clinic.monthlyVolume,
-  );
-  const [repeatRate, setRepeatRate] = useState(presets.clinic.repeatRate);
-  const [timeHours, setTimeHours] = useState(presets.clinic.timeHours);
-  const [hourlyCost, setHourlyCost] = useState(presets.clinic.hourlyCost);
-  const [productionCost, setProductionCost] = useState(
-    presets.clinic.productionCost,
-  );
-  const [adminCost, setAdminCost] = useState(presets.clinic.adminCost);
+  const [mode, setMode] = useState<CostMode>("klinik");
+  const [saved, setSaved] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
-  const timeCost = timeHours * hourlyCost;
-  const perRepeatCost = timeCost + productionCost + adminCost;
-  const yearlyRepeatCount = monthlyVolume * 12 * (repeatRate / 100);
-  const yearlyLoss = yearlyRepeatCount * perRepeatCost;
-  const targetLoss = monthlyVolume * 12 * 0.03 * perRepeatCost;
-  const savingsPotential = Math.max(0, yearlyLoss - targetLoss);
-  const scenarios: Scenario[] = useMemo(
-    () => [
-      {
-        label: mode === "clinic" ? "Aylık vaka" : "Aylık üretim",
-        value: formatNumber(monthlyVolume),
-        note:
-          mode === "clinic"
-            ? "Restoratif vaka hacmi"
-            : "Laboratuvar üretim adedi",
-      },
-      {
-        label: "Mevcut tekrar",
-        value: `%${formatNumber(repeatRate)}`,
-        note: "İlk seferde kabul edilmeyen iş oranı",
-      },
-      {
-        label: "Tekrar maliyeti",
-        value: formatCurrency(perRepeatCost),
-        note: "Aşağıdaki kalemlerden oluşur",
-      },
-      {
-        label: "Yıllık kayıp",
-        value: formatCurrency(yearlyLoss),
-        note: `${formatNumber(monthlyVolume)} x 12 x %${formatNumber(repeatRate)} x ${formatCurrency(perRepeatCost)}`,
-      },
-    ],
-    [mode, monthlyVolume, repeatRate, perRepeatCost, yearlyLoss],
-  );
+  // Klinik input states (initialized from props or defaults)
+  const [chairRate, setChairRate] = useState(props.defaultChairRate ?? 375);
+  const [chairMin, setChairMin] = useState(props.defaultChairMin ?? 55);
+  const [units, setUnits] = useState(props.defaultUnits ?? 1);
+  const [labFee, setLabFee] = useState(props.defaultLabFee ?? 110);
+  const [ship, setShip] = useState(props.defaultShip ?? 25);
+  const [misc, setMisc] = useState(props.defaultMisc ?? 20);
 
-  function applyMode(nextMode: CostMode) {
-    const next = presets[nextMode];
-    setMode(nextMode);
-    setMonthlyVolume(next.monthlyVolume);
-    setRepeatRate(next.repeatRate);
-    setTimeHours(next.timeHours);
-    setHourlyCost(next.hourlyCost);
-    setProductionCost(next.productionCost);
-    setAdminCost(next.adminCost);
-  }
+  // Lab input states (initialized from props or defaults)
+  const [matUnit, setMatUnit] = useState(props.defaultMatUnit ?? 35);
+  const [unitsL, setUnitsL] = useState(props.defaultUnitsL ?? 3);
+  const [labRate, setLabRate] = useState(props.defaultLabRate ?? 60);
+  const [labMin, setLabMin] = useState(props.defaultLabMin ?? 70);
+  const [shipL, setShipL] = useState(props.defaultShipL ?? 35);
+  const [goodwill, setGoodwill] = useState(props.defaultGoodwill ?? 40);
 
-  const style = {
-    "--tm-cost-bg": themeColor(
-      props.backgroundColor,
-      "#FAFAF7",
-      "--tm-theme-bg",
-      ["#ffffff", "#fff"],
-    ),
-    "--tm-cost-text": themeColor(
-      props.textColor,
-      "#0E0E0C",
-      "--tm-theme-text",
-      ["#000000", "#111111"],
-    ),
-    "--tm-cost-muted": themeColor(
-      props.mutedTextColor,
-      "#55554e",
-      "--tm-theme-sub",
-      ["#777777", "#6b7280"],
-    ),
-    "--tm-cost-line": themeColor(
-      props.lineColor,
-      "#E6E6E0",
-      "--tm-theme-line",
-      ["#e5e5e5", "#d9d9d9"],
-    ),
-    "--tm-cost-panel": "var(--tm-theme-panel, #F1F1EC)",
-    "--tm-cost-accent": "var(--tm-theme-accent, #C7F136)",
-    "--tm-cost-dark": "var(--tm-theme-dark, #0E0E0C)",
-    "--tm-cost-accent-text": "var(--tm-theme-accent-text, #3D4D0E)",
+  // Load persisted state from localStorage on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (data.mode === "klinik" || data.mode === "lab") {
+          setMode(data.mode);
+        }
+        if (data.values) {
+          if (typeof data.values.chairRate === "number") setChairRate(data.values.chairRate);
+          if (typeof data.values.chairMin === "number") setChairMin(data.values.chairMin);
+          if (typeof data.values.units === "number") setUnits(data.values.units);
+          if (typeof data.values.labFee === "number") setLabFee(data.values.labFee);
+          if (typeof data.values.ship === "number") setShip(data.values.ship);
+          if (typeof data.values.misc === "number") setMisc(data.values.misc);
+          if (typeof data.values.matUnit === "number") setMatUnit(data.values.matUnit);
+          if (typeof data.values.unitsL === "number") setUnitsL(data.values.unitsL);
+          if (typeof data.values.labRate === "number") setLabRate(data.values.labRate);
+          if (typeof data.values.labMin === "number") setLabMin(data.values.labMin);
+          if (typeof data.values.shipL === "number") setShipL(data.values.shipL);
+          if (typeof data.values.goodwill === "number") setGoodwill(data.values.goodwill);
+        }
+      }
+    } catch (_) {}
+    setInitialized(true);
+  }, []);
+
+  // Save state to localStorage whenever any value or mode changes
+  useEffect(() => {
+    if (!initialized) return;
+    try {
+      const stateObj = {
+        mode,
+        values: {
+          chairRate,
+          chairMin,
+          units,
+          labFee,
+          ship,
+          misc,
+          matUnit,
+          unitsL,
+          labRate,
+          labMin,
+          shipL,
+          goodwill,
+        },
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(stateObj));
+    } catch (_) {}
+  }, [
+    initialized,
+    mode,
+    chairRate,
+    chairMin,
+    units,
+    labFee,
+    ship,
+    misc,
+    matUnit,
+    unitsL,
+    labRate,
+    labMin,
+    shipL,
+    goodwill,
+  ]);
+
+  const modelData: Record<CostMode, { per: string; fields: FieldDef[] }> = {
+    klinik: {
+      per: "KLİNİK",
+      fields: [
+        { id: "chairRate", label: "Hekim + koltuk maliyeti", hint: "işletme gideri, $/saat", min: 150, max: 700, step: 25, val: chairRate, color: "#E2492F", kind: "rate" },
+        { id: "chairMin", label: "Bir tekrara harcanan süre", hint: "prep + ölçü + yapıştırma, dk", min: 20, max: 120, step: 5, val: chairMin, color: "#E2492F", kind: "min", pairsWith: "chairRate" },
+        { id: "units", label: "İşteki ünite sayısı", hint: "birim", min: 1, max: 6, step: 1, val: units, color: "#7C9C36", kind: "mult" },
+        { id: "labFee", label: "Yeniden lab ücreti", hint: "ünite başına, $", min: 0, max: 400, step: 10, val: labFee, color: "#7C9C36", kind: "perUnit" },
+        { id: "ship", label: "Kargo / lojistik", hint: "gidiş-dönüş, $", min: 0, max: 120, step: 5, val: ship, color: "#B7B7AE", kind: "flat" },
+        { id: "misc", label: "İskonto / jest / israf", hint: "$", min: 0, max: 200, step: 5, val: misc, color: "#B7B7AE", kind: "flat" },
+      ],
+    },
+    lab: {
+      per: "LAB",
+      fields: [
+        { id: "matUnit", label: "Yeniden üretim malzemesi", hint: "reçine/disk, ünite başına $", min: 0, max: 200, step: 5, val: matUnit, color: "#E2492F", kind: "perUnit" },
+        { id: "unitsL", label: "İşteki ünite sayısı", hint: "birim", min: 1, max: 12, step: 1, val: unitsL, color: "#7C9C36", kind: "mult" },
+        { id: "labRate", label: "Üretim iş gücü", hint: "baskı+kürleme+QC, $/saat", min: 20, max: 200, step: 10, val: labRate, color: "#E2492F", kind: "rate" },
+        { id: "labMin", label: "Yeniden üretim süresi", hint: "dk", min: 10, max: 180, step: 10, val: labMin, color: "#E2492F", kind: "min", pairsWith: "labRate" },
+        { id: "shipL", label: "Kargo (iki yön)", hint: "$", min: 0, max: 150, step: 5, val: shipL, color: "#B7B7AE", kind: "flat" },
+        { id: "goodwill", label: "İskonto / müşteri jesti", hint: "$", min: 0, max: 250, step: 10, val: goodwill, color: "#B7B7AE", kind: "flat" },
+      ],
+    },
+  };
+
+  const values: Record<string, number> = {
+    chairRate,
+    chairMin,
+    units,
+    labFee,
+    ship,
+    misc,
+    matUnit,
+    unitsL,
+    labRate,
+    labMin,
+    shipL,
+    goodwill,
+  };
+
+  const setters: Record<string, (v: number) => void> = {
+    chairRate: setChairRate,
+    chairMin: setChairMin,
+    units: setUnits,
+    labFee: setLabFee,
+    ship: setShip,
+    misc: setMisc,
+    matUnit: setMatUnit,
+    unitsL: setUnitsL,
+    labRate: setLabRate,
+    labMin: setLabMin,
+    shipL: setShipL,
+    goodwill: setGoodwill,
+  };
+
+  const { parts, total } = useMemo(() => {
+    let pList: { n: string; v: number; c: string }[] = [];
+    if (mode === "klinik") {
+      const chair = (chairRate * chairMin) / 60;
+      const production = labFee * units;
+      const logi = ship + misc;
+      pList = [
+        { n: "Koltuk süresi", v: chair, c: "#E2492F" },
+        { n: "Yeniden üretim", v: production, c: "#7C9C36" },
+        { n: "Lojistik + diğer", v: logi, c: "#B7B7AE" },
+      ];
+    } else {
+      const prod = matUnit * unitsL + (labRate * labMin) / 60;
+      const logi = shipL + goodwill;
+      pList = [
+        { n: "Üretim (malzeme+işçilik)", v: prod, c: "#E2492F" },
+        { n: "Kargo + jest", v: logi, c: "#B7B7AE" },
+      ];
+    }
+    const tot = pList.reduce((sum, item) => sum + item.v, 0);
+    return { parts: pList, total: tot };
+  }, [mode, chairRate, chairMin, units, labFee, ship, misc, matUnit, unitsL, labRate, labMin, shipL, goodwill]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      (window as any)._remakeTotal = Math.round(total);
+    }
+  }, [total]);
+
+  const handleUseBtn = () => {
+    const rounded = Math.round(total);
+    if (typeof window !== "undefined") {
+      (window as any)._remakeTotal = rounded;
+      try {
+        localStorage.setItem("mash_remake_cost", String(rounded));
+      } catch (_) {}
+      setSaved(true);
+    }
+  };
+
+  const baseHomeUrl = props.useButtonHref || "3MASH-Anasayfa-Konsept-v2.html";
+  const homeHref = baseHomeUrl.includes("?")
+    ? `${baseHomeUrl}&rc=${Math.round(total)}#hesap`
+    : `${baseHomeUrl}?rc=${Math.round(total)}#hesap`;
+
+  const d = modelData[mode];
+
+  const customStyle = {
+    "--bg": props.backgroundColor || "#FAFAF7",
+    "--ink": props.textColor || "#0E0E0C",
+    "--sub": props.mutedTextColor || "#55554E",
+    "--lime": props.accentColor || "#C7F136",
+    "--line": props.lineColor || "#E6E6E0",
   } as any;
 
   return (
-    <section className="three-mash-cost-detail-page" style={style}>
-      <div className="tm-cost-shell">
-        <section className="tm-cost-hero">
-          <div className="tm-cost-hero-copy">
-            <span
-              className="tm-cost-kicker"
-              dangerouslySetInnerHTML={richHtml(
-                props.eyebrowText,
-                "MALİYET DETAYI",
-              )}
-            />
-            <h1
-              dangerouslySetInnerHTML={richHtml(
-                props.titleText,
-                "Bir tekrarın gerçek maliyeti <em>kalem kalem.</em>",
-              )}
-            />
-            <p
-              dangerouslySetInnerHTML={richHtml(
-                props.descriptionText,
-                "Kron, splint veya model tekrarları sadece malzeme firelerinden oluşmaz. Asıl fark; koltuk süresi, yeniden ölçü, üretim zamanı ve hasta memnuniyeti gibi görünmeyen kalemlerde birikir.",
-              )}
-            />
-            <div className="tm-cost-actions">
-              <a
-                className="tm-cost-secondary-action"
-                href={href(props.secondaryButtonHref, WHATSAPP_CONSULTATION_HREF)}
-              >
-                <span
-                  dangerouslySetInnerHTML={richHtml(
-                    props.secondaryButtonText,
-                    "Ücretsiz danışmanlık al",
-                  )}
-                />
-              </a>
-            </div>
+    <div className="three-mash-cost-detail-page" style={customStyle}>
+      <div className="top">
+        <div className="wrap">
+          <div className="crumb">
+            <a href={props.useButtonHref || "3MASH-Anasayfa-Konsept-v2.html"}>
+              {props.breadcrumbHomeText || "Ana sayfa"}
+            </a>{" "}
+            &nbsp;/&nbsp; {props.breadcrumbParentText || "Tasarruf hesaplayıcı"} &nbsp;/&nbsp;{" "}
+            {props.breadcrumbCurrentText || "Bir tekrarın maliyeti"}
           </div>
-
-          <aside className="tm-cost-formula" aria-label="Örnek hesap">
-            <span>ÖRNEK HESAP</span>
-            <b>120 x 12 x %10 x $500</b>
-            <strong>$72.000</strong>
-            <p>
-              Aylık vaka, yıllık dönem, tekrar oranı ve  tekrar maliyeti.
+          {props.heroTitle ? (
+            <h1 dangerouslySetInnerHTML={{ __html: props.heroTitle }} />
+          ) : (
+            <h1>
+              Bir tekrarın gerçek maliyeti neden<br /><span className="em">~500 dolar?</span>
+            </h1>
+          )}
+          {props.heroAnswer ? (
+            <p className="answer" dangerouslySetInnerHTML={{ __html: props.heroAnswer }} />
+          ) : (
+            <p className="answer">
+              Kısa cevap: çünkü bir remake'in maliyeti <b>lab ücretinden ibaret değildir.</b> Asıl yükü{" "}
+              <span className="k">koltuk süresi</span> oluşturur — yeniden prep, yeniden ölçü/tarama ve yeniden
+              yapıştırma randevusu. Ulusal ölçekli klinik veriler tekrar oranını ortalama <b>%3,8</b>, ama hekimden
+              hekime <b>%0–42</b> aralığında gösteriyor. Aşağıda kendi kalemlerinizle gerçek rakamınızı
+              çıkarabilirsiniz.
             </p>
-          </aside>
-        </section>
-
-        <section className="tm-cost-scenario">
-          {scenarios.map((item) => (
-            <div className="tm-cost-scenario-card" key={item.label}>
-              <span>{item.label}</span>
-              <b>{item.value}</b>
-              <p>{item.note}</p>
-            </div>
-          ))}
-        </section>
-
-        <section className="tm-cost-calculator" id="kalem-kalem">
-          <div className="tm-cost-calculator-copy">
-            <span className="tm-cost-index">01</span>
-            <h2>
-              Kalemleri değiştir, <em>gerçek kaybı gör.</em>
-            </h2>
-            <p>
-              Bu hesap satış fiyatı karşılaştırması değildir. Tekrar işin
-              işletmeye bindirdiği zamanı, sarfı ve operasyon baskısını birlikte
-              toplar.
-            </p>
-            <div className="tm-cost-mode-tabs" aria-label="Hesaplama modu">
-              <button
-                className={mode === "clinic" ? "is-active" : ""}
-                type="button"
-                onClick={() => applyMode("clinic")}
-              >
-                Klinik
-              </button>
-              <button
-                className={mode === "lab" ? "is-active" : ""}
-                type="button"
-                onClick={() => applyMode("lab")}
-              >
-                Laboratuvar
-              </button>
-            </div>
-          </div>
-
-          <div className="tm-cost-calculator-panel">
-            <div className="tm-cost-controls">
-              <SliderControl
-                label={mode === "clinic" ? "Aylık vaka" : "Aylık üretim"}
-                value={monthlyVolume}
-                min={mode === "clinic" ? 20 : 100}
-                max={mode === "clinic" ? 500 : 2000}
-                step={mode === "clinic" ? 10 : 25}
-                onInput={setMonthlyVolume}
-              />
-              <SliderControl
-                label="Mevcut tekrar oranı"
-                value={repeatRate}
-                suffix="%"
-                min={1}
-                max={20}
-                step={1}
-                onInput={setRepeatRate}
-              />
-              <SliderControl
-                label={mode === "clinic" ? "Koltuk süresi" : "Operatör süresi"}
-                value={timeHours}
-                suffix="saat"
-                min={0.25}
-                max={3}
-                step={0.25}
-                onInput={setTimeHours}
-              />
-              <SliderControl
-                label={
-                  mode === "clinic"
-                    ? "Saatlik klinik gideri"
-                    : "Saatlik operasyon gideri"
-                }
-                value={hourlyCost}
-                suffix="$"
-                min={50}
-                max={500}
-                step={25}
-                onInput={setHourlyCost}
-              />
-              <SliderControl
-                label={
-                  mode === "clinic"
-                    ? "Lab / malzeme kalemi"
-                    : "Sarf + cihaz kalemi"
-                }
-                value={productionCost}
-                suffix="$"
-                min={25}
-                max={600}
-                step={25}
-                onInput={setProductionCost}
-              />
-              <SliderControl
-                label="Planlama / teslim baskısı"
-                value={adminCost}
-                suffix="$"
-                min={0}
-                max={250}
-                step={10}
-                onInput={setAdminCost}
-              />
-            </div>
-
-            <div className="tm-cost-live-output">
-              <span>TEK TEKRARIN TOPLAMI</span>
-              <strong>{formatCurrency(perRepeatCost)}</strong>
-              <div className="tm-cost-live-lines">
-                <div>
-                  <span>
-                    {mode === "clinic" ? "Koltuk süresi" : "Operatör zamanı"}
-                  </span>
-                  <b>{formatCurrency(timeCost)}</b>
-                </div>
-                <div>
-                  <span>
-                    {mode === "clinic" ? "Lab / malzeme" : "Sarf + cihaz"}
-                  </span>
-                  <b>{formatCurrency(productionCost)}</b>
-                </div>
-                <div>
-                  <span>Planlama / teslim</span>
-                  <b>{formatCurrency(adminCost)}</b>
-                </div>
-              </div>
-              <div className="tm-cost-live-loss">
-                <span>Tahmini yıllık kayıp</span>
-                <b>{formatCurrency(yearlyLoss)}</b>
-              </div>
-              <div className="tm-cost-live-save">
-                <span>≤%3 hedef oranla düşebilecek yük</span>
-                <b>{formatCurrency(savingsPotential)}</b>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="tm-cost-breakdown">
-          <div className="tm-cost-section-head">
-            <span className="tm-cost-index">02</span>
-            <h2>
-              Klinik tarafında <em>nereden kaybolur?</em>
-            </h2>
-            <p>
-              Hastanın ağzına ilk seferde oturmayan iş, aynı vakanın ikinci kez
-              planlanması anlamına gelir.
-            </p>
-          </div>
-          <div className="tm-cost-card-grid">
-            {clinicCosts.map((item) => (
-              <article className="tm-cost-card" key={item.number}>
-                <span>{item.number}</span>
-                <h3>{item.title}</h3>
-                <strong>{item.value}</strong>
-                <p>{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="tm-cost-dark-band">
-          <div>
-            <span>HASSASİYET ETKİSİ</span>
-            <h2>
-              Maliyet hesabı, sadece fiyat değil <em>tekrar oranı</em>{" "}
-              hesabıdır.
-            </h2>
-          </div>
-          <div className="tm-cost-band-table">
-            <div>
-              <span>Mevcut tekrar oranı</span>
-              <b>%7-12</b>
-            </div>
-            <div>
-              <span>Hedef tekrar oranı</span>
-              <b>≤%3</b>
-            </div>
-            <div>
-              <span>Boyutsal hassasiyet hedefi</span>
-              <b>±20 µm</b>
-            </div>
-            <div>
-              <span>Geri dönüş potansiyeli</span>
-              <b>&lt; 6 ay</b>
-            </div>
-          </div>
-        </section>
-
-        <section className="tm-cost-breakdown">
-          <div className="tm-cost-section-head">
-            <span className="tm-cost-index">03</span>
-            <h2>
-              Laboratuvar tarafında <em>hangi kalemler büyür?</em>
-            </h2>
-            <p>
-              Yüksek hacimde küçük tekrar oranları bile cihaz sırası, operatör
-              zamanı ve teslim baskısıyla hızlıca birikir.
-            </p>
-          </div>
-          <div className="tm-cost-card-grid">
-            {labCosts.map((item) => (
-              <article className="tm-cost-card" key={item.number}>
-                <span>{item.number}</span>
-                <h3>{item.title}</h3>
-                <strong>{item.value}</strong>
-                <p>{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="tm-cost-method">
-          <div>
-            <span className="tm-cost-index">04</span>
-            <h2>Hesaplama mantığı</h2>
-          </div>
-          <div className="tm-cost-method-grid">
-            <div>
-              <b>Aylık hacim</b>
-              <p>Klinikte restoratif vaka, laboratuvarda üretim adedi.</p>
-            </div>
-            <div>
-              <b>Tekrar oranı</b>
-              <p>
-                İlk seferde kabul edilmeyen ve yeniden işlenen vaka yüzdesi.
-              </p>
-            </div>
-            <div>
-              <b>Birim tekrar maliyeti</b>
-              <p>Koltuk süresi, operatör zamanı, sarf ve teslim baskısı.</p>
-            </div>
-            <div>
-              <b>Yıllık kayıp</b>
-              <p>Aylık hacim x 12 x tekrar oranı x birim maliyet.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="tm-cost-final">
-          <div>
-            <span>ÜCRETSİZ ANALİZ</span>
-            <h2>
-              Kendi tekrar oranınızla <em>gerçek tabloyu</em> çıkarın.
-            </h2>
-          </div>
-          <a href={WHATSAPP_CONSULTATION_HREF}>
-            <span
-              dangerouslySetInnerHTML={richHtml(
-                props.secondaryButtonText,
-                "Ücretsiz analiz iste",
-              )}
-            />
-          </a>
-        </section>
+          )}
+        </div>
       </div>
-    </section>
+
+      <div className="wrap cols">
+        {/* SOL: hesaplayıcı (sticky) */}
+        <div className="calc">
+          <div className="h">
+            <span className="micro">TEKRAR MALİYETİ · KALEM KALEM</span>
+            <span className="micro" id="perLabel">
+              {d.per}
+            </span>
+          </div>
+          <div className="seg" id="seg">
+            <button
+              className={mode === "klinik" ? "on" : ""}
+              type="button"
+              onClick={() => setMode("klinik")}
+            >
+              Klinik
+            </button>
+            <button
+              className={mode === "lab" ? "on" : ""}
+              type="button"
+              onClick={() => setMode("lab")}
+            >
+              Laboratuvar
+            </button>
+          </div>
+
+          <div id="fields">
+            {d.fields.map((f) => {
+              const val = values[f.id];
+              let valText = fmt(val);
+              if (f.kind === "rate") valText = fmt(val) + "/sa";
+              else if (f.kind === "min") valText = val + " dk";
+              else if (f.kind === "mult") valText = val + " ünite";
+
+              return (
+                <div className="li" key={f.id}>
+                  <div className="lab">
+                    <span>
+                      {f.label} <span className="hint">· {f.hint}</span>
+                    </span>
+                    <b id={`lb_${f.id}`}>{valText}</b>
+                  </div>
+                  <input
+                    type="range"
+                    id={f.id}
+                    min={f.min}
+                    max={f.max}
+                    step={f.step}
+                    value={val}
+                    style={{ "--p": rangeProgress(val, f.min, f.max) } as any}
+                    onInput={(e) => {
+                      const setter = setters[f.id];
+                      if (setter) setter(Number((e.currentTarget as HTMLInputElement).value));
+                    }}
+                    aria-label={f.label}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="bar" id="bar">
+            {parts.map((p) => (
+              <span
+                key={p.n}
+                style={{
+                  width: `${total ? (p.v / total) * 100 : 0}%`,
+                  background: p.c,
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="legend" id="legend">
+            {parts.map((p) => (
+              <div key={p.n}>
+                <i style={{ background: p.c }} />
+                {p.n} · <b style={{ fontFamily: "'Space Grotesk'" }}>{fmt(p.v)}</b>
+              </div>
+            ))}
+          </div>
+
+          <div className="tot">
+            <span className="micro">BİR TEKRARIN TOPLAM MALİYETİ</span>
+            <span className="v" id="total">
+              {fmt(total)}
+            </span>
+          </div>
+
+          <div className="use">
+            <a className="btn lime" id="useBtn" href={homeHref} onClick={handleUseBtn}>
+              {props.useButtonText || "Bu değeri ana sayfada kullan →"}
+            </a>
+          </div>
+
+          {saved && (
+            <div className="saved" id="saved">
+              ✓ Değer kaydedildi — ana sayfadaki hesaplayıcıya taşındı.
+            </div>
+          )}
+        </div>
+
+        {/* SAĞ: açıklama + bilim */}
+        <div className="explain">
+          <h2>Maliyet nereden geliyor?</h2>
+          <p>
+            Sektördeki yaygın yanılgı, bir tekrarın maliyetini yalnızca <b>yeniden lab ücreti</b> olarak görmektir.
+            Oysa bir kron reddedildiğinde asıl kaybı yaratan üç kalem vardır ve en büyüğü ilk sırada:
+          </p>
+          <p>
+            <b>1. Koltuk süresi (en büyük kalem).</b> Hastayı geri çağırmak, yeniden prep/ölçü almak ve yeni işi
+            yapıştırmak ortalama 45–75 dakika alır. Bir kliniğin ortalama işletme gideri saatte <b>~$375</b> olarak
+            modellenir; bu tek başına $280–470 demektir.
+          </p>
+          <p>
+            <b>2. Yeniden üretim + lojistik.</b> Yeni birimin lab ücreti, iki yönlü kargo ve varsa acele (rush)
+            farkı.
+          </p>
+          <p>
+            <b>3. Görünmeyenler.</b> İskonto/jest, boşa giden randevu slotu, malzeme israfı ve hasta güveninde
+            aşınma.
+          </p>
+
+          <div className="study">
+            <span className="tag">HAKEMLİ KLİNİK VERİ</span>
+            <h3>Tekrar oranı gerçekte ne kadar? Ulusal PBRN, 3.750 kron üzerinde ölçtü.</h3>
+            <div className="meta">
+              McCracken M.S. ve ark. (National Dental PBRN Collaborative Group) · <i>Journal of Prosthodontics</i>,
+              2019;28(2):122–130
+            </div>
+            <ul>
+              <li>
+                <b>205 diş hekimi</b>, gerçek klinik pratiğinde <b>3.750 tek-ünite kron</b> değerlendirdi.
+              </li>
+              <li>
+                Ortalama tekrar (remake) oranı <b>%3,8</b> — fakat hekimden hekime <b>%0 ile %42</b> arasında
+                değişiyor.
+              </li>
+              <li>
+                Hekimlerin %58'i hiç kron reddetmezken, tüm reddetmeler %42'lik gruptan geldi — yani sorun{" "}
+                <b>tekil, çözülebilir</b> bir uygulama farkı.
+              </li>
+              <li>
+                En sık ret sebepleri: <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlık</b> — üçü de
+                doğrudan <b>ölçüsel hassasiyet</b> problemi.
+              </li>
+            </ul>
+            <a className="link" href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener noreferrer">
+              DOI: 10.1111/jopr.12995 · Kaynağı aç →
+            </a>
+          </div>
+
+          <div className="study">
+            <span className="tag">HAKEMLİ · ÖLÇÜSEL DOĞRULUK</span>
+            <h3>Peki sapma neden oluşuyor? Doğruluk, kullanılan sisteme göre uçtan uca değişiyor.</h3>
+            <div className="meta">
+              Etemad-Shahidi Y. ve ark. · <i>J Clin Med</i> 2020 (sistematik derleme) &nbsp;·&nbsp; Németh A. ve ark.
+              · <i>J Dentistry</i> 2023 (ağ meta-analizi)
+            </div>
+            <ul>
+              <li>
+                Sistematik derlemede full-arch model doğruluğu en iyi sistemde <b>3,3 µm</b>'ye inerken, bazı
+                cihazlarda <b>130–190 µm</b>'ye çıkıyor — yani doğru sonucu cihaz ve parametre belirliyor.
+              </li>
+              <li>
+                Ağ meta-analizi <b>SLA, DLP ve PolyJet</b>'i en doğru teknolojiler olarak gösteriyor (SLA ~
+                <b>86,7 µm</b>, DLP ~<b>97,9 µm</b> ortalama trueness).
+              </li>
+              <li>
+                Yani sapma tesadüf değil, yönetilebilir bir değişken. <b>3mash bu değişkenleri birlikte kalibre ederek ±20 µm'yi her baskıda</b>{" "}
+                sabitler; tekrar oranı ve maliyet de bu sayede düşer.
+              </li>
+            </ul>
+            <a className="link" href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener noreferrer">
+              DOI: 10.3390/jcm9103357 →
+            </a>
+            &nbsp;&nbsp;
+            <a
+              className="link"
+              href="https://doi.org/10.1016/j.jdent.2023.104532"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              DOI: 10.1016/j.jdent.2023.104532 →
+            </a>
+          </div>
+
+          <div className="callout">
+            <p>
+              <b>3mash bağlantısı:</b> çalışmanın işaret ettiği üç sebep de (proksimal uyum, marjin, estetik){" "}
+              <b>±20 µm tekrar edilebilir hassasiyetle</b> doğrudan azalır. Tekrar oranınızı %42'lerden ya da
+              %10'lardan <b>≤%3'e</b> çektiğinizde, yukarıdaki kalem-kalem maliyet aynı oranda düşer.
+            </p>
+          </div>
+
+          <p className="mini-src">
+            Kaynaklar: Tekrar oranı ve ret sebepleri — McCracken ve ark.,{" "}
+            <a href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener noreferrer">
+              J Prosthodont 2019 (10.1111/jopr.12995)
+            </a>
+            . Ölçüsel doğruluk — Etemad-Shahidi ve ark.,{" "}
+            <a href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener noreferrer">
+              J Clin Med 2020 (10.3390/jcm9103357)
+            </a>{" "}
+            ve Németh ve ark.,{" "}
+            <a href="https://doi.org/10.1016/j.jdent.2023.104532" target="_blank" rel="noopener noreferrer">
+              J Dentistry 2023 (10.1016/j.jdent.2023.104532)
+            </a>
+            . Maliyet modeli (koltuk süresi/işletme gideri) — Spear Education, “The Cost of Laboratory Remakes.”
+            Rakamlar tahminî olup iş akışınıza göre değişir.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 
