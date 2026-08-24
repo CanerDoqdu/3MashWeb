@@ -1,0 +1,98 @@
+3MASH Audit Log - Started: 08/24/2026 12:27:00
+[PASS] https://dev-caner1.ikas.shop/ (16 s) -> .\lighthouse-audit\reports\001_homepage
+[PASS] https://dev-caner1.ikas.shop/3d-yazicilar (15 s) -> .\lighthouse-audit\reports\002_3d-yazicilar
+[PASS] https://dev-caner1.ikas.shop/dental-3d-yazici-recineleri (17 s) -> .\lighthouse-audit\reports\003_dental-3d-yazici-recineleri
+[PASS] https://dev-caner1.ikas.shop/yikama-kurleme-cihazlari (17 s) -> .\lighthouse-audit\reports\004_yikama-kurleme-cihazlari
+[PASS] https://dev-caner1.ikas.shop/kurleme-cihazlari (17 s) -> .\lighthouse-audit\reports\005_kurleme-cihazlari
+[PASS] https://dev-caner1.ikas.shop/masasustu-tarayicilar (17 s) -> .\lighthouse-audit\reports\006_masasustu-tarayicilar
+[PASS] https://dev-caner1.ikas.shop/zirkon-bloklar (17 s) -> .\lighthouse-audit\reports\007_zirkon-bloklar
+[PASS] https://dev-caner1.ikas.shop/dental-firinlar (17 s) -> .\lighthouse-audit\reports\008_dental-firinlar
+[PASS] https://dev-caner1.ikas.shop/titanyum-diskler (17 s) -> .\lighthouse-audit\reports\009_titanyum-diskler
+[PASS] https://dev-caner1.ikas.shop/3d-yazici-yedek-parcalari (18 s) -> .\lighthouse-audit\reports\010_3d-yazici-yedek-parcalari
+[PASS] https://dev-caner1.ikas.shop/sistemler (17 s) -> .\lighthouse-audit\reports\011_sistemler
+[FAIL] https://dev-caner1.ikas.shop/mash (Exit: 1, 9 s) -> .\lighthouse-audit\reports\012_mash
+[FAIL] https://dev-caner1.ikas.shop/crs (Exit: 1, 9 s) -> .\lighthouse-audit\reports\013_crs
+[FAIL] https://dev-caner1.ikas.shop/creality (Exit: 1, 9 s) -> .\lighthouse-audit\reports\014_creality
+[FAIL] https://dev-caner1.ikas.shop/argen (Exit: 1, 9 s) -> .\lighthouse-audit\reports\015_argen
+[FAIL] https://dev-caner1.ikas.shop/3shape (Exit: 1, 9 s) -> .\lighthouse-audit\reports\016_3shape
+[FAIL] https://dev-caner1.ikas.shop/tundro (Exit: 1, 9 s) -> .\lighthouse-audit\reports\017_tundro
+[FAIL] https://dev-caner1.ikas.shop/nuvora (Exit: 1, 9 s) -> .\lighthouse-audit\reports\018_nuvora
+[PASS] https://dev-caner1.ikas.shop/mash-p16l-385nm-16k-dental-3d-yazici (18 s) -> .\lighthouse-audit\reports\019_mash-p16l-385nm-16k-dental-3d-yazici
+[PASS] https://dev-caner1.ikas.shop/mash-curie-m1-dental-3d-yazici (18 s) -> .\lighthouse-audit\reports\020_mash-curie-m1-dental-3d-yazici
+[PASS] https://dev-caner1.ikas.shop/mash-curie-m1-jewelry-3d-printer (19 s) -> .\lighthouse-audit\reports\021_mash-curie-m1-jewelry-3d-printer
+[PASS] https://dev-caner1.ikas.shop/mash-c1e-uv-kurleme-cihazi (18 s) -> .\lighthouse-audit\reports\022_mash-c1e-uv-kurleme-cihazi
+[PASS] https://dev-caner1.ikas.shop/mash-w1e-ultrasonik-yikama-cihazi (18 s) -> .\lighthouse-audit\reports\023_mash-w1e-ultrasonik-yikama-cihazi
+[PASS] https://dev-caner1.ikas.shop/3shape-e2 (18 s) -> .\lighthouse-audit\reports\024_3shape-e2
+[PASS] https://dev-caner1.ikas.shop/3shape-e3 (18 s) -> .\lighthouse-audit\reports\025_3shape-e3
+[PASS] https://dev-caner1.ikas.shop/3shape-e4 (18 s) -> .\lighthouse-audit\reports\026_3shape-e4
+[PASS] https://dev-caner1.ikas.shop/crs-composite-mukemmel-dayanimli-gecici-recinesi (19 s) -> .\lighthouse-audit\reports\027_crs-composite-mukemmel-dayanimli-gecici-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-gingiva-yirtilmaz-dis-eti-recinesi (18 s) -> .\lighthouse-audit\reports\028_crs-gingiva-yirtilmaz-dis-eti-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-model-yuksek-hassasiyetli-model-recinesi (18 s) -> .\lighthouse-audit\reports\029_crs-model-yuksek-hassasiyetli-model-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-aligner-memory-shape-ozellikli-aligner-recinesi (18 s) -> .\lighthouse-audit\reports\030_crs-aligner-memory-shape-ozellikli-aligner-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-denture-biouyumlu-protez-recinesi (18 s) -> .\lighthouse-audit\reports\031_crs-denture-biouyumlu-protez-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-splint-hard-resin-sert-gece-plagi-recinesi (18 s) -> .\lighthouse-audit\reports\032_crs-splint-hard-resin-sert-gece-plagi-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-splint-soft-resin-dental-splint-gece-plak-recinesi (18 s) -> .\lighthouse-audit\reports\033_crs-splint-soft-resin-dental-splint-gece-plak-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-ibt-resin-ortodontik-ibt-recinesi (18 s) -> .\lighthouse-audit\reports\034_crs-ibt-resin-ortodontik-ibt-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-flexit-recin-protez-recinesi (19 s) -> .\lighthouse-audit\reports\035_crs-flexit-recin-protez-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi (18 s) -> .\lighthouse-audit\reports\036_crs-tray-resin-olcu-kasigi-3d-yazici-recinesi
+[PASS] https://dev-caner1.ikas.shop/crs-cast-cekmeyen-dokum-recinesi (17 s) -> .\lighthouse-audit\reports\037_crs-cast-cekmeyen-dokum-recinesi
+[PASS] https://dev-caner1.ikas.shop/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber (18 s) -> .\lighthouse-audit\reports\038_guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber
+[PASS] https://dev-caner1.ikas.shop/mash-study-resin-dental-model-3d-yazici-recinesi (18 s) -> .\lighthouse-audit\reports\039_mash-study-resin-dental-model-3d-yazici-recinesi
+[PASS] https://dev-caner1.ikas.shop/mash-trial-white-resin-gecici-dental-recinesi (18 s) -> .\lighthouse-audit\reports\040_mash-trial-white-resin-gecici-dental-recinesi
+[PASS] https://dev-caner1.ikas.shop/mash-trial-pink-resin-dental-try-in-gecici-recinesi (18 s) -> .\lighthouse-audit\reports\041_mash-trial-pink-resin-dental-try-in-gecici-recinesi
+[PASS] https://dev-caner1.ikas.shop/mash-clear-resin-dental-cerrahi-kilavuz-recinesi (18 s) -> .\lighthouse-audit\reports\042_mash-clear-resin-dental-cerrahi-kilavuz-recinesi
+[PASS] https://dev-caner1.ikas.shop/creality-washcure-uw-02 (18 s) -> .\lighthouse-audit\reports\043_creality-washcure-uw-02
+[PASS] https://dev-caner1.ikas.shop/creality-halot-sky-6k (18 s) -> .\lighthouse-audit\reports\044_creality-halot-sky-6k
+[PASS] https://dev-caner1.ikas.shop/creality-halot-sky-lcd-ekran-kiti-6k-mono (18 s) -> .\lighthouse-audit\reports\045_creality-halot-sky-lcd-ekran-kiti-6k-mono
+[PASS] https://dev-caner1.ikas.shop/argenz-st-multilayer-zirkon-blok (16 s) -> .\lighthouse-audit\reports\046_argenz-st-multilayer-zirkon-blok
+[PASS] https://dev-caner1.ikas.shop/argenz-ht-plus-zirkon-blok (16 s) -> .\lighthouse-audit\reports\047_argenz-ht-plus-zirkon-blok
+[PASS] https://dev-caner1.ikas.shop/argenz-ht-multilayer-zirkon-blok (25 s) -> .\lighthouse-audit\reports\048_argenz-ht-multilayer-zirkon-blok
+[PASS] https://dev-caner1.ikas.shop/naberthem-vl-01-12-lb-porselen-firini (18 s) -> .\lighthouse-audit\reports\049_naberthem-vl-01-12-lb-porselen-firini
+[PASS] https://dev-caner1.ikas.shop/naberthem-lht-01-16-turbo-fire (18 s) -> .\lighthouse-audit\reports\050_naberthem-lht-01-16-turbo-fire
+[PASS] https://dev-caner1.ikas.shop/naberthem-lht-02-17-lb-speed (18 s) -> .\lighthouse-audit\reports\051_naberthem-lht-02-17-lb-speed
+[PASS] https://dev-caner1.ikas.shop/naberthem-vl-01-12-lb-press-firini (18 s) -> .\lighthouse-audit\reports\052_naberthem-vl-01-12-lb-press-firini
+[PASS] https://dev-caner1.ikas.shop/mesa-grade-5-eli-titanyum-disk (17 s) -> .\lighthouse-audit\reports\053_mesa-grade-5-eli-titanyum-disk
+[PASS] https://dev-caner1.ikas.shop/piocreat-c01-lcd-ekran-kiti (18 s) -> .\lighthouse-audit\reports\054_piocreat-c01-lcd-ekran-kiti
+[PASS] https://dev-caner1.ikas.shop/seffaf-fep-film-3d-yazici (22 s) -> .\lighthouse-audit\reports\055_seffaf-fep-film-3d-yazici
+[PASS] https://dev-caner1.ikas.shop/mash-p16l-ana-kart (18 s) -> .\lighthouse-audit\reports\056_mash-p16l-ana-kart
+[PASS] https://dev-caner1.ikas.shop/mash-p16l-buyuk-baski-tablasi-211x118mm (18 s) -> .\lighthouse-audit\reports\057_mash-p16l-buyuk-baski-tablasi-211x118mm
+[PASS] https://dev-caner1.ikas.shop/mash-p16l-kucuk-hizli-baski-tablasi (18 s) -> .\lighthouse-audit\reports\058_mash-p16l-kucuk-hizli-baski-tablasi
+[PASS] https://dev-caner1.ikas.shop/mash-p16l-16k-monokrom-lcd-ekran-yedek-parca (18 s) -> .\lighthouse-audit\reports\059_mash-p16l-16k-monokrom-lcd-ekran-yedek-parca
+[PASS] https://dev-caner1.ikas.shop/mash-p16l-recine-tanki-800ml (18 s) -> .\lighthouse-audit\reports\060_mash-p16l-recine-tanki-800ml
+[PASS] https://dev-caner1.ikas.shop/trasformer-light-glass-mufla-sistemi (18 s) -> .\lighthouse-audit\reports\061_trasformer-light-glass-mufla-sistemi
+[PASS] https://dev-caner1.ikas.shop/trasformer-comp-flow-siringa-kompozit (18 s) -> .\lighthouse-audit\reports\062_trasformer-comp-flow-siringa-kompozit
+[PASS] https://dev-caner1.ikas.shop/ibar-tasarimi-mart-2024-antalya (17 s) -> .\lighthouse-audit\reports\063_ibar-tasarimi-mart-2024-antalya
+[PASS] https://dev-caner1.ikas.shop/pages/about-us (16 s) -> .\lighthouse-audit\reports\064_pages_about-us
+[PASS] https://dev-caner1.ikas.shop/pages/iletisim (16 s) -> .\lighthouse-audit\reports\065_pages_iletisim
+[PASS] https://dev-caner1.ikas.shop/pages/sss (16 s) -> .\lighthouse-audit\reports\066_pages_sss
+[PASS] https://dev-caner1.ikas.shop/pages/mash-academy (16 s) -> .\lighthouse-audit\reports\067_pages_mash-academy
+[PASS] https://dev-caner1.ikas.shop/pages/gizlilik-politikasi-ve-kvkk (16 s) -> .\lighthouse-audit\reports\068_pages_gizlilik-politikasi-ve-kvkk
+[PASS] https://dev-caner1.ikas.shop/pages/iade-ve-garanti (18 s) -> .\lighthouse-audit\reports\069_pages_iade-ve-garanti
+[PASS] https://dev-caner1.ikas.shop/pages/mesafeli-satis-sozlesmesi (16 s) -> .\lighthouse-audit\reports\070_pages_mesafeli-satis-sozlesmesi
+[PASS] https://dev-caner1.ikas.shop/pages/uyelik-sozlesmesi (18 s) -> .\lighthouse-audit\reports\071_pages_uyelik-sozlesmesi
+[PASS] https://dev-caner1.ikas.shop/pages/ticari-elektronik-ileti-onayi (16 s) -> .\lighthouse-audit\reports\072_pages_ticari-elektronik-ileti-onayi
+[FAIL] https://dev-caner1.ikas.shop/pages/brands (Exit: 1, 9 s) -> .\lighthouse-audit\reports\073_pages_brands
+[FAIL] https://dev-caner1.ikas.shop/pages/order-tracking (Exit: 1, 9 s) -> .\lighthouse-audit\reports\074_pages_order-tracking
+[FAIL] https://dev-caner1.ikas.shop/pages/technical-support-request (Exit: 1, 9 s) -> .\lighthouse-audit\reports\075_pages_technical-support-request
+[FAIL] https://dev-caner1.ikas.shop/pages/sipay-komisyon-hesaplama (Exit: 1, 9 s) -> .\lighthouse-audit\reports\076_pages_sipay-komisyon-hesaplama
+[PASS] https://dev-caner1.ikas.shop/blog (16 s) -> .\lighthouse-audit\reports\077_blog
+[FAIL] https://dev-caner1.ikas.shop/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi (Exit: 1, 10 s) -> .\lighthouse-audit\reports\078_blog_dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi
+[FAIL] https://dev-caner1.ikas.shop/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber (Exit: 1, 9 s) -> .\lighthouse-audit\reports\079_blog_dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber
+[FAIL] https://dev-caner1.ikas.shop/blog/implant-ustu-restorasyonlarda-metal-alt-yapi-secimi-bar-abutment-ve-multi-unit-uzeri-sistemlerin-karsilastirmali-incelemesi (Exit: 1, 9 s) -> .\lighthouse-audit\reports\080_blog_implant-ustu-restorasyonlarda-metal-alt-yapi-secimi-bar-abutment-ve-multi-unit-uzeri-sistemleri
+[FAIL] https://dev-caner1.ikas.shop/blog/halotbox-programini-linuxta-kullanma-rehberi (Exit: 1, 9 s) -> .\lighthouse-audit\reports\081_blog_halotbox-programini-linuxta-kullanma-rehberi
+[FAIL] https://dev-caner1.ikas.shop/blog/daha-dayanikli-restorasyonlar-icin-kurleme-ve-glazeleme-rehberi (Exit: 1, 8 s) -> .\lighthouse-audit\reports\082_blog_daha-dayanikli-restorasyonlar-icin-kurleme-ve-glazeleme-rehberi
+[FAIL] https://dev-caner1.ikas.shop/blog/dental-model-recinesinde-aranan-ozellikler-hassasiyetin-ve-dayanikliligin-bulustugu-nokta (Exit: 1, 7 s) -> .\lighthouse-audit\reports\083_blog_dental-model-recinesinde-aranan-ozellikler-hassasiyetin-ve-dayanikliligin-bulustugu-nokta
+[FAIL] https://dev-caner1.ikas.shop/blog/dis-eti-recinelerinde-mekanik-dayanim-ve-estetik-gercekcilik-arasindaki-denge (Exit: 1, 9 s) -> .\lighthouse-audit\reports\084_blog_dis-eti-recinelerinde-mekanik-dayanim-ve-estetik-gercekcilik-arasindaki-denge
+[FAIL] https://dev-caner1.ikas.shop/blog/dijital-dis-hekimliginde-sinterleme-firinlarinin-calisma-prensibi (Exit: 1, 9 s) -> .\lighthouse-audit\reports\085_blog_dijital-dis-hekimliginde-sinterleme-firinlarinin-calisma-prensibi
+[FAIL] https://dev-caner1.ikas.shop/blog/blender-for-dental-ile-ibar-uzeri-composite-kron-tasarim-egitimi-raporu (Exit: 1, 10 s) -> .\lighthouse-audit\reports\086_blog_blender-for-dental-ile-ibar-uzeri-composite-kron-tasarim-egitimi-raporu
+[FAIL] https://dev-caner1.ikas.shop/blog/ibar-tasarimi-egitimi (Exit: 1, 9 s) -> .\lighthouse-audit\reports\087_blog_ibar-tasarimi-egitimi
+[FAIL] https://dev-caner1.ikas.shop/blog/dental-3d-yazicilarda-fep-filmi-secimi--acf-ve-pfa-karsilastirmasi (Exit: 1, 9 s) -> .\lighthouse-audit\reports\088_blog_dental-3d-yazicilarda-fep-filmi-secimi--acf-ve-pfa-karsilastirmasi
+[FAIL] https://dev-caner1.ikas.shop/blog/mdr-ve-mdd-arasindaki-fark--dental-3d-baski-recineleri-hangi-sinifta (Exit: 1, 9 s) -> .\lighthouse-audit\reports\089_blog_mdr-ve-mdd-arasindaki-fark--dental-3d-baski-recineleri-hangi-sinifta
+[FAIL] https://dev-caner1.ikas.shop/blog/3d-yazici-teknolojileri-sla-dlp-ve-lcd (Exit: 1, 8 s) -> .\lighthouse-audit\reports\090_blog_3d-yazici-teknolojileri-sla-dlp-ve-lcd
+[FAIL] https://dev-caner1.ikas.shop/blog/dis-hekimliginde-cad-cam-sistemleri (Exit: 1, 9 s) -> .\lighthouse-audit\reports\091_blog_dis-hekimliginde-cad-cam-sistemleri
+[FAIL] https://dev-caner1.ikas.shop/blog/dental-sektorde-3-boyutlu-yazici-alirken-dikkat-edilmesi-gerekenler (Exit: 1, 8 s) -> .\lighthouse-audit\reports\092_blog_dental-sektorde-3-boyutlu-yazici-alirken-dikkat-edilmesi-gerekenler
+[FAIL] https://dev-caner1.ikas.shop/blog/mash-academy (Exit: 1, 9 s) -> .\lighthouse-audit\reports\093_blog_mash-academy
+[PASS] https://dev-caner1.ikas.shop/search (22 s) -> .\lighthouse-audit\reports\094_search
+[PASS] https://dev-caner1.ikas.shop/cart (15 s) -> .\lighthouse-audit\reports\095_cart
+[PASS] https://dev-caner1.ikas.shop/account/login (16 s) -> .\lighthouse-audit\reports\096_account_login
+Summary: Passed: 69, Failed: 27, Total time: ~26 min, Completed: 08/24/2026 12:53:00
