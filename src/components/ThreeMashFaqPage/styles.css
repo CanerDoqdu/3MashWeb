@@ -161,18 +161,32 @@
 }
 
 .tmfaq-item summary b {
+  position: relative;
   display: grid;
   place-items: center;
   width: 34px;
   height: 34px;
   background: var(--tmfaq-panel, var(--tm-theme-panel, #f1f1ec));
   color: var(--tmfaq-text, var(--tm-theme-text, #0e0e0c));
-  font-size: 21px;
-  font-weight: 800;
+  font-size: 0;
   line-height: 1;
   transition:
     transform 180ms ease,
     background-color 180ms ease;
+}
+
+.tmfaq-item summary b::before,
+.tmfaq-item summary b::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.tmfaq-item summary b::after {
+  transform: rotate(90deg);
 }
 
 .tmfaq-item[open] summary b {
