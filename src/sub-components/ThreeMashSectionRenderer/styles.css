@@ -2435,14 +2435,16 @@
     padding: 24px 22px;
   }
 
-  .tmr-solution .tmr-spec div {
+  .tmr-solution .tmr-spec div,
+  .tmr-curing .tmr-spec div {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(38px, 1fr) auto;
     align-items: center;
     gap: 10px;
   }
 
-  .tmr-solution .tmr-spec span {
+  .tmr-solution .tmr-spec span,
+  .tmr-curing .tmr-spec span {
     min-width: 0;
     overflow-wrap: normal;
     word-break: normal;
