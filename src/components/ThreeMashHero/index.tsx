@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useLayoutEffect,
 
   useMemo,
   useRef,
@@ -467,7 +468,7 @@ export function ThreeMashHero(props: Props) {
   const animatedLossRef = useRef(initialAnimatedLoss);
   const currentLossRef = useRef(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const next = importedCalculatorState();
     if (next.cost > 0) {
       const nextPreset = presets[next.mode];
