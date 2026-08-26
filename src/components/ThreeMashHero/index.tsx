@@ -461,7 +461,7 @@ export function ThreeMashHero(props: Props) {
     importedState.cost > 0 ? importedState.cost : active.costDefault;
   const initialLoss =
     active.workDefault * 12 * (active.rptDefault / 100) * initialCost;
-  const initialAnimatedLoss = initialLoss > 100000 ? 100000 : 10000;
+  const initialAnimatedLoss = initialLoss;
   const [animatedLoss, setAnimatedLoss] = useState(initialAnimatedLoss);
   const preserveImportedValuesRef = useRef(importedState.cost > 0);
   const animatedLossRef = useRef(initialAnimatedLoss);
