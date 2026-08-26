@@ -12,6 +12,10 @@
   overflow: hidden;
 }
 
+.three-mash-hero:not(.is-ready) .tmhero-calc {
+  visibility: hidden;
+}
+
 .three-mash-hero,
 .three-mash-hero * {
   box-sizing: border-box;
