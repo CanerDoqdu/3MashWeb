@@ -473,11 +473,12 @@ export function ThreeMashHero(props: Props) {
       const nextPreset = presets[next.mode];
       const nextLoss =
         nextPreset.workDefault * 12 * (nextPreset.rptDefault / 100) * next.cost;
+      const nextAnimatedLoss = nextLoss > 100000 ? 100000 : 10000;
       preserveImportedValuesRef.current = true;
       setMode(next.mode);
       setCost(next.cost);
-      animatedLossRef.current = nextLoss;
-      setAnimatedLoss(nextLoss);
+      animatedLossRef.current = nextAnimatedLoss;
+      setAnimatedLoss(nextAnimatedLoss);
     }
     setHeroReady(true);
   }, [presets]);
