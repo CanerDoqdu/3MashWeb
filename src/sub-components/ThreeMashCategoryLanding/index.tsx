@@ -3,6 +3,7 @@ import {
   createMediaSrcset,
   getDefaultSrc,
   getProductHref,
+  getProductVariantFormattedFinalPrice,
   getProductVariantMainImage,
   getSelectedProductVariant,
   type IkasProduct,
@@ -513,7 +514,37 @@ function findLiveProduct(products: IkasProduct[], title: string) {
   );
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function plainText(value: unknown) {
+  return String(value || "")
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<\/p>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function truncateText(value: string, limit: number) {
+  if (value.length <= limit) return value;
+  return `${value.slice(0, Math.max(0, limit - 1)).trimEnd()}…`;
+}
+
+function rawProductDescription(product: IkasProduct) {
+  const data = product as { shortDescription?: unknown; description?: unknown };
+  return data.shortDescription || data.description || "";
+}
+
 function liveProductDescription(product: IkasProduct) {
+  const description = truncateText(plainText(rawProductDescription(product)), 170);
+  if (description) return escapeHtml(description);
   const categoryName = product.categories?.[0]?.name;
   const brandName = product.brand?.name;
   if (categoryName && brandName) return `${categoryName} • <b>${brandName}</b>`;
@@ -522,13 +553,95 @@ function liveProductDescription(product: IkasProduct) {
   return product.name;
 }
 
-function liveProductCards(products: IkasProduct[]): CategoryProductCard[] {
-  return products.map((product) => ({
-    title: product.name,
-    descriptionHtml: liveProductDescription(product),
-    href: getProductHref(product),
-    tag: product.categories?.[0]?.name,
-  }));
+function liveProductStatus(product: IkasProduct) {
+  const variant = safeVariant(product);
+  return variant ? getProductVariantFormattedFinalPrice(variant) : "";
+}
+
+function liveProductFilterId(
+  product: IkasProduct,
+  filters: CategoryFilter[] | undefined,
+  preset: CategoryProductCard | undefined,
+) {
+  if (preset?.filterId) return preset.filterId;
+  if (!filters?.length) return undefined;
+
+  const filterCandidates = filters.filter((filter) => filter.id !== "all");
+  if (!filterCandidates.length) return undefined;
+
+  const searchableText = normalize(
+    [
+      product.name,
+      product.brand?.name,
+      ...(product.categories?.map((category) => category.name).filter(Boolean) || []),
+      plainText(rawProductDescription(product)),
+    ]
+      .filter(Boolean)
+      .join(" "),
+  );
+
+  const match = filterCandidates.find((filter) => {
+    const idKey = normalize(filter.id);
+    const labelKey = normalize(filter.label);
+    return (
+      (idKey && searchableText.includes(idKey)) ||
+      (labelKey && searchableText.includes(labelKey))
+    );
+  });
+
+  return match?.id;
+}
+
+function liveProductCards(
+  products: IkasProduct[],
+  presetCards: CategoryProductCard[],
+  filters?: CategoryFilter[],
+  preservePresetCards = false,
+): CategoryProductCard[] {
+  const presetByTitle = new Map(
+    presetCards.map((card, index) => [normalize(card.title), { card, index }] as const),
+  );
+
+  if (preservePresetCards) {
+    return presetCards.map((card) => {
+      const liveProduct = products.find((product) => {
+        const productKey = normalize(product.name);
+        return productKey === normalize(card.title) || productKey.includes(normalize(card.title)) || normalize(card.title).includes(productKey);
+      });
+      if (!liveProduct) return card;
+      return {
+        ...card,
+        title: liveProduct.name,
+        descriptionHtml: liveProductDescription(liveProduct),
+        href: getProductHref(liveProduct) || card.href,
+        imageAlt: liveProduct.name,
+        status: liveProductStatus(liveProduct) || card.status,
+      };
+    });
+  }
+
+  return products
+    .map((product, index) => ({ product, index }))
+    .sort((left, right) => {
+      const leftPreset = presetByTitle.get(normalize(left.product.name));
+      const rightPreset = presetByTitle.get(normalize(right.product.name));
+      const leftOrder = leftPreset?.index ?? Number.MAX_SAFE_INTEGER;
+      const rightOrder = rightPreset?.index ?? Number.MAX_SAFE_INTEGER;
+      if (leftOrder !== rightOrder) return leftOrder - rightOrder;
+      return left.index - right.index;
+    })
+    .map(({ product }) => {
+      const preset = presetByTitle.get(normalize(product.name))?.card;
+      return {
+        title: product.name,
+        descriptionHtml: liveProductDescription(product),
+        href: getProductHref(product),
+        imageAlt: product.name,
+        filterId: liveProductFilterId(product, filters, preset),
+        tag: product.categories?.[0]?.name || product.brand?.name || "",
+        status: liveProductStatus(product) || "Teklif alın",
+      };
+    });
 }
 
 function titleWithEmphasis(prefix: string, emphasis: string, suffix?: string) {
@@ -607,7 +720,7 @@ function ProductCard({
   return (
     <a className={`tmcl-product-card${card.hot ? " is-hot" : ""}`} href={href}>
       <div className="tmcl-product-media" style={card.tone ? { "--tmcl-card-tone": card.tone } as any : undefined}>
-        {card.tag ? <span className={`tmcl-card-tag${card.hot ? " is-hot" : ""}`}>{card.tag}</span> : null}
+        {card.tag && kind !== "resins" ? <span className={`tmcl-card-tag${card.hot ? " is-hot" : ""}`}>{card.tag}</span> : null}
         {card.status ? <span className="tmcl-card-status">{card.status}</span> : null}
         {imageSrc ? (
           media?.isVideo && !card.imageSrc ? (
@@ -811,7 +924,10 @@ export default function ThreeMashCategoryLanding(props: Props) {
     liveProducts.forEach((product) => map.set(normalize(product.name), product));
     return map;
   }, [liveProducts]);
-  const productCards = data.selector.products.length ? data.selector.products : liveProductCards(liveProducts);
+  const productCards = useMemo(
+    () => liveProductCards(liveProducts, data.selector.products, data.selector.filters, data.kind === "wash-cure"),
+    [data.selector.filters, data.selector.products, liveProducts],
+  );
   const visibleCards = productCards.filter((card) => activeFilter === "all" || card.filterId === activeFilter);
   const compare = data.selector.compare;
 

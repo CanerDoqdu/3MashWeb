@@ -2134,10 +2134,13 @@
   }
 
   .tmr-products,
-  .tmr-products-two,
   .tmr-why-grid,
   .tmr-testimonials {
     grid-template-columns: 1fr;
+  }
+
+  .tmr-products-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .tmr-products-slider {
@@ -2426,6 +2429,22 @@
   .tmr-product-body,
   .tmr-why-grid article {
     padding: 24px 22px;
+  }
+
+  .tmr-solution .tmr-product-body {
+    padding: 24px 22px;
+  }
+
+  .tmr-solution .tmr-spec div {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tmr-solution .tmr-spec span {
+    min-width: 0;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 
   .tmr-final {

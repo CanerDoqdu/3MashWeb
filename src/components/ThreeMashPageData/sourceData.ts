@@ -101,7 +101,7 @@ export const faqSections = [
 export const aboutPage = {
   "title": "Hakkımızda",
   "description": "Mash, her biri kendi alanında uzman bir grup tutkulu insanın, kişisel kariyerlerindeki hızlı yükselişin getirdiği konfor alanlarından çıkarak, ülkelerinin ilerlemesine ve insanlığın ortak mirasına azami katkıda bulunmak amacıyla başlattıkları bir oluşumdur. Mevcut durumda, ağız ve diş sağlığı, kuyumculuk, odyoloji sektörleri iyileştirmeyi ve dönüştürmeyi arzuladığımız hizmet alanlarıdır.",
-  "introTitleHtml": "<h4><strong>Biz Kimiz</strong></h4>",
+  "introTitleHtml": "<h4><strong>🇹🇷</strong></h4>",
   "introContentHtml": "<p><i style=\"color: rgb(7, 7, 7); font-family: &quot;DM Sans&quot;; font-size: 19px; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; text-align: center;\">\"Çalışmak demek, boşuna yorulmak, terlemek değildir. Zamanın gereklerine göre bilim ve teknik ve her türlü uygar buluşlardan azami derecede istifade etmek zorunludur.\"</i><span style=\"color: rgb(7, 7, 7); font-family: &quot;DM Sans&quot;; font-size: 19px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; text-align: center;\">&nbsp;&nbsp;</span></p><p><span style=\"color: rgb(7, 7, 7); font-family: &quot;DM Sans&quot;; font-size: 19px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; text-align: center;\"><br><div style=\"text-align: right;\"><b style=\"color: rgba(0, 0, 0, 0.88); background-color: transparent;\">M. Kemal Atatürk</b></div></span><b style=\"color: rgb(7, 7, 7); font-family: &quot;DM Sans&quot;; font-size: 19px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; text-align: center; background-color: transparent;\"></b></p>",
   "blocks": [
     {
@@ -111,7 +111,7 @@ export const aboutPage = {
       "reverse": true
     },
     {
-      "html": "<h3>Misyonumuz&nbsp; 🧭<span style=\"background-color: rgb(255, 255, 255); font-size: 1.5rem; font-weight: 500;\">&nbsp;</span></h3><p><span style=\"background-color: transparent;\"><br></span></p><p>Amacımız, <b>kaliteli diş tedavilerini</b>, insanların nerede yaşadığından bağımsız olarak <b>herkes için erişilebilir</b> hâle getirmektir.</p><p><br></p><h3>Vizyonumuz 🔭<span style=\"background-color: rgb(255, 255, 255); font-size: 1.75rem; font-weight: 500;\">&nbsp;</span></h3><p><br></p><p><span style=\"background-color: transparent;\"></span></p><p>Vizyonumuz; yalnızca 3D baskının değil, dijital üretimin sunduğu tüm imkânlardan yararlanarak yeniden üretimleri azaltmak, diş tedavilerinin kalitesini artırırken maliyetlerini düşürmek ve dünyanın en müşteri odaklı dental 3D baskı firması olmaktır.</p>",
+      "html": "<h3>Misyonumuz&nbsp; 🧭</h3><p><span style=\"background-color: transparent;\"><br></span></p><p>Amacımız, <b>kaliteli diş tedavilerini</b>, insanların nerede yaşadığından bağımsız olarak <b>herkes için erişilebilir</b> hâle getirmektir.</p><p><br></p><h3>Vizyonumuz 🔭</h3><p><br></p><p><span style=\"background-color: transparent;\"></span></p><p>Vizyonumuz; yalnızca 3D baskının değil, dijital üretimin sunduğu tüm imkânlardan yararlanarak yeniden üretimleri azaltmak, diş tedavilerinin kalitesini artırırken maliyetlerini düşürmek ve dünyanın en müşteri odaklı dental 3D baskı firması olmaktır.</p>",
       "imageUrl": "https://cdn.myikas.com/images/theme-images/a8845c4b-ba47-464a-95ea-1e5803cd4bdd/image_1080.webp",
       "imageAlt": "vizyon-misyon",
       "reverse": false

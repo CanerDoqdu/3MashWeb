@@ -1274,7 +1274,6 @@
   }
 
   .tmcl-product-grid-printers,
-  .tmcl-product-grid-wash-cure,
   .tmcl-product-grid-zircon,
   .tmcl-product-grid-furnaces,
   .tmcl-product-grid-scanners,
@@ -1284,6 +1283,10 @@
   .tmcl-flag,
   .tmcl-line-cards {
     grid-template-columns: 1fr;
+  }
+
+  .tmcl-product-grid-wash-cure {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .tmcl-why-grid {
@@ -1541,8 +1544,8 @@
   .tmcl-filter-chips {
     flex-wrap: nowrap;
     gap: 8px;
-    margin: 20px -14px 0;
-    padding: 0 14px 3px;
+    margin: 20px 0 0;
+    padding: 0 0 3px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
