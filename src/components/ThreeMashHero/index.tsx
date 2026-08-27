@@ -364,7 +364,7 @@ function StatBlock({
 }
 
 export function ThreeMashHero(props: Props) {
-  const [heroReady, setHeroReady] = useState(false);
+  const [heroReady, setHeroReady] = useState(true);
 
 
   const presets = useMemo<Record<Mode, Preset>>(
@@ -462,10 +462,9 @@ export function ThreeMashHero(props: Props) {
     importedState.cost > 0 ? importedState.cost : active.costDefault;
   const initialLoss =
     active.workDefault * 12 * (active.rptDefault / 100) * initialCost;
-  const initialAnimatedLoss = initialLoss > 100000 ? 100000 : 10000;
-  const [animatedLoss, setAnimatedLoss] = useState(initialAnimatedLoss);
+  const [animatedLoss, setAnimatedLoss] = useState(initialLoss);
   const preserveImportedValuesRef = useRef(importedState.cost > 0);
-  const animatedLossRef = useRef(initialAnimatedLoss);
+  const animatedLossRef = useRef(initialLoss);
   const currentLossRef = useRef(0);
 
   useLayoutEffect(() => {
@@ -474,14 +473,12 @@ export function ThreeMashHero(props: Props) {
       const nextPreset = presets[next.mode];
       const nextLoss =
         nextPreset.workDefault * 12 * (nextPreset.rptDefault / 100) * next.cost;
-      const nextAnimatedLoss = nextLoss > 100000 ? 100000 : 10000;
       preserveImportedValuesRef.current = true;
       setMode(next.mode);
       setCost(next.cost);
-      animatedLossRef.current = nextAnimatedLoss;
-      setAnimatedLoss(nextAnimatedLoss);
+      animatedLossRef.current = nextLoss;
+      setAnimatedLoss(nextLoss);
     }
-    setHeroReady(true);
   }, [presets]);
 
   useEffect(() => {
