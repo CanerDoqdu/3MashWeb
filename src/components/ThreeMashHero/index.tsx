@@ -304,21 +304,15 @@ function importedCalculatorState() {
   try {
     const params = new URLSearchParams(window.location.search);
     const urlMode = params.get("mode");
-    const storedMode = window.localStorage.getItem("mash_calculator_mode");
     const mode =
       urlMode === "lab" || urlMode === "clinic"
-        ? urlMode
-        : storedMode === "lab" || storedMode === "clinic"
-          ? storedMode
-          : "clinic";
+        ? (urlMode as Mode)
+        : "clinic";
     const urlCost = Number(params.get("rc"));
-    const storedCost = Number(
-      window.localStorage.getItem("mash_remake_cost"),
-    );
 
     return {
-      mode: mode as Mode,
-      cost: urlCost > 0 ? urlCost : storedCost > 0 ? storedCost : 0,
+      mode,
+      cost: urlCost > 0 ? urlCost : 0,
     };
   } catch {
     return { mode: "clinic" as Mode, cost: 0 };
@@ -473,9 +467,6 @@ export function ThreeMashHero(props: Props) {
     setWork(next.workDefault);
     setRpt(next.rptDefault);
     setCost(next.costDefault);
-    try {
-      window.localStorage.setItem("mash_calculator_mode", nextMode);
-    } catch {}
   }
 
   const yearly = work * 12;
