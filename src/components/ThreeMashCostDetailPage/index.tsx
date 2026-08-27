@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Props } from "./types";
 
 type CostMode = "klinik" | "lab";
@@ -28,6 +28,24 @@ export function ThreeMashCostDetailPage(props: Props) {
   const [mode, setMode] = useState<CostMode>("klinik");
   const [saved, setSaved] = useState(false);
   const [initialized, setInitialized] = useState(false);
+  const [isStuck, setIsStuck] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
+    const el = sentinelRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsStuck(!entry.isIntersecting);
+      },
+      { threshold: 0, rootMargin: "-20px 0px 0px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Klinik input states (initialized from props or defaults)
   const [chairRate, setChairRate] = useState(props.defaultChairRate ?? 375);
@@ -264,8 +282,20 @@ export function ThreeMashCostDetailPage(props: Props) {
       </div>
 
       <div className="wrap cols">
+        <div
+          ref={sentinelRef}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "1px",
+            width: "1px",
+            pointerEvents: "none",
+            visibility: "hidden",
+          }}
+        />
         {/* SOL: hesaplayıcı (sticky) */}
-        <div className="calc">
+        <div className={`calc${isStuck ? " is-stuck" : ""}`}>
           <div className="h">
             <span className="micro">TEKRAR MALİYETİ · KALEM KALEM</span>
             <span className="micro" id="perLabel">
