@@ -8435,7 +8435,7 @@
           "displayName": "Başlık Metni",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Arama",
+          "defaultValue": "Tüm Ürünler",
           "groupId": "header"
         },
         {
@@ -8443,7 +8443,7 @@
           "displayName": "Açıklama Metin",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Güncel ürün kataloğunu keşfedin; yayındaki ürünleri tek yerden inceleyin.",
+          "defaultValue": "",
           "groupId": "header"
         },
         {
@@ -8627,7 +8627,7 @@
           "displayName": "Göster Navigation",
           "type": "BOOLEAN",
           "required": false,
-          "defaultValue": false,
+          "defaultValue": true,
           "groupId": "layout"
         },
         {
@@ -11860,7 +11860,8 @@
           "displayName": "Kategori/Marka Navigasyonu",
           "type": "BOOLEAN",
           "required": false,
-          "groupId": "appearance"
+          "groupId": "appearance",
+          "defaultValue": true
         },
         {
           "name": "backgroundColor",
@@ -23711,7 +23712,7 @@
       "id": "2tplvqpo-kAGyzNeE0n",
       "name": "Hesabım Bilgileri",
       "entry": "./src/components/ThreeMashAccountInfoPage/index.tsx",
-      "styles": "./src/components/ThreeMashAccountInfoPage/styles.css",
+      "styles": "./src/components/ThreeMashAccountUtilityPage/styles.css",
       "type": "section",
       "props": [
         {
@@ -27258,7 +27259,7 @@
           "type": "BOOLEAN",
           "required": false,
           "groupId": "row1",
-          "defaultValue": false
+          "defaultValue": true
         },
         {
           "name": "row1Col2Positive",
@@ -28472,6 +28473,534 @@
           "id": "footer",
           "name": "06. Alt Yasal / Güven Notu",
           "description": "Orijinal doküman temin bilgilendirmesi"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-M5XDVZ57DP",
+      "name": "ThreeMashHeaderV2",
+      "entry": "./src/components/ThreeMashHeaderV2/index.tsx",
+      "styles": "./src/components/ThreeMashHeaderV2/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "showAnnouncement",
+          "displayName": "Duyuru Bandını Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true
+        },
+        {
+          "name": "announcementHighlightText",
+          "displayName": "Duyuru Vurgu Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "⚡ Fırsatı kaçırmayın."
+        },
+        {
+          "name": "announcementText",
+          "displayName": "Duyuru Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim."
+        },
+        {
+          "name": "announcementCtaText",
+          "displayName": "Duyuru Buton Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Hemen hesaplayın"
+        },
+        {
+          "name": "announcementHref",
+          "displayName": "Duyuru Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#hesap"
+        },
+        {
+          "name": "logoText",
+          "displayName": "Logo Metni",
+          "type": "RICH_TEXT",
+          "required": true,
+          "defaultValue": "mash"
+        },
+        {
+          "name": "logoHref",
+          "displayName": "Logo Linki",
+          "type": "TEXT",
+          "required": false,
+          "description": "Logo tıklanınca gidilecek anasayfa routeu.",
+          "defaultValue": "/"
+        },
+        {
+          "name": "productsMenuText",
+          "displayName": "Ürünler Menü Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürünler"
+        },
+        {
+          "name": "allProductsText",
+          "displayName": "Tüm Ürünler Metni",
+          "type": "TEXT",
+          "required": false,
+          "description": "Ürünler mega menüsündeki sağ alt küçük bağlantı metni.",
+          "defaultValue": "Tümü"
+        },
+        {
+          "name": "allProductsHref",
+          "displayName": "Tüm Ürünler Linki",
+          "type": "TEXT",
+          "required": false,
+          "description": "Ürünler mega menüsündeki sağ alt küçük bağlantı adresi. Arama sayfası için /search yazın.",
+          "defaultValue": "/search"
+        },
+        {
+          "name": "productsFeatureEyebrow",
+          "displayName": "Öne Çıkan Ürün Üst Etiketi",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "YENİ · DÜNYADA İLK"
+        },
+        {
+          "name": "productsFeatureTitle",
+          "displayName": "Öne Çıkan Ürün Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "MASH C4P<br>Akıllı Kürleme Cihazı"
+        },
+        {
+          "name": "productsFeatureDescription",
+          "displayName": "Öne Çıkan Ürün Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir."
+        },
+        {
+          "name": "productsFeatureCtaText",
+          "displayName": "Öne Çıkan Ürün Buton Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Keşfet →"
+        },
+        {
+          "name": "productsFeatureHref",
+          "displayName": "Öne Çıkan Ürün Linki",
+          "type": "TEXT",
+          "required": false,
+          "description": "C4P kartının gideceği çalışan ürün/kategori routeu.",
+          "defaultValue": "/yikama-kurleme-cihazlari"
+        },
+        {
+          "name": "productsCol1Title",
+          "displayName": "Ürünler Sütun 1 Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "ÜRETİM"
+        },
+        {
+          "name": "product1Title",
+          "displayName": "Ürün Kartı 1 Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Ürünler menüsünde sol sütundaki ilk kategori başlığı.",
+          "defaultValue": "3D Yazıcılar"
+        },
+        {
+          "name": "product1Description",
+          "displayName": "Ürün Kartı 1 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "3D Yazıcılar kartı alt açıklaması.",
+          "defaultValue": "P1D / P16L hassas baskı"
+        },
+        {
+          "name": "product1Href",
+          "displayName": "Ürün Kartı 1 Bağlantı",
+          "type": "TEXT",
+          "required": false,
+          "description": "3D Yazıcılar kategori routeu.",
+          "defaultValue": "/3d-yazicilar"
+        },
+        {
+          "name": "product2Title",
+          "displayName": "Ürün Kartı 2 Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Ürünler menüsünde sol sütundaki ikinci kategori başlığı.",
+          "defaultValue": "Yıkama"
+        },
+        {
+          "name": "product2Description",
+          "displayName": "Ürün Kartı 2 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Yıkama & Kürleme kartı alt açıklaması.",
+          "defaultValue": "Baskı sonrası ultrasonik temizlik"
+        },
+        {
+          "name": "product2Href",
+          "displayName": "Ürün Kartı 2 Bağlantı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Yıkama & Kürleme kategori routeu.",
+          "defaultValue": "/yikama-cihazlari"
+        },
+        {
+          "name": "product3Title",
+          "displayName": "Ürün Kartı 3 Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Ürünler menüsünde sol sütundaki üçüncü kategori başlığı.",
+          "defaultValue": "Kürleme"
+        },
+        {
+          "name": "product3Description",
+          "displayName": "Ürün Kartı 3 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Dental Reçineler kartı alt açıklaması.",
+          "defaultValue": "360° homojen UV post-curing"
+        },
+        {
+          "name": "product3Href",
+          "displayName": "Ürün Kartı 3 Bağlantı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Dental Reçineler kategori routeu.",
+          "defaultValue": "/kurleme-cihazlari"
+        },
+        {
+          "name": "productsCol2Title",
+          "displayName": "Ürünler Sütun 2 Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "TAMAMLAYICI"
+        },
+        {
+          "name": "product4Title",
+          "displayName": "Ürün Kartı 4 Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Ürünler menüsünde sağ sütundaki ilk kategori başlığı.",
+          "defaultValue": "Dental Reçineler"
+        },
+        {
+          "name": "product4Description",
+          "displayName": "Ürün Kartı 4 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Masaüstü Tarayıcılar kartı alt açıklaması.",
+          "defaultValue": "Dental reçine seçenekleri"
+        },
+        {
+          "name": "product4Href",
+          "displayName": "Ürün Kartı 4 Bağlantı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Masaüstü Tarayıcılar kategori routeu.",
+          "defaultValue": "/dental-3d-yazici-recineleri"
+        },
+        {
+          "name": "product5Title",
+          "displayName": "Ürün Kartı 5 Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Ürünler menüsünde sağ sütundaki ikinci kategori başlığı.",
+          "defaultValue": "Zirkon Bloklar & Titanyum"
+        },
+        {
+          "name": "product5Description",
+          "displayName": "Ürün Kartı 5 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Zirkon Bloklar kartı alt açıklaması.",
+          "defaultValue": "Freze tarafının sarfları"
+        },
+        {
+          "name": "product5Href",
+          "displayName": "Ürün Kartı 5 Bağlantı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Zirkon Bloklar kategori routeu.",
+          "defaultValue": "/zirkon-bloklar"
+        },
+        {
+          "name": "product6Title",
+          "displayName": "Ürün Kartı 6 Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Ürünler menüsünde sağ sütundaki üçüncü kategori başlığı.",
+          "defaultValue": "Dental Fırınlar"
+        },
+        {
+          "name": "product6Description",
+          "displayName": "Ürün Kartı 6 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "description": "Dental Fırınlar kartı alt açıklaması.",
+          "defaultValue": "Sinterleme çözümleri"
+        },
+        {
+          "name": "product6Href",
+          "displayName": "Ürün Kartı 6 Bağlantı",
+          "type": "TEXT",
+          "required": false,
+          "description": "Dental Fırınlar kategori routeu.",
+          "defaultValue": "/dental-firinlar"
+        },
+        {
+          "name": "whyMenuText",
+          "displayName": "Neden Menü Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Neden 3mash?"
+        },
+        {
+          "name": "why1Number",
+          "displayName": "Neden 1 Numarası",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "01"
+        },
+        {
+          "name": "why1Title",
+          "displayName": "Neden 1 Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Yılda $126K'ya varan görünmez kayıp"
+        },
+        {
+          "name": "why1Description",
+          "displayName": "Neden 1 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Tekrarlanan işlerin kliniğinize gerçek maliyeti"
+        },
+        {
+          "name": "why1Href",
+          "displayName": "Neden 1 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#sorun"
+        },
+        {
+          "name": "why2Number",
+          "displayName": "Neden 2 Numarası",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "02"
+        },
+        {
+          "name": "why2Title",
+          "displayName": "Neden 2 Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Sebep: ölçüsel hassasiyet"
+        },
+        {
+          "name": "why2Description",
+          "displayName": "Neden 2 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "250–500µm sapma bandı vs ±20µm güvenli bölge"
+        },
+        {
+          "name": "why2Href",
+          "displayName": "Neden 2 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#piyasada-yaygin-kurulum-250-500"
+        },
+        {
+          "name": "why3Number",
+          "displayName": "Neden 3 Numarası",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "03"
+        },
+        {
+          "name": "why3Title",
+          "displayName": "Neden 3 Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Çözüm: uyumlu ekosistem"
+        },
+        {
+          "name": "why3Description",
+          "displayName": "Neden 3 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Yazıcı + reçine + parametre bilgisi, birlikte kalibre"
+        },
+        {
+          "name": "why3Href",
+          "displayName": "Neden 3 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#cozum"
+        },
+        {
+          "name": "why4Number",
+          "displayName": "Neden 4 Numarası",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "04"
+        },
+        {
+          "name": "why4Title",
+          "displayName": "Neden 4 Başlığı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ve kürleme — son %20'lik fark"
+        },
+        {
+          "name": "why4Description",
+          "displayName": "Neden 4 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"
+        },
+        {
+          "name": "why4Href",
+          "displayName": "Neden 4 Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/yikama-kurleme-cihazlari#neden-gerekli"
+        },
+        {
+          "name": "referencesText",
+          "displayName": "Referanslar Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Referanslar"
+        },
+        {
+          "name": "referencesHref",
+          "displayName": "Referanslar Linki",
+          "type": "TEXT",
+          "required": false,
+          "description": "Referanslar menü linki. Başka sayfadan doğal olarak anasayfaya gider ve #guven hashini taşır.",
+          "defaultValue": "/#guven"
+        },
+        {
+          "name": "academyText",
+          "displayName": "Akademi Metni",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Academy"
+        },
+        {
+          "name": "academyHref",
+          "displayName": "Akademi Linki",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/pages/mash-academy"
+        },
+        {
+          "name": "searchHref",
+          "displayName": "Arama Linki",
+          "type": "TEXT",
+          "required": false,
+          "description": "Arama sayfası routeu. Tam domain kullanmayın; /search yazın.",
+          "defaultValue": "/search"
+        },
+        {
+          "name": "searchProductList",
+          "displayName": "Arama Ürün Listesi",
+          "type": "PRODUCT_LIST",
+          "required": false,
+          "description": "üst menü arama önerileri için Tüm Ürünler olarak bağlayın.",
+          "defaultValue": "@{id=2tplvqpo-header-search-productList; productListType=ALL; initialSort=DEFAULT; initialLimit=80; productCount=; productIds=; usePageFilter=False; category=; brand=; relatedProductsType=}"
+        },
+        {
+          "name": "searchAriaLabel",
+          "displayName": "Arama Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ara"
+        },
+        {
+          "name": "accountHref",
+          "displayName": "Hesap Linki",
+          "type": "TEXT",
+          "required": false,
+          "description": "Hesap giriş routeu. Tam domain kullanmayın; /account/login yazın.",
+          "defaultValue": "/account/login"
+        },
+        {
+          "name": "accountAriaLabel",
+          "displayName": "Hesap Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hesabım"
+        },
+        {
+          "name": "cartHref",
+          "displayName": "Sepet Linki",
+          "type": "TEXT",
+          "required": false,
+          "description": "Sepet routeu. Tam domain kullanmayın; /cart yazın.",
+          "defaultValue": "/cart"
+        },
+        {
+          "name": "cartAriaLabel",
+          "displayName": "Sepet Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Sepet"
+        },
+        {
+          "name": "product7Title",
+          "displayName": "Ürün Kartı 7 Başlık",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ağız İçi Tarayıcılar"
+        },
+        {
+          "name": "product7Description",
+          "displayName": "Ürün Kartı 7 Açıklama",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Lab tarafında hassas veri"
+        },
+        {
+          "name": "product7Href",
+          "displayName": "Ürün Kartı 7 Bağlantı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/masasustu-tarayicilar"
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-QRunMkGkrp",
+      "name": "ThreeMashWashingListingPage",
+      "entry": "./src/components/ThreeMashWashingListingPage/index.tsx",
+      "styles": "./src/components/ThreeMashWashingListingPage/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "productList",
+          "displayName": "Product List",
+          "type": "PRODUCT_LIST",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "2tplvqpo-Berl3lUnOF",
+      "name": "ThreeMashCuringListingPage",
+      "entry": "./src/components/ThreeMashCuringListingPage/index.tsx",
+      "styles": "./src/components/ThreeMashCuringListingPage/styles.css",
+      "type": "section",
+      "props": [
+        {
+          "name": "productList",
+          "displayName": "Product List",
+          "type": "PRODUCT_LIST",
+          "required": false
         }
       ]
     }

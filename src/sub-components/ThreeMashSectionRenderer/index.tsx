@@ -1305,7 +1305,7 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
     curingProduct2DescriptionHtml: {
       legacy:
         "Baskı sonrası yıkama ve kürleme adımlarını <b>tek kontrollü akışta</b> toplar. P16L ile tamamlayıcı başlangıç seti.",
-      next: "24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle <b>homojen UV post-curing</b> sağlar; mekanik dayanım, boyutsal doğruluk ve yüzey kalitesi hedefini tamamlar.",
+      next: "Kürleme, polimer malzemelerin <b>sertleştirilme sürecidir.</b> 3D baskı tamamlandıktan sonra ürünün boyutsal kararlılığını ve yüzey dayanımını destekler. Mash C1E, 24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle reçine baskılarınızda <b>hızlı ve homojen kürleme</b> sunar. <b>Sararmayı önlemeye</b> yardımcı olan teknolojisi ve dahili fan sistemiyle güvenilir, profesyonel sonuçlar sağlar.",
     },
     curingProduct2ImageAlt: {
       legacy: "Creality UW02",
@@ -1328,8 +1328,6 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
   });
   const staticCuringProps = {
     ...normalizedProps,
-    curingProduct1Product: null,
-    curingProduct2Product: null,
   };
 
   return `<div class="tmr-products tmr-products-two">${productCard(
@@ -2058,30 +2056,8 @@ export function ThreeMashStaticSection({
         });
     };
 
-    const blockStudioFooterPageNavigation = (event: MouseEvent) => {
-      const target =
-        event.target instanceof Element
-          ? event.target.closest<HTMLAnchorElement>(".tmr-footer a[href]")
-          : null;
-      if (!target) return;
-
-      const href = target.getAttribute("href") || "";
-      if (!href.startsWith("/pages/")) return;
-
-      const isStudioPreview =
-        window.location.hostname.includes("ikasapps.com") ||
-        window.location.hostname.includes("myikas.com") ||
-        document.referrer.includes("ikasapps.com") ||
-        document.referrer.includes("myikas.com");
-
-      if (!isStudioPreview) return;
-      event.preventDefault();
-      event.stopPropagation();
-    };
-
     normalizeProductSliders();
     syncFooterCategoryLists();
-    root.addEventListener("click", blockStudioFooterPageNavigation, true);
     const syncObserver =
       typeof MutationObserver === "undefined"
         ? null
@@ -2094,7 +2070,6 @@ export function ThreeMashStaticSection({
     });
 
     return () => {
-      root.removeEventListener("click", blockStudioFooterPageNavigation, true);
       syncObserver?.disconnect();
       productSliderCleanups.forEach((cleanup) => cleanup());
     };

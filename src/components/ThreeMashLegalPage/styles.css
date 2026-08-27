@@ -182,6 +182,11 @@
   text-transform: none;
 }
 
+.three-mash-legal-page.is-ticari {
+  min-height: max(408px, calc(100vh - 360px));
+  padding-bottom: 80px;
+}
+
 .three-mash-legal-page.is-uyelik .tmlp-content,
 .three-mash-legal-page.is-ticari .tmlp-content {
   font-size: 16px;

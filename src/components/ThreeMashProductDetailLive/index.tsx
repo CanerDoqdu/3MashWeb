@@ -6,6 +6,7 @@ import {
 
 import {
   addItemToCart,
+  apiSearchProducts,
   getDefaultSrc,
   getDisplayedProductVariantTypes,
   getProductFirstCategory,
@@ -480,17 +481,50 @@ function listProducts(productList: IkasProductList | undefined) {
     });
 }
 
+function productCategoryKeys(product: IkasProduct) {
+  const source = product as IkasProduct & {
+    category?: unknown;
+    productCategories?: unknown[];
+  };
+  const categories = [
+    ...(product.categories || []),
+    ...(Array.isArray(source.productCategories) ? source.productCategories : []),
+  ];
+  if (source.category) categories.push(source.category);
+
+  const ids = new Set<string>();
+  const names = new Set<string>();
+  categories.forEach((category) => {
+    const value = category as { id?: unknown; categoryId?: unknown; value?: unknown; name?: unknown; title?: unknown; slug?: unknown };
+    const id = stringValue(value.id) || stringValue(value.categoryId) || stringValue(value.value);
+    const name = stringValue(value.name) || stringValue(value.title) || stringValue(value.slug);
+    if (id) ids.add(id);
+    if (name) names.add(slugify(name));
+  });
+  return { ids, names };
+}
+
+function productsShareCategory(product: IkasProduct, currentProduct: IkasProduct) {
+  const current = productCategoryKeys(currentProduct);
+  const candidate = productCategoryKeys(product);
+  for (const id of current.ids) if (candidate.ids.has(id)) return true;
+  for (const name of current.names) if (name && candidate.names.has(name)) return true;
+  return false;
+}
+
 function relatedProduct(product: IkasProduct): ProductDetailRelatedProduct {
   const variant = selectedVariant(product);
   const media = variant ? getProductVariantMainImage(variant) : undefined;
-  const image = media?.image ? getDefaultSrc(media.image) : "";
+  const fallbackImage = variant?.images?.find((item) => !isMediaVideo(item))?.image;
+  const imageSource = media?.image || fallbackImage;
+  const image = imageSource ? getDefaultSrc(imageSource) : "";
   const description = summaryText(product);
   return {
     id: product.id,
     title: product.name,
     href: getProductHref(product) || `/${productSlug(product)}`,
     image,
-    imageAlt: media?.image?.altText || product.name,
+    imageAlt: imageSource?.altText || product.name,
     category: categoryName(firstProductCategory(product)) || product.brand?.name || "",
     descriptionHtml: description ? escapeHtml(description.length > 118 ? `${description.slice(0, 117).trimEnd()}...` : description) : "",
   };
@@ -1141,7 +1175,7 @@ export function ThreeMashProductDetailLive(props: Props) {
   const [message, setMessage] = useState("");
   const [version, setVersion] = useState(0);
   const [previewSelection, setPreviewSelection] = useState<PreviewSelection>({});
-  const [relatedProducts, setRelatedProducts] = useState<ProductDetailRelatedProduct[]>([]);
+  const [relatedProducts, setRelatedProducts] = useState<ProductDetailRelatedProduct[] | undefined>(undefined);
 
   useEffect(() => {
     if (!product) return;
@@ -1175,21 +1209,32 @@ export function ThreeMashProductDetailLive(props: Props) {
 
   useEffect(() => {
     const productList = categoryProductList(product, 12);
-    if (!productList || !product) {
+    const currentId = product?.id || "";
+    const currentCategoryId = product ? categoryId(firstProductCategory(product)) : "";
+    if (!product || !productList || !currentId || !currentCategoryId) {
       setRelatedProducts([]);
       return undefined;
     }
     let isMounted = true;
-    const currentId = product.id;
     getProductListInitialData(productList)
-      .then(() => {
+      .then(async () => {
         if (!isMounted) return;
-        setRelatedProducts(
-          listProducts(productList)
-            .filter((item) => item.id !== currentId)
-            .slice(0, 8)
-            .map(relatedProduct),
-        );
+        const listedProducts = listProducts(productList);
+        const response = currentCategoryId
+          ? await apiSearchProducts({
+              input: {
+                categoryIdList: [currentCategoryId],
+                page: 1,
+                perPage: 20,
+              },
+            } as Parameters<typeof apiSearchProducts>[0])
+          : null;
+        const apiProducts = response?.data?.data || [];
+        const liveRelatedProducts = (apiProducts.length ? apiProducts : listedProducts)
+          .filter((item) => item.id !== currentId)
+          .slice(0, 8)
+          .map(relatedProduct);
+        setRelatedProducts(liveRelatedProducts.length ? liveRelatedProducts : []);
       })
       .catch((error) => {
         console.error("ThreeMashProductDetailLive related products failed", error);

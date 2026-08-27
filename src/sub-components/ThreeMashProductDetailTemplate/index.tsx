@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { ComponentChildren } from "preact";
+import { resolveProductDetailData } from "../ThreeMashProductDetailData";
 
 export type ProductGalleryItem = {
   src: string;
@@ -168,6 +169,34 @@ export type ProductDetailRelatedProduct = {
   category?: string;
   descriptionHtml?: string;
 };
+
+const RELATED_PRODUCT_IMAGES: Record<string, { src: string; alt: string }> = {
+  "/crs-model-yuksek-hassasiyetli-model-recinesi": {
+    src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/36167f47-c92f-4660-967c-d4a8faa86006/1080/crs-model-resin.webp",
+    alt: "CRS Model reçine ürün görseli",
+  },
+  "/crs-denture-biouyumlu-protez-recinesi": {
+    src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/7a581ce8-604c-47c0-bb9d-c05e4cdefae0/1080/denture-resin.webp",
+    alt: "CRS Denture reçine ürün görseli",
+  },
+  "/crs-gingiva-yirtilmaz-dis-eti-recinesi": {
+    src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/b80f60c6-a2eb-4a48-a541-fa0c84489c6a/1080/gingiva-resin.webp",
+    alt: "CRS Gingiva reçine ürün görseli",
+  },
+  "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi": {
+    src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a7753220-8b7a-4832-a428-c8678e941fda/1080/crs-tray-resin.webp",
+    alt: "CRS Tray Resin ürün görseli",
+  },
+};
+
+function relatedProductImage(item: { href: string; image?: string; imageAlt?: string; title: string }) {
+  if (item.image) return { src: item.image, alt: item.imageAlt || item.title };
+  if (RELATED_PRODUCT_IMAGES[item.href]) return RELATED_PRODUCT_IMAGES[item.href];
+
+  const productData = resolveProductDetailData({ slug: item.href });
+  const mainImage = productData?.hero.gallery[0];
+  return mainImage?.src ? { src: mainImage.src, alt: mainImage.alt || `${item.title} ürün görseli` } : undefined;
+}
 
 type ProductAnnouncementPayload = {
   enabled?: boolean;
@@ -880,8 +909,8 @@ export function ProductDetailRelatedSection({
   const hasLiveProductSource = Array.isArray(products);
   const liveProducts = products?.filter((item) => item.id && item.title && item.href) || [];
   const relatedRailRef = useRef<HTMLDivElement>(null);
-  if (hasLiveProductSource && !liveProducts.length) return null;
-  if (!hasLiveProductSource && !related?.items.length) return null;
+  const shouldUseLiveProducts = hasLiveProductSource && liveProducts.length > 0;
+  if (!shouldUseLiveProducts && !related?.items.length) return null;
 
   function scrollRelated(direction: -1 | 1) {
     const rail = relatedRailRef.current;
@@ -896,8 +925,8 @@ export function ProductDetailRelatedSection({
     <section className="tmpdt-section tmpdt-section-tight">
       <div className="tmpdt-wrap">
         <SectionIndex index={related?.index || "07"} label={related?.label || "İlgili Ürünler"} />
-        <SectionHead titleHtml={titleHtml || related?.titleHtml || 'Aynı kategorideki <span class="em">diğer ürünler.</span>'} wide />
-        {hasLiveProductSource ? (
+        <SectionHead titleHtml={titleHtml || related?.titleHtml || 'Aynı vakada <span class="em">birlikte çalışanlar.</span>'} wide />
+        {shouldUseLiveProducts ? (
           <div className="tmpdt-rshell">
             {liveProducts.length > 4 ? (
               <button type="button" className="tmpdt-rnav tmpdt-rnav-prev" aria-label="Önceki ilgili ürünler" onClick={() => scrollRelated(-1)}>
@@ -943,29 +972,32 @@ export function ProductDetailRelatedSection({
           </div>
         ) : (
           <div className="tmpdt-rgrid">
-            {related?.items.map((item) => (
-              <article className="tmpdt-rc" key={item.title}>
-                <div className="tmpdt-rc-ph" style={{ background: item.background }}>
-                  <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{item.tag}</span>
-                  {item.image ? (
-                    <img className="tmpdt-rc-live-img" src={item.image} alt={item.imageAlt || item.title} loading="lazy" decoding="async" />
-                  ) : (
-                    <svg viewBox="0 0 48 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M18 6h12v8l5 7v31a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V21l5-7V6z" />
-                      <line x1="18" y1="6" x2="30" y2="6" />
-                      <line x1="13" y1="35" x2="35" y2="35" />
-                    </svg>
-                  )}
-                </div>
-                <div className="tmpdt-rc-bd">
-                  <h3>{item.title}</h3>
-                  <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
-                  <a className="tmpdt-rc-go" href={item.href}>
-                    {item.linkText} <span>→</span>
-                  </a>
-                </div>
-              </article>
-            ))}
+            {related?.items.map((item) => {
+              const image = relatedProductImage(item);
+              return (
+                <article className="tmpdt-rc" key={item.title}>
+                  <div className="tmpdt-rc-ph" style={{ background: item.background }}>
+                    <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{item.tag}</span>
+                    {image ? (
+                      <img className="tmpdt-rc-live-img" src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+                    ) : (
+                      <svg viewBox="0 0 48 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 6h12v8l5 7v31a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V21l5-7V6z" />
+                        <line x1="18" y1="6" x2="30" y2="6" />
+                        <line x1="13" y1="35" x2="35" y2="35" />
+                      </svg>
+                    )}
+                  </div>
+                  <div className="tmpdt-rc-bd">
+                    <h3>{item.title}</h3>
+                    <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
+                    <a className="tmpdt-rc-go" href={item.href}>
+                      {item.linkText} <span>→</span>
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         )}
       </div>

@@ -1,6 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProductList, IkasImage } from "@ikas/bp-storefront";
-import type { LogoImageFit } from "../../global-types";
+import type { IkasProductList } from "@ikas/bp-storefront";
 
 export interface Props {
   showAnnouncement?: boolean;
@@ -23,35 +22,43 @@ export interface Props {
   /** C4P kartının gideceği çalışan ürün/kategori routeu. */
   productsFeatureHref?: string;
   productsCol1Title?: string;
-  /** Ürünler menüsünde sol sütundaki ilk kategori başlığı. (3D Yazıcılar) */
+  /** Ürünler menüsünde sol sütundaki ilk kategori başlığı. */
   product1Title?: string;
+  /** 3D Yazıcılar kartı alt açıklaması. */
   product1Description?: string;
+  /** 3D Yazıcılar kategori routeu. */
   product1Href?: string;
-  /** Ürünler menüsünde sol sütundaki ikinci kategori başlığı. (Yıkama) */
+  /** Ürünler menüsünde sol sütundaki ikinci kategori başlığı. */
   product2Title?: string;
+  /** Yıkama & Kürleme kartı alt açıklaması. */
   product2Description?: string;
+  /** Yıkama & Kürleme kategori routeu. */
   product2Href?: string;
-  /** Ürünler menüsünde sol sütundaki üçüncü kategori başlığı. (Kürleme) */
+  /** Ürünler menüsünde sol sütundaki üçüncü kategori başlığı. */
   product3Title?: string;
+  /** Dental Reçineler kartı alt açıklaması. */
   product3Description?: string;
+  /** Dental Reçineler kategori routeu. */
   product3Href?: string;
   productsCol2Title?: string;
-  /** Ürünler menüsünde sağ sütundaki ilk kategori başlığı. (Dental Reçineler) */
+  /** Ürünler menüsünde sağ sütundaki ilk kategori başlığı. */
   product4Title?: string;
+  /** Masaüstü Tarayıcılar kartı alt açıklaması. */
   product4Description?: string;
+  /** Masaüstü Tarayıcılar kategori routeu. */
   product4Href?: string;
-  /** Ürünler menüsünde sağ sütundaki ikinci kategori başlığı. (Zirkon Bloklar) */
+  /** Ürünler menüsünde sağ sütundaki ikinci kategori başlığı. */
   product5Title?: string;
+  /** Zirkon Bloklar kartı alt açıklaması. */
   product5Description?: string;
+  /** Zirkon Bloklar kategori routeu. */
   product5Href?: string;
-  /** Ürünler menüsünde sağ sütun son satır sol item. (Dental Fırınlar) */
+  /** Ürünler menüsünde sağ sütundaki üçüncü kategori başlığı. */
   product6Title?: string;
+  /** Dental Fırınlar kartı alt açıklaması. */
   product6Description?: string;
+  /** Dental Fırınlar kategori routeu. */
   product6Href?: string;
-  /** Ürünler menüsünde sağ sütun son satır sağ item. (Tarayıcılar) */
-  product7Title?: string;
-  product7Description?: string;
-  product7Href?: string;
   whyMenuText?: string;
   why1Number?: string;
   why1Title?: string;
@@ -70,190 +77,22 @@ export interface Props {
   why4Description?: string;
   why4Href?: string;
   referencesText?: string;
-  /** Referanslar menü linki. */
+  /** Referanslar menü linki. Başka sayfadan doğal olarak anasayfaya gider ve #guven hashini taşır. */
   referencesHref?: string;
   academyText?: string;
   academyHref?: string;
-  /** Arama sayfası routeu. */
+  /** Arama sayfası routeu. Tam domain kullanmayın; /search yazın. */
   searchHref?: string;
+  /** üst menü arama önerileri için Tüm Ürünler olarak bağlayın. */
   searchProductList?: IkasProductList;
   searchAriaLabel?: string;
+  /** Hesap giriş routeu. Tam domain kullanmayın; /account/login yazın. */
   accountHref?: string;
   accountAriaLabel?: string;
+  /** Sepet routeu. Tam domain kullanmayın; /cart yazın. */
   cartHref?: string;
   cartAriaLabel?: string;
-  cartCount?: string;
-  mobileMenuLabel?: string;
-  backgroundColor?: string;
-  announcementBackgroundColor?: string;
-  announcementTextColor?: string;
-  accentColor?: string;
-  textColor?: string;
-  mutedTextColor?: string;
-  lineColor?: string;
-  panelColor?: string;
-  badgeColor?: string;
-  logoImageUrl?: IkasImage | null;
-  logoImageAlt?: string;
-  logoSvg?: string;
-  productsFeatureImageUrl?: IkasImage | null;
-  productsFeatureImageAlt?: string;
-  product1IconSvg?: string;
-  product2IconSvg?: string;
-  product3IconSvg?: string;
-  product4IconSvg?: string;
-  product5IconSvg?: string;
-  product6IconSvg?: string;
-  product7IconSvg?: string;
-  searchIconSvg?: string;
-  accountIconSvg?: string;
-  cartIconSvg?: string;
-  searchDrawerTitle?: string;
-  searchPlaceholder?: string;
-  searchCloseLabel?: string;
-  searchSubmitLabel?: string;
-  searchQueryParam?: string;
-  whyMenuEyebrow?: string;
-  whyMenuDescription?: string;
-  product1IconImageUrl?: IkasImage | null;
-  product2IconImageUrl?: IkasImage | null;
-  product3IconImageUrl?: IkasImage | null;
-  product4IconImageUrl?: IkasImage | null;
-  product5IconImageUrl?: IkasImage | null;
-  product6IconImageUrl?: IkasImage | null;
-  product7IconImageUrl?: IkasImage | null;
-  searchIconImageUrl?: IkasImage | null;
-  accountIconImageUrl?: IkasImage | null;
-  cartIconImageUrl?: IkasImage | null;
-  logoImageWidth?: number;
-  logoImageHeight?: number;
-  logoImageXOffset?: number;
-  logoImageYOffset?: number;
-  logoImageFit?: LogoImageFit;
-  logoImageOpacity?: number;
-  logoImageBrightness?: number;
-  logoImageContrast?: number;
-  logoImageSaturation?: number;
-  logoImageHue?: number;
-  logoImageInvert?: number;
-  logoSvgWidth?: number;
-  logoSvgHeight?: number;
-  logoSvgXOffset?: number;
-  logoSvgYOffset?: number;
-  logoSvgOpacity?: number;
-  logoSvgBrightness?: number;
-  logoSvgContrast?: number;
-  logoSvgSaturation?: number;
-  logoSvgHue?: number;
-  logoSvgInvert?: number;
-  productsFeatureImageWidth?: number;
-  productsFeatureImageHeight?: number;
-  productsFeatureImageXOffset?: number;
-  productsFeatureImageYOffset?: number;
-  productsFeatureImageFit?: LogoImageFit;
-  productsFeatureImageOpacity?: number;
-  productsFeatureImageBrightness?: number;
-  productsFeatureImageContrast?: number;
-  productsFeatureImageSaturation?: number;
-  productsFeatureImageHue?: number;
-  productsFeatureImageInvert?: number;
-  productIconImageWidth?: number;
-  productIconImageHeight?: number;
-  productIconImageXOffset?: number;
-  productIconImageYOffset?: number;
-  productIconImageFit?: LogoImageFit;
-  productIconImageOpacity?: number;
-  productIconImageBrightness?: number;
-  productIconImageContrast?: number;
-  productIconImageSaturation?: number;
-  productIconImageHue?: number;
-  productIconImageInvert?: number;
-  productIconSvgWidth?: number;
-  productIconSvgHeight?: number;
-  productIconSvgXOffset?: number;
-  productIconSvgYOffset?: number;
-  productIconSvgOpacity?: number;
-  productIconSvgBrightness?: number;
-  productIconSvgContrast?: number;
-  productIconSvgSaturation?: number;
-  productIconSvgHue?: number;
-  productIconSvgInvert?: number;
-  actionIconImageWidth?: number;
-  actionIconImageHeight?: number;
-  actionIconImageXOffset?: number;
-  actionIconImageYOffset?: number;
-  actionIconImageFit?: LogoImageFit;
-  actionIconImageOpacity?: number;
-  actionIconImageBrightness?: number;
-  actionIconImageContrast?: number;
-  actionIconImageSaturation?: number;
-  actionIconImageHue?: number;
-  actionIconImageInvert?: number;
-  actionIconSvgWidth?: number;
-  actionIconSvgHeight?: number;
-  actionIconSvgXOffset?: number;
-  actionIconSvgYOffset?: number;
-  actionIconSvgOpacity?: number;
-  actionIconSvgBrightness?: number;
-  actionIconSvgContrast?: number;
-  actionIconSvgSaturation?: number;
-  actionIconSvgHue?: number;
-  actionIconSvgInvert?: number;
-  why5Number?: string;
-  why5Title?: string;
-  why5Description?: string;
-  why5Href?: string;
-  why6Number?: string;
-  why6Title?: string;
-  why6Description?: string;
-  why6Href?: string;
-  why7Number?: string;
-  why7Title?: string;
-  why7Description?: string;
-  why7Href?: string;
-  showProductIcons?: boolean;
-  showActionIcons?: boolean;
-  showWhyItemGlow?: boolean;
-  showProfileMenu?: boolean;
-  profileMenuTitle?: string;
-  profileMenuDescription?: string;
-  profilePrimaryText?: string;
-  profilePrimaryHref?: string;
-  profileSecondaryText?: string;
-  profileSecondaryHref?: string;
-  showStorePanel?: boolean;
-  storePanelTitle?: string;
-  storePanelDescription?: string;
-  storePanelButtonText?: string;
-  storePanelButtonHref?: string;
-  storePanelNote?: string;
-  announcementWordStyleEnabled?: boolean;
-  announcementStyledPhrase?: string;
-  announcementStyledPhraseColor?: string;
-  announcementStyledPhraseBold?: boolean;
-  announcementStyledPhraseItalic?: boolean;
-  wordStyleEnabled?: boolean;
-  styledPhrase?: string;
-  styledPhraseColor?: string;
-  styledPhraseBold?: boolean;
-  styledPhraseItalic?: boolean;
-  profileLink1Text?: string;
-  profileLink2Text?: string;
-  profileLink2Href?: string;
-  profileLink3Text?: string;
-  profileLink3Href?: string;
-  storeItemCountText?: string;
-  storeEmptyTitle?: string;
-  storeEmptyDescription?: string;
-  storeSecondaryButtonText?: string;
-  storeSecondaryButtonHref?: string;
-  profileLink1Href?: string;
-  profileLink4Text?: string;
-  profileLink4Href?: string;
-  profileLink5Text?: string;
-  profileLink5Href?: string;
-  profileLink6Text?: string;
-  profileLink6Href?: string;
-  referencesHomeHref?: string;
-  referencesSectionId?: string;
+  product7Title?: string;
+  product7Description?: string;
+  product7Href?: string;
 }

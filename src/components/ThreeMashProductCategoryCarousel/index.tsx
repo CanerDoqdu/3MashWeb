@@ -37,6 +37,22 @@ function text(value: unknown, fallback = "") {
   return trimmed || fallback;
 }
 
+function searchKey(value: unknown) {
+  return propString(value)
+    .toLocaleLowerCase("tr-TR")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i")
+    .replace(/ç/g, "c")
+    .replace(/ğ/g, "g")
+    .replace(/ö/g, "o")
+    .replace(/ş/g, "s")
+    .replace(/ü/g, "u")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function html(value: unknown) {
   return { __html: propString(value) };
 }
@@ -192,6 +208,52 @@ function makeCategoryProductList(product: IkasProduct | null | undefined, limit:
   });
 }
 
+function makeAllProductList(limit: number) {
+  return initProductList({
+    type: "ALL",
+    sort: "DEFAULT",
+    limit: Math.max(limit, 40),
+    pageType: "CUSTOM",
+    productListPropValue: {
+      id: "product-category-carousel-all-products",
+      productListType: "ALL",
+      initialSort: "DEFAULT",
+      initialLimit: Math.max(limit, 40),
+      productCount: null,
+      productIds: [],
+      usePageFilter: false,
+      category: null,
+      brand: null,
+      relatedProductsType: null,
+    },
+  });
+}
+
+function productsShareCategory(product: IkasProduct, currentProduct: IkasProduct) {
+  const currentCategory = autoCategory(currentProduct);
+  const candidateCategory = autoCategory(product);
+  const currentId = categoryId(currentCategory);
+  const candidateId = categoryId(candidateCategory);
+  if (currentId && candidateId) return currentId === candidateId;
+
+  const currentName = searchKey(categoryName(currentCategory));
+  const candidateName = searchKey(categoryName(candidateCategory));
+  if (currentName && candidateName) return currentName === candidateName;
+
+  const categoryFamily = (item: IkasProduct) => {
+    const identity = searchKey(`${item.name} ${getProductHref(item) || ""}`);
+    if (["recine", "resin", "composite", "gingiva", "denture", "splint", "aligner", "guide", "model", "tray", "flexit", "trial", "study", "clear", "crs"].some((term) => identity.includes(term))) return "resin";
+    if (["yikama", "kurleme", "wash", "cure", "w1e", "c1e", "uw02", "uw03"].some((term) => identity.includes(term))) return "wash-cure";
+    if (["yazici", "printer", "p16l", "p1d", "curie", "halot"].some((term) => identity.includes(term))) return "printer";
+    if (["tarayici", "scanner", "3shape", "e2", "e3", "e4"].some((term) => identity.includes(term))) return "scanner";
+    if (["zirkon", "zircon", "argenz"].some((term) => identity.includes(term))) return "zircon";
+    if (["firin", "furnace", "oven", "naberthem"].some((term) => identity.includes(term))) return "furnace";
+    return "other";
+  };
+
+  return categoryFamily(product) === categoryFamily(currentProduct) && categoryFamily(currentProduct) !== "other";
+}
+
 function ProductCard({ product, showCategoryName, showPrice, target }: { product: IkasProduct; showCategoryName: boolean; showPrice: boolean; target?: string }) {
   const variant = selectedVariant(product);
   const media = variant ? getProductVariantMainImage(variant) : undefined;
@@ -214,14 +276,16 @@ function ProductCard({ product, showCategoryName, showPrice, target }: { product
 function sourceRelatedProduct(product: IkasProduct): ProductDetailRelatedProduct {
   const variant = selectedVariant(product);
   const media = variant ? getProductVariantMainImage(variant) : undefined;
-  const image = media?.image ? getDefaultSrc(media.image) : "";
+  const fallbackImage = variant?.images?.find((item) => !item.isVideo)?.image;
+  const imageSource = media?.image || fallbackImage;
+  const image = imageSource ? getDefaultSrc(imageSource) : "";
   const description = truncateText(plainText((product as { shortDescription?: unknown; description?: unknown }).shortDescription || (product as { description?: unknown }).description), 118);
   return {
     id: product.id,
     title: product.name,
     href: getProductHref(product),
     image,
-    imageAlt: media?.image?.altText || product.name,
+    imageAlt: imageSource?.altText || product.name,
     category: product.categories?.[0]?.name || product.brand?.name || "",
     descriptionHtml: description ? escapeHtml(description) : "",
   };
@@ -280,7 +344,11 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     getProductListInitialData(productList)
       .then(() => {
         if (!isMounted) return;
-        setResolvedProducts(listProducts(productList).slice(0, limit));
+        const fetchedProducts = listProducts(productList);
+        const relatedProducts = mode === "auto" && p.product
+          ? fetchedProducts.filter((item) => item.id !== p.product.id)
+          : fetchedProducts;
+        setResolvedProducts(relatedProducts.slice(0, limit));
       })
       .catch((error) => {
         console.error("ThreeMashProductCategoryCarousel product fetch failed", error);
@@ -331,8 +399,8 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     "--tmpcc-price-size": cssLength((p as any).priceFontSize, 13, 10, 24),
   } as any;
 
-  const liveList = products.map(sourceRelatedProduct);
-  const effectiveProducts = liveList.length > 0 ? liveList : [
+  const effectiveProducts = products.map(sourceRelatedProduct);
+  /*
     {
       id: "p-rel-1",
       title: "1. Örnek İlgili Ürün",
@@ -369,12 +437,15 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
       category: "4. KATEGORİ",
       descriptionHtml: "4. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
     },
-  ];
+  ]; */
 
   if (sourceData) {
     return (
       <ProductDetailSectionScope data={sourceData}>
-        <ProductDetailRelatedSection data={sourceData} products={effectiveProducts} />
+        <ProductDetailRelatedSection
+          data={sourceData}
+          products={effectiveProducts}
+        />
         <ProductDetailFinalCtaSection data={sourceData} />
       </ProductDetailSectionScope>
     );

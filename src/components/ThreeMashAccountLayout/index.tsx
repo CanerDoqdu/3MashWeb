@@ -121,14 +121,9 @@ export default function ThreeMashAccountLayout({
 
 
         <div className="tmai-user tmau-user">
-
-          {!isReady && !sidebarName ? (
-            <span className="tmai-user-name-skeleton" />
-          ) : (
-            <strong>
-              {sidebarName || text(props?.profileTitle, "Hesabım")}
-            </strong>
-          )}
+          <strong>
+            {sidebarName || text(props?.profileTitle, "Hesabım")}
+          </strong>
 
           <a
             href="#"
@@ -140,7 +135,6 @@ export default function ThreeMashAccountLayout({
               "Çıkış yap",
             )}
           </a>
-
         </div>
 
 

@@ -1271,10 +1271,11 @@
 .three-mash-products-page.is-search-products-page
   .tm-products-card-media
   video {
-  width: 100%;
-  height: 100%;
+  width: 82%;
+  height: 82%;
   margin: 0;
   object-position: center;
+  object-fit: contain;
 }
 
 .three-mash-products-page.is-search-products-page .tm-products-card-body {
@@ -1302,8 +1303,10 @@
   min-height: 32px;
   align-items: center;
   padding: 0 11px;
-  background: var(--tm-products-text);
-  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--tm-products-accent) 54%, var(--tm-products-line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--tm-products-accent) 12%, var(--tm-products-card));
+  color: var(--tm-products-text);
   font-style: normal;
   font-weight: 800;
   white-space: nowrap;
@@ -1327,6 +1330,29 @@
     sans-serif
   ) !important;
   font-weight: 800;
+}
+
+.three-mash-products-page.is-search-products-page .tm-products-pagination button {
+  min-width: 96px;
+  border-radius: 8px;
+  background: var(--tm-products-card);
+}
+
+@media (max-width: 1120px) {
+  .three-mash-products-page.is-search-products-page .tm-products-card-body {
+    height: 100%;
+  }
+
+  .three-mash-products-page.is-search-products-page .tm-products-card-bottom {
+    min-height: 44px;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .three-mash-products-page.is-search-products-page .tm-products-card-bottom em {
+    min-height: 34px;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 1120px) {
@@ -1859,6 +1885,12 @@
     aspect-ratio: 1.08 / 1;
   }
 
+  .three-mash-products-page.is-search-products-page .tm-products-card-media img,
+  .three-mash-products-page.is-search-products-page .tm-products-card-media video {
+    width: 68%;
+    height: 68%;
+  }
+
   .three-mash-products-page.is-search-products-page .tm-products-card-body {
     gap: 7px;
     padding: 11px 11px 12px;
@@ -1883,7 +1915,25 @@
 
   .three-mash-products-page.is-search-products-page .tm-products-pagination button,
   .three-mash-products-page.is-search-products-page .tm-products-pagination span {
-    width: 100%;
+    width: auto;
+  }
+
+  .three-mash-products-page.is-search-products-page .tm-products-pagination {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding-top: 20px;
+  }
+
+  .three-mash-products-page.is-search-products-page .tm-products-pagination button {
+    min-width: 0;
+    min-height: 40px;
+    padding: 0 14px;
+  }
+
+  .three-mash-products-page.is-search-products-page .tm-products-pagination span {
+    min-width: 32px;
   }
 }
 
@@ -2080,7 +2130,18 @@
 }
 
 .three-mash-products-page.is-search-products-page .tm-products-card-bottom em {
-  border-radius: 999px;
+  min-height: 34px;
+  border-radius: 8px;
+}
+
+.three-mash-products-page.is-search-products-page .tm-products-card-body {
+  height: 100%;
+}
+
+.three-mash-products-page.is-search-products-page .tm-products-card-bottom {
+  min-height: 44px;
+  align-items: center;
+  margin-top: auto;
 }
 
 @media (max-width: 860px) {

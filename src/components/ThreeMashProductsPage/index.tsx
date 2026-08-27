@@ -3,6 +3,8 @@ import {
   createMediaSrcset,
   getDefaultSrc,
   getProductHref,
+  getProductListFilterCategories,
+  getProductListInitialData,
   getProductListPage,
   getProductListSortOptions,
   getProductVariantFormattedFinalPrice,
@@ -12,9 +14,12 @@ import {
   hasProductListNextPage,
   hasProductListPrevPage,
   hasProductVariantDiscount,
+  initProductList,
   searchProductList,
   setSortType,
   type IkasProduct,
+  type IkasFilterCategory,
+  type IkasProductList,
   type IkasProductListSortType,
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
@@ -22,36 +27,11 @@ import { Props } from "./types";
 
 type ListingLink = {
   label: string;
-  href: string;
+  id: string;
   group: "Kategori" | "Marka";
 };
 
-const listingLinks: ListingLink[] = [
-  { label: "Tüm Ürünler", href: "/tum-urunler", group: "Kategori" },
-  { label: "3D Yazıcılar", href: "/3d-yazicilar", group: "Kategori" },
-  {
-    label: "Dental Reçineler",
-    href: "/dental-3d-yazici-recineleri",
-    group: "Kategori",
-  },
-  {
-    label: "Yıkama & Kürleme",
-    href: "/yikama-kurleme-cihazlari",
-    group: "Kategori",
-  },
-  {
-    label: "Masaüstü Tarayıcılar",
-    href: "/masasustu-tarayicilar",
-    group: "Kategori",
-  },
-  { label: "Zirkon Bloklar", href: "/zirkon-bloklar", group: "Kategori" },
-  { label: "Dental Fırınlar", href: "/dental-firinlar", group: "Kategori" },
-  {
-    label: "Yedek Parçalar",
-    href: "/3d-yazici-yedek-parcalari",
-    group: "Kategori",
-  },
-];
+const ALL_PRODUCTS_FILTER_ID = "all-products";
 
 function safeVariant(product: IkasProduct): IkasProductVariant | null {
   try {
@@ -67,19 +47,6 @@ function normalizedText(value: string | undefined) {
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
-}
-
-function isActiveListingLink(
-  link: ListingLink,
-  pageTitle: string,
-  eyebrow: string | undefined,
-) {
-  const page = normalizedText(pageTitle);
-  const label = normalizedText(link.label);
-  const isAllProducts =
-    label === "tüm ürünler" && (page === "ürünler" || page === "tüm ürünler");
-  const isBrand = normalizedText(eyebrow).includes("marka") && page === label;
-  return isAllProducts || isBrand || page === label;
 }
 
 function themeToken(
@@ -155,54 +122,42 @@ function filterProducts(products: IkasProduct[], query: string) {
   return products.filter((product) => productSearchText(product).includes(key));
 }
 
-const listingFilterAliases: Record<string, string[]> = {
-  "3d yazicilar": ["3d yazici", "3d printer", "printer", "yazici"],
-  "dental recineler": ["dental recine", "recine", "resin"],
-  "yikama kurleme": ["yikama", "kurleme", "wash", "cure"],
-  "masaustu tarayicilar": [
-    "masaustu tarayici",
-    "tarayici",
-    "scanner",
-    "3shape",
-  ],
-  "zirkon bloklar": ["zirkon", "zircon", "blok"],
-  "dental firinlar": ["dental firin", "firin", "oven", "furnace"],
-  "yedek parcalar": ["yedek parca", "spare"],
-  sistemler: ["sistem", "system"],
-  "titanyum diskler": ["titanyum", "titanium", "disk"],
-};
-
-function listingFilterTerms(link: ListingLink) {
-  const labelKey = searchKey(link.label);
-
-  return Array.from(
-    new Set([labelKey, ...(listingFilterAliases[labelKey] || [])]),
-  ).filter(Boolean);
+function availableProductCategories(productList: IkasProductList): IkasFilterCategory[] {
+  const categoriesById = new Map<string, IkasFilterCategory>();
+  getProductListFilterCategories(productList).forEach((category) => {
+    if (category.id) categoriesById.set(category.id, category);
+  });
+  (productList.data || []).forEach((product) => {
+    (product.categories || []).forEach((category) => {
+      const categoryData = category as unknown as Record<string, unknown>;
+      const categoryName =
+        categoryData.name || categoryData.title || categoryData.slug;
+      if (category.id) {
+        categoriesById.set(
+          category.id,
+          (categoryName
+            ? { ...category, name: String(categoryName) }
+            : category) as unknown as IkasFilterCategory,
+        );
+      }
+    });
+  });
+  return Array.from(categoriesById.values());
 }
 
-function filterProductsByListing(products: IkasProduct[], link: ListingLink) {
-  if (searchKey(link.label) === "tum urunler") return products;
+function categoryLabel(category: IkasFilterCategory) {
+  const data = category as unknown as Record<string, unknown>;
+  const label = String(data.name || data.title || data.slug || data.handle || "").trim();
+  return label || "Kategori";
+}
 
-  const terms = listingFilterTerms(link);
-
-  return products.filter((product) => {
-    const categoryText = searchKey(
-      product.categories
-        ?.map((category) => category.name)
-        .filter(Boolean)
-        .join(" ") || "",
-    );
-    const brandText = searchKey(product.brand?.name || "");
-    const haystack =
-      link.group === "Marka"
-        ? brandText
-        : categoryText || productSearchText(product);
-
-    return terms.some(
-      (term) =>
-        haystack.includes(term) ||
-        (term.length > 4 && productSearchText(product).includes(term)),
-    );
+function productCategoryMatches(product: IkasProduct, category: ListingLink) {
+  const targetLabel = searchKey(category.label);
+  return (product.categories || []).some((item) => {
+    const data = item as unknown as Record<string, unknown>;
+    const id = String(data.id || data.categoryId || data.value || "");
+    const label = searchKey(String(data.name || data.title || data.slug || data.handle || ""));
+    return id === category.id || label === targetLabel;
   });
 }
 
@@ -318,17 +273,23 @@ function ProductCardSkeleton({ index }: { index: number }) {
 }
 
 export function ThreeMashProductsPage(props: Props) {
-  const productList = props.productList;
+  const sourceProductList = props.productList;
+  const [activeProductList, setActiveProductList] =
+    useState<IkasProductList | undefined>(sourceProductList);
+  const [categoryCatalog, setCategoryCatalog] =
+    useState<IkasProductList | undefined>(sourceProductList);
+  const productList = activeProductList || sourceProductList;
   const products = productList?.data || [];
   const [searchValue, setSearchValue] = useState(
     productList?.searchKeyword || "",
   );
-  const [activeFilterLabel, setActiveFilterLabel] = useState("Tüm Ürünler");
+  const [activeFilterId, setActiveFilterId] = useState(ALL_PRODUCTS_FILTER_ID);
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const committedSearchRef = useRef(productList?.searchKeyword || "");
   const appliedUrlSearchRef = useRef(false);
   const unfilteredProductsRef = useRef<IkasProduct[]>(products);
   const sortControlRef = useRef<HTMLLabelElement>(null);
+  const categoryRequestRef = useRef(0);
   const sortOptions = productList ? getProductListSortOptions(productList) : [];
   const selectedSort =
     sortOptions.find((option) => option.isSelected)?.value || "";
@@ -337,20 +298,24 @@ export function ThreeMashProductsPage(props: Props) {
     props.sortLabel ||
     "Sırala";
   const pageTitle =
-    props.titleText ||
-    productList?.category?.name ||
-    productList?.brand?.name ||
-    "Ürünler";
+    normalizedText(props.eyebrowText) === "ürün kategorisi"
+      ? props.titleText || productList?.category?.name || productList?.brand?.name || "Ürünler"
+      : "Tüm Ürünler";
   const eyebrowText = props.eyebrowText?.trim() || "";
-  const categoryLinks = listingLinks.filter(
-    (link) => link.group === "Kategori",
-  );
-  const activeListingFilter =
-    listingLinks.find((link) => link.label === activeFilterLabel) ||
-    categoryLinks[0];
-  const isAllProductsFilter =
-    !activeListingFilter ||
-    searchKey(activeListingFilter.label) === "tum urunler";
+  const categoryLinks: ListingLink[] = [
+    {
+      id: ALL_PRODUCTS_FILTER_ID,
+      label: "Tüm Ürünler",
+      group: "Kategori",
+    },
+    ...((categoryCatalog ? availableProductCategories(categoryCatalog) : [])
+      .filter((category) => Boolean(category.id))
+      .map((category) => ({
+        id: category.id,
+        label: categoryLabel(category),
+        group: "Kategori" as const,
+      }))),
+  ];
   const isCategoryProductsPage =
     normalizedText(eyebrowText) === "ürün kategorisi";
   const isDentalResinCategoryPage =
@@ -361,25 +326,20 @@ export function ThreeMashProductsPage(props: Props) {
     props.showSort !== false &&
     sortOptions.length > 0;
   const showListControls = showSearchControl || showSortControl;
-  const showNavigationControls =
-    !isCategoryProductsPage && props.showNavigation !== false;
-  const displayEyebrowText =
-    eyebrowText ||
-    (isCategoryProductsPage ? "ÜRÜN KATEGORİSİ" : "CANLI ÜRÜN KATALOĞU");
+  const showNavigationControls = !isCategoryProductsPage;
+  const displayEyebrowText = eyebrowText || "ÜRÜN KATEGORİSİ";
   const trimmedSearch = searchValue.trim();
   const fallbackProducts =
     unfilteredProductsRef.current.length > 0
       ? unfilteredProductsRef.current
       : products;
   const productSource = products.length > 0 ? products : fallbackProducts;
-  const filteredByListing =
-    activeListingFilter && !isAllProductsFilter
-      ? filterProductsByListing(productSource, activeListingFilter)
-      : productSource;
   const displayedProducts = trimmedSearch
-    ? filterProducts(filteredByListing, trimmedSearch)
-    : filteredByListing;
-  const showProductSkeletons = Boolean(productList?.isLoading) && displayedProducts.length === 0;
+    ? filterProducts(productSource, trimmedSearch)
+    : productSource;
+  const showProductSkeletons = Boolean(
+    productList?.isLoading,
+  ) && displayedProducts.length === 0;
 
   const style = {
     "--tm-products-bg": themeToken(
@@ -413,6 +373,37 @@ export function ThreeMashProductsPage(props: Props) {
       "--tm-theme-accent",
     ),
   } as any;
+
+  useEffect(() => {
+    setActiveProductList(sourceProductList);
+    setCategoryCatalog(sourceProductList);
+    setActiveFilterId(ALL_PRODUCTS_FILTER_ID);
+    setSearchValue(sourceProductList?.searchKeyword || "");
+    committedSearchRef.current = sourceProductList?.searchKeyword || "";
+  }, [sourceProductList]);
+
+  useEffect(() => {
+    if (!sourceProductList || sourceProductList.type === "CATEGORY") return;
+
+    const allProductsList = initProductList({
+      type: "ALL",
+      sort: sourceProductList.sort || "DEFAULT",
+      limit: Math.max(sourceProductList.limit || 12, 200),
+      pageType: "CUSTOM",
+      productListPropValue: {
+        ...sourceProductList.productListPropValue,
+        id: "all-products-category-catalog",
+        productListType: "ALL",
+        category: null,
+        brand: null,
+        productIds: [],
+      },
+    });
+
+    void getProductListInitialData(allProductsList).then(() => {
+      setCategoryCatalog(allProductsList);
+    });
+  }, [sourceProductList]);
 
   useEffect(() => {
     if (!trimmedSearch && products.length > 0) {
@@ -486,6 +477,66 @@ export function ThreeMashProductsPage(props: Props) {
     commitSearch();
   }
 
+  function handleListingFilter(link: ListingLink) {
+    if (!sourceProductList) return;
+
+    setActiveFilterId(link.id);
+    if (link.id === ALL_PRODUCTS_FILTER_ID) {
+      categoryRequestRef.current += 1;
+      setActiveProductList(sourceProductList);
+      return;
+    }
+
+    const requestId = ++categoryRequestRef.current;
+    const categoryProductList = initProductList({
+      type: "CATEGORY",
+      sort: productList?.sort || "DEFAULT",
+      limit: productList?.limit || 12,
+      pageType: "CATEGORY",
+      filterCategoryId: link.id,
+      productListPropValue: {
+        ...sourceProductList.productListPropValue,
+        id: `category-${link.id}`,
+        productListType: "CATEGORY",
+        category: link.id,
+        brand: null,
+        productIds: [],
+      },
+    });
+
+    void getProductListInitialData(categoryProductList).then(() => {
+      if (requestId !== categoryRequestRef.current) return;
+
+      const productsById = new Map<string, IkasProduct>();
+      (categoryProductList.data || []).forEach((product) => {
+        productsById.set(product.id, product);
+      });
+
+      if (productsById.size === 0 && categoryCatalog) {
+        (categoryCatalog.data || []).forEach((product) => {
+          if (productCategoryMatches(product, link)) {
+            productsById.set(product.id, product);
+          }
+        });
+      }
+
+      setActiveProductList({
+        ...categoryProductList,
+        data: Array.from(productsById.values()),
+      });
+      setSearchValue("");
+      committedSearchRef.current = "";
+    }).catch(() => {
+      if (requestId !== categoryRequestRef.current) return;
+      setActiveProductList({
+        ...categoryProductList,
+        data: [],
+      });
+      setSearchValue("");
+      committedSearchRef.current = "";
+    });
+  }
+
   function commitSearch() {
     if (!productList) return;
     const nextSearch = searchValue.trim();
@@ -521,12 +572,7 @@ export function ThreeMashProductsPage(props: Props) {
               </>
             ) : (
               <>
-                <p className="tm-products-eyebrow">{displayEyebrowText}</p>
                 <h1>{pageTitle}</h1>
-                <p>
-                  {props.descriptionText ||
-                    "Güncel ürün kataloğunu keşfedin; yayındaki ürünleri tek yerden inceleyin."}
-                </p>
               </>
             )}
           </div>
@@ -631,26 +677,24 @@ export function ThreeMashProductsPage(props: Props) {
             {showNavigationControls ? (
               <div className="tm-products-nav-shell">
                 <div className="tm-products-nav-tabs" aria-label="Liste türü">
-                  <span className="is-active">Filtreler</span>
+                  <span className="is-active">Kategoriler</span>
                 </div>
                 <nav
                   className="tm-products-nav"
-                  aria-label="Ürün kategori ve marka filtreleri"
+                  aria-label="Ürün kategorileri"
                 >
                   {categoryLinks.map((link) => (
                     <button
                       type="button"
                       className={
-                        activeFilterLabel === link.label ||
-                        (isAllProductsFilter &&
-                          isActiveListingLink(link, pageTitle, props.eyebrowText))
+                        activeFilterId === link.id
                           ? "is-active"
                           : ""
                       }
                       data-group={link.group}
-                      aria-pressed={activeFilterLabel === link.label}
-                      onClick={() => setActiveFilterLabel(link.label)}
-                      key={`${link.group}-${link.label}`}
+                      aria-pressed={activeFilterId === link.id}
+                      onClick={() => handleListingFilter(link)}
+                      key={`${link.group}-${link.id}`}
                     >
                       {link.label}
                     </button>

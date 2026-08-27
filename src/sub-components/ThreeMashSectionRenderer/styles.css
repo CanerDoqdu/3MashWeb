@@ -2213,6 +2213,7 @@
 }
 
 @media (max-width: 620px) {
+
   .tmr-wrap {
     padding: 0 18px;
   }
@@ -2246,19 +2247,21 @@
     font-size: 32px;
   }
 
-  .tmr-product-media {
-    height: 180px;
+  /* =========================
+     PRODUCT GRID - TEK KOLON
+     ========================= */
+
+  .tmr-products,
+  .tmr-products-two {
+    grid-template-columns: 1fr !important;
   }
 
-  .tmr-solution .tmr-tag {
-    top: 12px;
-    left: 12px;
-    max-width: calc(100% - 24px);
-    padding: 4px 8px;
-    border-radius: 7px;
-    font-size: 8.5px;
-    letter-spacing: 0.08em;
-    line-height: 1.1;
+  /* =========================
+     PRODUCT IMAGES
+     ========================= */
+
+  .tmr-product-media {
+    height: 180px;
   }
 
   .tmr-product-img,
@@ -2266,10 +2269,14 @@
     max-height: 148px;
   }
 
+  /* =========================
+     CURING CARDS
+     ========================= */
+
   .tmr-curing .tmr-product-media {
-    height: 230px;
-    min-height: 230px;
-    padding: 42px 18px 18px;
+    height: 155px;
+    min-height: 155px;
+    padding: 36px 10px 10px;
   }
 
   .tmr-curing .tmr-tag {
@@ -2281,15 +2288,73 @@
   .tmr-curing .tmr-product-img,
   .tmr-curing .tmr-machine-phrozen,
   .tmr-curing .tmr-machine-uw02 {
-    max-width: none;
-    max-height: none;
-    transform: translate(var(--tmr-curing-image-x), calc(var(--tmr-curing-image-y) + 8px));
+    width: min(72%, 120px) !important;
+    height: 105px !important;
+    max-width: 72% !important;
+    max-height: 105px !important;
+    object-fit: contain;
+
+    transform:
+      translate(
+        var(--tmr-curing-image-x, 0),
+        var(--tmr-curing-image-y, 0)
+      ) !important;
   }
 
-  .tmr-curing .tmr-machine-phrozen,
-  .tmr-curing .tmr-machine-uw02 {
-    max-width: none;
-    max-height: none;
+  .tmr-curing .tmr-product-body {
+    padding: 20px 20px 22px;
+  }
+
+  /* =========================
+     SPEC — ONE COLUMN
+     BAŞLIK VE DEĞER ALT ALTA
+     ========================= */
+
+    .tmr-solution .tmr-spec div,
+  .tmr-curing .tmr-spec div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 4px !important;
+  }
+
+
+  .tmr-solution .tmr-spec span,
+  .tmr-curing .tmr-spec span {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+
+  .tmr-solution .tmr-spec b,
+  .tmr-curing .tmr-spec b {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    text-align: left !important;
+  }
+
+
+  /* =========================
+     TAG
+     ========================= */
+
+  .tmr-solution .tmr-tag {
+    top: 12px;
+    left: 12px;
+
+    max-width: calc(100% - 24px);
+
+    padding: 4px 8px;
+
+    border-radius: 7px;
+
+    font-size: 8.5px;
+
+    letter-spacing: 0.08em;
+
+    line-height: 1.1;
   }
 
   .tmr-machine-printer {
@@ -2299,6 +2364,10 @@
   .tmr-resin-bottle {
     max-height: 152px;
   }
+
+  /* =========================
+     ROI
+     ========================= */
 
   .tmr-roi {
     padding: 56px 0 68px;
@@ -2332,10 +2401,17 @@
   .tmr-roi .tmr-btn {
     width: 100%;
     min-height: 60px;
+
     margin-top: 34px;
+
     padding: 16px 18px;
+
     font-size: 16px;
   }
+
+  /* =========================
+     ECO
+     ========================= */
 
   .tmr-eco-map {
     margin-top: 32px;
@@ -2343,7 +2419,12 @@
 
   .tmr-eco-diagram {
     width: min(var(--tmr-eco-diagram-width), 150vw);
-    height: min(var(--tmr-eco-diagram-height), 280px);
+
+    height: min(
+      var(--tmr-eco-diagram-height),
+      280px
+    );
+
     opacity: var(--tmr-eco-diagram-opacity);
   }
 
@@ -2355,22 +2436,31 @@
   .tmr-eco-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
+
     margin-top: 36px;
   }
 
   .tmr-eco a {
     min-height: 100px;
+
     padding: 18px;
+
     font-size: 15px;
   }
 
   .tmr-eco-list a {
     min-height: 130px;
+
     gap: 14px;
+
     border-radius: 18px;
+
     padding: 18px 10px;
+
     font-size: 16px;
+
     font-weight: 700;
+
     line-height: 1.2;
   }
 
@@ -2389,41 +2479,74 @@
     height: 34px;
   }
 
+  /* =========================
+     TRUST
+     ========================= */
+
   .tmr-trusted {
     display: grid;
+
     grid-template-columns: 1fr;
+
     align-items: center;
+
     gap: 14px;
+
     padding: 18px;
   }
 
   .tmr-trusted-logos {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 12px;
+
     width: 100%;
   }
 
   .tmr-trusted-label {
     width: 100%;
+
     height: 28px;
+
     flex-basis: auto;
   }
 
   .tmr-trusted-logo {
     height: 58px;
-    border: 1px solid color-mix(in srgb, var(--tmr-line) 70%, transparent);
-    background: color-mix(in srgb, var(--tmr-panel) 86%, var(--tmr-bg));
+
+    border: 1px solid
+      color-mix(
+        in srgb,
+        var(--tmr-line) 70%,
+        transparent
+      );
+
+    background:
+      color-mix(
+        in srgb,
+        var(--tmr-panel) 86%,
+        var(--tmr-bg)
+      );
   }
 
   .tmr-trusted-logos img {
     width: 88%;
-    height: min(var(--tmr-trust-logo-height), 36px);
+
+    height: min(
+      var(--tmr-trust-logo-height),
+      36px
+    );
+
     transform: scale(1.22);
   }
 
   .tmr-trusted-logo:hover img {
     transform: scale(1.6);
   }
+
+  /* =========================
+     GENERAL
+     ========================= */
 
   .tmr-testimonial,
   .tmr-product-body,
@@ -2433,21 +2556,6 @@
 
   .tmr-solution .tmr-product-body {
     padding: 24px 22px;
-  }
-
-  .tmr-solution .tmr-spec div,
-  .tmr-curing .tmr-spec div {
-    display: grid;
-    grid-template-columns: minmax(38px, 1fr) auto;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .tmr-solution .tmr-spec span,
-  .tmr-curing .tmr-spec span {
-    min-width: 0;
-    overflow-wrap: normal;
-    word-break: normal;
   }
 
   .tmr-final {
@@ -2464,16 +2572,23 @@
 
   .tmr-base {
     align-items: flex-start;
+
     flex-direction: column;
   }
 
   .tmr-base-meta {
     width: 100%;
+
     flex-direction: row;
+
     flex-wrap: nowrap;
+
     justify-content: flex-start;
+
     gap: 7px;
+
     white-space: nowrap;
+
     font-size: 11.5px;
   }
 

@@ -213,6 +213,25 @@ function productDataFromProduct(product: unknown) {
 function productListCategoryData(productList: Props["productList"]) {
   if (!productList) return null;
 
+  const categorySignals = JSON.stringify({
+    category: productList.category,
+    pageSpecificData: productList.pageSpecificData,
+    productListPropValue: productList.productListPropValue,
+  }).toLocaleLowerCase("tr-TR");
+
+  if (
+    categorySignals.includes("yikama-kurleme") ||
+    categorySignals.includes("yıkama-kürleme") ||
+    categorySignals.includes("yikama cihazlari") ||
+    categorySignals.includes("yıkama cihazları") ||
+    categorySignals.includes("dental yikama") ||
+    categorySignals.includes("dental yıkama") ||
+    categorySignals.includes("wash-cure") ||
+    categorySignals.includes("washcure")
+  ) {
+    return washCureCategoryData;
+  }
+
   const directCategory =
     categoryDataFromCategory(productList.category) ||
     categoryDataFromCategory(productList.pageSpecificData) ||
@@ -318,7 +337,10 @@ function currentRouteCategoryData() {
 export function ThreeMashCategoryProductsPage(props: Props) {
   const productListCategory = productListCategoryData(props.productList);
   const routeCategoryData = currentRouteCategoryData();
-  const detectedCategoryData = productListCategory || routeCategoryData;
+  const detectedCategoryData =
+    routeCategoryData === washCureCategoryData
+      ? washCureCategoryData
+      : productListCategory || routeCategoryData;
 
   if (detectedCategoryData === printersCategoryData) {
     return <ThreeMashPrintersSourceLanding {...props} />;

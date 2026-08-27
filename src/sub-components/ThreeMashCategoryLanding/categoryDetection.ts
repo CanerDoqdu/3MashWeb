@@ -232,6 +232,32 @@ function productDataFromProduct(product: unknown) {
 export function productListCategoryData(productList: IkasProductList | undefined) {
   if (!productList) return null;
 
+  const categorySignals = JSON.stringify({
+    category: productList.category,
+    pageSpecificData: productList.pageSpecificData,
+    productListPropValue: productList.productListPropValue,
+  }).toLocaleLowerCase("tr-TR");
+
+  if (
+    categorySignals.includes("yikama-kurleme") ||
+    categorySignals.includes("yıkama-kürleme") ||
+    categorySignals.includes("dental yikama") ||
+    categorySignals.includes("dental yıkama") ||
+    categorySignals.includes("wash-cure") ||
+    categorySignals.includes("washcure")
+  ) {
+    return washCureCategoryData;
+  }
+
+  const productData = (productList.data || []).slice(0, 24).map(productDataFromProduct);
+  const hasWashingProduct = productData.includes(washingCategoryData);
+  const hasCuringProduct = productData.includes(curingCategoryData);
+  const hasWashCureProduct = productData.includes(washCureCategoryData);
+
+  if (hasWashingProduct && hasCuringProduct || (hasWashingProduct && hasWashCureProduct) || (hasCuringProduct && hasWashCureProduct)) {
+    return washCureCategoryData;
+  }
+
   const directCategory =
     categoryDataFromCategory(productList.category) ||
     categoryDataFromCategory(productList.pageSpecificData) ||

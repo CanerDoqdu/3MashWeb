@@ -90,9 +90,13 @@ function membershipAgreementHtml(props: Props) {
 export function ThreeMashLegalPage(props: Props) {
   const key = pageKey(props.mode);
   const page = legalPages[key];
+  const configuredContent =
+    key === 'mesafeli'
+      ? page.contentHtml
+      : props.contentHtml?.trim() || (key === 'uyelik' ? membershipAgreementHtml(props) : page.contentHtml);
   const contentHtml = normalizeContentHtml(
     key,
-    props.contentHtml?.trim() || (key === 'uyelik' ? membershipAgreementHtml(props) : page.contentHtml)
+    configuredContent
   );
   const showStandaloneTitle = !hasEmbeddedHeading(contentHtml);
   const isKvkk = key === 'kvkk';
