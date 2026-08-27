@@ -1006,9 +1006,19 @@ export function ThreeMashAccountUtilityPage(props: DashboardProps) {
         ),
   );
 
-  const [customer, setCustomer] = useState<IkasCustomer | null>(
-    () => customerStore.customer || (isStudio ? mockStudioCustomer : null),
-  );
+  const [customer, setCustomer] = useState<IkasCustomer | null>(() => {
+    if (customerStore.customer) return customerStore.customer;
+    if (isStudio) return mockStudioCustomer;
+    if (typeof window !== "undefined") {
+      try {
+        const cached =
+          localStorage.getItem("tm_customer_cache") ||
+          sessionStorage.getItem("tm_customer_cache");
+        if (cached) return JSON.parse(cached);
+      } catch {}
+    }
+    return null;
+  });
 
   const [orders, setOrders] = useState<IkasOrder[]>(
     () => (isStudio ? mockStudioOrders : []),
@@ -1079,6 +1089,24 @@ export function ThreeMashAccountUtilityPage(props: DashboardProps) {
 
         if (currentCustomer) {
           setCustomer(currentCustomer);
+          try {
+            const name =
+              `${currentCustomer.firstName ?? ""} ${currentCustomer.lastName ?? ""}`.trim() ||
+              currentCustomer.email ||
+              "";
+            if (name) {
+              localStorage.setItem("tm_customer_name", name);
+              sessionStorage.setItem("tm_customer_name", name);
+            }
+            localStorage.setItem(
+              "tm_customer_cache",
+              JSON.stringify(currentCustomer),
+            );
+            sessionStorage.setItem(
+              "tm_customer_cache",
+              JSON.stringify(currentCustomer),
+            );
+          } catch {}
         } else if (isStudio) {
           setCustomer(mockStudioCustomer);
         }

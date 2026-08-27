@@ -45,6 +45,28 @@ function customerName(customer: any) {
   return name || customer.email || "";
 }
 
+function getInitialSidebarName(customer: any): string {
+  const direct = customerName(customer);
+  if (direct) return direct;
+  if (typeof window !== "undefined") {
+    try {
+      const cached =
+        localStorage.getItem("tm_customer_name") ||
+        sessionStorage.getItem("tm_customer_name");
+      if (cached) return cached;
+      const cachedCustomer =
+        localStorage.getItem("tm_customer_cache") ||
+        sessionStorage.getItem("tm_customer_cache");
+      if (cachedCustomer) {
+        const parsed = JSON.parse(cachedCustomer);
+        const name = customerName(parsed);
+        if (name) return name;
+      }
+    } catch {}
+  }
+  return "";
+}
+
 
 export default function ThreeMashAccountLayout({
   children,
@@ -56,17 +78,34 @@ export default function ThreeMashAccountLayout({
 }: Props) {
 
   const [sidebarName, setSidebarName] = useState(() =>
-    customerName(customer),
+    getInitialSidebarName(customer),
   );
 
   useEffect(() => {
     const nextName = customerName(customer);
-    if (nextName) setSidebarName(nextName);
+    if (nextName) {
+      setSidebarName(nextName);
+      try {
+        localStorage.setItem("tm_customer_name", nextName);
+        sessionStorage.setItem("tm_customer_name", nextName);
+        if (customer) {
+          localStorage.setItem("tm_customer_cache", JSON.stringify(customer));
+          sessionStorage.setItem("tm_customer_cache", JSON.stringify(customer));
+        }
+      } catch {}
+    }
   }, [customer]);
 
 
   async function handleLogout(event: Event) {
     event.preventDefault();
+
+    try {
+      localStorage.removeItem("tm_customer_name");
+      localStorage.removeItem("tm_customer_cache");
+      sessionStorage.removeItem("tm_customer_name");
+      sessionStorage.removeItem("tm_customer_cache");
+    } catch {}
 
     await logout(customerStore);
 

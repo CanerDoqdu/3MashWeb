@@ -116,6 +116,21 @@ export function ThreeMashAccountPage(props: Props) {
     const result = await customerLogin(customerStore, email, password);
     if (result.isSuccess) {
       setStatus("success");
+      if (typeof window !== "undefined" && customerStore.customer) {
+        try {
+          const cust = customerStore.customer;
+          const name =
+            `${cust.firstName ?? ""} ${cust.lastName ?? ""}`.trim() ||
+            cust.email ||
+            "";
+          if (name) {
+            localStorage.setItem("tm_customer_name", name);
+            sessionStorage.setItem("tm_customer_name", name);
+          }
+          localStorage.setItem("tm_customer_cache", JSON.stringify(cust));
+          sessionStorage.setItem("tm_customer_cache", JSON.stringify(cust));
+        } catch {}
+      }
       setTimeout(() => Router.navigate("/account"), 350);
       return;
     }
