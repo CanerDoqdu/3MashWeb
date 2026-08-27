@@ -153,8 +153,8 @@
 .three-mash-cost-detail-page .cols {
   display: grid;
   grid-template-columns: 1.05fr .95fr;
-  gap: 32px;
-  padding: 32px 0 56px;
+  gap: 34px;
+  padding: 28px 0 48px;
   align-items: start;
 }
 
@@ -162,19 +162,16 @@
 .three-mash-cost-detail-page .calc {
   border: 1px solid var(--line);
   background: #fff;
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
   position: sticky;
-  top: 76px;
+  top: 12px;
   z-index: 20;
-  box-shadow: 0 16px 44px rgba(14, 14, 12, .06);
-  max-height: calc(100vh - 88px);
-  overflow-y: auto;
-  scrollbar-width: thin;
+  box-shadow: 0 24px 60px rgba(14, 14, 12, .07);
 }
 
 .three-mash-cost-detail-page .calc .h {
-  padding: 11px 20px;
+  padding: 16px 24px;
   border-bottom: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
@@ -184,16 +181,16 @@
 .three-mash-cost-detail-page .seg {
   display: flex;
   gap: 8px;
-  padding: 10px 20px 2px;
+  padding: 18px 24px 6px;
 }
 
 .three-mash-cost-detail-page .seg button {
   flex: 1;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 13px;
-  padding: 8px 12px;
-  border-radius: 8px;
+  font-size: 14px;
+  padding: 11px;
+  border-radius: 10px;
   border: 1px solid var(--line);
   background: #fff;
   color: var(--sub);
@@ -208,27 +205,27 @@
 }
 
 .three-mash-cost-detail-page .li {
-  padding: 7px 20px 2px;
+  padding: 13px 24px 5px;
 }
 
 .three-mash-cost-detail-page .li .lab {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--sub);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .three-mash-cost-detail-page .li .lab .hint {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--mut);
 }
 
 .three-mash-cost-detail-page .li .lab b {
   font-family: 'Space Grotesk', sans-serif;
   color: var(--ink);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -236,7 +233,7 @@
   width: 100%;
   -webkit-appearance: none;
   appearance: none;
-  height: 5px;
+  height: 6px;
   border-radius: 99px;
   background: linear-gradient(90deg, var(--lime) var(--p, 40%), #e8e8e1 var(--p, 40%));
   outline: none;
@@ -245,28 +242,28 @@
 
 .three-mash-cost-detail-page input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #fff;
-  border: 3px solid var(--ink);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .18);
+  border: 3.5px solid var(--ink);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
   cursor: pointer;
 }
 
 .three-mash-cost-detail-page input[type=range]::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
   background: #fff;
-  border: 3px solid var(--ink);
+  border: 3.5px solid var(--ink);
   cursor: pointer;
 }
 
 .three-mash-cost-detail-page .calc .bar {
-  margin: 10px 20px 0;
-  height: 12px;
-  border-radius: 6px;
+  margin: 16px 24px 0;
+  height: 16px;
+  border-radius: 8px;
   overflow: hidden;
   display: flex;
   border: 1px solid var(--line);
@@ -278,23 +275,23 @@
 }
 
 .three-mash-cost-detail-page .calc .legend {
-  padding: 6px 20px 2px;
+  padding: 12px 24px 4px;
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 12px;
+  gap: 8px 16px;
 }
 
 .three-mash-cost-detail-page .calc .legend div {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--sub);
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .three-mash-cost-detail-page .calc .legend i {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 2px;
   display: inline-block;
   flex-shrink: 0;
@@ -306,10 +303,10 @@
 }
 
 .three-mash-cost-detail-page .calc .tot {
-  margin: 8px 20px 0;
-  padding: 10px 16px;
+  margin: 14px 24px 0;
+  padding: 18px 22px;
   background: var(--lime-soft);
-  border-radius: 12px;
+  border-radius: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -321,29 +318,29 @@
 
 .three-mash-cost-detail-page .calc .tot .v {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 26px;
+  font-size: 34px;
   font-weight: 700;
   letter-spacing: -.02em;
 }
 
 .three-mash-cost-detail-page .calc .use {
-  margin: 10px 20px 14px;
+  margin: 16px 24px 20px;
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .three-mash-cost-detail-page .calc .use .btn {
   flex: 1;
   justify-content: center;
-  font-size: 13.5px;
-  padding: 10px 16px;
+  font-size: 14px;
+  padding: 12px;
 }
 
 .three-mash-cost-detail-page .saved {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--lime-ink);
   text-align: center;
-  padding: 0 20px 10px;
+  padding: 0 24px 16px;
   display: block;
 }
 
