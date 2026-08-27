@@ -48,6 +48,10 @@ function customerName(customer: any) {
 function getInitialSidebarName(customer: any): string {
   const direct = customerName(customer);
   if (direct) return direct;
+  if (typeof customerStore !== "undefined" && customerStore.customer) {
+    const storeDirect = customerName(customerStore.customer);
+    if (storeDirect) return storeDirect;
+  }
   if (typeof window !== "undefined") {
     try {
       const cached =
@@ -82,7 +86,7 @@ export default function ThreeMashAccountLayout({
   );
 
   useEffect(() => {
-    const nextName = customerName(customer);
+    const nextName = customerName(customer) || getInitialSidebarName(customer);
     if (nextName) {
       setSidebarName(nextName);
       try {
@@ -161,7 +165,7 @@ export default function ThreeMashAccountLayout({
 
         <div className="tmai-user tmau-user">
           <strong>
-            {sidebarName || text(props?.profileTitle, "Hesabım")}
+            {sidebarName}
           </strong>
 
           <a

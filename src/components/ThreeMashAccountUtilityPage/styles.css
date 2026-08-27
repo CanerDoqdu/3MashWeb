@@ -101,6 +101,8 @@
 }
 
 .tmau-user strong {
+  display: block;
+  min-height: 1.15em;
   color: var(--tm-theme-bg, #fafaf7);
   font-family: var(
     --tm-theme-font-heading,
