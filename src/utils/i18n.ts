@@ -570,3 +570,56 @@ export function translateText(text?: string | null): string {
   return text;
 }
 
+/**
+ * Prefix internal site links with '/en' when currently on the English locale.
+ * Ignores mailto:, tel:, javascript:, http(s):// external links, # anchors, and empty paths.
+ */
+export function localizedHref(path?: string | null): string {
+  if (!path || typeof path !== "string") return "";
+  const trimmed = path.trim();
+  if (!trimmed) return "";
+
+  // External links, protocol handlers, or pure hash anchors remain unchanged
+  if (
+    /^(?:[a-z0-9+.-]+:|\/\/|#)/i.test(trimmed) ||
+    trimmed.startsWith("mailto:") ||
+    trimmed.startsWith("tel:") ||
+    trimmed.startsWith("javascript:")
+  ) {
+    return trimmed;
+  }
+
+  // If not English locale, return clean path
+  if (!isEnglishLocale()) {
+    return trimmed;
+  }
+
+  // Already prefixed with /en or is /en
+  if (
+    trimmed === "/en" ||
+    trimmed.startsWith("/en/") ||
+    trimmed.startsWith("/en?") ||
+    trimmed.startsWith("/en#")
+  ) {
+    return trimmed;
+  }
+
+  // Root path
+  if (trimmed === "/") {
+    return "/en";
+  }
+
+  // Root with hash or query (e.g. "/#hesap" -> "/en#hesap")
+  if (trimmed.startsWith("/#") || trimmed.startsWith("/?")) {
+    return `/en${trimmed.slice(1)}`;
+  }
+
+  // Relative with leading slash (e.g. "/3d-yazicilar" -> "/en/3d-yazicilar")
+  if (trimmed.startsWith("/")) {
+    return `/en${trimmed}`;
+  }
+
+  // Relative without leading slash (e.g. "3d-yazicilar" -> "/en/3d-yazicilar")
+  return `/en/${trimmed}`;
+}
+

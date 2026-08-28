@@ -25,7 +25,7 @@ import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImag
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
-import { tLocalized, tProp, isEnglishLocale, translateText } from "../../utils/i18n";
+import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref } from "../../utils/i18n";
 import {
   ACF_FEP_FILM_SLUG,
   ARGENZ_HT_MULTILAYER_SLUG,
@@ -794,13 +794,13 @@ function internalSiteHref(value: string) {
   try {
     const url = new URL(trimmed);
     if (url.hostname === "3mash.com" || url.hostname === "www.3mash.com" || url.hostname === "studio.ikasapps.com") {
-      return `${url.pathname}${url.search}${url.hash}` || "/";
+      return localizedHref(`${url.pathname}${url.search}${url.hash}` || "/");
     }
   } catch {
     // Relative route, keep as-is.
   }
 
-  return trimmed;
+  return localizedHref(trimmed);
 }
 
 const productCategoryRoutes: Record<string, string> = {
