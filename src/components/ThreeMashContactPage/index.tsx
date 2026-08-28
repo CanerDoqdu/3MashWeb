@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import { Props } from "./types";
+import { t, tLocalized, tProp } from "../../utils/i18n";
 
 type ContactForm = {
   firstName: string;
@@ -25,8 +26,8 @@ const phoneCountries = [
   { iso: "SL", name: "Sierra Leone", dialCode: "+232" },
 ];
 
-function text(value: string | undefined, fallback: string) {
-  return value?.trim() || fallback;
+function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
+  return tProp(value, fallbackTr, fallbackEn || fallbackTr);
 }
 
 function href(value: string | undefined, fallback: string) {
@@ -145,14 +146,15 @@ export function ThreeMashContactPage(props: Props) {
     <section className="three-mash-contact-page" style={style}>
       <div className="tm-contact-shell">
         <section className="tm-contact-hero">
-          <span className="tm-contact-kicker">İLETİŞİM</span>
+          <span className="tm-contact-kicker">{t("footer.contactTitle", "İLETİŞİM")}</span>
           <div className="tm-contact-hero-grid">
             <div>
-              <h1>{text(props.titleText, "Bize Ulaşın")}</h1>
+              <h1>{text(props.titleText, tLocalized("Bize Ulaşın", "Contact Us"), "Contact Us")}</h1>
               <p>
                 {text(
                   props.descriptionText,
                   "Sizden herhangi bir soru ya da geri dönüş gelince çok mutlu oluyoruz. Aşağıdaki formu kullanarak bize her türlü soruyu sorabilirsiniz. Size en geç 24 saat içinde yanıt vereceğiz. Sitemizi ziyaret ettiğiniz için teşekkür ederiz.",
+                  "We are very happy to receive any questions or feedback from you. You can ask us anything using the form below. We will respond to you within 24 hours at the latest. Thank you for visiting our website."
                 )}
               </p>
             </div>
@@ -163,9 +165,9 @@ export function ThreeMashContactPage(props: Props) {
                 target="_blank"
                 rel="noreferrer"
               >
-                Antalya Teknokent, Konyaaltı
+                {tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Technopark, Konyaalti")}
               </a>
-              <span>Teknik destek ve ürün danışmanlığı</span>
+              <span>{tLocalized("Teknik destek ve ürün danışmanlığı", "Technical support & product consulting")}</span>
             </div>
           </div>
         </section>
@@ -173,22 +175,24 @@ export function ThreeMashContactPage(props: Props) {
         <section className="tm-contact-layout">
           <aside className="tm-contact-info-panel">
             <span className="tm-contact-section-code">01</span>
-            <h2>Doğru kişiye hızlı ulaşın.</h2>
+            <h2>{tLocalized("Doğru kişiye hızlı ulaşın.", "Reach the right person fast.")}</h2>
             <p>
-              Ürün seçimi, parametre uyumu, satış sonrası destek veya Academy iş
-              birlikleri için mesajınızı doğrudan ekibe iletin.
+              {tLocalized(
+                "Ürün seçimi, parametre kalibrasyonu, satış sonrası destek veya Academy iş birlikleri için mesajınızı doğrudan ekibe iletin.",
+                "Send your message directly to the team for product selection, parameter calibration, post-sale support or Academy partnerships."
+              )}
             </p>
             <div className="tm-contact-info-list">
               <div>
-                <b>Yanıt süresi</b>
-                <span>En geç 24 saat içinde dönüş</span>
+                <b>{tLocalized("Yanıt süresi", "Response time")}</b>
+                <span>{tLocalized("En geç 24 saat içinde dönüş", "Reply within 24 hours at latest")}</span>
               </div>
               <div>
-                <b>Destek kapsamı</b>
-                <span>Cihaz, reçine, kürleme ve sarf ürünleri</span>
+                <b>{tLocalized("Destek kapsamı", "Support scope")}</b>
+                <span>{tLocalized("Cihaz, reçine, kürleme ve sarf malzemeleri", "Printers, resins, curing and consumables")}</span>
               </div>
               <div>
-                <b>Lokasyon</b>
+                <b>{tLocalized("Lokasyon", "Location")}</b>
                 <span>Antalya Teknokent</span>
               </div>
             </div>
@@ -198,7 +202,7 @@ export function ThreeMashContactPage(props: Props) {
             <div className="tm-contact-grid">
               <label className="tm-contact-field">
                 <span className="is-required">
-                  * {text(props.firstNameLabel, "Ad")}
+                  * {text(props.firstNameLabel, tLocalized("Ad", "First Name"), "First Name")}
                 </span>
                 <input
                   value={form.firstName}
@@ -215,7 +219,7 @@ export function ThreeMashContactPage(props: Props) {
 
               <label className="tm-contact-field">
                 <span className="is-required">
-                  * {text(props.lastNameLabel, "Soyad")}
+                  * {text(props.lastNameLabel, tLocalized("Soyad", "Last Name"), "Last Name")}
                 </span>
                 <input
                   value={form.lastName}
@@ -232,7 +236,7 @@ export function ThreeMashContactPage(props: Props) {
 
               <label className="tm-contact-field">
                 <span className="is-required">
-                  * {text(props.emailLabel, "Email")}
+                  * {text(props.emailLabel, "Email", "Email")}
                 </span>
                 <input
                   type="email"
@@ -249,17 +253,21 @@ export function ThreeMashContactPage(props: Props) {
               </label>
 
               <label className="tm-contact-field">
-                <span>{text(props.phoneLabel, "Telefon")}</span>
+                <span>{text(props.phoneLabel, tLocalized("Telefon", "Phone"), "Phone")}</span>
                 <div className="tm-contact-phone">
                   <label
                     className="tm-contact-country"
-                    aria-label="Telefon ülke kodu"
+                    aria-label={t("account.phoneCountryAria", "Telefon ülke kodu")}
                   >
                     <img
                       src={`https://cdn.myikas.com/sf/assets/flags/3x2/${phoneCountry.iso}.svg`}
                       alt={phoneCountry.iso}
+                      width="24"
+                      height="16"
                     />
-                    <span aria-hidden="true">⌄</span>
+                    <svg width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true">
+                      <path d="M1 1.25L4.5 4.75L8 1.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                     <select
                       value={phoneCountry.iso}
                       onChange={(event) =>
@@ -270,6 +278,7 @@ export function ThreeMashContactPage(props: Props) {
                     >
                       {phoneCountries.map((country) => (
                         <option
+                          key={country.iso}
                           value={country.iso}
                         >{`${country.name} ${country.dialCode}`}</option>
                       ))}
@@ -280,7 +289,6 @@ export function ThreeMashContactPage(props: Props) {
                     value={form.phone}
                     inputMode="tel"
                     autoComplete="tel"
-                    pattern="\\d{7,14}"
                     onInput={(event) =>
                       updateField(
                         "phone",
@@ -294,7 +302,7 @@ export function ThreeMashContactPage(props: Props) {
 
             <label className="tm-contact-field tm-contact-message">
               <span className="is-required">
-                * {text(props.messageLabel, "Mesaj")}
+                * {text(props.messageLabel, tLocalized("Mesaj", "Message"), "Message")}
               </span>
               <textarea
                 rows={5}
@@ -322,14 +330,15 @@ export function ThreeMashContactPage(props: Props) {
               <span>
                 {text(
                   props.kvkkTextBefore,
-                  "Kişisel verilerin korunması kanunu",
+                  tLocalized("Kişisel verilerin korunması kanunu", "Personal data protection law"),
+                  "Personal data protection law"
                 )}{" "}
                 <a
                   href={href(props.kvkkHref, "/pages/gizlilik-politikasi-ve-kvkk")}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {text(props.kvkkLinkText, "okudum, onaylıyorum")}
+                  {text(props.kvkkLinkText, tLocalized("okudum, onaylıyorum", "I have read and agree"), "I have read and agree")}
                 </a>
               </span>
             </label>
@@ -339,12 +348,12 @@ export function ThreeMashContactPage(props: Props) {
               type="submit"
               disabled={!kvkkAccepted}
             >
-              <span>{text(props.buttonText, "Gönder")}</span>
+              <span>{text(props.buttonText, "Gönder", "Send")}</span>
             </button>
 
             {submitted ? (
               <p className="tm-contact-status">
-                {text(props.successText, "Mail uygulamanız açılıyor.")}
+                {text(props.successText, tLocalized("Mail uygulamanız açılıyor.", "Opening mail app..."), "Opening mail app...")}
               </p>
             ) : null}
           </form>

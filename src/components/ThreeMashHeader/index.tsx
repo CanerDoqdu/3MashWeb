@@ -25,6 +25,7 @@ import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImag
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
+import { tLocalized, tProp, isEnglishLocale, translateText } from "../../utils/i18n";
 import {
   ACF_FEP_FILM_SLUG,
   ARGENZ_HT_MULTILAYER_SLUG,
@@ -212,11 +213,11 @@ const defaultReferencesHomeHref = "/";
 const defaultReferencesSectionId = "guven";
 const pendingReferencesScrollKey = "tmh-pending-references-scroll";
 const legacyAcademyRouteKeys = new Set(["academy", "mash-academy", "pages-mash-academy", "2tplvqpo-rovtvwz53h"]);
-const defaultProductsMenuText = "Ürünler";
+const defaultProductsMenuText = tLocalized("Ürünler", "Products");
 const defaultWhyMenuText = "Neden 3mash?";
 const defaultReferencesText = "Referanslar";
 const defaultAcademyText = "Academy";
-const defaultMobileMenuLabel = "Menü";
+const defaultMobileMenuLabel = tLocalized("Menü", "Menu");
 
 // Critical header styles live with the markup so route changes cannot briefly
 // paint the header in its unstyled/default browser state before the component
@@ -721,14 +722,14 @@ const defaultProductsFeature = {
   href: "/yikama-kurleme-cihazlari",
 };
 const defaultProductPrimary: Required<MenuItem>[] = [
-  { title: "3D Yazıcılar", description: "P1D / P16L hassas baskı", href: "/3d-yazicilar", icon: ecoPrinterIcon },
-  { title: "Yıkama & Kürleme", description: "Yıkama ve akıllı kürleme", href: "/yikama-kurleme-cihazlari", icon: ecoScannerIcon },
-  { title: "Dental Reçineler", description: "Dental reçine seçenekleri", href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
+  { title: tLocalized("3D Yazıcılar", "3D Printers"), description: "P1D / P16L hassas baskı", href: "/3d-yazicilar", icon: ecoPrinterIcon },
+  { title: tLocalized("Yıkama & Kürleme", "Wash & Cure"), description: "Yıkama ve akıllı kürleme", href: "/yikama-kurleme-cihazlari", icon: ecoScannerIcon },
+  { title: tLocalized("Dental Reçineler", "Dental Resins"), description: "Dental reçine seçenekleri", href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
 ];
 const defaultProductSecondary: Required<MenuItem>[] = [
-  { title: "Masaüstü Tarayıcılar", description: "Lab tarafında hassas veri", href: "/masasustu-tarayicilar", icon: ecoCuringIcon },
+  { title: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), description: "Lab tarafında hassas veri", href: "/masasustu-tarayicilar", icon: ecoCuringIcon },
   { title: "Zirkon Bloklar & Titanyum", description: "Freze tarafının sarfları", href: "/zirkon-bloklar", icon: ecoBlocksIcon },
-  { title: "Dental Fırınlar", description: "Sinterleme çözümleri", href: "/dental-firinlar", icon: ecoOvenIcon },
+  { title: tLocalized("Dental Fırınlar", "Dental Furnaces"), description: "Sinterleme çözümleri", href: "/dental-firinlar", icon: ecoOvenIcon },
 ];
 
 function href(value?: string) {
@@ -1083,12 +1084,21 @@ function hideLegacyThemeCategories() {
   });
 }
 
-function richTextValue(value: string | undefined, fallback: string) {
+function richTextValue(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
   const visibleText = inlineHtml(value)
     .replace(/<[^>]*>/g, "")
     .replace(/&nbsp;/gi, " ")
     .trim();
-  return visibleText ? value : fallback;
+  if (visibleText) {
+    if (isEnglishLocale()) {
+      if (visibleText === fallbackTr.trim()) {
+        return fallbackEn || translateText(fallbackTr);
+      }
+      return translateText(value);
+    }
+    return value;
+  }
+  return isEnglishLocale() ? (fallbackEn || translateText(fallbackTr)) : fallbackTr;
 }
 
 function inlineHtml(value?: string) {
@@ -1137,7 +1147,8 @@ function styleTextChunks(markup: string, phrase?: string, enabled?: boolean, cla
 }
 
 function richText(value?: string, props?: Props) {
-  const markup = inlineHtml(value);
+  const raw = isEnglishLocale() ? translateText(value) : value;
+  const markup = inlineHtml(raw);
   if (!props) return { __html: markup };
   return {
     __html: styleTextChunks(markup, props.styledPhrase, props.wordStyleEnabled !== false),
@@ -1696,7 +1707,7 @@ const cartItems =
     {
       label: richTextValue(
         props.profileLink1Text,
-        "Siparişlerim"
+        tLocalized("Siparişlerim", "My Orders")
       ),
       link: headerRouteHref(
         props.profileLink1Href,
@@ -1706,7 +1717,7 @@ const cartItems =
     {
       label: richTextValue(
         props.profileLink2Text,
-        "Adreslerim"
+        tLocalized("Adreslerim", "My Addresses")
       ),
       link: headerRouteHref(
         props.profileLink2Href,
@@ -1725,7 +1736,7 @@ const cartItems =
     {
       label: richTextValue(
         props.profileLink6Text,
-        "Çıkış yap"
+        tLocalized("Çıkış yap", "Sign out")
       ),
       link: headerRouteHref(
         props.profileLink6Href,
@@ -1733,7 +1744,7 @@ const cartItems =
       ),
     },
   ];
-  const accountMenuTitle = "Hesabım";
+  const accountMenuTitle = tLocalized("Hesabım", "My Account");
 
   const themeStyle = {
     "--tmh-bg": sourceThemeToken("#FAFAF7", "--tm-theme-bg"),
@@ -2358,14 +2369,14 @@ const image = imageCandidates[0];
                                 <span className="tmh-cart-live-copy">
                                   <b>{cartItemTitle(item)}</b>
                                   {variant ? <small>{variant}</small> : null}
-                                  <em>Adet {item.quantity}</em>
+                                  <em>{tLocalized("Adet", "Qty")} {item.quantity}</em>
                                 </span>
                               </a>
                               <strong>{getOrderLineItemFormattedFinalPriceWithQuantity(item)}</strong>
                               <button
                                 className="tmh-cart-live-remove"
                                 type="button"
-                                aria-label={`${cartItemTitle(item)} sepetten kaldır`}
+                                aria-label={tLocalized(`${cartItemTitle(item)} sepetten kaldır`, `Remove ${cartItemTitle(item)} from cart`)}
                                 disabled={removingCartItemId === item.id}
                                 onClick={(event) => removeCartItem(event, item)}
                               >
@@ -2375,14 +2386,14 @@ const image = imageCandidates[0];
                           );
                         })}
                       </div>
-                      <a className="tmh-cart-market-button tmh-cart-go-button" href="/cart">Sepete git</a>
+                      <a className="tmh-cart-market-button tmh-cart-go-button" href="/cart">{tLocalized("Sepete git", "Go to Cart")}</a>
                     </div>
                   ) : (
                     <div className="tmh-cart-empty-card">
                       <a
                         className="tmh-cart-market-button"
                         href="/search"
-                        dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git"), props)}
+                        dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git", "Go to Store"), props)}
                       />
                     </div>
                   )}

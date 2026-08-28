@@ -19,6 +19,7 @@ import {
   ProductDetailSectionScope,
   type ProductDetailRelatedProduct,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
+import { tLocalized } from "../../utils/i18n";
 
 function propString(value: unknown) {
   if (typeof value === "string") return value;
@@ -301,7 +302,7 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     related: rawSourceData.related ? {
       ...rawSourceData.related,
       index: text(p.relatedIndex) || rawSourceData.related.index || "07",
-      label: text(p.relatedLabel) || rawSourceData.related.label || "İLGİLİ ÜRÜNLER",
+      label: text(p.relatedLabel) || rawSourceData.related.label || tLocalized("İLGİLİ ÜRÜNLER", "RELATED PRODUCTS"),
       titleHtml: text(p.relatedTitleHtml) || rawSourceData.related.titleHtml || "",
     } : rawSourceData.related,
     finalCta: rawSourceData.finalCta ? {

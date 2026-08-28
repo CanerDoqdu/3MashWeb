@@ -1,5 +1,6 @@
 import { academyEvent1Image, academyEvent2Image, academyIntroImage } from "./source-assets";
 import { Props } from "./types";
+import { tLocalized } from "../../utils/i18n";
 
 function value(input: string | undefined, fallback: string) {
   const trimmed = input?.trim();
@@ -109,14 +110,18 @@ const sourceDescription =
 const sourcePastText =
   "Geçmiş etkinliklerimiz arasında sektörde deneyimli isimlerin katıldığı paneller, uzmanlık seminerleri ve interaktif atölye çalışmaları bulunmaktadır. Ayrıca, yeni teknolojiler ve tedavi yöntemlerinin ele alındığı konferanslar düzenlemekteyiz. Bu etkinlikler sayesinde katılımcılarımız, sektördeki gelişmeleri yakından takip etmenin yanı sıra deneyimlerini paylaşarak birbirlerinden öğrenme fırsatı bulmaktadır.";
 
-const sourceTitle = "Mash Academy";
-const sourceIntroTitle = "Bilgiyle büyüyen ekosistem.";
-const sourceQuote = "Eğitimdir ki bir milleti ya hür bağımsız şanlı yüce bir toplum olarak yaşatır veya bir milleti esaret ve sefalete terk eder.";
+const sourceIntroTitle = tLocalized("Bilgiyle büyüyen ekosistem.", "An ecosystem powered by knowledge.");
 const sourceQuoteAuthor = "M. Kemal Atatürk";
-const sourcePastTitle = "Geçmiş Etkinlikler";
-const sourceReadMore = "Devamını Oku";
+const sourcePastTitle = tLocalized("Geçmiş Etkinlikler", "Past Events");
+const sourceReadMore = tLocalized("Devamını Oku", "Read More");
 
 export function ThreeMashAcademyPage(props: Props) {
+  const sourceTitle = tLocalized("Mash Academy", "Mash Academy");
+  const sourceQuote = tLocalized(
+    "Eğitimdir ki bir milleti ya hür bağımsız şanlı yüce bir toplum olarak yaşatır veya bir milleti esaret ve sefalete terk eder.",
+    "It is education that lifts a nation to a free, independent, glorious and elevated society, or abandons a nation to captivity and misery."
+  );
+
   const accentColor = themeColor(props.accentColor, "#C7F136", "--tm-theme-accent", ["#caff12"]);
   const headingColor = themeColor(props.headingColor, "#0E0E0C", "--tm-theme-text", ["#1f2933", "#111111", "#070707"]);
   const mutedColor = themeColor(props.mutedTextColor, "#55554e", "--tm-theme-sub", ["#555555", "#777777"]);

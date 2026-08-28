@@ -11,6 +11,7 @@ import {
   type IkasBlog,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import { tLocalized, tProp } from "../../utils/i18n";
 
 function themeToken(
   value: string | undefined,
@@ -103,22 +104,23 @@ export function ThreeMashBlogListingPage(props: Props) {
             <p className="tm-blog-eyebrow">
               {props.eyebrowText || "MASH ACADEMY"}
             </p>
-            <h1>{props.titleText || "Dental üretim notları."}</h1>
+            <h1>{props.titleText || tLocalized("Dental üretim notları.", "Dental manufacturing notes.")}</h1>
             <span>
               {props.descriptionText ||
-                "ikas blog panelinden yayınlanan içerikler bu sayfada canlı olarak listelenir."}
+                tLocalized("ikas blog panelinden yayınlanan içerikler bu sayfada canlı olarak listelenir.", "Articles published from blog dashboard are listed live on this page."
+                )}
             </span>
           </div>
           {blogList ? (
             <div className="tm-blog-count">
               <strong>{blogList.count ?? blogs.length}</strong>
-              <span>yazı</span>
+              <span>{tLocalized("yazı", "posts")}</span>
             </div>
           ) : null}
         </div>
 
         {categories.length > 0 ? (
-          <nav className="tm-blog-categories" aria-label="Blog kategorileri">
+          <nav className="tm-blog-categories" aria-label={tLocalized("Blog kategorileri", "Blog categories")}>
             {categories.map((category) => (
               <a href={getIkasBlogCategoryHref(category)} key={category.id}>
                 {category.name}
@@ -130,7 +132,7 @@ export function ThreeMashBlogListingPage(props: Props) {
         {!blogList ? (
           <div className="tm-blog-setup">
             {props.setupMessage ||
-              "Blog yazıları kısa süre içinde burada listelenecek."}
+              tLocalized("Blog yazıları kısa süre içinde burada listelenecek.", "Blog posts will be listed here shortly.")}
           </div>
         ) : blogs.length > 0 ? (
           <>
@@ -140,7 +142,7 @@ export function ThreeMashBlogListingPage(props: Props) {
               {blogs.map((blog) => (
                 <BlogCard
                   blog={blog}
-                  readMoreText={props.readMoreText || "Oku"}
+                  readMoreText={props.readMoreText || tLocalized("Oku", "Read")}
                   key={blog.id}
                 />
               ))}
@@ -151,7 +153,7 @@ export function ThreeMashBlogListingPage(props: Props) {
                 disabled={!hasBlogListPrevPage(blogList)}
                 onClick={() => getBlogListPrevPage(blogList)}
               >
-                Önceki
+                {tLocalized("Önceki", "Previous")}
               </button>
               <span>{blogList.page || 1}</span>
               <button
@@ -159,16 +161,17 @@ export function ThreeMashBlogListingPage(props: Props) {
                 disabled={!hasBlogListNextPage(blogList)}
                 onClick={() => getBlogListNextPage(blogList)}
               >
-                Sonraki
+                {tLocalized("Sonraki", "Next")}
               </button>
             </div>
           </>
         ) : (
           <div className="tm-blog-empty">
-            <h2>{props.emptyTitle || "Blog yazısı bulunamadı"}</h2>
+            <h2>{props.emptyTitle || tLocalized("Blog yazısı bulunamadı", "No blog posts found")}</h2>
             <p>
               {props.emptyMessage ||
-                "Bu listeye bağlı yayında olan blog yazısı yok."}
+                tLocalized("Bu listeye bağlı yayında olan blog yazısı yok.", "No published blog posts found for this list."
+                )}
             </p>
           </div>
         )}

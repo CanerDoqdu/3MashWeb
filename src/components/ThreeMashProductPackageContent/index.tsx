@@ -1,5 +1,6 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import { tLocalized } from "../../utils/i18n";
 
 function trimmedText(value: unknown, fallback = ""): string {
   return typeof value === "string" && value.trim() ? value.trim() : fallback;
@@ -17,57 +18,57 @@ function imageSource(value: unknown, fallback = ""): string {
 
 export function ThreeMashProductPackageContent(props: Props) {
   const index = trimmedText(props.sectionIndex, "06");
-  const label = trimmedText(props.sectionLabel, "BÖLÜM ETİKETİ");
+  const label = trimmedText(props.sectionLabel, tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"));
   const titleHtml = trimmedText(
     props.titleHtml,
-    'Paket ve kutu içeriği <span class="em">başlığı buraya gelecek.</span>'
+    tLocalized('Paket ve kutu içeriği <span class="em">başlığı buraya gelecek.</span>', 'Package and box contents <span class="em">title goes here.</span>')
   );
   const sideHtml = trimmedText(
     props.sideHtml,
-    "Kutu ve paket içeriği bölümünün sağ üst genel açıklama metni buraya gelecek."
+    tLocalized("Kutu ve paket içeriği bölümünün sağ üst genel açıklama metni buraya gelecek.", "General description text for the package and box contents section goes here.")
   );
 
   const packageImage = imageSource(
     props.packageImage,
     "https://cdn.myikas.com/images/theme-images/4a6af8e2-cb7c-4cc8-ba17-13656d4b8670/image_3840.webp"
   );
-  const packageBadge = trimmedText(props.packageBadge, "ÖNE ÇIKAN SET");
-  const packageTitle = trimmedText(props.packageTitle, "Paket Ana Başlığı");
+  const packageBadge = trimmedText(props.packageBadge, tLocalized("ÖNE ÇIKAN SET", "FEATURED SET"));
+  const packageTitle = trimmedText(props.packageTitle, tLocalized("Paket Ana Başlığı", "Package Main Title"));
   const packageSubtitle = trimmedText(
     props.packageSubtitle,
-    "Paket veya setin genel kapsamı ve avantajlarını anlatan kısa açıklama metni."
+    tLocalized("Paket veya setin genel kapsamı ve avantajlarını anlatan kısa açıklama metni.", "Short description explaining the overall scope and advantages of the package or set.")
   );
 
   const items = [
     {
       num: trimmedText(props.item1Number, "01"),
-      title: trimmedText(props.item1Title, "1. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item1Description, "Paket içeriğine dahil olan 1. ana ürün veya donanım açıklaması buraya gelecek."),
-      tag: trimmedText(props.item1Tag, "ANA DONANIM"),
+      title: trimmedText(props.item1Title, tLocalized("1. Paket Maddesi Başlığı", "Item 1 Package Title")),
+      desc: trimmedText(props.item1Description, tLocalized("Paket içeriğine dahil olan 1. ana ürün veya donanım açıklaması buraya gelecek.", "Description for main product or hardware included in package 1.")),
+      tag: trimmedText(props.item1Tag, tLocalized("ANA DONANIM", "MAIN HARDWARE")),
     },
     {
       num: trimmedText(props.item2Number, "02"),
-      title: trimmedText(props.item2Title, "2. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item2Description, "Paket içeriğine dahil olan 2. sarf veya aksesuar açıklaması buraya gelecek."),
-      tag: trimmedText(props.item2Tag, "SARF MALZEME"),
+      title: trimmedText(props.item2Title, tLocalized("2. Paket Maddesi Başlığı", "Item 2 Package Title")),
+      desc: trimmedText(props.item2Description, tLocalized("Paket içeriğine dahil olan 2. sarf veya aksesuar açıklaması buraya gelecek.", "Description for consumable or accessory included in package 2.")),
+      tag: trimmedText(props.item2Tag, tLocalized("SARF MALZEME", "CONSUMABLE")),
     },
     {
       num: trimmedText(props.item3Number, "03"),
-      title: trimmedText(props.item3Title, "3. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item3Description, "Paket içeriğine dahil olan 3. alet veya kalibrasyon seti açıklaması buraya gelecek."),
-      tag: trimmedText(props.item3Tag, "KALİBRASYON"),
+      title: trimmedText(props.item3Title, tLocalized("3. Paket Maddesi Başlığı", "Item 3 Package Title")),
+      desc: trimmedText(props.item3Description, tLocalized("Paket içeriğine dahil olan 3. alet veya kalibrasyon seti açıklaması buraya gelecek.", "Description for tool or calibration set included in package 3.")),
+      tag: trimmedText(props.item3Tag, tLocalized("KALİBRASYON", "CALIBRATION")),
     },
     {
       num: trimmedText(props.item4Number, "04"),
-      title: trimmedText(props.item4Title, "4. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item4Description, "Paket içeriğine dahil olan 4. yedek parça veya aksesuar açıklaması buraya gelecek."),
-      tag: trimmedText(props.item4Tag, "YEDEK PARÇA"),
+      title: trimmedText(props.item4Title, tLocalized("4. Paket Maddesi Başlığı", "Item 4 Package Title")),
+      desc: trimmedText(props.item4Description, tLocalized("Paket içeriğine dahil olan 4. yedek parça veya aksesuar açıklaması buraya gelecek.", "Description for spare part or accessory included in package 4.")),
+      tag: trimmedText(props.item4Tag, tLocalized("YEDEK PARÇA", "SPARE PART")),
     },
     {
       num: trimmedText(props.item5Number, "05"),
-      title: trimmedText(props.item5Title, "5. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item5Description, "Paket içeriğine dahil olan 5. eğitim veya danışmanlık hizmeti açıklaması buraya gelecek."),
-      tag: trimmedText(props.item5Tag, "EĞİTİM"),
+      title: trimmedText(props.item5Title, tLocalized("5. Paket Maddesi Başlığı", "Item 5 Package Title")),
+      desc: trimmedText(props.item5Description, tLocalized("Paket içeriğine dahil olan 5. eğitim veya danışmanlık hizmeti açıklaması buraya gelecek.", "Description for training or consulting service included in package 5.")),
+      tag: trimmedText(props.item5Tag, tLocalized("EĞİTİM", "TRAINING")),
     },
     {
       num: trimmedText(props.item6Number, "06"),
@@ -83,7 +84,7 @@ export function ThreeMashProductPackageContent(props: Props) {
     props.bottomBannerText,
     "Kutu içeriği veya teslimat garantisi ile ilgili alt bilgilendirme metni buraya gelecek."
   );
-  const ctaText = trimmedText(props.ctaText, "Aksiyon Butonu Metni →");
+  const ctaText = trimmedText(props.ctaText, tLocalized("Aksiyon Butonu Metni →", "Action Button Text →"));
   const ctaHref = trimmedText(
     props.ctaHref,
     "#"
@@ -109,7 +110,7 @@ export function ThreeMashProductPackageContent(props: Props) {
             <div className="tm-pkg-hero-media">
               <img
                 src={packageImage}
-                alt={packageTitle || "Paket İçeriği Görseli"}
+                alt={packageTitle || tLocalized("Paket İçeriği Görseli", "Package Content Image")}
                 loading="lazy"
                 decoding="async"
               />

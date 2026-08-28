@@ -4,6 +4,7 @@ import {
   getIkasBlogFormattedDate,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import { tLocalized, tProp } from "../../utils/i18n";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -67,7 +68,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
         <div className="tm-bda-wrap">
           <div className="tm-bda-setup">
             {props.setupMessage ||
-              "Blog yazısı kısa süre içinde burada gösterilecek."}
+              tLocalized("Blog yazısı kısa süre içinde burada gösterilecek.", "Blog post will be displayed here shortly.")}
           </div>
         </div>
       </section>
@@ -93,10 +94,10 @@ export function ThreeMashBlogDetailPage(props: Props) {
         <a
           className="tm-bda-back"
           href={props.backLinkHref || "/blog"}
-          aria-label={props.backLinkText || "Blog'a dön"}
+          aria-label={props.backLinkText || tLocalized("Blog'a dön", "Back to blog")}
         >
           <span aria-hidden="true">←</span>
-          <span>{props.backLinkText || "Blog'a dön"}</span>
+          <span>{props.backLinkText || tLocalized("Blog'a dön", "Back to blog")}</span>
         </a>
 
         {/* ── Article header ────────────────────────────────────────────── */}
@@ -106,7 +107,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
 
           {/* Publication eyebrow */}
           {showPublicationLabel && (
-            <span className="tm-bda-eyebrow" aria-label="Yayın etiketi">
+            <span className="tm-bda-eyebrow" aria-label={tLocalized("Yayın etiketi", "Publication tag")}>
               MASH ACADEMY
             </span>
           )}
@@ -136,7 +137,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
                 <>
                   <span className="tm-bda-meta-sep" aria-hidden="true">·</span>
                   <span className="tm-bda-meta-reading">
-                    {readingTime} dk okuma
+                    {readingTime} {tLocalized("dk okuma", "min read")}
                   </span>
                 </>
               )}

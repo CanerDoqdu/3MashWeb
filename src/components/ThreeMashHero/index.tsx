@@ -1,12 +1,13 @@
+import { tLocalized } from "../../utils/i18n";
 import {
   useEffect,
   useLayoutEffect,
-
   useMemo,
   useRef,
   useState,
 } from "preact/hooks";
 import { Props } from "./types";
+import { tProp, isEnglishLocale } from "../../utils/i18n";
 
 type Mode = "clinic" | "lab";
 
@@ -360,6 +361,48 @@ function StatBlock({
 export function ThreeMashHero(props: Props) {
   const [heroReady, setHeroReady] = useState(true);
 
+  // --- Localize all Turkish default prop values to English when on /en ---
+  props = {
+    ...props,
+    eyebrowText: tProp(props.eyebrowText, "DENTAL ÜRETİMİN GÖRÜNMEZ FATURASI", "THE INVISIBLE INVOICE OF DENTAL PRODUCTION"),
+    titleBeforeAmount: tProp(props.titleBeforeAmount, "Kliniğiniz her yıl", "Your clinic loses"),
+    labTitleBeforeAmount: tProp(props.labTitleBeforeAmount, "Laboratuvarınız her yıl", "Your lab loses"),
+    titleAfterAmount: tProp(props.titleAfterAmount, "sessizce kaybediyor olabilir.", "silently every year."),
+    titleEmphasis: tProp(props.titleEmphasis, "Farkında bile olmadan.", "Without even realizing it."),
+    subtitleStart: tProp(props.subtitleStart, "Bu para reklama gitmiyor, yeni cihaza da gitmiyor. Hastanın ağzına", "This money doesn't go to ads or new equipment. Because of work that"),
+    subtitleStrongOne: tProp(props.subtitleStrongOne, "ilk seferde oturmayan işler", "doesn't seat on the first try"),
+    subtitleMiddle: tProp(props.subtitleMiddle, "yüzünden, sessizce üretim maliyetine dönüşüyor. Yandaki değerleri", ", it silently turns into production waste. Adjust the values on the right"),
+    subtitleStrongTwo: tProp(props.subtitleStrongTwo, "kendinize göre ayarlayın", "to your own numbers"),
+    subtitleEnd: tProp(props.subtitleEnd, "— yukarıdaki rakam anında sizin kliniğinize göre güncellenir.", "— and the figure above instantly updates for your clinic."),
+    primaryButtonText: tProp(props.primaryButtonText, "Sebebini görün ↓", "See why ↓"),
+    secondaryButtonText: tProp(props.secondaryButtonText, "Ücretsiz danışmanlık", "Free consultation"),
+    hintText: tProp(props.hintText, "Bağlayıcılık yok · 20 dk", "No commitment · 20 min"),
+    calculatorEyebrow: tProp(props.calculatorEyebrow, "TASARRUF HESAPLAYICI", "SAVINGS CALCULATOR"),
+    calculatorBadgeText: tProp(props.calculatorBadgeText, "TAHMİNİ", "ESTIMATED"),
+    clinicModeText: tProp(props.clinicModeText, tLocalized("Klinik", "Clinic"), "Clinic"),
+    labModeText: tProp(props.labModeText, tLocalized("Laboratuvar", "Lab"), "Lab"),
+    clinicWorkLabel: tProp(props.clinicWorkLabel, "Aylık restoratif vaka", "Monthly restorative cases"),
+    clinicRptLabel: tProp(props.clinicRptLabel, "Mevcut tekrar oranınız (RPT)", "Current remake rate (RPT)"),
+    clinicCostLabel: tProp(props.clinicCostLabel, "Bir tekrarın size maliyeti", "Cost to you per remake"),
+    clinicCostDetailText: tProp(props.clinicCostDetailText, "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →", "What does this cost include? Calculate item by item →"),
+    labWorkLabel: tProp(props.labWorkLabel, "Aylık üretim adedi", "Monthly production volume"),
+    labRptLabel: tProp(props.labRptLabel, "Mevcut tekrar oranınız (RPT)", "Current remake rate (RPT)"),
+    labCostLabel: tProp(props.labCostLabel, "Bir tekrarın size maliyeti", "Cost to you per remake"),
+    labCostDetailText: tProp(props.labCostDetailText, "Bu maliyet nelerden oluşuyor? Kalem kalem hesaplayın →", "What does this cost include? Calculate item by item →"),
+    currentLossLabel: tProp(props.currentLossLabel, "Tahmini yıllık kayıp", "Estimated annual loss"),
+    currentLossNote: tProp(props.currentLossNote, "· mevcut oranla", "· at current rate"),
+    targetLossLabel: tProp(props.targetLossLabel, "Hedef oranla", "At target rate"),
+    targetLossNote: tProp(props.targetLossNote, "· ≤%3, 3mash desteğiyle", "· ≤3%, with 3mash support"),
+    savingsEyebrow: tProp(props.savingsEyebrow, "YILLIK TASARRUF POTANSİYELİNİZ", "YOUR ANNUAL SAVINGS POTENTIAL"),
+    alreadyTargetText: tProp(props.alreadyTargetText, "Zaten hedef banttasınız 👏", "You're already in the target band 👏"),
+    fineTextBeforeLink: tProp(props.fineTextBeforeLink, "Basitleştirilmiş bir tahmindir; sonuçlar iş akışınıza göre değişir. Kesin analiz için", "This is a simplified estimate; results vary by workflow. For precise analysis,"),
+    fineLinkText: tProp(props.fineLinkText, "ücretsiz danışmanlık", "free consultation"),
+    fineTextAfterLink: tProp(props.fineTextAfterLink, "alın.", "."),
+    stat1Label: tProp(props.stat1Label, "her baskıda boyutsal hassasiyet - insan saç telinin yarısı", "dimensional accuracy on every print — half a human hair"),
+    stat2Label: tProp(props.stat2Label, "3mash müşterilerinde tekrarlanan iş oranı (%7-12'den)", "remake rate in 3mash customers (down from 7-12%)"),
+    stat3Label: tProp(props.stat3Label, "yatırımın kendini geri ödeme potansiyeli", "investment payback potential"),
+    stat4Label: tProp(props.stat4Label, "dental lab & klinik bu sistemle üretiyor", "dental labs & clinics produce with this system"),
+  };
 
   const presets = useMemo<Record<Mode, Preset>>(
     () => ({
@@ -635,27 +678,55 @@ export function ThreeMashHero(props: Props) {
             </div>
 
             <h1>
-              <RichInline value={titleBeforeAmount} wordStyle={props} />{" "}
-             <span className="tmhero-loss-line" style={{ display: "block" }}>
-  <span className="tmhero-money">{formattedLoss}</span>{" "}
-  <RichInline value={props.titleAfterAmount} wordStyle={props} />
-</span>{" "}
-              <span className="tmhero-em-wrap">
-                <span
-                  className="tmhero-em"
-                  dangerouslySetInnerHTML={richText(props.titleEmphasis, props)}
-                />
-                {shouldRenderTitleUnderline && titleUnderlineImage ? (
-                  <img
-                    className="tmhero-title-underline-image"
-                    src={titleUnderlineImage}
-                    alt={props.titleUnderlineImageAlt || ""}
-                    aria-hidden={
-                      props.titleUnderlineImageAlt ? undefined : "true"
-                    }
-                  />
-                ) : null}
-              </span>
+              {isEnglishLocale() ? (
+                <>
+                  <span className="tmhero-line-1" style={{ display: "block" }}>
+                    <RichInline value={titleBeforeAmount} wordStyle={props} />
+                  </span>
+                  <span className="tmhero-loss-line" style={{ display: "block" }}>
+                    <span className="tmhero-money">{formattedLoss}</span> silently
+                  </span>
+                  <span className="tmhero-line-after" style={{ display: "block" }}>
+                    every year.
+                  </span>
+                  <span className="tmhero-em-wrap" style={{ display: "block" }}>
+                    <span
+                      className="tmhero-em"
+                      dangerouslySetInnerHTML={richText(props.titleEmphasis, props)}
+                    />
+                    {shouldRenderTitleUnderline && titleUnderlineImage ? (
+                      <img
+                        className="tmhero-title-underline-image"
+                        src={titleUnderlineImage}
+                        alt={props.titleUnderlineImageAlt || ""}
+                        aria-hidden={props.titleUnderlineImageAlt ? undefined : "true"}
+                      />
+                    ) : null}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <RichInline value={titleBeforeAmount} wordStyle={props} />{" "}
+                  <span className="tmhero-loss-line" style={{ display: "block" }}>
+                    <span className="tmhero-money">{formattedLoss}</span>{" "}
+                    <RichInline value={props.titleAfterAmount} wordStyle={props} />
+                  </span>{" "}
+                  <span className="tmhero-em-wrap">
+                    <span
+                      className="tmhero-em"
+                      dangerouslySetInnerHTML={richText(props.titleEmphasis, props)}
+                    />
+                    {shouldRenderTitleUnderline && titleUnderlineImage ? (
+                      <img
+                        className="tmhero-title-underline-image"
+                        src={titleUnderlineImage}
+                        alt={props.titleUnderlineImageAlt || ""}
+                        aria-hidden={props.titleUnderlineImageAlt ? undefined : "true"}
+                      />
+                    ) : null}
+                  </span>
+                </>
+              )}
             </h1>
 
             <p className="tmhero-subtitle">
@@ -666,7 +737,7 @@ export function ThreeMashHero(props: Props) {
                   props,
                 )}
               />{" "}
-              <RichInline value={props.subtitleMiddle} wordStyle={props} />{" "}
+              <RichInline value={props.subtitleMiddle?.startsWith(",") ? props.subtitleMiddle : `, ${props.subtitleMiddle}`} wordStyle={props} />{" "}
               <b
                 dangerouslySetInnerHTML={richText(
                   props.subtitleStrongTwo,

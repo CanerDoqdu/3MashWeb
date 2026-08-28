@@ -1,3 +1,4 @@
+import { tLocalized } from "../../utils/i18n";
 /**
  * ThreeMashProductSectionPlaceholder
  *
@@ -13,7 +14,7 @@ export function makePlaceholderBase(): ProductDetailTemplateData {
   return {
     key: PLACEHOLDER_BASE_KEY,
     breadcrumb: {
-      homeText: "Ana sayfa",
+      homeText: tLocalized("Ana sayfa", "Home"),
       homeHref: "/",
       categoryText: "Kategori Adı",
       categoryHref: "#",
@@ -34,7 +35,7 @@ export function makePlaceholderBase(): ProductDetailTemplateData {
       buyHrefBase: "#",
       whatsappHref: "https://wa.me/905314326577?text=Urun%20hakkinda%20bilgi%20almak%20istiyorum",
       whatsappText: "WhatsApp'tan sor",
-      addToCartText: "Sepete ekle",
+      addToCartText: tLocalized("Sepete ekle", "Add to Cart"),
       addingToCartText: "Ekleniyor...",
       outOfStockText: "Stok yok",
       trustBadges: ["Güven Rozeti 1", "Güven Rozeti 2", "Güven Rozeti 3"],
@@ -48,7 +49,7 @@ export function makePlaceholderRatings(): ProductDetailTemplateData {
     ...makePlaceholderBase(),
     ratings: {
       index: "01",
-      label: "BÖLÜM ETİKETİ",
+      label: tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"),
       titleHtml: 'Kullanıcı deneyimi <span class="em">başlığı buraya gelecek.</span>',
       sideHtml: "Bu bölümün sağ tarafındaki detaylı açıklama metni buraya gelecek.",
       panelTitleHtml: "Geri Bildirim &amp; Deneyim Başlığı",
@@ -155,7 +156,7 @@ export function makePlaceholderFaq(): ProductDetailTemplateData {
     ...makePlaceholderBase(),
     faq: {
       index: "04",
-      label: "SIKÇA SORULAN SORULAR",
+      label: tLocalized("SIKÇA SORULAN SORULAR", "FREQUENTLY ASKED QUESTIONS"),
       titleHtml: 'Sıkça sorulan sorular <span class="em">ve yanıtlar.</span>',
       sideHtml: "Bu ürünle ilgili en çok merak edilen konulara dair açıklamalar.",
       openFirst: true,

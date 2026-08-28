@@ -1,5 +1,6 @@
 import { useLayoutEffect } from "preact/hooks";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
+import { translateText } from "../../utils/i18n";
 
 const curieM1MainImage =
   "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/302ffc22-20c4-49b7-8d16-b303e079f0cf/1080/1.webp";
@@ -39,7 +40,7 @@ type Props = {
 
 function textValue(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
-  return trimmed ? trimmed : fallback;
+  return trimmed ? translateText(trimmed) : translateText(fallback);
 }
 
 function smoothAnchorClick(event: Event, rawHref: string) {

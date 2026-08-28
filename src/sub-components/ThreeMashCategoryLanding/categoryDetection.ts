@@ -241,8 +241,6 @@ export function productListCategoryData(productList: IkasProductList | undefined
   if (
     categorySignals.includes("yikama-kurleme") ||
     categorySignals.includes("yıkama-kürleme") ||
-    categorySignals.includes("dental yikama") ||
-    categorySignals.includes("dental yıkama") ||
     categorySignals.includes("wash-cure") ||
     categorySignals.includes("washcure")
   ) {
@@ -308,9 +306,9 @@ export function productListCategoryData(productList: IkasProductList | undefined
 
   if (printerMatches > 0 && otherMatches.printer === 0) return printersCategoryData;
   if (resinMatches > 0 && otherMatches.resin === 0) return dentalResinsCategoryData;
+  if (washCureMatches > 0 && otherMatches.washCure === 0) return washCureCategoryData;
   if (washingMatches > 0 && otherMatches.washing === 0) return washingCategoryData;
   if (curingMatches > 0 && otherMatches.curing === 0) return curingCategoryData;
-  if (washCureMatches > 0 && otherMatches.washCure === 0) return washCureCategoryData;
   if (zirconMatches > 0 && otherMatches.zircon === 0) return zirconBlocksCategoryData;
   if (furnaceMatches > 0 && otherMatches.furnace === 0) return dentalFurnacesCategoryData;
   if (scannerMatches > 0 && otherMatches.scanner === 0) return desktopScannersCategoryData;

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { ComponentChildren } from "preact";
 import { resolveProductDetailData } from "../ThreeMashProductDetailData";
+import { tLocalized, isEnglishLocale, translateText } from "../../utils/i18n";
 
 export type ProductGalleryItem = {
   src: string;
@@ -249,7 +250,7 @@ export function ProductDetailSectionScope({ data, children }: { data: ProductDet
 }
 
 function html(value: string) {
-  return { __html: value };
+  return { __html: translateText(value) };
 }
 
 function SectionIndex({ index, label }: { index: string; label: string }) {
@@ -391,9 +392,50 @@ function photoTransformStyle(photo: { imageOffsetY?: string; imageScale?: string
   return Object.keys(style).length ? (style as any) : undefined;
 }
 
+function localizeAddToCartText(text?: string): string {
+  if (!isEnglishLocale()) return text || "Sepete ekle →";
+  const normalized = (text || "").toLowerCase().trim();
+  if (!normalized || normalized.includes("sepet") || normalized === "ekle") {
+    return text && text === text.toUpperCase() ? "ADD TO CART" : "Add to Cart →";
+  }
+  return text || "Add to Cart →";
+}
+
+function localizeAddingToCartText(text?: string): string {
+  if (!isEnglishLocale()) return text || "Ekleniyor...";
+  const normalized = (text || "").toLowerCase().trim();
+  if (!normalized || normalized.includes("ekleniyor")) {
+    return text && text === text.toUpperCase() ? "ADDING..." : "Adding...";
+  }
+  return text || "Adding...";
+}
+
+function localizeOutOfStockText(text?: string): string {
+  if (!isEnglishLocale()) return text || "Stok yok";
+  const normalized = (text || "").toLowerCase().trim();
+  if (!normalized || normalized.includes("stok") || normalized.includes(tLocalized("tükendi", "Out of Stock"))) {
+    return text && text === text.toUpperCase() ? "OUT OF STOCK" : "Out of stock";
+  }
+  return text || "Out of stock";
+}
+
+function localizeSummarySuffix(suffix?: string): string {
+  if (!isEnglishLocale()) return suffix || "";
+  const normalized = (suffix || "").toLowerCase().trim();
+  if (normalized.includes("uyumluluk") || normalized.includes("parametre") || normalized.includes("teknik destek")) {
+    return "— compatibility check & technical support included.";
+  }
+  return suffix || "";
+}
+
 function Configurator(props: Props) {
   const buyHref = productBuyHref(props.data.hero.buyHrefBase, props.variantGroups);
   const hasManySwatches = props.variantGroups.some((group) => group.values.some((value) => value.color) && group.values.length > 12);
+
+  const rawMessage = props.message || "";
+  const displayedMessage = isEnglishLocale() && (rawMessage.toLowerCase().includes("stok") || rawMessage.toLowerCase().includes(tLocalized("tükendi", "Out of Stock")))
+    ? "Out of stock"
+    : rawMessage;
 
   return (
     <div className="tmpdt-cfg">
@@ -451,7 +493,7 @@ function Configurator(props: Props) {
         </div>
       ) : null}
       <div className="tmpdt-sum">
-        {props.data.hero.selectedPrefix} <b>{props.selectedSummary}</b> {props.data.hero.summarySuffix}
+        {isEnglishLocale() && (props.data.hero.selectedPrefix === "Seçiminiz:" || !props.data.hero.selectedPrefix) ? "Selected:" : props.data.hero.selectedPrefix} <b>{props.selectedSummary}</b> {localizeSummarySuffix(props.data.hero.summarySuffix)}
       </div>
       <div className="tmpdt-act">
        <button
@@ -465,21 +507,21 @@ function Configurator(props: Props) {
   }}
 >
   {props.isAdding
-    ? props.data.hero.addingToCartText
-    : props.data.hero.addToCartText}
+    ? localizeAddingToCartText(props.data.hero.addingToCartText)
+    : localizeAddToCartText(props.data.hero.addToCartText)}
 </button>
         <a className="tmpdt-btn tmpdt-line" href={props.data.hero.whatsappHref} target="_blank" rel="noopener noreferrer">
-          {props.data.hero.whatsappText}
+          {isEnglishLocale() && (props.data.hero.whatsappText === "WhatsApp'tan sor" || !props.data.hero.whatsappText) ? "Ask via WhatsApp" : props.data.hero.whatsappText}
         </a>
       </div>
-      {props.message ? <p className="tmpdt-msg">{props.message}</p> : null}
+      {displayedMessage ? <p className="tmpdt-msg">{displayedMessage}</p> : null}
       <div className="tmpdt-trust">
         {props.data.hero.trustBadges.map((item) => (
           <span key={item}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12l4 4L19 7" />
             </svg>
-            {item}
+            {item === tLocalized("Ücretsiz kargo", "Free Shipping") ? tLocalized("Ücretsiz kargo", "Free Shipping") : item === tLocalized("Koşulsuz iade", "Hassle-free Returns") ? tLocalized("Koşulsuz iade", "Hassle-free Returns") : item === tLocalized("Güvenli ödeme", "Secure Payment") ? tLocalized("Güvenli ödeme", "Secure Payment") : item}
           </span>
         ))}
       </div>
@@ -549,7 +591,7 @@ export function ProductDetailHeroSection(props: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <div className="tmpdt-wrap">
         <div className="tmpdt-crumb">
-          <a href={props.data.breadcrumb.homeHref}>{props.data.breadcrumb.homeText}</a>
+          <a href={props.data.breadcrumb.homeHref}>{isEnglishLocale() && (props.data.breadcrumb.homeText === tLocalized("Ana sayfa", "Home") || props.data.breadcrumb.homeText === tLocalized("Anasayfa", "Home")) ? "Home" : props.data.breadcrumb.homeText}</a>
           <span>/</span>
           <a href={props.data.breadcrumb.categoryHref}>{props.data.breadcrumb.categoryText}</a>
           <span>/</span>
@@ -924,18 +966,18 @@ export function ProductDetailRelatedSection({
   return (
     <section className="tmpdt-section tmpdt-section-tight">
       <div className="tmpdt-wrap">
-        <SectionIndex index={related?.index || "07"} label={related?.label || "İlgili Ürünler"} />
-        <SectionHead titleHtml={titleHtml || related?.titleHtml || 'Aynı vakada <span class="em">birlikte çalışanlar.</span>'} wide />
+        <SectionIndex index={related?.index || "07"} label={related?.label ? (isEnglishLocale() && related.label === tLocalized("İlgili Ürünler", "Related Products") ? "Related Products" : related.label) : tLocalized("İlgili Ürünler", "Related Products")} />
+        <SectionHead titleHtml={titleHtml || related?.titleHtml || (isEnglishLocale() ? 'Working <span class="em">together in the same case.</span>' : 'Aynı vakada <span class="em">birlikte çalışanlar.</span>')} wide />
         {shouldUseLiveProducts ? (
           <div className="tmpdt-rshell">
             {liveProducts.length > 4 ? (
-              <button type="button" className="tmpdt-rnav tmpdt-rnav-prev" aria-label="Önceki ilgili ürünler" onClick={() => scrollRelated(-1)}>
+              <button type="button" className="tmpdt-rnav tmpdt-rnav-prev" aria-label={tLocalized("Önceki ilgili ürünler", "Previous related products")} onClick={() => scrollRelated(-1)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="m15 18-6-6 6-6" />
                 </svg>
               </button>
             ) : null}
-            <div ref={relatedRailRef} className="tmpdt-rgrid tmpdt-rgrid-live" aria-label="İlgili ürünler">
+            <div ref={relatedRailRef} className="tmpdt-rgrid tmpdt-rgrid-live" aria-label={tLocalized("İlgili ürünler", "Related products")}>
               {liveProducts.map((item) => (
                 <article className="tmpdt-rc tmpdt-rc-live" key={item.id}>
                   <a className="tmpdt-rc-live-link" href={item.href}>
@@ -955,7 +997,7 @@ export function ProductDetailRelatedSection({
                       <h3>{item.title}</h3>
                       {item.descriptionHtml ? <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} /> : null}
                       <span className="tmpdt-rc-go">
-                        İncele <span>→</span>
+                        {tLocalized("İncele", "View")} <span>→</span>
                       </span>
                     </div>
                   </a>
@@ -963,7 +1005,7 @@ export function ProductDetailRelatedSection({
               ))}
             </div>
             {liveProducts.length > 4 ? (
-              <button type="button" className="tmpdt-rnav tmpdt-rnav-next" aria-label="Sonraki ilgili ürünler" onClick={() => scrollRelated(1)}>
+              <button type="button" className="tmpdt-rnav tmpdt-rnav-next" aria-label={tLocalized("Sonraki ilgili ürünler", "Next related products")} onClick={() => scrollRelated(1)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="m9 6 6 6-6 6" />
                 </svg>

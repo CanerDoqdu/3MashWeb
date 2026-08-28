@@ -6,6 +6,7 @@ import {
   type IkasImage,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import { t, tLocalized, tProp } from "../../utils/i18n";
 
 const defaultAuthImage =
   "https://cdn.myikas.com/images/theme-images/a6f9541f-702d-431d-9744-9d4f494c94af/image_1080.webp";
@@ -15,8 +16,8 @@ const logoImageIds = [
   "de819199-332c-407c-82de-917418b2c2e1",
 ];
 
-function text(value: string | undefined, fallback: string) {
-  return value?.trim() || fallback;
+function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
+  return tProp(value, fallbackTr, fallbackEn || fallbackTr);
 }
 
 function href(value: string | undefined, fallback: string) {
@@ -180,27 +181,28 @@ export function ThreeMashRegisterPage(props: Props) {
       <div className="tmrpg-auth-panel">
         <form className="tmrpg-auth-form" onSubmit={submit}>
           <div className="tmrpg-auth-copy">
-            <span>{text(props.eyebrowText, "HESAP")}</span>
-            <h1>{text(props.titleText, "3mash hesabınızı oluşturun.")}</h1>
+            <span>{text(props.eyebrowText, "HESAP", "ACCOUNT")}</span>
+            <h1>{text(props.titleText, tLocalized("3mash hesabınızı oluşturun.", "Create your 3mash account."), "Create your 3mash account.")}</h1>
             <p>
               {text(
                 props.subtitleText,
-                "Sipariş, favori ürün ve destek süreçlerinizi hesabınızdan takip edin.",
+                tLocalized("Sipariş, favori ürün ve destek süreçlerinizi hesabınızdan takip edin.", "Track your orders, wishlist items and support requests in your account."),
+                "Track your orders, wishlist items and support requests in your account."
               )}
             </p>
           </div>
 
           <div className="tmrpg-auth-tabs">
             <a href={href(props.loginTabHref, "/account/login")}>
-              {text(props.loginTabText, "Üye Girişi")}
+              {text(props.loginTabText, "Üye Girişi", "Sign In")}
             </a>
             <span className="is-active">
-              {text(props.registerTabText, "Üye Ol")}
+              {text(props.registerTabText, tLocalized("Üye Ol", "Register"), "Register")}
             </span>
           </div>
 
           <label className="tmrpg-auth-field">
-            <span>* {text(props.nameLabel, "Ad")}</span>
+            <span>* {text(props.nameLabel, tLocalized("Ad", "First Name"), "First Name")}</span>
             <input
               name="firstName"
               autoComplete="given-name"
@@ -213,7 +215,7 @@ export function ThreeMashRegisterPage(props: Props) {
           </label>
 
           <label className="tmrpg-auth-field">
-            <span>* {text(props.surnameLabel, "Soyad")}</span>
+            <span>* {text(props.surnameLabel, tLocalized("Soyad", "Last Name"), "Last Name")}</span>
             <input
               name="lastName"
               autoComplete="family-name"
@@ -226,7 +228,7 @@ export function ThreeMashRegisterPage(props: Props) {
           </label>
 
           <label className="tmrpg-auth-field">
-            <span>* {text(props.emailLabel, "Email")}</span>
+            <span>* {text(props.emailLabel, "Email", "Email")}</span>
             <input
               name="email"
               type="email"
@@ -240,7 +242,7 @@ export function ThreeMashRegisterPage(props: Props) {
           </label>
 
           <label className="tmrpg-auth-field">
-            <span>* {text(props.passwordLabel, "Şifre")}</span>
+            <span>* {text(props.passwordLabel, tLocalized("Şifre", "Password"), "Password")}</span>
             <input
               name="password"
               type="password"
@@ -264,19 +266,16 @@ export function ThreeMashRegisterPage(props: Props) {
               }
             />
             <span>
-              Kampanyalardan haberdar olmak için{" "}
+              {t("auth.marketingConsentPrefix", "Kampanyalardan haberdar olmak için")}{" "}
               <a
                 href={href(
                   props.marketingHref,
                   "/pages/ticari-elektronik-ileti-onayi",
                 )}
               >
-                Ticari Elektronik İleti Onayı
+                {t("auth.marketingConsentLink", "Ticari Elektronik İleti Onayı")}
               </a>{" "}
-              metnini okudum, onaylıyorum.
-              <br />
-              Tarafınızdan gönderilecek ticari elektronik iletileri almak
-              istiyorum.
+              {t("auth.marketingConsentSuffix", "metnini okudum, onaylıyorum. Tarafınızdan gönderilecek ticari elektronik iletileri almak istiyorum.")}
             </span>
           </label>
 
@@ -293,13 +292,13 @@ export function ThreeMashRegisterPage(props: Props) {
             />
             <span>
               <a href={href(props.termsHref, "/pages/uyelik-sozlesmesi")}>
-                Üyelik Sözleşmesi
+                {t("auth.termsMembershipLink", tLocalized("Üyelik Sözleşmesi", "Membership Agreement"))}
               </a>{" "}
-              ve{" "}
+              {t("auth.termsAnd", "ve")}{" "}
               <a href={href(props.kvkkHref, "/pages/gizlilik-politikasi-ve-kvkk")}>
-                KVKK Aydınlatma Metni
+                {t("auth.termsKvkkLink", tLocalized("KVKK Aydınlatma Metni", "KVKK Clarification Text"))}
               </a>
-              ni okudum, kabul ediyorum.
+              {t("auth.termsSuffix", "ni okudum, kabul ediyorum.")}
             </span>
           </label>
 
@@ -309,8 +308,8 @@ export function ThreeMashRegisterPage(props: Props) {
             disabled={status === "loading" || !termsAccepted}
           >
             {status === "loading"
-              ? text(props.loadingText, "Kaydınız oluşturuluyor...")
-              : text(props.submitButtonText, "Hesap Oluştur")}
+              ? text(props.loadingText, tLocalized("Kaydınız oluşturuluyor...", "Creating account..."), "Creating account...")
+              : text(props.submitButtonText, tLocalized("Hesap Oluştur", "Create Account"), "Create Account")}
           </button>
 
           {status !== "idle" && (
@@ -318,23 +317,25 @@ export function ThreeMashRegisterPage(props: Props) {
               {status === "success"
                 ? text(
                     props.successMessage,
-                    "Kaydınız oluşturuldu. Hesabınıza yönlendiriliyorsunuz.",
+                    tLocalized("Kaydınız oluşturuldu. Hesabınıza yönlendiriliyorsunuz.", "Account created successfully. Redirecting to your account."),
+                    "Account created successfully. Redirecting to your account."
                   )
                 : status === "error"
                   ? text(
                       props.errorMessage,
-                      "Kayıt tamamlanamadı. Lütfen bilgilerinizi kontrol edin.",
+                      tLocalized("Kayıt tamamlanamadı. Lütfen bilgilerinizi kontrol edin.", "Registration failed. Please check your information."),
+                      "Registration failed. Please check your information."
                     )
-                  : text(props.loadingText, "Kaydınız oluşturuluyor...")}
+                  : text(props.loadingText, tLocalized("Kaydınız oluşturuluyor...", "Creating account..."), "Creating account...")}
             </p>
           )}
 
           <div className="tmrpg-auth-login-callout">
             <span>
-              {text(props.loginPromptText, "Zaten hesabınız var mı?")}
+              {text(props.loginPromptText, tLocalized("Zaten hesabınız var mı?", "Already have an account?"), "Already have an account?")}
             </span>
             <a href={href(props.loginButtonHref, "/account/login")}>
-              {text(props.loginButtonText, "Giriş yap")}
+              {text(props.loginButtonText, tLocalized("Giriş yap", "Sign in"), "Sign in")}
             </a>
           </div>
         </form>

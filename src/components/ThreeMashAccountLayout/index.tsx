@@ -1,47 +1,237 @@
-import { ComponentChildren } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import {
-  Router,
   customerStore,
+  getFavoriteProducts,
+  getOrders,
+  initCustomerStore,
   logout,
+  Router,
   type IkasCustomer,
+  type IkasOrder,
+  type IkasProduct,
 } from "@ikas/bp-storefront";
 
+import {
+  AccountProfileForm,
+  AddressesView,
+  FavoritesView,
+  ForgotPasswordView,
+  isStudioEnvironment,
+  mockStudioCustomer,
+  mockStudioOrders,
+  OrdersView,
+  RecoverPasswordView,
+  text,
+  type DashboardProps,
+} from "../ThreeMashAccountUtilityPage";
+import { t, tLocalized } from "../../utils/i18n";
 
-type Props = {
-  children: ComponentChildren;
-  props?: any;
-  active?: string;
-  customer?: IkasCustomer | null;
-  isReady?: boolean;
-  onNavigate?: (href: string) => void;
-};
+// Critical CSS injected inline — ikas Studio does not bundle sub-component CSS files.
+// The registered page's own styles.css (ThreeMashAccountInfoPage/styles.css) covers
+// most tmai-* / tmau-* classes. We only inject the new classes added by this shell.
+const criticalLayoutCss = `
+.three-mash-account-info-page,
+.tmau-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  overflow-x: hidden;
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
+}
+.three-mash-account-info-page *, .tmau-page * { box-sizing: border-box; }
 
-
-function text(value: string | undefined, fallback: string) {
-  return value?.trim() || fallback;
+.tmai-shell, .three-mash-account-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+  width: 100%;
+  max-width: min(var(--tmai-max, 1180px), 1180px);
+  margin: 0 auto;
+  flex: 1;
+  min-height: 560px;
+  padding: var(--tmai-pad-top, clamp(40px,5vw,64px)) 24px var(--tmai-pad-bottom, clamp(64px,8vw,110px));
+}
+.tmai-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  height: 100%;
+  min-height: 100%;
+  padding: clamp(34px,4vw,48px);
+  background: var(--tmai-dark, var(--tm-theme-dark, #0e0e0c));
+  color: var(--tm-theme-bg, #fafaf7);
+  min-width: 0;
+  box-sizing: border-box;
+}
+.tmai-main, .tmai-main-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+  padding: clamp(34px,4vw,48px);
+  background: #fff;
+  min-width: 0;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
+/* Loading overlay — right panel only */
+.tmai-panel-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+.tmai-panel-loading.is-visible {
+  opacity: 1;
+  pointer-events: all;
+}
+.tmai-panel-spinner {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--tmai-line, #e6e6e0);
+  border-top-color: var(--tmai-accent, var(--tm-theme-accent, #c7f136));
+  border-radius: 50%;
+  animation: tmai-spin 0.65s linear infinite;
+}
+@keyframes tmai-spin { to { transform: rotate(360deg); } }
 
-function normalizeHref(
-  value: string | undefined,
-  fallback: string,
-) {
+/* Content fade-in on route swap */
+.tmai-main > *:not(.tmai-panel-loading) {
+  animation: tmai-fade-in 0.22s ease both;
+}
+@keyframes tmai-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Auth inner forms (forgot / recover — rendered inside panel) */
+.tmau-auth-form-wrap { display: grid; gap: 0; width: 100%; min-width: 0; }
+.tmau-auth-inner-form { display: grid; gap: 14px; width: min(100%,480px); margin-top: 28px; }
+.tmau-auth-login-link { display: block; margin-top: 16px; color: var(--tmai-muted,#55554e); font-size: 13px; text-decoration: underline; }
+
+.tmai-menu a,
+.tmai-menu button,
+.tmai-nav-btn {
+  display: block;
+  width: fit-content;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: #cfcfc6;
+  font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
+  font-size: 14px;
+  line-height: 1.35;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+.tmai-menu a:hover,
+.tmai-menu a.is-active,
+.tmai-menu button:hover,
+.tmai-menu button.is-active,
+.tmai-nav-btn:hover,
+.tmai-nav-btn.is-active {
+  color: var(--tmai-accent, var(--tm-theme-accent, #c7f136));
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .tmai-shell, .three-mash-account-layout {
+    grid-template-columns: 1fr;
+    max-width: 100vw;
+    min-height: 0;
+    padding: 34px 18px 72px;
+  }
+  .tmai-sidebar, .tmai-main, .tmai-main-panel {
+    min-height: auto;
+    padding: 30px 22px;
+  }
+}
+@media (max-width: 640px) {
+  .tmai-shell, .three-mash-account-layout { padding: 26px 14px 58px; }
+}
+`;
+
+// ─── Customer store eager init ──────────────────────────────────────────────
+
+let customerStoreInitPromise: Promise<void> | null = null;
+let customerStoreInitResolved = false;
+
+function ensureCustomerStoreReady() {
+  if (!customerStoreInitPromise) {
+    customerStoreInitPromise = initCustomerStore(customerStore).then(() => {
+      customerStoreInitResolved = true;
+    });
+  }
+  return customerStoreInitPromise;
+}
+
+if (typeof window !== "undefined" && !customerStore._initialized) {
+  ensureCustomerStoreReady();
+} else if (typeof window !== "undefined") {
+  customerStoreInitResolved = true;
+}
+
+// ─── Mode helpers ───────────────────────────────────────────────────────────
+
+type AccountMode =
+  | "account"
+  | "addresses"
+  | "orders"
+  | "favorites"
+  | "forgot-password"
+  | "recover-password";
+
+function modeFromPathname(pathname: string, fallback: AccountMode): AccountMode {
+  const p = pathname.replace(/\/+$/, "");
+  if (p === "/account") return "account";
+  if (p === "/account/addresses") return "addresses";
+  if (p === "/account/favorites" || p === "/account/favorite-products")
+    return "favorites";
+  if (p === "/account/orders") return "orders";
+  if (p === "/account/forgot-password") return "forgot-password";
+  if (p === "/account/recover-password") return "recover-password";
+  return fallback;
+}
+
+function modeFromHref(nextHref: string, fallback: AccountMode): AccountMode {
+  try {
+    const pathname =
+      typeof window !== "undefined"
+        ? new URL(nextHref, window.location.origin).pathname
+        : nextHref;
+    return modeFromPathname(pathname, fallback);
+  } catch {
+    return fallback;
+  }
+}
+
+function normalizeHref(value: string | undefined, fallback: string) {
   const next = value?.trim();
-
-  return next && next !== "#"
-    ? next
-    : fallback;
+  return next && next !== "#" ? next : fallback;
 }
-
 
 function customerName(customer: any) {
   if (!customer) return "";
-
-  const name =
-    `${customer.firstName ?? ""} ${customer.lastName ?? ""}`
-      .trim();
-
+  const name = `${customer.firstName ?? ""} ${customer.lastName ?? ""}`.trim();
   return name || customer.email || "";
 }
 
@@ -71,22 +261,130 @@ function getInitialSidebarName(customer: any): string {
   return "";
 }
 
+// ─── themeColor helper for CSS custom properties ────────────────────────────
 
-export default function ThreeMashAccountLayout({
-  children,
-  props,
-  active,
-  customer = customerStore.customer,
-  isReady = customerStore._initialized,
-  onNavigate,
-}: Props) {
+function themeColor(
+  input: string | undefined,
+  fallback: string,
+  token: string,
+  legacyDefaults: string[] = [],
+) {
+  const trimmed = input?.trim();
+  const normalized = trimmed?.toLowerCase();
+  const defaults = [fallback, ...legacyDefaults].map((item) =>
+    item.toLowerCase(),
+  );
+  if (!trimmed || (normalized && defaults.includes(normalized))) {
+    return `var(${token}, ${fallback})`;
+  }
+  return trimmed;
+}
 
+function numeric(value: number | undefined, fallback: number, min: number, max: number) {
+  const next = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(next)) return fallback;
+  return Math.min(max, Math.max(min, next));
+}
+
+function dashboardStyle(props: DashboardProps) {
+  return {
+    "--tmai-bg": themeColor(props.backgroundColor, "#FAFAF7", "--tm-theme-bg", [
+      "#ffffff",
+      "#fff",
+    ]),
+    "--tmai-sidebar": themeColor(
+      props.sidebarColor,
+      "#F1F1EC",
+      "--tm-theme-panel",
+      ["#f7f7f5", "#ffffff", "#fff"],
+    ),
+    "--tmai-text": themeColor(props.textColor, "#0E0E0C", "--tm-theme-text", [
+      "#050505",
+      "#000000",
+      "#111111",
+    ]),
+    "--tmai-muted": themeColor(
+      props.mutedTextColor,
+      "#55554e",
+      "--tm-theme-sub",
+      ["#9698a3", "#777777"],
+    ),
+    "--tmai-line": themeColor(props.lineColor, "#E6E6E0", "--tm-theme-line", [
+      "#e6e6e1",
+      "#e5e5e5",
+    ]),
+    "--tmai-accent": themeColor(
+      props.accentColor,
+      "#C7F136",
+      "--tm-theme-accent",
+      ["#dbfa37"],
+    ),
+    "--tmai-button-text": themeColor(
+      props.buttonTextColor,
+      "#0E0E0C",
+      "--tm-theme-text",
+      ["#ffffff", "#fff"],
+    ),
+    "--tmai-dark": "var(--tm-theme-dark, #0E0E0C)",
+    "--tmai-max": `${numeric(props.maxWidth, 1180, 960, 1760)}px`,
+    "--tmai-pad-top": `${numeric(props.sectionPaddingTop, 52, 0, 180)}px`,
+    "--tmai-pad-bottom": `${numeric(props.sectionPaddingBottom, 86, 24, 240)}px`,
+  } as any;
+}
+
+// ─── Shell Component ─────────────────────────────────────────────────────────
+
+export default function ThreeMashAccountLayout(props: DashboardProps) {
+  const isStudio = isStudioEnvironment();
+
+  // ── Initial mode from URL (or prop if set by ikas Studio preview) ──
+  const [mode, setMode] = useState<AccountMode>(() => {
+    if (props.mode) return props.mode as AccountMode;
+    if (typeof window !== "undefined") {
+      return modeFromPathname(
+        window.location.pathname.replace(/\/+$/, ""),
+        "account",
+      );
+    }
+    return "account";
+  });
+
+  // ── Customer state ────────────────────────────────────────────────
+  const [customer, setCustomer] = useState<IkasCustomer | null>(() => {
+    if (customerStore.customer) return customerStore.customer;
+    if (isStudio) return mockStudioCustomer;
+    if (typeof window !== "undefined") {
+      try {
+        const cached =
+          localStorage.getItem("tm_customer_cache") ||
+          sessionStorage.getItem("tm_customer_cache");
+        if (cached) return JSON.parse(cached);
+      } catch {}
+    }
+    return null;
+  });
+
+  const [orders, setOrders] = useState<IkasOrder[]>(
+    () => (isStudio ? mockStudioOrders : []),
+  );
+  const [favorites, setFavorites] = useState<IkasProduct[]>([]);
+  const [ready, setReady] = useState(
+    isStudio || customerStore._initialized || customerStoreInitResolved,
+  );
+
+  // ── Sidebar name ──────────────────────────────────────────────────
   const [sidebarName, setSidebarName] = useState(() =>
     getInitialSidebarName(customer),
   );
 
+  // ── Right-panel loading overlay state ────────────────────────────
+  const [isLoadingContent, setIsLoadingContent] = useState(false);
+  const loadingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // ── Sync sidebar name when customer changes ────────────────────────
   useEffect(() => {
-    const nextName = customerName(customer) || getInitialSidebarName(customer);
+    const nextName =
+      customerName(customer) || getInitialSidebarName(customer);
     if (nextName) {
       setSidebarName(nextName);
       try {
@@ -100,10 +398,128 @@ export default function ThreeMashAccountLayout({
     }
   }, [customer]);
 
+  // ── Listen to browser popstate (back/forward) ─────────────────────
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    function handlePopState() {
+      setMode(
+        modeFromPathname(
+          window.location.pathname.replace(/\/+$/, ""),
+          (props.mode as AccountMode) || "account",
+        ),
+      );
+    }
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [props.mode]);
+
+  // ── Load customer + section data on mount / mode change ───────────
+  useEffect(() => {
+    let mounted = true;
+
+    async function load() {
+      try {
+        if (!customerStore._initialized) {
+          await ensureCustomerStoreReady();
+        }
+        if (!mounted) return;
+
+        const currentCustomer = customerStore.customer;
+        if (currentCustomer) {
+          setCustomer(currentCustomer);
+          try {
+            const name =
+              `${currentCustomer.firstName ?? ""} ${currentCustomer.lastName ?? ""}`.trim() ||
+              currentCustomer.email ||
+              "";
+            if (name) {
+              localStorage.setItem("tm_customer_name", name);
+              sessionStorage.setItem("tm_customer_name", name);
+            }
+            localStorage.setItem(
+              "tm_customer_cache",
+              JSON.stringify(currentCustomer),
+            );
+            sessionStorage.setItem(
+              "tm_customer_cache",
+              JSON.stringify(currentCustomer),
+            );
+          } catch {}
+        } else if (isStudio) {
+          setCustomer(mockStudioCustomer);
+        }
+
+        setReady(true);
+
+        if (!currentCustomer) {
+          if (isStudio && mode === "orders") setOrders(mockStudioOrders);
+          return;
+        }
+
+        if (mode === "orders") {
+          const nextOrders = await getOrders(customerStore);
+          if (mounted) setOrders(nextOrders || []);
+        }
+
+        if (mode === "favorites") {
+          const nextFavorites = await getFavoriteProducts(customerStore);
+          if (mounted) setFavorites(nextFavorites || []);
+        }
+      } catch {
+        if (mounted) {
+          setReady(true);
+          if (isStudio) {
+            setCustomer(mockStudioCustomer);
+            if (mode === "orders") setOrders(mockStudioOrders);
+          }
+        }
+      }
+    }
+
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, [mode, isStudio]);
+
+  // ── Navigation handler (sidebar clicks) ───────────────────────────
+  // Uses buttons instead of <a href> so ikas router never intercepts.
+  // URL is updated via pushState, right panel swaps via setMode.
+  function handleNavigate(nextHref: string) {
+    const nextMode = modeFromHref(
+      nextHref,
+      (props.mode as AccountMode) || "account",
+    );
+
+    // Already on this mode — no-op
+    if (nextMode === mode) return;
+
+    // Push URL without full navigation — sidebar stays mounted
+    if (typeof window !== "undefined") {
+      try {
+        window.history.pushState({}, "", nextHref);
+      } catch {
+        // iframe-safe
+      }
+    }
+
+    // Show loading overlay
+    setIsLoadingContent(true);
+    if (loadingTimerRef.current) clearTimeout(loadingTimerRef.current);
+
+    // Swap content after one frame so loading overlay paints first
+    loadingTimerRef.current = setTimeout(() => {
+      setMode(nextMode);
+      loadingTimerRef.current = setTimeout(() => {
+        setIsLoadingContent(false);
+      }, 200);
+    }, 40);
+  }
 
   async function handleLogout(event: Event) {
     event.preventDefault();
-
     try {
       localStorage.removeItem("tm_customer_name");
       localStorage.removeItem("tm_customer_cache");
@@ -112,23 +528,10 @@ export default function ThreeMashAccountLayout({
     } catch {}
 
     await logout(customerStore);
-
     Router.navigate(normalizeHref(props?.loginHref, "/account/login"));
   }
 
-  function handleNavigate(event: Event, nextHref: string) {
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation?.();
-
-    if (onNavigate) {
-      onNavigate(nextHref);
-      return;
-    }
-
-    Router.navigate(nextHref);
-  }
-
+  // ── Href helpers ──────────────────────────────────────────────────
   const accountHref = normalizeHref(props?.accountHref, "/account");
   const addressesHref = normalizeHref(props?.addressesHref, "/account/addresses");
   const favoritesHref = normalizeHref(props?.favoritesHref, "/account/favorites");
@@ -136,109 +539,137 @@ export default function ThreeMashAccountLayout({
 
   const personalLinks = [
     {
-      key: "account",
-      label: text(props?.profileTitle, "Kişisel Bilgilerim"),
+      key: "account" as AccountMode,
+      label: text(props?.profileTitle, tLocalized("Kişisel Bilgilerim", "My Personal Information"), "Profile Info"),
       href: accountHref,
     },
     {
-      key: "addresses",
-      label: text(props?.addressesTitle, "Adreslerim"),
+      key: "addresses" as AccountMode,
+      label: text(props?.addressesTitle, tLocalized("Adreslerim", "My Addresses"), "My Addresses"),
       href: addressesHref,
     },
     {
-      key: "favorites",
-      label: text(props?.favoritesTitle, "Beğendiğim Ürünler"),
+      key: "favorites" as AccountMode,
+      label: text(props?.favoritesTitle, tLocalized("Beğendiğim Ürünler", "My Favorites"), "Favorite Products"),
       href: favoritesHref,
     },
   ];
 
-  return (
-    <section className="three-mash-account-layout tmai-shell tmau-shell">
+  const effectiveCustomer = customer || (isStudio ? mockStudioCustomer : null);
+  const addresses = effectiveCustomer?.addresses || [];
 
-
-      <aside className="tmai-sidebar tmau-sidebar">
-
-        <span className="tmai-kicker tmau-kicker">
-          {text(props?.accountLabel, "HESABIM")}
-        </span>
-
-
-        <div className="tmai-user tmau-user">
-          <strong>
-            {sidebarName}
-          </strong>
-
-          <a
-            href="#"
-            className="tmai-logout tmau-logout"
-            onClick={handleLogout}
-          >
-            {text(
-              props?.logoutText,
-              "Çıkış yap",
-            )}
-          </a>
+  // ── Right panel content ───────────────────────────────────────────
+  function renderContent() {
+    if (!ready) {
+      return (
+        <div className="tmai-form-loading">
+          <div className="tmai-loading-title" />
+          <div className="tmai-loading-line" />
+          <div className="tmai-loading-fields" />
         </div>
+      );
+    }
 
+    switch (mode) {
+      case "account":
+        return (
+          <AccountProfileForm
+            customer={effectiveCustomer || ({} as IkasCustomer)}
+            ready={ready}
+            setCustomer={setCustomer}
+            props={props}
+          />
+        );
+      case "addresses":
+        return <AddressesView addresses={addresses} props={props} />;
+      case "orders":
+        return <OrdersView orders={orders} props={props} />;
+      case "favorites":
+        return <FavoritesView favorites={favorites} props={props} />;
+      case "forgot-password":
+        return <ForgotPasswordView props={props} />;
+      case "recover-password":
+        return <RecoverPasswordView props={props} />;
+      default:
+        return null;
+    }
+  }
 
-        <nav className="tmai-menu tmau-menu">
+  return (
+    <section
+      className="three-mash-account-info-page tmau-page"
+      style={dashboardStyle(props)}
+    >
+      <style dangerouslySetInnerHTML={{ __html: criticalLayoutCss }} />
+      <section className="three-mash-account-layout tmai-shell">
 
-          <h2>
-            {text(
-              props?.accountGroupTitle,
-              "Hesap Yönetimi",
+        {/* ── LEFT SIDEBAR — never unmounts ─────────────────────── */}
+        <aside className="tmai-sidebar">
+
+          <span className="tmai-kicker">
+            {text(props?.accountLabel, "HESABIM", "MY ACCOUNT")}
+          </span>
+
+          <div className="tmai-user">
+            {sidebarName ? (
+              <strong>{sidebarName}</strong>
+            ) : (
+              <span className="tmai-user-name-skeleton" aria-hidden="true" />
             )}
-          </h2>
-
-
-          {personalLinks.map((item) => (
             <a
-              key={item.key}
-              href={item.href}
-              onClick={(event) => handleNavigate(event, item.href)}
-              className={
-                active === item.key
-                  ? "is-active"
-                  : ""
-              }
+              href="#"
+              className="tmai-logout tmau-logout"
+              onClick={handleLogout}
             >
-              {item.label}
+              {text(props?.logoutText, tLocalized("Çıkış yap", "Sign out"), "Sign out")}
             </a>
-          ))}
+          </div>
 
+          <nav className="tmai-menu">
+            <h2>
+              {text(props?.accountGroupTitle, tLocalized("Hesap Yönetimi", "Account Management"), "Account Management")}
+            </h2>
 
+            {personalLinks.map((item) => (
+              <button
+                key={item.key}
+                type="button"
+                onClick={() => handleNavigate(item.href)}
+                className={`tmai-nav-btn${mode === item.key ? " is-active" : ""}`}
+              >
+                {item.label}
+              </button>
+            ))}
 
-          <h2>
-            Sipariş Bilgilerim
-          </h2>
+            <h2>{tLocalized("Sipariş Bilgilerim", "Order Information")}</h2>
 
+            <button
+              type="button"
+              onClick={() => handleNavigate(ordersHref)}
+              className={`tmai-nav-btn${mode === "orders" ? " is-active" : ""}`}
+            >
+              {text(props?.ordersTitle, tLocalized("Siparişlerim", "My Orders"), "My Orders")}
+            </button>
+          </nav>
 
-          <a
-            href={ordersHref}
-            onClick={(event) => handleNavigate(event, ordersHref)}
-            className={
-              active === "orders"
-                ? "is-active"
-                : ""
-            }
+        </aside>
+
+        {/* ── RIGHT PANEL — content swaps, sidebar stays ────────── */}
+        <main className="tmai-main tmai-main-panel">
+
+          {/* Loading overlay — covers only the right panel */}
+          <div
+            className={`tmai-panel-loading${isLoadingContent ? " is-visible" : ""}`}
+            aria-hidden="true"
           >
-            Siparişlerim
-          </a>
+            <span className="tmai-panel-spinner" />
+          </div>
 
+          {renderContent()}
 
-        </nav>
+        </main>
 
-      </aside>
-
-
-
-      <main className="tmai-main tmau-main">
-
-        {children}
-
-      </main>
-
-
+      </section>
     </section>
   );
 }

@@ -1,3 +1,4 @@
+import { tLocalized } from "../../utils/i18n";
 import { useState } from "preact/hooks";
 import {
   customerLogin,
@@ -205,7 +206,7 @@ export function ThreeMashAccountPage(props: Props) {
               {text(props.loginTabText, "Üye Girişi")}
             </span>
             <a href={href(props.registerTabHref, "/account/register")}>
-              {text(props.registerTabText, "Üye Ol")}
+              {text(props.registerTabText, tLocalized("Üye Ol", "Register"))}
             </a>
           </div>
 
@@ -224,7 +225,7 @@ export function ThreeMashAccountPage(props: Props) {
           </label>
 
           <label className="tma-auth-field">
-            <span>* {text(props.passwordLabel, "Şifre")}</span>
+            <span>* {text(props.passwordLabel, tLocalized("Şifre", "Password"))}</span>
             <input
               name="password"
               type="password"
@@ -259,7 +260,7 @@ export function ThreeMashAccountPage(props: Props) {
               {text(props.registerPromptText, "Henüz hesabınız yok mu?")}
             </span>
             <a href={href(props.registerButtonHref, "/account/register")}>
-              {text(props.registerButtonText, "Hesap oluştur")}
+              {text(props.registerButtonText, tLocalized("Hesap oluştur", "Create Account"))}
             </a>
           </div>
 

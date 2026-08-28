@@ -42,6 +42,7 @@ import ThreeMashProductDetailTemplate, {
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { publishSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
+import { isEnglishLocale, tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
 
 type PlainObject = Record<string, unknown>;
@@ -87,9 +88,9 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Composite",
   },
@@ -114,11 +115,11 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Biyouyumlu <span class="hl">geçici ve daimi</span> reçinesi.',
     sideHtml: "CRS Composite, <b>CE Class IIa</b> sertifikalı toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılabilir.",
     panelTitleHtml: "CRS Composite'i satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -131,7 +132,7 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Baskı sonrası <span class="em">sararma yapmaz</span>, kalıcıda kullanılır.',
     sideHtml:
       "CRS Composite, kalıcı uygulamada kullanıldığını iddia eden rakip markalara göre daha yüksek dayanım sunar ve kürleme sonrası sararmaz. Değerler ISO 10477 standardına göredir.",
@@ -239,7 +240,7 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Composite hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Klinik ve laboratuvarların CRS Composite için en çok sorduğu sorular, net cevaplarla.",
     openFirst: true,
@@ -292,7 +293,7 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
         title: "CRS Model",
         descriptionHtml: "Kron-köprü öncesi master model. Belirgin <b>kole hatları</b>, net marjinal uyum.",
         href: "/crs-model-yuksek-hassasiyetli-model-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#EFE7D3,#fff)",
       },
       {
@@ -301,7 +302,7 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
         title: "CRS Denture",
         descriptionHtml: "Çıkarılabilir protez tabanı; PMMA'ya kıyasla <b>düşük çekme</b>, cila + glaze uyumlu.",
         href: "/crs-denture-biouyumlu-protez-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F6E3E4,#fff)",
       },
       {
@@ -309,7 +310,7 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
         title: "CRS Gingiva",
         descriptionHtml: "İmplant modeli ve diş eti maskesi. Yüksek yırtılma direnci, doğal diş eti rengi.",
         href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F5DEE0,#fff)",
       },
       {
@@ -328,7 +329,7 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi vaka, hangi renk? Kısa bir görüşmeyle CRS Composite'i cihazınızın parametreleriyle eşleştirip doğru kürleme protokolüyle birlikte <b>ücretsiz</b> teslim edelim.",
     primaryText: "Renk ve boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -723,7 +724,7 @@ function linkValue(source: unknown) {
   if (link.pageId === "2tplvqpo-contact-page") return "/pages/iletisim";
   if (link.pageId === "2tplvqpo-references-page") return "/pages/referanslar";
   if (link.label === "Arama Sayfası") return "/search";
-  if (link.label === "iletişim" || link.label === "İletişim") return "/pages/iletisim";
+  if (link.label === "iletişim" || link.label === tLocalized("İletişim", "Contact")) return "/pages/iletisim";
   return "";
 }
 
@@ -895,7 +896,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
     key: productSlug(product) || product.id || product.name,
     announcement: { enabled: false, strongText: "", ctaText: "", ctaHref: "#satinal" },
     breadcrumb: {
-      homeText: "Ana sayfa",
+      homeText: tLocalized("Ana sayfa", "Home"),
       homeHref: "/",
       categoryText,
       categoryHref: categoryLink,
@@ -923,7 +924,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
     },
     ratings: {
       index: "01",
-      label: "BÖLÜM ETİKETİ",
+      label: tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"),
       titleHtml: 'Kullanıcı deneyimi <span class="em">başlığı buraya gelecek.</span>',
       sideHtml: "Bu bölümün sağ tarafındaki detaylı açıklama metni buraya gelecek.",
       panelTitleHtml: "Geri Bildirim &amp; Deneyim Başlığı",
@@ -996,7 +997,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
     },
     faq: {
       index: "04",
-      label: "SIKÇA SORULAN SORULAR",
+      label: tLocalized("SIKÇA SORULAN SORULAR", "FREQUENTLY ASKED QUESTIONS"),
       titleHtml: 'Sıkça sorulan sorular <span class="em">ve yanıtlar.</span>',
       sideHtml: "Bu ürünle ilgili en çok merak edilen konulara dair açıklamalar.",
       openFirst: true,
@@ -1030,7 +1031,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
     },
     related: {
       index: "07",
-      label: "BÖLÜM ETİKETİ",
+      label: tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"),
       titleHtml: 'Aynı kategorideki <span class="em">diğer ürünler.</span>',
       items: [
         {
@@ -1038,7 +1039,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
           title: "1. Örnek İlgili Ürün",
           descriptionHtml: "1. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
           href: "#",
-          linkText: "İncele",
+          linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
           image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/deb67f5e-a02a-4fa6-9cb8-595a277d69fd/1080/composite-apps-10.webp",
         },
@@ -1047,7 +1048,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
           title: "2. Örnek İlgili Ürün",
           descriptionHtml: "2. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
           href: "#",
-          linkText: "İncele",
+          linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
           image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/9d7bb34c-1f0d-4b36-8f0e-ce9a41863d55/1080/composite-apps-11.webp",
         },
@@ -1056,7 +1057,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
           title: "3. Örnek İlgili Ürün",
           descriptionHtml: "3. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
           href: "#",
-          linkText: "İncele",
+          linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
           image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/1080/composite-apps-12.webp",
         },
@@ -1065,7 +1066,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
           title: "4. Örnek İlgili Ürün",
           descriptionHtml: "4. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
           href: "#",
-          linkText: "İncele",
+          linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
           image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d875a523-2228-44a7-818d-022312b0a44d/1080/composite-resin-ce.webp",
         },
@@ -1376,7 +1377,7 @@ if (result.success) {
             onAddToCart={handleAddToCart}
             isAddToCartDisabled={addDisabled}
             isAdding={isAdding}
-            message={message || (product && !isInStock ? data.hero.outOfStockText : "")}
+            message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || "Stok yok")) : "")}
             price={variant ? getProductVariantFormattedFinalPrice(variant) : ""}
             compareAtPrice={variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : ""}
             selectedSummary={selectedSummary(data, groups)}
@@ -1407,7 +1408,7 @@ if (result.success) {
         onAddToCart={handleAddToCart}
         isAddToCartDisabled={addDisabled}
         isAdding={isAdding}
-        message={message || (product && !isInStock ? data.hero.outOfStockText : "")}
+        message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || "Stok yok")) : "")}
         price={variant ? getProductVariantFormattedFinalPrice(variant) : ""}
         compareAtPrice={variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : ""}
         selectedSummary={selectedSummary(data, groups)}

@@ -1,4 +1,5 @@
 import { Props } from "./types";
+import { tLocalized } from "../../utils/i18n";
 
 function trimmedText(value: unknown, fallback = ""): string {
   return typeof value === "string" && value.trim() ? value.trim() : fallback;
@@ -6,49 +7,51 @@ function trimmedText(value: unknown, fallback = ""): string {
 
 export function ThreeMashProductStepFlow(props: Props) {
   const index = trimmedText(props.sectionIndex, "07");
-  const label = trimmedText(props.sectionLabel, "BÖLÜM ETİKETİ");
+  const label = trimmedText(props.sectionLabel, tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"));
   const titleHtml = trimmedText(
     props.titleHtml,
-    'Adım adım iş akışı <span class="em">başlığı buraya gelecek.</span>'
+    tLocalized('Adım adım iş akışı <span class="em">başlığı buraya gelecek.</span>', 'Step-by-step workflow <span class="em">title goes here.</span>')
   );
   const sideHtml = trimmedText(
     props.sideHtml,
-    "İş akışı ve üretim süreçlerinin aşamalarını anlatan genel açıklama metni buraya gelecek."
+    tLocalized("İş akışı ve üretim süreçlerinin aşamalarını anlatan genel açıklama metni buraya gelecek.", "General description explaining the workflow and production stages goes here."
+    )
   );
 
   const steps = [
     {
       num: trimmedText(props.step1Number, "01"),
-      title: trimmedText(props.step1Title, "1. Aşama Başlığı"),
-      desc: trimmedText(props.step1Description, "İş akışının 1. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek."),
-      tag: trimmedText(props.step1Tag, "1. AŞAMA"),
+      title: trimmedText(props.step1Title, tLocalized("1. Aşama Başlığı", "Stage 1 Title")),
+      desc: trimmedText(props.step1Description, tLocalized("İş akışının 1. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 1 goes here.")),
+      tag: trimmedText(props.step1Tag, tLocalized("1. AŞAMA", "STAGE 1")),
     },
     {
       num: trimmedText(props.step2Number, "02"),
-      title: trimmedText(props.step2Title, "2. Aşama Başlığı"),
-      desc: trimmedText(props.step2Description, "İş akışının 2. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek."),
-      tag: trimmedText(props.step2Tag, "2. AŞAMA"),
+      title: trimmedText(props.step2Title, tLocalized("2. Aşama Başlığı", "Stage 2 Title")),
+      desc: trimmedText(props.step2Description, tLocalized("İş akışının 2. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 2 goes here.")),
+      tag: trimmedText(props.step2Tag, tLocalized("2. AŞAMA", "STAGE 2")),
     },
     {
       num: trimmedText(props.step3Number, "03"),
-      title: trimmedText(props.step3Title, "3. Aşama Başlığı"),
-      desc: trimmedText(props.step3Description, "İş akışının 3. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek."),
-      tag: trimmedText(props.step3Tag, "3. AŞAMA"),
+      title: trimmedText(props.step3Title, tLocalized("3. Aşama Başlığı", "Stage 3 Title")),
+      desc: trimmedText(props.step3Description, tLocalized("İş akışının 3. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 3 goes here.")),
+      tag: trimmedText(props.step3Tag, tLocalized("3. AŞAMA", "STAGE 3")),
     },
     {
       num: trimmedText(props.step4Number, "04"),
-      title: trimmedText(props.step4Title, "4. Aşama Başlığı"),
-      desc: trimmedText(props.step4Description, "İş akışının 4. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek."),
-      tag: trimmedText(props.step4Tag, "4. AŞAMA"),
+      title: trimmedText(props.step4Title, tLocalized("4. Aşama Başlığı", "Stage 4 Title")),
+      desc: trimmedText(props.step4Description, tLocalized("İş akışının 4. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 4 goes here.")),
+      tag: trimmedText(props.step4Tag, tLocalized("4. AŞAMA", "STAGE 4")),
     },
   ];
 
-  const ctaTitle = trimmedText(props.ctaTitle, "Alt Aksiyon Kartı Başlığı");
+  const ctaTitle = trimmedText(props.ctaTitle, tLocalized("Alt Aksiyon Kartı Başlığı", "Bottom Action Card Title"));
   const ctaDesc = trimmedText(
     props.ctaDescription,
-    "İş akışı ile ilgili danışmanlık veya teklif almak isteyenler için alt açıklama metni."
+    tLocalized("İş akışı ile ilgili danışmanlık veya teklif almak isteyenler için alt açıklama metni.", "Bottom description text for those seeking workflow consulting or a quote."
+    )
   );
-  const ctaBtnText = trimmedText(props.ctaButtonText, "Aksiyon Buton Metni →");
+  const ctaBtnText = trimmedText(props.ctaButtonText, tLocalized("Aksiyon Buton Metni →", "Action Button Text →"));
   const ctaBtnHref = trimmedText(
     props.ctaButtonHref,
     "#"

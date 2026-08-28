@@ -6,6 +6,7 @@ import {
   type ProductDetailTemplateData,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderRatings } from "../../sub-components/ThreeMashProductSectionPlaceholder";
+import { tLocalized } from "../../utils/i18n";
 
 function trimmedText(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -23,7 +24,7 @@ function numberValue(value: unknown): number | undefined {
 function overrideRatingsData(baseData: ProductDetailTemplateData, props: Props): ProductDetailTemplateData {
   const currentRatings = baseData.ratings;
   const index = trimmedText((props as any).sectionIndex) || currentRatings?.index || "01";
-  const label = trimmedText((props as any).sectionLabel) || currentRatings?.label || "KULLANICI DENEYİMİ";
+  const label = trimmedText((props as any).sectionLabel) || currentRatings?.label || tLocalized("KULLANICI DENEYİMİ", "USER EXPERIENCE");
   const titleHtml = trimmedText((props as any).titleHtml) || currentRatings?.titleHtml || "";
   const sideHtml = trimmedText((props as any).sideHtml) || currentRatings?.sideHtml || "";
   const panelTitleHtml = trimmedText((props as any).panelTitleHtml) || currentRatings?.panelTitleHtml || "";

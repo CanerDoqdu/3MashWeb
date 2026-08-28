@@ -314,11 +314,13 @@
   border-radius: 2px;
 }
 
-.tmau-phone-country span,
-.tmai-phone-country span {
+.tmau-phone-country svg,
+.tmai-phone-country svg {
+  display: block;
+  width: 9px;
+  height: 6px;
   color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
-  font-size: 11px;
-  line-height: 1;
+  flex-shrink: 0;
 }
 
 .tmau-phone-country select,

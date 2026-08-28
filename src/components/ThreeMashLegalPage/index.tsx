@@ -1,4 +1,5 @@
 import { legalPages, type LegalPageKey } from '../ThreeMashPageData/sourceData';
+import { translateText } from '../../utils/i18n';
 import { Props } from './types';
 
 function text(value: string | undefined, fallback: string) {
@@ -112,8 +113,8 @@ export function ThreeMashLegalPage(props: Props) {
   return (
     <section className={`three-mash-legal-page is-${key}`} style={style}>
       <article className="tmlp-shell">
-        {showStandaloneTitle ? <h1>{titleText(key, props.titleText, page.title)}</h1> : null}
-        <div className="tmlp-content" dangerouslySetInnerHTML={{ __html: contentHtml }} />
+        {showStandaloneTitle ? <h1>{translateText(titleText(key, props.titleText, page.title))}</h1> : null}
+        <div className="tmlp-content" dangerouslySetInnerHTML={{ __html: translateText(contentHtml) }} />
       </article>
     </section>
   );

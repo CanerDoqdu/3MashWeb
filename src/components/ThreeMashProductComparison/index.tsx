@@ -1,4 +1,5 @@
 import { Props } from "./types";
+import { tLocalized } from "../../utils/i18n";
 
 function trimmedText(value: unknown, fallback = ""): string {
   return typeof value === "string" && value.trim() ? value.trim() : fallback;
@@ -6,64 +7,65 @@ function trimmedText(value: unknown, fallback = ""): string {
 
 export function ThreeMashProductComparison(props: Props) {
   const index = trimmedText(props.sectionIndex, "05");
-  const label = trimmedText(props.sectionLabel, "BÖLÜM ETİKETİ");
+  const label = trimmedText(props.sectionLabel, tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"));
   const titleHtml = trimmedText(
     props.titleHtml,
-    'Karşılaştırma tablosu <span class="em">başlığı buraya gelecek.</span>'
+    tLocalized('Karşılaştırma tablosu <span class="em">başlığı buraya gelecek.</span>', 'Comparison table <span class="em">title goes here.</span>')
   );
   const sideHtml = trimmedText(
     props.sideHtml,
-    "Karşılaştırma bölümü için sağ tarafta yer alan detaylı açıklama metni buraya gelecek."
+    tLocalized("Karşılaştırma bölümü için sağ tarafta yer alan detaylı açıklama metni buraya gelecek.", "Detailed description text for the comparison section goes here."
+    )
   );
 
-  const col1Title = trimmedText(props.column1Title, "1. Karşılaştırılan Seçenek");
-  const col1Sub = trimmedText(props.column1Subtitle, "1. Seçenek kısa alt açıklama metni");
-  const col1Badge = trimmedText(props.column1Badge, "SEÇENEK 1");
+  const col1Title = trimmedText(props.column1Title, tLocalized("1. Karşılaştırılan Seçenek", "1. Comparison Option"));
+  const col1Sub = trimmedText(props.column1Subtitle, tLocalized("1. Seçenek kısa alt açıklama metni", "Option 1 short description"));
+  const col1Badge = trimmedText(props.column1Badge, tLocalized("SEÇENEK 1", "OPTION 1"));
 
-  const col2Title = trimmedText(props.column2Title, "2. Karşılaştırılan Seçenek");
-  const col2Sub = trimmedText(props.column2Subtitle, "2. Seçenek kısa alt açıklama metni");
-  const col2Badge = trimmedText(props.column2Badge, "ÖNE ÇIKAN");
+  const col2Title = trimmedText(props.column2Title, tLocalized("2. Karşılaştırılan Seçenek", "2. Comparison Option"));
+  const col2Sub = trimmedText(props.column2Subtitle, tLocalized("2. Seçenek kısa alt açıklama metni", "Option 2 short description"));
+  const col2Badge = trimmedText(props.column2Badge, tLocalized("ÖNE ÇIKAN", "FEATURED"));
 
   const rows = [
     {
-      feature: trimmedText(props.row1Feature, "1. Karşılaştırma Kriteri"),
-      col1: trimmedText(props.row1Col1Value, "1. Kriter 1. Seçenek Değeri"),
-      col2: trimmedText(props.row1Col2Value, "1. Kriter 2. Seçenek Değeri"),
+      feature: trimmedText(props.row1Feature, tLocalized("1. Karşılaştırma Kriteri", "1. Comparison Criteria")),
+      col1: trimmedText(props.row1Col1Value, tLocalized("1. Kriter 1. Seçenek Değeri", "Criteria 1 Option 1 Value")),
+      col2: trimmedText(props.row1Col2Value, tLocalized("1. Kriter 2. Seçenek Değeri", "Criteria 1 Option 2 Value")),
       col1Pos: props.row1Col1Positive ?? false,
       col2Pos: props.row1Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row2Feature, "2. Karşılaştırma Kriteri"),
-      col1: trimmedText(props.row2Col1Value, "2. Kriter 1. Seçenek Değeri"),
-      col2: trimmedText(props.row2Col2Value, "2. Kriter 2. Seçenek Değeri"),
+      feature: trimmedText(props.row2Feature, tLocalized("2. Karşılaştırma Kriteri", "2. Comparison Criteria")),
+      col1: trimmedText(props.row2Col1Value, tLocalized("2. Kriter 1. Seçenek Değeri", "Criteria 2 Option 1 Value")),
+      col2: trimmedText(props.row2Col2Value, tLocalized("2. Kriter 2. Seçenek Değeri", "Criteria 2 Option 2 Value")),
       col1Pos: props.row2Col1Positive ?? false,
       col2Pos: props.row2Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row3Feature, "3. Karşılaştırma Kriteri"),
-      col1: trimmedText(props.row3Col1Value, "3. Kriter 1. Seçenek Değeri"),
-      col2: trimmedText(props.row3Col2Value, "3. Kriter 2. Seçenek Değeri"),
+      feature: trimmedText(props.row3Feature, tLocalized("3. Karşılaştırma Kriteri", "3. Comparison Criteria")),
+      col1: trimmedText(props.row3Col1Value, tLocalized("3. Kriter 1. Seçenek Değeri", "Criteria 3 Option 1 Value")),
+      col2: trimmedText(props.row3Col2Value, tLocalized("3. Kriter 2. Seçenek Değeri", "Criteria 3 Option 2 Value")),
       col1Pos: props.row3Col1Positive ?? false,
       col2Pos: props.row3Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row4Feature, "4. Karşılaştırma Kriteri"),
-      col1: trimmedText(props.row4Col1Value, "4. Kriter 1. Seçenek Değeri"),
-      col2: trimmedText(props.row4Col2Value, "4. Kriter 2. Seçenek Değeri"),
+      feature: trimmedText(props.row4Feature, tLocalized("4. Karşılaştırma Kriteri", "4. Comparison Criteria")),
+      col1: trimmedText(props.row4Col1Value, tLocalized("4. Kriter 1. Seçenek Değeri", "Criteria 4 Option 1 Value")),
+      col2: trimmedText(props.row4Col2Value, tLocalized("4. Kriter 2. Seçenek Değeri", "Criteria 4 Option 2 Value")),
       col1Pos: props.row4Col1Positive ?? false,
       col2Pos: props.row4Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row5Feature, "5. Karşılaştırma Kriteri"),
-      col1: trimmedText(props.row5Col1Value, "5. Kriter 1. Seçenek Değeri"),
-      col2: trimmedText(props.row5Col2Value, "5. Kriter 2. Seçenek Değeri"),
+      feature: trimmedText(props.row5Feature, tLocalized("5. Karşılaştırma Kriteri", "5. Comparison Criteria")),
+      col1: trimmedText(props.row5Col1Value, tLocalized("5. Kriter 1. Seçenek Değeri", "Criteria 5 Option 1 Value")),
+      col2: trimmedText(props.row5Col2Value, tLocalized("5. Kriter 2. Seçenek Değeri", "Criteria 5 Option 2 Value")),
       col1Pos: props.row5Col1Positive ?? false,
       col2Pos: props.row5Col2Positive ?? true,
     },
     {
-      feature: trimmedText(props.row6Feature, "6. Karşılaştırma Kriteri"),
-      col1: trimmedText(props.row6Col1Value, "6. Kriter 1. Seçenek Değeri"),
-      col2: trimmedText(props.row6Col2Value, "6. Kriter 2. Seçenek Değeri"),
+      feature: trimmedText(props.row6Feature, tLocalized("6. Karşılaştırma Kriteri", "6. Comparison Criteria")),
+      col1: trimmedText(props.row6Col1Value, tLocalized("6. Kriter 1. Seçenek Değeri", "Criteria 6 Option 1 Value")),
+      col2: trimmedText(props.row6Col2Value, tLocalized("6. Kriter 2. Seçenek Değeri", "Criteria 6 Option 2 Value")),
       col1Pos: props.row6Col1Positive ?? false,
       col2Pos: props.row6Col2Positive ?? true,
     },
@@ -71,9 +73,9 @@ export function ThreeMashProductComparison(props: Props) {
 
   const bottomNote = trimmedText(
     props.bottomNote,
-    "* Tablo altı açıklama veya bilgilendirme notu buraya gelecek."
+    tLocalized("* Tablo altı açıklama veya bilgilendirme notu buraya gelecek.", "* Table bottom explanation or informative note goes here.")
   );
-  const ctaText = trimmedText(props.ctaText, "Aksiyon Butonu Metni →");
+  const ctaText = trimmedText(props.ctaText, tLocalized("Aksiyon Butonu Metni →", "Action Button Text →"));
   const ctaHref = trimmedText(
     props.ctaHref,
     "#"
@@ -95,7 +97,7 @@ export function ThreeMashProductComparison(props: Props) {
 
         <div className="tm-cmp-table-card">
           <div className="tm-cmp-grid-head">
-            <div className="tm-cmp-th-feature">KARŞILAŞTIRMA KRİTERİ</div>
+            <div className="tm-cmp-th-feature">{tLocalized("KARŞILAŞTIRMA KRİTERİ", "COMPARISON CRITERIA")}</div>
             <div className="tm-cmp-th-col">
               <div className="tm-cmp-col-badge-wrap">
                 <span className="tm-cmp-col-badge">{col1Badge}</span>

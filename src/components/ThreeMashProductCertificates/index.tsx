@@ -1,5 +1,6 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import { tLocalized } from "../../utils/i18n";
 
 function trimmedText(value: unknown, fallback = ""): string {
   return typeof value === "string" && value.trim() ? value.trim() : fallback;
@@ -17,14 +18,14 @@ function imageSource(value: unknown, fallback = ""): string {
 
 export function ThreeMashProductCertificates(props: Props) {
   const index = trimmedText(props.sectionIndex, "08");
-  const label = trimmedText(props.sectionLabel, "BÖLÜM ETİKETİ");
+  const label = trimmedText(props.sectionLabel, tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"));
   const titleHtml = trimmedText(
     props.titleHtml,
-    'Sertifikalar ve raporlar <span class="em">başlığı buraya gelecek.</span>'
+    tLocalized('Sertifikalar ve raporlar <span class="em">başlığı buraya gelecek.</span>', 'Certificates and reports <span class="em">title goes here.</span>')
   );
   const sideHtml = trimmedText(
     props.sideHtml,
-    "Sertifikalar ve test raporları bölümü için sağ taraftaki detaylı açıklama metni buraya gelecek."
+    tLocalized("Sertifikalar ve test raporları bölümü için sağ taraftaki detaylı açıklama metni buraya gelecek.", "Detailed description text for the certificates and test reports section goes here.")
   );
 
   const globalShowImages = props.showImages !== false;
@@ -90,7 +91,7 @@ export function ThreeMashProductCertificates(props: Props) {
 
   const complianceNotice = trimmedText(
     props.complianceNotice,
-    "Sertifikalar ve test raporları hakkında genel yasal bilgilendirme notu buraya gelecek."
+    tLocalized("Sertifikalar ve test raporları hakkında genel yasal bilgilendirme notu buraya gelecek.", "General legal disclaimer note regarding certificates and test reports goes here.")
   );
 
   return (
@@ -134,11 +135,11 @@ export function ThreeMashProductCertificates(props: Props) {
               <div>
                 <div className="tm-cert-meta">
                   <div className="tm-cert-meta-row">
-                    <span>Rapor No:</span>
+                    <span>{tLocalized("Rapor No:", "Report No:")}</span>
                     <b>{cert.reportNo}</b>
                   </div>
                   <div className="tm-cert-meta-row">
-                    <span>Kurum:</span>
+                    <span>{tLocalized("Kurum:", "Issuer:")}</span>
                     <b>{cert.issuer}</b>
                   </div>
                 </div>

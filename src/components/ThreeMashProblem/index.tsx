@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
+import { isEnglishLocale, tProp } from "../../utils/i18n";
 import { Props } from "./types";
 
 function stripInlineTypographyStyles(markup: string) {
@@ -125,6 +126,43 @@ function parseRangeValue(value?: string) {
 }
 
 export function ThreeMashProblem(props: Props) {
+  const en = isEnglishLocale();
+  const p = props as any;
+
+  props = {
+    ...props,
+    indexText: en
+      ? (p.indexTextEn || tProp(props.indexText, "Sorunun Kaynağı", "Root of the Problem"))
+      : props.indexText,
+    titleText: en
+      ? (p.titleTextEn || tProp(props.titleText, "Kaybın görünmeyen sebebi:", "The unseen cause of loss:"))
+      : props.titleText,
+    titleEmphasis: en
+      ? (p.titleEmphasisEn || tProp(props.titleEmphasis, "ölçüsel hassasiyet.", "dimensional accuracy."))
+      : props.titleEmphasis,
+    sideHtml: en
+      ? (p.sideHtmlEn || tProp(props.sideHtml, "Diş hekimliği dijitalleşti; herkes benzer cihazlara erişiyor. Asıl fark, ürettiğiniz işin <b>ilk seferde</b> oturup oturmadığı.", "Dentistry went digital; everyone has access to similar machines. The real difference is whether your restoration seats on the <b>first try</b>."))
+      : props.sideHtml,
+    badLabel: en
+      ? (p.badLabelEn || tProp(props.badLabel, "Piyasada yaygın kurulum", "Common market setup"))
+      : props.badLabel,
+    badDescriptionHtml: en
+      ? (p.badDescriptionHtmlEn || tProp(props.badDescriptionHtml, "Yanlış parametre, reçine uyumsuzluğu ve eksik kalibrasyonla sapma <b>güvenli sınırın 2-5 katına</b> çıkabiliyor.", "With wrong parameters, resin mismatch, and lack of calibration, deviation can reach <b>2-5x the safe limit</b>."))
+      : props.badDescriptionHtml,
+    goodLabel: en
+      ? (p.goodLabelEn || tProp(props.goodLabel, "3mash ekosistemiyle", "With 3mash ecosystem"))
+      : props.goodLabel,
+    goodDescriptionHtml: en
+      ? (p.goodDescriptionHtmlEn || tProp(props.goodDescriptionHtml, "Yazıcı, reçine ve kürleme <b>birlikte kalibre</b> edildiğinde: her baskıda tekrar edilebilir hassasiyet ve minimum tekrar oranı.", "When printer, resin, and curing are <b>calibrated together</b>: repeatable precision and minimal remake rate on every print."))
+      : props.goodDescriptionHtml,
+    hairNoteHtml: en
+      ? (p.hairNoteHtmlEn || tProp(props.hairNoteHtml, "<b>Ölçek için:</b> bir insan saç teli ~70 µm. Piyasadaki sapma saç telinin <b>5 katına</b> çıkabilirken, 3mash ±20 µm bandında kalır.", "<b>For scale:</b> a human hair is ~70 µm. While market deviation can reach <b>5x a hair</b>, 3mash stays within the ±20 µm band."))
+      : props.hairNoteHtml,
+    referenceHtml: en
+      ? (p.referenceHtmlEn || tProp(props.referenceHtml, "Bilimsel dayanak: full-arch model doğruluğu sistemden sisteme <b>3–190 µm</b> arasında değişiyor (Revilla-León et al., J Prosthet Dent 2023).", "Scientific reference: full-arch model accuracy varies between <b>3–190 µm</b> across systems (Revilla-León et al., J Prosthet Dent 2023)."))
+      : props.referenceHtml,
+  };
+
   const sectionRef = useRef<HTMLElement>(null);
   const badRange = parseRangeValue(props.badValue);
   const [animatedBadValue, setAnimatedBadValue] = useState(() => (badRange ? `0–0${badRange.suffix}` : props.badValue || ""));

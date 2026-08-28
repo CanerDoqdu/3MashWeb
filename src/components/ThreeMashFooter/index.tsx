@@ -1,3 +1,4 @@
+import { tLocalized } from "../../utils/i18n";
 import { useMemo } from "preact/hooks";
 import { renderFooterHtml, ThreeMashStaticSection } from "../../sub-components/ThreeMashSectionRenderer";
 import { Props } from "./types";
@@ -16,7 +17,7 @@ function organizationJsonLd(props: Props): string {
       addressLocality: "Antalya",
       addressRegion: "Konyaaltı",
       addressCountry: "TR",
-      streetAddress: "Antalya Teknokent, Konyaaltı",
+      streetAddress: tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Technopark, Konyaalti"),
     },
     contactPoint: {
       "@type": "ContactPoint",

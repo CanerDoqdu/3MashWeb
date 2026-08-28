@@ -25,6 +25,7 @@ import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImag
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
+import { tLocalized, tProp, isEnglishLocale, translateText } from "../../utils/i18n";
 import {
   ACF_FEP_FILM_SLUG,
   ARGENZ_HT_MULTILAYER_SLUG,
@@ -212,11 +213,11 @@ const defaultReferencesHomeHref = "/";
 const defaultReferencesSectionId = "guven";
 const pendingReferencesScrollKey = "tmh-pending-references-scroll";
 const legacyAcademyRouteKeys = new Set(["academy", "mash-academy", "pages-mash-academy", "2tplvqpo-rovtvwz53h"]);
-const defaultProductsMenuText = "Ürünler";
+const defaultProductsMenuText = tLocalized("Ürünler", "Products");
 const defaultWhyMenuText = "Neden 3mash?";
 const defaultReferencesText = "Referanslar";
 const defaultAcademyText = "Academy";
-const defaultMobileMenuLabel = "Menü";
+const defaultMobileMenuLabel = tLocalized("Menü", "Menu");
 
 // Critical header styles live with the markup so route changes cannot briefly
 // paint the header in its unstyled/default browser state before the component
@@ -697,8 +698,9 @@ function firstPaintAnnouncementScript() {
   const payload = JSON.stringify(firstPaintAnnouncementMap).replace(/</g, "\\u003c");
   return `
 (function(){
-  var map=${payload};
   var path=(window.location.pathname||"").toLocaleLowerCase("tr").replace(/^\\/+|\\/+$/g,"").split("/").pop()||"";
+  if(window.location.pathname.indexOf("/en")===0||(document.documentElement&&document.documentElement.lang==="en"))return;
+  var map=${payload};
   var ann=map[path];
   if(!ann)return;
   var root=document.currentScript&&document.currentScript.closest&&document.currentScript.closest(".three-mash-header");
@@ -721,12 +723,12 @@ const defaultProductsFeature = {
   href: "/yikama-kurleme-cihazlari",
 };
 const defaultProductPrimary: Required<MenuItem>[] = [
-  { title: "3D Yazıcılar", description: "P1D / P16L hassas baskı", href: "/3d-yazicilar", icon: ecoPrinterIcon },
-  { title: "Yıkama", description: "Baskı sonrası ultrasonik temizlik", href: "/yikama-cihazlari", icon: ecoScannerIcon },
-  { title: "Kürleme", description: "360° homojen UV post-curing", href: "/kurleme-cihazlari", icon: ecoCuringIcon },
+  { title: tLocalized("3D Yazıcılar", "3D Printers"), description: "P1D / P16L hassas baskı", href: "/3d-yazicilar", icon: ecoPrinterIcon },
+  { title: tLocalized("Yıkama", "Washing"), description: "Baskı sonrası ultrasonik temizlik", href: "/yikama-cihazlari", icon: ecoScannerIcon },
+  { title: tLocalized("Kürleme", "Curing"), description: "360° homojen UV post-curing", href: "/kurleme-cihazlari", icon: ecoCuringIcon },
 ];
 const defaultProductSecondary: Required<MenuItem>[] = [
-  { title: "Dental Reçineler", description: "Dental reçine seçenekleri", href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
+  { title: tLocalized("Dental Reçineler", "Dental Resins"), description: "Dental reçine seçenekleri", href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
   { title: "Zirkon Bloklar & Titanyum", description: "Freze tarafının sarfları", href: "/zirkon-bloklar", icon: ecoBlocksIcon },
   { title: "Tarayıcılar ve Fırınlar", description: "Lab tarafında hassas veri · Sinterleme çözümleri", href: "/dental-firinlar", icon: ecoOvenIcon },
 ];
@@ -1083,12 +1085,21 @@ function hideLegacyThemeCategories() {
   });
 }
 
-function richTextValue(value: string | undefined, fallback: string) {
+function richTextValue(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
   const visibleText = inlineHtml(value)
     .replace(/<[^>]*>/g, "")
     .replace(/&nbsp;/gi, " ")
     .trim();
-  return visibleText ? value : fallback;
+  if (visibleText) {
+    if (isEnglishLocale()) {
+      if (visibleText === fallbackTr.trim()) {
+        return fallbackEn || translateText(fallbackTr);
+      }
+      return translateText(value);
+    }
+    return value;
+  }
+  return isEnglishLocale() ? (fallbackEn || translateText(fallbackTr)) : fallbackTr;
 }
 
 function inlineHtml(value?: string) {
@@ -1137,7 +1148,8 @@ function styleTextChunks(markup: string, phrase?: string, enabled?: boolean, cla
 }
 
 function richText(value?: string, props?: any) {
-  const markup = inlineHtml(value);
+  const raw = isEnglishLocale() ? translateText(value) : value;
+  const markup = inlineHtml(raw);
   if (!props) return { __html: markup };
   return {
     __html: styleTextChunks(markup, props.styledPhrase, props.wordStyleEnabled !== false),
@@ -1628,57 +1640,93 @@ const cartItems =
       Number(item.quantity || 0) > 0
   ) || []; const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
   const visibleCartItems = cartItems.slice(0, 4);
-  const productsMenuText = sourceRichText(props.productsMenuText, defaultProductsMenuText);
-  const whyMenuText = sourceRichText(props.whyMenuText, defaultWhyMenuText);
-  const referencesText = sourceRichText(props.referencesText, defaultReferencesText);
-  const academyText = sourceRichText(props.academyText, defaultAcademyText, ["akademi"]);
-  const mobileMenuLabel = richTextValue(props.mobileMenuLabel, defaultMobileMenuLabel);
-  const announcementHighlightText = richTextValue(productAnnouncement?.highlightText ?? props.announcementHighlightText, defaultAnnouncement.highlightText);
-  const announcementText = richTextValue(productAnnouncement?.text ?? props.announcementText, defaultAnnouncement.text);
-  const announcementCtaText = richTextValue(productAnnouncement?.ctaText ?? props.announcementCtaText, defaultAnnouncement.ctaText);
+  const productsMenuText = tProp(props.productsMenuText, defaultProductsMenuText, "Products");
+  const whyMenuText = tProp(props.whyMenuText, defaultWhyMenuText, "Why 3mash?");
+  const referencesText = tProp(props.referencesText, defaultReferencesText, "References");
+  const academyText = tProp(props.academyText, defaultAcademyText, "Academy");
+  const mobileMenuLabel = tProp(props.mobileMenuLabel, defaultMobileMenuLabel, "Menu");
+  const rawAnnHighlight = productAnnouncement?.highlightText ?? props.announcementHighlightText;
+  const rawAnnText = productAnnouncement?.text ?? props.announcementText;
+  const rawAnnCta = productAnnouncement?.ctaText ?? props.announcementCtaText;
+  const announcementHighlightText = tProp(rawAnnHighlight, defaultAnnouncement.highlightText, "⚡ Don't miss out.");
+  const announcementText = tProp(rawAnnText, defaultAnnouncement.text, "Calculate your clinic's silent loss in 30 seconds; see how to reduce it with a free analysis.");
+  const announcementCtaText = tProp(rawAnnCta, defaultAnnouncement.ctaText, "Calculate now");
   const announcementHref = productAnnouncement?.href ?? props.announcementHref;
   const effectiveAnnouncementHref = currentRouteKey() === "3d-yazicilar" ? "#karsilastirma-tablosu" : announcementHref;
-  const productsCol1Title = sourceRichText(props.productsCol1Title, "ÜRETİM", ["uretim"]);
-  const productsCol2Title = sourceRichText(props.productsCol2Title, "TAMAMLAYICI", ["tamamlayici"]);
-  const productsFeatureEyebrow = sourceRichText(props.productsFeatureEyebrow, defaultProductsFeature.eyebrow);
-  const productsFeatureTitle = sourceRichText(props.productsFeatureTitle, defaultProductsFeature.title, ["mash c4p akilli kurleme cihazi"]);
-  const productsFeatureDescription = sourceRichText(props.productsFeatureDescription, defaultProductsFeature.description, [
-    "recineye gore otomatik kurleme. sonuc kalitesini kullanici hatasindan cikarir.",
-  ]);
-  const productsFeatureCtaText = sourceRichText(props.productsFeatureCtaText, defaultProductsFeature.ctaText, ["kesfet"]);
+  const productsCol1Title = tProp(props.productsCol1Title, "ÜRETİM", "PRODUCTION");
+  const productsCol2Title = tProp(props.productsCol2Title, "TAMAMLAYICI", "COMPLEMENTARY");
+  const productsFeatureEyebrow = tProp(props.productsFeatureEyebrow, defaultProductsFeature.eyebrow, "FEATURED");
+  const productsFeatureTitle = tProp(props.productsFeatureTitle, defaultProductsFeature.title, "MASH C4P Smart Curing Unit");
+  const productsFeatureDescription = tProp(props.productsFeatureDescription, defaultProductsFeature.description, "Automatic curing tailored to resin. Eliminates user error from outcome quality.");
+  const productsFeatureCtaText = tProp(props.productsFeatureCtaText, defaultProductsFeature.ctaText, "Explore");
   const mobileSearchHref = searchPageHref(props.searchHref);
   const productPrimary: MenuItem[] = [
     {
-      title: sourceRichText(props.product1Title, defaultProductPrimary[0].title),
-      description: sourceRichText(props.product1Description, defaultProductPrimary[0].description, ["mash p1d (385 nm dlp) · p16l — ±20µm hassasiyet"]),
+      title: tProp(props.product1Title, defaultProductPrimary[0].title, "3D Printers"),
+      description: tProp(props.product1Description, defaultProductPrimary[0].description, "MASH P1D (385 nm DLP) · P16L — ±20µm accuracy"),
       href: productRouteHref(props.product1Href, defaultProductPrimary[0].href),
       icon: ecoPrinterIcon,
     },
     {
-      title: defaultProductPrimary[1].title,
-      description: defaultProductPrimary[1].description,
+      title: tLocalized(defaultProductPrimary[1].title, "Desktop Scanners"),
+      description: tLocalized(defaultProductPrimary[1].description, "Lab-speed digital impressions with 3Shape E Series"),
       href: defaultProductPrimary[1].href,
       icon: ecoScannerIcon,
     },
     {
-      title: defaultProductPrimary[2].title,
-      description: defaultProductPrimary[2].description,
+      title: tLocalized(defaultProductPrimary[2].title, "Wash & Cure"),
+      description: tLocalized(defaultProductPrimary[2].description, "MASH C4P · W1E · Creality UW02 post-processing"),
       href: defaultProductPrimary[2].href,
       icon: ecoCuringIcon,
     },
   ];
 
   const productSecondary: MenuItem[] = [
-    { title: defaultProductSecondary[0].title, description: defaultProductSecondary[0].description, href: defaultProductSecondary[0].href, icon: ecoResinIcon },
-    { title: sourceRichText(props.product5Title, defaultProductSecondary[1].title), description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]), href: productRouteHref(props.product5Href, defaultProductSecondary[1].href), icon: ecoBlocksIcon },
-    { title: defaultProductSecondary[2].title, description: defaultProductSecondary[2].description, href: defaultProductSecondary[2].href, icon: ecoCuringIcon },
+    {
+      title: tLocalized(defaultProductSecondary[0].title, "Dental Resins"),
+      description: tLocalized(defaultProductSecondary[0].description, "CRS Composite Resin — biocompatible & high strength"),
+      href: defaultProductSecondary[0].href,
+      icon: ecoResinIcon,
+    },
+    {
+      title: tProp(props.product5Title, defaultProductSecondary[1].title, "Zirconia Blocks"),
+      description: tProp(props.product5Description, defaultProductSecondary[1].description, "Multilayer blocks with balanced esthetics & strength"),
+      href: productRouteHref(props.product5Href, defaultProductSecondary[1].href),
+      icon: ecoBlocksIcon,
+    },
+    {
+      title: tLocalized(defaultProductSecondary[2].title, "Dental Furnaces"),
+      description: tLocalized(defaultProductSecondary[2].description, "Nabertherm sintering and porcelain furnaces"),
+      href: defaultProductSecondary[2].href,
+      icon: ecoCuringIcon,
+    },
   ];
 
   const whyItems: FlowItem[] = [
-    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Yılda $126K'ya varan görünmez kayıp"), description: text(props.why1Description, "Tekrarlanan işlerin kliniğinize gerçek maliyeti"), href: "/" },
-    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Sebep: ölçüsel hassasiyet"), description: text(props.why2Description, "250–500µm sapma bandı vs ±20µm güvenli bölge"), href: whyMenuHref("/#sebep") },
-    { number: text(props.why3Number, "03"), title: text(props.why3Title, "Çözüm: uyumlu ekosistem"), description: text(props.why3Description, "Yazıcı + reçine + parametre bilgisi, birlikte kalibre"), href: whyMenuHref("/#cozum") },
-    { number: text(props.why4Number, "04"), title: text(props.why4Title, "Ve kürleme — son %20'lik fark"), description: text(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"), href: whyMenuHref("/#kurleme") },
+    {
+      number: text(props.why1Number, "01"),
+      title: tProp(props.why1Title, "Yılda $126K'ya varan görünmez kayıp", "Up to $126K invisible loss per year"),
+      description: tProp(props.why1Description, "Tekrarlanan işlerin kliniğinize gerçek maliyeti", "The real cost of remake jobs to your clinic"),
+      href: "/",
+    },
+    {
+      number: text(props.why2Number, "02"),
+      title: tProp(props.why2Title, "Sebep: ölçüsel hassasiyet", "Cause: dimensional accuracy"),
+      description: tProp(props.why2Description, "250–500µm sapma bandı vs ±20µm güvenli bölge", "250–500µm deviation band vs ±20µm safe zone"),
+      href: whyMenuHref("/#sebep"),
+    },
+    {
+      number: text(props.why3Number, "03"),
+      title: tProp(props.why3Title, "Çözüm: uyumlu ekosistem", "Solution: compatible ecosystem"),
+      description: tProp(props.why3Description, "Yazıcı + reçine + parametre bilgisi, birlikte kalibre", "Printer + resin + parameter knowledge, calibrated together"),
+      href: whyMenuHref("/#cozum"),
+    },
+    {
+      number: text(props.why4Number, "04"),
+      title: tProp(props.why4Title, "Ve kürleme — son %20'lik fark", "And curing — the final 20% difference"),
+      description: tProp(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur", "Correctly printed jobs still fail if incorrectly cured"),
+      href: whyMenuHref("/#kurleme"),
+    },
   ];
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -1698,7 +1746,7 @@ const cartItems =
     {
       label: richTextValue(
         props.profileLink1Text,
-        "Siparişlerim"
+        tLocalized("Siparişlerim", "My Orders")
       ),
       link: headerRouteHref(
         props.profileLink1Href,
@@ -1708,7 +1756,7 @@ const cartItems =
     {
       label: richTextValue(
         props.profileLink2Text,
-        "Adreslerim"
+        tLocalized("Adreslerim", "My Addresses")
       ),
       link: headerRouteHref(
         props.profileLink2Href,
@@ -1727,7 +1775,7 @@ const cartItems =
     {
       label: richTextValue(
         props.profileLink6Text,
-        "Çıkış yap"
+        tLocalized("Çıkış yap", "Sign out")
       ),
       link: headerRouteHref(
         props.profileLink6Href,
@@ -1735,7 +1783,7 @@ const cartItems =
       ),
     },
   ];
-  const accountMenuTitle = "Hesabım";
+  const accountMenuTitle = tLocalized("Hesabım", "My Account");
 
   const themeStyle = {
     "--tmh-bg": sourceThemeToken("#FAFAF7", "--tm-theme-bg"),
@@ -2358,14 +2406,14 @@ const image = imageCandidates[0];
                                 <span className="tmh-cart-live-copy">
                                   <b>{cartItemTitle(item)}</b>
                                   {variant ? <small>{variant}</small> : null}
-                                  <em>Adet {item.quantity}</em>
+                                  <em>{tLocalized("Adet", "Qty")} {item.quantity}</em>
                                 </span>
                               </a>
                               <strong>{getOrderLineItemFormattedFinalPriceWithQuantity(item)}</strong>
                               <button
                                 className="tmh-cart-live-remove"
                                 type="button"
-                                aria-label={`${cartItemTitle(item)} sepetten kaldır`}
+                                aria-label={tLocalized(`${cartItemTitle(item)} sepetten kaldır`, `Remove ${cartItemTitle(item)} from cart`)}
                                 disabled={removingCartItemId === item.id}
                                 onClick={(event) => removeCartItem(event, item)}
                               >
@@ -2375,14 +2423,14 @@ const image = imageCandidates[0];
                           );
                         })}
                       </div>
-                      <a className="tmh-cart-market-button tmh-cart-go-button" href="/cart">Sepete git</a>
+                      <a className="tmh-cart-market-button tmh-cart-go-button" href="/cart">{tLocalized("Sepete git", "Go to Cart")}</a>
                     </div>
                   ) : (
                     <div className="tmh-cart-empty-card">
                       <a
                         className="tmh-cart-market-button"
                         href="/search"
-                        dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git"), props)}
+                        dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git", "Go to Store"), props)}
                       />
                     </div>
                   )}

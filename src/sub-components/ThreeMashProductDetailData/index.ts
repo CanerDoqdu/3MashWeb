@@ -1,3 +1,4 @@
+import { tLocalized } from "../../utils/i18n";
 import type { ProductDetailTemplateData, ProductGalleryItem } from "../ThreeMashProductDetailTemplate";
 import { useEffect, useMemo, useState } from "preact/hooks";
 import {
@@ -500,9 +501,9 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Composite",
   },
@@ -527,11 +528,11 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Biyouyumlu <span class="hl">geçici ve daimi</span> reçinesi.',
     sideHtml: "CRS Composite, <b>CE Class IIa</b> sertifikalı toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılabilir.",
     panelTitleHtml: "CRS Composite'i satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -544,7 +545,7 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Baskı sonrası <span class="em">sararma yapmaz</span>, kalıcıda kullanılır.',
     sideHtml:
       "CRS Composite, kalıcı uygulamada kullanıldığını iddia eden rakip markalara göre daha yüksek dayanım sunar ve kürleme sonrası sararmaz. Değerler ISO 10477 standardına göredir.",
@@ -652,7 +653,7 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Composite hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Klinik ve laboratuvarların CRS Composite için en çok sorduğu sorular, net cevaplarla.",
     openFirst: true,
@@ -700,7 +701,7 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Model",
         descriptionHtml: "Kron-köprü öncesi master model. Belirgin <b>kole hatları</b>, net marjinal uyum.",
         href: "/crs-model-yuksek-hassasiyetli-model-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#EFE7D3,#fff)",
       },
       {
@@ -709,7 +710,7 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Denture",
         descriptionHtml: "Çıkarılabilir protez tabanı; PMMA'ya kıyasla <b>düşük çekme</b>, cila + glaze uyumlu.",
         href: "/crs-denture-biouyumlu-protez-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F6E3E4,#fff)",
       },
       {
@@ -717,7 +718,7 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Gingiva",
         descriptionHtml: "İmplant modeli ve diş eti maskesi. Yüksek yırtılma direnci, doğal diş eti rengi.",
         href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F5DEE0,#fff)",
       },
       {
@@ -736,7 +737,7 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi vaka, hangi renk? Kısa bir görüşmeyle CRS Composite'i cihazınızın parametreleriyle eşleştirip doğru kürleme protokolüyle birlikte <b>ücretsiz</b> teslim edelim.",
     primaryText: "Renk ve boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -751,9 +752,9 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Splint Hard Resin",
   },
@@ -777,11 +778,11 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Sert splint için <span class="hl">uzun form stabilitesi</span>.',
     sideHtml: "Yüksek dayanıklılık sunan CRS Splint Hard Resin, sert splint reçinesi arayan dental laboratuvarlar ve klinikler için geliştirilmiştir.",
     panelTitleHtml: "CRS Splint Hard Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -794,13 +795,13 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Gece plağı üretiminde <span class="em">sert ve stabil</span> yapı.',
     sideHtml:
       "CRS Splint Hard Resin; sert splint reçinesi olarak gece plağı ve bruksizm apareylerinde kullanılır, 385–405 nm dalga boyunda çalışan LCD ve DLP yazıcılarla uyumludur.",
     items: [
       {
-        name: "Dalga Boyu",
+        name: tLocalized("Dalga Boyu", "Wavelength"),
         value: "385",
         unit: "–405 nm",
         tag: "LCD / DLP",
@@ -827,7 +828,7 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Yoğun kullanımda <span class="em">formunu koruyan splint.</span>',
     descriptionHtml:
       "Yüksek sertlik ve mekanik dayanım sunan yapısı sayesinde baskılar uzun süre formunu korur ve deformasyona karşı direnç gösterir. Özellikle yoğun kullanım gerektiren vakalarda güvenilir sonuçlar elde edilmesini sağlar.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Gece plağı + bruksizm apareyi" },
@@ -902,7 +903,7 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Splint Hard hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Sert gece plağı ve bruksizm apareyi üretimi için net kullanım cevapları.",
     openFirst: true,
@@ -947,7 +948,7 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Splint Soft",
         descriptionHtml: "Esnek ve biyouyumlu splint / gece plağı reçinesi; konforlu kullanım.",
         href: "/crs-splint-soft-resin-dental-splint-gece-plak-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#EFE7D3,#fff)",
       },
       {
@@ -955,7 +956,7 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "Guide Resin",
         descriptionHtml: "Cerrahi rehber için biyouyumlu ve hassas kılavuz reçinesi.",
         href: "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F6E3E4,#fff)",
       },
       {
@@ -963,7 +964,7 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS IBT Resin",
         descriptionHtml: "Ortodontik braket yerleştirme için hassas ve esnek indirect bonding tray reçinesi.",
         href: "/crs-ibt-resin-ortodontik-ibt-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F5DEE0,#fff)",
       },
       {
@@ -982,7 +983,7 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi splint vakası, hangi post-curing akışı? Kısa bir görüşmeyle CRS Splint Hard Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -997,9 +998,9 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Splint Soft Resin",
   },
@@ -1010,8 +1011,8 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "CRS Splint Soft Resin, ortodontik ve dental kullanım için geliştirilen biyouyumlu bir fotopolimer 3D yazıcı reçinesidir. Esnek yapısı hasta konforunu artırırken, dengeli mekanik dayanımı güvenilir ve stabil kullanım sunar.",
     pills: [
       { label: "Esnek splint" },
-      { label: "Gece plağı" },
-      { label: "Biyouyumlu" },
+      { label: tLocalized("Gece plağı", "night guard") },
+      { label: tLocalized("Biyouyumlu", "Biocompatible") },
       { value: "385–405 nm", label: "LCD / DLP uyumu" },
     ],
     gallery: CRS_SPLINT_SOFT_GALLERY,
@@ -1023,11 +1024,11 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Esnek yapısıyla <span class="hl">hasta konforunu</span> artırır.',
     sideHtml: "CRS Splint Soft Resin, dental splint ve gece plağı üretiminde esnek yapısı ile öne çıkan biyouyumlu bir 3D yazıcı reçinesidir.",
     panelTitleHtml: "CRS Splint Soft Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -1040,13 +1041,13 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Gece plağı üretiminde <span class="em">esneklik ve konfor</span>.',
     sideHtml:
       "CRS Splint Soft Resin; dental splint ve gece plağı üretimi için geliştirilmiş biyouyumlu reçinedir. 385–405 nm dalga boyunda çalışan LCD ve DLP 3D yazıcılarla uyumludur.",
     items: [
       {
-        name: "Dalga Boyu",
+        name: tLocalized("Dalga Boyu", "Wavelength"),
         value: "385",
         unit: "–405 nm",
         tag: "LCD / DLP",
@@ -1073,7 +1074,7 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Konfor odaklı <span class="em">esnek gece plağı.</span>',
     descriptionHtml:
       "Esnek yapısı, üretilen splintlerin ağız içinde daha iyi uyum sağlamasına ve kullanım sırasında daha konforlu bir deneyim sunmasına yardımcı olur. Dengeli mekanik özellikleri uygun kullanım koşullarında güvenilir performans sağlar.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Dental splint + gece plağı" },
@@ -1090,7 +1091,7 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     sideHtml: "Hepsi tek bakışta: esnek dental splint, gece plağı, ağız koruyucu ve uyumlu 3D yazıcılar.",
     photos: [
       { src: CRS_SPLINT_SOFT_GALLERY[2].src, alt: "CRS Splint Soft dental splint uygulaması", title: "Dental splint", text: "Esnek yapı ile ağız içinde daha iyi uyum." },
-      { src: CRS_SPLINT_SOFT_GALLERY[3].src, alt: "CRS Splint Soft bruksizm plağı", title: "Gece plağı", text: "Bruksizm plakları için konfor odaklı kullanım." },
+      { src: CRS_SPLINT_SOFT_GALLERY[3].src, alt: "CRS Splint Soft bruksizm plağı", title: tLocalized("Gece plağı", "night guard"), text: "Bruksizm plakları için konfor odaklı kullanım." },
       { src: CRS_SPLINT_SOFT_GALLERY[3].src, alt: "CRS Splint Soft ağız koruyucu uygulaması", title: "Ağız koruyucu", text: "Esnek ve şeffaf yapı ile dental aygıt üretimi." },
     ],
     cards: [
@@ -1148,7 +1149,7 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Splint Soft hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Esnek dental splint ve gece plağı üretimi için net kullanım cevapları.",
     openFirst: true,
@@ -1197,7 +1198,7 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Splint Hard",
         descriptionHtml: "Sert gece plağı ve bruksizm apareyleri için stabil splint reçinesi.",
         href: "/crs-splint-hard-resin-sert-gece-plagi-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#EFE7D3,#fff)",
       },
       {
@@ -1205,7 +1206,7 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "Guide Resin",
         descriptionHtml: "Cerrahi rehber için biyouyumlu ve hassas kılavuz reçinesi.",
         href: "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F6E3E4,#fff)",
       },
       {
@@ -1213,7 +1214,7 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS IBT Resin",
         descriptionHtml: "Ortodontik braket yerleştirme için hassas ve esnek indirect bonding tray reçinesi.",
         href: "/crs-ibt-resin-ortodontik-ibt-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F5DEE0,#fff)",
       },
       {
@@ -1232,7 +1233,7 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi gece plağı vakası, hangi post-curing akışı? Kısa bir görüşmeyle CRS Splint Soft Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -1247,9 +1248,9 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Guide Resin",
   },
@@ -1259,9 +1260,9 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     leadHtml:
       "Kılavuz reçinesi, implant cerrahisinde kullanılan cerrahi rehberlerin üretimi için geliştirilmiş biyouyumlu 3D yazıcı reçinesidir. Yüksek hassasiyet, stabil yapı ve DLP/LCD uyumluluğu ile güvenilir cerrahi rehber üretimi sağlar.",
     pills: [
-      { label: "Cerrahi rehber" },
+      { label: tLocalized("Cerrahi rehber", "surgical guide") },
       { label: "İmplant cerrahisi" },
-      { label: "Biyouyumlu" },
+      { label: tLocalized("Biyouyumlu", "Biocompatible") },
       { value: "385–405 nm", label: "LCD / DLP uyumu" },
     ],
     gallery: CRS_GUIDE_GALLERY,
@@ -1273,11 +1274,11 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'İmplant rehberlerinde <span class="hl">hassas yönlendirme</span> sağlar.',
     sideHtml: "CRS Guide Resin, cerrahi rehberlerin implant uygulamalarında güvenilir yönlendirme sağlaması için yüksek ölçü doğruluğu ve stabil yapı sunar.",
     panelTitleHtml: "CRS Guide Resin'i satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -1290,13 +1291,13 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Cerrahi rehber için <span class="em">stabil ve şeffaf</span> yapı.',
     sideHtml:
       "CRS Guide Resin, UV kürleme sonrası intraoral kullanıma uygun hale gelen biyouyumlu cerrahi rehber reçinesidir. 385–405 nm dalga boyunda çalışan DLP ve LCD yazıcılarla uyumludur.",
     items: [
       {
-        name: "Dalga Boyu",
+        name: tLocalized("Dalga Boyu", "Wavelength"),
         value: "385",
         unit: "–405 nm",
         tag: "LCD / DLP",
@@ -1323,7 +1324,7 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Operasyon sırasında <span class="em">kontrollü yönlendirme.</span>',
     descriptionHtml:
       "Yüksek baskı hassasiyeti ve stabil yapısı sayesinde operasyon sırasında doğru yönlendirme ve kontrollü uygulama imkanı sunar. UV kürleme sonrası optimum performansa ulaşarak intraoral kullanıma uygun hale gelir.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Cerrahi rehber üretimi" },
@@ -1339,7 +1340,7 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Nerede kullanılır, <span class="em">neyle çalışır?</span>',
     sideHtml: "Hepsi tek bakışta: implant cerrahisi, cerrahi rehber üretimi, şeffaf kontrol ve uyumlu 3D yazıcılar.",
     photos: [
-      { src: CRS_GUIDE_GALLERY[1].src, alt: "CRS Guide Resin cerrahi rehber uygulaması", title: "Cerrahi rehber", text: "İmplantın doğru açı ve konumda yerleştirilmesine yardımcı olur." },
+      { src: CRS_GUIDE_GALLERY[1].src, alt: "CRS Guide Resin cerrahi rehber uygulaması", title: tLocalized("Cerrahi rehber", "surgical guide"), text: "İmplantın doğru açı ve konumda yerleştirilmesine yardımcı olur." },
       { src: CRS_GUIDE_GALLERY[2].src, alt: "CRS Guide Resin implant kılavuzu", title: "İmplant kılavuzu", text: "Yüksek hassasiyet gerektiren cerrahi planların aktarımı." },
       { src: CRS_GUIDE_GALLERY[3].src, alt: "CRS Guide Resin şeffaf rehber", title: "Şeffaf kontrol", text: "Şeffaf yapı, uygulama sırasında görsel kontrol avantajı sağlar." },
     ],
@@ -1390,7 +1391,7 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Cerrahi rehber sonucu <span class="em">parametreyle tamamlanır.</span>',
     textHtml:
       "Cerrahi rehber üretiminde hassasiyet, reçinenin doğru baskı, temizlik, UV kürleme ve sterilizasyon akışıyla birlikte çalışmasına bağlıdır. Reçineyi kullandığınız yazıcıya göre kalibre ederek teslim ediyoruz.",
-    chips: ["385–405 nm uyum", "Cerrahi rehber", "IPA temizlik", "UV post-curing", "Otoklav"],
+    chips: ["385–405 nm uyum", tLocalized("Cerrahi rehber", "surgical guide"), "IPA temizlik", "UV post-curing", "Otoklav"],
     buttons: [
       { text: "3D yazıcıları gör →", href: "/3d-yazicilar" },
       { text: "Uzmana danış →", href: "/pages/iletisim", variant: "line" },
@@ -1398,7 +1399,7 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Guide Resin hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Cerrahi rehber üretimi, biyouyumluluk, baskı sonrası işlem ve yazıcı uyumu için net cevaplar.",
     openFirst: true,
@@ -1455,7 +1456,7 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Splint Hard",
         descriptionHtml: "Sert gece plağı ve bruksizm apareyleri için stabil splint reçinesi.",
         href: "/crs-splint-hard-resin-sert-gece-plagi-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#EFE7D3,#fff)",
       },
       {
@@ -1463,7 +1464,7 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS IBT Resin",
         descriptionHtml: "Ortodontik braket yerleştirme için hassas ve esnek indirect bonding tray reçinesi.",
         href: "/crs-ibt-resin-ortodontik-ibt-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F5DEE0,#fff)",
       },
       {
@@ -1471,7 +1472,7 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Flexit",
         descriptionHtml: "Tam ve parsiyel çıkarılabilir protezler için esnek dental reçine.",
         href: "/crs-flexit-recin-protez-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F6E3E4,#fff)",
       },
       {
@@ -1490,7 +1491,7 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi cerrahi rehber vakası, hangi temizlik ve post-curing akışı? Kısa bir görüşmeyle CRS Guide Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -1505,9 +1506,9 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS IBT Resin",
   },
@@ -1531,11 +1532,11 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Braketleri <span class="hl">planlanan pozisyonda</span> aktarır.',
     sideHtml: "CRS IBT Resin, ortodontik braketlerin dijital planlamaya uygun şekilde tek seferde aktarılmasına destek olan esnek ve stabil bir reçinedir.",
     panelTitleHtml: "CRS IBT Resin'i satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -1548,13 +1549,13 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Ortodontik IBT için <span class="em">hassas ve esnek</span> yapı.',
     sideHtml:
       "CRS IBT Resin; ortodontik tedavilerde indirekt bonding tray üretimi için geliştirilmiş biyouyumlu bir 3D yazıcı reçinesidir. 385 nm ve 405 nm dalga boyunda çalışan DLP ve LCD yazıcılarla uyumludur.",
     items: [
       {
-        name: "Dalga Boyu",
+        name: tLocalized("Dalga Boyu", "Wavelength"),
         value: "385",
         unit: "–405 nm",
         tag: "LCD / DLP",
@@ -1564,7 +1565,7 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         name: "Uygulama",
         value: "IBT",
         unit: "Tray",
-        tag: "Ortodonti",
+        tag: tLocalized("Ortodonti", "Orthodontics"),
         caption: "Braketlerin dijital planlamaya uygun şekilde aktarılması için indirekt bonding tray üretimi.",
       },
       {
@@ -1581,7 +1582,7 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Dijital planı <span class="em">braket aktarımına</span> taşır.',
     descriptionHtml:
       "Braketlerin doğru ve hassas şekilde konumlandırılmasını desteklerken, kontrollü esnekliği sayesinde uygulama sırasında kolay kullanım sağlar. Stabil baskı performansı, dijital planlamanın fiziksel ortama güvenilir şekilde aktarılmasına yardımcı olur.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Indirect bonding tray" },
@@ -1656,7 +1657,7 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS IBT Resin hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Ortodontik IBT üretimi, braket aktarımı, temizlik ve yazıcı uyumu için net cevaplar.",
     openFirst: true,
@@ -1721,7 +1722,7 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "Guide Resin",
         descriptionHtml: "Cerrahi rehber için biyouyumlu ve hassas kılavuz reçinesi.",
         href: "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F6E3E4,#fff)",
       },
       {
@@ -1729,7 +1730,7 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Splint Hard",
         descriptionHtml: "Sert gece plağı ve bruksizm apareyleri için stabil splint reçinesi.",
         href: "/crs-splint-hard-resin-sert-gece-plagi-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#EFE7D3,#fff)",
       },
       {
@@ -1737,7 +1738,7 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Splint Soft",
         descriptionHtml: "Esnek ve biyouyumlu splint / gece plağı reçinesi; konforlu kullanım.",
         href: "/crs-splint-soft-resin-dental-splint-gece-plak-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#EFE7D3,#fff)",
       },
       {
@@ -1756,7 +1757,7 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi ortodontik IBT vakası, hangi temizlik ve post-curing akışı? Kısa bir görüşmeyle CRS IBT Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -1771,9 +1772,9 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Flexit Reçinesi",
   },
@@ -1785,7 +1786,7 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     pills: [
       { label: "Esnek protez" },
       { label: "Tam / parsiyel protez" },
-      { label: "Biyouyumlu" },
+      { label: tLocalized("Biyouyumlu", "Biocompatible") },
       { value: "385–405 nm", label: "LCD / DLP uyumu" },
     ],
     gallery: CRS_FLEXIT_GALLERY,
@@ -1797,11 +1798,11 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Esnek yapısıyla <span class="hl">uyum ve konfor</span> sağlar.',
     sideHtml: "CRS Flexit Reçinesi, çıkarılabilir tam ve parsiyel protezlerde dayanıklılık, doğal estetik ve hasta konforu dengesine odaklanır.",
     panelTitleHtml: "CRS Flexit Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -1814,13 +1815,13 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Hareketli protez için <span class="em">dayanım ve konfor</span> dengesi.',
     sideHtml:
       "CRS Flexit Reçinesi; çıkarılabilir tam ve parsiyel protezlerin üretimi için geliştirilmiş, ışıkla kürlenen esnek dental 3D yazıcı reçinesidir. 385 nm ve 405 nm dalga boyunda çalışan LCD ve DLP sistemlerle uyumludur.",
     items: [
       {
-        name: "Dalga Boyu",
+        name: tLocalized("Dalga Boyu", "Wavelength"),
         value: "385",
         unit: "–405 nm",
         tag: "LCD / DLP",
@@ -1830,7 +1831,7 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         name: "Uygulama",
         value: "Tam",
         unit: "+ Parsiyel",
-        tag: "Protez",
+        tag: tLocalized("Protez", "Denture"),
         caption: "Tam ve parsiyel çıkarılabilir protezlerin üretimi ve protez tabanı uygulamaları.",
       },
       {
@@ -1847,7 +1848,7 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Protez tabanında <span class="em">esnek ve stabil</span> sonuç.',
     descriptionHtml:
       "Akıllı elastikiyet özelliği sayesinde ortam koşullarında stabil formunu korurken, kullanım sırasında esnek davranış sergileyerek hasta konforunu artırır. Doğal diş eti görünümünü taklit eden estetik yapısı ve biyouyumlu formülasyonu ile dengeli sonuçlar sunar.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Tam + parsiyel protez" },
@@ -1922,7 +1923,7 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Flexit Reçinesi hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Esnek protez üretimi, temizlik, post-curing, biyouyumluluk ve saklama koşulları için net cevaplar.",
     openFirst: true,
@@ -1991,7 +1992,7 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Model",
         descriptionHtml: "Dental model üretimi için hassas yüzey ve stabil ölçü reçinesi.",
         href: "/crs-model-recinesi-dental-model-uretimi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#EFE7D3,#fff)",
       },
       {
@@ -1999,7 +2000,7 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Tray Resin",
         descriptionHtml: "Kişiye özel ölçü kaşığı üretimi için rijit ve stabil reçine.",
         href: "/crs-tray-resin-kisiye-ozel-olcu-kasigi-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F6E3E4,#fff)",
       },
       {
@@ -2007,7 +2008,7 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
         title: "CRS Denture",
         descriptionHtml: "Çıkarılabilir protez tabanı ve PMMA uyumlu protez üretimi.",
         href: "/crs-denture-recinesi-protez-tabani-recinesi",
-        linkText: "İncele",
+        linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F5DEE0,#fff)",
       },
       {
@@ -2026,7 +2027,7 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi protez vakası, hangi temizlik ve post-curing akışı? Kısa bir görüşmeyle CRS Flexit Reçinesi'ni cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -2041,9 +2042,9 @@ export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Aligner",
   },
@@ -2067,11 +2068,11 @@ export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Tedavi planını <span class="hl">daha hızlı</span> üretime taşır.',
     sideHtml: "CRS Aligner, direkt baskı hizalayıcı üretiminde işlem adımlarını azaltarak üretim sürecini verimli hale getirmeye odaklanır.",
     panelTitleHtml: "CRS Aligner Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -2084,7 +2085,7 @@ export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Kuvvetli, esnek ve <span class="em">memory shape</span> karakterli.',
     sideHtml:
       "CRS Aligner, biyouyumlu ortodontik reçine sınıfında direkt hizalayıcı baskısı için geliştirilmiştir. Teknik değerler ISO 20795-2 ve ASTM D638 referanslarıyla listelenir.",
@@ -2117,7 +2118,7 @@ export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Tabaka termoform yerine <span class="em">direkt hizalayıcı baskısı.</span>',
     descriptionHtml:
       "Ortodontistlerin hizalayıcıların dayanıklılığını ve esnekliğini kontrol etmesine olanak tanır. Benzersiz hafıza şekli fonksiyonu, hastaların daha rahat bir tedavi deneyimi yaşamasını destekler.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Malzeme tipi", value: "Biyouyumlu ortodontik reçine" },
@@ -2184,7 +2185,7 @@ export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Aligner sonucu <span class="em">parametreyle tamamlanır.</span>',
     textHtml:
       "Direkt hizalayıcı üretiminde reçinenin kuvvet, esneklik ve memory shape davranışı doğru baskı, yıkama ve kürleme akışıyla birlikte korunur. Reçineyi kullandığınız yazıcıya göre kalibre ederek teslim ediyoruz.",
-    chips: ["Memory shape", "Direkt aligner baskı", "Yıkama", "UV post-curing", "100°C altı dezenfeksiyon"],
+    chips: ["Memory shape", "Direkt aligner baskı", tLocalized("Yıkama", "Washing"), "UV post-curing", "100°C altı dezenfeksiyon"],
     buttons: [
       { text: "3D yazıcıları gör →", href: "/3d-yazicilar" },
       { text: "Uzmana danış →", href: "/pages/iletisim", variant: "line" },
@@ -2192,7 +2193,7 @@ export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Aligner hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Direkt aligner baskısı, memory shape fonksiyonu, dezenfeksiyon ve teknik değerler için net cevaplar.",
     openFirst: true,
@@ -2232,9 +2233,9 @@ export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "ORTODONTİ", title: "CRS IBT Resin", descriptionHtml: "Ortodontik braket yerleştirme için hassas ve esnek indirect bonding tray reçinesi.", href: "/crs-ibt-resin-ortodontik-ibt-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F5DEE0,#fff)" },
-      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
-      { tag: "DİŞ ETİ", title: "CRS Gingiva", descriptionHtml: "İmplant modelleri için elastik ve yırtılmaz diş eti reçinesi.", href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "ORTODONTİ", title: "CRS IBT Resin", descriptionHtml: "Ortodontik braket yerleştirme için hassas ve esnek indirect bonding tray reçinesi.", href: "/crs-ibt-resin-ortodontik-ibt-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F5DEE0,#fff)" },
+      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "DİŞ ETİ", title: "CRS Gingiva", descriptionHtml: "İmplant modelleri için elastik ve yırtılmaz diş eti reçinesi.", href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -2244,7 +2245,7 @@ export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi aligner vakası, hangi yıkama ve post-curing akışı? Kısa bir görüşmeyle CRS Aligner Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -2259,9 +2260,9 @@ export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Denture",
   },
@@ -2285,11 +2286,11 @@ export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Düşük çekme oranıyla <span class="hl">mükemmel uyum</span> sağlar.',
     sideHtml: "CRS Denture, standart PMMA protez taban malzemelerine kıyasla düşük çekme oranı ve doğal şeffaflıkla protez tabanlarında uyumlu sonuç hedefler.",
     panelTitleHtml: "CRS Denture Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -2302,7 +2303,7 @@ export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Protez tabanında <span class="em">dayanım ve doğal şeffaflık</span>.',
     sideHtml:
       "CRS Denture Reçinesi; çıkarılabilir protez tabanları için geliştirilmiş, biyouyumlu CE Class IIA sertifikalı protez reçinesidir. Teknik değerler ISO 20795 ve ASTM standartlarıyla listelenir.",
@@ -2317,7 +2318,7 @@ export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Düşük çekme oranıyla <span class="em">uyumlu protez tabanı.</span>',
     descriptionHtml:
       "Standart PMMA protez taban malzemelerine kıyasla düşük çekme oranına sahiptir. Doğal şeffaflık ve dayanıklılık ile uzun ömürlü, doğal görünümlü protezler üretmeyi destekler.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Çekme dayanımı", value: "30 MPa" },
@@ -2384,7 +2385,7 @@ export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Protez sonucu <span class="em">cilalama ve glaze ile tamamlanır.</span>',
     textHtml:
       "CRS Denture protez tabanında düşük çekme, doğal şeffaflık ve dayanıklılık; doğru baskı, temizlik, post-curing, mekanik cilalama ve optik glaze akışıyla birlikte görünür hale gelir.",
-    chips: ["CE Class IIA", "Düşük çekme", "Mekanik cilalama", "Optik glaze", "ISO 10993"],
+    chips: ["CE Class IIA", "Düşük çekme", "Mekanik cilalama", tLocalized("Optik glaze", "optik glaze"), "ISO 10993"],
     buttons: [
       { text: "3D yazıcıları gör →", href: "/3d-yazicilar" },
       { text: "Uzmana danış →", href: "/pages/iletisim", variant: "line" },
@@ -2392,7 +2393,7 @@ export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Denture hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Protez tabanı üretimi, akrilik diş uyumu, cilalama ve teknik değerler için net cevaplar.",
     openFirst: true,
@@ -2432,9 +2433,9 @@ export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "ESNEK PROTEZ", title: "CRS Flexit", descriptionHtml: "Tam ve parsiyel çıkarılabilir protezler için esnek dental reçine.", href: "/crs-flexit-recin-protez-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
-      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
-      { tag: "DİŞ ETİ", title: "CRS Gingiva", descriptionHtml: "İmplant modelleri için elastik ve yırtılmaz diş eti reçinesi.", href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "ESNEK PROTEZ", title: "CRS Flexit", descriptionHtml: "Tam ve parsiyel çıkarılabilir protezler için esnek dental reçine.", href: "/crs-flexit-recin-protez-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "DİŞ ETİ", title: "CRS Gingiva", descriptionHtml: "İmplant modelleri için elastik ve yırtılmaz diş eti reçinesi.", href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -2444,7 +2445,7 @@ export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi protez tabanı vakası, hangi cilalama veya glaze akışı? Kısa bir görüşmeyle CRS Denture Reçinesi'ni cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -2459,9 +2460,9 @@ export const CRS_GINGIVA_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Gingiva",
   },
@@ -2485,11 +2486,11 @@ export const CRS_GINGIVA_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Doğal diş etine <span class="hl">çok yakın</span> görünüm verir.',
     sideHtml: "CRS Gingiva, implant modellerinde yumuşak doku ve diş eti maskesi üretimi için esnek, yırtılmaz ve boyutsal olarak stabil bir baskı malzemesidir.",
     panelTitleHtml: "CRS Gingiva Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -2502,7 +2503,7 @@ export const CRS_GINGIVA_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Esnek, yırtılmaz ve <span class="em">boyutsal olarak stabil</span>.',
     sideHtml:
       "CRS Gingiva Reçinesi; implant modelleri için yumuşak doku ve diş eti maskesi üretiminde kullanılan elastik diş eti reçinesidir. Teknik başlıklarda ASTM D638 ve ISO 10139-2 referansları yer alır.",
@@ -2517,7 +2518,7 @@ export const CRS_GINGIVA_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'İmplant modellerinde <span class="em">esnek yumuşak doku.</span>',
     descriptionHtml:
       "Renk, doku ve hissiyat olarak doğal diş etine çok benzeyen baskılar almanızı sağlar. Baskı sırasında boyutsal stabiliteye sahiptir ve baskı işlemi tamamlandıktan sonra lekesizdir.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "İmplant modeli yumuşak doku" },
@@ -2592,7 +2593,7 @@ export const CRS_GINGIVA_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Gingiva hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Diş eti maskesi, implant modeli yumuşak doku ve elastik malzeme davranışı için net cevaplar.",
     openFirst: true,
@@ -2632,9 +2633,9 @@ export const CRS_GINGIVA_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
-      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F5DEE0,#fff)" },
-      { tag: "REHBER", title: "Guide Resin", descriptionHtml: "Cerrahi rehber için biyouyumlu ve hassas kılavuz reçinesi.", href: "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F5DEE0,#fff)" },
+      { tag: "REHBER", title: "Guide Resin", descriptionHtml: "Cerrahi rehber için biyouyumlu ve hassas kılavuz reçinesi.", href: "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -2644,7 +2645,7 @@ export const CRS_GINGIVA_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi implant modeli, hangi diş eti maskesi akışı? Kısa bir görüşmeyle CRS Gingiva Reçinesi'ni cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -2659,9 +2660,9 @@ export const CRS_MODEL_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Model",
   },
@@ -2685,11 +2686,11 @@ export const CRS_MODEL_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Baskı sonrası <span class="hl">boyut değiştirmez</span> model reçinesi.',
     sideHtml: "CRS Model, protez ve ortodontik iş akışlarında referans model doğruluğunu korumaya odaklanan yüksek hassasiyetli dental model reçinesidir.",
     panelTitleHtml: "CRS Model Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -2702,7 +2703,7 @@ export const CRS_MODEL_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Marjin sınırları ve <span class="em">tüberkül detayları</span> belirgin.',
     sideHtml:
       "CRS Model ile üretilen modellerde kole çizgileri belirgindir ve marjinal oturum rahatlıkla tespit edilir. Teknik başlıklarında ISO 10477 ve ASTM D638 referansları listelenir.",
@@ -2717,7 +2718,7 @@ export const CRS_MODEL_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Tedavinin referans noktası <span class="em">doğru modeldir.</span>',
     descriptionHtml:
       "Bir tedavideki en önemli şey modelin doğruluğudur; diğer tüm işlemlerin referans noktası model olur. CRS Model'in yüksek boyutsal kararlılığı sayesinde protezin başlangıç noktasından emin olabilirsiniz.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Master protez modeli" },
@@ -2792,7 +2793,7 @@ export const CRS_MODEL_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Model hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Hassas model üretimi, implant analog uyumu, model detayları ve yazıcı uyumu için net cevaplar.",
     openFirst: true,
@@ -2820,9 +2821,9 @@ export const CRS_MODEL_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "DİŞ ETİ", title: "CRS Gingiva", descriptionHtml: "İmplant modelleri için elastik ve yırtılmaz diş eti reçinesi.", href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
-      { tag: "TRAY", title: "CRS Tray Resin", descriptionHtml: "Kişiye özel ölçü kaşığı üretimi için DLP / LCD uyumlu reçine.", href: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F5DEE0,#fff)" },
-      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "DİŞ ETİ", title: "CRS Gingiva", descriptionHtml: "İmplant modelleri için elastik ve yırtılmaz diş eti reçinesi.", href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "TRAY", title: "CRS Tray Resin", descriptionHtml: "Kişiye özel ölçü kaşığı üretimi için DLP / LCD uyumlu reçine.", href: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F5DEE0,#fff)" },
+      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -2832,7 +2833,7 @@ export const CRS_MODEL_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi model uygulaması, hangi post-process akışı? Kısa bir görüşmeyle CRS Model Reçinesi'ni cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -2847,9 +2848,9 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Tray Resin",
   },
@@ -2859,7 +2860,7 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     leadHtml:
       "CRS Tray Resin; kişiye özel ölçü kaşıklarının üretimi için geliştirilmiş, DLP ve LCD yazıcılarla uyumlu bir 3D yazıcı reçinesidir. 385–405 nm dalga boyunda çalışan sistemlerle optimize edilmiştir ve ölçü süreçlerinde güvenilir, tekrarlanabilir sonuçlar sağlar.",
     pills: [
-      { label: "Ölçü kaşığı" },
+      { label: tLocalized("Ölçü kaşığı", "impression tray") },
       { value: "385–405 nm", label: "LCD / DLP uyumu" },
       { label: "Dijital iş akışı" },
       { label: "Tekrarlanabilir sonuç" },
@@ -2873,11 +2874,11 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Ölçü süreçlerinde <span class="hl">stabil ve tekrarlanabilir</span> sonuç.',
     sideHtml: "CRS Tray Resin, dijital tasarım sürecine uyumlu kişiye özel ölçü kaşıkları üretmek için geliştirilmiş dental reçinedir.",
     panelTitleHtml: "CRS Tray Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -2890,12 +2891,12 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Kişiye özel ölçü kaşığı için <span class="em">385–405 nm</span> uyum.',
     sideHtml:
       "CRS Tray Resin, baskı sonrası uygulanan işlemlerle gerekli mekanik özellikleri kazanır ve ölçü kaşığı üretiminde güvenilir kullanım sunar.",
     items: [
-      { name: "Dalga Boyu", value: "385", unit: "–405 nm", tag: "LCD / DLP", caption: "385–405 nm dalga boyunda çalışan DLP ve LCD sistemlerle uyumlu üretim." },
+      { name: tLocalized("Dalga Boyu", "Wavelength"), value: "385", unit: "–405 nm", tag: "LCD / DLP", caption: "385–405 nm dalga boyunda çalışan DLP ve LCD sistemlerle uyumlu üretim." },
       { name: "Uygulama", value: "Ölçü", unit: "Kaşığı", tag: "Custom tray", caption: "Kişiye özel ölçü kaşıklarının dijital tasarımdan üretimine odaklanır." },
       { name: "İş Akışı", value: "Dijital", unit: "", tag: "Tekrarlanabilir", caption: "Her baskıda aynı formun korunmasına katkı sağlayan dijital ölçü süreci." },
     ],
@@ -2905,7 +2906,7 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Ölçü süreçlerinde <span class="em">kontrollü ve öngörülebilir</span> üretim.',
     descriptionHtml:
       "CRS Tray Reçinesi ile üretilen ölçü kaşıkları dijital tasarım sürecine uyumlu şekilde hazırlanır ve her baskıda aynı formun korunmasına katkı sağlar.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Kişiye özel ölçü kaşığı" },
@@ -2921,7 +2922,7 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Nerede kullanılır, <span class="em">neyle çalışır?</span>',
     sideHtml: "Hepsi tek bakışta: kişiye özel ölçü kaşığı, implant ölçü, kron-köprü ölçüleri ve uyumlu 3D yazıcılar.",
     photos: [
-      { src: CRS_TRAY_GALLERY[1].src, alt: "CRS Tray ölçü kaşığı uygulaması", title: "Ölçü kaşığı", text: "Kişiye özel ölçü kaşığı üretimi için stabil yapı." },
+      { src: CRS_TRAY_GALLERY[1].src, alt: "CRS Tray ölçü kaşığı uygulaması", title: tLocalized("Ölçü kaşığı", "impression tray"), text: "Kişiye özel ölçü kaşığı üretimi için stabil yapı." },
       { src: CRS_TRAY_GALLERY[2].src, alt: "CRS Tray implant ölçü uygulaması", title: "İmplant ölçü", text: "İmplant ölçü uygulamaları için dijital üretim akışı." },
       { src: CRS_TRAY_GALLERY[3].src, alt: "CRS Tray kron köprü ölçü uygulaması", title: "Kron-köprü ölçü", text: "Kron ve köprü ölçü süreçlerinde tekrarlanabilir sonuçlar." },
     ],
@@ -2972,7 +2973,7 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Ölçü kaşığı sonucu <span class="em">dijital akışla tamamlanır.</span>',
     textHtml:
       "Kişiye özel ölçü kaşığı üretiminde form stabilitesi, doğru yazıcı parametresi ve baskı sonrası işlem akışıyla korunur. Reçineyi kullandığınız yazıcıya göre kalibre ederek teslim ediyoruz.",
-    chips: ["385–405 nm uyum", "Ölçü kaşığı", "İmplant ölçü", "Kron-köprü ölçü", "Dijital iş akışı"],
+    chips: ["385–405 nm uyum", tLocalized("Ölçü kaşığı", "impression tray"), "İmplant ölçü", "Kron-köprü ölçü", "Dijital iş akışı"],
     buttons: [
       { text: "3D yazıcıları gör →", href: "/3d-yazicilar" },
       { text: "Uzmana danış →", href: "/pages/iletisim", variant: "line" },
@@ -2980,7 +2981,7 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Tray Resin hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Ölçü kaşığı üretimi, yazıcı uyumu, baskı sonrası işlem ve kullanım alanları için net cevaplar.",
     openFirst: true,
@@ -3008,9 +3009,9 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
-      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F5DEE0,#fff)" },
-      { tag: "REHBER", title: "Guide Resin", descriptionHtml: "Cerrahi rehber için biyouyumlu ve hassas kılavuz reçinesi.", href: "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F5DEE0,#fff)" },
+      { tag: "REHBER", title: "Guide Resin", descriptionHtml: "Cerrahi rehber için biyouyumlu ve hassas kılavuz reçinesi.", href: "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -3020,7 +3021,7 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi ölçü uygulaması, hangi post-process akışı? Kısa bir görüşmeyle CRS Tray Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -3035,9 +3036,9 @@ export const MASH_CLEAR_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "Mash Clear Resin",
   },
@@ -3061,11 +3062,11 @@ export const MASH_CLEAR_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Şeffaf yapısıyla <span class="hl">cerrahi kontrolü</span> artırır.',
     sideHtml: "Mash Clear Resin, cerrahi kılavuz ve splint uygulamalarında şeffaf yapısı sayesinde operasyon sırasında maksimum görüş avantajı sunar.",
     panelTitleHtml: "Mash Clear Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -3078,7 +3079,7 @@ export const MASH_CLEAR_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Şeffaf, biyouyumlu ve <span class="em">otoklavlanabilir</span> yapı.',
     sideHtml:
       "Mash Clear Resin, yüksek mekanik dayanımı, stabil form yapısı ve otoklavlanabilir özelliğiyle klinik ve laboratuvar süreçlerinde pratik kullanım sunar.",
@@ -3093,7 +3094,7 @@ export const MASH_CLEAR_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Cerrahi uygulamada <span class="em">net görüş ve güvenilir sonuç.</span>',
     descriptionHtml:
       "Şeffaf yapısı sayesinde operasyon sırasında anatomik yapıların daha net değerlendirilmesine olanak tanır. Yüksek ölçü doğruluğu ve stabil baskı performansı klinik süreçlerde güvenilir ve öngörülebilir sonuçları destekler.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Dental implant cerrahisi" },
@@ -3168,7 +3169,7 @@ export const MASH_CLEAR_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'Mash Clear Resin hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "İntraoral kullanım, cerrahi kılavuz üretimi, şeffaflık, sterilizasyon ve yüzey kalitesi için net cevaplar.",
     openFirst: true,
@@ -3196,9 +3197,9 @@ export const MASH_CLEAR_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "REHBER", title: "Guide Resin", descriptionHtml: "Cerrahi rehber için biyouyumlu ve hassas kılavuz reçinesi.", href: "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
-      { tag: "SERT SPLINT", title: "CRS Splint Hard", descriptionHtml: "Sert gece plağı ve bruksizm apareyleri için stabil splint reçinesi.", href: "/crs-splint-hard-resin-sert-gece-plagi-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
-      { tag: "TRAY", title: "CRS Tray Resin", descriptionHtml: "Kişiye özel ölçü kaşığı üretimi için DLP / LCD uyumlu reçine.", href: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F5DEE0,#fff)" },
+      { tag: "REHBER", title: "Guide Resin", descriptionHtml: "Cerrahi rehber için biyouyumlu ve hassas kılavuz reçinesi.", href: "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "SERT SPLINT", title: "CRS Splint Hard", descriptionHtml: "Sert gece plağı ve bruksizm apareyleri için stabil splint reçinesi.", href: "/crs-splint-hard-resin-sert-gece-plagi-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "TRAY", title: "CRS Tray Resin", descriptionHtml: "Kişiye özel ölçü kaşığı üretimi için DLP / LCD uyumlu reçine.", href: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F5DEE0,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -3208,7 +3209,7 @@ export const MASH_CLEAR_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi cerrahi kılavuz vakası, hangi sterilizasyon akışı? Kısa bir görüşmeyle Mash Clear Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -3223,9 +3224,9 @@ export const CRS_CAST_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaHref: "#satinal",
   },
   breadcrumb: {
-    homeText: "Ana sayfa",
+    homeText: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    categoryText: "Dental Reçineler",
+    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
     productText: "CRS Cast",
   },
@@ -3244,11 +3245,11 @@ export const CRS_CAST_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Döküm akışında <span class="hl">çekme ve kalıntı</span> riskini azaltır.',
     sideHtml: "CRS Cast, dental döküm uygulamalarında çekmeyen ve kalıntı bırakmayan reçine karakteriyle öne çıkar.",
     panelTitleHtml: "CRS Cast Reçinesi <span class=\"em\">nerede öne çıkar?</span>",
@@ -3261,7 +3262,7 @@ export const CRS_CAST_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Dental döküm için <span class="em">çekmeyen ve kalıntısız</span> reçine.',
     sideHtml: "CRS Cast; çekmeyen, kalıntı bırakmayan ve tüm revetman markalarıyla çalışabilen döküm reçinesi özellikleriyle konumlandırılır.",
     items: [
@@ -3275,7 +3276,7 @@ export const CRS_CAST_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Döküm sürecinde <span class="em">kalıntısız ve uyumlu</span> akış.',
     descriptionHtml:
       "Dental laboratuvarlarda döküm reçinesi seçimi; çekme davranışı, yanma sonrası kalıntı ve revetman uyumu üzerinden belirlenir. CRS Cast bu üç başlık için konumlandırılmış döküm reçinesidir.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Ürün", value: "CRS Cast" },
@@ -3333,7 +3334,7 @@ export const CRS_CAST_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'CRS Cast hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Döküm reçinesi, revetman uyumu ve kalıntısız yanma akışı için net cevaplar.",
     openFirst: true,
@@ -3361,9 +3362,9 @@ export const CRS_CAST_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
-      { tag: "TRAY", title: "CRS Tray Resin", descriptionHtml: "Kişiye özel ölçü kaşığı üretimi için DLP / LCD uyumlu reçine.", href: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F5DEE0,#fff)" },
-      { tag: "STUDY", title: "Mash Study", descriptionHtml: "Ekonomik ve yüksek çözünürlüklü dental model reçinesi.", href: "/mash-study-resin-dental-model-3d-yazici-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "TRAY", title: "CRS Tray Resin", descriptionHtml: "Kişiye özel ölçü kaşığı üretimi için DLP / LCD uyumlu reçine.", href: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F5DEE0,#fff)" },
+      { tag: "STUDY", title: "Mash Study", descriptionHtml: "Ekonomik ve yüksek çözünürlüklü dental model reçinesi.", href: "/mash-study-resin-dental-model-3d-yazici-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -3373,7 +3374,7 @@ export const CRS_CAST_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
       "Hangi yazıcı, hangi revetman, hangi döküm akışı? Kısa bir görüşmeyle CRS Cast Reçinesi'ni cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -3387,7 +3388,7 @@ export const MASH_STUDY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaText: "Ücretsiz parametre uyumlaması →",
     ctaHref: "#satinal",
   },
-  breadcrumb: { homeText: "Ana sayfa", homeHref: "/", categoryText: "Dental Reçineler", categoryHref: "/dental-3d-yazici-recineleri", productText: "Mash Study" },
+  breadcrumb: { homeText: tLocalized("Ana sayfa", "Home"), homeHref: "/", categoryText: tLocalized("Dental Reçineler", "Dental Resins"), categoryHref: "/dental-3d-yazici-recineleri", productText: "Mash Study" },
   hero: {
     kicker: "Mash Study · Ekonomik Dental Model Reçinesi",
     titleHtml: 'Dental model artık <span class="em">uygun maliyetle</span> net çıkıyor.',
@@ -3403,11 +3404,11 @@ export const MASH_STUDY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Uygun fiyatla <span class="hl">yüksek çözünürlüklü</span> model üretir.',
     sideHtml: "Mash Study Resin, dental laboratuvarlar ve eğitim uygulamaları için detay doğruluğu ile yüzey kalitesini dengeli şekilde sunar.",
     panelTitleHtml: "Mash Study Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -3420,7 +3421,7 @@ export const MASH_STUDY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Net anatomik detay ve <span class="em">yüksek ölçü doğruluğu</span>.',
     sideHtml: "Mash Study Resin ile üretilen dental modellerde diş anatomisi, marjin sınırları ve yüzey detayları net şekilde görülebilir.",
     items: [
@@ -3434,7 +3435,7 @@ export const MASH_STUDY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Ekonomik model reçinesinde <span class="em">stabil baskı performansı.</span>',
     descriptionHtml:
       "Gelişmiş reçine formülü sayesinde baskıdan kürleme aşamasına kadar yüksek stabilite sağlar. Dental laboratuvar ve eğitim uygulamalarında net kenar hatları, pürüzsüz yüzey ve yüksek ölçü doğruluğu sunar.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Dental model üretimi" },
@@ -3475,7 +3476,7 @@ export const MASH_STUDY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'Mash Study hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Dental model üretimi, yüzey kalitesi, yazıcı uyumu ve post-process için net cevaplar.",
     openFirst: true,
@@ -3503,9 +3504,9 @@ export const MASH_STUDY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
-      { tag: "DİŞ ETİ", title: "CRS Gingiva", descriptionHtml: "İmplant modelleri için elastik ve yırtılmaz diş eti reçinesi.", href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
-      { tag: "TRAY", title: "CRS Tray Resin", descriptionHtml: "Kişiye özel ölçü kaşığı üretimi için DLP / LCD uyumlu reçine.", href: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F5DEE0,#fff)" },
+      { tag: "MODEL", title: "CRS Model", descriptionHtml: "Yüksek hassasiyetli master protez ve ortodontik model reçinesi.", href: "/crs-model-yuksek-hassasiyetli-model-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "DİŞ ETİ", title: "CRS Gingiva", descriptionHtml: "İmplant modelleri için elastik ve yırtılmaz diş eti reçinesi.", href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "TRAY", title: "CRS Tray Resin", descriptionHtml: "Kişiye özel ölçü kaşığı üretimi için DLP / LCD uyumlu reçine.", href: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F5DEE0,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -3514,7 +3515,7 @@ export const MASH_STUDY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     textHtml: "Hangi yazıcı, hangi model uygulaması, hangi temizlik ve kürleme akışı? Mash Study Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -3528,7 +3529,7 @@ export const MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaText: "Ücretsiz parametre uyumlaması →",
     ctaHref: "#satinal",
   },
-  breadcrumb: { homeText: "Ana sayfa", homeHref: "/", categoryText: "Dental Reçineler", categoryHref: "/dental-3d-yazici-recineleri", productText: "Mash Trial Pink Resin" },
+  breadcrumb: { homeText: tLocalized("Ana sayfa", "Home"), homeHref: "/", categoryText: tLocalized("Dental Reçineler", "Dental Resins"), categoryHref: "/dental-3d-yazici-recineleri", productText: "Mash Trial Pink Resin" },
   hero: {
     kicker: "Mash Trial Pink Resin · Dental Geçici Try-in Reçinesi",
     titleHtml: 'Try-in provası artık <span class="em">klinik doğrulukla</span> basılıyor.',
@@ -3544,11 +3545,11 @@ export const MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Try-in protezlerde <span class="hl">uyum ve kapanış</span> kontrolü.',
     sideHtml: "Mash Trial Pink Resin, oklüzyon ve kapanış ilişkisini değerlendirme aşamasında yüksek doğruluk ve stabil prova sonucu sunar.",
     panelTitleHtml: "Mash Trial Pink Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -3561,7 +3562,7 @@ export const MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Dental try-in için <span class="em">stabil ve görünür</span> prova reçinesi.',
     sideHtml:
       "Mash Trial Pink Resin; düşük viskozitesi, kolay işlenebilir yapısı ve baskı sonrası form stabilitesi ile hızlı ve pratik üretim imkanı sunar.",
@@ -3576,7 +3577,7 @@ export const MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Estetik uyum ve <span class="em">pratik prova</span> avantajı.',
     descriptionHtml:
       "Diş eti görünümünü taklit eden geçici dental reçine yapısıyla estetik değerlendirme sürecini kolaylaştırır. X-ray ile görünürlük sağlayan formülasyonu klinik değerlendirme süreçlerine destek olur.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Geçici try-in protez" },
@@ -3617,7 +3618,7 @@ export const MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'Mash Trial Pink hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Try-in protez, ağız içi prova, mekanik dayanım, yazıcı uyumu ve post-process için net cevaplar.",
     openFirst: true,
@@ -3645,9 +3646,9 @@ export const MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "TRY-IN", title: "Mash Trial White", descriptionHtml: "Geçici dental restorasyon provaları için beyaz prova reçinesi.", href: "/mash-trial-white-resin-gecici-dental-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
-      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F5DEE0,#fff)" },
-      { tag: "MODEL", title: "Mash Study", descriptionHtml: "Ekonomik ve yüksek çözünürlüklü dental model reçinesi.", href: "/mash-study-resin-dental-model-3d-yazici-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "TRY-IN", title: "Mash Trial White", descriptionHtml: "Geçici dental restorasyon provaları için beyaz prova reçinesi.", href: "/mash-trial-white-resin-gecici-dental-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F5DEE0,#fff)" },
+      { tag: "MODEL", title: "Mash Study", descriptionHtml: "Ekonomik ve yüksek çözünürlüklü dental model reçinesi.", href: "/mash-study-resin-dental-model-3d-yazici-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -3656,7 +3657,7 @@ export const MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     textHtml: "Hangi yazıcı, hangi try-in vaka, hangi klinik prova akışı? Mash Trial Pink Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -3670,7 +3671,7 @@ export const MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     ctaText: "Ücretsiz parametre uyumlaması →",
     ctaHref: "#satinal",
   },
-  breadcrumb: { homeText: "Ana sayfa", homeHref: "/", categoryText: "Dental Reçineler", categoryHref: "/dental-3d-yazici-recineleri", productText: "Mash Trial White Resin" },
+  breadcrumb: { homeText: tLocalized("Ana sayfa", "Home"), homeHref: "/", categoryText: tLocalized("Dental Reçineler", "Dental Resins"), categoryHref: "/dental-3d-yazici-recineleri", productText: "Mash Trial White Resin" },
   hero: {
     kicker: "Mash Trial White Resin · Geçici Dental Reçine",
     titleHtml: 'Geçici prova artık <span class="em">görsel netlikle</span> kontrol ediliyor.',
@@ -3686,11 +3687,11 @@ export const MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     addToCartText: "Sepete ekle →",
     addingToCartText: "Ekleniyor...",
     outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
-    label: "Kullanıcı Deneyimi",
+    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
     titleHtml: 'Geçici restorasyonda <span class="hl">uyum ve estetik</span> kontrolü.',
     sideHtml: "Mash Trial White Resin, protez uyumu, oklüzyon ve estetik değerlendirmelerin klinik ortamda daha güvenilir yapılmasına yardımcı olur.",
     panelTitleHtml: "Mash Trial White Resin kullananlar <span class=\"em\">nasıl değerlendirdi?</span>",
@@ -3703,7 +3704,7 @@ export const MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   metrics: {
     index: "02",
-    label: "Teknik Özellikler",
+    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
     titleHtml: 'Geçici restorasyon için <span class="em">CE Class I</span> prova reçinesi.',
     sideHtml:
       "Mash Trial White Resin, özel fotopolimer formülasyonu sayesinde baskı sonrası stabil yapı ve yüksek görsel netlik sunar. 385 nm ve 405 nm UV ışık kaynağı kullanan LCD ve DLP yazıcılarla uyumludur.",
@@ -3718,7 +3719,7 @@ export const MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     titleHtml: 'Geçici dental provalarda <span class="em">klinik kontrolü kolaylaştırır.</span>',
     descriptionHtml:
       "Protez uyumu, oklüzyon ve estetik değerlendirmelerin daha güvenilir yapılmasına destek olur. CE Class I sertifikalı yapısı ve röntgende görünür formülasyonu dijital diş hekimliği süreçlerinde pratik bir klinik çözüm sunar.",
-    ctaText: "Boyut seç →",
+    ctaText: tLocalized("Boyut seç →", "Select size →"),
     ctaHref: "#satinal",
     rows: [
       { label: "Uygulama", value: "Geçici prova restorasyonu" },
@@ -3759,7 +3760,7 @@ export const MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
   },
   faq: {
     index: "05",
-    label: "Sık Sorulan Sorular",
+    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
     titleHtml: 'Mash Trial White hakkında <span class="em">merak edilenler.</span>',
     sideHtml: "Geçici prova restorasyonları, kalıcı kullanım sınırı, yazıcı uyumu ve post-process için net cevaplar.",
     openFirst: true,
@@ -3787,9 +3788,9 @@ export const MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     label: "İlgili Reçineler",
     titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
     items: [
-      { tag: "TRY-IN", title: "Mash Trial Pink", descriptionHtml: "Dental try-in uygulamaları için pembe geçici prova reçinesi.", href: "/mash-trial-pink-resin-dental-try-in-gecici-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F6E3E4,#fff)" },
-      { tag: "MODEL", title: "Mash Study", descriptionHtml: "Ekonomik ve yüksek çözünürlüklü dental model reçinesi.", href: "/mash-study-resin-dental-model-3d-yazici-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#EFE7D3,#fff)" },
-      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: "İncele", background: "linear-gradient(160deg,#F5DEE0,#fff)" },
+      { tag: "TRY-IN", title: "Mash Trial Pink", descriptionHtml: "Dental try-in uygulamaları için pembe geçici prova reçinesi.", href: "/mash-trial-pink-resin-dental-try-in-gecici-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F6E3E4,#fff)" },
+      { tag: "MODEL", title: "Mash Study", descriptionHtml: "Ekonomik ve yüksek çözünürlüklü dental model reçinesi.", href: "/mash-study-resin-dental-model-3d-yazici-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#EFE7D3,#fff)" },
+      { tag: "PROTEZ", title: "CRS Denture", descriptionHtml: "Çıkarılabilir protez tabanları için biyouyumlu protez reçinesi.", href: "/crs-denture-biouyumlu-protez-recinesi", linkText: tLocalized("İncele", "Explore"), background: "linear-gradient(160deg,#F5DEE0,#fff)" },
       { tag: "TÜM HAT", title: "Tüm reçineler", descriptionHtml: "Dental reçineleri uygulamaya göre karşılaştırın; doğru reçineyi seçin.", href: "/dental-3d-yazici-recineleri", linkText: "Reçine seçici", background: "linear-gradient(160deg,#EEEEE9,#fff)" },
     ],
   },
@@ -3798,7 +3799,7 @@ export const MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     textHtml: "Hangi yazıcı, hangi geçici prova restorasyonu, hangi klinik değerlendirme akışı? Mash Trial White Resin'i cihazınızın parametreleriyle eşleştirip <b>ücretsiz</b> uyumlama desteğiyle teslim edelim.",
     primaryText: "Boyut seç ↑",
     primaryHref: "#satinal",
-    secondaryText: "Uzmana danış — ücretsiz",
+    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
     secondaryHref: "/pages/iletisim",
   },
 };
@@ -3870,7 +3871,7 @@ function spareRelatedItems(currentSlug: string): NonNullable<ProductDetailTempla
       title: "MASH P16L 16K LCD Ekran",
       descriptionHtml: "16K UHD monokrom LCD ekran; 385 nm P16L ışık sistemiyle uyumlu yedek parça.",
       href: `/${MASH_P16L_LCD_SCREEN_SLUG}`,
-      linkText: "İncele",
+      linkText: tLocalized("İncele", "Explore"),
       background: "linear-gradient(160deg,#EEF2F5,#fff)",
     },
     {
@@ -3878,7 +3879,7 @@ function spareRelatedItems(currentSlug: string): NonNullable<ProductDetailTempla
       title: "MASH P16L Büyük Baskı Tablası",
       descriptionHtml: "211x118 mm geniş baskı alanı; yüksek hacimli dental üretimler için standart tabla.",
       href: `/${MASH_P16L_LARGE_BUILD_PLATE_SLUG}`,
-      linkText: "İncele",
+      linkText: tLocalized("İncele", "Explore"),
       background: "linear-gradient(160deg,#F3EFE7,#fff)",
     },
     {
@@ -3886,7 +3887,7 @@ function spareRelatedItems(currentSlug: string): NonNullable<ProductDetailTempla
       title: "MASH P16L Reçine Tankı",
       descriptionHtml: "800 ml alüminyum reçine tankı; hızlı kilit ve ısıtma sistemiyle uyumlu yapı.",
       href: `/${MASH_P16L_RESIN_TANK_SLUG}`,
-      linkText: "İncele",
+      linkText: tLocalized("İncele", "Explore"),
       background: "linear-gradient(160deg,#EDEFE9,#fff)",
     },
     {
@@ -3894,7 +3895,7 @@ function spareRelatedItems(currentSlug: string): NonNullable<ProductDetailTempla
       title: "Şeffaf ACF Film",
       descriptionHtml: "LCD/DLP reçine yazıcılarda UV geçirgenliği ve stabil katman oluşumu için sarf film.",
       href: `/${ACF_FEP_FILM_SLUG}`,
-      linkText: "İncele",
+      linkText: tLocalized("İncele", "Explore"),
       background: "linear-gradient(160deg,#EEF6F6,#fff)",
     },
     {
@@ -3902,7 +3903,7 @@ function spareRelatedItems(currentSlug: string): NonNullable<ProductDetailTempla
       title: "MASH P16L Ana Kart",
       descriptionHtml: "Motor, sensör ve veri iletişimi görevlerini yöneten merkezi kontrol kartı.",
       href: `/${MASH_P16L_MAINBOARD_SLUG}`,
-      linkText: "İncele",
+      linkText: tLocalized("İncele", "Explore"),
       background: "linear-gradient(160deg,#F0F0EA,#fff)",
     },
   ];
@@ -3922,7 +3923,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
       ctaHref: "#satinal",
     },
     breadcrumb: {
-      homeText: "Ana sayfa",
+      homeText: tLocalized("Ana sayfa", "Home"),
       homeHref: "/",
       categoryText: PRINTER_SPARE_CATEGORY.text,
       categoryHref: PRINTER_SPARE_CATEGORY.href,
@@ -3943,7 +3944,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
       addToCartText: "Sepete ekle →",
       addingToCartText: "Ekleniyor...",
       outOfStockText: "Stok yok",
-      trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+      trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
     },
     ratings: {
       index: "01",
@@ -3960,7 +3961,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
     },
     metrics: {
       index: "02",
-      label: "Teknik Özellikler",
+      label: tLocalized("Teknik Özellikler", "Technical Specifications"),
       titleHtml: config.metricTitleHtml,
       sideHtml: config.metricSideHtml,
       items: config.metrics,
@@ -4005,7 +4006,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
     },
     faq: {
       index: "05",
-      label: "Sık Sorulanlar",
+      label: tLocalized("Sık Sorulanlar", "Frequently Asked Questions"),
       titleHtml: `${config.productText} <span class="em">hakkında.</span>`,
       sideHtml: "Satın alma öncesi cihaz modeli ve parça uyumu birlikte kontrol edilmelidir.",
       openFirst: true,
@@ -4046,7 +4047,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
 const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
   {
     slug: CREALITY_HALOT_SKY_LCD_KIT_SLUG,
-    productText: "Creality Halot Sky LCD Ekran Kiti",
+    productText: tLocalized("Creality Halot Sky LCD Ekran Kiti", "Creality Halot Sky LCD ekran kiti"),
     kicker: "Creality Halot Sky · 6K Mono LCD Ekran Kiti",
     titleHtml: 'Halot Sky baskı kalitesi <span class="em">ekranla</span> yenilenir.',
     leadHtml:
@@ -4073,7 +4074,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
       { label: "Ekran", value: "6K Mono LCD" },
       { label: "Boyut", value: "9.25 inç" },
       { label: "Kullanım", value: "Bakım / onarım" },
-      { label: "Kategori", value: "Yedek parça" },
+      { label: "Kategori", value: tLocalized("Yedek parça", "spare parts") },
     ],
     useCaseSideHtml: "Halot Sky ekran değişimi, pozlama stabilitesi ve dokunmatik kontrol için kullanılan yedek parça.",
     useCasePhotos: [
@@ -4109,7 +4110,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     titleHtml: 'C01 baskı akışı <span class="em">stabil ekranla</span> sürer.',
     leadHtml:
       "Piocreat C01 3D yazıcıya özel LCD ekran kiti, baskı performansını korumaya ve üretim sürecini kesintisiz devam ettirmeye yardımcı olur. Stabil çalışma yapısı daha net ve tutarlı sonuçları destekler.",
-    pills: [{ label: "C01 uyumlu" }, { label: "LCD ekran" }, { label: "Stabil baskı" }, { label: "Yedek parça" }],
+    pills: [{ label: "C01 uyumlu" }, { label: "LCD ekran" }, { label: "Stabil baskı" }, { label: tLocalized("Yedek parça", "spare parts") }],
     images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/5178138f-f83b-4c0e-b48a-78f5e04be566/1080/piocreat-lcd.webp"],
     summarySubject: "LCD ekran kiti",
     metricTitleHtml: 'C01 için <span class="em">güvenilir ekran yenileme.</span>',
@@ -4127,7 +4128,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
       { label: "Parça", value: "LCD ekran kiti" },
       { label: "Kullanım", value: "Bakım / onarım" },
       { label: "Hedef", value: "Stabil baskı" },
-      { label: "Kategori", value: "Yedek parça" },
+      { label: "Kategori", value: tLocalized("Yedek parça", "spare parts") },
     ],
     useCaseSideHtml: "Piocreat C01 LCD ekran kiti, ekran kaynaklı baskı performansı düşüşlerinde üretim sürekliliğini destekler.",
     useCasePhotos: [
@@ -4141,7 +4142,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     ],
     devicesTitle: "Piocreat C01 ile çalışır",
     devicesTextHtml: "Piocreat C01 3D yazıcı için listelenen LCD ekran kitidir. Satın alma öncesi cihaz modelini birlikte doğrulayabiliriz.",
-    deviceChips: [{ label: "Piocreat C01" }, { label: "LCD ekran" }, { label: "Yedek parça" }, { label: "Uyumluluk kontrolü", highlighted: true }],
+    deviceChips: [{ label: "Piocreat C01" }, { label: "LCD ekran" }, { label: tLocalized("Yedek parça", "spare parts") }, { label: "Uyumluluk kontrolü", highlighted: true }],
     ecosystemTitleHtml: 'LCD değişimiyle <span class="em">üretim ritmi korunur.</span>',
     ecosystemTextHtml: "Ekran yenileme, temiz montaj ve ilk test baskısı birlikte planlandığında C01 üretim akışı daha güvenli devam eder.",
     ecosystemChips: ["LCD ekran", "C01 uyumu", "Test baskısı", "Teknik destek"],
@@ -4153,7 +4154,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     videoHref: "https://www.youtube.com/watch?v=dNPHy_sd9aQ",
     videoTitleHtml: 'C01 servis akışını <span class="em">videoda görün.</span>',
     videoSideHtml: "Piocreat C01 ekran değişimi ve dental LCD yazıcı bakım akışını video üzerinden değerlendirin.",
-    videoTitle: "Piocreat C01 LCD ekran kiti",
+    videoTitle: tLocalized("Piocreat C01 LCD ekran kiti", "Piocreat C01 LCD Ekran Kiti"),
     videoText: "LCD ekran, pozlama ve test baskısı kontrollerine odaklanan bakım akışı.",
   },
   {
@@ -4169,12 +4170,12 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/6d2e75a0-c8f4-4e2f-9d09-7811ff446084/1080/acf-fep-film1.webp",
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/8e64b47c-8d24-4979-9be3-cc183a94b88e/1080/acf-fep-film2.webp",
     ],
-    galleryBadge: "ACF FILM",
-    summarySubject: "ACF film",
+    galleryBadge: tLocalized("ACF FILM", "ACF Film"),
+    summarySubject: tLocalized("ACF film", "ACF Film"),
     metricTitleHtml: 'UV geçişi ve <span class="em">katman stabilitesi.</span>',
     metricSideHtml: "Film yüzeyi, reçine baskıda ışık iletimi ve katman ayrımı için kritik sarf parçasıdır.",
     metrics: [
-      { name: "Uyum", value: "LCD", unit: "/ DLP", tag: "Reçine", caption: "LCD ve DLP teknolojisine sahip reçine 3D yazıcılarda kullanılır." },
+      { name: "Uyum", value: "LCD", unit: "/ DLP", tag: tLocalized("Reçine", "Resin"), caption: "LCD ve DLP teknolojisine sahip reçine 3D yazıcılarda kullanılır." },
       { name: "Yüzey", value: "2", unit: "tip", tag: "Mat + düz", caption: "Bir yüzeyi pürüzsüz, diğer yüzeyi mat formdadır." },
       { name: "Koruma", value: "Mavi", unit: "jelatin", tag: "Kurulum", caption: "Ürün mavi koruyucu jelatin ile gönderilir; kullanım öncesi çıkarılır." },
     ],
@@ -4224,7 +4225,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
       "MASH P16L Ana Kart, cihazın elektronik kontrol süreçlerini yöneten merkezi bileşendir. Motor kontrolü, sensör yönetimi ve veri iletişimi gibi kritik görevlerde bakım ve onarım amacıyla kullanılır.",
     pills: [{ label: "MASH P16L uyumlu" }, { label: "Kontrol kartı" }, { label: "Motor & sensör yönetimi" }, { label: "Bakım / onarım" }],
     images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/c9594235-74c3-4f06-9b83-84028ecc7716/1080/mash-p16l-ana-kart-kontrol-karti.webp"],
-    summarySubject: "ana kart",
+    summarySubject: tLocalized("ana kart", "Ana kart"),
     metricTitleHtml: 'Elektronik kontrolün <span class="em">merkezi parçası.</span>',
     metricSideHtml: "Ana kart değişiminde cihaz revizyonu, bağlantılar ve servis kurulumu kritik kontrollerdir.",
     metrics: [
@@ -4240,7 +4241,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
       { label: "Parça", value: "Ana kart" },
       { label: "Görev", value: "Kontrol yönetimi" },
       { label: "Kullanım", value: "Bakım / onarım" },
-      { label: "Kategori", value: "Yedek parça" },
+      { label: "Kategori", value: tLocalized("Yedek parça", "spare parts") },
     ],
     useCaseSideHtml: "Ana kart değişimi, elektronik kontrol ve bağlantı kaynaklı servis süreçlerinde değerlendirilir.",
     useCasePhotos: [
@@ -4285,7 +4286,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     metricTitleHtml: 'Geniş alanda <span class="em">stabil tutunma.</span>',
     metricSideHtml: "Baskı tablasında yüzey tutunması, ölçü ve 385 nm P16L uyumu birlikte değerlendirilir.",
     metrics: [
-      { name: "Baskı Alanı", value: "211x118", unit: "mm", tag: "P16L", caption: "Tek seferde çok sayıda dental restorasyon üretimi için geniş tabla alanı." },
+      { name: tLocalized("Baskı Alanı", "Build Volume"), value: "211x118", unit: "mm", tag: "P16L", caption: "Tek seferde çok sayıda dental restorasyon üretimi için geniş tabla alanı." },
       { name: "Işık Uyumu", value: "385", unit: "nm", tag: "P16L", caption: "MASH P16L 385 nm ışık sistemiyle optimize edilmiş yapı." },
       { name: "Kullanım", value: "Yüksek", unit: "hacim", tag: "Dental", caption: "Yoğun laboratuvar üretiminde stabil baskı akışını destekler." },
     ],
@@ -4402,8 +4403,8 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     metricTitleHtml: 'Mikron detay için <span class="em">16K monokrom LCD.</span>',
     metricSideHtml: "P16L ekran değişiminde çözünürlük, ışık geçirgenliği ve 385 nm uyumu kritik teknik değerlerdir.",
     metrics: [
-      { name: "Çözünürlük", value: "16K", unit: "UHD", tag: "Mono LCD", caption: "Dental restorasyonlarda yüksek detay aktarımı için monokrom LCD ekran." },
-      { name: "Hassasiyet", value: "14x19", unit: "μm", tag: "Piksel", caption: "Mikroskobik doğruluk ve yüzey kalitesini destekleyen piksel hassasiyeti." },
+      { name: tLocalized("Çözünürlük", "Resolution"), value: "16K", unit: "UHD", tag: "Mono LCD", caption: "Dental restorasyonlarda yüksek detay aktarımı için monokrom LCD ekran." },
+      { name: tLocalized("Hassasiyet", "Accuracy"), value: "14x19", unit: "μm", tag: "Piksel", caption: "Mikroskobik doğruluk ve yüzey kalitesini destekleyen piksel hassasiyeti." },
       { name: "Isı Direnci", value: "100", unit: "°C", tag: "LCD", caption: "Dental üretim sürecinde ısıya dayanıklı ekran yapısı." },
     ],
     specTag: "MASH P16L · 16K LCD · 385 nm",
@@ -4413,7 +4414,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
       { label: "Cihaz", value: "MASH P16L" },
       { label: "Ekran", value: "16K UHD Mono LCD" },
       { label: "Boyut", value: "9.6 inç" },
-      { label: "Hassasiyet", value: "14x19 μm" },
+      { label: tLocalized("Hassasiyet", "Accuracy"), value: "14x19 μm" },
       { label: "Işık", value: "385 nm" },
     ],
     useCaseSideHtml: "P16L 16K LCD ekran, dental üretimde yüksek detay ve stabil pozlama için kullanılan ana yedek parçadır.",
@@ -4440,7 +4441,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     videoHref: "https://www.youtube.com/watch?v=dNPHy_sd9aQ",
     videoTitleHtml: '16K ekran akışını <span class="em">videoda görün.</span>',
     videoSideHtml: "MASH P16L LCD ekran değişimi ve baskı kontrol akışını video üzerinden değerlendirin.",
-    videoTitle: "MASH P16L 16K LCD ekran",
+    videoTitle: tLocalized("MASH P16L 16K LCD ekran", "MASH P16L 16K LCD Ekran"),
     videoText: "16K LCD, pozlama testi ve dental üretim hassasiyeti kontrollerine odaklanan video.",
   },
   {
@@ -4500,7 +4501,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     videoHref: "https://www.youtube.com/watch?v=dNPHy_sd9aQ",
     videoTitleHtml: 'Tank bakım akışını <span class="em">videoda görün.</span>',
     videoSideHtml: "MASH P16L reçine tankı, film değişimi ve baskı kontrol akışını video üzerinden değerlendirin.",
-    videoTitle: "MASH P16L reçine tankı",
+    videoTitle: tLocalized("MASH P16L reçine tankı", "MASH P16L Reçine Tankı"),
     videoText: "Tank, film, hızlı kilit ve test baskısı kontrollerine odaklanan bakım akışı.",
   },
 ];
@@ -4545,7 +4546,7 @@ type ZirconBlockConfig = {
 };
 
 const ZIRCON_CATEGORY = {
-  text: "Zirkon Bloklar",
+  text: tLocalized("Zirkon Bloklar", "Zirconia Blocks"),
   href: "/zirkon-bloklar",
 };
 
@@ -4562,7 +4563,7 @@ function zirconRelatedItems(currentSlug: string): NonNullable<ProductDetailTempl
       title: "ArgenZ ST Multilayer",
       descriptionHtml: "Doğal dentin geçişini taklit eden süper translüsent multilayer zirkonya disk.",
       href: `/${ARGENZ_ST_MULTILAYER_SLUG}`,
-      linkText: "İncele",
+      linkText: tLocalized("İncele", "Explore"),
       background: "linear-gradient(160deg,#F0ECE2,#fff)",
     },
     {
@@ -4570,7 +4571,7 @@ function zirconRelatedItems(currentSlug: string): NonNullable<ProductDetailTempl
       title: "ArgenZ HT+",
       descriptionHtml: "Yüksek translüsent plus yapı; dayanım, performans ve estetik dengesi.",
       href: `/${ARGENZ_HT_PLUS_SLUG}`,
-      linkText: "İncele",
+      linkText: tLocalized("İncele", "Explore"),
       background: "linear-gradient(160deg,#EEF0F3,#fff)",
     },
     {
@@ -4578,12 +4579,12 @@ function zirconRelatedItems(currentSlug: string): NonNullable<ProductDetailTempl
       title: "ArgenZ HT+ Multilayer",
       descriptionHtml: "HT+ materyal dayanımıyla doğal dentin-mine geçişini birleştiren multilayer disk.",
       href: `/${ARGENZ_HT_MULTILAYER_SLUG}`,
-      linkText: "İncele",
+      linkText: tLocalized("İncele", "Explore"),
       background: "linear-gradient(160deg,#ECE7DB,#fff)",
     },
     {
       tag: "FIRIN",
-      title: "Dental Fırınlar",
+      title: tLocalized("Dental Fırınlar", "Dental Furnaces"),
       descriptionHtml: "Zirkon sinterleme ve porselen/press akışları için uyumlu fırın seçenekleri.",
       href: "/dental-firinlar",
       linkText: "Fırınları gör",
@@ -4605,7 +4606,7 @@ function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData
       ctaHref: "#satinal",
     },
     breadcrumb: {
-      homeText: "Ana sayfa",
+      homeText: tLocalized("Ana sayfa", "Home"),
       homeHref: "/",
       categoryText: ZIRCON_CATEGORY.text,
       categoryHref: ZIRCON_CATEGORY.href,
@@ -4626,7 +4627,7 @@ function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData
       addToCartText: "Sepete ekle →",
       addingToCartText: "Ekleniyor...",
       outOfStockText: "Stok yok",
-      trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+      trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
     },
     ratings: {
       index: "01",
@@ -4643,7 +4644,7 @@ function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData
     },
     metrics: {
       index: "02",
-      label: "Teknik Özellikler",
+      label: tLocalized("Teknik Özellikler", "Technical Specifications"),
       titleHtml: config.metricTitleHtml,
       sideHtml: config.metricSideHtml,
       items: config.metrics,
@@ -4693,7 +4694,7 @@ function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData
     },
     faq: {
       index: "05",
-      label: "Sık Sorulanlar",
+      label: tLocalized("Sık Sorulanlar", "Frequently Asked Questions"),
       titleHtml: `${config.productText} <span class="em">hakkında.</span>`,
       sideHtml: "Renk, kalınlık ve endikasyon seçimi satın alma öncesi netleştirilmelidir.",
       openFirst: true,
@@ -4749,7 +4750,7 @@ const ZIRCON_BLOCK_CONFIGS: ZirconBlockConfig[] = [
     metrics: [
       { name: "Translüsentlik", value: "50", unit: "%", tag: "ST", caption: "Doğal dentini taklit eden yüksek geçirgenlik seviyesi." },
       { name: "Dayanım", value: "850", unit: "MPa", tag: "Zirkonya", caption: "Estetik vakalar için optimum dayanıklılık dengesi." },
-      { name: "Köprü", value: "3", unit: "üyeye kadar", tag: "Anterior", caption: "Tek kronlar ve 1 pontikli 3 üyeye kadar anterior köprüler için konumlandırılır." },
+      { name: tLocalized("Köprü", "Bridge"), value: "3", unit: "üyeye kadar", tag: "Anterior", caption: "Tek kronlar ve 1 pontikli 3 üyeye kadar anterior köprüler için konumlandırılır." },
     ],
     specTag: "ARGENZ ST MULTILAYER · 50% · 850 MPa",
     specTitleHtml: 'Lityum disilikata <span class="em">estetik alternatif.</span>',
@@ -4940,7 +4941,7 @@ type LabProductConfig = {
 const WASH_CURE_CATEGORY: LabProductCategory = {
   text: "Yıkama & Kürleme Cihazları",
   href: "/yikama-kurleme-cihazlari",
-  label: "Yıkama & Kürleme",
+  label: tLocalized("Yıkama & Kürleme", "Wash & Cure"),
   relatedLabel: "İlgili Cihazlar",
   relatedTitleHtml: 'Aynı baskı akışında <span class="em">birlikte çalışanlar.</span>',
   announcementStrong: "Post-process kontrolü.",
@@ -4948,7 +4949,7 @@ const WASH_CURE_CATEGORY: LabProductCategory = {
   ecosystemLabel: "Post-Process Ekosistemi",
   ecosystemTitleHtml: 'Baskı sonucu, <span class="em">yıkama ve kürlemeyle</span> tamamlanır.',
   ecosystemTextHtml: "Reçine baskıda nihai mekanik değerler; doğru yıkama, kurutma ve UV kürleme süreciyle korunur. Cihazı reçine ve iş akışınıza göre birlikte konumlandırabiliriz.",
-  ecosystemChips: ["Yıkama", "Kürleme", "365 / 405 nm", "Reçine sonrası işlem"],
+  ecosystemChips: ["Yıkama", tLocalized("Kürleme", "Curing"), "365 / 405 nm", "Reçine sonrası işlem"],
 };
 
 const MASH_C1E_MAIN_IMAGE =
@@ -4958,9 +4959,9 @@ const MASH_W1E_MAIN_IMAGE =
   "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp";
 
 const PRINTER_CATEGORY: LabProductCategory = {
-  text: "3D Yazıcılar",
+  text: tLocalized("3D Yazıcılar", "3D Printers"),
   href: "/3d-yazicilar",
-  label: "3D Yazıcı",
+  label: tLocalized("3D Yazıcı", "3D Printer"),
   relatedLabel: "İlgili Yazıcılar",
   relatedTitleHtml: 'Aynı üretim ekosisteminde <span class="em">birlikte değerlendirilenler.</span>',
   announcementStrong: "Yazıcı seçimi.",
@@ -4968,13 +4969,13 @@ const PRINTER_CATEGORY: LabProductCategory = {
   ecosystemLabel: "Baskı Ekosistemi",
   ecosystemTitleHtml: 'Yazıcı seçimi, <span class="em">materyal ve post-process</span> ile tamamlanır.',
   ecosystemTextHtml: "Dental ve mücevher üretiminde yazıcı, reçine, yıkama-kürleme ve teknik parametreler birlikte çalışır. Cihaz seçimini üretim hedefinize göre birlikte netleştirebiliriz.",
-  ecosystemChips: ["3D yazıcı", "Reçine", "Yıkama & kürleme", "Parametre desteği"],
+  ecosystemChips: ["3D yazıcı", tLocalized("Reçine", "Resin"), "Yıkama & kürleme", "Parametre desteği"],
 };
 
 const SCANNER_CATEGORY: LabProductCategory = {
-  text: "Masaüstü Tarayıcılar",
+  text: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"),
   href: "/masasustu-tarayicilar",
-  label: "Masaüstü Tarayıcı",
+  label: tLocalized("Masaüstü Tarayıcı", "Desktop Scanner"),
   relatedLabel: "İlgili Tarayıcılar",
   relatedTitleHtml: 'Aynı laboratuvarda <span class="em">birlikte değerlendirilenler.</span>',
   announcementStrong: "Tarama doğruluğu.",
@@ -4986,9 +4987,9 @@ const SCANNER_CATEGORY: LabProductCategory = {
 };
 
 const FURNACE_CATEGORY: LabProductCategory = {
-  text: "Dental Fırınlar",
+  text: tLocalized("Dental Fırınlar", "Dental Furnaces"),
   href: "/dental-firinlar",
-  label: "Dental Fırın",
+  label: tLocalized("Dental Fırın", "Dental Furnace"),
   relatedLabel: "İlgili Fırınlar",
   relatedTitleHtml: 'Aynı laboratuvarda <span class="em">ısı akışını tamamlayanlar.</span>',
   announcementStrong: "Fırın seçimi.",
@@ -5000,9 +5001,9 @@ const FURNACE_CATEGORY: LabProductCategory = {
 };
 
 const TITANIUM_CATEGORY: LabProductCategory = {
-  text: "Titanyum Diskler",
+  text: tLocalized("Titanyum Diskler", "Titanium Discs"),
   href: "/titanyum-diskler",
-  label: "Titanyum Disk",
+  label: tLocalized("Titanyum Disk", "Titanium Disc"),
   relatedLabel: "İlgili Malzemeler",
   relatedTitleHtml: 'CAD/CAM iş akışında <span class="em">birlikte kullanılanlar.</span>',
   announcementStrong: "CAD/CAM materyal seçimi.",
@@ -5014,7 +5015,7 @@ const TITANIUM_CATEGORY: LabProductCategory = {
 };
 
 const SYSTEM_CATEGORY: LabProductCategory = {
-  text: "Sistemler",
+  text: tLocalized("Sistemler", "Systems"),
   href: "/sistemler",
   label: "Sistem",
   relatedLabel: "İlgili Sistemler",
@@ -5041,7 +5042,7 @@ function labRelatedItems(config: LabProductConfig): NonNullable<ProductDetailTem
     title: item.productText,
     descriptionHtml: item.leadHtml,
     href: `/${item.slug}`,
-    linkText: "İncele",
+    linkText: tLocalized("İncele", "Explore"),
     background: "linear-gradient(160deg,#F1F1EC,#fff)",
     image: item.images[0],
     imageAlt: item.productText,
@@ -5062,7 +5063,7 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       ctaHref: "#satinal",
     },
     breadcrumb: {
-      homeText: "Ana sayfa",
+      homeText: tLocalized("Ana sayfa", "Home"),
       homeHref: "/",
       categoryText: config.category.text,
       categoryHref: config.category.href,
@@ -5079,12 +5080,12 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       summarySuffix: "— uyumluluk kontrolü ve teknik destek dahil.",
       buyHrefBase: `/${config.slug}`,
       whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
-      whatsappText: quoteOnly ? "Teklif alın" : "WhatsApp'tan sor",
+      whatsappText: quoteOnly ? tLocalized("Teklif alın", "Get a quote") : "WhatsApp'tan sor",
       addToCartText: "Sepete ekle →",
       disableAddToCart: quoteOnly,
       addingToCartText: "Ekleniyor...",
       outOfStockText: "Stok yok",
-      trustBadges: ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"],
+      trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
     },
     ratings: {
       index: "01",
@@ -5152,7 +5153,7 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
     },
     faq: {
       index: "05",
-      label: "Sık Sorulanlar",
+      label: tLocalized("Sık Sorulanlar", "Frequently Asked Questions"),
       titleHtml: `${config.productText} <span class="em">hakkında.</span>`,
       sideHtml: "Uyumluluk, kapasite ve kullanım akışı satın alma öncesi netleştirilmelidir.",
       openFirst: true,
@@ -5198,7 +5199,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     titleHtml: 'Dental üretimde <span class="em">385 nm ve 16K</span> hassasiyet.',
     leadHtml:
       "MASH P16L, 385 nm profesyonel UV ışık ve 16K çözünürlük ile dental restorasyonlarda mikron hassasiyeti hedefleyen profesyonel dental 3D yazıcıdır. Maksimum hız ve mükemmel uyumu aynı üretim akışında sunmak için konumlandırılır.",
-    pills: [{ value: "385", label: "nm UV" }, { value: "16K", label: "çözünürlük" }, { label: "Dental restorasyon" }, { label: "MASH" }],
+    pills: [{ value: "385", label: "nm UV" }, { value: "16K", label: tLocalized("çözünürlük", "resolution") }, { label: "Dental restorasyon" }, { label: "MASH" }],
     images: [
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e47e604b-5052-4935-800f-57d4ead78ced/1080/mash-p16l.webp",
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/b92468e1-e607-46f2-b5fd-c7001c066fd8/1080/mash-p16l.webp",
@@ -5209,7 +5210,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metricSideHtml: "P16L, dental restorasyonlarda 385 nm ışık sistemi ve 16K çözünürlükle hassas baskı akışına odaklanır.",
     metrics: [
       { name: "Işık", value: "385", unit: "nm", tag: "UV", caption: "Kaynak ürün sayfasında belirtilen profesyonel UV ışık dalga boyu." },
-      { name: "Çözünürlük", value: "16K", unit: "", tag: "LCD", caption: "Dental restorasyonlarda detay ve yüzey kalitesi için yüksek çözünürlük." },
+      { name: tLocalized("Çözünürlük", "Resolution"), value: "16K", unit: "", tag: "LCD", caption: "Dental restorasyonlarda detay ve yüzey kalitesi için yüksek çözünürlük." },
       { name: "Kullanım", value: "Dental", unit: "restorasyon", tag: "Lab", caption: "Mikron hassasiyeti ve uyum hedefleyen dental üretim akışı." },
     ],
     specTag: "MASH P16L · 385 NM · 16K",
@@ -5218,9 +5219,9 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     specRows: [
       { label: "Model", value: "MASH P16L" },
       { label: "Işık", value: "385 nm" },
-      { label: "Çözünürlük", value: "16K" },
+      { label: tLocalized("Çözünürlük", "Resolution"), value: "16K" },
       { label: "Kullanım", value: "Dental restorasyon" },
-      { label: "Kategori", value: "3D yazıcı" },
+      { label: "Kategori", value: tLocalized("3D yazıcı", "3D Printer") },
     ],
     useCaseSideHtml: "Dental restorasyon, reçine üretimi ve hassas laboratuvar baskı akışlarında kullanılır.",
     useCasePhotos: [
@@ -5282,7 +5283,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metrics: [
       { name: "Teknoloji", value: "DLP", unit: "", tag: "Curie", caption: "Kaynak açıklamada DLP teknolojili yüksek hassasiyetli yazıcı olarak geçer." },
       { name: "Uygulama", value: "Dental", unit: "", tag: "Clinical", caption: "Dijital diş hekimliği uygulamaları için geliştirilmiştir." },
-      { name: "Sonuç", value: "Stabil", unit: "", tag: "Repeat", caption: "İstikrarlı ve tekrarlanabilir sonuçlar hedefler." },
+      { name: tLocalized("Sonuç", "Result"), value: "Stabil", unit: "", tag: "Repeat", caption: "İstikrarlı ve tekrarlanabilir sonuçlar hedefler." },
     ],
     specTag: "CURIE M1 · DENTAL DLP",
     specTitleHtml: 'Klinik hassasiyet için <span class="em">dental DLP yazıcı.</span>',
@@ -5292,7 +5293,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Teknoloji", value: "DLP" },
       { label: "Kullanım", value: "Dijital diş hekimliği" },
       { label: "Uygulamalar", value: "Kuron / model / gece plağı" },
-      { label: "Kategori", value: "3D yazıcı" },
+      { label: "Kategori", value: tLocalized("3D yazıcı", "3D Printer") },
     ],
     useCaseSideHtml: "Geçici kuron, ortodontik model, gece plağı ve implant analog üretimlerinde kullanılır.",
     useCasePhotos: [
@@ -5334,7 +5335,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metricSideHtml: "Curie M1 Jewelry, mücevher tasarımı ve kuyumculuk uygulamalarında detay hassasiyeti ve malzeme uyumluluğu için konumlandırılır.",
     metrics: [
       { name: "Teknoloji", value: "DLP", unit: "", tag: "Jewelry", caption: "Kuyumculuk için geliştirilmiş DLP teknolojili yazıcı." },
-      { name: "Detay", value: "Yüksek", unit: "", tag: "Hassasiyet", caption: "Kaynak açıklamada yüksek detay hassasiyeti vurgulanır." },
+      { name: "Detay", value: "Yüksek", unit: "", tag: tLocalized("Hassasiyet", "Accuracy"), caption: "Kaynak açıklamada yüksek detay hassasiyeti vurgulanır." },
       { name: "Yüzey", value: "Kusursuz", unit: "", tag: "Finish", caption: "Mücevher üretiminde yüzey kalitesi hedefler." },
     ],
     specTag: "CURIE M1 · JEWELRY DLP",
@@ -5345,7 +5346,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Teknoloji", value: "DLP" },
       { label: "Kullanım", value: "Kuyumculuk / mücevher" },
       { label: "Odak", value: "Detay hassasiyeti" },
-      { label: "Kategori", value: "3D yazıcı" },
+      { label: "Kategori", value: tLocalized("3D yazıcı", "3D Printer") },
     ],
     useCaseSideHtml: "Mücevher tasarımı, döküm masterı ve yüksek detay isteyen kuyumculuk baskılarında kullanılır.",
     useCasePhotos: [
@@ -5394,9 +5395,9 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metricTitleHtml: 'Reçine baskıda <span class="em">6K LCD seçenekleri.</span>',
     metricSideHtml: "Halot-Sky seçimi yapılırken cihaz versiyonu, reçine uyumu ve hedeflenen hassasiyet birlikte kontrol edilmelidir.",
     metrics: [
-      { name: "Çözünürlük", value: "6K", unit: "", tag: "LCD", caption: "Kategori kaynağında Creality Halot-Sky 6K olarak listelenir." },
-      { name: "Versiyon", value: "2", unit: "seçenek", tag: "Variant", caption: "Fabrika çıkışlı ve hassasiyeti arttırılmış versiyonlar aynı ürün slug'ında listelenir." },
-      { name: "Kullanım", value: "Reçine", unit: "baskı", tag: "LCD", caption: "LCD reçine 3D yazıcı üretim akışı için kullanılır." },
+      { name: tLocalized("Çözünürlük", "Resolution"), value: "6K", unit: "", tag: "LCD", caption: "Kategori kaynağında Creality Halot-Sky 6K olarak listelenir." },
+      { name: "Versiyon", value: "2", unit: tLocalized("seçenek", "Seçenek"), tag: "Variant", caption: "Fabrika çıkışlı ve hassasiyeti arttırılmış versiyonlar aynı ürün slug'ında listelenir." },
+      { name: "Kullanım", value: tLocalized("Reçine", "Resin"), unit: "baskı", tag: "LCD", caption: "LCD reçine 3D yazıcı üretim akışı için kullanılır." },
     ],
     specTag: "CREALITY HALOT-SKY · 6K",
     specTitleHtml: 'Fabrika çıkışlı veya <span class="em">hassasiyeti artırılmış.</span>',
@@ -5406,7 +5407,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Teknoloji", value: "LCD reçine yazıcı" },
       { label: "Seçenek", value: "Fabrika çıkışlı" },
       { label: "Seçenek", value: "Hassasiyeti artırılmış" },
-      { label: "Kategori", value: "3D yazıcı" },
+      { label: "Kategori", value: tLocalized("3D yazıcı", "3D Printer") },
     ],
     useCaseSideHtml: "Halot-Sky 6K; reçine baskı, dental üretime giriş ve hassasiyet ayarı isteyen LCD yazıcı akışlarında konumlanır.",
     useCasePhotos: [
@@ -5476,7 +5477,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metricTitleHtml: 'Yıkama adımı <span class="em">kürleme öncesi zemini hazırlar.</span>',
     metricSideHtml: "W1E, reçine baskı sonrası yüzeyde kalan fazla materyalin temizlenmesi için yıkama adımına odaklanır.",
     metrics: [
-      { name: "İşlem", value: "Ultrasonik", unit: "yıkama", tag: "Wash", caption: "Baskı sonrası parçaların yüzey temizliği için kullanılır." },
+      { name: "İşlem", value: "Ultrasonik", unit: tLocalized("yıkama", "Washing"), tag: "Wash", caption: "Baskı sonrası parçaların yüzey temizliği için kullanılır." },
       { name: "Akış", value: "Post", unit: "process", tag: "Baskı sonrası", caption: "Kürleme öncesi yüzey hazırlığı sağlar." },
       { name: "Uyum", value: "C1E", unit: "ile", tag: "Tamamlayıcı", caption: "W1E yıkama adımı C1E UV kürleme adımıyla birlikte planlanır." },
     ],
@@ -5487,7 +5488,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Cihaz", value: "Mash W1E" },
       { label: "İşlem", value: "Ultrasonik yıkama" },
       { label: "Kullanım", value: "Reçine 3D baskı sonrası" },
-      { label: "Kategori", value: "Yıkama cihazı" },
+      { label: "Kategori", value: tLocalized("Yıkama cihazı", "Washing Unit") },
       { label: "Marka", value: "Mash" },
     ],
     useCaseSideHtml: "Reçine baskıların yüzey temizliği, kurutma ve ardından UV post-curing adımına hazırlanması için kullanılır.",
@@ -5601,7 +5602,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     titleHtml: 'Baskı sonrası süreç <span class="em">tek cihazda</span> tamamlanır.',
     leadHtml:
       "Creality Wash&Cure UW-03, 3D yazıcı baskıları için hızlı yıkama ve kürleme makinesidir. Baskıların doğru mekanik değerlere ulaşabilmesi için 365 nm ve 405 nm ışık dalga boyuyla kürleme yapar.",
-    pills: [{ value: "365 / 405", label: "nm UV" }, { label: "Yıkama" }, { label: "Kürleme" }, { label: "Reçine baskı sonrası" }],
+    pills: [{ value: "365 / 405", label: "nm UV" }, { label: tLocalized("Yıkama", "Washing") }, { label: tLocalized("Kürleme", "Curing") }, { label: "Reçine baskı sonrası" }],
     images: [
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/152789ed-cca6-47ff-8018-c1ee04e645a6/1080/washcure-website-1.webp",
@@ -5611,9 +5612,9 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metricTitleHtml: 'Yıkama ve kürleme <span class="em">aynı akışta.</span>',
     metricSideHtml: "UW-03, reçine baskı sonrası temizleme ve UV kürleme adımlarını tek cihazla yönetmek için kullanılır.",
     metrics: [
-      { name: "Dalga Boyu", value: "365", unit: "/ 405 nm", tag: "UV", caption: "Kaynak ürün sayfasında listelenen kürleme dalga boyları." },
+      { name: tLocalized("Dalga Boyu", "Wavelength"), value: "365", unit: "/ 405 nm", tag: "UV", caption: "Kaynak ürün sayfasında listelenen kürleme dalga boyları." },
       { name: "Süreç", value: "Wash", unit: "& Cure", tag: "2 aşama", caption: "Baskı sonrası yıkama ve kürleme adımları için tek cihaz." },
-      { name: "Kullanım", value: "Reçine", unit: "baskı", tag: "Post-process", caption: "3D yazıcı reçine baskılarının son işlem süreci için kullanılır." },
+      { name: "Kullanım", value: tLocalized("Reçine", "Resin"), unit: "baskı", tag: "Post-process", caption: "3D yazıcı reçine baskılarının son işlem süreci için kullanılır." },
     ],
     specTag: "CREALITY UW-03 · 365 / 405 NM",
     specTitleHtml: 'Mekanik değerler için <span class="em">doğru kürleme.</span>',
@@ -5627,8 +5628,8 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     ],
     useCaseSideHtml: "Reçine baskıların temizlenmesi, kurutulması ve UV kürlenmesi için post-process cihazı.",
     useCasePhotos: [
-      { imageIndex: 1, title: "Yıkama", text: "Baskı üzerindeki reçine kalıntılarını temizleme.", alt: "Creality UW-03 yıkama" },
-      { imageIndex: 2, title: "Kürleme", text: "365 ve 405 nm UV ışıkla son kürleme.", alt: "Creality UW-03 kürleme" },
+      { imageIndex: 1, title: tLocalized("Yıkama", "Washing"), text: "Baskı üzerindeki reçine kalıntılarını temizleme.", alt: "Creality UW-03 yıkama" },
+      { imageIndex: 2, title: tLocalized("Kürleme", "Curing"), text: "365 ve 405 nm UV ışıkla son kürleme.", alt: "Creality UW-03 kürleme" },
       { imageIndex: 2, title: "Post-process", text: "Baskı sonrası mekanik değerleri destekleyen akış.", alt: "Creality UW-03 post-process" },
     ],
     useCaseCards: [
@@ -5657,7 +5658,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     titleHtml: 'Üretken laboratuvarlar için <span class="em">doku taraması.</span>',
     leadHtml:
       "3Shape E2, diş laboratuvarlarının üretkenliğini artırmak ve üst düzey doku taraması yapmak için tasarlanmış masaüstü tarayıcıdır. Siyah beyaz dokuya sahip olan E2, daha fazla hassasiyet ve doğruluk sunar.",
-    pills: [{ label: "Masaüstü tarayıcı" }, { label: "Doku taraması" }, { label: "Laboratuvar" }, { label: "3Shape" }],
+    pills: [{ label: "Masaüstü tarayıcı" }, { label: "Doku taraması" }, { label: tLocalized("Laboratuvar", "Lab") }, { label: "3Shape" }],
     images: ["https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d2937ac4-16ad-4c18-a76e-24a2b26ced24/1080/e2-new-red-2.webp"],
     galleryBadge: "3SHAPE",
     metricTitleHtml: 'Giriş seviyesi değil, <span class="em">üretken tarama.</span>',
@@ -5689,7 +5690,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     ],
     devicesTitle: "Dental laboratuvar CAD/CAM akışıyla çalışır",
     devicesTextHtml: "Tarayıcı verisi, tasarım ve üretim adımlarına temel oluşturur. Mevcut CAD/CAM sürecinizle uyumu birlikte değerlendirebiliriz.",
-    deviceChips: [{ label: "3Shape CAD" }, { label: "Model tarama" }, { label: "Doku tarama" }, { label: "Laboratuvar", highlighted: true }],
+    deviceChips: [{ label: "3Shape CAD" }, { label: "Model tarama" }, { label: "Doku tarama" }, { label: tLocalized("Laboratuvar", "Lab"), highlighted: true }],
     faqItems: [
       { question: "3Shape E2 ne için kullanılır?", answerHtml: "Dental laboratuvarlarda model ve doku taraması için kullanılan masaüstü tarayıcıdır." },
       { question: "E2'nin öne çıkan tarafı nedir?", answerHtml: "Ürün sayfasında üretkenlik, üst düzey doku taraması, hassasiyet ve doğruluk vurgulanır." },
@@ -5767,7 +5768,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metricTitleHtml: 'Hız ve hassasiyet <span class="em">aynı cihazda.</span>',
     metricSideHtml: "E4, E serisinin en güçlü cihazı olarak hızlı tam çene tarama ve yüksek hassasiyet gerektiren üretimlerde öne çıkar.",
     metrics: [
-      { name: "Hassasiyet", value: "4", unit: "μm", tag: "E4", caption: "Ürün sayfasında listelenen hassasiyet değeri." },
+      { name: tLocalized("Hassasiyet", "Accuracy"), value: "4", unit: "μm", tag: "E4", caption: "Ürün sayfasında listelenen hassasiyet değeri." },
       { name: "Tam Çene", value: "9", unit: "sn", tag: "Scan", caption: "Kaynakta belirtilen tam çene tarama hızı." },
       { name: "Kamera", value: "4", unit: "adet", tag: "E serisi", caption: "Dört kamera ile E serisinin en güçlü cihazı olarak konumlandırılır." },
     ],
@@ -5777,7 +5778,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     specRows: [
       { label: "Marka", value: "3Shape" },
       { label: "Model", value: "E4" },
-      { label: "Hassasiyet", value: "4 μm" },
+      { label: tLocalized("Hassasiyet", "Accuracy"), value: "4 μm" },
       { label: "Tam çene", value: "9 sn" },
       { label: "Kamera", value: "4" },
     ],
@@ -5820,7 +5821,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metricSideHtml: "LHT 02/17 LB Speed, yarı saydam zirkonyanın sinterlenmesi ve geniş fırın odası ihtiyacı için konumlandırılır.",
     metrics: [
       { name: "Maks. Sıcaklık", value: "1650", unit: "°C", tag: "Speed", caption: "Ürün sayfasında belirtilen maksimum sıcaklık." },
-      { name: "Uygulama", value: "Zirkon", unit: "sinter", tag: "Dental", caption: "Yarı saydam zirkonya sinterleme için kullanılır." },
+      { name: "Uygulama", value: tLocalized("Zirkon", "Zirconia"), unit: "sinter", tag: "Dental", caption: "Yarı saydam zirkonya sinterleme için kullanılır." },
       { name: "Yükleme", value: "Lift", unit: "table", tag: "Elektrikli", caption: "Elektrikle çalışan kaldırma masası yüklemeyi kolaylaştırır." },
     ],
     specTag: "LHT 02/17 LB SPEED · 1650 °C",
@@ -5831,7 +5832,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Maksimum", value: "1650 °C" },
       { label: "Uygulama", value: "Yarı saydam zirkonya" },
       { label: "Yükleme", value: "Elektrikli kaldırma masası" },
-      { label: "Kategori", value: "Dental fırın" },
+      { label: "Kategori", value: tLocalized("Dental fırın", "Dental Furnace") },
     ],
     useCaseSideHtml: "Zirkonya sinterleme ve yüksek sıcaklık gerektiren dental laboratuvar işlerinde kullanılır.",
     useCasePhotos: [
@@ -5872,7 +5873,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metrics: [
       { name: "Maks. Sıcaklık", value: "1600", unit: "°C", tag: "Turbo", caption: "Ürün sayfasında belirtilen maksimum sıcaklık." },
       { name: "Sinterleme", value: "1", unit: "saat", tag: "Hızlı", caption: "Tüm sinterleme işlemi bir saat içinde tamamlanabilir." },
-      { name: "Kapasite", value: "1-3", unit: "tek kron", tag: "Zirkon", caption: "Yarı saydam zirkonyum oksitten tek kronlar için geliştirilmiştir." },
+      { name: "Kapasite", value: "1-3", unit: "tek kron", tag: tLocalized("Zirkon", "Zirconia"), caption: "Yarı saydam zirkonyum oksitten tek kronlar için geliştirilmiştir." },
     ],
     specTag: "LHT 01/16 TURBO FIRE · 1600 °C",
     specTitleHtml: 'Hızlı tek kron sinterleme için <span class="em">Turbo Fire.</span>',
@@ -5882,7 +5883,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Maksimum", value: "1600 °C" },
       { label: "Kapasite", value: "1-3 tek kron" },
       { label: "Süreç", value: "1 saat içinde sinterleme" },
-      { label: "Kategori", value: "Dental fırın" },
+      { label: "Kategori", value: tLocalized("Dental fırın", "Dental Furnace") },
     ],
     useCaseSideHtml: "Hızlı tek kron sinterleme ve küçük vaka akışları için kullanılır.",
     useCasePhotos: [
@@ -5923,7 +5924,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metrics: [
       { name: "Uygulama", value: "Press", unit: "", tag: "Dental", caption: "Press seramik restorasyon akışı için konumlandırılır." },
       { name: "Yapı", value: "Lift", unit: "table", tag: "LB", caption: "Kaldırma tablalı yapı yükleme sürecini kolaylaştırır." },
-      { name: "Kullanım", value: "Lab", unit: "", tag: "Fırın", caption: "Dental laboratuvar ısı işlem akışları için kullanılır." },
+      { name: "Kullanım", value: "Lab", unit: "", tag: tLocalized("Fırın", "Furnace"), caption: "Dental laboratuvar ısı işlem akışları için kullanılır." },
     ],
     specTag: "VL 01/12 LB · PRESS",
     specTitleHtml: 'Press restorasyonlarda <span class="em">kontrollü çevrim.</span>',
@@ -5933,13 +5934,13 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Tip", value: "Pres fırını" },
       { label: "Yapı", value: "Kaldırma tablalı" },
       { label: "Kullanım", value: "Press seramik" },
-      { label: "Kategori", value: "Dental fırın" },
+      { label: "Kategori", value: tLocalized("Dental fırın", "Dental Furnace") },
     ],
     useCaseSideHtml: "Press seramik ve dental laboratuvar fırınlama akışlarında kullanılır.",
     useCasePhotos: [
       { title: "Press seramik", text: "Press restorasyon fırınlama işleri.", alt: "VL 01/12 press seramik" },
       { title: "Kaldırma tabla", text: "Yükleme ve işlem kontrolünü kolaylaştıran yapı.", alt: "VL 01/12 kaldırma tabla" },
-      { title: "Laboratuvar", text: "Dental restorasyon ısı işlem akışı.", alt: "VL 01/12 dental laboratuvar" },
+      { title: tLocalized("Laboratuvar", "Lab"), text: "Dental restorasyon ısı işlem akışı.", alt: "VL 01/12 dental laboratuvar" },
     ],
     useCaseCards: [
       { eyebrow: "Kullanım", title: "Nerede kullanılır?", items: ["Press seramik restorasyonlar", "Dental laboratuvar fırın çevrimleri", "Kontrollü ısı işlem akışları"] },
@@ -5984,7 +5985,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Tip", value: "Porselen fırını" },
       { label: "Atmosfer", value: "Normal / vakum" },
       { label: "Isıtma", value: "Çepeçevre fırın odası" },
-      { label: "Kategori", value: "Dental fırın" },
+      { label: "Kategori", value: tLocalized("Dental fırın", "Dental Furnace") },
     ],
     useCaseSideHtml: "Seramik kaplama, porselen pişirim ve vakumlu dental fırınlama işlerinde kullanılır.",
     useCasePhotos: [
@@ -6038,7 +6039,7 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       { label: "Çap", value: "Ø98.5 mm" },
       { label: "Kullanım", value: "İmplant üstü restorasyon" },
       { label: "Uyum", value: "CAD/CAM sistemler" },
-      { label: "Kategori", value: "Titanyum disk" },
+      { label: "Kategori", value: tLocalized("Titanyum disk", "Titanium Disc") },
     ],
     useCaseSideHtml: "İmplant üstü restorasyonlar ve CAD/CAM frezeleme iş akışlarında kullanılır.",
     useCasePhotos: [
@@ -6093,10 +6094,10 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     specDescriptionHtml: "Comp Flow, Trasformer Light Glass Mufla Sistemi ile birlikte tam çene kompozit restorasyonlarda kullanılmak üzere konumlandırılır.",
     specRows: [
       { label: "Ürün", value: "Şırınga kompozit" },
-      { label: "Sistem", value: "Trasformer Light Glass" },
+      { label: "Sistem", value: tLocalized("Trasformer Light Glass", "TRASFORMER LIGHT GLASS") },
       { label: "Kullanım", value: "Tam çene kompozit restorasyon" },
       { label: "Marka", value: "CRS" },
-      { label: "Kategori", value: "Sistemler" },
+      { label: "Kategori", value: tLocalized("Sistemler", "Systems") },
     ],
     useCaseSideHtml: "Tam çene kompozit restorasyon ve Light Glass mufla sistemiyle birlikte kullanılır.",
     useCasePhotos: [
@@ -6143,17 +6144,17 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     metrics: [
       { name: "Sistem", value: "Light", unit: "Glass", tag: "Mufla", caption: "Mufla sistemi olarak listelenir." },
       { name: "Uygulama", value: "Tam", unit: "çene", tag: "Composite", caption: "Tam çene kompozit restorasyon hedefler." },
-      { name: "Hedef", value: "Stabil", unit: "akış", tag: "Lab", caption: "Doğruluk, ışık geçirgenliği ve stabilite vurgulanır." },
+      { name: "Hedef", value: "Stabil", unit: tLocalized("akış", "Akış"), tag: "Lab", caption: "Doğruluk, ışık geçirgenliği ve stabilite vurgulanır." },
     ],
     specTag: "TRASFORMER · LIGHT GLASS",
     specTitleHtml: 'Tam çene kompozit için <span class="em">mufla sistemi.</span>',
     specDescriptionHtml: "Light Glass Mufla Sistemi, tam çene kompozit restorasyonlarda doğruluk, ışık geçirgenliği ve stabilite ihtiyacını karşılamak için tasarlanmıştır.",
     specRows: [
       { label: "Ürün", value: "Mufla sistemi" },
-      { label: "Sistem", value: "Trasformer Light Glass" },
+      { label: "Sistem", value: tLocalized("Trasformer Light Glass", "TRASFORMER LIGHT GLASS") },
       { label: "Kullanım", value: "Tam çene kompozit restorasyon" },
       { label: "Hedef", value: "Doğruluk / ışık geçirgenliği / stabilite" },
-      { label: "Kategori", value: "Sistemler" },
+      { label: "Kategori", value: tLocalized("Sistemler", "Systems") },
     ],
     useCaseSideHtml: "Tam çene kompozit restorasyonlarda sistem stabilitesi ve ışık geçirgenliği için kullanılır.",
     useCasePhotos: [

@@ -1,3 +1,4 @@
+import { tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
 import { machineP16L, resinBottle } from "../../assets/remaining-assets-data";
 import p1dPrinterImage from "../../assets/p1d-printer-data";
@@ -201,7 +202,7 @@ function templatePreset(preset?: string) {
 function presetImage(preset?: string) {
   const key = preset?.trim().toLowerCase();
   if (key === "p1d" || key === "printer" || key === "mash-p1d") return p1dPrinterImage;
-  if (key === "resin" || key === "crs" || key === "recine" || key === "reçine") return resinBottle;
+  if (key === "resin" || key === "crs" || key === "recine" || key === tLocalized("reçine", "Resin")) return resinBottle;
   return machineP16L;
 }
 

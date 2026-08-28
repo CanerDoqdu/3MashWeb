@@ -29,6 +29,7 @@ import {
   refreshGlobalCart,
   subscribeCart,
 } from "../cartState";
+import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
 
 const categoryProductsPageHref = "/dental-3d-yazici-recineleri";
 const legacyContinueShoppingHrefs = new Set([
@@ -38,8 +39,8 @@ const legacyContinueShoppingHrefs = new Set([
   "/cart",
 ]);
 
-function text(value: string | undefined, fallback: string) {
-  return value?.trim() || fallback;
+function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
+  return tProp(value, fallbackTr, fallbackEn || fallbackTr);
 }
 
 function href(value: string | undefined, fallback: string) {
@@ -116,17 +117,19 @@ function EmptyCart({
     ? continueShoppingTarget(props.emptyButtonHref)
     : href(props.loginHref, "/account/login");
   const buttonText = isLoggedIn
-    ? text(props.emptyButtonText, "ALIŞVERİŞE BAŞLA")
-    : text(props.loginRequiredText, "GİRİŞ YAP");
+    ? text(props.emptyButtonText, tLocalized("ALIŞVERİŞE BAŞLA", "START SHOPPING"), "START SHOPPING")
+    : text(props.loginRequiredText, tLocalized("GİRİŞ YAP", "SIGN IN"), "SIGN IN");
 
   return (
     <div className="tmcart-wrap">
       <header className="tmcart-head">
-        <span>SEPET</span>
-        <h1>{text(props.titleText, "Sepetim")}</h1>
+        <span>{tLocalized("SEPET", "CART")}</span>
+        <h1>{text(props.titleText, tLocalized("Sepetim", "My Cart"), "My Cart")}</h1>
         <p>
-          {count} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve
-          adetleri kontrol edin.
+          {tLocalized(
+            `${count} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve adetleri kontrol edin.`,
+            `${count} items in your cart. Check your items and quantities before checking out.`
+          )}
         </p>
       </header>
       <div className="tmcart-empty">
@@ -141,10 +144,12 @@ function EmptyCart({
         >
           <path d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z" />
         </svg>
-        <h2>Sepetiniz boş.</h2>
+        <h2>{tLocalized("Sepetiniz boş.", "Your cart is empty.")}</h2>
         <p>
-          3mash ürünlerine geri dönerek ihtiyacınız olan cihaz, reçine veya sarf
-          ürününü sepete ekleyin.
+          {tLocalized(
+            "3mash ürünlerine geri dönerek ihtiyacınız olan cihaz, reçine veya sarf malzemelerini sepetinize ekleyebilirsiniz.",
+            "Explore 3mash products to add 3D printers, resins or consumables to your cart."
+          )}
         </p>
       </div>
       <a className="tmcart-empty-button" href={buttonHref}>
@@ -229,12 +234,12 @@ try {
           type="button"
           onClick={remove}
           disabled={isUpdating}
-          aria-label={`${itemTitle(item)} sepetten kaldır`}
+          aria-label={tLocalized(`${itemTitle(item)} sepetten kaldır`, `Remove ${itemTitle(item)} from cart`)}
         >
-          {text(props.removeText, "Kaldır")}
+          {text(props.removeText, tLocalized("Kaldır", "Remove"), "Remove")}
         </button>
       </div>
-      <div className="tmcart-qty" aria-label="Adet">
+      <div className="tmcart-qty" aria-label={tLocalized("Adet", "Quantity")}>
         <button
           type="button"
           disabled={isUpdating || item.quantity <= 1}
@@ -430,33 +435,33 @@ if (isCartReady && !hasItems) {
     >
       <div className="tmcart-wrap">
         <header className="tmcart-head">
-          <span>SEPET</span>
+          <span>{tLocalized("SEPET", "CART")}</span>
 
-          <h1>{text(props.titleText, "Sepetim")}</h1>
+          <h1>{text(props.titleText, tLocalized("Sepetim", "My Cart"), "My Cart")}</h1>
 
           <p>
-            0 ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve
-            adetleri kontrol edin.
+            {tLocalized("0 ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve adetleri kontrol edin.", "0 items in your cart. Check your items and quantities before checking out."
+            )}
           </p>
         </header>
 
         <div className="tmcart-shell">
           <div className="tmcart-list">
             <div className="tmcart-empty-message">
-              Sepetiniz boş.
+              {tLocalized("Sepetiniz boş.", "Your cart is empty.")}
             </div>
           </div>
 
           <aside className="tmcart-summary">
-            <h2>Sipariş Özeti</h2>
+            <h2>{tLocalized("Sipariş Özeti", "Order Summary")}</h2>
 
             <div className="tmcart-summary-row">
-              <span>{text(props.subtotalText, "Ara Toplam")}</span>
+              <span>{text(props.subtotalText, tLocalized("Ara Toplam", "Subtotal"), "Subtotal")}</span>
               <strong>{money(0, cart)}</strong>
             </div>
 
             <div className="tmcart-summary-row tmcart-summary-total">
-              <span>Toplam</span>
+              <span>{tLocalized("Toplam", "Total")}</span>
               <strong>{money(0, cart)}</strong>
             </div>
 
@@ -466,13 +471,13 @@ if (isCartReady && !hasItems) {
                 className="tmcart-coupon-start"
                 disabled
               >
-                Promosyon kodu ekle
+                {tLocalized("Promosyon kodu ekle", "Add promo code")}
               </button>
             </div>
 
             <button type="button" disabled>
               <span>
-                {text(props.checkoutButtonText, "SATIN AL")}
+                {text(props.checkoutButtonText, tLocalized("SATIN AL", "CHECKOUT"), "CHECKOUT")}
               </span>
 
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -481,7 +486,7 @@ if (isCartReady && !hasItems) {
             </button>
 
             <a href={continueShoppingTarget(props.continueShoppingHref)}>
-              {text(props.continueShoppingText, "Alışverişe devam et")}
+              {text(props.continueShoppingText, tLocalized("Alışverişe devam et", "Continue shopping"), "Continue shopping")}
             </a>
           </aside>
         </div>
@@ -494,11 +499,13 @@ if (isCartReady && !hasItems) {
     <section className="three-mash-cart-page" style={style}>
       <div className="tmcart-wrap">
         <header className="tmcart-head">
-          <span>SEPET</span>
-          <h1>{text(props.titleText, "Sepetim")}</h1>
+          <span>{tLocalized("SEPET", "CART")}</span>
+          <h1>{text(props.titleText, tLocalized("Sepetim", "My Cart"), "My Cart")}</h1>
           <p>
-            {itemCount} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve
-            adetleri kontrol edin.
+            {tLocalized(
+              `${itemCount} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve adetleri kontrol edin.`,
+              `${itemCount} items in your cart. Check your items and quantities before checking out.`
+            )}
           </p>
         </header>
         <div className="tmcart-shell">
@@ -514,26 +521,26 @@ if (isCartReady && !hasItems) {
           </div>
 
           <aside className="tmcart-summary">
-            <h2>Sipariş Özeti</h2>
+            <h2>{tLocalized("Sipariş Özeti", "Order Summary")}</h2>
             <div className="tmcart-summary-row">
-              <span>{text(props.subtotalText, "Ara Toplam")}</span>
+              <span>{text(props.subtotalText, tLocalized("Ara Toplam", "Subtotal"), "Subtotal")}</span>
               <strong>{money(cart?.totalFinalPrice, cart)}</strong>
             </div>
 
             <div className="tmcart-summary-row tmcart-summary-total">
-              <span>Toplam</span>
+              <span>{tLocalized("Toplam", "Total")}</span>
               <strong>{money(cart?.totalFinalPrice, cart)}</strong>
             </div>
              <div className="tmcart-coupon-slot">
   {cart?.couponCode ? (
     <div className="tmcart-coupon-applied">
       <span>
-        <b>{cart.couponCode}</b> uygulandı
+        <b>{cart.couponCode}</b> {tLocalized("uygulandı", "applied")}
       </span>
 
       <button
         type="button"
-        aria-label="Promosyon kodunu kaldır"
+        aria-label={tLocalized("Promosyon kodunu kaldır", "Remove promo code")}
         onClick={() => void deleteCoupon()}
         disabled={couponLoading}
       >
@@ -546,7 +553,7 @@ if (isCartReady && !hasItems) {
         autoFocus
         type="text"
         value={couponCode}
-        placeholder="Promosyon kodu giriniz"
+        placeholder={tLocalized("Promosyon kodu giriniz", "Enter promo code")}
         onInput={(event) =>
           setCouponCode(
             (event.currentTarget as HTMLInputElement).value
@@ -571,7 +578,7 @@ if (isCartReady && !hasItems) {
         onClick={() => void applyCoupon()}
         disabled={couponLoading || !couponCode.trim()}
       >
-        {couponLoading ? "..." : "KULLAN"}
+        {couponLoading ? "..." : tLocalized("KULLAN", "APPLY")}
       </button>
     </div>
   ) : (
@@ -580,7 +587,7 @@ if (isCartReady && !hasItems) {
       className="tmcart-coupon-start"
       onClick={() => setCouponOpen(true)}
     >
-      Promosyon kodu ekle
+      {tLocalized("Promosyon kodu ekle", "Add promo code")}
     </button>
   )}
 </div>
@@ -588,14 +595,14 @@ if (isCartReady && !hasItems) {
             
             <button type="button" onClick={checkout} disabled={isCheckingOut}>
               <span>
-                {text(props.checkoutButtonText, "ALIŞVERİŞİ TAMAMLA")}
+                {text(props.checkoutButtonText, tLocalized("ALIŞVERİŞİ TAMAMLA", "PROCEED TO CHECKOUT"), "PROCEED TO CHECKOUT")}
               </span>
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" />
               </svg>
             </button>
             <a href={continueShoppingTarget(props.continueShoppingHref)}>
-              {text(props.continueShoppingText, "Alışverişe devam et")}
+              {text(props.continueShoppingText, tLocalized("Alışverişe devam et", "Continue shopping"), "Continue shopping")}
             </a>
           </aside>
         </div>

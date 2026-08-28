@@ -1,3 +1,4 @@
+import { tLocalized } from "../../utils/i18n";
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
   createMediaSrcset,
@@ -300,12 +301,12 @@ export function ThreeMashProductsPage(props: Props) {
   const pageTitle =
     normalizedText(props.eyebrowText) === "ürün kategorisi"
       ? props.titleText || productList?.category?.name || productList?.brand?.name || "Ürünler"
-      : "Tüm Ürünler";
+      : tLocalized("Tüm Ürünler", "All Products");
   const eyebrowText = props.eyebrowText?.trim() || "";
   const categoryLinks: ListingLink[] = [
     {
       id: ALL_PRODUCTS_FILTER_ID,
-      label: "Tüm Ürünler",
+      label: tLocalized("Tüm Ürünler", "All Products"),
       group: "Kategori",
     },
     ...((categoryCatalog ? availableProductCategories(categoryCatalog) : [])
@@ -319,7 +320,7 @@ export function ThreeMashProductsPage(props: Props) {
   const isCategoryProductsPage =
     normalizedText(eyebrowText) === "ürün kategorisi";
   const isDentalResinCategoryPage =
-    isCategoryProductsPage && normalizedText(pageTitle) === "dental reçineler";
+    isCategoryProductsPage && normalizedText(pageTitle) === tLocalized("dental reçineler", "Dental Resins");
   const showSearchControl = props.showSearch !== false;
   const showSortControl =
     !isCategoryProductsPage &&

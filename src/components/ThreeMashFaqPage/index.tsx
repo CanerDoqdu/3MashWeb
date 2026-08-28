@@ -1,8 +1,9 @@
 import { faqSections } from "../ThreeMashPageData/sourceData";
 import { Props } from "./types";
+import { t, tLocalized, tProp } from "../../utils/i18n";
 
-function text(value: string | undefined, fallback: string) {
-  return value?.trim() || fallback;
+function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
+  return tProp(value, fallbackTr, fallbackEn || fallbackTr);
 }
 
 function numberValue(value: number | undefined, fallback: number) {
@@ -99,19 +100,21 @@ export function ThreeMashFaqPage(props: Props) {
     "--tmfaq-dark": "var(--tm-theme-dark, #0E0E0C)",
     "--tmfaq-max": `${numberValue(props.maxWidth, 1180)}px`,
   } as any;
-  const pageTitle = text(props.titleText, "Sık Sorulan Sorular");
+  const pageTitle = text(props.titleText, tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"), "Frequently Asked Questions");
 
   return (
     <section className="three-mash-faq-page" style={style}>
       <div className="tmfaq-shell">
         {props.showPageTitle !== false ? (
           <section className="tmfaq-hero">
-            <span className="tmfaq-kicker">SSS</span>
+            <span className="tmfaq-kicker">{t("sections.faq.indexText", "SSS")}</span>
             <div className="tmfaq-hero-grid">
               <h1>{pageTitle}</h1>
               <p>
-                Dental üretim akışı, reçine kullanımı ve 3D yazıcı süreçlerinde
-                en sık gelen soruları tek yerde topladık.
+                {tLocalized(
+                  tLocalized("Dental üretim akışı, reçine kullanımı ve 3D yazıcı süreçlerinde en sık gelen soruları tek yerde topladık.", "We gathered the most frequent questions on dental manufacturing workflows, resin usage, and 3D printing in one place."),
+                  "We gathered the most frequent questions on dental manufacturing workflows, resin usage, and 3D printing in one place."
+                )}
               </p>
             </div>
           </section>

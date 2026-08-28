@@ -1,8 +1,8 @@
-import { ThreeMashAccountUtilityPage } from "../ThreeMashAccountUtilityPage";
+import ThreeMashAccountLayout from "../ThreeMashAccountLayout";
 import { Props } from "./types";
 
 export function ThreeMashAccountInfoPage(props: Props) {
-  return <ThreeMashAccountUtilityPage {...props} mode="account" />;
+  return <ThreeMashAccountLayout {...props} mode="account" />;
 }
 
 export default ThreeMashAccountInfoPage;

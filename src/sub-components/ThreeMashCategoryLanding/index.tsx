@@ -10,6 +10,7 @@ import {
   type IkasProductList,
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
+import { tLocalized, isEnglishLocale, translateText } from "../../utils/i18n";
 
 export type CategoryButton = {
   label: string;
@@ -309,12 +310,12 @@ type CategoryAnnouncementWindow = Window & {
 };
 
 function rich(value: string) {
-  return { __html: normalizeHtmlLinks(value) };
+  return { __html: normalizeHtmlLinks(translateText(value)) };
 }
 
 function textValue(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
-  return trimmed ? trimmed : fallback;
+  return trimmed ? translateText(trimmed) : translateText(fallback);
 }
 
 function richValue(value: string | undefined, fallback: string) {
@@ -639,7 +640,7 @@ function liveProductCards(
         imageAlt: product.name,
         filterId: liveProductFilterId(product, filters, preset),
         tag: product.categories?.[0]?.name || product.brand?.name || "",
-        status: liveProductStatus(product) || "Teklif alın",
+        status: liveProductStatus(product) || tLocalized("Teklif alın", "Get a quote"),
       };
     });
 }

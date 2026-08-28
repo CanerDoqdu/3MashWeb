@@ -1,11 +1,11 @@
 import { Props } from "./types";
+import { tLocalized, tProp } from "../../utils/i18n";
 
 const defaultBackgroundImage =
   "https://cdn.myikas.com/images/theme-images/ebbf8195-570a-4650-893b-b460bab2c034/image_1080.webp";
 
-function text(value: string | undefined, fallback: string) {
-  const trimmed = value?.trim();
-  return trimmed || fallback;
+function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
+  return tProp(value, fallbackTr, fallbackEn || fallbackTr);
 }
 
 function numberInRange(
@@ -39,7 +39,11 @@ function themeColor(
 }
 
 export function ThreeMashNotFoundPage(props: Props) {
-  const title = text(props.titleText, "Aradığınız Sayfa Bulunamadı.");
+  const title = text(
+    props.titleText,
+    tLocalized("Aradığınız Sayfa Bulunamadı.", "Page Not Found."),
+    "Page Not Found."
+  );
   const style = {
     "--tm-404-bg-image": `url(${text(props.backgroundImageUrl, defaultBackgroundImage)})`,
     "--tm-404-min-height": `${numberInRange(props.minHeight, 76, 40, 140)}vh`,
@@ -71,12 +75,13 @@ export function ThreeMashNotFoundPage(props: Props) {
           <span className="tm-404-kicker">404</span>
           <h1>{title}</h1>
           <p>
-            Bu bağlantı taşınmış, kaldırılmış veya adres hatalı yazılmış
-            olabilir. Ana sayfaya dönerek 3mash ürün ve içeriklerine yeniden
-            ulaşabilirsiniz.
+            {tLocalized(
+              tLocalized("Bu bağlantı taşınmış, kaldırılmış veya adres hatalı yazılmış olabilir. Ana sayfaya dönerek 3mash ürün ve içeriklerine yeniden ulaşabilirsiniz.", "This link may have been moved, removed, or mistyped. You can return to the homepage to explore 3mash products and content."),
+              "This link may have been moved, removed, or mistyped. You can return to the homepage to explore 3mash products and content."
+            )}
           </p>
           <a className="tm-404-link" href={text(props.buttonHref, "/")}>
-            {text(props.buttonText, "Ana sayfaya dön")}
+            {text(props.buttonText, tLocalized("Ana sayfaya dön", "Back to home"), "Back to home")}
           </a>
         </div>
       </div>

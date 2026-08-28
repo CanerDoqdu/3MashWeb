@@ -1,3 +1,4 @@
+import { tLocalized } from "../../utils/i18n";
 import type { CategoryLandingData } from "./index";
 
 const curieM1MainImage =
@@ -36,48 +37,48 @@ export const dentalResinsCategoryData: CategoryLandingData = {
     highlight: "⚡ Doğru reçineyi mi arıyorsunuz?",
     text: "Uygulamanıza göre filtreleyin; emin değilseniz ekibimiz sizin için eşleştirir.",
     href: "#secici",
-    ctaText: "Reçine seçiciye git →",
+    ctaText: tLocalized("Reçine seçiciye git →", "go to resin selector →"),
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
-    currentLabel: "Dental Reçineler",
+    parentLabel: tLocalized("Ürünler", "Products"),
+    currentLabel: tLocalized("Dental Reçineler", "Dental Resins"),
   },
   hero: {
-    titlePrefix: "Sonucun yarısı",
-    titleEmphasis: "reçinede",
+    titlePrefix: tLocalized("Sonucun yarısı", "half of the result lies in the"),
+    titleEmphasis: tLocalized("reçinede", "resin."),
     titleSuffix: "saklı.",
     descriptionHtml:
       "Ana sayfada gördüğümüz gibi hassasiyet tek bir cihazdan çıkmaz. Doğru reçine, <b>doğru işe eşleştiğinde</b> ve cihazınızın parametreleriyle <b>birlikte kalibre edildiğinde</b> ortaya çıkar. CE Class IIa sertifikalı <b>CRS</b> hattı ve ekonomik <b>Mash</b> hattıyla, her uygulama için doğru bir reçine var.",
     buttons: [
-      { label: "Reçineni seç ↓", href: "#secici", variant: "lime" },
-      { label: "Emin değil misiniz? Ekibe sorun", href: "/pages/iletisim", variant: "line" },
+      { label: tLocalized("Reçineni seç ↓", "select your resin ↓"), href: "#secici", variant: "lime" },
+      { label: tLocalized("Emin değil misiniz? Ekibe sorun", "not sure? ask our team"), href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
       { value: "CE", emphasis: "Class IIa", label: "biyouyumlu CRS hattı · sertifikalı" },
-      { value: "16", emphasis: "reçine", label: "model, kron, protez, diş eti, splint, aligner, guide…" },
+      { value: "16", emphasis: tLocalized("reçine", "Resin"), label: "model, kron, protez, diş eti, splint, aligner, guide…" },
       { value: "Marka", emphasis: "bağımsız", label: "tüm DLP & LCD 3D yazıcılarla uyumlu" },
       { value: "Birlikte", emphasis: "kalibre", label: "cihaz parametrelerinizle eşleştirilerek teslim" },
     ],
   },
   selector: {
     anchorId: "secici",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "REÇİNİ SEÇİCİ",
-    titlePrefix: "Hangi işe",
-    titleEmphasis: "hangi reçine?",
+    titlePrefix: tLocalized("Hangi işe", "which resin for"),
+    titleEmphasis: tLocalized("hangi reçine?", "which application?"),
     sideHtml:
       "Uygulamanızı seçin, doğru reçineyi görün. Hepsi tüm DLP/LCD yazıcılarla çalışır; CRS hattı ayrıca <b>CE Class IIa</b> biyouyumludur.",
     filters: [
-      { id: "all", label: "Tümü" },
+      { id: "all", label: tLocalized("Tümü", "All") },
       { id: "model", label: "Model" },
-      { id: "kron", label: "Kron & Köprü" },
-      { id: "protez", label: "Protez & Diş Eti" },
-      { id: "splint", label: "Splint / Gece Plağı" },
-      { id: "orto", label: "Ortodonti" },
-      { id: "cerrahi", label: "Cerrahi / Döküm / Ölçü" },
+      { id: "kron", label: tLocalized("Kron & Köprü", "Crown & Bridge") },
+      { id: "protez", label: tLocalized("Protez & Diş Eti", "Denture & Gingiva") },
+      { id: "splint", label: tLocalized("Splint / Gece Plağı", "Splint / Night Guard") },
+      { id: "orto", label: tLocalized("Ortodonti", "Orthodontics") },
+      { id: "cerrahi", label: tLocalized("Cerrahi / Döküm / Ölçü", "Surgical / Cast / Impression") },
     ],
     emptyMessageHtml: 'Bu kategoride ürün yok. <a href="/pages/iletisim">İhtiyacınızı bize iletin →</a>',
     products: [
@@ -182,7 +183,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/c0f96a6a-1d60-4f11-81d9-abd1eeda5251/1080/cast-resin.webp",
         imageAlt: "CRS Cast reçine",
         filterId: "cerrahi",
-        tag: "DÖKÜM",
+        tag: tLocalized("DÖKÜM", "CAST"),
         tone: "#E4ECF5",
       },
       {
@@ -249,7 +250,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "CRS COMPOSITE · CE CLASS IIa",
       titlePrefix: "Daimi kron artık",
@@ -339,7 +340,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Hangi uygulama, hangi cihaz, hangi bütçe? Kısa bir görüşmeyle size en uygun CRS veya Mash reçinesini ve doğru parametreleri <b>ücretsiz</b> önerelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Reçine seçiciye dön", href: "#secici", variant: "inverse" },
     ],
   },
@@ -354,10 +355,10 @@ export const printersCategoryData: CategoryLandingData = {
     ctaText: "Karşılaştırmaya git →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
-    currentLabel: "3D Yazıcılar",
+    parentLabel: tLocalized("Ürünler", "Products"),
+    currentLabel: tLocalized("3D Yazıcılar", "3D Printers"),
   },
   hero: {
     titlePrefix: "±20 mikron",
@@ -377,7 +378,7 @@ export const printersCategoryData: CategoryLandingData = {
   },
   selector: {
     anchorId: "karsilastir",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "CİHAZLAR",
     titlePrefix: "İhtiyacınıza göre",
@@ -394,7 +395,7 @@ export const printersCategoryData: CategoryLandingData = {
         hot: true,
         sourceIcon: true,
         specs: [
-          { label: "Çözünürlük", value: "14×19 µm · 16K" },
+          { label: tLocalized("Çözünürlük", "Resolution"), value: "14×19 µm · 16K" },
           { label: "Işık", value: "385 nm UV" },
           { label: "Kalibrasyon", value: "8 nokta dikey kilit" },
         ],
@@ -408,7 +409,7 @@ export const printersCategoryData: CategoryLandingData = {
         imageSrc: curieM1MainImage,
         imageAlt: "Mash CURIE M1 dental 3D yazıcı",
         specs: [
-          { label: "Hassasiyet", value: "±20 µm tekrarlanabilir" },
+          { label: tLocalized("Hassasiyet", "Accuracy"), value: "±20 µm tekrarlanabilir" },
           { label: "Hız", value: "14 dk'da geçici kron" },
           { label: "Kalibrasyon", value: "6 aya kadar gerekmez" },
         ],
@@ -423,8 +424,8 @@ export const printersCategoryData: CategoryLandingData = {
         imageAlt: "Creality Halot-Sky 6K reçine 3D yazıcı",
         tone: "#FFFFFF",
         specs: [
-          { label: "Çözünürlük", value: "6K" },
-          { label: "Hassasiyet", value: "±15 µm (arttırılmış)" },
+          { label: tLocalized("Çözünürlük", "Resolution"), value: "6K" },
+          { label: tLocalized("Hassasiyet", "Accuracy"), value: "±15 µm (arttırılmış)" },
           { label: "Versiyon", value: "Fabrika / Arttırılmış" },
         ],
       },
@@ -451,7 +452,7 @@ export const printersCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "MASH P16L · 385nm · 16K",
       titlePrefix: "Marjin hattı,",
@@ -530,7 +531,7 @@ export const printersCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Hangi işler, hangi hacim, hangi bütçe? Kısa bir görüşmeyle size en uygun cihazı, reçineyi ve doğru parametreleri <b>ücretsiz</b> önerelim — elinizdeki cihazı da değerlendiririz.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Karşılaştırmaya dön", href: "#karsilastir", variant: "inverse" },
     ],
   },
@@ -545,9 +546,9 @@ export const washCureCategoryData: CategoryLandingData = {
     ctaText: "Cihaza git →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
+    parentLabel: tLocalized("Ürünler", "Products"),
     currentLabel: "Yıkama Kürleme Cihazları",
   },
   hero: {
@@ -568,7 +569,7 @@ export const washCureCategoryData: CategoryLandingData = {
   },
   selector: {
     anchorId: "cihaz",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "CİHAZLAR",
     titlePrefix: "Baskı sonrası için",
@@ -590,7 +591,7 @@ export const washCureCategoryData: CategoryLandingData = {
         specs: [
           { label: "İşlem", value: "Ultrasonik yıkama" },
           { label: "Akış", value: "Baskı sonrası temizlik" },
-          { label: "Kategori", value: "Yıkama" },
+          { label: "Kategori", value: tLocalized("Yıkama", "Washing") },
         ],
       },
       {
@@ -600,13 +601,13 @@ export const washCureCategoryData: CategoryLandingData = {
         href: "/mash-c1e-uv-kurleme-cihazi",
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e7c22c86-93e4-4c53-92f8-969d358e0c0f/1080/mash-c1e-dental-post-cure-cihazi.webp",
         imageAlt: "Mash C1E UV kürleme cihazı",
-        tag: "KÜRLEME",
+        tag: tLocalized("KÜRLEME", "CURING"),
         status: "76.782 TRY",
         tone: "#F2F8DC",
         specs: [
           { label: "Işık", value: "360° / 24 LED" },
           { label: "Spektrum", value: "360-530 nm" },
-          { label: "Kategori", value: "Kürleme" },
+          { label: "Kategori", value: tLocalized("Kürleme", "Curing") },
         ],
       },
       {
@@ -629,8 +630,8 @@ export const washCureCategoryData: CategoryLandingData = {
     compare: {
       columns: [
         { title: "Akış" },
-        { title: "Yıkama" },
-        { title: "Kürleme" },
+        { title: tLocalized("Yıkama", "Washing") },
+        { title: tLocalized("Kürleme", "Curing") },
         { title: "Birlikte" },
       ],
       rows: [
@@ -644,7 +645,7 @@ export const washCureCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "MASH W1E + MASH C1E",
       titlePrefix: "Yıkama ve kürleme",
@@ -654,8 +655,8 @@ export const washCureCategoryData: CategoryLandingData = {
       href: "/mash-c1e-uv-kurleme-cihazi",
       ctaText: "C1E detayına git →",
       specs: [
-        { label: "Yıkama", value: "Mash W1E" },
-        { label: "Kürleme", value: "Mash C1E" },
+        { label: tLocalized("Yıkama", "Washing"), value: "Mash W1E" },
+        { label: tLocalized("Kürleme", "Curing"), value: "Mash C1E" },
         { label: "C1E ışık sistemi", value: "360° / 24 LED" },
         { label: "C1E spektrum", value: "360-530 nm" },
       ],
@@ -724,7 +725,7 @@ export const washCureCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Hangi yazıcı, hangi reçine, hangi parça tipi? Kısa bir görüşmeyle yıkama ve kürleme adımını iş akışınıza göre birlikte netleştirelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Cihazlara dön", href: "#cihaz", variant: "inverse" },
     ],
   },
@@ -739,9 +740,9 @@ export const washingCategoryData: CategoryLandingData = {
     ctaText: "Yıkama cihazını incele →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
+    parentLabel: tLocalized("Ürünler", "Products"),
     currentLabel: "Dental Yıkama Cihazları",
   },
   hero: {
@@ -755,15 +756,15 @@ export const washingCategoryData: CategoryLandingData = {
       { label: "İş akışına danış", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "Ultrasonik", emphasis: "yıkama", label: "mikro boşluklarda derinlemesine temizlik" },
+      { value: "Ultrasonik", emphasis: tLocalized("yıkama", "Washing"), label: "mikro boşluklarda derinlemesine temizlik" },
       { value: "16.453", emphasis: "TRY", label: "W1E başlangıç fiyatı" },
       { value: "Hassas", emphasis: "arındırma", label: "parça geometrisine zarar vermez" },
-      { value: "Kürleme", emphasis: "öncesi", label: "homojen post-curing için hazır yüzey" },
+      { value: tLocalized("Kürleme", "Curing"), emphasis: "öncesi", label: "homojen post-curing için hazır yüzey" },
     ],
   },
   selector: {
     anchorId: "cihaz",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "YIKAMA CİHAZLARI",
     titlePrefix: "Baskı sonrası için",
@@ -785,7 +786,7 @@ export const washingCategoryData: CategoryLandingData = {
         specs: [
           { label: "İşlem", value: "Ultrasonik yıkama" },
           { label: "Akış", value: "Baskı sonrası temizlik" },
-          { label: "Kategori", value: "Yıkama" },
+          { label: "Kategori", value: tLocalized("Yıkama", "Washing") },
         ],
       },
       {
@@ -801,7 +802,7 @@ export const washingCategoryData: CategoryLandingData = {
         specs: [
           { label: "İşlem", value: "Geniş yıkama haznesi" },
           { label: "Uyumluluk", value: "Büyük tablalarla uyumlu" },
-          { label: "Kategori", value: "Yıkama" },
+          { label: "Kategori", value: tLocalized("Yıkama", "Washing") },
         ],
       },
     ],
@@ -823,7 +824,7 @@ export const washingCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "MASH W1E · ULTRASONİK YIKAMA",
       titlePrefix: "Kürleme öncesi,",
@@ -897,7 +898,7 @@ export const washingCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Hangi reçineleri kullanıyorsunuz, günlük baskı hacminiz ne kadar? İhtiyacınıza en uygun yıkama protokolünü ücretsiz belirleyelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Cihazlara dön", href: "#cihaz", variant: "inverse" },
     ],
   },
@@ -912,9 +913,9 @@ export const curingCategoryData: CategoryLandingData = {
     ctaText: "Kürleme cihazını incele →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
+    parentLabel: tLocalized("Ürünler", "Products"),
     currentLabel: "Dental Kürleme Cihazları",
   },
   hero: {
@@ -936,7 +937,7 @@ export const curingCategoryData: CategoryLandingData = {
   },
   selector: {
     anchorId: "cihaz",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "KÜRLEME CİHAZLARI",
     titlePrefix: "Dental reçineler için",
@@ -958,7 +959,7 @@ export const curingCategoryData: CategoryLandingData = {
         specs: [
           { label: "Işık", value: "360° / 24 LED" },
           { label: "Spektrum", value: "360-530 nm" },
-          { label: "Kategori", value: "Kürleme" },
+          { label: "Kategori", value: tLocalized("Kürleme", "Curing") },
         ],
       },
       {
@@ -974,7 +975,7 @@ export const curingCategoryData: CategoryLandingData = {
         specs: [
           { label: "İşlem", value: "Döner tablalı kürleme" },
           { label: "UV", value: "365 / 405 nm" },
-          { label: "Kategori", value: "Kürleme" },
+          { label: "Kategori", value: tLocalized("Kürleme", "Curing") },
         ],
       },
     ],
@@ -996,7 +997,7 @@ export const curingCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "MASH C1E · 360° UV POST-CURING",
       titlePrefix: "24 LED ile",
@@ -1009,8 +1010,8 @@ export const curingCategoryData: CategoryLandingData = {
       specs: [
         { label: "LED Sayısı", value: "24 Adet Yüksek Güçlü" },
         { label: "Işık Açısı", value: "360° Çepeçevre" },
-        { label: "Dalga Boyu", value: "360 - 530 nm" },
-        { label: "Sonuç", value: "Maksimum Bükülme Dayanımı" },
+        { label: tLocalized("Dalga Boyu", "Wavelength"), value: "360 - 530 nm" },
+        { label: tLocalized("Sonuç", "Result"), value: "Maksimum Bükülme Dayanımı" },
       ],
     },
   },
@@ -1071,7 +1072,7 @@ export const curingCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Hangi reçineleri kullanıyorsunuz, hangi endikasyonları basıyorsunuz? C1E akıllı kürleme cihazı ile kliniğinizin/laboratuvarınızın kalite standardını sabitleyelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Cihazlara dön", href: "#cihaz", variant: "inverse" },
     ],
   },
@@ -1086,10 +1087,10 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
     ctaText: "Zirkonları karşılaştır →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
-    currentLabel: "Zirkon Bloklar",
+    parentLabel: tLocalized("Ürünler", "Products"),
+    currentLabel: tLocalized("Zirkon Bloklar", "Zirconia Blocks"),
   },
   hero: {
     titlePrefix: "Doğru zirkon,",
@@ -1102,7 +1103,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
       { label: "Vaka uyumunu sor", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "3", emphasis: "ürün", label: "farklı estetik ve dayanım seçenekleri" },
+      { value: "3", emphasis: tLocalized("ürün", "Ürün"), label: "farklı estetik ve dayanım seçenekleri" },
       { value: "850", emphasis: "MPa", label: "ST Multilayer estetik zirkon dayanımı" },
       { value: "1250", emphasis: "MPa", label: "HT+ ve HT+ Multilayer yüksek dayanım sınıfı" },
       { value: "7.337", emphasis: "TRY", label: "başlangıç fiyat aralığı" },
@@ -1110,7 +1111,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
   },
   selector: {
     anchorId: "zirkonlar",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "ZİRKON SEÇİCİ",
     titlePrefix: "Estetik, dayanım,",
@@ -1186,7 +1187,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "ARGENZ HT+ · 1250 MPa · 45%",
       titlePrefix: "Dayanım ve estetik",
@@ -1266,7 +1267,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Vaka tipi, renk, kalınlık ve fırın akışınızı kısa bir görüşmeyle netleştirip doğru ArgenZ zirkon bloğu birlikte belirleyelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Zirkonlara dön", href: "#zirkonlar", variant: "inverse" },
     ],
   },
@@ -1281,10 +1282,10 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
     ctaText: "Fırınları karşılaştır →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
-    currentLabel: "Dental Fırınlar",
+    parentLabel: tLocalized("Ürünler", "Products"),
+    currentLabel: tLocalized("Dental Fırınlar", "Dental Furnaces"),
   },
   hero: {
     titlePrefix: "Restorasyon kalitesi,",
@@ -1297,7 +1298,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
       { label: "Akışı birlikte planlayalım", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "4", emphasis: "ürün", label: "sinterleme ve porselen pişirim seçenekleri" },
+      { value: "4", emphasis: tLocalized("ürün", "Ürün"), label: "sinterleme ve porselen pişirim seçenekleri" },
       { value: "1650", emphasis: "°C", label: "LHT 02/17 LB Speed maksimum sıcaklık sınıfı" },
       { value: "1600", emphasis: "°C", label: "LHT 01/16 Turbo Fire hızlı sinterleme akışı" },
       { value: "Press", emphasis: "/ Porselen", label: "VL 01/12 LB hattında iki farklı laboratuvar işi" },
@@ -1305,7 +1306,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
   },
   selector: {
     anchorId: "firinlar",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "FIRIN SEÇİCİ",
     titlePrefix: "Sinterleme, press,",
@@ -1321,7 +1322,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/4112bcc1-a205-4063-bb3b-c52112d8dba2/1080/firinlar4.webp",
         imageAlt: "Naberthem LHT 02/17 LB Speed dental fırın",
         tag: "SINTERLEME",
-        status: "Teklif alın",
+        status: tLocalized("Teklif alın", "Get a quote"),
         hot: true,
         tone: "#F1F1EC",
         specs: [
@@ -1338,7 +1339,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/cef47053-2e60-4139-9089-9aadb5855033/1080/firinlar3.webp",
         imageAlt: "Naberthem LHT 01/16 Turbo Fire dental fırın",
         tag: "TURBO FIRE",
-        status: "Teklif alın",
+        status: tLocalized("Teklif alın", "Get a quote"),
         tone: "#F1F1EC",
         specs: [
           { label: "Kategori sırası", value: "2" },
@@ -1354,7 +1355,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/c72ba72c-c628-46f6-ac9d-863e3ccb6d8a/1080/firinlar2.webp",
         imageAlt: "Naberthem VL 01/12 LB Pres Fırını",
         tag: "PRESS",
-        status: "Teklif alın",
+        status: tLocalized("Teklif alın", "Get a quote"),
         tone: "#F1F1EC",
         specs: [
           { label: "Kategori sırası", value: "3" },
@@ -1370,7 +1371,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/3bfdd659-7c98-4939-8573-8fecb1408edc/1080/washcure-website-kopyasi.webp",
         imageAlt: "Naberthem VL 01/12 LB Porselen Fırını",
         tag: "PORSELEN",
-        status: "Teklif alın",
+        status: tLocalized("Teklif alın", "Get a quote"),
         tone: "#F1F1EC",
         specs: [
           { label: "Kategori sırası", value: "4" },
@@ -1397,7 +1398,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "NABERTHEM LHT 02/17 LB SPEED",
       titlePrefix: "Zirkon sinterleme için",
@@ -1478,7 +1479,7 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Hangi zirkon, hangi adet, hangi teslim süresi? Kısa bir görüşmeyle sinterleme, press veya porselen akışınız için doğru fırın seçimini netleştirelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Fırınlara dön", href: "#firinlar", variant: "inverse" },
     ],
   },
@@ -1493,10 +1494,10 @@ export const desktopScannersCategoryData: CategoryLandingData = {
     ctaText: "Tarayıcıları karşılaştır →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
-    currentLabel: "Masaüstü Tarayıcılar",
+    parentLabel: tLocalized("Ürünler", "Products"),
+    currentLabel: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"),
   },
   hero: {
     titlePrefix: "Dijital üretim,",
@@ -1509,7 +1510,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
       { label: "Laboratuvarı birlikte eşleyelim", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "3", emphasis: "ürün", label: "E2, E3 ve E4 tarayıcı seçenekleri" },
+      { value: "3", emphasis: tLocalized("ürün", "Ürün"), label: "E2, E3 ve E4 tarayıcı seçenekleri" },
       { value: "4", emphasis: "μm", label: "3Shape E4 hassasiyet bilgisi" },
       { value: "9", emphasis: "sn", label: "3Shape E4 tam çene tarama hızı" },
       { value: "3Shape", emphasis: "E serisi", label: "dental laboratuvar CAD/CAM başlangıcı" },
@@ -1517,7 +1518,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
   },
   selector: {
     anchorId: "tarayicilar",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "TARAYICI SEÇİCİ",
     titlePrefix: "Doku, implant bar,",
@@ -1533,7 +1534,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d2937ac4-16ad-4c18-a76e-24a2b26ced24/1080/e2-new-red-2.webp",
         imageAlt: "3Shape E2 masaüstü tarayıcı",
         tag: "DOKU TARAMASI",
-        status: "Teklif alın",
+        status: tLocalized("Teklif alın", "Get a quote"),
         tone: "#F1F1EC",
         specs: [
           { label: "Kategori sırası", value: "1" },
@@ -1549,7 +1550,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/0adf4e0d-a7a0-48ef-b2f2-65b9c5719703/1080/e3-new-red.webp",
         imageAlt: "3Shape E3 masaüstü tarayıcı",
         tag: "IMPLANT BAR",
-        status: "Teklif alın",
+        status: tLocalized("Teklif alın", "Get a quote"),
         hot: true,
         tone: "#F1F1EC",
         specs: [
@@ -1566,12 +1567,12 @@ export const desktopScannersCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/f6ee476e-9d5a-4744-b561-b2990f9db4ae/1080/4-1550872.webp",
         imageAlt: "3Shape E4 masaüstü tarayıcı",
         tag: "4 μm · 9 sn",
-        status: "Teklif alın",
+        status: tLocalized("Teklif alın", "Get a quote"),
         hot: true,
         tone: "#F1F1EC",
         specs: [
           { label: "Kategori sırası", value: "3" },
-          { label: "Hassasiyet", value: "4 μm" },
+          { label: tLocalized("Hassasiyet", "Accuracy"), value: "4 μm" },
           { label: "Tam çene", value: "9 sn" },
         ],
       },
@@ -1594,7 +1595,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "3SHAPE E4 · 4 μM · 9 SN",
       titlePrefix: "Hız ve hassasiyet",
@@ -1604,7 +1605,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
       href: "/3shape-e4",
       ctaText: "E4 ürün detayına git →",
       specs: [
-        { label: "Hassasiyet", value: "4 μm" },
+        { label: tLocalized("Hassasiyet", "Accuracy"), value: "4 μm" },
         { label: "Tam çene", value: "9 sn" },
         { label: "Kamera", value: "4" },
         { label: "Kategori sırası", value: "3" },
@@ -1674,7 +1675,7 @@ export const desktopScannersCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Doku taraması mı, implant bar doğruluğu mu, yüksek hacimli tam çene akışı mı? Kısa bir görüşmeyle E2, E3 ve E4 arasındaki doğru seçimi netleştirelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Tarayıcılara dön", href: "#tarayicilar", variant: "inverse" },
     ],
   },
@@ -1689,9 +1690,9 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
     ctaText: "Yedek parçaları gör →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
+    parentLabel: tLocalized("Ürünler", "Products"),
     currentLabel: "3D Yazıcı Yedek Parçaları",
   },
   hero: {
@@ -1705,7 +1706,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
       { label: "Uyumluluğu kontrol ettir", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "8", emphasis: "ürün", label: "yazıcı bakım ve yedek parça seçenekleri" },
+      { value: "8", emphasis: tLocalized("ürün", "Ürün"), label: "yazıcı bakım ve yedek parça seçenekleri" },
       { value: "16K", emphasis: "LCD", label: "MASH P16L monokrom ekran yedek parçası" },
       { value: "800", emphasis: "ml", label: "MASH P16L reçine tankı kapasitesi" },
       { value: "6K", emphasis: "Mono", label: "Creality Halot Sky LCD ekran kiti" },
@@ -1713,7 +1714,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
   },
   selector: {
     anchorId: "yedek-parcalar",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "PARÇA LİSTESİ",
     titlePrefix: "Elektronik, tabla,",
@@ -1815,7 +1816,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
         specs: [
           { label: "Sıra", value: "6" },
           { label: "Uyum", value: "LCD / DLP" },
-          { label: "Tip", value: "Sarf film" },
+          { label: "Tip", value: tLocalized("Sarf film", "sarf film") },
         ],
       },
       {
@@ -1859,7 +1860,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
         { title: "Tank / film" },
       ],
       rows: [
-        { label: "Ürünler", values: ["Ana kart, 16K LCD, C01 LCD, Halot Sky LCD", "Küçük tabla, büyük tabla", "P16L reçine tankı, ACF/FEP film"] },
+        { label: tLocalized("Ürünler", "Products"), values: ["Ana kart, 16K LCD, C01 LCD, Halot Sky LCD", "Küçük tabla, büyük tabla", "P16L reçine tankı, ACF/FEP film"] },
         { label: "Kontrol", values: ["Cihaz modeli, ekran revizyonu, bağlantı", "Tabla yüzeyi, hizalama, ilk katman", "Film gerginliği, tank yüzeyi, UV geçirgenliği"] },
         { label: "Amaç", values: ["Pozlama ve kontrol stabilitesi", "Baskı tutunması ve üretim hızı", "Reçine akışı ve katman ayrımı"] },
       ],
@@ -1869,7 +1870,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "MASH P16L · 16K LCD · 385 nm",
       titlePrefix: "Mikron detay",
@@ -1880,8 +1881,8 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
       href: "/mash-p16l-16k-monokrom-lcd-ekran-yedek-parca",
       ctaText: "LCD ekran detayına git →",
       specs: [
-        { label: "Çözünürlük", value: "16K UHD" },
-        { label: "Hassasiyet", value: "14x19 μm" },
+        { label: tLocalized("Çözünürlük", "Resolution"), value: "16K UHD" },
+        { label: tLocalized("Hassasiyet", "Accuracy"), value: "14x19 μm" },
         { label: "Ekran", value: "9.6 inç" },
         { label: "Işık", value: "385 nm" },
       ],
@@ -1930,7 +1931,7 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Cihaz modelinizi, baskı probleminizi ve mevcut parça revizyonunu paylaşın; doğru ürünü ve kurulum kontrol listesini birlikte belirleyelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Yedek parçalara dön", href: "#yedek-parcalar", variant: "inverse" },
     ],
   },
@@ -1945,10 +1946,10 @@ export const systemsCategoryData: CategoryLandingData = {
     ctaText: "Sistemleri gör →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
-    currentLabel: "Sistemler",
+    parentLabel: tLocalized("Ürünler", "Products"),
+    currentLabel: tLocalized("Sistemler", "Systems"),
   },
   hero: {
     titlePrefix: "Tam çene kompozitte",
@@ -1961,7 +1962,7 @@ export const systemsCategoryData: CategoryLandingData = {
       { label: "Vaka uyumunu sor", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "2", emphasis: "ürün", label: "Comp Flow ve Light Glass sistemleri" },
+      { value: "2", emphasis: tLocalized("ürün", "Ürün"), label: "Comp Flow ve Light Glass sistemleri" },
       { value: "Tam", emphasis: "çene", label: "kompozit restorasyon akışı" },
       { value: "CRS", emphasis: "Trasformer", label: "sistem ve materyal birlikte konumlanır" },
       { value: "14.654", emphasis: "TRY", label: "Light Glass başlangıç fiyat aralığı" },
@@ -1969,7 +1970,7 @@ export const systemsCategoryData: CategoryLandingData = {
   },
   selector: {
     anchorId: "sistemler",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "SİSTEM SEÇİCİ",
     titlePrefix: "Kompozit materyal,",
@@ -2030,7 +2031,7 @@ export const systemsCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "TRASFORMER LIGHT GLASS",
       titlePrefix: "Kompozit restorasyonda",
@@ -2090,7 +2091,7 @@ export const systemsCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Vaka hedefinizi, renk ihtiyacınızı ve laboratuvar sürecinizi paylaşın; Comp Flow ve Light Glass kullanımını birlikte netleştirelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Sistemlere dön", href: "#sistemler", variant: "inverse" },
     ],
   },
@@ -2105,10 +2106,10 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
     ctaText: "Titanyum diski gör →",
   },
   breadcrumb: {
-    homeLabel: "Ana sayfa",
+    homeLabel: tLocalized("Ana sayfa", "Home"),
     homeHref: "/",
-    parentLabel: "Ürünler",
-    currentLabel: "Titanyum Diskler",
+    parentLabel: tLocalized("Ürünler", "Products"),
+    currentLabel: tLocalized("Titanyum Diskler", "Titanium Discs"),
   },
   hero: {
     titlePrefix: "İmplant üstü işlerde",
@@ -2121,7 +2122,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
       { label: "Freze uyumunu sor", href: "/pages/iletisim", variant: "line" },
     ],
     metrics: [
-      { value: "1", emphasis: "ürün", label: "freze iş akışı için titanyum disk" },
+      { value: "1", emphasis: tLocalized("ürün", "Ürün"), label: "freze iş akışı için titanyum disk" },
       { value: "Grade", emphasis: "5 ELI", label: "titanyum materyal sınıfı" },
       { value: "Ø98.5", emphasis: "mm", label: "CAD/CAM disk formu" },
       { value: "3.930", emphasis: "TRY", label: "başlangıç fiyat aralığı" },
@@ -2129,7 +2130,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
   },
   selector: {
     anchorId: "titanyum",
-    cardCtaText: "İncele",
+    cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: "TİTANYUM DİSK",
     titlePrefix: "Grade 5 ELI,",
@@ -2173,7 +2174,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
   },
   feature: {
     number: "02",
-    label: "ÖNE ÇIKAN",
+    label: tLocalized("ÖNE ÇIKAN", "FEATURED"),
     content: {
       eyebrow: "MESA · GRADE 5 ELI · Ø98.5 MM",
       titlePrefix: "CAD/CAM frezeleme için",
@@ -2234,7 +2235,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
     descriptionHtml:
       "Freze sisteminizi, CAM akışınızı ve implant üstü vaka tipinizi paylaşın; doğru disk boyutu ve kullanım planını birlikte netleştirelim.",
     buttons: [
-      { label: "Uzmana danış — ücretsiz", href: "/pages/iletisim", variant: "lime" },
+      { label: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), href: "/pages/iletisim", variant: "lime" },
       { label: "Titanyum diske dön", href: "#titanyum", variant: "inverse" },
     ],
   },
@@ -2244,11 +2245,11 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
   const key = normalizeCategoryKey(value);
   if (!key) return null;
   const dentalKeys = ["dental 3d yazici recineleri", "3d yazici recineleri", "dental recineler", "dental recine"];
-  const printerKeys = ["3d yazicilar", "dental 3d yazicilar", "mash p16l", "curie m1", "halot sky", "creality halot"];
-  const washingKeys = ["yikama cihazlari", "dental yikama", "yikama", "washing", "mash w1e"];
-  const curingKeys = ["kurleme cihazlari", "dental kurleme", "kurleme", "curing", "mash c1e"];
+  const printerKeys = ["3d yazicilar", "dental 3d yazicilar", tLocalized("mash p16l", "MASH P16L"), "curie m1", "halot sky", "creality halot"];
+  const washingKeys = ["yikama cihazlari", "dental yikama", "yikama", "washing", tLocalized("mash w1e", "Mash W1E")];
+  const curingKeys = ["kurleme cihazlari", "dental kurleme", "kurleme", "curing", tLocalized("mash c1e", "Mash C1E")];
   const washCureKeys = ["yikama kurleme cihazlari", "yikama kurleme", "wash cure", "washcure", "uw 03", "uw 02"];
-  const zirconKeys = ["zirkon bloklar", "zirkon blok", "zircon blocks", "argenz ht plus", "argenz st multilayer", "argenz ht multilayer"];
+  const zirconKeys = ["zirkon bloklar", tLocalized("zirkon blok", "Zirconia Block"), "zircon blocks", "argenz ht plus", tLocalized("argenz st multilayer", "ArgenZ ST Multilayer"), "argenz ht multilayer"];
   const furnaceKeys = [
     "dental firinlar",
     "dental firin",
@@ -2264,35 +2265,35 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
     "masaustu tarayicilar",
     "desktop scanners",
     "tarayicilar",
-    "3shape e2",
-    "3shape e3",
-    "3shape e4",
+    tLocalized("3shape e2", "3Shape E2"),
+    tLocalized("3shape e3", "3Shape E3"),
+    tLocalized("3shape e4", "3Shape E4"),
   ];
   const spareKeys = [
     "3d yazici yedek parcalari",
     "yazici yedek parcalari",
     "yedek parcalar",
-    "mash p16l ana kart",
-    "mash p16l 16k monokrom lcd ekran",
+    tLocalized("mash p16l ana kart", "MASH P16L Ana Kart"),
+    tLocalized("mash p16l 16k monokrom lcd ekran", "MASH P16L 16K Monokrom LCD Ekran"),
     "mash p16l kucuk baski tablasi",
     "mash p16l buyuk baski tablasi",
     "mash p16l recine tanki",
     "seffaf acf film",
     "seffaf fep film",
-    "piocreat c01 lcd ekran kiti",
-    "creality halot sky lcd ekran kiti",
+    tLocalized("piocreat c01 lcd ekran kiti", "Piocreat C01 LCD Ekran Kiti"),
+    tLocalized("creality halot sky lcd ekran kiti", "Creality Halot Sky LCD ekran kiti"),
   ];
   const systemKeys = [
     "sistemler",
-    "trasformer comp flow",
+    tLocalized("trasformer comp flow", "Trasformer Comp Flow"),
     "trasformer comp flow siringa kompozit",
-    "trasformer light glass",
-    "trasformer light glass mufla sistemi",
+    tLocalized("trasformer light glass", "TRASFORMER LIGHT GLASS"),
+    tLocalized("trasformer light glass mufla sistemi", "Trasformer Light Glass Mufla Sistemi"),
     "light glass mufla",
   ];
   const titaniumKeys = [
     "titanyum diskler",
-    "titanyum disk",
+    tLocalized("titanyum disk", "Titanium Disc"),
     "titanium disk",
     "mesa grade 5 eli",
     "mesa titanyum disk",
@@ -2302,14 +2303,14 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
   if (dentalKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return dentalResinsCategoryData;
   }
+  if (washCureKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
+    return washCureCategoryData;
+  }
   if (washingKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return washingCategoryData;
   }
   if (curingKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return curingCategoryData;
-  }
-  if (washCureKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return washCureCategoryData;
   }
   if (zirconKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return zirconBlocksCategoryData;

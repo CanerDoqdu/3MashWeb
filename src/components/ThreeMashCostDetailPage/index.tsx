@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { Props } from "./types";
+import { isEnglishLocale, tLocalized, tProp } from "../../utils/i18n";
 
 type CostMode = "klinik" | "lab";
 
@@ -28,24 +29,6 @@ export function ThreeMashCostDetailPage(props: Props) {
   const [mode, setMode] = useState<CostMode>("klinik");
   const [saved, setSaved] = useState(false);
   const [initialized, setInitialized] = useState(false);
-  const [isStuck, setIsStuck] = useState(false);
-  const sentinelRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
-    const el = sentinelRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsStuck(!entry.isIntersecting);
-      },
-      { threshold: 0, rootMargin: "-20px 0px 0px 0px" }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   // Klinik input states (initialized from props or defaults)
   const [chairRate, setChairRate] = useState(props.defaultChairRate ?? 375);
@@ -133,25 +116,25 @@ export function ThreeMashCostDetailPage(props: Props) {
 
   const modelData: Record<CostMode, { per: string; fields: FieldDef[] }> = {
     klinik: {
-      per: "KLİNİK",
+      per: tLocalized("KLİNİK", "CLINIC"),
       fields: [
-        { id: "chairRate", label: "Hekim + koltuk maliyeti", hint: "işletme gideri, $/saat", min: 150, max: 700, step: 25, val: chairRate, color: "#E2492F", kind: "rate" },
-        { id: "chairMin", label: "Bir tekrara harcanan süre", hint: "prep + ölçü + yapıştırma, dk", min: 20, max: 120, step: 5, val: chairMin, color: "#E2492F", kind: "min", pairsWith: "chairRate" },
-        { id: "units", label: "İşteki ünite sayısı", hint: "birim", min: 1, max: 6, step: 1, val: units, color: "#7C9C36", kind: "mult" },
-        { id: "labFee", label: "Yeniden lab ücreti", hint: "ünite başına, $", min: 0, max: 400, step: 10, val: labFee, color: "#7C9C36", kind: "perUnit" },
-        { id: "ship", label: "Kargo / lojistik", hint: "gidiş-dönüş, $", min: 0, max: 120, step: 5, val: ship, color: "#B7B7AE", kind: "flat" },
-        { id: "misc", label: "İskonto / jest / israf", hint: "$", min: 0, max: 200, step: 5, val: misc, color: "#B7B7AE", kind: "flat" },
+        { id: "chairRate", label: tLocalized("Hekim + koltuk maliyeti", "Doctor + chair cost"), hint: tLocalized("işletme gideri, $/saat", "operating cost, $/hr"), min: 150, max: 700, step: 25, val: chairRate, color: "#E2492F", kind: "rate" },
+        { id: "chairMin", label: tLocalized("Bir tekrara harcanan süre", "Time spent per remake"), hint: tLocalized("prep + ölçü + yapıştırma, dk", "prep + scan + cementation, min"), min: 20, max: 120, step: 5, val: chairMin, color: "#E2492F", kind: "min", pairsWith: "chairRate" },
+        { id: "units", label: tLocalized("İşteki ünite sayısı", "Units per case"), hint: tLocalized("birim", "units"), min: 1, max: 6, step: 1, val: units, color: "#7C9C36", kind: "mult" },
+        { id: "labFee", label: tLocalized("Yeniden lab ücreti", "Remake lab fee"), hint: tLocalized("ünite başına, $", "per unit, $"), min: 0, max: 400, step: 10, val: labFee, color: "#7C9C36", kind: "perUnit" },
+        { id: "ship", label: tLocalized("Kargo / lojistik", "Shipping / logistics"), hint: tLocalized("gidiş-dönüş, $", "round-trip, $"), min: 0, max: 120, step: 5, val: ship, color: "#B7B7AE", kind: "flat" },
+        { id: "misc", label: tLocalized("İskonto / jest / israf", "Discount / goodwill / waste"), hint: "$", min: 0, max: 200, step: 5, val: misc, color: "#B7B7AE", kind: "flat" },
       ],
     },
     lab: {
-      per: "LAB",
+      per: tLocalized("LAB", "LAB"),
       fields: [
-        { id: "matUnit", label: "Yeniden üretim malzemesi", hint: "reçine/disk, ünite başına $", min: 0, max: 200, step: 5, val: matUnit, color: "#E2492F", kind: "perUnit" },
-        { id: "unitsL", label: "İşteki ünite sayısı", hint: "birim", min: 1, max: 12, step: 1, val: unitsL, color: "#7C9C36", kind: "mult" },
-        { id: "labRate", label: "Üretim iş gücü", hint: "baskı+kürleme+QC, $/saat", min: 20, max: 200, step: 10, val: labRate, color: "#E2492F", kind: "rate" },
-        { id: "labMin", label: "Yeniden üretim süresi", hint: "dk", min: 10, max: 180, step: 10, val: labMin, color: "#E2492F", kind: "min", pairsWith: "labRate" },
-        { id: "shipL", label: "Kargo (iki yön)", hint: "$", min: 0, max: 150, step: 5, val: shipL, color: "#B7B7AE", kind: "flat" },
-        { id: "goodwill", label: "İskonto / müşteri jesti", hint: "$", min: 0, max: 250, step: 10, val: goodwill, color: "#B7B7AE", kind: "flat" },
+        { id: "matUnit", label: tLocalized("Yeniden üretim malzemesi", "Remake material"), hint: tLocalized("reçine/disk, $/birim", "resin/disc, per unit $"), min: 0, max: 200, step: 5, val: matUnit, color: "#E2492F", kind: "perUnit" },
+        { id: "unitsL", label: tLocalized("İşteki ünite sayısı", "Units per case"), hint: tLocalized("birim", "units"), min: 1, max: 12, step: 1, val: unitsL, color: "#7C9C36", kind: "mult" },
+        { id: "labRate", label: tLocalized("Üretim iş gücü", "Production labor"), hint: tLocalized("baskı+kürleme+QC, $/saat", "print+curing+QC, $/hr"), min: 20, max: 200, step: 10, val: labRate, color: "#E2492F", kind: "rate" },
+        { id: "labMin", label: tLocalized("Yeniden üretim süresi", "Remake production time"), hint: tLocalized("dk", "min"), min: 10, max: 180, step: 10, val: labMin, color: "#E2492F", kind: "min", pairsWith: "labRate" },
+        { id: "shipL", label: tLocalized("Kargo (iki yön)", "Shipping (two-way)"), hint: "$", min: 0, max: 150, step: 5, val: shipL, color: "#B7B7AE", kind: "flat" },
+        { id: "goodwill", label: tLocalized("İskonto / müşteri jesti", "Discount / customer goodwill"), hint: "$", min: 0, max: 250, step: 10, val: goodwill, color: "#B7B7AE", kind: "flat" },
       ],
     },
   };
@@ -193,16 +176,16 @@ export function ThreeMashCostDetailPage(props: Props) {
       const production = labFee * units;
       const logi = ship + misc;
       pList = [
-        { n: "Koltuk süresi", v: chair, c: "#E2492F" },
-        { n: "Yeniden üretim", v: production, c: "#7C9C36" },
-        { n: "Lojistik + diğer", v: logi, c: "#B7B7AE" },
+        { n: tLocalized("Koltuk süresi", "Chair time"), v: chair, c: "#E2492F" },
+        { n: tLocalized("Yeniden üretim", "Remake production"), v: production, c: "#7C9C36" },
+        { n: tLocalized("Lojistik + diğer", "Logistics + other"), v: logi, c: "#B7B7AE" },
       ];
     } else {
       const prod = matUnit * unitsL + (labRate * labMin) / 60;
       const logi = shipL + goodwill;
       pList = [
-        { n: "Üretim (malzeme+işçilik)", v: prod, c: "#E2492F" },
-        { n: "Kargo + jest", v: logi, c: "#B7B7AE" },
+        { n: tLocalized(tLocalized("Üretim (malzeme+işçilik)", "Production (material+labor)"), "Production (material+labor)"), v: prod, c: "#E2492F" },
+        { n: tLocalized("Kargo + jest", "Shipping + goodwill"), v: logi, c: "#B7B7AE" },
       ];
     }
     const tot = pList.reduce((sum, item) => sum + item.v, 0);
@@ -252,52 +235,39 @@ export function ThreeMashCostDetailPage(props: Props) {
         <div className="wrap">
           <div className="crumb">
             <a href={props.useButtonHref || "/"}>
-              {props.breadcrumbHomeText || "Ana sayfa"}
+              {props.breadcrumbHomeText || tLocalized("Ana sayfa", "Home")}
             </a>{" "}
             &nbsp;/&nbsp;{" "}
             <a href={(props.useButtonHref || "/") + "#hesap"}>
-              {props.breadcrumbParentText || "Tasarruf hesaplayıcı"}
+              {props.breadcrumbParentText || tLocalized("Tasarruf hesaplayıcı", "Savings calculator")}
             </a>{" "}
-            &nbsp;/&nbsp; {props.breadcrumbCurrentText || "Bir tekrarın maliyeti"}
+            &nbsp;/&nbsp; {props.breadcrumbCurrentText || tLocalized("Bir tekrarın maliyeti", "Cost of a remake")}
           </div>
           {props.heroTitle ? (
             <h1 dangerouslySetInnerHTML={{ __html: props.heroTitle }} />
           ) : (
             <h1>
-              Bir tekrarın gerçek maliyeti neden<br /><span className="em">~500 dolar?</span>
+              {tLocalized("Bir tekrarın gerçek maliyeti neden", "Why does a remake really cost")}<br /><span className="em">{tLocalized("~500 dolar?", "~$500?")}</span>
             </h1>
           )}
           {props.heroAnswer ? (
             <p className="answer" dangerouslySetInnerHTML={{ __html: props.heroAnswer }} />
           ) : (
             <p className="answer">
-              Kısa cevap: çünkü bir remake'in maliyeti <b>lab ücretinden ibaret değildir.</b> Asıl yükü{" "}
-              <span className="k">koltuk süresi</span> oluşturur — yeniden prep, yeniden ölçü/tarama ve yeniden
-              yapıştırma randevusu. Ulusal ölçekli klinik veriler tekrar oranını ortalama <b>%3,8</b>, ama hekimden
-              hekime <b>%0–42</b> aralığında gösteriyor. Aşağıda kendi kalemlerinizle gerçek rakamınızı
-              çıkarabilirsiniz.
+              {tLocalized(
+                "Kısa cevap: çünkü bir remake'in maliyeti lab ücretinden ibaret değildir. Asıl yükü koltuk süresi oluşturur — yeniden prep, yeniden ölçü/tarama ve yeniden yapıştırma randevusu. Ulusal ölçekli klinik veriler tekrar oranını ortalama %3,8, ama hekimden hekime %0–42 aralığında gösteriyor. Aşağıda kendi kalemlerinizle gerçek rakamınızı çıkarabilirsiniz.",
+                "Short answer: because the cost of a remake is not just the lab fee. The primary burden is chair time — appointments for re-prep, re-impression/scan, and re-cementation. National clinical data shows an average remake rate of 3.8%, ranging from 0% to 42% across practitioners. Calculate your own figure below item by item."
+              )}
             </p>
           )}
         </div>
       </div>
 
       <div className="wrap cols">
-        <div
-          ref={sentinelRef}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            height: "1px",
-            width: "1px",
-            pointerEvents: "none",
-            visibility: "hidden",
-          }}
-        />
         {/* SOL: hesaplayıcı (sticky) */}
-        <div className={`calc${isStuck ? " is-stuck" : ""}`}>
+        <div className="calc">
           <div className="h">
-            <span className="micro">TEKRAR MALİYETİ · KALEM KALEM</span>
+            <span className="micro">{tLocalized("TEKRAR MALİYETİ · KALEM KALEM", "REMAKE COST · ITEM BY ITEM")}</span>
             <span className="micro" id="perLabel">
               {d.per}
             </span>
@@ -308,14 +278,14 @@ export function ThreeMashCostDetailPage(props: Props) {
               type="button"
               onClick={() => setMode("klinik")}
             >
-              Klinik
+              {tLocalized("Klinik", "Clinic")}
             </button>
             <button
               className={mode === "lab" ? "on" : ""}
               type="button"
               onClick={() => setMode("lab")}
             >
-              Laboratuvar
+              {tLocalized("Laboratuvar", "Lab")}
             </button>
           </div>
 
@@ -323,9 +293,9 @@ export function ThreeMashCostDetailPage(props: Props) {
             {d.fields.map((f) => {
               const val = values[f.id];
               let valText = fmt(val);
-              if (f.kind === "rate") valText = fmt(val) + "/sa";
-              else if (f.kind === "min") valText = val + " dk";
-              else if (f.kind === "mult") valText = val + " ünite";
+              if (f.kind === "rate") valText = fmt(val) + (isEnglishLocale() ? "/hr" : "/sa");
+              else if (f.kind === "min") valText = val + (isEnglishLocale() ? " min" : " dk");
+              else if (f.kind === "mult") valText = val + (isEnglishLocale() ? " unit" : " ünite");
 
               return (
                 <div className="li" key={f.id}>
@@ -376,7 +346,7 @@ export function ThreeMashCostDetailPage(props: Props) {
           </div>
 
           <div className="tot">
-            <span className="micro">BİR TEKRARIN TOPLAM MALİYETİ</span>
+            <span className="micro">{tLocalized("BİR TEKRARIN TOPLAM MALİYETİ", "TOTAL COST PER REMAKE")}</span>
             <span className="v" id="total">
               {fmt(total)}
             </span>
@@ -384,13 +354,13 @@ export function ThreeMashCostDetailPage(props: Props) {
 
           <div className="use">
             <a className="btn lime" id="useBtn" href={homeHref} onClick={handleUseBtn}>
-              {props.useButtonText || "Bu değeri ana sayfada kullan →"}
+              {props.useButtonText || tLocalized("Bu değeri ana sayfada kullan →", "Use this value on homepage →")}
             </a>
           </div>
 
           {saved && (
             <div className="saved" id="saved">
-              ✓ Değer kaydedildi — ana sayfadaki hesaplayıcıya taşındı.
+              {tLocalized("✓ Değer kaydedildi — ana sayfadaki hesaplayıcıya taşındı.", "✓ Value saved — transferred to homepage calculator.")}
             </div>
           )}
         </div>

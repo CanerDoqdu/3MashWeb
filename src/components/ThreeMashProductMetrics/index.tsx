@@ -6,6 +6,7 @@ import {
   type ProductDetailTemplateData,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderMetrics } from "../../sub-components/ThreeMashProductSectionPlaceholder";
+import { tLocalized } from "../../utils/i18n";
 
 function trimmedText(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -17,7 +18,7 @@ function overrideMetricsData(baseData: ProductDetailTemplateData | null, props: 
   const currentMetrics = baseData.metrics;
   const metrics = {
     index: trimmedText((props as any).sectionIndex) || currentMetrics?.index || "02",
-    label: trimmedText((props as any).sectionLabel) || currentMetrics?.label || "TEKNİK ÖZELLİKLER",
+    label: trimmedText((props as any).sectionLabel) || currentMetrics?.label || tLocalized("TEKNİK ÖZELLİKLER", "TECHNICAL SPECIFICATIONS"),
     titleHtml: trimmedText((props as any).titleHtml) || currentMetrics?.titleHtml || "",
     sideHtml: trimmedText((props as any).sideHtml) || currentMetrics?.sideHtml || "",
     items: currentMetrics?.items ? [...currentMetrics.items] : [],
@@ -60,7 +61,7 @@ function overrideMetricsData(baseData: ProductDetailTemplateData | null, props: 
       tag: specTag || specHighlight?.tag || "",
       titleHtml: specTitleHtml || specHighlight?.titleHtml || "",
       descriptionHtml: specDescriptionHtml || specHighlight?.descriptionHtml || "",
-      ctaText: specCtaText || specHighlight?.ctaText || "Boyut seç →",
+      ctaText: specCtaText || specHighlight?.ctaText || tLocalized("Boyut seç →", "Select size →"),
       ctaHref: specCtaHref || specHighlight?.ctaHref || "#satinal",
       rows: specHighlight?.rows ? [...specHighlight.rows] : [],
     };

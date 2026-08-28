@@ -1,0 +1,816 @@
+/* ============================================================
+   ThreeMashAccountLayout — shell + static sidebar + right panel
+   ============================================================ */
+
+/* ── Page wrapper ──────────────────────────────────────────── */
+
+.three-mash-account-info-page,
+.tmau-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  overflow-x: hidden;
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
+}
+
+.three-mash-account-info-page *,
+.three-mash-account-info-page *::before,
+.three-mash-account-info-page *::after,
+.tmau-page *,
+.tmau-page *::before,
+.tmau-page *::after {
+  box-sizing: border-box;
+}
+
+/* ── Grid shell ────────────────────────────────────────────── */
+
+.tmai-shell,
+.three-mash-account-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+  width: 100%;
+  max-width: min(var(--tmai-max, 1180px), 1180px);
+  margin: 0 auto;
+  flex: 1;
+  min-height: 560px;
+  padding: var(--tmai-pad-top, clamp(40px, 5vw, 64px)) 24px var(--tmai-pad-bottom, clamp(64px, 8vw, 110px));
+}
+
+/* ── Sidebar (static — never re-renders) ───────────────────── */
+
+.tmai-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  height: 100%;
+  min-height: 100%;
+  padding: clamp(34px, 4vw, 48px);
+  background: var(--tmai-dark, var(--tm-theme-dark, #0e0e0c));
+  color: var(--tm-theme-bg, #fafaf7);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* ── Right panel ───────────────────────────────────────────── */
+
+.tmai-main,
+.tmai-main-panel {
+  position: relative; /* needed for the loading overlay */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+  padding: clamp(34px, 4vw, 48px);
+  background: #fff;
+  min-width: 0;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ── Loading overlay (right panel only) ────────────────────── */
+
+.tmai-panel-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.tmai-panel-loading.is-visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Spinner ────────────────────────────────────────────────── */
+
+.tmai-panel-spinner {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--tmai-line, #e6e6e0);
+  border-top-color: var(--tmai-accent, var(--tm-theme-accent, #c7f136));
+  border-radius: 50%;
+  animation: tmai-spin 0.65s linear infinite;
+}
+
+@keyframes tmai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Right-panel content fade-in on swap ───────────────────── */
+
+.tmai-main > *:not(.tmai-panel-loading) {
+  animation: tmai-fade-in 0.22s ease both;
+}
+
+@keyframes tmai-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Sidebar kicker ─────────────────────────────────────────── */
+
+.tmai-kicker,
+.tmai-form-head span,
+.tmai-login-required > span {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 26px;
+  padding: 0 11px;
+  background: var(--tmai-accent, var(--tm-theme-accent, #c7f136));
+  color: var(--tm-theme-accent-text, #3d4d0e);
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* ── User block ─────────────────────────────────────────────── */
+
+.tmai-user {
+  display: grid;
+  gap: 9px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid rgba(250, 250, 247, 0.18);
+}
+
+.tmai-user strong {
+  color: var(--tm-theme-bg, #fafaf7);
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.05;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.tmai-user-name-skeleton {
+  display: block;
+  width: 170px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.tmai-logout,
+.tmau-logout {
+  width: max-content;
+  color: #f2b0a8;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* ── Sidebar nav ────────────────────────────────────────────── */
+
+.tmai-menu {
+  display: grid;
+  gap: 10px;
+}
+
+.tmai-menu h2 {
+  margin: 26px 0 6px;
+  color: var(--tm-theme-bg, #fafaf7);
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.tmai-menu h2:first-child {
+  margin-top: 0;
+}
+
+.tmai-menu a,
+.tmai-menu button,
+.tmai-nav-btn {
+  display: block;
+  width: fit-content;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: #cfcfc6;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.35;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.tmai-menu a:hover,
+.tmai-menu a.is-active,
+.tmai-menu button:hover,
+.tmai-menu button.is-active,
+.tmai-nav-btn:hover,
+.tmai-nav-btn.is-active {
+  color: var(--tmai-accent, var(--tm-theme-accent, #c7f136));
+}
+
+/* ── Main content header ────────────────────────────────────── */
+
+.tmai-form-head,
+.tmau-main-head {
+  display: grid;
+  gap: 14px;
+  margin-bottom: clamp(28px, 4vw, 44px);
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+}
+
+.tmai-form-head h1,
+.tmau-main-head h1,
+.tmai-login-required h1 {
+  margin: 0;
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.tmai-form-head p,
+.tmau-main-head p,
+.tmai-login-required p {
+  max-width: 680px;
+  margin: 0;
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  font-size: 15px;
+  line-height: 1.62;
+}
+
+/* ── Profile form ───────────────────────────────────────────── */
+
+.tmai-form,
+.tmau-form {
+  width: 100%;
+  min-width: 0;
+}
+
+.tmai-fields,
+.tmau-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.tmai-field,
+.tmau-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  width: 100%;
+}
+
+.tmai-field > span,
+.tmau-field > span {
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.tmai-field span.is-required::first-letter,
+.tmau-field span.is-required::first-letter {
+  color: #dc2626;
+}
+
+.tmai-field input,
+.tmau-field input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 48px;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  border-radius: 0;
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  padding: 0 14px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+}
+
+.tmai-field input:focus,
+.tmau-field input:focus {
+  border-color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  background: #fff;
+}
+
+.tmai-field input:disabled,
+.tmau-field input:disabled {
+  background: #eef0ec;
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  opacity: 1;
+}
+
+/* ── Phone input ────────────────────────────────────────────── */
+
+.tmai-phone-input,
+.tmau-phone-input {
+  display: grid;
+  grid-template-columns: 62px 58px minmax(0, 1fr);
+  align-items: center;
+  min-height: 48px;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+}
+
+.tmai-phone-country,
+.tmau-phone-country {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: 48px;
+  height: 24px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.tmai-phone-country img,
+.tmau-phone-country img {
+  display: block !important;
+  width: 24px !important;
+  max-width: 24px !important;
+  height: 16px !important;
+  max-height: 16px !important;
+  object-fit: cover !important;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.tmai-phone-country svg,
+.tmau-phone-country svg {
+  display: block;
+  width: 9px;
+  height: 6px;
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  flex-shrink: 0;
+}
+
+.tmai-phone-country select,
+.tmau-phone-country select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.tmai-phone-input b,
+.tmau-phone-input b {
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.tmai-phone-input input,
+.tmau-phone-input input {
+  height: 46px;
+  border: 0;
+  background: transparent;
+  padding: 0 12px 0 0;
+}
+
+.tmai-phone-input:focus-within,
+.tmau-phone-input:focus-within {
+  border-color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  background: #fff;
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+
+.tmai-submit,
+.tmau-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  border: 0;
+  border-radius: 0;
+  background: var(--tmai-accent, var(--tm-theme-accent, #c7f136));
+  color: var(--tmai-button-text, var(--tm-theme-text, #0e0e0c));
+  font: inherit;
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tmai-submit {
+  width: min(100%, 338px);
+  margin: 30px 0 0;
+}
+
+.tmai-submit:disabled,
+.tmau-submit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.tmai-submit:not(:disabled):hover,
+.tmau-submit:not(:disabled):hover {
+  opacity: 0.92;
+}
+
+/* ── Status messages ────────────────────────────────────────── */
+
+.tmai-status,
+.tmau-status {
+  width: min(100%, 520px);
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.tmai-status.is-success,
+.tmau-status.is-success {
+  background: color-mix(in srgb, var(--tmai-accent, #c7f136) 28%, #fff);
+  color: #152000;
+}
+
+.tmai-status.is-error,
+.tmau-status.is-error {
+  background: #fff1ee;
+  color: #9a1d12;
+}
+
+/* ── Lists / cards ──────────────────────────────────────────── */
+
+.tmau-list {
+  display: grid;
+  gap: 14px;
+}
+
+.tmau-card {
+  display: grid;
+  gap: 9px;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+}
+
+.tmau-card h2 {
+  margin: 0;
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: 18px;
+  line-height: 1.18;
+  font-weight: 800;
+}
+
+.tmau-card p {
+  margin: 0;
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.tmau-card small {
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.tmau-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: clamp(24px, 4vw, 42px);
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* ── Products grid ──────────────────────────────────────────── */
+
+.tmau-products {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.tmau-product {
+  display: grid;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  background: #fff;
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  text-decoration: none;
+}
+
+.tmau-product-media {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  background: var(--tmai-sidebar, var(--tm-theme-panel, #f1f1ec));
+}
+
+.tmau-product-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 16px;
+}
+
+.tmau-product-media span {
+  color: var(--tm-theme-accent-text, #3d4d0e);
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: 48px;
+  font-weight: 800;
+}
+
+.tmau-product strong {
+  display: block;
+  min-height: 58px;
+  padding: 16px 14px 0;
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.tmau-product small {
+  display: block;
+  padding: 10px 14px 16px;
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* ── Skeleton loading ───────────────────────────────────────── */
+
+.tmai-form-loading {
+  display: grid;
+  gap: 18px;
+}
+
+.tmai-loading-title {
+  width: min(360px, 70%);
+  height: 56px;
+  background: var(--tmai-sidebar, #f1f1ec);
+}
+
+.tmai-loading-line {
+  width: min(620px, 90%);
+  height: 18px;
+  background: var(--tmai-sidebar, #f1f1ec);
+}
+
+.tmai-loading-fields {
+  width: 100%;
+  height: 250px;
+  margin-top: 28px;
+  background: var(--tmai-sidebar, #f1f1ec);
+}
+
+/* ── Auth inner forms (forgot / recover password) ───────────── */
+
+.tmau-auth-form-wrap {
+  display: grid;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
+}
+
+.tmau-auth-inner-form {
+  display: grid;
+  gap: 14px;
+  width: min(100%, 480px);
+  margin-top: 28px;
+}
+
+.tmau-auth-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tmau-auth-field > span {
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tmau-auth-field > span b {
+  color: #dc2626;
+}
+
+.tmau-auth-field input {
+  display: block;
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+  background: var(--tmai-bg, var(--tm-theme-bg, #fafaf7));
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+}
+
+.tmau-auth-field input:focus {
+  border-color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  background: #fff;
+}
+
+.tmau-auth-login-link {
+  display: block;
+  margin-top: 16px;
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+/* ── Login required fallback ────────────────────────────────── */
+
+.tmai-login-required {
+  display: grid;
+  gap: 16px;
+  width: min(100%, 680px);
+  margin: 0 auto;
+  padding: clamp(52px, 7vw, 94px) 24px;
+  text-align: left;
+}
+
+.tmai-login-required a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  min-height: 52px;
+  padding: 0 26px;
+  border: 0;
+  background: var(--tmai-accent, var(--tm-theme-accent, #c7f136));
+  color: var(--tmai-button-text, var(--tm-theme-text, #0e0e0c));
+  font: inherit;
+  font-family: var(
+    --tm-theme-font-heading,
+    "Space Grotesk",
+    "Inter",
+    sans-serif
+  ) !important;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 980px) {
+  .tmai-shell,
+  .three-mash-account-layout {
+    grid-template-columns: 1fr;
+    max-width: 100vw;
+    min-height: 0;
+    padding: 34px 18px 72px;
+  }
+
+  .tmai-sidebar,
+  .tmai-main,
+  .tmai-main-panel {
+    min-height: auto;
+    padding: 30px 22px;
+  }
+}
+
+@media (max-width: 720px) {
+  .tmau-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .tmai-shell,
+  .three-mash-account-layout {
+    padding: 26px 14px 58px;
+  }
+
+  .tmai-fields,
+  .tmau-fields {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .tmai-form-head h1,
+  .tmau-main-head h1,
+  .tmai-login-required h1 {
+    font-size: clamp(31px, 9vw, 40px);
+    line-height: 1.02;
+  }
+
+  .tmai-submit {
+    width: 100%;
+  }
+
+  .tmau-card {
+    padding: 18px;
+  }
+
+  .tmau-products {
+    gap: 12px;
+  }
+
+  .tmau-product-media img {
+    padding: 12px;
+  }
+
+  .tmau-product strong {
+    min-height: 0;
+    padding: 13px 12px 0;
+    font-size: 13px;
+  }
+
+  .tmau-product small {
+    padding: 8px 12px 13px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .tmau-products {
+    grid-template-columns: 1fr;
+  }
+}

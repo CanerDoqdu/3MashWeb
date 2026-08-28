@@ -3,6 +3,7 @@ import { Props } from "./types";
 import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailFaqSection, ProductDetailSectionScope, type ProductDetailTemplateData } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderFaq } from "../../sub-components/ThreeMashProductSectionPlaceholder";
+import { tLocalized } from "../../utils/i18n";
 
 type FaqItem = {
   question: string;
@@ -17,7 +18,7 @@ function overrideFaqData(baseData: ProductDetailTemplateData | null, props: Prop
   if (!baseData) return null;
 
   const currentFaq = baseData.faq;
-  const title = trimmedText((props as any).titleHtml || (props as any).titleText) || currentFaq?.titleHtml || "Sıkça Sorulan Sorular";
+  const title = trimmedText((props as any).titleHtml || (props as any).titleText) || currentFaq?.titleHtml || tLocalized("Sıkça Sorulan Sorular", "Frequently Asked Questions");
   const side = trimmedText((props as any).sideHtml || (props as any).descriptionHtml) || currentFaq?.sideHtml || "";
 
   const customItems = Array.from({ length: 12 }, (_, index) => {
@@ -30,7 +31,7 @@ function overrideFaqData(baseData: ProductDetailTemplateData | null, props: Prop
 
   const faq = {
     index: currentFaq?.index || "05",
-    label: currentFaq?.label || "SIKÇA SORULAN SORULAR",
+    label: currentFaq?.label || tLocalized("SIKÇA SORULAN SORULAR", "FREQUENTLY ASKED QUESTIONS"),
     titleHtml: title,
     sideHtml: side,
     items: customItems.length ? customItems : (currentFaq?.items ? [...currentFaq.items] : []),
