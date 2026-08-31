@@ -46,7 +46,7 @@ export const dentalResinsCategoryData: CategoryLandingData = {
     currentLabel: tLocalized("Dental Reçineler", "Dental Resins"),
   },
   hero: {
-    titlePrefix: tLocalized("Sonucun yarısı", "half of the result lies in the"),
+    titlePrefix: tLocalized("Sonucun yarısı", "Half of the result lies in the"),
     titleEmphasis: tLocalized("reçinede", "resin."),
     titleSuffix: tLocalized("saklı.", "hidden."),
     descriptionHtml:

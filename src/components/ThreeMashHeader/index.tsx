@@ -25,7 +25,7 @@ import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImag
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
-import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref } from "../../utils/i18n";
+import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale } from "../../utils/i18n";
 import {
   ACF_FEP_FILM_SLUG,
   ARGENZ_HT_MULTILAYER_SLUG,
@@ -252,19 +252,22 @@ const criticalHeaderCss = `
 
 .three-mash-header .tmh-announcement {
   width: 100%;
-  height: var(--tmh-announcement-fixed-height);
-  overflow: hidden;
+  min-height: var(--tmh-announcement-fixed-height);
+  overflow: visible;
   background: var(--tmh-ann-bg);
   color: var(--tmh-ann-text);
   font-size: 13px;
   line-height: 1.45;
+  position: relative;
+  z-index: 100000;
 }
 
 .three-mash-header .tmh-announcement-inner {
+  position: relative;
   width: min(100%, 1240px);
-  height: 100%;
+  min-height: 100%;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 6px 90px 6px 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -274,6 +277,159 @@ const criticalHeaderCss = `
   text-align: center;
   flex-wrap: wrap;
 }
+
+.three-mash-header .tmh-announcement-lang {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100001;
+}
+
+.three-mash-header .tmh-lang-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  padding: 3px 7px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transition: all 0.15s ease;
+  backdrop-filter: blur(6px);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.three-mash-header .tmh-lang-trigger:hover,
+.three-mash-header .tmh-lang-trigger:focus-visible {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.three-mash-header .tmh-lang-caret {
+  width: 8px;
+  height: 5px;
+  opacity: 0.8;
+  transition: transform 0.18s ease;
+}
+
+.three-mash-header .tmh-lang-caret.is-open {
+  transform: rotate(180deg);
+}
+
+.three-mash-header .tmh-lang-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 140px;
+  background: #141412;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100002;
+}
+
+.three-mash-header .tmh-lang-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  min-height: 34px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+}
+
+.three-mash-header .tmh-lang-option:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+.three-mash-header .tmh-lang-option.is-active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.09);
+  font-weight: 600;
+}
+
+.three-mash-header .tmh-lang-check {
+  margin-left: auto;
+  color: var(--tmh-accent, #C7F136);
+  font-size: 11px;
+}
+
+.three-mash-header .tmh-flag-svg {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.three-mash-header .tmh-mobile-lang-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0 6px;
+  margin-top: 14px;
+  border-top: 1px solid var(--tmh-line);
+}
+
+.three-mash-header .tmh-mobile-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1 1 0;
+  justify-content: center;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: var(--tmh-panel, #ffffff);
+  border: 1px solid var(--tmh-line, #E6E6E0);
+  color: var(--tmh-text, #0E0E0C);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.three-mash-header .tmh-mobile-lang-btn.is-active {
+  border-color: var(--tmh-text, #0E0E0C);
+  background: var(--tmh-text, #0E0E0C);
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .three-mash-header {
+    --tmh-announcement-fixed-height: auto;
+  }
+  .three-mash-header .tmh-announcement-inner {
+    padding: 7px 14px;
+  }
+  .three-mash-header .tmh-announcement-lang {
+    display: none;
+  }
+}
+
+
 
 .three-mash-header .tmh-announcement-inner > * { margin: 0; }
 .three-mash-header .tmh-announcement b {
@@ -700,9 +856,9 @@ const firstPaintAnnouncementMap = Object.fromEntries(
 function firstPaintAnnouncementScript() {
   const payload = JSON.stringify(firstPaintAnnouncementMap).replace(/</g, "\\u003c");
   return `
-(function(){
-  var map=${payload};
   var path=(window.location.pathname||"").toLocaleLowerCase("tr").replace(/^\\/+|\\/+$/g,"").split("/").pop()||"";
+  if(window.location.pathname.indexOf("/en")===0||(document.documentElement&&document.documentElement.lang==="en")||(window.localStorage&&(localStorage.getItem("3mash_locale")==="en"||localStorage.getItem("3mash_lang")==="en")))return;
+  var map=${payload};
   var ann=map[path];
   if(!ann)return;
   var root=document.currentScript&&document.currentScript.closest&&document.currentScript.closest(".three-mash-header");
@@ -1613,6 +1769,20 @@ export function ThreeMashHeader(props: Props) {
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
   const [activeAction, setActiveAction] = useState<ActiveAction>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isLangOpen) return;
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target as Node)) {
+        setIsLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isLangOpen]);
+
 const [cart, setCart] = useState<IkasCart | null>(
   () => getCurrentCart()
 );
@@ -2165,6 +2335,105 @@ async function removeCartItem(
                 onClick={(event) => handleAnnouncementClick(event, text(effectiveAnnouncementHref, defaultAnnouncement.href))}
                 dangerouslySetInnerHTML={announcementRichText(announcementCtaText, props)}
               />
+              <div className="tmh-announcement-lang" ref={langDropdownRef}>
+                <button
+                  type="button"
+                  className="tmh-lang-trigger"
+                  aria-label={isEnglishLocale() ? "Language: English" : "Dil: Türkçe"}
+                  aria-expanded={isLangOpen}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsLangOpen((prev) => !prev);
+                  }}
+                >
+                  {isEnglishLocale() ? (
+                    <>
+                      <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect width="60" height="40" fill="#012169" rx="2"/>
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6"/>
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5"/>
+                        <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10"/>
+                        <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6"/>
+                      </svg>
+                      <span>EN</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect width="1200" height="800" fill="#E30A17" rx="30"/>
+                        <circle cx="425" cy="400" r="200" fill="#ffffff"/>
+                        <circle cx="475" cy="400" r="160" fill="#E30A17"/>
+                        <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81"/>
+                      </svg>
+                      <span>TR</span>
+                    </>
+                  )}
+                  <svg className={`tmh-lang-caret ${isLangOpen ? "is-open" : ""}`} width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+
+                {isLangOpen && (
+                  <div className="tmh-lang-dropdown" role="menu">
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className={`tmh-lang-option ${!isEnglishLocale() ? "is-active" : ""}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsLangOpen(false);
+                        setPreferredLocale("tr");
+                        if (typeof window === "undefined") return;
+                        const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
+                        const searchParams = new URLSearchParams(window.location.search);
+                        searchParams.delete("lang");
+                        searchParams.delete("locale");
+                        const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
+                        const hash = window.location.hash;
+                        window.location.href = path + search + hash;
+                      }}
+                    >
+                      <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect width="1200" height="800" fill="#E30A17" rx="30"/>
+                        <circle cx="425" cy="400" r="200" fill="#ffffff"/>
+                        <circle cx="475" cy="400" r="160" fill="#E30A17"/>
+                        <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81"/>
+                      </svg>
+                      <span>Türkçe (TR)</span>
+                      {!isEnglishLocale() && <span className="tmh-lang-check">✓</span>}
+                    </button>
+
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className={`tmh-lang-option ${isEnglishLocale() ? "is-active" : ""}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsLangOpen(false);
+                        setPreferredLocale("en");
+                        if (typeof window === "undefined") return;
+                        const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
+                        const searchParams = new URLSearchParams(window.location.search);
+                        searchParams.delete("lang");
+                        searchParams.delete("locale");
+                        const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
+                        const hash = window.location.hash;
+                        window.location.href = path + search + hash;
+                      }}
+                    >
+                      <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect width="60" height="40" fill="#012169" rx="2"/>
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6"/>
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5"/>
+                        <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10"/>
+                        <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6"/>
+                      </svg>
+                      <span>English (EN)</span>
+                      {isEnglishLocale() && <span className="tmh-lang-check">✓</span>}
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <script dangerouslySetInnerHTML={{ __html: firstPaintAnnouncementScript() }} />
@@ -2437,6 +2706,43 @@ const image = imageCandidates[0];
             <a href={href(productPrimary[0]?.href)} dangerouslySetInnerHTML={richText(productPrimary[0]?.title, props)} />
             <a href={academyPageTarget(props.academyHref)} dangerouslySetInnerHTML={richText(academyText, props)} />
             <a href={headerRouteHref(props.accountHref, "/account/login")} dangerouslySetInnerHTML={richText(accountMenuTitle, props)} />
+            <div className="tmh-mobile-lang-wrap">
+              <button
+                type="button"
+                className={`tmh-mobile-lang-btn ${!isEnglishLocale() ? "is-active" : ""}`}
+                onClick={() => {
+                  setPreferredLocale("tr");
+                  const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
+                  window.location.href = path + window.location.search + window.location.hash;
+                }}
+              >
+                <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect width="1200" height="800" fill="#E30A17" rx="30" />
+                  <circle cx="425" cy="400" r="200" fill="#ffffff" />
+                  <circle cx="475" cy="400" r="160" fill="#E30A17" />
+                  <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81" />
+                </svg>
+                <span>Türkçe</span>
+              </button>
+              <button
+                type="button"
+                className={`tmh-mobile-lang-btn ${isEnglishLocale() ? "is-active" : ""}`}
+                onClick={() => {
+                  setPreferredLocale("en");
+                  const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
+                  window.location.href = path + window.location.search + window.location.hash;
+                }}
+              >
+                <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect width="60" height="40" fill="#012169" rx="2" />
+                  <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6" />
+                  <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5" />
+                  <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10" />
+                  <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6" />
+                </svg>
+                <span>English</span>
+              </button>
+            </div>
           </nav>
         </div>
       </header>

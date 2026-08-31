@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useState } from "preact/hooks";
 import {
+  apiSearchProducts,
   createMediaSrcset,
   getDefaultSrc,
   getProductHref,
@@ -10,7 +11,7 @@ import {
   type IkasProductList,
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
-import { tLocalized, isEnglishLocale, translateText } from "../../utils/i18n";
+import { tLocalized, isEnglishLocale, translateText, localizedHref } from "../../utils/i18n";
 
 export type CategoryButton = {
   label: string;
@@ -605,18 +606,26 @@ function liveProductCards(
 
   if (preservePresetCards) {
     return presetCards.map((card) => {
+      const cardKey = normalize(card.title);
+      const cardHrefKey = normalize(card.href);
       const liveProduct = products.find((product) => {
         const productKey = normalize(product.name);
-        return productKey === normalize(card.title) || productKey.includes(normalize(card.title)) || normalize(card.title).includes(productKey);
+        const productHrefKey = normalize(getProductHref(product) || "");
+        return (
+          productKey === cardKey ||
+          productKey.includes(cardKey) ||
+          cardKey.includes(productKey) ||
+          (productHrefKey && cardHrefKey && (productHrefKey.includes(cardHrefKey) || cardHrefKey.includes(productHrefKey)))
+        );
       });
-      if (!liveProduct) return card;
+      if (!liveProduct) return { ...card, status: card.status || "" };
       return {
         ...card,
         title: liveProduct.name,
-        descriptionHtml: liveProductDescription(liveProduct),
+        descriptionHtml: liveProductDescription(liveProduct) || card.descriptionHtml,
         href: getProductHref(liveProduct) || card.href,
         imageAlt: liveProduct.name,
-        status: liveProductStatus(liveProduct) || card.status,
+        status: liveProductStatus(liveProduct) || card.status || "",
       };
     });
   }
@@ -713,7 +722,7 @@ function ProductCard({
   const variant = product ? safeVariant(product) : null;
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image;
-  const href = categoryHref(product ? getProductHref(product) : card.href);
+  const href = localizedHref(categoryHref(product ? getProductHref(product) : card.href));
   const liveImageSrc = image ? getDefaultSrc(image) : "";
   const imageSrc = card.sourceIcon ? "" : card.imageSrc || liveImageSrc;
   const imageAlt = card.imageAlt || image?.altText || card.title;
@@ -919,14 +928,52 @@ export default function ThreeMashCategoryLanding(props: Props) {
   });
 
   const [activeFilter, setActiveFilter] = useState(data.selector.filters?.[0]?.id || "all");
-  const liveProducts = productList?.data || [];
+  const [extraProducts, setExtraProducts] = useState<IkasProduct[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const response = await apiSearchProducts({
+          input: {
+            page: 1,
+            perPage: 50,
+          },
+        } as Parameters<typeof apiSearchProducts>[0]);
+        if (!active) return;
+        const items = response?.data?.data || [];
+        if (items.length) {
+          setExtraProducts(items);
+        }
+      } catch {
+        // silent
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const liveProducts = useMemo(() => {
+    const base = productList?.data || [];
+    if (!extraProducts.length) return base;
+    const existingIds = new Set(base.map((p) => p.id));
+    const merged = [...base];
+    for (const p of extraProducts) {
+      if (!existingIds.has(p.id)) {
+        merged.push(p);
+      }
+    }
+    return merged;
+  }, [productList?.data, extraProducts]);
+
   const liveProductsByTitle = useMemo(() => {
     const map = new Map<string, IkasProduct>();
     liveProducts.forEach((product) => map.set(normalize(product.name), product));
     return map;
   }, [liveProducts]);
   const productCards = useMemo(
-    () => liveProductCards(liveProducts, data.selector.products, data.selector.filters, data.kind === "wash-cure"),
+    () => liveProductCards(liveProducts, data.selector.products, data.selector.filters, data.kind === "wash-cure" || data.kind === "resins"),
     [data.selector.filters, data.selector.products, liveProducts],
   );
   const visibleCards = productCards.filter((card) => activeFilter === "all" || card.filterId === activeFilter);

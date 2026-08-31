@@ -34,6 +34,51 @@ export const translations: Record<Locale, Record<string, string>> = {
  */
 export function getCurrentLocale(): Locale {
   try {
+    if (typeof window !== "undefined") {
+      // 1. Check URL pathname if starts with /en
+      const pathname = window.location.pathname.toLowerCase();
+      if (pathname === "/en" || pathname.startsWith("/en/")) {
+        return "en";
+      }
+
+      // 2. Check URL query params (e.g. ?lang=en or ?locale=en)
+      try {
+        const searchParams = new URLSearchParams(window.location.search);
+        const urlLang = searchParams.get("lang") || searchParams.get("locale");
+        if (urlLang) {
+          const clean = urlLang.toLowerCase();
+          if (clean.startsWith("en")) return "en";
+          if (clean.startsWith("tr")) return "tr";
+        }
+      } catch { }
+
+      // 3. Check persistent localStorage
+      try {
+        const stored = localStorage.getItem("3mash_locale") || localStorage.getItem("3mash_lang") || localStorage.getItem("locale");
+        if (stored) {
+          const clean = stored.toLowerCase();
+          if (clean.startsWith("en")) return "en";
+          if (clean.startsWith("tr")) return "tr";
+        }
+      } catch { }
+
+      // 4. Check persistent cookies
+      try {
+        const match = document.cookie.match(/(?:^|;\s*)(?:3mash_locale|3mash_lang|locale)=([^;]+)/);
+        if (match && match[1]) {
+          const clean = decodeURIComponent(match[1]).toLowerCase();
+          if (clean.startsWith("en")) return "en";
+          if (clean.startsWith("tr")) return "tr";
+        }
+      } catch { }
+
+      // 5. Check document lang attribute
+      const docLang = document.documentElement.lang?.toLowerCase?.();
+      if (docLang?.startsWith("en")) {
+        return "en";
+      }
+    }
+
     const ikasLocale =
       typeof I18n !== "undefined" && typeof I18n.getLocale === "function"
         ? I18n.getLocale()?.toLowerCase()
@@ -42,22 +87,27 @@ export function getCurrentLocale(): Locale {
       if (ikasLocale.startsWith("en")) return "en";
       if (ikasLocale.startsWith("tr")) return "tr";
     }
-
-    if (typeof window !== "undefined") {
-      const pathname = window.location.pathname.toLowerCase();
-      if (pathname.startsWith("/en/") || pathname === "/en") {
-        return "en";
-      }
-
-      const docLang = document.documentElement.lang?.toLowerCase?.();
-      if (docLang?.startsWith("en")) {
-        return "en";
-      }
-    }
   } catch (_e) {
     // Fallback to default 'tr'
   }
   return "tr";
+}
+
+/**
+ * Persists the preferred locale to localStorage and cookies across all pages
+ */
+export function setPreferredLocale(locale: Locale): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem("3mash_locale", locale);
+    localStorage.setItem("3mash_lang", locale);
+    localStorage.setItem("locale", locale);
+  } catch { }
+  try {
+    document.cookie = `3mash_locale=${locale}; path=/; max-age=31536000; SameSite=Lax`;
+    document.cookie = `3mash_lang=${locale}; path=/; max-age=31536000; SameSite=Lax`;
+    document.cookie = `locale=${locale}; path=/; max-age=31536000; SameSite=Lax`;
+  } catch { }
 }
 
 /**
@@ -283,15 +333,15 @@ export const AUTO_TRANSLATION_MAP: Record<string, string> = {
   "yazıcı, reçine ve kürleme birlikte kalibre edildiğinde: her baskıda tekrar edilebilir hassasiyet -> <=%3 remake -> yılda $72-162k'ya varan tasarruf potansiyeli.":
     "When printer, resin, and curing are <b>calibrated together</b>: repeatable precision → <b>≤3% remake</b> → annual savings potential up to <b>$72-162K</b>.",
   "ölçek için: bir insan saç teli ~70 µm. piyasadaki sapma saç telinin 5 katına çıkabilirken, 3mash ±20 µm bandında kalır.":
-    "<b>For scale:</b> a human hair is ~70 µm. While market deviation can reach <b>5x a hair</b>, 3mash stays within the ±20 µm band.",
+    "<b>For scale:</b> a human hair is ~70 µm. Market deviation can reach <b>5x the thickness of a hair</b>; we work at <b>half the thickness of a human hair</b> — and we commit to this <b>on every print, not just once.</b>\n\n<b>2 — Scientific basis:</b> Full-arch model accuracy varies from <b>3–190 µm</b> across systems (Etemad-Shahidi et al., <b>J Clin Med 2020</b>); SLA/DLP/PolyJet are among the most accurate technologies (Németh et al., <b>J Dentistry 2023</b>). Repeatability and its contributing factors: <b>McCracken et al., J Prosthodont 2019</b>.",
   "ölçek için: bir insan saç teli ~70 µm. piyasadaki sapma saç telinin 5 katına çıkabilir; biz saç telinin yarısında çalışıyoruz -- ve bunu tek seferlik değil, her baskıda sağlıyoruz.":
-    "<b>For scale:</b> a human hair is ~70 µm. Market deviation can reach <b>5x a human hair</b>; we work at <b>half a hair</b> — and we provide this on <b>every print</b>, not just once.",
+    "<b>For scale:</b> a human hair is ~70 µm. Market deviation can reach <b>5x the thickness of a hair</b>; we work at <b>half the thickness of a human hair</b> — and we commit to this <b>on every print, not just once.</b>\n\n<b>2 — Scientific basis:</b> Full-arch model accuracy varies from <b>3–190 µm</b> across systems (Etemad-Shahidi et al., <b>J Clin Med 2020</b>); SLA/DLP/PolyJet are among the most accurate technologies (Németh et al., <b>J Dentistry 2023</b>). Repeatability and its contributing factors: <b>McCracken et al., J Prosthodont 2019</b>.",
   "ölçek için: bir insan saç teli ~70 µm. piyasadaki sapma saç telinin 5 katına çıkabilir; biz saç telinin yarısında çalışıyoruz -- ve bunu tek seferlik değil, her baskıda taahhüt ediyoruz.":
-    "<b>For scale:</b> a human hair is ~70 µm. Market deviation can reach <b>5x a human hair</b>; we work at <b>half a hair</b> — and we guarantee this on <b>every print</b>, not just once.",
+    "<b>For scale:</b> a human hair is ~70 µm. Market deviation can reach <b>5x the thickness of a hair</b>; we work at <b>half the thickness of a human hair</b> — and we commit to this <b>on every print, not just once.</b>\n\n<b>2 — Scientific basis:</b> Full-arch model accuracy varies from <b>3–190 µm</b> across systems (Etemad-Shahidi et al., <b>J Clin Med 2020</b>); SLA/DLP/PolyJet are among the most accurate technologies (Németh et al., <b>J Dentistry 2023</b>). Repeatability and its contributing factors: <b>McCracken et al., J Prosthodont 2019</b>.",
   "bilimsel dayanak: full-arch model doğruluğu sistemden sisteme 3-190 µm arasında değişiyor (revilla-león et al., j prosthet dent 2023).":
-    "Scientific reference: full-arch model accuracy varies between <b>3–190 µm</b> across systems (Revilla-León et al., J Prosthet Dent 2023).",
+    "<b>2 — Scientific basis:</b> Full-arch model accuracy varies from <b>3–190 µm</b> across systems (<a href=\"https://doi.org/10.3390/jcm9103357\" target=\"_blank\" rel=\"noopener noreferrer\">Etemad-Shahidi et al., <b>J Clin Med 2020</b></a>); SLA/DLP/PolyJet are among the most accurate technologies (<a href=\"https://doi.org/10.1016/j.jdent.2023.104532\" target=\"_blank\" rel=\"noopener noreferrer\">Németh et al., <b>J Dentistry 2023</b></a>). Repeatability and its contributing factors: <a href=\"https://doi.org/10.1111/jopr.12995\" target=\"_blank\" rel=\"noopener noreferrer\"><b>McCracken et al., J Prosthodont 2019</b></a>.",
   "bilimsel dayanak: full-arch model doğruluğu sistemden sisteme 3-190 µm arasında değişiyor (etemad-shahidi ve ark., j clin med 2020); sla/dlp/polyjet en doğru teknolojiler (németh ve ark., j dentistry 2023). tekrar oranı ve sebepleri: mccracken ve ark., j prosthodont 2019.":
-    "Scientific reference: full-arch model accuracy varies between <b>3–190 µm</b> across systems (Etemad-Shahidi et al., J Clin Med 2020); SLA/DLP/PolyJet are the most accurate technologies (Németh et al., J Dentistry 2023). Remake rate and reasons: McCracken et al., J Prosthodont 2019.",
+    "<b>2 — Scientific basis:</b> Full-arch model accuracy varies from <b>3–190 µm</b> across systems (<a href=\"https://doi.org/10.3390/jcm9103357\" target=\"_blank\" rel=\"noopener noreferrer\">Etemad-Shahidi et al., <b>J Clin Med 2020</b></a>); SLA/DLP/PolyJet are among the most accurate technologies (<a href=\"https://doi.org/10.1016/j.jdent.2023.104532\" target=\"_blank\" rel=\"noopener noreferrer\">Németh et al., <b>J Dentistry 2023</b></a>). Repeatability and its contributing factors: <a href=\"https://doi.org/10.1111/jopr.12995\" target=\"_blank\" rel=\"noopener noreferrer\"><b>McCracken et al., J Prosthodont 2019</b></a>.",
 
   // Solution Section
   "çözüm · üretim ekosistemi": "Solution · Production Ecosystem",
@@ -571,8 +621,8 @@ export function translateText(text?: string | null): string {
 }
 
 /**
- * Prefix internal site links with '/en' when currently on the English locale.
- * Ignores mailto:, tel:, javascript:, http(s):// external links, # anchors, and empty paths.
+ * Normalizes internal site links so valid routes are preserved without breaking ikas routing.
+ * Since locale preference is persisted in localStorage & cookies, standard paths retain the chosen language.
  */
 export function localizedHref(path?: string | null): string {
   if (!path || typeof path !== "string") return "";
@@ -589,37 +639,14 @@ export function localizedHref(path?: string | null): string {
     return trimmed;
   }
 
-  // If not English locale, return clean path
-  if (!isEnglishLocale()) {
-    return trimmed;
+  // Strip redundant /en/ prefix if present to ensure proper ikas route matching
+  if (trimmed === "/en" || trimmed === "/en/") {
+    return "/";
+  }
+  if (trimmed.startsWith("/en/")) {
+    return trimmed.replace(/^\/en\//, "/");
   }
 
-  // Already prefixed with /en or is /en
-  if (
-    trimmed === "/en" ||
-    trimmed.startsWith("/en/") ||
-    trimmed.startsWith("/en?") ||
-    trimmed.startsWith("/en#")
-  ) {
-    return trimmed;
-  }
-
-  // Root path
-  if (trimmed === "/") {
-    return "/en";
-  }
-
-  // Root with hash or query (e.g. "/#hesap" -> "/en#hesap")
-  if (trimmed.startsWith("/#") || trimmed.startsWith("/?")) {
-    return `/en${trimmed.slice(1)}`;
-  }
-
-  // Relative with leading slash (e.g. "/3d-yazicilar" -> "/en/3d-yazicilar")
-  if (trimmed.startsWith("/")) {
-    return `/en${trimmed}`;
-  }
-
-  // Relative without leading slash (e.g. "3d-yazicilar" -> "/en/3d-yazicilar")
-  return `/en/${trimmed}`;
+  return trimmed;
 }
 

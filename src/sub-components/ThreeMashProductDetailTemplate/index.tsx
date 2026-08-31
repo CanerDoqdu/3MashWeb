@@ -1015,28 +1015,60 @@ export function ProductDetailRelatedSection({
         ) : (
           <div className="tmpdt-rgrid">
             {related?.items.map((item) => {
+              const isAllResins =
+                item.href === "/dental-3d-yazici-recineleri" ||
+                item.tag === "TÜM HAT" ||
+                item.tag === "FULL RANGE" ||
+                item.title?.toLowerCase().includes("tüm reçineler") ||
+                item.title?.toLowerCase().includes("all resins");
               const image = relatedProductImage(item);
               return (
                 <article className="tmpdt-rc" key={item.title}>
-                  <div className="tmpdt-rc-ph" style={{ background: item.background }}>
-                    <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{item.tag}</span>
-                    {image ? (
-                      <img className="tmpdt-rc-live-img" src={image.src} alt={image.alt} loading="lazy" decoding="async" />
-                    ) : (
-                      <svg viewBox="0 0 48 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M18 6h12v8l5 7v31a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V21l5-7V6z" />
-                        <line x1="18" y1="6" x2="30" y2="6" />
-                        <line x1="13" y1="35" x2="35" y2="35" />
-                      </svg>
-                    )}
-                  </div>
-                  <div className="tmpdt-rc-bd">
-                    <h3>{item.title}</h3>
-                    <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
-                    <a className="tmpdt-rc-go" href={item.href}>
-                      {item.linkText} <span>→</span>
-                    </a>
-                  </div>
+                  <a className="tmpdt-rc-live-link" href={item.href}>
+                    <div className="tmpdt-rc-ph" style={{ background: item.background }}>
+                      <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{item.tag}</span>
+                      {isAllResins ? (
+                        <div className="tmpdt-rc-trio" aria-hidden="true">
+                          <img
+                            className="tmpdt-rc-trio-img is-left"
+                            src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a7753220-8b7a-4832-a428-c8678e941fda/1080/crs-tray-resin.webp"
+                            alt="CRS Tray Resin"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <img
+                            className="tmpdt-rc-trio-img is-center"
+                            src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/36167f47-c92f-4660-967c-d4a8faa86006/1080/crs-model-resin.webp"
+                            alt="CRS Model Resin"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <img
+                            className="tmpdt-rc-trio-img is-right"
+                            src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/7a581ce8-604c-47c0-bb9d-c05e4cdefae0/1080/denture-resin.webp"
+                            alt="CRS Denture Resin"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                      ) : image ? (
+                        <img className="tmpdt-rc-live-img" src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+                      ) : (
+                        <svg viewBox="0 0 48 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M18 6h12v8l5 7v31a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V21l5-7V6z" />
+                          <line x1="18" y1="6" x2="30" y2="6" />
+                          <line x1="13" y1="35" x2="35" y2="35" />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="tmpdt-rc-bd">
+                      <h3>{item.title}</h3>
+                      <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
+                      <span className="tmpdt-rc-go">
+                        {item.linkText} <span>→</span>
+                      </span>
+                    </div>
+                  </a>
                 </article>
               );
             })}
