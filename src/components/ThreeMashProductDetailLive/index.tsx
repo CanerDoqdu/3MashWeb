@@ -569,7 +569,11 @@ function normalizedVariantKey(value: string | undefined) {
 }
 
 const SHADE_COLORS: Record<string, string> = {
-  a1: "#f3ede0",
+  a1: "#ede9d0",
+  "1m1": "#f4ede4",
+  "1-m-1": "#f4ede4",
+  "1.m.1": "#f4ede4",
+  "1 m 1": "#f4ede4",
   a2: "#efe4cf",
   a3: "#e8d7b8",
   "a3.5": "#e0cba6",

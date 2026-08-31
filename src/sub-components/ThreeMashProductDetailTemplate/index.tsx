@@ -243,7 +243,7 @@ function templateStyle() {
 export function ProductDetailSectionScope({ data, children }: { data: ProductDetailTemplateData; children: ComponentChildren }) {
   const style = useMemo(templateStyle, []);
   return (
-    <section lang="tr" className="three-mash-product-detail-template" style={style} data-product-template-key={data.key}>
+    <section lang={isEnglishLocale() ? "en" : "tr"} className="three-mash-product-detail-template" style={style} data-product-template-key={data.key}>
       {children}
     </section>
   );
@@ -253,11 +253,15 @@ function html(value: string) {
   return { __html: translateText(value) };
 }
 
+function t(value?: string | null): string {
+  return translateText(value || "");
+}
+
 function SectionIndex({ index, label }: { index: string; label: string }) {
   return (
     <div className="tmpdt-idx">
       <span className="tmpdt-idx-n">{index}</span>
-      <span className="tmpdt-idx-t">{label}</span>
+      <span className="tmpdt-idx-t">{t(label)}</span>
       <span className="tmpdt-idx-ln" />
     </div>
   );
@@ -645,7 +649,7 @@ export function ProductDetailRatingsSection({ data }: { data: ProductDetailTempl
         <div className="tmpdt-rate" ref={ref}>
           <div className="tmpdt-rate-hd">
             <h3 dangerouslySetInnerHTML={html(ratings.panelTitleHtml)} />
-            <div className="tmpdt-note">{ratings.note}</div>
+            <div className="tmpdt-note">{t(ratings.note)}</div>
           </div>
           {ratings.items.map((item, index) => (
             <div className={`tmpdt-rrow${typeof item.percent === "number" ? "" : " is-plain"}`} key={`${item.descriptionHtml}-${index}`}>
@@ -681,13 +685,13 @@ export function ProductDetailMetricsSection({ data }: { data: ProductDetailTempl
         <div className="tmpdt-meters">
           {metrics.items.map((item) => (
             <article className="tmpdt-meter" key={`${item.name}-${item.value}`}>
-              <div className="tmpdt-meter-nm">{item.name}</div>
+              <div className="tmpdt-meter-nm">{t(item.name)}</div>
               <div className="tmpdt-meter-val">
                 <CountText value={item.value} active={visible} />
-                {item.unit ? <em>{item.unit}</em> : null}
+                {item.unit ? <em>{t(item.unit)}</em> : null}
               </div>
-              {item.tag ? <span className="tmpdt-iso">{item.tag}</span> : null}
-              <div className="tmpdt-meter-cap">{item.caption}</div>
+              {item.tag ? <span className="tmpdt-iso">{t(item.tag)}</span> : null}
+              <div className="tmpdt-meter-cap">{t(item.caption)}</div>
             </article>
           ))}
         </div>
@@ -713,18 +717,18 @@ export function ProductDetailSpecHighlight({ data }: { data: NonNullable<Product
   return (
     <div className="tmpdt-flag">
       <div>
-        <div className="tmpdt-flag-tag">{data.tag}</div>
+        <div className="tmpdt-flag-tag">{t(data.tag)}</div>
         <h3 dangerouslySetInnerHTML={html(data.titleHtml)} />
         <p dangerouslySetInnerHTML={html(data.descriptionHtml)} />
         <a className="tmpdt-go" href={data.ctaHref}>
-          {data.ctaText}
+          {t(data.ctaText)}
         </a>
       </div>
       <div className="tmpdt-spectbl">
         {data.rows.map((row) => (
           <div key={row.label}>
-            <span>{row.label}</span>
-            <b>{row.value}</b>
+            <span>{t(row.label)}</span>
+            <b>{t(row.value)}</b>
           </div>
         ))}
       </div>
@@ -773,8 +777,8 @@ export function ProductDetailUseCasesSection({ data }: { data: ProductDetailTemp
                   )}
                 </div>
                 <div className="tmpdt-pshot-cp">
-                  <b>{photo.title}</b>
-                  <span>{photo.text}</span>
+                  <b>{t(photo.title)}</b>
+                  <span>{t(photo.text)}</span>
                 </div>
               </article>
             ))}
@@ -784,26 +788,26 @@ export function ProductDetailUseCasesSection({ data }: { data: ProductDetailTemp
           <div className="tmpdt-open2">
             {useCases.cards.map((card) => (
               <article className="tmpdt-ocard" key={card.title}>
-                <div className="tmpdt-oh">{card.eyebrow}</div>
-                <h3>{card.title}</h3>
+                <div className="tmpdt-oh">{t(card.eyebrow)}</div>
+                <h3>{t(card.title)}</h3>
                 <ul>
                   {card.items.map((item) => (
                     <li key={item} dangerouslySetInnerHTML={html(item)} />
                   ))}
                 </ul>
-                {card.note ? <div className="tmpdt-onote">{card.note}</div> : null}
+                {card.note ? <div className="tmpdt-onote">{t(card.note)}</div> : null}
               </article>
             ))}
           </div>
         ) : null}
         <div className="tmpdt-devfull">
-          <div className="tmpdt-oh">{useCases.devices.eyebrow}</div>
-          <h3>{useCases.devices.title}</h3>
+          <div className="tmpdt-oh">{t(useCases.devices.eyebrow)}</div>
+          <h3>{t(useCases.devices.title)}</h3>
           <p dangerouslySetInnerHTML={html(useCases.devices.textHtml)} />
           <div className="tmpdt-chips2">
             {useCases.devices.chips.map((chip) => (
               <span className={chip.highlighted ? "is-more" : ""} key={chip.label}>
-                {chip.label}
+                {t(chip.label)}
               </span>
             ))}
           </div>
@@ -900,7 +904,7 @@ export function ProductDetailFaqSection({ data }: { data: ProductDetailTemplateD
             <div className="tmpdt-qa" key={`${data.key}-${item.question}`}>
               <details open={(faq.openFirst ?? true) && index === 0}>
                 <summary>
-                  {item.question}
+                  {t(item.question)}
                   <span>+</span>
                 </summary>
                 <div className="tmpdt-answer" dangerouslySetInnerHTML={html(item.answerHtml)} />
@@ -928,9 +932,9 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
             <span className="tmpdt-play">
               <span className="tmpdt-play-icon" aria-hidden="true"></span>
             </span>
-            <span className="tmpdt-vt">{video.title}</span>
-            <span className="tmpdt-vs">{video.text}</span>
-            <span className="tmpdt-vmeta">{video.meta}</span>
+            <span className="tmpdt-vt">{t(video.title)}</span>
+            <span className="tmpdt-vs">{t(video.text)}</span>
+            <span className="tmpdt-vmeta">{t(video.meta)}</span>
           </span>
         </a>
       </div>
@@ -994,7 +998,7 @@ export function ProductDetailRelatedSection({
                       )}
                     </div>
                     <div className="tmpdt-rc-bd">
-                      <h3>{item.title}</h3>
+                      <h3>{t(item.title)}</h3>
                       {item.descriptionHtml ? <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} /> : null}
                       <span className="tmpdt-rc-go">
                         {tLocalized("İncele", "View")} <span>→</span>
@@ -1026,7 +1030,7 @@ export function ProductDetailRelatedSection({
                 <article className="tmpdt-rc" key={item.title}>
                   <a className="tmpdt-rc-live-link" href={item.href}>
                     <div className="tmpdt-rc-ph" style={{ background: item.background }}>
-                      <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{item.tag}</span>
+                      <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{t(item.tag)}</span>
                       {isAllResins ? (
                         <div className="tmpdt-rc-trio" aria-hidden="true">
                           <img
@@ -1062,10 +1066,10 @@ export function ProductDetailRelatedSection({
                       )}
                     </div>
                     <div className="tmpdt-rc-bd">
-                      <h3>{item.title}</h3>
+                      <h3>{t(item.title)}</h3>
                       <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
                       <span className="tmpdt-rc-go">
-                        {item.linkText} <span>→</span>
+                        {t(item.linkText)} <span>→</span>
                       </span>
                     </div>
                   </a>
@@ -1090,10 +1094,10 @@ export function ProductDetailFinalCtaSection({ data }: { data: ProductDetailTemp
         <p dangerouslySetInnerHTML={html(finalCta.textHtml)} />
         <div className="tmpdt-final-actions">
           <a className="tmpdt-btn tmpdt-lime" href={finalCta.primaryHref}>
-            {finalCta.primaryText}
+            {t(finalCta.primaryText)}
           </a>
           <a className="tmpdt-btn tmpdt-inv" href={finalCta.secondaryHref}>
-            {finalCta.secondaryText}
+            {t(finalCta.secondaryText)}
           </a>
         </div>
       </div>
