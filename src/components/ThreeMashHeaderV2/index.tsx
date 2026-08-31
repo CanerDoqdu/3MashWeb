@@ -198,7 +198,7 @@ function cartProductHref(item: IkasOrderLineItem) {
 }
 
 function cartItemTitle(item: IkasOrderLineItem) {
-  return item.variant?.name || "Ürün";
+  return item.variant?.name || tLocalized("Ürün", "Product");
 }
 
 function cartItemVariantText(item: IkasOrderLineItem) {
@@ -214,8 +214,8 @@ const defaultReferencesSectionId = "guven";
 const pendingReferencesScrollKey = "tmh-pending-references-scroll";
 const legacyAcademyRouteKeys = new Set(["academy", "mash-academy", "pages-mash-academy", "2tplvqpo-rovtvwz53h"]);
 const defaultProductsMenuText = tLocalized("Ürünler", "Products");
-const defaultWhyMenuText = "Neden 3mash?";
-const defaultReferencesText = "Referanslar";
+const defaultWhyMenuText = tLocalized("Neden 3mash?", "Why 3mash?");
+const defaultReferencesText = tLocalized("Referanslar", "References");
 const defaultAcademyText = "Academy";
 const defaultMobileMenuLabel = tLocalized("Menü", "Menu");
 
@@ -559,9 +559,12 @@ const criticalHeaderCss = `
 `;
 
 const defaultAnnouncement = {
-  highlightText: "⚡ Fırsatı kaçırmayın.",
-  text: "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
-  ctaText: "Hemen hesaplayın",
+  highlightText: tLocalized("⚡ Fırsatı kaçırmayın.", "⚡ Don't miss out."),
+  text: tLocalized(
+    "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
+    "Calculate your clinic's silent loss in 30 seconds; see how to reduce it with free analysis."
+  ),
+  ctaText: tLocalized("Hemen hesaplayın", "Calculate now"),
   href: "#hesap",
 };
 
@@ -716,21 +719,24 @@ function firstPaintAnnouncementScript() {
 
 
 const defaultProductsFeature = {
-  eyebrow: "YENİ · DÜNYADA İLK",
-  title: "MASH C1E<br>Akıllı Kürleme Cihazı",
-  description: "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
-  ctaText: "Keşfet →",
+  eyebrow: tLocalized("YENİ · DÜNYADA İLK", "NEW · WORLD'S FIRST"),
+  title: tLocalized("MASH C1E<br>Akıllı Kürleme Cihazı", "MASH C1E<br>Smart Curing Unit"),
+  description: tLocalized(
+    "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
+    "Eliminates user error in post-curing: automatically manages time, temperature, and wavelength based on resin."
+  ),
+  ctaText: tLocalized("Keşfet →", "Discover →"),
   href: "/yikama-kurleme-cihazlari",
 };
 const defaultProductPrimary: Required<MenuItem>[] = [
-  { title: tLocalized("3D Yazıcılar", "3D Printers"), description: "P1D / P16L hassas baskı", href: "/3d-yazicilar", icon: ecoPrinterIcon },
-  { title: tLocalized("Yıkama", "Washing"), description: "Baskı sonrası ultrasonik temizlik", href: "/yikama-cihazlari", icon: ecoScannerIcon },
-  { title: tLocalized("Kürleme", "Curing"), description: "360° homojen UV post-curing", href: "/kurleme-cihazlari", icon: ecoCuringIcon },
+  { title: tLocalized("3D Yazıcılar", "3D Printers"), description: tLocalized("P1D / P16L hassas baskı", "P1D / P16L precision printing"), href: "/3d-yazicilar", icon: ecoPrinterIcon },
+  { title: tLocalized("Yıkama", "Washing"), description: tLocalized("Baskı sonrası ultrasonik temizlik", "Post-print ultrasonic cleaning"), href: "/yikama-cihazlari", icon: ecoScannerIcon },
+  { title: tLocalized("Kürleme", "Curing"), description: tLocalized("360° homojen UV post-curing", "360° uniform UV post-curing"), href: "/kurleme-cihazlari", icon: ecoCuringIcon },
 ];
 const defaultProductSecondary: Required<MenuItem>[] = [
-  { title: tLocalized("Dental Reçineler", "Dental Resins"), description: "Dental reçine seçenekleri", href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
-  { title: "Zirkon Bloklar & Titanyum", description: "Freze tarafının sarfları", href: "/zirkon-bloklar", icon: ecoBlocksIcon },
-  { title: "Tarayıcılar ve Fırınlar", description: "Lab tarafında hassas veri · Sinterleme çözümleri", href: "/dental-firinlar", icon: ecoOvenIcon },
+  { title: tLocalized("Dental Reçineler", "Dental Resins"), description: tLocalized("Dental reçine seçenekleri", "Dental resin options"), href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
+  { title: tLocalized("Zirkon Bloklar & Titanyum", "Zirconia Blocks & Titanium"), description: tLocalized("Freze tarafının sarfları", "Milling consumables"), href: "/zirkon-bloklar", icon: ecoBlocksIcon },
+  { title: tLocalized("Tarayıcılar ve Fırınlar", "Scanners & Furnaces"), description: tLocalized("Lab tarafında hassas veri · Sinterleme çözümleri", "Precise lab data · Sintering solutions"), href: "/dental-firinlar", icon: ecoOvenIcon },
 ];
 
 function href(value?: string) {
@@ -1324,7 +1330,7 @@ function resolveActionIcon(image: unknown, svg: unknown, fallbackSvg: string, sh
 }
 
 function ProductLink({ item, wordStyle }: { item: MenuItem; wordStyle: any }) {
-  const isCombinedProduct = item.title === "Tarayıcılar ve Fırınlar";
+  const isCombinedProduct = item.title === "Tarayıcılar ve Fırınlar" || item.title === "Scanners & Furnaces" || item.href?.includes("dental-firinlar");
 
   return (
     <a href={href(item.href)} className={`tmh-mega-link${isCombinedProduct ? " tmh-mega-link-combined" : ""}`}>
@@ -1505,13 +1511,13 @@ function FlowLink({
 
         if (isFirstItem) {
           scrollToSectionWithOffset("__top__", () => {
-            if (onToast) onToast("Zaten ilgili bölümdesiniz");
+            if (onToast) onToast(tLocalized("Zaten ilgili bölümdesiniz", "You are already in this section"));
           });
           return;
         }
 
         scrollToSectionWithOffset(sectionId, () => {
-          if (onToast) onToast("Zaten ilgili bölümdesiniz");
+          if (onToast) onToast(tLocalized("Zaten ilgili bölümdesiniz", "You are already in this section"));
         });
       }}
     >
@@ -2349,7 +2355,7 @@ async function removeCartItem(
                 >
                   <span className="tmh-action-panel-kicker">3Mash</span>
                   <b dangerouslySetInnerHTML={richText(accountMenuTitle, props)} />
-                  <p dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuDescription, "Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın."), props)} />
+                  <p dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuDescription, tLocalized("Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın.", "Quickly access your orders, support, and account settings.")), props)} />
                   <div className="tmh-panel-links">
                     {profileLinks.map((item) => (
                       <a href={href(item.link)} dangerouslySetInnerHTML={richText(item.label, props)} />
@@ -2381,10 +2387,10 @@ async function removeCartItem(
                   className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}
                   hidden={activeAction !== "store"}
                 >
-                  <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, "SEPETİM")}</span>
+                  <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, tLocalized("SEPETİM", "MY CART"))}</span>
                   {cartItems.length > 0 ? (
                     <div className="tmh-cart-live">
-                      <div className="tmh-cart-count">{cartItemCount} ürün sepetinizde</div>
+                      <div className="tmh-cart-count">{cartItemCount} {tLocalized("ürün sepetinizde", "items in your cart")}</div>
                       <div className="tmh-cart-live-list">
                         {visibleCartItems.map((item) => {
                     const imageCandidates = Array.from(

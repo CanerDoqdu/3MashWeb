@@ -539,7 +539,7 @@ export function ThreeMashHero(props: Props) {
   const titleBeforeAmount =
     mode === "lab"
       ? props.labTitleBeforeAmount ||
-        props.titleBeforeAmount?.replace("Kliniğiniz", "Laboratuvarınız")
+        props.titleBeforeAmount?.replace("Kliniğiniz", "Laboratuvarınız").replace(/clinic/i, "laboratory")
       : props.titleBeforeAmount;
 
   useEffect(() => {

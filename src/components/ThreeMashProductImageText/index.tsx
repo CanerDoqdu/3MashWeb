@@ -8,9 +8,12 @@ import {
   type ProductDetailTemplateData,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderUseCases } from "../../sub-components/ThreeMashProductSectionPlaceholder";
+import { isEnglishLocale, isTurkishText } from "../../utils/i18n";
 
 function trimmedText(value: unknown): string {
-  return typeof value === "string" ? value.trim() : "";
+  const trimmed = typeof value === "string" ? value.trim() : "";
+  if (isEnglishLocale() && isTurkishText(trimmed)) return "";
+  return trimmed;
 }
 
 function imageSource(value: unknown): string {

@@ -6,10 +6,12 @@ import {
   type ProductDetailTemplateData,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderMetrics } from "../../sub-components/ThreeMashProductSectionPlaceholder";
-import { tLocalized } from "../../utils/i18n";
+import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
 
 function trimmedText(value: unknown): string {
-  return typeof value === "string" ? value.trim() : "";
+  const trimmed = typeof value === "string" ? value.trim() : "";
+  if (isEnglishLocale() && isTurkishText(trimmed)) return "";
+  return trimmed;
 }
 
 function overrideMetricsData(baseData: ProductDetailTemplateData | null, props: Props): ProductDetailTemplateData | null {

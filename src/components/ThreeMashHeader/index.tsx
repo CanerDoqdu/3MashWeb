@@ -198,7 +198,7 @@ function cartProductHref(item: IkasOrderLineItem) {
 }
 
 function cartItemTitle(item: IkasOrderLineItem) {
-  return item.variant?.name || "Ürün";
+  return item.variant?.name || tLocalized("Ürün", "Product");
 }
 
 function cartItemVariantText(item: IkasOrderLineItem) {
@@ -214,8 +214,8 @@ const defaultReferencesSectionId = "guven";
 const pendingReferencesScrollKey = "tmh-pending-references-scroll";
 const legacyAcademyRouteKeys = new Set(["academy", "mash-academy", "pages-mash-academy", "2tplvqpo-rovtvwz53h"]);
 const defaultProductsMenuText = tLocalized("Ürünler", "Products");
-const defaultWhyMenuText = "Neden 3mash?";
-const defaultReferencesText = "Referanslar";
+const defaultWhyMenuText = tLocalized("Neden 3mash?", "Why 3mash?");
+const defaultReferencesText = tLocalized("Referanslar", "References");
 const defaultAcademyText = "Academy";
 const defaultMobileMenuLabel = tLocalized("Menü", "Menu");
 
@@ -559,9 +559,12 @@ const criticalHeaderCss = `
 `;
 
 const defaultAnnouncement = {
-  highlightText: "⚡ Fırsatı kaçırmayın.",
-  text: "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
-  ctaText: "Hemen hesaplayın",
+  highlightText: tLocalized("⚡ Fırsatı kaçırmayın.", "⚡ Don't miss out."),
+  text: tLocalized(
+    "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
+    "Calculate your clinic's silent loss in 30 seconds; see how to reduce it with free analysis."
+  ),
+  ctaText: tLocalized("Hemen hesaplayın", "Calculate now"),
   href: "#hesap",
 };
 
@@ -715,21 +718,24 @@ function firstPaintAnnouncementScript() {
 
 
 const defaultProductsFeature = {
-  eyebrow: "YENİ · DÜNYADA İLK",
-  title: "MASH C1E<br>Akıllı Kürleme Cihazı",
-  description: "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
-  ctaText: "Keşfet →",
+  eyebrow: tLocalized("YENİ · DÜNYADA İLK", "NEW · WORLD'S FIRST"),
+  title: tLocalized("MASH C1E<br>Akıllı Kürleme Cihazı", "MASH C1E<br>Smart Curing Unit"),
+  description: tLocalized(
+    "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
+    "Eliminates user error in post-curing: automatically manages time, temperature, and wavelength based on resin."
+  ),
+  ctaText: tLocalized("Keşfet →", "Discover →"),
   href: "/yikama-kurleme-cihazlari",
 };
 const defaultProductPrimary: Required<MenuItem>[] = [
-  { title: tLocalized("3D Yazıcılar", "3D Printers"), description: "P1D / P16L hassas baskı", href: "/3d-yazicilar", icon: ecoPrinterIcon },
-  { title: tLocalized("Yıkama & Kürleme", "Wash & Cure"), description: "Yıkama ve akıllı kürleme", href: "/yikama-kurleme-cihazlari", icon: ecoScannerIcon },
-  { title: tLocalized("Dental Reçineler", "Dental Resins"), description: "Dental reçine seçenekleri", href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
+  { title: tLocalized("3D Yazıcılar", "3D Printers"), description: tLocalized("P1D / P16L hassas baskı", "P1D / P16L precision printing"), href: "/3d-yazicilar", icon: ecoPrinterIcon },
+  { title: tLocalized("Yıkama & Kürleme", "Wash & Cure"), description: tLocalized("Yıkama ve akıllı kürleme", "Wash and smart curing"), href: "/yikama-kurleme-cihazlari", icon: ecoScannerIcon },
+  { title: tLocalized("Dental Reçineler", "Dental Resins"), description: tLocalized("Dental reçine seçenekleri", "Dental resin options"), href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
 ];
 const defaultProductSecondary: Required<MenuItem>[] = [
-  { title: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), description: "Lab tarafında hassas veri", href: "/masasustu-tarayicilar", icon: ecoCuringIcon },
-  { title: "Zirkon Bloklar & Titanyum", description: "Freze tarafının sarfları", href: "/zirkon-bloklar", icon: ecoBlocksIcon },
-  { title: tLocalized("Dental Fırınlar", "Dental Furnaces"), description: "Sinterleme çözümleri", href: "/dental-firinlar", icon: ecoOvenIcon },
+  { title: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), description: tLocalized("Lab tarafında hassas veri", "Precise lab data"), href: "/masasustu-tarayicilar", icon: ecoCuringIcon },
+  { title: tLocalized("Zirkon Bloklar & Titanyum", "Zirconia Blocks & Titanium"), description: tLocalized("Freze tarafının sarfları", "Milling consumables"), href: "/zirkon-bloklar", icon: ecoBlocksIcon },
+  { title: tLocalized("Dental Fırınlar", "Dental Furnaces"), description: tLocalized("Sinterleme çözümleri", "Sintering solutions"), href: "/dental-firinlar", icon: ecoOvenIcon },
 ];
 
 function href(value?: string) {
@@ -1502,13 +1508,13 @@ function FlowLink({
 
         if (isFirstItem) {
           scrollToSectionWithOffset("__top__", () => {
-            if (onToast) onToast("Zaten ilgili bölümdesiniz");
+            if (onToast) onToast(tLocalized("Zaten ilgili bölümdesiniz", "You are already in this section"));
           });
           return;
         }
 
         scrollToSectionWithOffset(sectionId, () => {
-          if (onToast) onToast("Zaten ilgili bölümdesiniz");
+          if (onToast) onToast(tLocalized("Zaten ilgili bölümdesiniz", "You are already in this section"));
         });
       }}
     >
@@ -1647,8 +1653,8 @@ const cartItems =
   const announcementCtaText = richTextValue(productAnnouncement?.ctaText ?? props.announcementCtaText, defaultAnnouncement.ctaText);
   const announcementHref = productAnnouncement?.href ?? props.announcementHref;
   const effectiveAnnouncementHref = currentRouteKey() === "3d-yazicilar" ? "#karsilastirma-tablosu" : announcementHref;
-  const productsCol1Title = sourceRichText(props.productsCol1Title, "ÜRETİM", ["uretim"]);
-  const productsCol2Title = sourceRichText(props.productsCol2Title, "TAMAMLAYICI", ["tamamlayici"]);
+  const productsCol1Title = sourceRichText(props.productsCol1Title, tLocalized("ÜRETİM", "PRODUCTION"), ["uretim"]);
+  const productsCol2Title = sourceRichText(props.productsCol2Title, tLocalized("TAMAMLAYICI", "COMPLEMENTARY"), ["tamamlayici"]);
   const productsFeatureEyebrow = sourceRichText(props.productsFeatureEyebrow, defaultProductsFeature.eyebrow);
   const productsFeatureTitle = sourceRichText(props.productsFeatureTitle, defaultProductsFeature.title, ["mash c4p akilli kurleme cihazi"]);
   const productsFeatureDescription = sourceRichText(props.productsFeatureDescription, defaultProductsFeature.description, [
@@ -1684,10 +1690,10 @@ const cartItems =
   ];
 
   const whyItems: FlowItem[] = [
-    { number: text(props.why1Number, "01"), title: text(props.why1Title, "Yılda $126K'ya varan görünmez kayıp"), description: text(props.why1Description, "Tekrarlanan işlerin kliniğinize gerçek maliyeti"), href: "/" },
-    { number: text(props.why2Number, "02"), title: text(props.why2Title, "Sebep: ölçüsel hassasiyet"), description: text(props.why2Description, "250–500µm sapma bandı vs ±20µm güvenli bölge"), href: whyMenuHref("/#sebep") },
-    { number: text(props.why3Number, "03"), title: text(props.why3Title, "Çözüm: uyumlu ekosistem"), description: text(props.why3Description, "Yazıcı + reçine + parametre bilgisi, birlikte kalibre"), href: whyMenuHref("/#cozum") },
-    { number: text(props.why4Number, "04"), title: text(props.why4Title, "Ve kürleme — son %20'lik fark"), description: text(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur"), href: whyMenuHref("/#kurleme") },
+    { number: text(props.why1Number, "01"), title: text(props.why1Title, tLocalized("Yılda $126K'ya varan görünmez kayıp", "Invisible loss up to $126K per year")), description: text(props.why1Description, tLocalized("Tekrarlanan işlerin kliniğinize gerçek maliyeti", "The true cost of remakes to your clinic")), href: "/" },
+    { number: text(props.why2Number, "02"), title: text(props.why2Title, tLocalized("Sebep: ölçüsel hassasiyet", "Reason: dimensional accuracy")), description: text(props.why2Description, tLocalized("250–500µm sapma bandı vs ±20µm güvenli bölge", "250–500µm deviation band vs ±20µm safe zone")), href: whyMenuHref("/#sebep") },
+    { number: text(props.why3Number, "03"), title: text(props.why3Title, tLocalized("Çözüm: uyumlu ekosistem", "Solution: compatible ecosystem")), description: text(props.why3Description, tLocalized("Yazıcı + reçine + parametre bilgisi, birlikte kalibre", "Printer + resin + parameter knowledge, calibrated together")), href: whyMenuHref("/#cozum") },
+    { number: text(props.why4Number, "04"), title: text(props.why4Title, tLocalized("Ve kürleme — son %20'lik fark", "And curing — the final 20% difference")), description: text(props.why4Description, tLocalized("Doğru basılan iş, yanlış kürlenirse yine başarısız olur", "A properly printed job fails if improperly cured")), href: whyMenuHref("/#kurleme") },
   ];
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -2312,7 +2318,7 @@ async function removeCartItem(
                 >
                   <span className="tmh-action-panel-kicker">3Mash</span>
                   <b dangerouslySetInnerHTML={richText(accountMenuTitle, props)} />
-                  <p dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuDescription, "Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın."), props)} />
+                  <p dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuDescription, tLocalized("Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın.", "Quickly access your orders, support, and account settings.")), props)} />
                   <div className="tmh-panel-links">
                     {profileLinks.map((item) => (
                       <a href={href(item.link)} dangerouslySetInnerHTML={richText(item.label, props)} />
@@ -2344,10 +2350,10 @@ async function removeCartItem(
                   className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}
                   hidden={activeAction !== "store"}
                 >
-                  <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, "SEPETİM")}</span>
+                  <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, tLocalized("SEPETİM", "MY CART"))}</span>
                   {cartItems.length > 0 ? (
                     <div className="tmh-cart-live">
-                      <div className="tmh-cart-count">{cartItemCount} ürün sepetinizde</div>
+                      <div className="tmh-cart-count">{cartItemCount} {tLocalized("ürün sepetinizde", "items in your cart")}</div>
                       <div className="tmh-cart-live-list">
                         {visibleCartItems.map((item) => {
                     const imageCandidates = Array.from(

@@ -1,9 +1,12 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { tLocalized } from "../../utils/i18n";
+import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
 
 function trimmedText(value: unknown, fallback = ""): string {
-  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+  const trimmed = typeof value === "string" ? value.trim() : "";
+  if (!trimmed) return fallback;
+  if (isEnglishLocale() && isTurkishText(trimmed)) return fallback;
+  return trimmed;
 }
 
 function imageSource(value: unknown, fallback = ""): string {

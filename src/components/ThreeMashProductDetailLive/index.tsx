@@ -42,7 +42,7 @@ import ThreeMashProductDetailTemplate, {
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { publishSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
-import { isEnglishLocale, tLocalized } from "../../utils/i18n";
+import { isEnglishLocale, isTurkishText, tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
 
 type PlainObject = Record<string, unknown>;
@@ -704,7 +704,9 @@ function parseTemplateJson(source: unknown) {
 }
 
 function trimmedText(value: unknown) {
-  return typeof value === "string" ? value.trim() : "";
+  const trimmed = typeof value === "string" ? value.trim() : "";
+  if (isEnglishLocale() && isTurkishText(trimmed)) return "";
+  return trimmed;
 }
 
 function linkValue(source: unknown) {

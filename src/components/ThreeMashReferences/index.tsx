@@ -15,147 +15,178 @@ import trustLogo2 from "../../assets/trust-logo-2-data";
 import trustLogo3 from "../../assets/trust-logo-3-data";
 import trustLogo4 from "../../assets/trust-logo-4-data";
 import trustLogo5 from "../../assets/trust-logo-5-data";
+import { tLocalized } from "../../utils/i18n";
 
-const defaultDescription =
-  "3MASH ekosistemi; kliniklerin, laboratuvarların ve çözüm ortaklarının günlük üretiminde aynı hedefe çalışır: doğru cihaz, doğru malzeme, doğru parametre ve kesintisiz teknik destek.";
+const defaultDescription = tLocalized(
+  "3MASH ekosistemi; kliniklerin, laboratuvarların ve çözüm ortaklarının günlük üretiminde aynı hedefe çalışır: doğru cihaz, doğru malzeme, doğru parametre ve kesintisiz teknik destek.",
+  "The 3MASH ecosystem works toward the same goal in daily production for clinics, laboratories, and solution partners: the right device, the right material, the right parameters, and continuous technical support."
+);
 
 const testimonials = [
   {
     name: "Mehmet İşlek",
-    role: "ATTELIA - Kurucu Başhekim",
+    role: tLocalized("ATTELIA - Kurucu Başhekim", "ATTELIA - Founding Chief Physician"),
     image: profileMehmet,
-    quote:
+    quote: tLocalized(
       "Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.",
-    meta: "22 yıldır gülümseme tasarlayan klinik",
+      "Professionals trust professionals for absolute success. We collaborate with Mash in equipment selection, supply, training, and operation."
+    ),
+    meta: tLocalized("22 yıldır gülümseme tasarlayan klinik", "Clinic designing smiles for 22 years"),
   },
   {
     name: "Berkan Öztaş",
-    role: "DENTEK - Genel Müd. Yard.",
+    role: tLocalized("DENTEK - Genel Müd. Yard.", "DENTEK - Asst. General Manager"),
     image: profileBerkan,
-    quote:
+    quote: tLocalized(
       "Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.",
-    meta: "Dijital üretim ve laboratuvar operasyonu",
+      "Innovative and creative. A long-term, successful partnership across hardware, software, and materials."
+    ),
+    meta: tLocalized("Dijital üretim ve laboratuvar operasyonu", "Digital production and laboratory operation"),
   },
   {
     name: "Göksel Pişkin",
-    role: "MIKRO LAB - Kurucu Ortak",
+    role: tLocalized("MIKRO LAB - Kurucu Ortak", "MIKRO LAB - Co-founder"),
     image: profileGoksel,
-    quote:
+    quote: tLocalized(
       "Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim, mükemmel sonuçlar.",
-    meta: "Tekrarlanabilir üretim ve teknik süreç",
+      "They solved issues before we even encountered them. Consistent production quality and excellent results every time."
+    ),
+    meta: tLocalized("Tekrarlanabilir üretim ve teknik süreç", "Repeatable production and technical process"),
   },
 ];
 
 const referenceEntries = [
   ...testimonials.map((item) => ({
     ...item,
-    type: "Kullanıcı yorumu",
+    type: tLocalized("Kullanıcı yorumu", "User Review"),
   })),
   {
     name: "Dr. Barbaros Baran",
-    role: "Diş Hekimi",
-    quote:
+    role: tLocalized("Diş Hekimi", "Dentist"),
+    quote: tLocalized(
       "CRS Composite Resin ile tamamen dijital olarak üretilen All-on-Six geçici restorasyon, düşük ağırlığı ve takip edilebilir klinik iş akışıyla öne çıktı.",
-    meta: "All-on-Six geçici restorasyon vakası",
-    type: "Klinik vaka",
+      "The All-on-Six temporary restoration produced entirely digitally with CRS Composite Resin stood out with its lightweight structure and traceable clinical workflow."
+    ),
+    meta: tLocalized("All-on-Six geçici restorasyon vakası", "All-on-Six provisional restoration case"),
+    type: tLocalized("Klinik vaka", "Clinical Case"),
   },
   {
     name: "Yapı Dental",
-    role: "Dental ürün ve teknoloji iş ortağı",
-    quote:
+    role: tLocalized("Dental ürün ve teknoloji iş ortağı", "Dental products & technology partner"),
+    quote: tLocalized(
       "Phrozen cihazları üzerinde 3MASH ortaklığıyla geliştirme, ayarlama ve kalibrasyon süreci yürütüldü; CRS reçineleriyle uyum aynı ekosistemde değerlendirildi.",
-    meta: "Kalibre edilmiş cihaz ve reçine iş akışı",
-    type: "İş ortaklığı",
+      "Development, calibration, and adjustment processes were carried out on Phrozen devices in partnership with 3MASH; compatibility with CRS resins was verified in the same ecosystem."
+    ),
+    meta: tLocalized("Kalibre edilmiş cihaz ve reçine iş akışı", "Calibrated device & resin workflow"),
+    type: tLocalized("İş ortaklığı", "Partnership"),
   },
   {
     name: "Serdent",
-    role: "Diş hekimliği ve laboratuvar malzemeleri çözüm ağı",
-    quote:
+    role: tLocalized("Diş hekimliği ve laboratuvar malzemeleri çözüm ağı", "Dental and lab supplies solution network"),
+    quote: tLocalized(
       "Klinik ve laboratuvarlara ürün, eğitim ve teknik servis desteği sunan portföy içinde CRS ve 3MASH markaları birlikte konumlanıyor.",
-    meta: "Bölgesel çözüm ve destek ağı",
-    type: "Çözüm ortağı",
+      "CRS and 3MASH brands are positioned together within a portfolio offering product, training, and technical service support to clinics and laboratories."
+    ),
+    meta: tLocalized("Bölgesel çözüm ve destek ağı", "Regional solution & support network"),
+    type: tLocalized("Çözüm ortağı", "Solution Partner"),
   },
   {
-    name: "Özel Manas Diş Protez Laboratuvarı",
-    role: "Diş protez laboratuvarı",
-    quote:
+    name: tLocalized("Özel Manas Diş Protez Laboratuvarı", "Ozel Manas Dental Prosthesis Laboratory"),
+    role: tLocalized("Diş protez laboratuvarı", "Dental prosthesis laboratory"),
+    quote: tLocalized(
       "Laboratuvar üretim paylaşımlarında #3mash, #crs ve #digitaldentistry etiketleriyle dijital dental üretim çalışmalarını öne çıkarıyor.",
-    meta: "Kullanıcı üretimi ve laboratuvar paylaşımı",
-    type: "Kullanıcı çalışması",
+      "Highlights digital dental production work with #3mash, #crs, and #digitaldentistry tags in laboratory production shares."
+    ),
+    meta: tLocalized("Kullanıcı üretimi ve laboratuvar paylaşımı", "User production & laboratory share"),
+    type: tLocalized("Kullanıcı çalışması", "User Showcase"),
   },
   {
     name: "Mümin Tuğra",
-    role: "Dental laboratuvar içerik üreticisi",
-    quote:
+    role: tLocalized("Dental laboratuvar içerik üreticisi", "Dental laboratory content creator"),
+    quote: tLocalized(
       "CRS Model ve dijital dental üretim odağındaki paylaşımlarıyla 3MASH ekosistemine bağlı kullanıcı içeriği havuzunda yer alıyor.",
-    meta: "CRS Model odaklı üretim içeriği",
-    type: "Kullanıcı içeriği",
+      "Included in the 3MASH ecosystem user content pool with focus on CRS Model and digital dental fabrication."
+    ),
+    meta: tLocalized("CRS Model odaklı üretim içeriği", "CRS Model focused production content"),
+    type: tLocalized("Kullanıcı içeriği", "User Content"),
   },
   {
     name: "Batuhan Arabacı",
-    role: "Dental sektör profesyoneli",
-    quote:
+    role: tLocalized("Dental sektör profesyoneli", "Dental industry professional"),
+    quote: tLocalized(
       "Ürünler için sektöre güçlü giriş yapan ve rakip tanımayan bir çizgi vurgusu yapan olumlu tanıtım ifadesiyle öne çıkıyor.",
-    meta: "Sektör yorumu",
-    type: "Profesyonel görüş",
+      "Stands out with positive commentary highlighting a strong market entrance and unrivaled quality."
+    ),
+    meta: tLocalized("Sektör yorumu", "Industry review"),
+    type: tLocalized("Profesyonel görüş", "Professional Opinion"),
   },
 ];
 
 const proofStats = [
-  { value: "580+", label: "laboratuvar ve klinik" },
-  { value: String(referenceEntries.length), label: "referans kaydı" },
-  { value: "A-Z", label: "kurulumdan desteğe" },
+  { value: "580+", label: tLocalized("laboratuvar ve klinik", "laboratories and clinics") },
+  { value: String(referenceEntries.length), label: tLocalized("referans kaydı", "reference records") },
+  { value: "A-Z", label: tLocalized("kurulumdan desteğe", "from installation to support") },
 ];
 
 const proofCategories = [
-  "Klinik vaka",
-  "Kullanıcı yorumu",
-  "İş ortaklığı",
-  "Laboratuvar paylaşımı",
+  tLocalized("Klinik vaka", "Clinical Case"),
+  tLocalized("Kullanıcı yorumu", "User Review"),
+  tLocalized("İş ortaklığı", "Partnership"),
+  tLocalized("Laboratuvar paylaşımı", "Lab Showcase"),
 ];
 
 const partnerCards = [
   {
     name: "Yapı Dental",
-    title: "Kalibre edilmiş dental üretim ekosistemi",
-    text:
+    title: tLocalized("Kalibre edilmiş dental üretim ekosistemi", "Calibrated dental production ecosystem"),
+    text: tLocalized(
       "Phrozen cihazları, CRS Dental reçineleri ve 3MASH teknik birikimi aynı üretim hattında buluşur. Cihaz seçimi, ışık dağılımı, Z ekseni stabilitesi ve reçine parametreleri birlikte değerlendirilir.",
+      "Phrozen hardware, CRS Dental resins, and 3MASH technical expertise unite on the same line. Device selection, light uniformity, Z-axis stability, and resin parameters are evaluated together."
+    ),
     image: machineP16L,
   },
   {
     name: "Serdent",
-    title: "Bölgesel çözüm ve teknik servis ağı",
-    text:
+    title: tLocalized("Bölgesel çözüm ve teknik servis ağı", "Regional solution & technical service network"),
+    text: tLocalized(
       "Klinik ve laboratuvarlara ürün, eğitim ve teknik servis desteği sunan çözüm ağı içinde CRS ve 3MASH markaları birlikte konumlanır.",
+      "CRS and 3MASH brands are positioned together within a solution network delivering product, training, and service support to clinics and labs."
+    ),
     image: resinBottle,
   },
 ];
 
 const workflowCards = [
   {
-    title: "Cihaz",
-    text:
+    title: tLocalized("Cihaz", "Hardware"),
+    text: tLocalized(
       "3D yazıcı, yıkama-kürleme ve tarayıcı seçimi üretim hedefiyle birlikte planlanır.",
+      "3D printer, wash-cure, and scanner selections are planned alongside production goals."
+    ),
     image: p16lPrimaryImage,
   },
   {
-    title: "Malzeme",
-    text:
+    title: tLocalized("Malzeme", "Material"),
+    text: tLocalized(
       "CRS reçine hattı; model, kompozit, tray ve restoratif uygulamalarda doğru parametreyle çalışır.",
+      "The CRS resin line operates with validated parameters for model, composite, tray, and restorative applications."
+    ),
     image: crsModelBottleImage,
   },
   {
-    title: "Destek",
-    text:
+    title: tLocalized("Destek", "Support"),
+    text: tLocalized(
       "Kurulum, eğitim, reçine uyumlama ve satış sonrası teknik destek aynı ekip tarafından takip edilir.",
+      "Installation, training, resin profiling, and after-sales support are handled by the same team."
+    ),
     image: machineUW02,
   },
 ];
 
 const storyPoints = [
-  "Üst ve alt All-on-Six geçici restorasyon üretimi",
-  "Metal bar üzerinde 3D baskılı kompozit köprü yaklaşımı",
-  "Düşük ağırlık, takip edilebilir dijital iş akışı ve klinik adaptasyon odağı",
+  tLocalized("Üst ve alt All-on-Six geçici restorasyon üretimi", "Upper and lower All-on-Six provisional restoration fabrication"),
+  tLocalized("Metal bar üzerinde 3D baskılı kompozit köprü yaklaşımı", "3D-printed composite bridge on metal bar framework"),
+  tLocalized("Düşük ağırlık, takip edilebilir dijital iş akışı ve klinik adaptasyon odağı", "Low weight, traceable digital workflow, and clinical adaptation focus"),
 ];
 
 const logos = [trustLogo1, trustLogo2, trustLogo3, trustLogo4, trustLogo5];
@@ -255,13 +286,13 @@ export function ThreeMashReferences(props: Props) {
               className="tmref-eyebrow"
               dangerouslySetInnerHTML={richHtml(
                 props.eyebrowText,
-                "Referanslar ve başarı hikayeleri",
+                tLocalized("Referanslar ve başarı hikayeleri", "References and success stories"),
               )}
             />
             <h2
               dangerouslySetInnerHTML={richHtml(
                 props.titleText,
-                "Dijital üretimde güveni <em>gerçek işlerle</em> kuruyoruz.",
+                tLocalized("Dijital üretimde güveni <em>gerçek işlerle</em> kuruyoruz.", "We build trust in digital production with <em>real results</em>."),
               )}
             />
             <p
@@ -270,23 +301,25 @@ export function ThreeMashReferences(props: Props) {
                 defaultDescription,
               )}
             />
-            <div className="tmref-actions" aria-label="Referanslar aksiyonları">
+            <div className="tmref-actions" aria-label={tLocalized("Referanslar aksiyonları", "References actions")}>
               <ActionLink href={primaryHref} variant="primary">
-                {text(props.primaryButtonText, "Başarı hikayesini gör")}
+                {text(props.primaryButtonText, tLocalized("Başarı hikayesini gör", "View success story"))}
               </ActionLink>
               <ActionLink href={secondaryHref} variant="secondary">
-                {text(props.secondaryButtonText, "Ekosistemi incele")}
+                {text(props.secondaryButtonText, tLocalized("Ekosistemi incele", "Explore ecosystem"))}
               </ActionLink>
             </div>
           </div>
 
-          <div className="tmref-hero-proof" aria-label="3MASH referans özeti">
+          <div className="tmref-hero-proof" aria-label={tLocalized("3MASH referans özeti", "3MASH reference summary")}>
             <div className="tmref-proof-panel">
-              <span>Referans havuzu</span>
-              <strong>Kliniklerden laboratuvarlara uzanan saha kaydı.</strong>
+              <span>{tLocalized("Referans havuzu", "Reference Pool")}</span>
+              <strong>{tLocalized("Kliniklerden laboratuvarlara uzanan saha kaydı.", "Field records spanning clinics to laboratories.")}</strong>
               <p>
-                Yorumlar, klinik vakalar, iş ortakları ve üretim paylaşımları
-                aynı sayfada tek bir güven mimarisi olarak sunulur.
+                {tLocalized(
+                  "Yorumlar, klinik vakalar, iş ortakları ve üretim paylaşımları aynı sayfada tek bir güven mimarisi olarak sunulur.",
+                  "Reviews, clinical cases, partnerships, and production shares presented as a single architecture of trust."
+                )}
               </p>
             </div>
             <div className="tmref-proof-categories">
@@ -305,7 +338,7 @@ export function ThreeMashReferences(props: Props) {
           </div>
         </div>
 
-        <div className="tmref-logo-strip" aria-label="3MASH güven logoları">
+        <div className="tmref-logo-strip" aria-label={tLocalized("3MASH güven logoları", "3MASH trust logos")}>
           {logos.map((logo, index) => (
             <div className="tmref-logo-cell" key={index}>
               <img src={logo} alt="" loading="lazy" />
@@ -315,7 +348,7 @@ export function ThreeMashReferences(props: Props) {
 
         <section
           className="tmref-reference-wall"
-          aria-label="3MASH referans yorumları"
+          aria-label={tLocalized("3MASH referans yorumları", "3MASH reference reviews")}
         >
           {referenceEntries.map((item, index) => (
             <article
@@ -356,15 +389,15 @@ export function ThreeMashReferences(props: Props) {
           aria-labelledby="tmref-case-title"
         >
           <div className="tmref-case-copy">
-            <div className="tmref-section-kicker">Klinik başarı hikayesi</div>
+            <div className="tmref-section-kicker">{tLocalized("Klinik başarı hikayesi", "Clinical Success Story")}</div>
             <h3 id="tmref-case-title">
-              Dr. Barbaros Baran ile All-on-Six geçici restorasyon.
+              {tLocalized("Dr. Barbaros Baran ile All-on-Six geçici restorasyon.", "All-on-Six temporary restoration with Dr. Barbaros Baran.")}
             </h3>
             <p>
-              CRS Composite Resin ile tamamen dijital olarak üretilen geçici
-              restorasyon; hafif yapı, kontrollü üretim süreci ve klinik
-              adaptasyon odağıyla 3MASH ekosisteminin sahadaki karşılığını
-              gösterir.
+              {tLocalized(
+                "CRS Composite Resin ile tamamen dijital olarak üretilen geçici restorasyon; hafif yapı, kontrollü üretim süreci ve klinik adaptasyon odağıyla 3MASH ekosisteminin sahadaki karşılığını gösterir.",
+                "The provisional restoration produced entirely digitally with CRS Composite Resin demonstrates the field value of the 3MASH ecosystem through lightweight design, controlled manufacturing, and clinical precision."
+              )}
             </p>
             <ul className="tmref-story-list">
               {storyPoints.map((item) => (
@@ -375,11 +408,11 @@ export function ThreeMashReferences(props: Props) {
           <div className="tmref-case-media">
             <img
               src={crsCompositeSararmaImage}
-              alt="CRS Composite Resin ile dijital restorasyon çalışması"
+              alt={tLocalized("CRS Composite Resin ile dijital restorasyon çalışması", "Digital restoration study with CRS Composite Resin")}
             />
             <div className="tmref-media-caption">
               <strong>CRS Composite Resin</strong>
-              <span>Dijital geçici restorasyon ve klinik takip süreci</span>
+              <span>{tLocalized("Dijital geçici restorasyon ve klinik takip süreci", "Digital provisional restoration and clinical follow-up")}</span>
             </div>
           </div>
         </section>
@@ -389,9 +422,9 @@ export function ThreeMashReferences(props: Props) {
           aria-labelledby="tmref-partners-title"
         >
           <div className="tmref-section-heading">
-            <div className="tmref-section-kicker">Çözüm ortakları</div>
+            <div className="tmref-section-kicker">{tLocalized("Çözüm ortakları", "Solution Partners")}</div>
             <h3 id="tmref-partners-title">
-              Cihaz, reçine ve teknik destek aynı iş akışında buluşur.
+              {tLocalized("Cihaz, reçine ve teknik destek aynı iş akışında buluşur.", "Hardware, resin, and technical support unite in the same workflow.")}
             </h3>
           </div>
           <div className="tmref-partner-grid">
@@ -416,14 +449,15 @@ export function ThreeMashReferences(props: Props) {
           aria-labelledby="tmref-workflow-title"
         >
           <div className="tmref-workflow-copy">
-            <div className="tmref-section-kicker">3MASH ile üretim akışı</div>
+            <div className="tmref-section-kicker">{tLocalized("3MASH ile üretim akışı", "Production Workflow with 3MASH")}</div>
             <h3 id="tmref-workflow-title">
-              Referansların ortak noktası ürün değil, çalışan sistem.
+              {tLocalized("Referansların ortak noktası ürün değil, çalışan sistem.", "The common thread of references isn't just a product—it's a working system.")}
             </h3>
             <p>
-              Başarılı sonuç yalnızca bir cihaz veya tek bir reçineyle oluşmaz.
-              Laboratuvarda tekrarlanabilir kalite için donanım, malzeme,
-              eğitim ve teknik destek birlikte ilerler.
+              {tLocalized(
+                "Başarılı sonuç yalnızca bir cihaz veya tek bir reçineyle oluşmaz. Laboratuvarda tekrarlanabilir kalite için donanım, malzeme, eğitim ve teknik destek birlikte ilerler.",
+                "Successful results don't come from a single printer or resin alone. Hardware, materials, training, and support work together for repeatable quality in the lab."
+              )}
             </p>
           </div>
           <div className="tmref-workflow-grid">
@@ -442,3 +476,5 @@ export function ThreeMashReferences(props: Props) {
     </section>
   );
 }
+
+export default ThreeMashReferences;

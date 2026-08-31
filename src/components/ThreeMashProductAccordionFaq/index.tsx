@@ -3,7 +3,7 @@ import { Props } from "./types";
 import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailFaqSection, ProductDetailSectionScope, type ProductDetailTemplateData } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderFaq } from "../../sub-components/ThreeMashProductSectionPlaceholder";
-import { tLocalized } from "../../utils/i18n";
+import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
 
 type FaqItem = {
   question: string;
@@ -11,7 +11,9 @@ type FaqItem = {
 };
 
 function trimmedText(value: unknown): string {
-  return typeof value === "string" ? value.trim() : "";
+  const trimmed = typeof value === "string" ? value.trim() : "";
+  if (isEnglishLocale() && isTurkishText(trimmed)) return "";
+  return trimmed;
 }
 
 function overrideFaqData(baseData: ProductDetailTemplateData | null, props: Props): ProductDetailTemplateData | null {

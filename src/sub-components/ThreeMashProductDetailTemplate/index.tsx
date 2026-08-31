@@ -174,19 +174,19 @@ export type ProductDetailRelatedProduct = {
 const RELATED_PRODUCT_IMAGES: Record<string, { src: string; alt: string }> = {
   "/crs-model-yuksek-hassasiyetli-model-recinesi": {
     src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/36167f47-c92f-4660-967c-d4a8faa86006/1080/crs-model-resin.webp",
-    alt: "CRS Model reçine ürün görseli",
+    alt: tLocalized("CRS Model reçine ürün görseli", "CRS Model resin product image"),
   },
   "/crs-denture-biouyumlu-protez-recinesi": {
     src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/7a581ce8-604c-47c0-bb9d-c05e4cdefae0/1080/denture-resin.webp",
-    alt: "CRS Denture reçine ürün görseli",
+    alt: tLocalized("CRS Denture reçine ürün görseli", "CRS Denture resin product image"),
   },
   "/crs-gingiva-yirtilmaz-dis-eti-recinesi": {
     src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/b80f60c6-a2eb-4a48-a541-fa0c84489c6a/1080/gingiva-resin.webp",
-    alt: "CRS Gingiva reçine ürün görseli",
+    alt: tLocalized("CRS Gingiva reçine ürün görseli", "CRS Gingiva resin product image"),
   },
   "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi": {
     src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a7753220-8b7a-4832-a428-c8678e941fda/1080/crs-tray-resin.webp",
-    alt: "CRS Tray Resin ürün görseli",
+    alt: tLocalized("CRS Tray Resin ürün görseli", "CRS Tray Resin product image"),
   },
 };
 
@@ -196,7 +196,7 @@ function relatedProductImage(item: { href: string; image?: string; imageAlt?: st
 
   const productData = resolveProductDetailData({ slug: item.href });
   const mainImage = productData?.hero.gallery[0];
-  return mainImage?.src ? { src: mainImage.src, alt: mainImage.alt || `${item.title} ürün görseli` } : undefined;
+  return mainImage?.src ? { src: mainImage.src, alt: mainImage.alt || (isEnglishLocale() ? `${item.title} product image` : `${item.title} ürün görseli`) } : undefined;
 }
 
 type ProductAnnouncementPayload = {
@@ -562,13 +562,13 @@ function productJsonLd(props: Props): string {
       {
         "@type": "ListItem",
         position: 1,
-        name: data.breadcrumb.homeText || "Anasayfa",
+        name: data.breadcrumb.homeText || tLocalized("Anasayfa", "Home"),
         item: data.breadcrumb.homeHref || "/",
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: data.breadcrumb.categoryText || "Kategori",
+        name: data.breadcrumb.categoryText || tLocalized("Kategori", "Category"),
         item: data.breadcrumb.categoryHref || "/kategori",
       },
       {
