@@ -50,7 +50,7 @@ const academyPageHref = "/pages/mash-academy";
 const consultationWhatsappHref =
   "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum";
 
-const solutionSetupHtml = `<div class="tmr-products-setup">Ürünler kısa süre içinde burada listelenecek.</div>`;
+const solutionSetupHtml = tLocalized("<div class=\"tmr-products-setup\">Ürünler kısa süre içinde burada listelenecek.</div>", "<div class=\"tmr-products-setup\">Products will be listed here shortly.</div>");
 
 const legacyThemeCategoryNames = new Set([
   "clothing",
@@ -86,7 +86,7 @@ export const defaultCuringHtml = `
   </div>
 </section>`;
 
-export const defaultRoiHtml = `<div class="tmr-roi"><div class="tmr-wrap"><div class="tmr-roi-num"><span>YATIRIMIN GERİ DÖNÜŞÜ</span><b>&lt; 6 ay</b></div><p>3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b></p><a class="tmr-btn" href="/">Kliniğiniz için hesaplayalım →</a></div></div>`;
+export const defaultRoiHtml = tLocalized("<div class=\"tmr-roi\"><div class=\"tmr-wrap\"><div class=\"tmr-roi-num\"><span>YATIRIMIN GERİ DÖNÜŞÜ</span><b>&lt; 6 ay</b></div><p>3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b></p><a class=\"tmr-btn\" href=\"/\">Kliniğiniz için hesaplayalım →</a></div></div>", "<div class=\"tmr-roi\"><div class=\"tmr-wrap\"><div class=\"tmr-roi-num\"><span>RETURN ON INVESTMENT</span><b>&lt; 6 months</b></div><p>A clinic that switches to the 3mash ecosystem has the potential to recover its investment in <b>less than 6 months</b>. After that, this efficiency continues every year: <b>up to $72–162K in potential annual savings.</b></p><a class=\"tmr-btn\" href=\"/\">Let's calculate it for your clinic →</a></div></div>");
 
 export const defaultEcosystemHtml = `<section id="ekosistem" class="tmr-section"><div class="tmr-wrap"><div class="tmr-index"><span class="tmr-index-number">05</span><span class="tmr-index-text">Uçtan Uca</span><span class="tmr-index-line"></span></div><div class="tmr-head"><h2>Dijital akışın her parçası, <span>tek çatı altında.</span></h2><div class="tmr-side">Cihaz satıp gitmiyoruz: doğru ürün için <b>danışmanlık</b>, sürdürülebilirlik için <b>Academy eğitimleri</b>, satış sonrasında teknisyen + mühendis <b>teknik destek.</b></div></div><div class="tmr-eco"><a href="/3d-yazicilar"><span class="tmr-eco-icon"><img src="${ecoPrinterIcon}" alt="" aria-hidden="true"></span><span>3D Yazıcılar</span></a><a href="/dental-3d-yazici-recineleri"><span class="tmr-eco-icon"><img src="${ecoResinIcon}" alt="" aria-hidden="true"></span><span>Dental Reçineler</span></a><a href="/yikama-kurleme-cihazlari"><span class="tmr-eco-icon"><img src="${ecoScannerIcon}" alt="" aria-hidden="true"></span><span>Yıkama &amp; Kürleme</span></a><a href="/masasustu-tarayicilar"><span class="tmr-eco-icon"><img src="${ecoCuringIcon}" alt="" aria-hidden="true"></span><span>Masaüstü Tarayıcılar</span></a><a href="/zirkon-bloklar"><span class="tmr-eco-icon"><img src="${ecoBlocksIcon}" alt="" aria-hidden="true"></span><span>Zirkon Bloklar</span></a><a href="/dental-firinlar"><span class="tmr-eco-icon"><img src="${ecoOvenIcon}" alt="" aria-hidden="true"></span><span>Dental Fırınlar</span></a></div></div></section>`;
 
@@ -115,8 +115,8 @@ const defaultFooterProductLinks: Array<[string, string]> = [
 ];
 const defaultFooterCompanyLinks: Array<[string, string]> = [
   [tLocalized("Hakkımızda", "About Us"), "/pages/about-us"],
-  ["Mash Academy", academyPageHref],
-  ["Blog", "/blog"],
+  [tLocalized("Mash Academy", "Mash Academy"), academyPageHref],
+  [tLocalized("Blog", "Blog"), "/blog"],
   [tLocalized("Sıkça Sorulan Sorular", "FAQ"), "/pages/sss"],
 ];
 const defaultFooterContactLinks: Array<[string, string]> = [
@@ -418,7 +418,7 @@ function liveProductCard(product: IkasProduct) {
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image;
   const categoryName =
-    product.categories?.[0]?.name || product.brand?.name || "3MASH";
+    product.categories?.[0]?.name || product.brand?.name || tLocalized("3MASH", "3MASH");
   const rawDescription =
     (product as { shortDescription?: unknown; description?: unknown })
       .shortDescription || (product as { description?: unknown }).description;
@@ -506,9 +506,9 @@ function linkHref(source: unknown, fallback: string) {
     if (link.pageId === "egF4vDuOju") return "/pages/mash-p1d";
     if (link.pageId === "NCjIeO1nu4") return "/pages/mash-p16l";
     if (link.pageId === "hw1iKDxUMY") return "/pages/crs-recineler";
-    if (link.label === "MASH P1D") return localizedHref("/pages/mash-p1d");
-    if (link.label === "MASH P16L") return localizedHref("/pages/mash-p16l");
-    if (link.label === "CRS Reçineler") return localizedHref("/pages/crs-recineler");
+    if (link.label === tLocalized("MASH P1D", "MASH P1D")) return localizedHref("/pages/mash-p1d");
+    if (link.label === tLocalized("MASH P16L", "MASH P16L")) return localizedHref("/pages/mash-p16l");
+    if (link.label === tLocalized("CRS Reçineler", "CRS Resins")) return localizedHref("/pages/crs-recineler");
   }
 
   return localizedHref(fallback);
@@ -832,12 +832,12 @@ function solutionP1dCard(props: ThreeMashSectionRenderProps) {
   return productCard(props, "solutionCard1", {
     tag: en ? "PROFESSIONAL" : "PROFESYONEL",
     image: p1dSectionCardImage,
-    imageAlt: "MASH P1D",
+    imageAlt: tLocalized("MASH P1D", "MASH P1D"),
     imageClass: "tmr-machine-printer",
-    title: "MASH P1D",
+    title: tLocalized("MASH P1D", "MASH P1D"),
     descriptionHtml: en
       ? "Professional DLP production with an optical system designed for the material. The engine of high-volume labs and clinics."
-      : "Malzemeye göre tasarlanmış optik sistemle <b>profesyonel DLP</b> üretim. Yüksek hacimli lab ve kliniklerin motoru.",
+      : tLocalized("Malzemeye göre tasarlanmış optik sistemle <b>profesyonel DLP</b> üretim. Yüksek hacimli lab ve kliniklerin motoru.", "<b>Professional DLP</b> production with an optical system designed around the material. The engine of high-volume labs and clinics."),
     specs: en
       ? [
         ["Light source", "385 nm DLP"],
@@ -845,9 +845,9 @@ function solutionP1dCard(props: ThreeMashSectionRenderProps) {
         ["Character", "Repeatability"],
       ]
       : [
-        ["Işık kaynağı", "385 nm DLP"],
+        [tLocalized("Işık kaynağı", "Light source"), "385 nm DLP"],
         ["Hassasiyet", "±20 µm"],
-        ["Karakter", "Tekrar edilebilirlik"],
+        ["Karakter", tLocalized("Tekrar edilebilirlik", "Repeatability")],
       ],
     ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
     ctaHref: "/3d-yazicilar",
@@ -857,14 +857,14 @@ function solutionP1dCard(props: ThreeMashSectionRenderProps) {
 function solutionSecondCard(props: ThreeMashSectionRenderProps) {
   const en = isEnglishLocale();
   return productCard(props, "solutionCard2", {
-    tag: en ? "ENTRY LEVEL" : "GİRİŞ SEGMENTİ",
+    tag: en ? "ENTRY LEVEL" : tLocalized("GİRİŞ SEGMENTİ", "ENTRY SEGMENT"),
     image: p16lPrimaryImage,
-    imageAlt: "MASH P16L",
+    imageAlt: tLocalized("MASH P16L", "MASH P16L"),
     imageClass: "tmr-machine-p16l",
-    title: "MASH P16L",
+    title: tLocalized("MASH P16L", "MASH P16L"),
     descriptionHtml: en
       ? "3mash-revised LCD printer for those new to digital. Same parameter support, same technical team."
-      : "Dijitale yeni geçenler için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.",
+      : tLocalized("Dijitale yeni geçenler için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.", "An <b>3mash-revised</b> LCD printer for those new to digital. Same parameter support, same technical team."),
     specs: en
       ? [
         ["Technology", "LCD · revised"],
@@ -872,9 +872,9 @@ function solutionSecondCard(props: ThreeMashSectionRenderProps) {
         ["Support", "Setup + training"],
       ]
       : [
-        ["Teknoloji", "LCD · revize"],
-        ["Rol", "Ekosisteme giriş"],
-        ["Destek", "Kurulum + eğitim"],
+        [tLocalized("Teknoloji", "Technology"), "LCD · revize"],
+        [tLocalized("Rol", "Role"), tLocalized("Ekosisteme giriş", "Entry into the ecosystem")],
+        [tLocalized("Destek", "Support"), tLocalized("Kurulum + eğitim", "Installation + training")],
       ],
     ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
     ctaHref: "/3d-yazicilar",
@@ -884,24 +884,24 @@ function solutionSecondCard(props: ThreeMashSectionRenderProps) {
 function solutionResinCategoryCard(props: ThreeMashSectionRenderProps) {
   const en = isEnglishLocale();
   return productCard(props, "solutionCard3", {
-    tag: en ? "OFFICIAL DISTRIBUTOR" : "RESMİ DİSTRİBÜTÖR",
+    tag: en ? "OFFICIAL DISTRIBUTOR" : tLocalized("RESMİ DİSTRİBÜTÖR", "OFFICIAL DISTRIBUTOR"),
     image: crsModelBottleImage,
-    imageAlt: en ? "CRS Resins" : "CRS Reçineler",
+    imageAlt: en ? "CRS Resins" : tLocalized("CRS Reçineler", "CRS Resins"),
     imageClass: "tmr-resin-bottle",
-    title: en ? "CRS Resins" : "CRS Reçineler",
+    title: en ? "CRS Resins" : tLocalized("CRS Reçineler", "CRS Resins"),
     descriptionHtml: en
       ? "<b>CE Class IIa</b> biocompatible &amp; model resins; delivered <b>calibrated together</b> with your device parameters."
-      : "<b>CE Class IIa</b> biyouyumlu &amp; model reçineleri; cihazınızın parametreleriyle <b>birlikte kalibre edilmiş</b> teslim edilir.",
+      : tLocalized("<b>CE Class IIa</b> biyouyumlu &amp; model reçineleri; cihazınızın parametreleriyle <b>birlikte kalibre edilmiş</b> teslim edilir.", "<b>CE Class IIa</b> biocompatible &amp; model resins; delivered <b>calibrated together</b> with your device's parameters."),
     specs: en
       ? [
-        ["Certificate", "CE Class IIa"],
+        ["Certificate", tLocalized("CE Class IIa", "CE Class IIa")],
         ["Application", "Model · temp · splint · guide"],
         ["Compatibility", "Brand independent"],
       ]
       : [
-        ["Sertifika", "CE Class IIa"],
-        ["Uygulama", "Model · geçici · splint · guide"],
-        ["Uyum", "Marka bağımsız"],
+        ["Sertifika", tLocalized("CE Class IIa", "CE Class IIa")],
+        [tLocalized("Uygulama", "APPLICATION"), tLocalized("Model · geçici · splint · guide", "Model · temporary · splint · guide")],
+        [tLocalized("Uyum", "Rapport"), tLocalized("Marka bağımsız", "Brand-independent")],
       ],
     ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
     ctaHref: "/dental-3d-yazici-recineleri",
@@ -1269,25 +1269,25 @@ const trustContentHtml = `<div class="tmr-testimonials"><article class="tmr-test
 const faqContentHtml = `<div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="#">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div>`;
 
 function solutionContent(props: ThreeMashSectionRenderProps) {
-  return `<div class="tmr-products" aria-label="${escapeAttr(field(props, "carouselAriaLabel", "Çözüm ürünleri"))}">${solutionP1dCard(props)}${solutionSecondCard(props)}${solutionResinCategoryCard(props)}</div>`;
+  return `<div class="tmr-products" aria-label="${escapeAttr(field(props, "carouselAriaLabel", tLocalized("Çözüm ürünleri", "Solution products")))}">${solutionP1dCard(props)}${solutionSecondCard(props)}${solutionResinCategoryCard(props)}</div>`;
 }
 
 function curingReasons(props: ThreeMashSectionRenderProps) {
   const trDefaults = [
     [
-      "SEBEP 01",
-      "Mekanik dayanım",
-      "Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.",
+      tLocalized("SEBEP 01", "REASON 01"),
+      tLocalized("Mekanik dayanım", "Mechanical strength"),
+      tLocalized("Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.", "Undercuring means brittleness — the most common hidden cause of <b>frequent breakage</b> in temporary crowns and bridges."),
     ],
     [
-      "SEBEP 02",
-      "Ölçüsel doğruluk",
-      "Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.",
+      tLocalized("SEBEP 02", "REASON 02"),
+      tLocalized("Ölçüsel doğruluk", "Dimensional accuracy"),
+      tLocalized("Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.", "Overcuring <b>shrinks and deforms</b> the material. The ±20 µm gained at the printer is lost at the curing unit."),
     ],
     [
-      "SEBEP 03",
-      "Biyouyumluluk &amp; renk",
-      "Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.",
+      tLocalized("SEBEP 03", "REASON 03"),
+      tLocalized("Biyouyumluluk &amp; renk", "Biocompatibility &amp; colour"),
+      tLocalized("Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.", "The correct degree of conversion prevents <b>monomer release</b>; it ensures color stability and patient safety."),
     ],
   ];
 
@@ -1321,59 +1321,59 @@ function curingReasons(props: ThreeMashSectionRenderProps) {
 function curingProducts(props: ThreeMashSectionRenderProps) {
   const normalizedProps = withLegacyDefaults(props, {
     curingProduct1Tag: {
-      legacy: "YIKAMA · KÜRLEME",
-      next: "YIKAMA",
+      legacy: tLocalized("YIKAMA · KÜRLEME", "WASHING · CURING"),
+      next: tLocalized("YIKAMA", "WASHING"),
     },
     curingProduct1Title: {
       legacy: "Phrozen Wash & Cure Kit",
-      next: "Mash W1E Ultrasonik Yıkama Cihazı",
+      next: tLocalized("Mash W1E Ultrasonik Yıkama Cihazı", "Mash W1E Ultrasonic Washing Device"),
     },
     curingProduct1DescriptionHtml: {
       legacy:
-        "8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.",
-      next: "Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.",
+        tLocalized("8L yıkama istasyonu ve kuru+kürleme moduyla baskı sonrası süreci <b>temizleme, kurutma ve 405nm UV kürleme</b> olarak tek akışta toplar.", "With an 8L wash station and dry + cure mode, it brings the post-print process together in a single workflow: <b>cleaning, drying, and 405nm UV curing</b>."),
+      next: tLocalized("Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.", "Removes excess resin remaining on the surface after resin printing quickly and precisely with <b>ultrasonic cleaning</b>; provides a clean surface before curing."),
     },
     curingProduct1ImageAlt: {
       legacy: "Phrozen Wash & Cure Kit",
-      next: "Mash W1E Ultrasonik Yıkama Cihazı",
+      next: tLocalized("Mash W1E Ultrasonik Yıkama Cihazı", "Mash W1E Ultrasonic Washing Device"),
     },
     curingProduct1Spec1Label: {
-      legacy: "Yıkama hacmi",
-      next: "İşlem",
+      legacy: tLocalized("Yıkama hacmi", "Washing volume"),
+      next: tLocalized("İşlem", "Process"),
     },
-    curingProduct1Spec1Value: { legacy: "8 L", next: "Ultrasonik temizleme" },
+    curingProduct1Spec1Value: { legacy: "8 L", next: tLocalized("Ultrasonik temizleme", "ultrasonic cleaning") },
     curingProduct1Spec2Label: {
       legacy: tLocalized("Kürleme", "Curing"),
-      next: "Akış",
+      next: tLocalized("Akış", "Workflow"),
     },
-    curingProduct1Spec2Value: { legacy: "405 nm UV", next: "Yıkama → kürleme hazırlığı" },
+    curingProduct1Spec2Value: { legacy: "405 nm UV", next: tLocalized("Yıkama → kürleme hazırlığı", "Washing → curing preparation") },
     curingProduct1CtaHref: {
       legacy: "https://uk.phrozen3d.com/products/wash-cure-kit",
       next: "/mash-w1e-ultrasonik-yikama-cihazi",
     },
-    curingProduct2Tag: { legacy: "YIKAMA · KÜRLEME", next: tLocalized("KÜRLEME", "CURING") },
+    curingProduct2Tag: { legacy: tLocalized("YIKAMA · KÜRLEME", "WASHING · CURING"), next: tLocalized("KÜRLEME", "CURING") },
     curingProduct2Title: {
-      legacy: "Creality UW02",
-      next: "Mash C1E UV Kürleme Cihazı",
+      legacy: tLocalized("Creality UW02", "Creality UW02"),
+      next: tLocalized("Mash C1E UV Kürleme Cihazı", "Mash C1E UV Curing Device"),
     },
     curingProduct2DescriptionHtml: {
       legacy:
-        "Baskı sonrası yıkama ve kürleme adımlarını <b>tek kontrollü akışta</b> toplar. P16L ile tamamlayıcı başlangıç seti.",
-      next: "Kürleme, polimer malzemelerin <b>sertleştirilme sürecidir.</b> 3D baskı tamamlandıktan sonra ürünün boyutsal kararlılığını ve yüzey dayanımını destekler. Mash C1E, 24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle reçine baskılarınızda <b>hızlı ve homojen kürleme</b> sunar. <b>Sararmayı önlemeye</b> yardımcı olan teknolojisi ve dahili fan sistemiyle güvenilir, profesyonel sonuçlar sağlar.",
+        tLocalized("Baskı sonrası yıkama ve kürleme adımlarını <b>tek kontrollü akışta</b> toplar. P16L ile tamamlayıcı başlangıç seti.", "Brings the post-print washing and curing steps together in a <b>single controlled workflow</b>. A complementary starter set with the P16L."),
+      next: tLocalized("Kürleme, polimer malzemelerin <b>sertleştirilme sürecidir.</b> 3D baskı tamamlandıktan sonra ürünün boyutsal kararlılığını ve yüzey dayanımını destekler. Mash C1E, 24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle reçine baskılarınızda <b>hızlı ve homojen kürleme</b> sunar. <b>Sararmayı önlemeye</b> yardımcı olan teknolojisi ve dahili fan sistemiyle güvenilir, profesyonel sonuçlar sağlar.", "Curing is the <b>process of hardening polymer materials.</b> After 3D printing is complete, it supports the dimensional stability and surface durability of the product. With its 24-LED 360° curing system and wide 360–530 nm spectrum support, the Mash C1E offers <b>fast and homogeneous curing</b> for your resin prints. With technology that helps <b>prevent yellowing</b> and a built-in fan system, it delivers reliable, professional results."),
     },
     curingProduct2ImageAlt: {
-      legacy: "Creality UW02",
-      next: "Mash C1E UV Kürleme Cihazı",
+      legacy: tLocalized("Creality UW02", "Creality UW02"),
+      next: tLocalized("Mash C1E UV Kürleme Cihazı", "Mash C1E UV Curing Device"),
     },
-    curingProduct2Spec1Label: { legacy: "Görev", next: "Işık" },
+    curingProduct2Spec1Label: { legacy: tLocalized("Görev", "Task"), next: tLocalized("Işık", "Light") },
     curingProduct2Spec1Value: {
-      legacy: "Yıkama + kürleme",
+      legacy: tLocalized("Yıkama + kürleme", "Washing + curing"),
       next: "24 LED / 360°",
     },
-    curingProduct2Spec2Label: { legacy: "Uyum", next: "Spektrum" },
+    curingProduct2Spec2Label: { legacy: tLocalized("Uyum", "Rapport"), next: tLocalized("Spektrum", "Spectrum") },
     curingProduct2Spec2Value: {
       legacy: "P16L + CRS",
-      next: "360-530 nm",
+      next: tLocalized("360-530 nm", "360-530nm"),
     },
     curingProduct2CtaHref: {
       legacy: "/yikama-kurleme-cihazlari",
@@ -1389,23 +1389,23 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
     staticCuringProps,
     "curingProduct1",
     {
-      tag: en ? "WASHING" : "YIKAMA",
+      tag: en ? "WASHING" : tLocalized("YIKAMA", "WASHING"),
       tagClass: "tmr-lime-tag",
       image: mashW1eImage,
-      imageAlt: "Mash W1E Ultrasonik Yıkama Cihazı",
+      imageAlt: tLocalized("Mash W1E Ultrasonik Yıkama Cihazı", "Mash W1E Ultrasonic Washing Device"),
       imageClass: "tmr-machine-phrozen",
-      title: "Mash W1E Ultrasonik Yıkama Cihazı",
+      title: tLocalized("Mash W1E Ultrasonik Yıkama Cihazı", "Mash W1E Ultrasonic Washing Device"),
       descriptionHtml: en
         ? "Removes excess resin remaining on the surface after printing in a short time with <b>ultrasonic cleaning</b>; provides a clean surface before curing."
-        : "Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.",
+        : tLocalized("Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.", "Removes excess resin remaining on the surface after resin printing quickly and precisely with <b>ultrasonic cleaning</b>; provides a clean surface before curing."),
       specs: en
         ? [
           ["Process", "Ultrasonic cleaning"],
           ["Workflow", "Washing → curing prep"],
         ]
         : [
-          ["İşlem", "Ultrasonik temizleme"],
-          ["Akış", "Yıkama → kürleme hazırlığı"],
+          [tLocalized("İşlem", "Process"), tLocalized("Ultrasonik temizleme", "ultrasonic cleaning")],
+          [tLocalized("Akış", "Workflow"), tLocalized("Yıkama → kürleme hazırlığı", "Washing → curing preparation")],
         ],
       ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
       ctaHref: "/mash-w1e-ultrasonik-yikama-cihazi",
@@ -1413,20 +1413,20 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
   )}${productCard(staticCuringProps, "curingProduct2", {
     tag: en ? "CURING" : tLocalized("KÜRLEME", "CURING"),
     image: mashC1eImage,
-    imageAlt: "Mash C1E UV Kürleme Cihazı",
+    imageAlt: tLocalized("Mash C1E UV Kürleme Cihazı", "Mash C1E UV Curing Device"),
     imageClass: "tmr-machine-uw02",
-    title: "Mash C1E UV Kürleme Cihazı",
+    title: tLocalized("Mash C1E UV Kürleme Cihazı", "Mash C1E UV Curing Device"),
     descriptionHtml: en
       ? "Provides <b>homogenous UV post-curing</b> with its 24-LED 360° curing system and 360-530 nm wide spectrum support; completes mechanical strength, dimensional accuracy and surface quality goals."
-      : "24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle <b>homojen UV post-curing</b> sağlar; mekanik dayanım, boyutsal doğruluk ve yüzey kalitesi hedefini tamamlar.",
+      : tLocalized("24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle <b>homojen UV post-curing</b> sağlar; mekanik dayanım, boyutsal doğruluk ve yüzey kalitesi hedefini tamamlar.", "Delivers <b>homogeneous UV post-curing</b> with a 24-LED 360° curing system and 360-530 nm wide spectrum support; completes the target for mechanical strength, dimensional accuracy, and surface quality."),
     specs: en
       ? [
         ["Light", "24 LED / 360°"],
-        ["Spectrum", "360-530 nm"],
+        ["Spectrum", tLocalized("360-530 nm", "360-530nm")],
       ]
       : [
-        ["Işık", "24 LED / 360°"],
-        ["Spektrum", "360-530 nm"],
+        [tLocalized("Işık", "Light"), "24 LED / 360°"],
+        [tLocalized("Spektrum", "Spectrum"), tLocalized("360-530 nm", "360-530nm")],
       ],
     ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
     ctaHref: "/mash-c1e-uv-kurleme-cihazi",
@@ -1434,9 +1434,9 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
 }
 
 function curingContent(props: ThreeMashSectionRenderProps) {
-  const readMoreTr = "Derine inmek isteyenlere, Mash Academy'den:";
+  const readMoreTr = tLocalized("Derine inmek isteyenlere, Mash Academy'den:", "For those who want to go deeper, from Mash Academy:");
   const readMoreEn = "For those who want to dive deeper, from Mash Academy:";
-  const link1Tr = "Overcure ve Undercure Nedir?";
+  const link1Tr = tLocalized("Overcure ve Undercure Nedir?", "What Are Overcure and Undercure?");
   const link1En = "What is Overcure and Undercure?";
   const link2Tr = "385nm mi 405nm mi?";
   const link2En = "385nm or 405nm?";
@@ -1445,9 +1445,9 @@ function curingContent(props: ThreeMashSectionRenderProps) {
 
 function curingTitleHtml(props: ThreeMashSectionRenderProps) {
   const en = isEnglishLocale();
-  const defaultTitleTr = "Sadece yazıcı değil. Sonucu";
+  const defaultTitleTr = tLocalized("Sadece yazıcı değil. Sonucu", "Not just the printer. The result");
   const defaultTitleEn = "Not just the printer. Curing";
-  const defaultEmphasisTr = "kürleme tamamlar.";
+  const defaultEmphasisTr = tLocalized("kürleme tamamlar.", "completes curing.");
   const defaultEmphasisEn = "completes the result.";
 
   const titleText = field(props, "titleText", defaultTitleTr, defaultTitleEn);
@@ -1456,7 +1456,7 @@ function curingTitleHtml(props: ThreeMashSectionRenderProps) {
   if (en) {
     return `Not just the printer. <span class="tmr-curing-keep"><span class="tmr-title-em">Curing</span></span><br>completes the result.`;
   }
-  return `Sadece yazıcı değil. <span class="tmr-curing-keep">Sonucu <span class="tmr-title-em">kürleme</span></span><br>tamamlar.`;
+  return tLocalized("Sadece yazıcı değil. <span class=\"tmr-curing-keep\">Sonucu <span class=\"tmr-title-em\">kürleme</span></span><br>tamamlar.", "Not just the printer. <span class=\"tmr-curing-keep\">It is <span class=\"tmr-title-em\">curing</span></span><br>that completes the result.");
 }
 
 function ecosystemContent(props: ThreeMashSectionRenderProps) {
@@ -1469,9 +1469,9 @@ function ecosystemContent(props: ThreeMashSectionRenderProps) {
     ecoOvenIcon,
   ];
   const trTitles = [
-    "3D Yazıcılar",
+    tLocalized("3D Yazıcılar", "3D Printers"),
     tLocalized("Dental Reçineler", "Dental Resins"),
-    "Yıkama &amp; Kürleme",
+    tLocalized("Yıkama &amp; Kürleme", "Washing &amp; Curing"),
     tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"),
     tLocalized("Zirkon Bloklar", "Zirconia Blocks"),
     tLocalized("Dental Fırınlar", "Dental Furnaces"),
@@ -1531,47 +1531,47 @@ function trustContent(props: ThreeMashSectionRenderProps) {
   const trDefaults = [
     [
       profileMehmet,
-      "Mehmet İşlek",
-      "Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.",
-      "Mehmet İşlek",
-      "ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik",
+      tLocalized("Mehmet İşlek", "Mehmet İşlek"),
+      tLocalized("Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.", "Professionals trust professionals for absolute success. We collaborate with Mash on equipment selection, supply, training, and use."),
+      tLocalized("Mehmet İşlek", "Mehmet İşlek"),
+      tLocalized("ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik", "ATTELIA · Founding Chief Physician — a clinic designing smiles for 22 years"),
     ],
     [
       profileBerkan,
-      "Berkan Öztaş",
-      "Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.",
-      "Berkan Öztaş",
-      "DENTEK · Genel Müd. Yard.",
+      tLocalized("Berkan Öztaş", "Berkan Öztaş"),
+      tLocalized("Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.", "Innovative and creative. A long-term, successful partnership in hardware, software, and materials."),
+      tLocalized("Berkan Öztaş", "Berkan Öztaş"),
+      tLocalized("DENTEK · Genel Müd. Yard.", "DENTEK · Assistant General Manager"),
     ],
     [
       profileGoksel,
-      "Göksel Pişkin",
-      "Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.",
-      "Göksel Pişkin",
-      "MIKRO LAB · Kurucu Ortak",
+      tLocalized("Göksel Pişkin", "Göksel Pişkin"),
+      tLocalized("Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.", "They've solved problems before we even encountered them. Always the same production quality — perfect results."),
+      tLocalized("Göksel Pişkin", "Göksel Pişkin"),
+      tLocalized("MIKRO LAB · Kurucu Ortak", "MIKRO LAB · Founding Partner"),
     ],
   ];
 
   const enDefaults = [
     [
       profileMehmet,
-      "Mehmet İşlek",
+      tLocalized("Mehmet İşlek", "Mehmet İşlek"),
       "Professionals trust professionals for absolute success. We collaborate with Mash in equipment selection, supply, training, and operation.",
-      "Mehmet İşlek",
+      tLocalized("Mehmet İşlek", "Mehmet İşlek"),
       "ATTELIA · Chief Physician & Founder — Designing smiles for 22 years",
     ],
     [
       profileBerkan,
-      "Berkan Öztaş",
+      tLocalized("Berkan Öztaş", "Berkan Öztaş"),
       "Innovative and creative. A long-term, successful collaboration across hardware, software, and materials.",
-      "Berkan Öztaş",
+      tLocalized("Berkan Öztaş", "Berkan Öztaş"),
       "DENTEK · Deputy General Manager",
     ],
     [
       profileGoksel,
-      "Göksel Pişkin",
+      tLocalized("Göksel Pişkin", "Göksel Pişkin"),
       "They solved problems before we even encountered them. Consistent production quality every single time — excellent results.",
-      "Göksel Pişkin",
+      tLocalized("Göksel Pişkin", "Göksel Pişkin"),
       "MIKRO LAB · Co-Founder",
     ],
   ];
@@ -1591,24 +1591,24 @@ function trustContent(props: ThreeMashSectionRenderProps) {
 function faqContent(props: ThreeMashSectionRenderProps) {
   const trDefaults = [
     [
-      "Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?",
-      "Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.",
+      tLocalized("Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?", "Why is dimensional accuracy so important in dental 3D printing?"),
+      tLocalized("Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.", "Because a restoration fitting the first time depends directly on dimensional accuracy. In national-scale clinical data, the most common causes of crown remakes are <b>proximal misfit, marginal errors, and aesthetic failure</b> — all three are precision problems. The 3mash ecosystem delivers <b>±20 µm</b> dimensional accuracy repeatably, <b>with every print</b> rather than just once — lowering the remake rate and hidden cost."),
     ],
     [
-      "Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?",
-      'Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="/pages/hesaplama">maliyet detay sayfamıza</a> bakabilirsiniz.',
+      tLocalized("Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?", "How much does a crown remake actually cost?"),
+      tLocalized("Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"/pages/hesaplama\">maliyet detay sayfamıza</a> bakabilirsiniz.", "Roughly <b>~$500</b> — and most of that amount is not the lab fee, but <b>chair time</b> (re-prep, impression, and cementation appointment). Clinical overhead is modeled at ~$375 per hour; a single remake consumes most of that. You can check our <a href=\"/pages/hesaplama\">cost detail page</a> to calculate it with your own figures."),
     ],
     [
-      "3D baskıda kürleme (post-curing) neden kritik?",
-      "Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.",
+      tLocalized("3D baskıda kürleme (post-curing) neden kritik?", "Why is curing (post-curing) critical in 3D printing?"),
+      tLocalized("Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.", "Because the print isn't finished when it comes out of the device. Undercuring causes <b>brittleness</b>, while overcuring causes <b>deformation</b> — you can lose the precision you gained on the printer during curing. 3mash's smart curing device manages the parameters automatically, removing this risk from user error."),
     ],
     [
-      "3mash yalnızca cihaz mı satıyor?",
-      "Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.",
+      tLocalized("3mash yalnızca cihaz mı satıyor?", "Does 3mash only sell devices?"),
+      tLocalized("Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.", "No. 3mash offers an integrated <b>production ecosystem</b>: it calibrates the printer, resin, and curing together, and stays by your side throughout the entire process with consulting, Mash Academy training, and after-sales technical support made up of <b>dental technicians + engineers</b>."),
     ],
     [
-      "Elimdeki başka marka yazıcıyla çalışır mısınız?",
-      "Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.",
+      tLocalized("Elimdeki başka marka yazıcıyla çalışır mısınız?", "Do you work with the other-brand printer I already have?"),
+      tLocalized("Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.", "Yes. Since we have strong technical expertise on both the resin and printer side, our solutions are <b>brand-independent</b>; we can optimize your existing device's parameters to get it to the same result."),
     ],
   ];
 
@@ -1735,12 +1735,12 @@ export function renderFinalHtml(props: ThreeMashSectionRenderProps) {
     value(props.secondaryButtonHref, academyPageHref),
   );
 
-  const titleText = field(props, "titleText", "Bu görünmez kaybı", "Let's reduce this invisible loss");
-  const titleEmphasis = field(props, "titleEmphasis", "birlikte azaltalım.", "together.");
+  const titleText = field(props, "titleText", tLocalized("Bu görünmez kaybı", "This invisible loss"), "Let's reduce this invisible loss");
+  const titleEmphasis = field(props, "titleEmphasis", tLocalized("birlikte azaltalım.", "let's reduce it together."), "together.");
   const descriptionHtml = field(
     props,
     "descriptionHtml",
-    "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b class='tmr-final-white'>elinizdeki cihazlarla bile.</b>",
+    tLocalized("Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b class='tmr-final-white'>elinizdeki cihazlarla bile.</b>", "Let's review your current workflow together, identify where the loss is occurring, and build the right ecosystem for you — <b class='tmr-final-white'>even with the devices you already have.</b>"),
     "Let's review your current workflow together; we'll identify where the loss occurs and set up the right ecosystem for you — <b class='tmr-final-white'>even with your existing equipment.</b>"
   );
   const primaryText = field(props, "primaryButtonText", tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), "Talk to an expert — free");
@@ -1788,28 +1788,28 @@ function footerSocialLinks(props: ThreeMashSectionRenderProps) {
       "facebookHref",
       "facebookLabel",
       "https://www.facebook.com/3mashsocial/",
-      "Facebook",
+      tLocalized("Facebook", "Facebook"),
     ],
     [
       "instagram",
       "instagramHref",
       "instagramLabel",
       "https://instagram.com/3mashsocial",
-      "Instagram",
+      tLocalized("Instagram", "Instagram"),
     ],
     [
       "youtube",
       "youtubeHref",
       "youtubeLabel",
       "https://www.youtube.com/@3mashsocial",
-      "YouTube",
+      tLocalized("YouTube", "YouTube"),
     ],
     [
       "linkedin",
       "linkedinHref",
       "linkedinLabel",
       "https://www.linkedin.com/company/3mash",
-      "LinkedIn",
+      tLocalized("LinkedIn", "LinkedIn"),
     ],
   ]
     .map(([icon, hrefKey, labelKey, fallbackHref, fallbackLabel]) => {
@@ -1825,11 +1825,11 @@ function footerSocialLinks(props: ThreeMashSectionRenderProps) {
 }
 
 function footerPaymentBadges() {
-  return `<div class="tmr-footer-payments" aria-label="Ödeme yöntemleri"><span class="tmr-payment-badge tmr-payment-visa" aria-label="Visa" role="img">VISA</span><span class="tmr-payment-badge tmr-payment-maestro" aria-label="Maestro" role="img"><span></span><span></span></span><span class="tmr-payment-badge tmr-payment-mastercard" aria-label="Mastercard" role="img"><span></span><span></span></span></div>`;
+  return tLocalized("<div class=\"tmr-footer-payments\" aria-label=\"Ödeme yöntemleri\"><span class=\"tmr-payment-badge tmr-payment-visa\" aria-label=\"Visa\" role=\"img\">VISA</span><span class=\"tmr-payment-badge tmr-payment-maestro\" aria-label=\"Maestro\" role=\"img\"><span></span><span></span></span><span class=\"tmr-payment-badge tmr-payment-mastercard\" aria-label=\"Mastercard\" role=\"img\"><span></span><span></span></span></div>", "<div class=\"tmr-footer-payments\" aria-label=\"Payment methods\"><span class=\"tmr-payment-badge tmr-payment-visa\" aria-label=\"Visa\" role=\"img\">VISA</span><span class=\"tmr-payment-badge tmr-payment-maestro\" aria-label=\"Maestro\" role=\"img\"><span></span><span></span></span><span class=\"tmr-payment-badge tmr-payment-mastercard\" aria-label=\"Mastercard\" role=\"img\"><span></span><span></span></span></div>");
 }
 
 function footerCopyrightText(props: ThreeMashSectionRenderProps) {
-  const fallback = "© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.";
+  const fallback = tLocalized("© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.", "© 2026 3MASH Teknoloji A.Ş. All rights reserved.");
   const current = value(props.copyrightText, fallback);
   if (/all\s+rights\s+(reserved|preserved)/i.test(current)) return fallback;
   if (
@@ -1838,7 +1838,7 @@ function footerCopyrightText(props: ThreeMashSectionRenderProps) {
   ) {
     return current.replace(
       /3MASH\s+Teknoloji\s+A\.Ş\./i,
-      "3MASH Teknoloji A.Ş. Tüm hakları saklıdır.",
+      tLocalized("3MASH Teknoloji A.Ş. Tüm hakları saklıdır.", "3MASH Teknoloji A.Ş. All rights reserved."),
     );
   }
   return current;
@@ -1852,7 +1852,7 @@ function normalizeFooterLegalText(markup: string) {
     )
     .replace(
       /(©\s*2026\s*3MASH\s+Teknoloji\s+A\.Ş\.)(?!\s*Tüm\s+hakları\s+saklıdır)/gi,
-      "$1 Tüm hakları saklıdır.",
+      tLocalized("$1 Tüm hakları saklıdır.", "$1 All rights reserved."),
     );
 }
 
@@ -2056,8 +2056,8 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
   const companyLinks: Array<[string, string]> = en
     ? [
       ["About Us", "/pages/about-us"],
-      ["Mash Academy", academyPageHref],
-      ["Blog", "/blog"],
+      [tLocalized("Mash Academy", "Mash Academy"), academyPageHref],
+      [tLocalized("Blog", "Blog"), "/blog"],
       ["FAQ", "/pages/sss"],
     ]
     : defaultFooterCompanyLinks;

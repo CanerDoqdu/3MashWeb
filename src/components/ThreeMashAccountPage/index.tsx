@@ -192,18 +192,18 @@ export function ThreeMashAccountPage(props: Props) {
         <form className="tma-auth-form" onSubmit={submit}>
           <div className="tma-auth-copy">
             <span>{text(props.eyebrowText, "HESAP")}</span>
-            <h1>{text(props.titleText, "3mash hesabınıza giriş yapın.")}</h1>
+            <h1>{text(props.titleText, tLocalized("3mash hesabınıza giriş yapın.", "Log in to your 3mash account."))}</h1>
             <p>
               {text(
                 props.subtitleText,
-                "Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.",
+                tLocalized("Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.", "Manage your orders, favorites, and account information from one place."),
               )}
             </p>
           </div>
 
           <div className="tma-auth-tabs">
             <span className="is-active">
-              {text(props.loginTabText, "Üye Girişi")}
+              {text(props.loginTabText, tLocalized("Üye Girişi", "Member Login"))}
             </span>
             <a href={href(props.registerTabHref, "/account/register")}>
               {text(props.registerTabText, tLocalized("Üye Ol", "Register"))}
@@ -211,7 +211,7 @@ export function ThreeMashAccountPage(props: Props) {
           </div>
 
           <label className="tma-auth-field">
-            <span>* {text(props.emailLabel, "Email")}</span>
+            <span>* {text(props.emailLabel, tLocalized("Email", "E-mail"))}</span>
             <input
               name="email"
               type="email"
@@ -244,20 +244,20 @@ export function ThreeMashAccountPage(props: Props) {
             disabled={status === "loading"}
           >
             {status === "loading"
-              ? text(props.loadingText, "Giriş yapılıyor...")
-              : text(props.submitButtonText, "Üye Girişi")}
+              ? text(props.loadingText, tLocalized("Giriş yapılıyor...", "Logging in..."))
+              : text(props.submitButtonText, tLocalized("Üye Girişi", "Member Login"))}
           </button>
 
           <a
             className="tma-auth-underlink"
             href={href(props.forgotPasswordHref, "/account/forgot-password")}
           >
-            {text(props.forgotPasswordText, "Parolamı Unuttum")}
+            {text(props.forgotPasswordText, tLocalized("Parolamı Unuttum", "Forgot My Password"))}
           </a>
 
           <div className="tma-auth-register-callout">
             <span>
-              {text(props.registerPromptText, "Henüz hesabınız yok mu?")}
+              {text(props.registerPromptText, tLocalized("Henüz hesabınız yok mu?", "Don't have an account yet?"))}
             </span>
             <a href={href(props.registerButtonHref, "/account/register")}>
               {text(props.registerButtonText, tLocalized("Hesap oluştur", "Create Account"))}
@@ -269,14 +269,14 @@ export function ThreeMashAccountPage(props: Props) {
               {status === "success"
                 ? text(
                     props.successMessage,
-                    "Giriş başarılı. Hesabınıza yönlendiriliyorsunuz.",
+                    tLocalized("Giriş başarılı. Hesabınıza yönlendiriliyorsunuz.", "Login successful. You are being redirected to your account."),
                   )
                 : status === "error"
                   ? text(
                       props.errorMessage,
-                      "Email veya şifre hatalı. Lütfen bilgilerinizi kontrol edin.",
+                      tLocalized("Email veya şifre hatalı. Lütfen bilgilerinizi kontrol edin.", "Email or password is incorrect. Please check your details."),
                     )
-                  : text(props.loadingText, "Giriş yapılıyor...")}
+                  : text(props.loadingText, tLocalized("Giriş yapılıyor...", "Logging in..."))}
             </p>
           )}
         </form>

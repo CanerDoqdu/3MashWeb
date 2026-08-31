@@ -8,8 +8,8 @@ export function ThreeMashCrealityListingPage(props: Props) {
     <ThreeMashProductsPage
       {...listingProps(props, {
         eyebrowText: tLocalized("MARKA KOLEKSİYONU", "BRAND COLLECTION"),
-        titleText: "Creality",
-        descriptionText: "Creality ürünleri ve aksesuarları için canlı envanter.",
+        titleText: tLocalized("Creality", "creality"),
+        descriptionText: tLocalized("Creality ürünleri ve aksesuarları için canlı envanter.", "Live inventory for Creality products and accessories."),
       })}
     />
   );

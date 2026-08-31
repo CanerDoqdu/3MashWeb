@@ -1,5 +1,6 @@
 import { aboutPage } from "../ThreeMashPageData/sourceData";
 import { Props } from "./types";
+import { tLocalized } from "../../utils/i18n";
 
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
@@ -109,7 +110,7 @@ export function ThreeMashAboutUsPage(props: Props) {
     <section className="three-mash-about-page" style={style}>
       <div className="tmabout-shell">
         <section className="tmabout-hero">
-          <span className="tmabout-kicker">3MASH</span>
+          <span className="tmabout-kicker">{tLocalized("3MASH", "3MASH")}</span>
           <div className="tmabout-hero-grid">
             <div>
               <h1>{aboutPage.title}</h1>
@@ -150,7 +151,7 @@ export function ThreeMashAboutUsPage(props: Props) {
           <figure className="tmabout-mission-media">
             <img
               src={blocks[1]?.imageUrl}
-              alt={blocks[1]?.imageAlt || "Misyon ve vizyon"}
+              alt={blocks[1]?.imageAlt || tLocalized("Misyon ve vizyon", "Mission and vision")}
               loading="lazy"
               decoding="async"
             />

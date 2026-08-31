@@ -11,19 +11,19 @@ type ContactForm = {
 };
 
 const phoneCountries = [
-  { iso: "TR", name: "Türkiye", dialCode: "+90" },
-  { iso: "US", name: "United States", dialCode: "+1" },
-  { iso: "GB", name: "United Kingdom", dialCode: "+44" },
-  { iso: "DE", name: "Germany", dialCode: "+49" },
-  { iso: "FR", name: "France", dialCode: "+33" },
-  { iso: "NL", name: "Netherlands", dialCode: "+31" },
-  { iso: "IT", name: "Italy", dialCode: "+39" },
-  { iso: "ES", name: "Spain", dialCode: "+34" },
-  { iso: "AE", name: "United Arab Emirates", dialCode: "+971" },
-  { iso: "SA", name: "Saudi Arabia", dialCode: "+966" },
-  { iso: "IQ", name: "Iraq", dialCode: "+964" },
-  { iso: "AZ", name: "Azerbaijan", dialCode: "+994" },
-  { iso: "SL", name: "Sierra Leone", dialCode: "+232" },
+  { iso: "TR", name: tLocalized("Türkiye", "Turkey"), dialCode: "+90" },
+  { iso: "US", name: tLocalized("United States", "United States"), dialCode: "+1" },
+  { iso: "GB", name: tLocalized("United Kingdom", "United Kingdom"), dialCode: "+44" },
+  { iso: "DE", name: tLocalized("Germany", "Germany"), dialCode: "+49" },
+  { iso: "FR", name: tLocalized("France", "france"), dialCode: "+33" },
+  { iso: "NL", name: tLocalized("Netherlands", "Netherlands"), dialCode: "+31" },
+  { iso: "IT", name: tLocalized("Italy", "Italy"), dialCode: "+39" },
+  { iso: "ES", name: tLocalized("Spain", "spain"), dialCode: "+34" },
+  { iso: "AE", name: tLocalized("United Arab Emirates", "United Arab Emirates"), dialCode: "+971" },
+  { iso: "SA", name: tLocalized("Saudi Arabia", "Saudi Arabia"), dialCode: "+966" },
+  { iso: "IQ", name: tLocalized("Iraq", "Iraq"), dialCode: "+964" },
+  { iso: "AZ", name: tLocalized("Azerbaijan", "Azerbaijan"), dialCode: "+994" },
+  { iso: "SL", name: tLocalized("Sierra Leone", "Sierra Leone"), dialCode: "+232" },
 ];
 
 function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
@@ -153,7 +153,7 @@ export function ThreeMashContactPage(props: Props) {
               <p>
                 {text(
                   props.descriptionText,
-                  "Sizden herhangi bir soru ya da geri dönüş gelince çok mutlu oluyoruz. Aşağıdaki formu kullanarak bize her türlü soruyu sorabilirsiniz. Size en geç 24 saat içinde yanıt vereceğiz. Sitemizi ziyaret ettiğiniz için teşekkür ederiz.",
+                  tLocalized("Sizden herhangi bir soru ya da geri dönüş gelince çok mutlu oluyoruz. Aşağıdaki formu kullanarak bize her türlü soruyu sorabilirsiniz. Size en geç 24 saat içinde yanıt vereceğiz. Sitemizi ziyaret ettiğiniz için teşekkür ederiz.", "We're always happy to hear any question or feedback from you. You can ask us anything using the form below. We will respond to you within 24 hours at the latest. Thank you for visiting our site."),
                   "We are very happy to receive any questions or feedback from you. You can ask us anything using the form below. We will respond to you within 24 hours at the latest. Thank you for visiting our website."
                 )}
               </p>
@@ -193,7 +193,7 @@ export function ThreeMashContactPage(props: Props) {
               </div>
               <div>
                 <b>{tLocalized("Lokasyon", "Location")}</b>
-                <span>Antalya Teknokent</span>
+                <span>{tLocalized("Antalya Teknokent", "Antalya Technocity")}</span>
               </div>
             </div>
           </aside>
@@ -236,7 +236,7 @@ export function ThreeMashContactPage(props: Props) {
 
               <label className="tm-contact-field">
                 <span className="is-required">
-                  * {text(props.emailLabel, "Email", "Email")}
+                  * {text(props.emailLabel, tLocalized("Email", "E-mail"), tLocalized("Email", "E-mail"))}
                 </span>
                 <input
                   type="email"
@@ -334,7 +334,7 @@ export function ThreeMashContactPage(props: Props) {
                   "Personal data protection law"
                 )}{" "}
                 <a
-                  href={href(props.kvkkHref, "/pages/gizlilik-politikasi-ve-kvkk")}
+                  href={href(props.kvkkHref, tLocalized("/pages/gizlilik-politikasi-ve-kvkk", "/pages/gizlilik-politikasi-ve-kvkk"))}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -348,7 +348,7 @@ export function ThreeMashContactPage(props: Props) {
               type="submit"
               disabled={!kvkkAccepted}
             >
-              <span>{text(props.buttonText, "Gönder", "Send")}</span>
+              <span>{text(props.buttonText, tLocalized("Gönder", "Send"), "Send")}</span>
             </button>
 
             {submitted ? (

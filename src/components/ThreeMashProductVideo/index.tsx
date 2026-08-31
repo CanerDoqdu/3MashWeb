@@ -6,7 +6,7 @@ import {
   ProductDetailVideoSection,
   type ProductDetailTemplateData,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
-import { isEnglishLocale, isTurkishText } from "../../utils/i18n";
+import { isEnglishLocale, isTurkishText, tLocalized } from "../../utils/i18n";
 
 function trimmedText(value: unknown): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -28,7 +28,7 @@ function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Pr
 
   // 01. Bölüm Başlığı
   const index = trimmedText(p.sectionIndex) || currentVideo?.index || "04";
-  const label = trimmedText(p.sectionLabel) || currentVideo?.label || "VİDEO";
+  const label = trimmedText(p.sectionLabel) || currentVideo?.label || tLocalized("VİDEO", "VIDEO");
   const titleHtml = trimmedText(p.titleHtml) || currentVideo?.titleHtml || "";
   const sideHtml = trimmedText(p.sideHtml) || currentVideo?.sideHtml || "";
 

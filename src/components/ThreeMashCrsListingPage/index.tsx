@@ -9,7 +9,7 @@ export function ThreeMashCrsListingPage(props: Props) {
       {...listingProps(props, {
         eyebrowText: tLocalized("MARKA KOLEKSİYONU", "BRAND COLLECTION"),
         titleText: "CRS",
-        descriptionText: "CRS reçine ve sarf ürünleri için canlı ürün envanteri.",
+        descriptionText: tLocalized("CRS reçine ve sarf ürünleri için canlı ürün envanteri.", "Live product inventory for CRS resin and consumable products."),
       })}
     />
   );

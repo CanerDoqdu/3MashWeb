@@ -104,14 +104,16 @@ function htmlParts(input: string | undefined, props: Props, fallback = "") {
     .filter(Boolean);
 }
 
-const sourceDescription =
-  "Çalıştığımız sektörlerde özellikle dental alanda öncü isimlerle genç ve değişime açık profesyonelleri buluşturarak bilgi paylaşımını teşvik etmeyi amaçlamaktadır. Amacımız, sektördeki son gelişmeleri yakından takip ederek bu bilgileri paydaşlarımıza aktarmak ve birlikte öğrenerek büyüdüğümüz bir ekosistem oluşturmaktır.<br><br>Mash Academy, sektörün önde gelen isimleriyle işbirliği yaparak eğitimler, seminerler ve etkinlikler düzenlemekte ve katılımcılarını sektördeki en güncel bilgilerle buluşturmaktadır. Ayrıca, genç yeteneklere yönelik mentorluk programları ve uzmanlık eğitimleri ile sektöre yeni katılanları desteklemekteyiz.<br><br>Biz, bilgiyi paylaşmanın ve birlikte öğrenmenin gücüne inanıyoruz. Mash Academy olarak, sektördeki değişimi takip etmek ve bu değişime ayak uydurmak isteyen herkesi bir araya getirerek sektörün gelişimine katkıda bulunmaya davet ediyoruz.<br><br>Siz de bizimle birlikte, bilgiyi paylaşarak ve birlikte öğrenerek sektördeki gelişmelere yön vermek isterseniz, etkinliklerimize katılarak bu heyecanlı yolculuğa ortak olabilirsiniz. Haydi, geleceği birlikte şekillendirelim!";
+const sourceDescription = tLocalized(
+  "Çalıştığımız sektörlerde özellikle dental alanda öncü isimlerle genç ve değişime açık profesyonelleri buluşturarak bilgi paylaşımını teşvik etmeyi amaçlamaktadır. Amacımız, sektördeki son gelişmeleri yakından takip ederek bu bilgileri paydaşlarımıza aktarmak ve birlikte öğrenerek büyüdüğümüz bir ekosistem oluşturmaktır.<br><br>Mash Academy, sektörün önde gelen isimleriyle işbirliği yaparak eğitimler, seminerler ve etkinlikler düzenlemekte ve katılımcılarını sektördeki en güncel bilgilerle buluşturmaktadır. Ayrıca, genç yeteneklere yönelik mentorluk programları ve uzmanlık eğitimleri ile sektöre yeni katılanları desteklemekteyiz.<br><br>Biz, bilgiyi paylaşmanın ve birlikte öğrenmenin gücüne inanıyoruz. Mash Academy olarak, sektördeki değişimi takip etmek ve bu değişime ayak uydurmak isteyen herkesi bir araya getirerek sektörün gelişimine katkıda bulunmaya davet ediyoruz.<br><br>Siz de bizimle birlikte, bilgiyi paylaşarak ve birlikte öğrenerek sektördeki gelişmelere yön vermek isterseniz, etkinliklerimize katılarak bu heyecanlı yolculuğa ortak olabilirsiniz. Haydi, geleceği birlikte şekillendirelim!",
+  "It aims to encourage knowledge sharing by bringing together leading names and young, forward-thinking professionals in the industries we operate in, especially in dentistry. Our goal is to closely follow the latest developments in the sector, pass this knowledge on to our stakeholders, and create an ecosystem where we grow and learn together.<br><br>Mash Academy collaborates with prominent industry figures to organize trainings, seminars, and events, connecting participants with the latest knowledge in the field. Additionally, we support newcomers to the sector through mentorship programs and specialized training for young talents.<br><br>We believe in the power of sharing knowledge and learning together. As Mash Academy, we invite everyone who wants to follow and adapt to industry changes to come together and contribute to the sector's development.<br><br>If you would like to join us in shaping industry developments by sharing knowledge and learning together, you can be part of this exciting journey by attending our events. Let's shape the future together!"
+);
 
 const sourcePastText =
-  "Geçmiş etkinliklerimiz arasında sektörde deneyimli isimlerin katıldığı paneller, uzmanlık seminerleri ve interaktif atölye çalışmaları bulunmaktadır. Ayrıca, yeni teknolojiler ve tedavi yöntemlerinin ele alındığı konferanslar düzenlemekteyiz. Bu etkinlikler sayesinde katılımcılarımız, sektördeki gelişmeleri yakından takip etmenin yanı sıra deneyimlerini paylaşarak birbirlerinden öğrenme fırsatı bulmaktadır.";
+  tLocalized("Geçmiş etkinliklerimiz arasında sektörde deneyimli isimlerin katıldığı paneller, uzmanlık seminerleri ve interaktif atölye çalışmaları bulunmaktadır. Ayrıca, yeni teknolojiler ve tedavi yöntemlerinin ele alındığı konferanslar düzenlemekteyiz. Bu etkinlikler sayesinde katılımcılarımız, sektördeki gelişmeleri yakından takip etmenin yanı sıra deneyimlerini paylaşarak birbirlerinden öğrenme fırsatı bulmaktadır.", "Our past events include panels featuring experienced names in the industry, expert seminars, and interactive workshops. We also organize conferences covering new technologies and treatment methods. Through these events, our participants get the chance to closely follow developments in the industry as well as learn from each other by sharing their experiences.");
 
 const sourceIntroTitle = tLocalized("Bilgiyle büyüyen ekosistem.", "An ecosystem powered by knowledge.");
-const sourceQuoteAuthor = "M. Kemal Atatürk";
+const sourceQuoteAuthor = tLocalized("M. Kemal Atatürk", "M. Kemal Atatürk");
 const sourcePastTitle = tLocalized("Geçmiş Etkinlikler", "Past Events");
 const sourceReadMore = tLocalized("Devamını Oku", "Read More");
 
@@ -159,16 +161,16 @@ export function ThreeMashAcademyPage(props: Props) {
   const events = [
     {
       image: academyEvent1Image,
-      fallbackTitle: "Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi Raporu",
-      fallbackText: "''Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi\" webinarında, dijital diş hekimliği alanında yenilikçi yaklaşımlar ve IBAR destekli hibrit protez tasarımı ele alınmıştır.",
-      fallbackHref: "/blog/blender-for-dental-ile-ibar-uzeri-composite-kron-tasarim-egitimi-raporu",
+      fallbackTitle: tLocalized("Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi Raporu", "Composite Crown Design Over IBAR with Blender for Dental Training Report"),
+      fallbackText: tLocalized("''Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi\" webinarında, dijital diş hekimliği alanında yenilikçi yaklaşımlar ve IBAR destekli hibrit protez tasarımı ele alınmıştır.", "In the webinar \"Composite Crown Design Over IBAR with Blender for Dental,\" innovative approaches in digital dentistry and IBAR-supported hybrid prosthesis design were discussed."),
+      fallbackHref: tLocalized("/blog/blender-for-dental-ile-ibar-uzeri-composite-kron-tasarim-egitimi-raporu", "/blog/blender-for-dental-ile-ibar-uzeri-composite-kron-tasarim-egitimi-raporu"),
       fallbackDate: "Apr 2, 2025",
     },
     {
       image: academyEvent2Image,
-      fallbackTitle: "IBAR Tasarımı Eğitimi",
-      fallbackText: "Eğitim Mash Academy tarafından, 23 Mart 2024 tarihinde Antalya'da organize edilmiştir. Eğitimcilerimizden Vahit Topçu \"Hibrit Protez Tasarımı\" ve Alihan Şahbaz \"IBAR Tasarımı\" eğitimi ile katılımcılara tecrübelerini aktarmıştır. Eğitimin sonunda 3D printer kullanımındaki sık karşılaşılan hatalar ve püf noktalara değinilmiştir.",
-      fallbackHref: "/blog/ibar-tasarimi-egitimi",
+      fallbackTitle: tLocalized("IBAR Tasarımı Eğitimi", "IBAR Design Training"),
+      fallbackText: tLocalized("Eğitim Mash Academy tarafından, 23 Mart 2024 tarihinde Antalya'da organize edilmiştir. Eğitimcilerimizden Vahit Topçu \"Hibrit Protez Tasarımı\" ve Alihan Şahbaz \"IBAR Tasarımı\" eğitimi ile katılımcılara tecrübelerini aktarmıştır. Eğitimin sonunda 3D printer kullanımındaki sık karşılaşılan hatalar ve püf noktalara değinilmiştir.", "The training was organized by Mash Academy in Antalya on March 23, 2024. Our instructors Vahit Topçu, with the \"Hybrid Denture Design\" training, and Alihan Şahbaz, with the \"IBAR Design\" training, shared their experience with participants. At the end of the training, common mistakes and tips in 3D printer use were covered."),
+      fallbackHref: tLocalized("/blog/ibar-tasarimi-egitimi", "/blog/ibar-tasarimi-egitimi"),
       fallbackDate: "Apr 5, 2024",
     },
   ];

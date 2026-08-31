@@ -93,7 +93,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
         {/* ← Back link — quiet, editorial */}
         <a
           className="tm-bda-back"
-          href={props.backLinkHref || "/blog"}
+          href={props.backLinkHref || tLocalized("/blog", "/blog")}
           aria-label={props.backLinkText || tLocalized("Blog'a dön", "Back to blog")}
         >
           <span aria-hidden="true">←</span>
@@ -108,7 +108,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
           {/* Publication eyebrow */}
           {showPublicationLabel && (
             <span className="tm-bda-eyebrow" aria-label={tLocalized("Yayın etiketi", "Publication tag")}>
-              MASH ACADEMY
+              {tLocalized("MASH ACADEMY", "MASH ACADEMY")}
             </span>
           )}
 

@@ -1,4 +1,5 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
+import { tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
 import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import {
@@ -77,7 +78,7 @@ function overrideUseCasesData(baseData: ProductDetailTemplateData | null, props:
   ].filter(Boolean);
 
   if (cardEyebrow || cardTitle || overrideBullets.length || cardNote) {
-    const existing = cards[0] || { eyebrow: "KULLANIM ALANLARI", title: "", items: [] };
+    const existing = cards[0] || { eyebrow: tLocalized("KULLANIM ALANLARI", "APPLICATION AREAS"), title: "", items: [] };
     cards[0] = {
       eyebrow: cardEyebrow || existing.eyebrow,
       title: cardTitle || existing.title,
@@ -87,7 +88,7 @@ function overrideUseCasesData(baseData: ProductDetailTemplateData | null, props:
   }
 
   // 04. Cihaz Uyumluluğu
-  const currentDevices = currentUseCases.devices || { eyebrow: "CİHAZ UYUMLULUĞU", title: "", textHtml: "", chips: [] };
+  const currentDevices = currentUseCases.devices || { eyebrow: tLocalized("CİHAZ UYUMLULUĞU", "DEVICE COMPATIBILITY"), title: "", textHtml: "", chips: [] };
   const devicesEyebrow = trimmedText(p.devicesEyebrow);
   const devicesTitle = trimmedText(p.devicesTitle);
   const devicesTextHtml = trimmedText(p.devicesTextHtml);
@@ -125,21 +126,21 @@ function overrideUseCasesData(baseData: ProductDetailTemplateData | null, props:
     const buttons = [...(ecosystem?.buttons || [])];
     if (ecoButton1Text || ecoButton1Href) {
       buttons[0] = {
-        text: ecoButton1Text || buttons[0]?.text || "İletişime Geç",
-        href: ecoButton1Href || buttons[0]?.href || "#iletisim",
+        text: ecoButton1Text || buttons[0]?.text || tLocalized("İletişime Geç", "Get in Touch"),
+        href: ecoButton1Href || buttons[0]?.href || tLocalized("#iletisim", "#iletisim"),
       };
     }
     if (ecoButton2Text || ecoButton2Href) {
       buttons[1] = {
-        text: ecoButton2Text || buttons[1]?.text || "Dokümanı İncele",
-        href: ecoButton2Href || buttons[1]?.href || "#dokuman",
+        text: ecoButton2Text || buttons[1]?.text || tLocalized("Dokümanı İncele", "View Document"),
+        href: ecoButton2Href || buttons[1]?.href || tLocalized("#dokuman", "#dokuman"),
         variant: "line",
       };
     }
 
     ecosystem = {
       index: ecoIndex || ecosystem?.index || "04",
-      label: ecoLabel || ecosystem?.label || "TARAMA EKOSİSTEMİ",
+      label: ecoLabel || ecosystem?.label || tLocalized("TARAMA EKOSİSTEMİ", "SCANNING ECOSYSTEM"),
       titleHtml: ecoTitleHtml || ecosystem?.titleHtml || "",
       textHtml: ecoTextHtml || ecosystem?.textHtml || "",
       chips: parsedEcoChips,

@@ -8,7 +8,7 @@ export function ThreeMash3shapeListingPage(props: Props) {
     <ThreeMashProductsPage
       {...listingProps(props, {
         eyebrowText: tLocalized("MARKA KOLEKSİYONU", "BRAND COLLECTION"),
-        titleText: "3Shape",
+        titleText: tLocalized("3Shape", "3Shape"),
         descriptionText: tLocalized("3Shape ekosistemi için canlı ürün envanteri.", "Live product inventory for the 3Shape ecosystem."),
       })}
     />

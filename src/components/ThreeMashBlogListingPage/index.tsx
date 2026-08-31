@@ -102,7 +102,7 @@ export function ThreeMashBlogListingPage(props: Props) {
         <div className="tm-blog-head">
           <div>
             <p className="tm-blog-eyebrow">
-              {props.eyebrowText || "MASH ACADEMY"}
+              {props.eyebrowText || tLocalized("MASH ACADEMY", "MASH ACADEMY")}
             </p>
             <h1>{props.titleText || tLocalized("Dental üretim notları.", "Dental manufacturing notes.")}</h1>
             <span>

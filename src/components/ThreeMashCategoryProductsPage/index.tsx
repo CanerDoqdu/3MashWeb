@@ -5,6 +5,7 @@ import { ThreeMashProductsPage } from "../ThreeMashProductsPage";
 import { listingProps } from "../ThreeMashProductListingPresets";
 import { getProductHref } from "@ikas/bp-storefront";
 import type { Props } from "./types";
+import { tLocalized } from "../../utils/i18n";
 
 function stringValue(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -51,7 +52,7 @@ const RESIN_PRODUCT_KEYS = new Set([
   "crs-splint-soft-resin-dental-splint-gece-plak-recinesi",
   "crs-aligner-memory-shape-ozellikli-aligner-recinesi",
   "crs-ibt-resin-ortodontik-ibt-recinesi",
-  "guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber",
+  tLocalized("guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", "guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber"),
   "crs-cast-cekmeyen-dokum-recinesi",
   "crs-flexit-recin-protez-recinesi",
   "crs-tray-resin-olcu-kasigi-3d-yazici-recinesi",
@@ -108,15 +109,15 @@ const SCANNER_PRODUCT_KEYS = new Set([
   "3shape-e4",
   "e2-yuksek-uretkenlik",
   "implant-bar-dogrulugu",
-  "hiz-ve-hassasiyet",
+  tLocalized("hiz-ve-hassasiyet", "hiz-ve-hassasiyet"),
 ]);
 
 const SPARE_PRODUCT_KEYS = new Set([
   "mash-p16l-ana-kart",
   "mash-p16l-16k-monokrom-lcd-ekran-yedek-parca",
-  "mash-p16l-kucuk-hizli-baski-tablasi",
-  "mash-p16l-kucuk-baski-tablasi",
-  "mash-p16l-buyuk-baski-tablasi-211x118mm",
+  tLocalized("mash-p16l-kucuk-hizli-baski-tablasi", "mash-p16l-kucuk-hizli-baski-tablasi"),
+  tLocalized("mash-p16l-kucuk-baski-tablasi", "mash-p16l-kucuk-baski-tablasi"),
+  tLocalized("mash-p16l-buyuk-baski-tablasi-211x118mm", "mash-p16l-buyuk-baski-tablasi-211x118mm"),
   "mash-p16l-recine-tanki-800ml",
   "seffaf-fep-film-3d-yazici",
   "seffaf-acf-film",
@@ -220,12 +221,12 @@ function productListCategoryData(productList: Props["productList"]) {
   }).toLocaleLowerCase("tr-TR");
 
   if (
-    categorySignals.includes("yikama-kurleme") ||
-    categorySignals.includes("yıkama-kürleme") ||
-    categorySignals.includes("yikama cihazlari") ||
-    categorySignals.includes("yıkama cihazları") ||
-    categorySignals.includes("dental yikama") ||
-    categorySignals.includes("dental yıkama") ||
+    categorySignals.includes(tLocalized("yikama-kurleme", "yikama-kurleme")) ||
+    categorySignals.includes(tLocalized("yıkama-kürleme", "yıkama-kürleme")) ||
+    categorySignals.includes(tLocalized("yikama cihazlari", "yikama cihazlari")) ||
+    categorySignals.includes(tLocalized("yıkama cihazları", "washing devices")) ||
+    categorySignals.includes(tLocalized("dental yikama", "dental washing")) ||
+    categorySignals.includes(tLocalized("dental yıkama", "dental washing")) ||
     categorySignals.includes("wash-cure") ||
     categorySignals.includes("washcure")
   ) {
@@ -353,9 +354,9 @@ export function ThreeMashCategoryProductsPage(props: Props) {
   return (
     <ThreeMashProductsPage
       {...listingProps(props, {
-        eyebrowText: "ÜRÜN KATEGORİSİ",
+        eyebrowText: tLocalized("ÜRÜN KATEGORİSİ", "PRODUCT CATEGORY"),
         titleText: "",
-        descriptionText: "Bu kategoriye ait güncel ürünleri tek yerden inceleyin.",
+        descriptionText: tLocalized("Bu kategoriye ait güncel ürünleri tek yerden inceleyin.", "Browse the current products in this category in one place."),
         showSort: false,
       })}
     />

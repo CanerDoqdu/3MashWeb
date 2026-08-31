@@ -9,7 +9,7 @@ export function ThreeMashArgenListingPage(props: Props) {
       {...listingProps(props, {
         eyebrowText: tLocalized("MARKA KOLEKSİYONU", "BRAND COLLECTION"),
         titleText: "Argen",
-        descriptionText: "Argen materyalleri ve üretim çözümleri için canlı envanter.",
+        descriptionText: tLocalized("Argen materyalleri ve üretim çözümleri için canlı envanter.", "Live inventory for Argen materials and production solutions."),
       })}
     />
   );

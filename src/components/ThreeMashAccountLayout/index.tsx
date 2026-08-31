@@ -607,7 +607,7 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
         <aside className="tmai-sidebar">
 
           <span className="tmai-kicker">
-            {text(props?.accountLabel, "HESABIM", "MY ACCOUNT")}
+            {text(props?.accountLabel, tLocalized("HESABIM", "MY ACCOUNT"), "MY ACCOUNT")}
           </span>
 
           <div className="tmai-user">

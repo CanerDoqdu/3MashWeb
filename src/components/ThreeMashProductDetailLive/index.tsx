@@ -54,27 +54,27 @@ const CRS_GALLERY: ProductGalleryItem[] = [
   {
     src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d875a523-2228-44a7-818d-022312b0a44d/1080/composite-resin-ce.webp",
     thumbSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d875a523-2228-44a7-818d-022312b0a44d/540/composite-resin-ce.webp",
-    alt: "CRS Composite CE Class IIa sertifikalı geçici ve daimi reçinesi",
+    alt: tLocalized("CRS Composite CE Class IIa sertifikalı geçici ve daimi reçinesi", "CRS Composite CE Class IIa certified temporary and permanent resin"),
   },
   {
     src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/deb67f5e-a02a-4fa6-9cb8-595a277d69fd/1080/composite-apps-10.webp",
     thumbSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/deb67f5e-a02a-4fa6-9cb8-595a277d69fd/540/composite-apps-10.webp",
-    alt: "CRS Composite kron uygulaması",
+    alt: tLocalized("CRS Composite kron uygulaması", "CRS Composite crown application"),
   },
   {
     src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/9d7bb34c-1f0d-4b36-8f0e-ce9a41863d55/1080/composite-apps-11.webp",
     thumbSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/9d7bb34c-1f0d-4b36-8f0e-ce9a41863d55/540/composite-apps-11.webp",
-    alt: "CRS Composite köprü uygulaması",
+    alt: tLocalized("CRS Composite köprü uygulaması", "CRS Composite bridge application"),
   },
   {
     src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/1080/composite-apps-12.webp",
     thumbSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/540/composite-apps-12.webp",
-    alt: "CRS Composite restorasyon",
+    alt: tLocalized("CRS Composite restorasyon", "CRS Composite restoration"),
   },
   {
     src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/0c8743e4-abb5-4d0b-854c-3a4f5a46b686/1080/sand-model-gecici-4.webp",
     thumbSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/0c8743e4-abb5-4d0b-854c-3a4f5a46b686/540/sand-model-gecici-4.webp",
-    alt: "CRS Composite model üzerinde geçici",
+    alt: tLocalized("CRS Composite model üzerinde geçici", "Temporary on the CRS Composite model"),
   },
 ];
 
@@ -82,9 +82,9 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
   key: CRS_COMPOSITE_SLUG,
   announcement: {
     enabled: true,
-    strongText: "Fırsatı kaçırmayın.",
-    longText: "CE Class IIa CRS Composite'i cihazınızın parametreleriyle birlikte kalibre ederek, ücretsiz kurulum desteğiyle teslim ediyoruz.",
-    ctaText: "Ücretsiz parametre uyumlaması →",
+    strongText: tLocalized("Fırsatı kaçırmayın.", "Don't miss the opportunity."),
+    longText: tLocalized("CE Class IIa CRS Composite'i cihazınızın parametreleriyle birlikte kalibre ederek, ücretsiz kurulum desteğiyle teslim ediyoruz.", "We deliver the CE Class IIa CRS Composite calibrated together with your device's parameters, with free setup support."),
+    ctaText: tLocalized("Ücretsiz parametre uyumlaması →", "Free parameter matching →"),
     ctaHref: "#satinal",
   },
   breadcrumb: {
@@ -92,245 +92,245 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
     homeHref: "/",
     categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
     categoryHref: "/dental-3d-yazici-recineleri",
-    productText: "CRS Composite",
+    productText: tLocalized("CRS Composite", "CRS Composite"),
   },
   hero: {
-    kicker: "CRS Composite · Biyouyumlu Kron-Köprü Reçinesi",
-    titleHtml: 'Daimi kron artık <span class="em">baskıdan</span> çıkıyor.',
+    kicker: tLocalized("CRS Composite · Biyouyumlu Kron-Köprü Reçinesi", "CRS Composite · Biocompatible Crown-and-Bridge Resin"),
+    titleHtml: tLocalized("Daimi kron artık <span class=\"em\">baskıdan</span> çıkıyor.", "The permanent crown now comes out of a <span class=\"em\">print.</span>"),
     leadHtml:
-      "Geçici ve daimi kuron-köprülerin katmanlı üretimi için biyouyumlu reçine. Sektörde önde gelen rakiplerine kıyasla <b>daha yüksek bükülme mukavemeti</b> ve hassas marjinal uyum sağlar; yarı saydamlık-opaklık arasında dengeli translüsentliğe sahiptir. Ağız koşullarına dayanıklıdır, tat ve koku yapmaz.",
+      tLocalized("Geçici ve daimi kuron-köprülerin katmanlı üretimi için biyouyumlu reçine. Sektörde önde gelen rakiplerine kıyasla <b>daha yüksek bükülme mukavemeti</b> ve hassas marjinal uyum sağlar; yarı saydamlık-opaklık arasında dengeli translüsentliğe sahiptir. Ağız koşullarına dayanıklıdır, tat ve koku yapmaz.", "A biocompatible resin for layered production of temporary and permanent crowns and bridges. It provides <b>higher flexural strength</b> and precise marginal fit compared to leading competitors in the industry; it has balanced translucency between semi-transparency and opacity. It is resistant to oral conditions and produces no taste or odor."),
     pills: [
-      { value: "144 MPa", label: "eğilme mukavemeti" },
-      { value: "5000 MPa", label: "eğilme modülü" },
-      { value: "CE", label: "Class IIa" },
-      { label: "Sararma yapmaz" },
+      { value: "144 MPa", label: tLocalized("eğilme mukavemeti", "flexural strength") },
+      { value: "5000 MPa", label: tLocalized("eğilme modülü", "flexural modulus") },
+      { value: "CE", label: tLocalized("Class IIa", "Class IIa") },
+      { label: tLocalized("Sararma yapmaz", "Does not turn yellow") },
     ],
-    galleryBadge: "CE CLASS IIa",
+    galleryBadge: tLocalized("CE CLASS IIa", "CE CLASS IIa"),
     gallery: CRS_GALLERY,
-    selectedPrefix: "Seçiminiz:",
-    summarySuffix: "— parametre uyumlaması ve teknik destek dahil.",
+    selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
+    summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-composite-mukemmel-dayanimli-gecici-recinesi",
-    whatsappHref: "https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum",
+    whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum"),
     whatsappText: "WhatsApp'tan sor",
-    addToCartText: "Sepete ekle →",
+    addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
     addingToCartText: "Ekleniyor...",
-    outOfStockText: "Stok yok",
-    trustBadges: ["Ücretsiz kargo", tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
+    outOfStockText: tLocalized("Stok yok", "Out of stock"),
+    trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
   ratings: {
     index: "01",
     label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
-    titleHtml: 'Biyouyumlu <span class="hl">geçici ve daimi</span> reçinesi.',
-    sideHtml: "CRS Composite, <b>CE Class IIa</b> sertifikalı toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılabilir.",
-    panelTitleHtml: "CRS Composite'i satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>",
-    note: "Ürünü satın alan kullanıcıların geri bildirimlerine göre.",
+    titleHtml: tLocalized("Biyouyumlu <span class=\"hl\">geçici ve daimi</span> reçinesi.", "Biocompatible <span class=\"hl\">temporary and permanent</span> resin."),
+    sideHtml: tLocalized("CRS Composite, <b>CE Class IIa</b> sertifikalı toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılabilir.", "Thanks to its <b>CE Class IIa</b> certified, non-toxic formulation, CRS Composite can be used safely intraorally."),
+    panelTitleHtml: tLocalized("CRS Composite'i satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>", "Buyers of CRS Composite — <span class=\"em\">how did they rate it?</span>"),
+    note: tLocalized("Ürünü satın alan kullanıcıların geri bildirimlerine göre.", "Based on feedback from customers who purchased the product."),
     items: [
-      { descriptionHtml: "Baskı sonrası kürleme işleminde <b>sararma yapmadığını</b> söyledi", percent: 99 },
-      { descriptionHtml: "<b>Yüksek mekanik dayanımı</b> sayesinde kırılmadan uzun süre kullanılabildiğini söyledi", percent: 97 },
-      { descriptionHtml: "<b>Şırınga dolgu malzemesiyle yüksek uyum</b> sayesinde hasta ağzında geçici diş üzerinde değişiklik yapabildiğini söyledi", percent: 95 },
+      { descriptionHtml: tLocalized("Baskı sonrası kürleme işleminde <b>sararma yapmadığını</b> söyledi", "It was noted that it <b>doesn't yellow</b> during post-print curing"), percent: 99 },
+      { descriptionHtml: tLocalized("<b>Yüksek mekanik dayanımı</b> sayesinde kırılmadan uzun süre kullanılabildiğini söyledi", "Said it can be used for a long time without breaking, thanks to its <b>high mechanical strength</b>"), percent: 97 },
+      { descriptionHtml: tLocalized("<b>Şırınga dolgu malzemesiyle yüksek uyum</b> sayesinde hasta ağzında geçici diş üzerinde değişiklik yapabildiğini söyledi", "Said that thanks to <b>high compatibility with syringe filling material</b>, adjustments can be made to the temporary tooth in the patient's mouth"), percent: 95 },
     ],
   },
   metrics: {
     index: "02",
     label: tLocalized("Teknik Özellikler", "Technical Specifications"),
-    titleHtml: 'Baskı sonrası <span class="em">sararma yapmaz</span>, kalıcıda kullanılır.',
+    titleHtml: tLocalized("Baskı sonrası <span class=\"em\">sararma yapmaz</span>, kalıcıda kullanılır.", "<span class=\"em\">Doesn't yellow</span> after printing, used in permanent restorations."),
     sideHtml:
-      "CRS Composite, kalıcı uygulamada kullanıldığını iddia eden rakip markalara göre daha yüksek dayanım sunar ve kürleme sonrası sararmaz. Değerler ISO 10477 standardına göredir.",
+      tLocalized("CRS Composite, kalıcı uygulamada kullanıldığını iddia eden rakip markalara göre daha yüksek dayanım sunar ve kürleme sonrası sararmaz. Değerler ISO 10477 standardına göredir.", "CRS Composite offers higher strength than competitor brands that claim to be usable for permanent applications, and it does not yellow after curing. Values are according to the ISO 10477 standard."),
     items: [
       {
-        name: "Eğilme Mukavemeti",
+        name: tLocalized("Eğilme Mukavemeti", "Flexural Strength"),
         value: "144",
-        unit: "MPa",
-        tag: "ISO 10477",
-        caption: "Kalıcı restorasyon iddiası taşıyan birçok geçici reçinenin üzerinde; kırılmadan uzun süre kullanım.",
+        unit: tLocalized("MPa", "MPa"),
+        tag: tLocalized("ISO 10477", "ISO 10477"),
+        caption: tLocalized("Kalıcı restorasyon iddiası taşıyan birçok geçici reçinenin üzerinde; kırılmadan uzun süre kullanım.", "Outperforms many temporary resins that claim to be permanent-restoration-grade; long-term use without breaking."),
       },
       {
-        name: "Eğilme Modülü",
+        name: tLocalized("Eğilme Modülü", "Flexural Modulus"),
         value: "5000",
-        unit: "MPa",
-        tag: "ISO 10477",
-        caption: "Yüksek rijitlik: fonksiyon altında bükülmeye direnç, stabil oklüzyon.",
+        unit: tLocalized("MPa", "MPa"),
+        tag: tLocalized("ISO 10477", "ISO 10477"),
+        caption: tLocalized("Yüksek rijitlik: fonksiyon altında bükülmeye direnç, stabil oklüzyon.", "High rigidity: resistance to bending under function, stable occlusion."),
       },
       {
-        name: "Biyouyumluluk",
+        name: tLocalized("Biyouyumluluk", "Biocompatibility"),
         value: "CE",
-        unit: "Class IIa",
+        unit: tLocalized("Class IIa", "Class IIa"),
         tag: "MDR",
-        caption: "Ağız içinde belirli süre temas eden tıbbi cihaz sınıfı; toksik olmayan formülasyon.",
+        caption: tLocalized("Ağız içinde belirli süre temas eden tıbbi cihaz sınıfı; toksik olmayan formülasyon.", "A class of medical device that has contact inside the mouth for a certain period; non-toxic formulation."),
       },
     ],
   },
   specHighlight: {
-    tag: "CRS COMPOSITE · CE CLASS IIa · MDR",
-    titleHtml: 'Porselen estetiği, <span class="em">marka bağımsız glaze.</span>',
+    tag: tLocalized("CRS COMPOSITE · CE CLASS IIa · MDR", "CRS COMPOSITE · CE CLASS IIa · MDR"),
+    titleHtml: tLocalized("Porselen estetiği, <span class=\"em\">marka bağımsız glaze.</span>", "Porcelain aesthetics, <span class=\"em\">brand-independent glaze.</span>"),
     descriptionHtml:
-      "CE Class IIa sertifikalı, toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılır. Yarı saydamlık ve opaklık arasında mükemmel bir translüsent dengeye sahiptir; marka ve renk ayırt etmeksizin <b>optik glaze</b> yapılabilir. Ağız koşullarına dayanıklıdır, <b>tat ve koku yapmaz.</b>",
-    ctaText: "Renk ve boyut seç →",
+      tLocalized("CE Class IIa sertifikalı, toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılır. Yarı saydamlık ve opaklık arasında mükemmel bir translüsent dengeye sahiptir; marka ve renk ayırt etmeksizin <b>optik glaze</b> yapılabilir. Ağız koşullarına dayanıklıdır, <b>tat ve koku yapmaz.</b>", "Thanks to its CE Class IIa certified, non-toxic formulation, it can be used safely intraorally. It has an excellent translucency balance between semi-transparency and opacity; <b>optical glazing</b> can be applied regardless of brand or color. It withstands oral conditions and <b>produces no taste or odor.</b>"),
+    ctaText: tLocalized("Renk ve boyut seç →", "Select color and size →"),
     ctaHref: "#satinal",
     rows: [
-      { label: "Eğilme mukavemeti", value: "144 MPa" },
-      { label: "Eğilme modülü", value: "5000 MPa" },
-      { label: "Sertifikasyon", value: "CE Class IIa (MDR)" },
-      { label: "Uygulama", value: "Geçici + daimi" },
-      { label: "Uyum", value: "Tüm DLP / LCD" },
+      { label: tLocalized("Eğilme mukavemeti", "Flexural strength"), value: "144 MPa" },
+      { label: tLocalized("Eğilme modülü", "Flexural modulus"), value: "5000 MPa" },
+      { label: tLocalized("Sertifikasyon", "Certification"), value: "CE Class IIa (MDR)" },
+      { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Geçici + daimi", "Temporary + permanent") },
+      { label: tLocalized("Uyum", "Rapport"), value: tLocalized("Tüm DLP / LCD", "All DLP / LCD") },
     ],
   },
   useCases: {
     index: "03",
-    label: "Uygulama & Uyumluluk",
-    titleHtml: 'Nerede kullanılır, <span class="em">neyle çalışır?</span>',
-    sideHtml: "Hepsi tek bakışta: uygulama alanları, öne çıkan özellikler ve uyumlu 3D yazıcılar.",
+    label: tLocalized("Uygulama & Uyumluluk", "Application & Compatibility"),
+    titleHtml: tLocalized("Nerede kullanılır, <span class=\"em\">neyle çalışır?</span>", "Where is it used, <span class=\"em\">what does it work with?</span>"),
+    sideHtml: tLocalized("Hepsi tek bakışta: uygulama alanları, öne çıkan özellikler ve uyumlu 3D yazıcılar.", "Everything at a glance: application areas, standout features, and compatible 3D printers."),
     photos: [
-      { src: CRS_GALLERY[1].src, alt: "CRS Composite ile üretilmiş kron restorasyonu", title: "Aynı gün kron", text: "Porselen benzeri güç ve estetik, tek seansta." },
-      { src: CRS_GALLERY[2].src, alt: "CRS Composite ile üretilmiş köprü restorasyonu", title: "Köprü restorasyonları", text: "144 MPa dayanım; kırılmadan uzun süre kullanım." },
-      { src: CRS_GALLERY[4].src, alt: "Model üzerinde CRS Composite geçici restorasyon", title: "Model üzerinde uyum", text: "Hassas marjinal uyum, net kole hatları." },
+      { src: CRS_GALLERY[1].src, alt: tLocalized("CRS Composite ile üretilmiş kron restorasyonu", "Crown restoration produced with CRS Composite"), title: tLocalized("Aynı gün kron", "Same-day crown"), text: tLocalized("Porselen benzeri güç ve estetik, tek seansta.", "Porcelain-like strength and aesthetics, in a single session.") },
+      { src: CRS_GALLERY[2].src, alt: tLocalized("CRS Composite ile üretilmiş köprü restorasyonu", "Bridge restoration produced with CRS Composite"), title: tLocalized("Köprü restorasyonları", "Bridge restorations"), text: tLocalized("144 MPa dayanım; kırılmadan uzun süre kullanım.", "144 MPa strength; long-lasting use without breaking.") },
+      { src: CRS_GALLERY[4].src, alt: tLocalized("Model üzerinde CRS Composite geçici restorasyon", "CRS Composite temporary restoration on a model"), title: tLocalized("Model üzerinde uyum", "Fit on the model"), text: tLocalized("Hassas marjinal uyum, net kole hatları.", "Precise marginal fit, clear cervical lines.") },
     ],
     cards: [
       {
-        eyebrow: "Uygulama Alanları",
-        title: "Hangi restorasyonlar?",
+        eyebrow: tLocalized("Uygulama Alanları", "Application Areas"),
+        title: tLocalized("Hangi restorasyonlar?", "Which restorations?"),
         items: [
-          "Porselen benzeri güç ve güzelliğe sahip <b>aynı gün kron ve köprüler</b>",
-          "Çok çeşitli <b>kalıcı ve geçici</b> diş restorasyonları",
-          "Çıkarılabilir total protezler için <b>vakaya özel</b> tasarlanmış kuron ve köprüler",
+          tLocalized("Porselen benzeri güç ve güzelliğe sahip <b>aynı gün kron ve köprüler</b>", "<b>Same-day crowns and bridges</b> with porcelain-like strength and beauty"),
+          tLocalized("Çok çeşitli <b>kalıcı ve geçici</b> diş restorasyonları", "A wide variety of <b>permanent and temporary</b> dental restorations"),
+          tLocalized("Çıkarılabilir total protezler için <b>vakaya özel</b> tasarlanmış kuron ve köprüler", "Crowns and bridges designed <b>case-specifically</b> for removable full dentures"),
         ],
-        note: "Vakanıza uygun tasarım parametrelerini ücretsiz paylaşıyoruz.",
+        note: tLocalized("Vakanıza uygun tasarım parametrelerini ücretsiz paylaşıyoruz.", "We share design parameters suited to your case free of charge."),
       },
       {
-        eyebrow: "Öne Çıkan Özellikler",
-        title: "Neden CRS Composite?",
+        eyebrow: tLocalized("Öne Çıkan Özellikler", "Featured Features"),
+        title: tLocalized("Neden CRS Composite?", "Why CRS Composite?"),
         items: [
-          "Yarı saydamlık-opaklık arasında dengeli <b>translüsentlik</b>",
-          "Marka ve renk ayırt etmeksizin <b>optik glaze</b>",
-          "Ağız koşullarına dayanıklı; <b>tat ve koku yapmaz</b>",
-          "<b>CE Class IIa</b> biyouyumlu, toksik olmayan formülasyon",
+          tLocalized("Yarı saydamlık-opaklık arasında dengeli <b>translüsentlik</b>", "Balanced <b>translucency</b> between translucent and opaque"),
+          tLocalized("Marka ve renk ayırt etmeksizin <b>optik glaze</b>", "<b>Optical glaze</b> regardless of brand or shade"),
+          tLocalized("Ağız koşullarına dayanıklı; <b>tat ve koku yapmaz</b>", "Resistant to oral conditions; <b>no taste or odor</b>"),
+          tLocalized("<b>CE Class IIa</b> biyouyumlu, toksik olmayan formülasyon", "<b>CE Class IIa</b> biocompatible, non-toxic formulation"),
         ],
       },
     ],
     devices: {
-      eyebrow: "Uyumlu Cihazlar",
-      title: "Tüm DLP & LCD yazıcılarla çalışır",
+      eyebrow: tLocalized("Uyumlu Cihazlar", "Compatible Devices"),
+      title: tLocalized("Tüm DLP & LCD yazıcılarla çalışır", "Works with all DLP & LCD printers"),
       textHtml:
-        "Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> gerçekleştiriyoruz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.",
+        tLocalized("Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> gerçekleştiriyoruz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.", "As the <b>official distributor</b> of Custom Resin Solutions, we carry out parameter calibration <b>free of charge</b> regardless of the 3D printer brand you use. We are with you with post-sale user training and <b>24/7 technical support.</b>"),
       chips: [
-        { label: "Creality Halot-Sky" },
-        { label: "Phrozen Mini 8K" },
-        { label: "Asiga Max UV" },
-        { label: "Anycubic Photon Mono" },
-        { label: "SprintRay Pro S" },
-        { label: "Shining AccuFab-D1" },
-        { label: "Nova Bene 4" },
-        { label: "Ackuretta Dentiq" },
-        { label: "Elegoo Mars 3" },
-        { label: "+ tüm DLP / LCD markaları", highlighted: true },
+        { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
+        { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
+        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
+        { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
+        { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
+        { label: tLocalized("Nova Bene 4", "Nova Bene 4") },
+        { label: tLocalized("Ackuretta Dentiq", "Ackuretta Dentiq") },
+        { label: tLocalized("Elegoo Mars 3", "Elegoo Mars 3") },
+        { label: tLocalized("+ tüm DLP / LCD markaları", "+ all DLP / LCD brands"), highlighted: true },
       ],
     },
   },
   ecosystem: {
     index: "04",
-    label: "Ekosistem",
-    titleHtml: 'Reçine tek başına yeterli değil: <span class="em">kürleme sonucu tamamlar.</span>',
+    label: tLocalized("Ekosistem", "Ecosystem"),
+    titleHtml: tLocalized("Reçine tek başına yeterli değil: <span class=\"em\">kürleme sonucu tamamlar.</span>", "Resin alone is not enough: <span class=\"em\">curing completes the result.</span>"),
     textHtml:
-      "CRS Composite'in 144 MPa dayanımını ve sararmasız rengini ortaya çıkaran şey, doğru <b>post-curing</b> protokolüdür. Reçineyi cihazınızın parametreleriyle birlikte kalibre ederek teslim ediyoruz; akıllı kürleme cihazımız bu protokolü otomatik uygular.",
-    chips: ["385 nm optimize baskı", "Doğru post-curing protokolü", "Marka bağımsız kalibrasyon", "7/24 teknik destek"],
+      tLocalized("CRS Composite'in 144 MPa dayanımını ve sararmasız rengini ortaya çıkaran şey, doğru <b>post-curing</b> protokolüdür. Reçineyi cihazınızın parametreleriyle birlikte kalibre ederek teslim ediyoruz; akıllı kürleme cihazımız bu protokolü otomatik uygular.", "What brings out CRS Composite's 144 MPa strength and non-yellowing color is the correct <b>post-curing</b> protocol. We deliver the resin calibrated together with your device's parameters; our smart curing device applies this protocol automatically."),
+    chips: [tLocalized("385 nm optimize baskı", "385 nm optimized printing"), tLocalized("Doğru post-curing protokolü", "The right post-curing protocol"), tLocalized("Marka bağımsız kalibrasyon", "Brand-independent calibration"), tLocalized("7/24 teknik destek", "24/7 technical support")],
     buttons: [
-      { text: "3D yazıcıları gör →", href: "/3d-yazicilar" },
-      { text: "Kürlemenin önemini gör →", href: "/yikama-kurleme-cihazlari#neden-gerekli", variant: "line" },
+      { text: tLocalized("3D yazıcıları gör →", "See 3D printers →"), href: "/3d-yazicilar" },
+      { text: tLocalized("Kürlemenin önemini gör →", "See the importance of curing →"), href: tLocalized("/yikama-kurleme-cihazlari#neden-gerekli", "/yikama-kurleme-cihazlari#neden-gerekli"), variant: "line" },
     ],
   },
   faq: {
     index: "05",
     label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
-    titleHtml: 'CRS Composite hakkında <span class="em">merak edilenler.</span>',
-    sideHtml: "Klinik ve laboratuvarların CRS Composite için en çok sorduğu sorular, net cevaplarla.",
+    titleHtml: tLocalized("CRS Composite hakkında <span class=\"em\">merak edilenler.</span>", "<span class=\"em\">Frequently asked questions</span> about CRS Composite."),
+    sideHtml: tLocalized("Klinik ve laboratuvarların CRS Composite için en çok sorduğu sorular, net cevaplarla.", "The most frequently asked questions from clinics and laboratories about CRS Composite, with clear answers."),
     openFirst: true,
     items: [
       {
-        question: "1 kg CRS Composite reçinesinden kaç üye iş alabiliriz?",
+        question: tLocalized("1 kg CRS Composite reçinesinden kaç üye iş alabiliriz?", "How many units of work can we get from 1 kg of CRS Composite resin?"),
         answerHtml:
-          "Bu, restorasyonun boyutuna, duvar kalınlığına ve destek yapılarına göre değişir. Tek bir kron ünitesi ortalama olarak birkaç mililitre reçine tüketir; 1 kg reçineden genellikle <b>yüzlerce üye</b> üretilebilir.",
+          tLocalized("Bu, restorasyonun boyutuna, duvar kalınlığına ve destek yapılarına göre değişir. Tek bir kron ünitesi ortalama olarak birkaç mililitre reçine tüketir; 1 kg reçineden genellikle <b>yüzlerce üye</b> üretilebilir.", "This varies depending on the size of the restoration, wall thickness, and support structures. A single crown unit consumes an average of a few milliliters of resin; <b>hundreds of units</b> can typically be produced from 1 kg of resin."),
       },
       {
-        question: "CRS Composite reçinesinin kırılma direnci nedir?",
+        question: tLocalized("CRS Composite reçinesinin kırılma direnci nedir?", "What is the fracture strength of CRS Composite resin?"),
         answerHtml:
-          "CRS Composite, ISO 10477 standardına göre <b>144 MPa eğilme mukavemeti</b> ve <b>5000 MPa eğilme modülü</b> sunar.",
+          tLocalized("CRS Composite, ISO 10477 standardına göre <b>144 MPa eğilme mukavemeti</b> ve <b>5000 MPa eğilme modülü</b> sunar.", "CRS Composite offers a <b>144 MPa flexural strength</b> and a <b>5000 MPa flexural modulus</b> according to the ISO 10477 standard."),
       },
       {
-        question: "CRS Composite hasta ağzında tat veya koku bırakır mı?",
-        answerHtml: "Hayır. CRS Composite <b>ağız koşullarına dayanıklıdır, tat ve koku yapmaz.</b>",
+        question: tLocalized("CRS Composite hasta ağzında tat veya koku bırakır mı?", "Does CRS Composite leave a taste or odor in the patient's mouth?"),
+        answerHtml: tLocalized("Hayır. CRS Composite <b>ağız koşullarına dayanıklıdır, tat ve koku yapmaz.</b>", "No. CRS Composite <b>is resistant to oral conditions and does not produce any taste or odor.</b>"),
       },
       {
-        question: "Dirençli olması için tavsiye edilen tasarım parametreleri nelerdir?",
+        question: tLocalized("Dirençli olması için tavsiye edilen tasarım parametreleri nelerdir?", "What are the recommended design parameters for resistance?"),
         answerHtml:
-          "Dayanım için <b>yeterli minimum duvar kalınlığı</b>, köprülerde uygun konnektör kesiti, doğru baskı yönü ve reçineye özel doğru post-curing süresi kritik önemdedir.",
+          tLocalized("Dayanım için <b>yeterli minimum duvar kalınlığı</b>, köprülerde uygun konnektör kesiti, doğru baskı yönü ve reçineye özel doğru post-curing süresi kritik önemdedir.", "For strength, <b>sufficient minimum wall thickness</b>, an appropriate connector cross-section in bridges, correct print orientation, and the right resin-specific post-curing time are critically important."),
       },
       {
-        question: "Klinik uygulamalar için şırınga kompozitler ile uyumlu mudur?",
+        question: tLocalized("Klinik uygulamalar için şırınga kompozitler ile uyumlu mudur?", "Is it compatible with syringe composites for clinical applications?"),
         answerHtml:
-          "Evet. CRS Composite, <b>şırınga dolgu malzemesiyle yüksek uyum</b> gösterir; hasta ağzında geçici diş üzerinde ekleme ve düzeltme yapılabilir.",
+          tLocalized("Evet. CRS Composite, <b>şırınga dolgu malzemesiyle yüksek uyum</b> gösterir; hasta ağzında geçici diş üzerinde ekleme ve düzeltme yapılabilir.", "Yes. CRS Composite shows <b>high compatibility with syringe filling material</b>; additions and corrections can be made on the temporary tooth in the patient's mouth."),
       },
     ],
   },
   video: {
     index: "06",
-    label: "Videoda Gör",
-    titleHtml: 'Baskıdan ağza: <span class="em">süreci izleyin.</span>',
-    sideHtml: "Tasarımdan baskıya, kürlemeden glaze'e; CRS Composite ile tek seans kron-köprü akışının tamamı.",
+    label: tLocalized("Videoda Gör", "Watch Video"),
+    titleHtml: tLocalized("Baskıdan ağza: <span class=\"em\">süreci izleyin.</span>", "From print to mouth: <span class=\"em\">follow the process.</span>"),
+    sideHtml: tLocalized("Tasarımdan baskıya, kürlemeden glaze'e; CRS Composite ile tek seans kron-köprü akışının tamamı.", "From design to printing, from curing to glaze; the entire single-session crown-and-bridge workflow with CRS Composite."),
     href: "https://www.youtube.com/@3mashsocial",
     image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/3840/composite-apps-12.webp",
-    imageAlt: "CRS Composite uygulama videosu",
-    title: "CRS Composite ile tek seans kron-köprü",
-    text: "Baskı parametreleri, post-curing protokolü ve optik glaze adımları; uygulamalı anlatım.",
+    imageAlt: tLocalized("CRS Composite uygulama videosu", "CRS Composite application video"),
+    title: tLocalized("CRS Composite ile tek seans kron-köprü", "Single-session crown-and-bridge with CRS Composite"),
+    text: tLocalized("Baskı parametreleri, post-curing protokolü ve optik glaze adımları; uygulamalı anlatım.", "Print parameters, post-curing protocol, and optical glaze steps; a hands-on walkthrough."),
     meta: "Mash Academy · YouTube'da izle",
   },
   related: {
     index: "07",
-    label: "İlgili Reçineler",
-    titleHtml: 'Aynı vakada <span class="em">birlikte çalışanlar.</span>',
+    label: tLocalized("İlgili Reçineler", "Related Resins"),
+    titleHtml: tLocalized("Aynı vakada <span class=\"em\">birlikte çalışanlar.</span>", "Those who <span class=\"em\">work together</span> on the same case."),
     items: [
       {
-        tag: "HASSASİYET",
-        title: "CRS Model",
-        descriptionHtml: "Kron-köprü öncesi master model. Belirgin <b>kole hatları</b>, net marjinal uyum.",
+        tag: tLocalized("HASSASİYET", "PRECISION"),
+        title: tLocalized("CRS Model", "CRS Model"),
+        descriptionHtml: tLocalized("Kron-köprü öncesi master model. Belirgin <b>kole hatları</b>, net marjinal uyum.", "Master model prior to crown-bridge work. Distinct <b>cervical lines</b>, clear marginal fit."),
         href: "/crs-model-yuksek-hassasiyetli-model-recinesi",
         linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#EFE7D3,#fff)",
       },
       {
-        tag: "CE CLASS IIa",
+        tag: tLocalized("CE CLASS IIa", "CE CLASS IIa"),
         tagVariant: "ce",
-        title: "CRS Denture",
-        descriptionHtml: "Çıkarılabilir protez tabanı; PMMA'ya kıyasla <b>düşük çekme</b>, cila + glaze uyumlu.",
+        title: tLocalized("CRS Denture", "CRS Denture"),
+        descriptionHtml: tLocalized("Çıkarılabilir protez tabanı; PMMA'ya kıyasla <b>düşük çekme</b>, cila + glaze uyumlu.", "Removable denture base; <b>low shrinkage</b> compared to PMMA, compatible with polishing + glazing."),
         href: "/crs-denture-biouyumlu-protez-recinesi",
         linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F6E3E4,#fff)",
       },
       {
         tag: "YIRTILMAZ",
-        title: "CRS Gingiva",
-        descriptionHtml: "İmplant modeli ve diş eti maskesi. Yüksek yırtılma direnci, doğal diş eti rengi.",
+        title: tLocalized("CRS Gingiva", "CRS Gingiva"),
+        descriptionHtml: tLocalized("İmplant modeli ve diş eti maskesi. Yüksek yırtılma direnci, doğal diş eti rengi.", "Implant model and gingiva mask. High tear resistance, natural gingiva color."),
         href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi",
         linkText: tLocalized("İncele", "Explore"),
         background: "linear-gradient(160deg,#F5DEE0,#fff)",
       },
       {
-        tag: "TÜM HAT",
-        title: "Tüm reçineler",
-        descriptionHtml: "16 CRS & Mash reçinesini uygulamaya göre karşılaştırın; doğru reçineyi seçin.",
+        tag: tLocalized("TÜM HAT", "FULL RANGE"),
+        title: tLocalized("Tüm reçineler", "All resins"),
+        descriptionHtml: tLocalized("16 CRS & Mash reçinesini uygulamaya göre karşılaştırın; doğru reçineyi seçin.", "Compare 16 CRS & Mash resins by application; choose the right resin."),
         href: "/dental-3d-yazici-recineleri",
-        linkText: "Reçine seçici",
+        linkText: tLocalized("Reçine seçici", "Resin selector"),
         background: "linear-gradient(160deg,#EEEEE9,#fff)",
       },
     ],
   },
   finalCta: {
-    titleHtml: "CRS Composite'i cihazınıza <span class=\"em\">birlikte kalibre edelim.</span>",
+    titleHtml: tLocalized("CRS Composite'i cihazınıza <span class=\"em\">birlikte kalibre edelim.</span>", "Let's calibrate CRS Composite to your device, <span class=\"em\">together.</span>"),
     textHtml:
-      "Hangi yazıcı, hangi vaka, hangi renk? Kısa bir görüşmeyle CRS Composite'i cihazınızın parametreleriyle eşleştirip doğru kürleme protokolüyle birlikte <b>ücretsiz</b> teslim edelim.",
-    primaryText: "Renk ve boyut seç ↑",
+      tLocalized("Hangi yazıcı, hangi vaka, hangi renk? Kısa bir görüşmeyle CRS Composite'i cihazınızın parametreleriyle eşleştirip doğru kürleme protokolüyle birlikte <b>ücretsiz</b> teslim edelim.", "Which printer, which case, which shade? With a short conversation, let's match CRS Composite to your device's parameters and deliver it with the correct curing protocol, <b>free of charge</b>."),
+    primaryText: tLocalized("Renk ve boyut seç ↑", "Select color and size ↑"),
     primaryHref: "#satinal",
     secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
-    secondaryHref: "/pages/iletisim",
+    secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
 
@@ -723,10 +723,10 @@ function linkValue(source: unknown) {
   if (typeof link.externalLink === "string" && link.externalLink.trim()) return link.externalLink.trim();
   if (typeof link.fileUrl === "string" && link.fileUrl.trim()) return link.fileUrl.trim();
   if (link.pageId === "2tplvqpo-search-page") return "/search";
-  if (link.pageId === "2tplvqpo-contact-page") return "/pages/iletisim";
+  if (link.pageId === "2tplvqpo-contact-page") return tLocalized("/pages/iletisim", "/pages/iletisim");
   if (link.pageId === "2tplvqpo-references-page") return "/pages/referanslar";
-  if (link.label === "Arama Sayfası") return "/search";
-  if (link.label === "iletişim" || link.label === tLocalized("İletişim", "Contact")) return "/pages/iletisim";
+  if (link.label === tLocalized("Arama Sayfası", "Search Page")) return "/search";
+  if (link.label === tLocalized("iletişim", "iletişim") || link.label === tLocalized("İletişim", "Contact")) return tLocalized("/pages/iletisim", "/pages/iletisim");
   return "";
 }
 
@@ -760,7 +760,7 @@ function productDetailPropOverrides(props: Props) {
   }
 
   const breadcrumbCategoryText = trimmedText(props.breadcrumbCategoryText || props.categoryText);
-  if (breadcrumbCategoryText && breadcrumbCategoryText !== "Kategori") breadcrumb.categoryText = breadcrumbCategoryText;
+  if (breadcrumbCategoryText && breadcrumbCategoryText !== tLocalized("Kategori", "Category")) breadcrumb.categoryText = breadcrumbCategoryText;
 
   const breadcrumbCategoryHref = linkValue(props.breadcrumbCategoryHref);
   if (breadcrumbCategoryHref) breadcrumb.categoryHref = breadcrumbCategoryHref;
@@ -890,7 +890,7 @@ function makeWhatsappHref(product: IkasProduct) {
 
 function genericProductData(product: IkasProduct, variant: IkasProductVariant | null, labels: Pick<Props, "addToCartText" | "addingToCartText" | "outOfStockText">): ProductDetailTemplateData {
   const firstCategory = product.categories?.[0];
-  const categoryText = categoryName(firstCategory) || "Kategori Adı";
+  const categoryText = categoryName(firstCategory) || tLocalized("Kategori Adı", "Category Name");
   const categoryLink = categoryHref(firstCategory);
   const gallery = productMediaGallery(product, variant);
   const href = getProductHref(product) || `/${productSlug(product)}`;
@@ -907,166 +907,166 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
     hero: {
       kicker: categoryText,
       titleHtml: product.name,
-      leadHtml: summaryText(product) || "Ürün kısa açıklama metni buraya gelecek. Panelden veya ürün açıklamasından düzenleyebilirsiniz.",
+      leadHtml: summaryText(product) || tLocalized("Ürün kısa açıklama metni buraya gelecek. Panelden veya ürün açıklamasından düzenleyebilirsiniz.", "The short product description text will go here. You can edit it from the panel or the product description."),
       pills: [
-        { label: "Örnek Rozet 1" },
-        { label: "Örnek Rozet 2" },
-        { label: "Örnek Rozet 3" },
+        { label: tLocalized("Örnek Rozet 1", "Sample Badge 1") },
+        { label: tLocalized("Örnek Rozet 2", "Sample Badge 2") },
+        { label: tLocalized("Örnek Rozet 3", "Sample Badge 3") },
       ],
       gallery,
-      selectedPrefix: "Seçiminiz:",
+      selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: "",
       buyHrefBase: href,
       whatsappHref: makeWhatsappHref(product),
       whatsappText: "WhatsApp'tan sor",
-      addToCartText: labels.addToCartText || "Sepete ekle",
+      addToCartText: labels.addToCartText || tLocalized("Sepete ekle", "Add to cart"),
       addingToCartText: labels.addingToCartText || "Ekleniyor...",
-      outOfStockText: labels.outOfStockText || "Stok yok",
-      trustBadges: ["Güven Rozeti 1", "Güven Rozeti 2", "Güven Rozeti 3"],
+      outOfStockText: labels.outOfStockText || tLocalized("Stok yok", "Out of stock"),
+      trustBadges: [tLocalized("Güven Rozeti 1", "Trust Badge 1"), tLocalized("Güven Rozeti 2", "Trust Badge 2"), tLocalized("Güven Rozeti 3", "Trust Badge 3")],
     },
     ratings: {
       index: "01",
       label: tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"),
-      titleHtml: 'Kullanıcı deneyimi <span class="em">başlığı buraya gelecek.</span>',
-      sideHtml: "Bu bölümün sağ tarafındaki detaylı açıklama metni buraya gelecek.",
-      panelTitleHtml: "Geri Bildirim &amp; Deneyim Başlığı",
-      note: "Örnek açıklama veya araştırma notu",
+      titleHtml: tLocalized("Kullanıcı deneyimi <span class=\"em\">başlığı buraya gelecek.</span>", "User experience <span class=\"em\">heading will go here.</span>"),
+      sideHtml: tLocalized("Bu bölümün sağ tarafındaki detaylı açıklama metni buraya gelecek.", "The detailed description text for the right side of this section will go here."),
+      panelTitleHtml: tLocalized("Geri Bildirim &amp; Deneyim Başlığı", "Feedback &amp; Experience Title"),
+      note: tLocalized("Örnek açıklama veya araştırma notu", "Sample description or research note"),
       items: [
-        { descriptionHtml: "1. Deneyim maddesi açıklama metni buraya gelecek", percent: 95 },
-        { descriptionHtml: "2. Deneyim maddesi açıklama metni buraya gelecek", percent: 90 },
-        { descriptionHtml: "3. Deneyim maddesi açıklama metni buraya gelecek" },
+        { descriptionHtml: tLocalized("1. Deneyim maddesi açıklama metni buraya gelecek", "1. Experience item description text goes here"), percent: 95 },
+        { descriptionHtml: tLocalized("2. Deneyim maddesi açıklama metni buraya gelecek", "2. Experience item description text goes here"), percent: 90 },
+        { descriptionHtml: tLocalized("3. Deneyim maddesi açıklama metni buraya gelecek", "3. Experience item description text goes here") },
       ],
     },
     metrics: {
       index: "02",
-      label: "TEKNİK ÖZELLİKLER",
-      titleHtml: 'Bölüm ana başlığı ve <span class="em">vurgulu metin.</span>',
-      sideHtml: "Teknik özellikler bölümü için sağ tarafta yer alan genel açıklama metni.",
+      label: tLocalized("TEKNİK ÖZELLİKLER", "TECHNICAL SPECIFICATIONS"),
+      titleHtml: tLocalized("Bölüm ana başlığı ve <span class=\"em\">vurgulu metin.</span>", "Section main heading and <span class=\"em\">highlighted text.</span>"),
+      sideHtml: tLocalized("Teknik özellikler bölümü için sağ tarafta yer alan genel açıklama metni.", "The general description text on the right side for the technical specifications section."),
       items: [
-        { name: "Özellik 1", value: "01", unit: "Birim", caption: "1. kart açıklama metni buraya gelecek" },
-        { name: "Özellik 2", value: "02", unit: "Birim", caption: "2. kart açıklama metni buraya gelecek" },
-        { name: "Özellik 3", value: "03", unit: "Birim", caption: "3. kart açıklama metni buraya gelecek" },
+        { name: tLocalized("Özellik 1", "Feature 1"), value: "01", unit: "Birim", caption: tLocalized("1. kart açıklama metni buraya gelecek", "1. Card description text will go here") },
+        { name: tLocalized("Özellik 2", "Feature 2"), value: "02", unit: "Birim", caption: tLocalized("2. kart açıklama metni buraya gelecek", "2. Card description text will go here") },
+        { name: tLocalized("Özellik 3", "Feature 3"), value: "03", unit: "Birim", caption: tLocalized("3. kart açıklama metni buraya gelecek", "3. Card description text will go here") },
       ],
     },
     useCases: {
       index: "03",
-      label: "KULLANIM ALANLARI",
-      titleHtml: 'Kullanım alanları ve <span class="em">uygulama seçenekleri.</span>',
-      sideHtml: "Uygulama alanları bölümünün sağ üst genel açıklama metni buraya gelecek.",
+      label: tLocalized("KULLANIM ALANLARI", "APPLICATION AREAS"),
+      titleHtml: tLocalized("Kullanım alanları ve <span class=\"em\">uygulama seçenekleri.</span>", "Application areas and <span class=\"em\">usage options.</span>"),
+      sideHtml: tLocalized("Uygulama alanları bölümünün sağ üst genel açıklama metni buraya gelecek.", "The general description text for the top right of the application areas section will go here."),
       photos: [
         {
           src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/deb67f5e-a02a-4fa6-9cb8-595a277d69fd/1080/composite-apps-10.webp",
-          alt: "1. Görsel",
-          title: "1. Görsel Başlığı",
-          text: "1. Görsel açıklama metni buraya gelecek.",
+          alt: tLocalized("1. Görsel", "1. Image"),
+          title: tLocalized("1. Görsel Başlığı", "1. Image Title"),
+          text: tLocalized("1. Görsel açıklama metni buraya gelecek.", "1. Image description text goes here."),
         },
         {
           src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/9d7bb34c-1f0d-4b36-8f0e-ce9a41863d55/1080/composite-apps-11.webp",
-          alt: "2. Görsel",
-          title: "2. Görsel Başlığı",
-          text: "2. Görsel açıklama metni buraya gelecek.",
+          alt: tLocalized("2. Görsel", "2. Image"),
+          title: tLocalized("2. Görsel Başlığı", "2. Image Title"),
+          text: tLocalized("2. Görsel açıklama metni buraya gelecek.", "2. Image description text goes here."),
         },
         {
           src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/1080/composite-apps-12.webp",
-          alt: "3. Görsel",
-          title: "3. Görsel Başlığı",
-          text: "3. Görsel açıklama metni buraya gelecek.",
+          alt: tLocalized("3. Görsel", "3. Image"),
+          title: tLocalized("3. Görsel Başlığı", "3. Image Title"),
+          text: tLocalized("3. Görsel açıklama metni buraya gelecek.", "3. Image description text goes here."),
         },
       ],
       cards: [
         {
-          eyebrow: "KART ETİKETİ 1",
-          title: "1. Kart Başlığı",
-          items: ["1. Madde açıklama metni", "2. Madde açıklama metni", "3. Madde açıklama metni"],
+          eyebrow: tLocalized("KART ETİKETİ 1", "CARD LABEL 1"),
+          title: tLocalized("1. Kart Başlığı", "1. Card Title"),
+          items: [tLocalized("1. Madde açıklama metni", "1. Item description text"), tLocalized("2. Madde açıklama metni", "2. Item description text"), tLocalized("3. Madde açıklama metni", "3. Item description text")],
         },
         {
-          eyebrow: "KART ETİKETİ 2",
-          title: "2. Kart Başlığı",
-          items: ["1. Madde açıklama metni", "2. Madde açıklama metni"],
+          eyebrow: tLocalized("KART ETİKETİ 2", "CARD LABEL 2"),
+          title: tLocalized("2. Kart Başlığı", "2. Card Title"),
+          items: [tLocalized("1. Madde açıklama metni", "1. Item description text"), tLocalized("2. Madde açıklama metni", "2. Item description text")],
         },
       ],
       devices: {
         eyebrow: "UYUMLULUK",
-        title: "Sistem ve cihaz uyumluluğu başlığı.",
-        textHtml: "Cihaz uyumluluğu ile ilgili genel açıklama metni buraya gelecek.",
+        title: tLocalized("Sistem ve cihaz uyumluluğu başlığı.", "System and device compatibility heading."),
+        textHtml: tLocalized("Cihaz uyumluluğu ile ilgili genel açıklama metni buraya gelecek.", "The general description text about device compatibility will go here."),
         chips: [
-          { label: "Örnek Cihaz 1", highlighted: true },
-          { label: "Örnek Cihaz 2", highlighted: true },
-          { label: "Örnek Cihaz 3" },
-          { label: "Örnek Cihaz 4" },
+          { label: tLocalized("Örnek Cihaz 1", "Sample Device 1"), highlighted: true },
+          { label: tLocalized("Örnek Cihaz 2", "Sample Device 2"), highlighted: true },
+          { label: tLocalized("Örnek Cihaz 3", "Sample Device 3") },
+          { label: tLocalized("Örnek Cihaz 4", "Sample Device 4") },
         ],
       },
     },
     faq: {
       index: "04",
       label: tLocalized("SIKÇA SORULAN SORULAR", "FREQUENTLY ASKED QUESTIONS"),
-      titleHtml: 'Sıkça sorulan sorular <span class="em">ve yanıtlar.</span>',
-      sideHtml: "Bu ürünle ilgili en çok merak edilen konulara dair açıklamalar.",
+      titleHtml: tLocalized("Sıkça sorulan sorular <span class=\"em\">ve yanıtlar.</span>", "Frequently asked questions <span class=\"em\">and answers.</span>"),
+      sideHtml: tLocalized("Bu ürünle ilgili en çok merak edilen konulara dair açıklamalar.", "Explanations for the most frequently asked questions about this product."),
       openFirst: true,
       items: [
         {
-          question: "1. Örnek soru metni buraya gelecek?",
-          answerHtml: "1. Soruya ait detaylı cevap metni buraya gelecek.",
+          question: tLocalized("1. Örnek soru metni buraya gelecek?", "1. Sample question text will go here?"),
+          answerHtml: tLocalized("1. Soruya ait detaylı cevap metni buraya gelecek.", "1. The detailed answer text for the question will go here."),
         },
         {
-          question: "2. Örnek soru metni buraya gelecek?",
-          answerHtml: "2. Soruya ait detaylı cevap metni buraya gelecek.",
+          question: tLocalized("2. Örnek soru metni buraya gelecek?", "2. Sample question text will go here?"),
+          answerHtml: tLocalized("2. Soruya ait detaylı cevap metni buraya gelecek.", "2. The detailed answer text for the question will go here."),
         },
         {
-          question: "3. Örnek soru metni buraya gelecek?",
-          answerHtml: "3. Soruya ait detaylı cevap metni buraya gelecek.",
+          question: tLocalized("3. Örnek soru metni buraya gelecek?", "3. Sample question text will go here?"),
+          answerHtml: tLocalized("3. Soruya ait detaylı cevap metni buraya gelecek.", "3. The detailed answer text for the question will go here."),
         },
       ],
     },
     specHighlight: {
-      tag: "ÖNE ÇIKAN DETAY",
-      titleHtml: 'Siyah kutu başlığı ve <span class="em">vurgulu metin.</span>',
-      descriptionHtml: "Siyah kutu içerisindeki detaylı ürün açıklaması metni buraya gelecek.",
-      ctaText: "İncele →",
+      tag: tLocalized("ÖNE ÇIKAN DETAY", "FEATURED DETAIL"),
+      titleHtml: tLocalized("Siyah kutu başlığı ve <span class=\"em\">vurgulu metin.</span>", "Black box heading and <span class=\"em\">highlighted text.</span>"),
+      descriptionHtml: tLocalized("Siyah kutu içerisindeki detaylı ürün açıklaması metni buraya gelecek.", "The detailed product description text inside the black box will go here."),
+      ctaText: tLocalized("İncele →", "View →"),
       ctaHref: "#satinal",
       rows: [
-        { label: "Özellik Adı 1", value: "Özellik Değeri 1" },
-        { label: "Özellik Adı 2", value: "Özellik Değeri 2" },
-        { label: "Özellik Adı 3", value: "Özellik Değeri 3" },
-        { label: "Özellik Adı 4", value: "Özellik Değeri 4" },
+        { label: tLocalized("Özellik Adı 1", "Feature Name 1"), value: tLocalized("Özellik Değeri 1", "Feature Value 1") },
+        { label: tLocalized("Özellik Adı 2", "Feature Name 2"), value: tLocalized("Özellik Değeri 2", "Feature Value 2") },
+        { label: tLocalized("Özellik Adı 3", "Feature Name 3"), value: tLocalized("Özellik Değeri 3", "Feature Value 3") },
+        { label: tLocalized("Özellik Adı 4", "Feature Name 4"), value: tLocalized("Özellik Değeri 4", "Feature Value 4") },
       ],
     },
     related: {
       index: "07",
       label: tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"),
-      titleHtml: 'Aynı kategorideki <span class="em">diğer ürünler.</span>',
+      titleHtml: tLocalized("Aynı kategorideki <span class=\"em\">diğer ürünler.</span>", "<span class=\"em\">Other products</span> in the same category."),
       items: [
         {
-          tag: "1. KATEGORİ",
-          title: "1. Örnek İlgili Ürün",
-          descriptionHtml: "1. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
+          tag: tLocalized("1. KATEGORİ", "1. CATEGORY"),
+          title: tLocalized("1. Örnek İlgili Ürün", "1. Sample Related Product"),
+          descriptionHtml: tLocalized("1. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.", "1. The short introductory description of the related product will go here."),
           href: "#",
           linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
           image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/deb67f5e-a02a-4fa6-9cb8-595a277d69fd/1080/composite-apps-10.webp",
         },
         {
-          tag: "2. KATEGORİ",
-          title: "2. Örnek İlgili Ürün",
-          descriptionHtml: "2. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
+          tag: tLocalized("2. KATEGORİ", "2. CATEGORY"),
+          title: tLocalized("2. Örnek İlgili Ürün", "2. Sample Related Product"),
+          descriptionHtml: tLocalized("2. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.", "2. The short introductory description of the related product will go here."),
           href: "#",
           linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
           image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/9d7bb34c-1f0d-4b36-8f0e-ce9a41863d55/1080/composite-apps-11.webp",
         },
         {
-          tag: "3. KATEGORİ",
-          title: "3. Örnek İlgili Ürün",
-          descriptionHtml: "3. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
+          tag: tLocalized("3. KATEGORİ", "3. CATEGORY"),
+          title: tLocalized("3. Örnek İlgili Ürün", "3. Sample Related Product"),
+          descriptionHtml: tLocalized("3. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.", "3. The short introductory description of the related product will go here."),
           href: "#",
           linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
           image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/1080/composite-apps-12.webp",
         },
         {
-          tag: "4. KATEGORİ",
-          title: "4. Örnek İlgili Ürün",
-          descriptionHtml: "4. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
+          tag: tLocalized("4. KATEGORİ", "4. CATEGORY"),
+          title: tLocalized("4. Örnek İlgili Ürün", "4. Sample Related Product"),
+          descriptionHtml: tLocalized("4. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.", "4. The short introductory description of the related product will go here."),
           href: "#",
           linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
@@ -1075,8 +1075,8 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
       ],
     },
     finalCta: {
-      titleHtml: 'Son aksiyon alanı <span class="em">ana başlığı buraya gelecek.</span>',
-      textHtml: "Kullanıcıyı iletişime geçmeye veya satın almaya yönlendiren açıklama metni buraya gelecek.",
+      titleHtml: tLocalized("Son aksiyon alanı <span class=\"em\">ana başlığı buraya gelecek.</span>", "The final call-to-action area's <span class=\"em\">main heading will go here.</span>"),
+      textHtml: tLocalized("Kullanıcıyı iletişime geçmeye veya satın almaya yönlendiren açıklama metni buraya gelecek.", "Descriptive text directing the user to get in touch or make a purchase will go here."),
       primaryText: "1. Aksiyon Butonu",
       primaryHref: "#",
       secondaryText: "2. Aksiyon Butonu",
@@ -1108,24 +1108,24 @@ function previewVariantGroups(selection: PreviewSelection): ProductVariantGroup[
   return [
     {
       id: "preview-color",
-      name: "Renk",
+      name: tLocalized("Renk", "Colour"),
       values: [
-        { id: "A1", name: "A1", color: "#f3ede0" },
-        { id: "A2", name: "A2", color: "#efe4cf" },
-        { id: "A3", name: "A3", color: "#e8d7b8" },
+        { id: tLocalized("A1", "A1"), name: tLocalized("A1", "A1"), color: "#f3ede0" },
+        { id: tLocalized("A2", "A2"), name: tLocalized("A2", "A2"), color: "#efe4cf" },
+        { id: tLocalized("A3", "A3"), name: tLocalized("A3", "A3"), color: "#e8d7b8" },
       ].map((value) => ({
         ...value,
-        selected: (selection["preview-color"] || "A1") === value.id,
+        selected: (selection["preview-color"] || tLocalized("A1", "A1")) === value.id,
         hasStock: true,
         rawValue: { groupId: "preview-color", valueId: value.id },
       })),
     },
     {
       id: "preview-size",
-      name: "Boyut",
+      name: tLocalized("Boyut", "Dimension"),
       values: [
-        { id: "500-gr", name: "500 gr" },
-        { id: "1000-gr", name: "1000 gr" },
+        { id: "500-gr", name: tLocalized("500 gr", "500g") },
+        { id: "1000-gr", name: tLocalized("1000 gr", "1000g") },
       ].map((value) => ({
         ...value,
         selected: (selection["preview-size"] || "500-gr") === value.id,
@@ -1295,7 +1295,7 @@ async function handleAddToCart() {
   if (!hasProductValidOptionValues(product)) {
     setMessage(
       props.optionRequiredMessage ||
-        "Lütfen gerekli ürün seçeneklerini tamamlayın."
+        tLocalized("Lütfen gerekli ürün seçeneklerini tamamlayın.", "Please complete the required product options.")
     );
     return;
   }
@@ -1303,7 +1303,7 @@ async function handleAddToCart() {
   if (!isAddToCartEnabled(product)) {
     setMessage(
       props.addToCartErrorMessage ||
-        "Ürün sepete eklenemiyor."
+        tLocalized("Ürün sepete eklenemiyor.", "The product cannot be added to the cart.")
     );
     return;
   }
@@ -1338,7 +1338,7 @@ if (result.success) {
 } else {
   setMessage(
     props.addToCartErrorMessage ||
-      "Ürün sepete eklenemedi."
+      tLocalized("Ürün sepete eklenemedi.", "The product could not be added to the cart.")
   );
 }
   } finally {
@@ -1350,7 +1350,7 @@ if (result.success) {
     return (
       <section className="three-mash-product-detail-live" style={style}>
         <div className="tmpdl-setup">
-          {props.setupMessage || "Ürün detayları kısa süre içinde burada gösterilecek."}
+          {props.setupMessage || tLocalized("Ürün detayları kısa süre içinde burada gösterilecek.", "Product details will be shown here shortly.")}
         </div>
       </section>
     );
@@ -1379,7 +1379,7 @@ if (result.success) {
             onAddToCart={handleAddToCart}
             isAddToCartDisabled={addDisabled}
             isAdding={isAdding}
-            message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || "Stok yok")) : "")}
+            message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || tLocalized("Stok yok", "Out of stock"))) : "")}
             price={variant ? getProductVariantFormattedFinalPrice(variant) : ""}
             compareAtPrice={variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : ""}
             selectedSummary={selectedSummary(data, groups)}
@@ -1410,7 +1410,7 @@ if (result.success) {
         onAddToCart={handleAddToCart}
         isAddToCartDisabled={addDisabled}
         isAdding={isAdding}
-        message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || "Stok yok")) : "")}
+        message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || tLocalized("Stok yok", "Out of stock"))) : "")}
         price={variant ? getProductVariantFormattedFinalPrice(variant) : ""}
         compareAtPrice={variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : ""}
         selectedSummary={selectedSummary(data, groups)}

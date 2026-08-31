@@ -340,17 +340,17 @@ function routeKey(value: string) {
 const categoryRouteAliases: Record<string, string> = {
   "resins": "/dental-3d-yazici-recineleri",
   "printers": "/3d-yazicilar",
-  "wash-cure": "/yikama-kurleme-cihazlari",
-  "washing": "/yikama-cihazlari",
-  "curing": "/kurleme-cihazlari",
-  "yikama-cihazlari": "/yikama-cihazlari",
-  "yikama": "/yikama-cihazlari",
-  "urunler-yikama": "/yikama-cihazlari",
-  "urunler-yikama-cihazlari": "/yikama-cihazlari",
-  "kurleme-cihazlari": "/kurleme-cihazlari",
-  "kurleme": "/kurleme-cihazlari",
-  "urunler-kurleme": "/kurleme-cihazlari",
-  "urunler-kurleme-cihazlari": "/kurleme-cihazlari",
+  "wash-cure": tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
+  "washing": tLocalized("/yikama-cihazlari", "/yikama-cihazlari"),
+  "curing": tLocalized("/kurleme-cihazlari", "/kurleme-cihazlari"),
+  "yikama-cihazlari": tLocalized("/yikama-cihazlari", "/yikama-cihazlari"),
+  "yikama": tLocalized("/yikama-cihazlari", "/yikama-cihazlari"),
+  "urunler-yikama": tLocalized("/yikama-cihazlari", "/yikama-cihazlari"),
+  "urunler-yikama-cihazlari": tLocalized("/yikama-cihazlari", "/yikama-cihazlari"),
+  "kurleme-cihazlari": tLocalized("/kurleme-cihazlari", "/kurleme-cihazlari"),
+  "kurleme": tLocalized("/kurleme-cihazlari", "/kurleme-cihazlari"),
+  "urunler-kurleme": tLocalized("/kurleme-cihazlari", "/kurleme-cihazlari"),
+  "urunler-kurleme-cihazlari": tLocalized("/kurleme-cihazlari", "/kurleme-cihazlari"),
   "zircon": "/zirkon-bloklar",
   "furnaces": "/dental-firinlar",
   "scanners": "/masasustu-tarayicilar",
@@ -364,9 +364,9 @@ const categoryRouteAliases: Record<string, string> = {
   "dental-recineler": "/dental-3d-yazici-recineleri",
   "urunler-dental-recineler": "/dental-3d-yazici-recineleri",
   "recineler": "/dental-3d-yazici-recineleri",
-  "yikama-kurleme-cihazlari": "/yikama-kurleme-cihazlari",
-  "yikama-kurleme": "/yikama-kurleme-cihazlari",
-  "urunler-yikama-kurleme": "/yikama-kurleme-cihazlari",
+  "yikama-kurleme-cihazlari": tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
+  "yikama-kurleme": tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
+  "urunler-yikama-kurleme": tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
   "masasustu-tarayicilar": "/masasustu-tarayicilar",
   "masaustu-tarayicilar": "/masasustu-tarayicilar",
   "urunler-masasustu-tarayicilar": "/masasustu-tarayicilar",
@@ -402,7 +402,7 @@ function categoryHref(value: string) {
 
 function parentCategoryHref(data: CategoryLandingData) {
   const parentLabelKey = routeKey(data.breadcrumb.parentLabel || "");
-  if (parentLabelKey === "urunler" || parentLabelKey === "products") {
+  if (parentLabelKey === tLocalized("urunler", "urunler") || parentLabelKey === "products") {
     return "/search";
   }
 
@@ -470,7 +470,7 @@ function safeHistoryReplace(url: string) {
 }
 
 function anchorScrollTarget(section: HTMLElement, sectionId: string) {
-  if (sectionId !== "neden-gerekli") return section;
+  if (sectionId !== tLocalized("neden-gerekli", "neden-gerekli")) return section;
   return section.querySelector(".tmcl-section-head") || section;
 }
 

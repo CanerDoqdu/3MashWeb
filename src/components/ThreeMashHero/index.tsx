@@ -42,9 +42,9 @@ function href(value?: string) {
 
   const key = routeKey(next);
   if (
-    key === "3mash-maliyet-detay-html" ||
-    key === "maliyet-detay" ||
-    key === "pages-maliyet-detay" ||
+    key === tLocalized("3mash-maliyet-detay-html", "3mash-maliyet-detay-html") ||
+    key === tLocalized("maliyet-detay", "maliyet-detay") ||
+    key === tLocalized("pages-maliyet-detay", "pages-maliyet-detay") ||
     key === "hesaplama" ||
     key === "pages-hesaplama"
   ) {
@@ -74,8 +74,8 @@ function consultationHref(value?: string) {
   const key = routeKey(current);
   if (
     current === "#" ||
-    key === "pages-iletisim" ||
-    key === "iletisim" ||
+    key === tLocalized("pages-iletisim", "pages-iletisim") ||
+    key === tLocalized("iletisim", "iletisim") ||
     key === "contact"
   ) {
     return defaultConsultationWhatsappHref;
@@ -539,7 +539,7 @@ export function ThreeMashHero(props: Props) {
   const titleBeforeAmount =
     mode === "lab"
       ? props.labTitleBeforeAmount ||
-        props.titleBeforeAmount?.replace("Kliniğiniz", "Laboratuvarınız").replace(/clinic/i, "laboratory")
+        props.titleBeforeAmount?.replace(tLocalized("Kliniğiniz", "Your clinic"), tLocalized("Laboratuvarınız", "Your laboratory")).replace(/clinic/i, "laboratory")
       : props.titleBeforeAmount;
 
   useEffect(() => {
@@ -687,7 +687,7 @@ export function ThreeMashHero(props: Props) {
                     <span className="tmhero-money">{formattedLoss}</span> silently
                   </span>
                   <span className="tmhero-line-after" style={{ display: "block" }}>
-                    every year.
+                    {tLocalized("every year.", "every year")}
                   </span>
                   <span className="tmhero-em-wrap" style={{ display: "block" }}>
                     <span

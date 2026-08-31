@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import { isEnglishLocale, tProp } from "../../utils/i18n";
+import { isEnglishLocale, tProp, tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
 
 function stripInlineTypographyStyles(markup: string) {
@@ -61,7 +61,7 @@ function sideHtml(value?: string, enabled = true, props?: Props) {
 }
 
 function anchorId(_value?: string) {
-  return "sebep";
+  return tLocalized("sebep", "reason");
 }
 
 function imageSource(value: unknown) {

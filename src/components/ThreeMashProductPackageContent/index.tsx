@@ -75,17 +75,17 @@ export function ThreeMashProductPackageContent(props: Props) {
     },
     {
       num: trimmedText(props.item6Number, "06"),
-      title: trimmedText(props.item6Title, "6. Paket Maddesi Başlığı"),
-      desc: trimmedText(props.item6Description, "Paket içeriğine dahil olan 6. teknik destek veya garanti kapsamı açıklaması buraya gelecek."),
-      tag: trimmedText(props.item6Tag, "GARANTİ"),
+      title: trimmedText(props.item6Title, tLocalized("6. Paket Maddesi Başlığı", "6. Package Item Title")),
+      desc: trimmedText(props.item6Description, tLocalized("Paket içeriğine dahil olan 6. teknik destek veya garanti kapsamı açıklaması buraya gelecek.", "The description of the 6th technical support or warranty coverage included in the package will go here.")),
+      tag: trimmedText(props.item6Tag, tLocalized("GARANTİ", "WARRANTY")),
     },
   ];
 
-  const bannerTitle = trimmedText(props.bottomBannerTitle, "Alt Garanti Bandı Başlığı");
-  const bannerBadge = trimmedText(props.bottomBannerBadge, "ÖZEL ROZET");
+  const bannerTitle = trimmedText(props.bottomBannerTitle, tLocalized("Alt Garanti Bandı Başlığı", "Bottom Warranty Band Title"));
+  const bannerBadge = trimmedText(props.bottomBannerBadge, tLocalized("ÖZEL ROZET", "SPECIAL BADGE"));
   const bannerText = trimmedText(
     props.bottomBannerText,
-    "Kutu içeriği veya teslimat garantisi ile ilgili alt bilgilendirme metni buraya gelecek."
+    tLocalized("Kutu içeriği veya teslimat garantisi ile ilgili alt bilgilendirme metni buraya gelecek.", "Footer information text about box contents or delivery guarantee will go here.")
   );
   const ctaText = trimmedText(props.ctaText, tLocalized("Aksiyon Butonu Metni →", "Action Button Text →"));
   const ctaHref = trimmedText(

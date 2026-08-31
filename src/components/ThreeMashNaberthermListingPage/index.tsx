@@ -9,7 +9,7 @@ export function ThreeMashNaberthermListingPage(props: Props) {
       {...listingProps(props, {
         eyebrowText: tLocalized("MARKA KOLEKSİYONU", "BRAND COLLECTION"),
         titleText: "Nabertherm",
-        descriptionText: "Nabertherm fırın ve ısıl işlem çözümleri için canlı envanter.",
+        descriptionText: tLocalized("Nabertherm fırın ve ısıl işlem çözümleri için canlı envanter.", "Live inventory for Nabertherm furnace and heat-treatment solutions."),
       })}
     />
   );

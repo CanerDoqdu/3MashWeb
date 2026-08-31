@@ -9,7 +9,7 @@ export function ThreeMashAllProductsPage(props: Props) {
       {...listingProps(props, {
         eyebrowText: tLocalized("TÜM ÜRÜNLER", "All Products"),
         titleText: tLocalized("Ürünler", "Products"),
-        descriptionText: "Güncel ürün kataloğunu keşfedin; yayındaki ürünleri tek yerden inceleyin.",
+        descriptionText: tLocalized("Güncel ürün kataloğunu keşfedin; yayındaki ürünleri tek yerden inceleyin.", "Discover our current product catalog; browse live products in one place."),
       })}
     />
   );

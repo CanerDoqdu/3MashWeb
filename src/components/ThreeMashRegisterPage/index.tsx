@@ -194,7 +194,7 @@ export function ThreeMashRegisterPage(props: Props) {
 
           <div className="tmrpg-auth-tabs">
             <a href={href(props.loginTabHref, "/account/login")}>
-              {text(props.loginTabText, "Üye Girişi", "Sign In")}
+              {text(props.loginTabText, tLocalized("Üye Girişi", "Member Login"), "Sign In")}
             </a>
             <span className="is-active">
               {text(props.registerTabText, tLocalized("Üye Ol", "Register"), "Register")}
@@ -228,7 +228,7 @@ export function ThreeMashRegisterPage(props: Props) {
           </label>
 
           <label className="tmrpg-auth-field">
-            <span>* {text(props.emailLabel, "Email", "Email")}</span>
+            <span>* {text(props.emailLabel, tLocalized("Email", "E-mail"), tLocalized("Email", "E-mail"))}</span>
             <input
               name="email"
               type="email"
@@ -295,7 +295,7 @@ export function ThreeMashRegisterPage(props: Props) {
                 {t("auth.termsMembershipLink", tLocalized("Üyelik Sözleşmesi", "Membership Agreement"))}
               </a>{" "}
               {t("auth.termsAnd", "ve")}{" "}
-              <a href={href(props.kvkkHref, "/pages/gizlilik-politikasi-ve-kvkk")}>
+              <a href={href(props.kvkkHref, tLocalized("/pages/gizlilik-politikasi-ve-kvkk", "/pages/gizlilik-politikasi-ve-kvkk"))}>
                 {t("auth.termsKvkkLink", tLocalized("KVKK Aydınlatma Metni", "KVKK Clarification Text"))}
               </a>
               {t("auth.termsSuffix", "ni okudum, kabul ediyorum.")}

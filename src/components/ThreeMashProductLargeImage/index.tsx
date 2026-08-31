@@ -3,7 +3,7 @@ import { Props } from "./types";
 import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailSectionScope, ProductDetailSpecHighlightSection, type ProductDetailTemplateData } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderSpecHighlight } from "../../sub-components/ThreeMashProductSectionPlaceholder";
-import { isEnglishLocale, isTurkishText } from "../../utils/i18n";
+import { isEnglishLocale, isTurkishText, tLocalized } from "../../utils/i18n";
 
 function trimmedText(value: unknown): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -33,7 +33,7 @@ export function ThreeMashProductLargeImage(props: Props) {
           <div className="tmplg-frame">
             <img
               src={src}
-              alt="Urun detay gorseli"
+              alt={tLocalized("Urun detay gorseli", "Product detail image")}
               loading="lazy"
               decoding="async"
             />

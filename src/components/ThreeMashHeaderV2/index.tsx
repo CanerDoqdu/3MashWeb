@@ -632,7 +632,7 @@ function routeAnnouncementOverride(): HeaderAnnouncementOverride | null {
 const firstPaintCategoryRouteKeys = [
   "3d-yazicilar",
   "dental-3d-yazici-recineleri",
-  "yikama-kurleme-cihazlari",
+  tLocalized("yikama-kurleme-cihazlari", "yikama-kurleme-cihazlari"),
   "masasustu-tarayicilar",
   "zirkon-bloklar",
   "dental-firinlar",
@@ -726,12 +726,12 @@ const defaultProductsFeature = {
     "Eliminates user error in post-curing: automatically manages time, temperature, and wavelength based on resin."
   ),
   ctaText: tLocalized("Keşfet →", "Discover →"),
-  href: "/yikama-kurleme-cihazlari",
+  href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
 };
 const defaultProductPrimary: Required<MenuItem>[] = [
   { title: tLocalized("3D Yazıcılar", "3D Printers"), description: tLocalized("P1D / P16L hassas baskı", "P1D / P16L precision printing"), href: "/3d-yazicilar", icon: ecoPrinterIcon },
-  { title: tLocalized("Yıkama", "Washing"), description: tLocalized("Baskı sonrası ultrasonik temizlik", "Post-print ultrasonic cleaning"), href: "/yikama-cihazlari", icon: ecoScannerIcon },
-  { title: tLocalized("Kürleme", "Curing"), description: tLocalized("360° homojen UV post-curing", "360° uniform UV post-curing"), href: "/kurleme-cihazlari", icon: ecoCuringIcon },
+  { title: tLocalized("Yıkama", "Washing"), description: tLocalized("Baskı sonrası ultrasonik temizlik", "Post-print ultrasonic cleaning"), href: tLocalized("/yikama-cihazlari", "/yikama-cihazlari"), icon: ecoScannerIcon },
+  { title: tLocalized("Kürleme", "Curing"), description: tLocalized("360° homojen UV post-curing", "360° uniform UV post-curing"), href: tLocalized("/kurleme-cihazlari", "/kurleme-cihazlari"), icon: ecoCuringIcon },
 ];
 const defaultProductSecondary: Required<MenuItem>[] = [
   { title: tLocalized("Dental Reçineler", "Dental Resins"), description: tLocalized("Dental reçine seçenekleri", "Dental resin options"), href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
@@ -753,9 +753,9 @@ function headerRouteHref(value: string | undefined, fallback: string) {
   const slug = routeTextKey(internal || trimmed);
 
   if (normalized === "/" && fallback === "/cart") return "/cart";
-  if (slug === "account-login" || slug === "login" || slug === "hesabim" || slug === "account") return "/account/login";
-  if (slug === "cart" || slug === "sepet") return "/cart";
-  if (slug === "search" || slug === "arama") return "/search";
+  if (slug === "account-login" || slug === "login" || slug === tLocalized("hesabim", "hesabim") || slug === "account") return "/account/login";
+  if (slug === "cart" || slug === tLocalized("sepet", "cart")) return "/cart";
+  if (slug === "search" || slug === tLocalized("arama", "search")) return "/search";
   if (productCategoryRoutes[slug]) return productCategoryRoutes[slug];
   return internal || fallback;
 }
@@ -768,7 +768,7 @@ function storePageHref(value?: string) {
   const internal = internalSiteHref(value || "") || value || "";
   const normalized = routeAliasKey(internal);
   const slug = routeTextKey(internal);
-  if (!internal.trim() || normalized === "/" || slug === "cart" || slug === "sepet") return "/search";
+  if (!internal.trim() || normalized === "/" || slug === "cart" || slug === tLocalized("sepet", "cart")) return "/search";
   return headerRouteHref(value, "/search");
 }
 
@@ -815,9 +815,9 @@ const productCategoryRoutes: Record<string, string> = {
   "dental-3d-yazici-recineleri": "/dental-3d-yazici-recineleri",
   "dental-recineler": "/dental-3d-yazici-recineleri",
   "recineler": "/dental-3d-yazici-recineleri",
-  "yikama-kurleme-cihazlari": "/yikama-kurleme-cihazlari",
-  "yikama-kurleme": "/yikama-kurleme-cihazlari",
-  "kurleme-cihazlari": "/yikama-kurleme-cihazlari",
+  "yikama-kurleme-cihazlari": tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
+  "yikama-kurleme": tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
+  "kurleme-cihazlari": tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
   "masasustu-tarayicilar": "/masasustu-tarayicilar",
   "masaustu-tarayicilar": "/masasustu-tarayicilar",
   "tarayicilar": "/masasustu-tarayicilar",
@@ -956,12 +956,12 @@ function handleAnnouncementClick(event: MouseEvent, targetHref: string) {
 
 function c4pRouteHref(value: string | undefined) {
   const trimmed = value?.trim();
-  if (!trimmed) return "/yikama-kurleme-cihazlari";
+  if (!trimmed) return tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari");
   const normalized = trimmed
     .toLowerCase()
     .replace(/^https?:\/\/(?:www\.)?(?:3mash\.com|studio\.ikasapps\.com)/i, "")
     .replace(/\/$/, "");
-  if (normalized === "/mash" || normalized === "/urunler/c4p" || normalized === "/yikama-kurleme-cihazlari") return "/yikama-kurleme-cihazlari";
+  if (normalized === "/mash" || normalized === tLocalized("/urunler/c4p", "/urunler/c4p") || normalized === tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari")) return tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari");
   return trimmed;
 }
 
@@ -1330,7 +1330,7 @@ function resolveActionIcon(image: unknown, svg: unknown, fallbackSvg: string, sh
 }
 
 function ProductLink({ item, wordStyle }: { item: MenuItem; wordStyle: any }) {
-  const isCombinedProduct = item.title === "Tarayıcılar ve Fırınlar" || item.title === "Scanners & Furnaces" || item.href?.includes("dental-firinlar");
+  const isCombinedProduct = item.title === tLocalized("Tarayıcılar ve Fırınlar", "Scanners and Furnaces") || item.title === "Scanners & Furnaces" || item.href?.includes("dental-firinlar");
 
   return (
     <a href={href(item.href)} className={`tmh-mega-link${isCombinedProduct ? " tmh-mega-link-combined" : ""}`}>
@@ -1397,11 +1397,11 @@ function getElementHeaderScrollTop(targetEl: HTMLElement, sectionId?: string): n
   const elementAbsoluteTop = window.scrollY + rect.top;
   const isMobile = window.innerWidth <= 768;
 
-  if (sectionId === "cozum") {
+  if (sectionId === tLocalized("cozum", "cozum")) {
     return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 10 : 20));
-  } else if (sectionId === "sebep" || sectionId === "sorun") {
+  } else if (sectionId === tLocalized("sebep", "reason") || sectionId === "sorun") {
     return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 12 : 24));
-  } else if (sectionId === "kurleme") {
+  } else if (sectionId === tLocalized("kurleme", "kurleme")) {
     return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 10 : 18));
   }
   return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 12 : 20));
@@ -1411,14 +1411,14 @@ function findSectionTargetElement(sectionId: string): HTMLElement | null {
   const cleanId = sectionId.replace(/^#+/, "").trim();
   if (!cleanId) return null;
 
-  if (cleanId === "sebep" || cleanId === "sorun") {
-    return document.querySelector("#sebep, #sorun, .three-mash-problem, .tmproblem-head, .tmproblem");
+  if (cleanId === tLocalized("sebep", "reason") || cleanId === "sorun") {
+    return document.querySelector(tLocalized("#sebep, #sorun, .three-mash-problem, .tmproblem-head, .tmproblem", "#sebep, #sorun, .three-mash-problem, .tmproblem-head, .tmproblem"));
   }
-  if (cleanId === "cozum") {
-    return document.querySelector("#cozum, .three-mash-solution, .tmr-solution, .tmr-head");
+  if (cleanId === tLocalized("cozum", "cozum")) {
+    return document.querySelector(tLocalized("#cozum, .three-mash-solution, .tmr-solution, .tmr-head", "#cozum, .three-mash-solution, .tmr-solution, .tmr-head"));
   }
-  if (cleanId === "kurleme") {
-    return document.querySelector("#kurleme, .three-mash-curing, .tmr-curing");
+  if (cleanId === tLocalized("kurleme", "kurleme")) {
+    return document.querySelector(tLocalized("#kurleme, .three-mash-curing, .tmr-curing", "#kurleme, .three-mash-curing, .tmr-curing"));
   }
   if (cleanId === "ekosistem") {
     return document.querySelector("#ekosistem, .three-mash-ecosystem, .tmr-ecosystem");
@@ -1429,8 +1429,8 @@ function findSectionTargetElement(sectionId: string): HTMLElement | null {
   if (cleanId === "sss") {
     return document.querySelector("#sss, .three-mash-faq, .tmr-faq");
   }
-  if (cleanId === "iletisim-cta") {
-    return document.querySelector("#iletisim-cta, .three-mash-final, .tmr-final");
+  if (cleanId === tLocalized("iletisim-cta", "iletisim-cta")) {
+    return document.querySelector(tLocalized("#iletisim-cta, .three-mash-final, .tmr-final", "#iletisim-cta, .three-mash-final, .tmr-final"));
   }
   return document.getElementById(cleanId) || document.querySelector(`#${cleanId}`);
 }
@@ -1440,7 +1440,7 @@ function scrollToSectionWithOffset(sectionId: string, onAlreadyAtSection?: () =>
 
   const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
   const cleanId = sectionId.replace(/^#+/, "").trim();
-  const isTopTarget = !cleanId || cleanId === "__top__" || cleanId === "giris" || cleanId === "/" || cleanId === "top";
+  const isTopTarget = !cleanId || cleanId === "__top__" || cleanId === tLocalized("giris", "giris") || cleanId === "/" || cleanId === "top";
 
   if (currentPath !== "/") {
     if (isTopTarget) {
@@ -1498,7 +1498,7 @@ function FlowLink({
 }) {
   const itemHref = href(item.href);
   const sectionId = flowSectionId(item);
-  const isFirstItem = item.number === "01" || itemHref === "/" || !sectionId || sectionId === "giris";
+  const isFirstItem = item.number === "01" || itemHref === "/" || !sectionId || sectionId === tLocalized("giris", "giris");
 
   return (
     <a
@@ -1538,10 +1538,10 @@ function whyMenuHref(fallback: string) {
   const hash = target.includes("#") ? `#${target.split("#").pop() || ""}` : target;
   const slug = routeTextKey(hash);
 
-  if (fallback === "/" || slug === "sorun" || slug === "sebep" || slug === "piyasada-yaygin-kurulum-250-500") return "/#sebep";
-  if (slug === "cozum") return "/#cozum";
-  if (slug === "kurleme" || slug === "neden-gerekli") return "/#kurleme";
-  if (slug === "iletisim-cta" || slug === "kritik-son-adim" || slug === "son-adim") return "/#iletisim-cta";
+  if (fallback === "/" || slug === "sorun" || slug === tLocalized("sebep", "reason") || slug === tLocalized("piyasada-yaygin-kurulum-250-500", "piyasada-yaygin-kurulum-250-500")) return tLocalized("/#sebep", "/#sebep");
+  if (slug === tLocalized("cozum", "cozum")) return tLocalized("/#cozum", "/#cozum");
+  if (slug === tLocalized("kurleme", "kurleme") || slug === tLocalized("neden-gerekli", "neden-gerekli")) return tLocalized("/#kurleme", "/#kurleme");
+  if (slug === tLocalized("iletisim-cta", "iletisim-cta") || slug === "kritik-son-adim" || slug === "son-adim") return tLocalized("/#iletisim-cta", "/#iletisim-cta");
   return target.startsWith("#") ? `/${target}` : target;
 }
 
@@ -1719,19 +1719,19 @@ const cartItems =
       number: text(props.why2Number, "02"),
       title: tProp(props.why2Title, "Sebep: ölçüsel hassasiyet", "Cause: dimensional accuracy"),
       description: tProp(props.why2Description, "250–500µm sapma bandı vs ±20µm güvenli bölge", "250–500µm deviation band vs ±20µm safe zone"),
-      href: whyMenuHref("/#sebep"),
+      href: whyMenuHref(tLocalized("/#sebep", "/#sebep")),
     },
     {
       number: text(props.why3Number, "03"),
       title: tProp(props.why3Title, "Çözüm: uyumlu ekosistem", "Solution: compatible ecosystem"),
       description: tProp(props.why3Description, "Yazıcı + reçine + parametre bilgisi, birlikte kalibre", "Printer + resin + parameter knowledge, calibrated together"),
-      href: whyMenuHref("/#cozum"),
+      href: whyMenuHref(tLocalized("/#cozum", "/#cozum")),
     },
     {
       number: text(props.why4Number, "04"),
       title: tProp(props.why4Title, "Ve kürleme — son %20'lik fark", "And curing — the final 20% difference"),
       description: tProp(props.why4Description, "Doğru basılan iş, yanlış kürlenirse yine başarısız olur", "Correctly printed jobs still fail if incorrectly cured"),
-      href: whyMenuHref("/#kurleme"),
+      href: whyMenuHref(tLocalized("/#kurleme", "/#kurleme")),
     },
   ];
 
@@ -1772,7 +1772,7 @@ const cartItems =
     {
       label: richTextValue(
         props.profileLink5Text,
-        "Mash Academy"
+        tLocalized("Mash Academy", "Mash Academy")
       ),
       link: academyPageTarget(
         props.profileLink5Href

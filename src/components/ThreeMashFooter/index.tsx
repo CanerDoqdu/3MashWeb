@@ -7,14 +7,14 @@ function organizationJsonLd(props: Props): string {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "3MASH",
+    name: tLocalized("3MASH", "3MASH"),
     legalName: "3MASH Dental & 3D Technologies",
     url: "https://3mash.com",
     logo: "https://cdn.myikas.com/images/theme-images/4a6af8e2-cb7c-4cc8-ba17-13656d4b8670/image_3840.webp",
     description: props.descriptionText || tLocalized("Dental 3D yazıcılar, biyouyumlu reçineler, tarama ve kürleme cihazları ekosistemi.", "Ecosystem of dental 3D printers, biocompatible resins, scanning and curing devices."),
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Antalya",
+      addressLocality: tLocalized("Antalya", "Antalya"),
       addressRegion: tLocalized("Konyaaltı", "Konyaalti"),
       addressCountry: "TR",
       streetAddress: tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Technopark, Konyaalti"),

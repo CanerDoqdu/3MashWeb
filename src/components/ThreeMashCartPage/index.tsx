@@ -34,7 +34,7 @@ import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
 const categoryProductsPageHref = "/dental-3d-yazici-recineleri";
 const legacyContinueShoppingHrefs = new Set([
   "/2tplvqpo-category-products-page",
-  "/tum-urunler",
+  tLocalized("/tum-urunler", "/tum-urunler"),
   "/search",
   "/cart",
 ]);
@@ -90,7 +90,7 @@ function productHref(item: IkasOrderLineItem) {
 }
 
 function itemTitle(item: IkasOrderLineItem) {
-  return item.variant?.name || "Ürün";
+  return item.variant?.name || tLocalized("Ürün", "Product");
 }
 
 function variantText(item: IkasOrderLineItem) {
@@ -382,12 +382,12 @@ async function applyCoupon() {
     refreshState();
 
     if (cartStore.cart?.couponCode) {
-      setCouponMessage("İndirim kodu uygulandı.");
+      setCouponMessage(tLocalized("İndirim kodu uygulandı.", "Discount code applied."));
     } else {
-      setCouponMessage("Geçersiz indirim kodu.");
+      setCouponMessage(tLocalized("Geçersiz indirim kodu.", "Invalid discount code."));
     }
   } catch {
-    setCouponMessage("Geçersiz indirim kodu.");
+    setCouponMessage(tLocalized("Geçersiz indirim kodu.", "Invalid discount code."));
   } finally {
     setCouponLoading(false);
   }

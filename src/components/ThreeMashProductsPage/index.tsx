@@ -81,22 +81,22 @@ function localizeSortLabel(value: string | undefined) {
   const normalized = searchKey(label);
 
   if (!normalized) return label;
-  if (normalized === "sirala") return "Sırala";
-  if (normalized.includes("default") || normalized.includes("varsayilan")) return "Varsayılan";
-  if (normalized.includes("most relevant") || normalized.includes("relevant")) return "En Alakalı";
-  if (normalized.includes("newest") || normalized.includes("en yeni") || normalized === "new") return "En Yeni";
+  if (normalized === tLocalized("sirala", "sirala")) return tLocalized("Sırala", "Sort");
+  if (normalized.includes("default") || normalized.includes("varsayilan")) return tLocalized("Varsayılan", "Default");
+  if (normalized.includes("most relevant") || normalized.includes("relevant")) return tLocalized("En Alakalı", "Most Relevant");
+  if (normalized.includes("newest") || normalized.includes(tLocalized("en yeni", "newest")) || normalized === "new") return tLocalized("En Yeni", "Newest");
   if (normalized.includes("oldest") || normalized.includes("en eski")) return "En Eski";
-  if (normalized.includes("price") && (normalized.includes("low") || normalized.includes("asc") || normalized.includes("cheap"))) return "Fiyat: Artan";
-  if (normalized.includes("price") && (normalized.includes("high") || normalized.includes("desc") || normalized.includes("expensive"))) return "Fiyat: Azalan";
-  if (normalized.includes("name") && normalized.includes("az")) return "İsim: A-Z";
-  if (normalized.includes("name") && normalized.includes("za")) return "İsim: Z-A";
-  if (normalized.includes("increasing price")) return "Fiyat: Artan";
-  if (normalized.includes("decreasing price")) return "Fiyat: Azalan";
+  if (normalized.includes("price") && (normalized.includes("low") || normalized.includes("asc") || normalized.includes("cheap"))) return tLocalized("Fiyat: Artan", "Price: Low to High");
+  if (normalized.includes("price") && (normalized.includes("high") || normalized.includes("desc") || normalized.includes("expensive"))) return tLocalized("Fiyat: Azalan", "Price: High to Low");
+  if (normalized.includes("name") && normalized.includes("az")) return tLocalized("İsim: A-Z", "Name: A-Z");
+  if (normalized.includes("name") && normalized.includes("za")) return tLocalized("İsim: Z-A", "Name: Z-A");
+  if (normalized.includes("increasing price")) return tLocalized("Fiyat: Artan", "Price: Low to High");
+  if (normalized.includes("decreasing price")) return tLocalized("Fiyat: Azalan", "Price: High to Low");
   if (normalized.includes("last added")) return "Son Eklenen";
-  if (normalized.includes("first added")) return "İlk Eklenen";
-  if (normalized.includes("increasing discount")) return "İndirim: Artan";
-  if (normalized.includes("decreasing discount")) return "İndirim: Azalan";
-  if (normalized.includes("featured")) return "Öne Çıkan";
+  if (normalized.includes("first added")) return tLocalized("İlk Eklenen", "First Added");
+  if (normalized.includes("increasing discount")) return tLocalized("İndirim: Artan", "Discount: Ascending");
+  if (normalized.includes("decreasing discount")) return tLocalized("İndirim: Azalan", "Discount: Descending");
+  if (normalized.includes("featured")) return tLocalized("Öne Çıkan", "Featured");
 
   return label;
 }
@@ -149,7 +149,7 @@ function availableProductCategories(productList: IkasProductList): IkasFilterCat
 function categoryLabel(category: IkasFilterCategory) {
   const data = category as unknown as Record<string, unknown>;
   const label = String(data.name || data.title || data.slug || data.handle || "").trim();
-  return label || "Kategori";
+  return label || tLocalized("Kategori", "Category");
 }
 
 function productCategoryMatches(product: IkasProduct, category: ListingLink) {
@@ -194,7 +194,7 @@ function ProductCard({
       <div className="tm-products-card-media">
         {imageSrc && !isMediaLoaded ? <div className="tm-products-card-media-loader" aria-hidden="true" /> : null}
         <div className="tm-products-card-badges">
-          {hasDiscount ? <span>{props.discountText || "İndirim"}</span> : null}
+          {hasDiscount ? <span>{props.discountText || tLocalized("İndirim", "Discount")}</span> : null}
         </div>
         {image ? (
           media?.isVideo ? (
@@ -233,7 +233,7 @@ function ProductCard({
           {firstCategory ? (
             <span>{firstCategory}</span>
           ) : (
-            <span>{props.fallbackCategoryText || "3MASH"}</span>
+            <span>{props.fallbackCategoryText || tLocalized("3MASH", "3MASH")}</span>
           )}
           {product.brand?.name ? <span>{product.brand.name}</span> : null}
         </div>
@@ -254,11 +254,11 @@ function ProductCard({
             {price ? (
               <strong>{price}</strong>
             ) : (
-              <strong>{props.priceRequestText || "Teklif Alın"}</strong>
+              <strong>{props.priceRequestText || tLocalized("Teklif Alın", "Get a Quote")}</strong>
             )}
             {comparePrice ? <span>{comparePrice}</span> : null}
           </div>
-          <em>{props.viewProductText || "Ürünü İncele"}</em>
+          <em>{props.viewProductText || tLocalized("Ürünü İncele", "View Product")}</em>
         </div>
       </div>
     </a>
@@ -297,10 +297,10 @@ export function ThreeMashProductsPage(props: Props) {
   const selectedSortLabel =
     localizeSortLabel(sortOptions.find((option) => option.value === selectedSort)?.label) ||
     props.sortLabel ||
-    "Sırala";
+    tLocalized("Sırala", "Sort");
   const pageTitle =
-    normalizedText(props.eyebrowText) === "ürün kategorisi"
-      ? props.titleText || productList?.category?.name || productList?.brand?.name || "Ürünler"
+    normalizedText(props.eyebrowText) === tLocalized("ürün kategorisi", "product category")
+      ? props.titleText || productList?.category?.name || productList?.brand?.name || tLocalized("Ürünler", "Products")
       : tLocalized("Tüm Ürünler", "All Products");
   const eyebrowText = props.eyebrowText?.trim() || "";
   const categoryLinks: ListingLink[] = [
@@ -318,7 +318,7 @@ export function ThreeMashProductsPage(props: Props) {
       }))),
   ];
   const isCategoryProductsPage =
-    normalizedText(eyebrowText) === "ürün kategorisi";
+    normalizedText(eyebrowText) === tLocalized("ürün kategorisi", "product category");
   const isDentalResinCategoryPage =
     isCategoryProductsPage && normalizedText(pageTitle) === tLocalized("dental reçineler", "Dental Resins");
   const showSearchControl = props.showSearch !== false;
@@ -328,7 +328,7 @@ export function ThreeMashProductsPage(props: Props) {
     sortOptions.length > 0;
   const showListControls = showSearchControl || showSortControl;
   const showNavigationControls = !isCategoryProductsPage;
-  const displayEyebrowText = eyebrowText || "ÜRÜN KATEGORİSİ";
+  const displayEyebrowText = eyebrowText || tLocalized("ÜRÜN KATEGORİSİ", "PRODUCT CATEGORY");
   const trimmedSearch = searchValue.trim();
   const fallbackProducts =
     unfilteredProductsRef.current.length > 0
@@ -582,7 +582,7 @@ export function ThreeMashProductsPage(props: Props) {
         {!productList ? (
           <div className="tm-products-setup">
             {props.setupMessage ||
-              "Ürünler kısa süre içinde burada listelenecek."}
+              tLocalized("Ürünler kısa süre içinde burada listelenecek.", "Products will be listed here shortly.")}
           </div>
         ) : (
           <>
@@ -590,13 +590,13 @@ export function ThreeMashProductsPage(props: Props) {
               <div className="tm-products-toolbar">
                 {showSearchControl ? (
                   <label className="tm-products-search">
-                    <span>{props.searchLabel || "Arama"}</span>
+                    <span>{props.searchLabel || tLocalized("Arama", "Search")}</span>
                     <div className="tm-products-search-control">
                       <input
                         type="search"
                         value={searchValue}
                         placeholder={
-                          props.searchPlaceholder || "Ürün adı, marka"
+                          props.searchPlaceholder || tLocalized("Ürün adı, marka", "Product name, brand")
                         }
                         onInput={handleSearch}
                         onKeyDown={handleSearchKeyDown}
@@ -604,7 +604,7 @@ export function ThreeMashProductsPage(props: Props) {
                       <button
                         type="button"
                         className="tm-products-search-icon"
-                        aria-label="Ara"
+                        aria-label={tLocalized("Ara", "Search")}
                         onClick={commitSearch}
                       >
                         <svg viewBox="0 0 24 24" focusable="false">
@@ -620,7 +620,7 @@ export function ThreeMashProductsPage(props: Props) {
 
                 {showSortControl ? (
                   <label className="tm-products-sort" ref={sortControlRef}>
-                    <span>{props.sortLabel || "Sırala"}</span>
+                    <span>{props.sortLabel || tLocalized("Sırala", "Sort")}</span>
                     <button
                       className="tm-products-sort-trigger"
                       type="button"
@@ -667,7 +667,7 @@ export function ThreeMashProductsPage(props: Props) {
             {trimmedSearch ? (
               <div className="tm-products-active-query">
                 <span>
-                  Arama: <b>{trimmedSearch}</b>
+                  {tLocalized("Arama:", "Search:")} <b>{trimmedSearch}</b>
                 </span>
                 <button type="button" onClick={() => setSearchValue("")}>
                   Temizle
@@ -677,12 +677,12 @@ export function ThreeMashProductsPage(props: Props) {
 
             {showNavigationControls ? (
               <div className="tm-products-nav-shell">
-                <div className="tm-products-nav-tabs" aria-label="Liste türü">
+                <div className="tm-products-nav-tabs" aria-label={tLocalized("Liste türü", "List type")}>
                   <span className="is-active">Kategoriler</span>
                 </div>
                 <nav
                   className="tm-products-nav"
-                  aria-label="Ürün kategorileri"
+                  aria-label={tLocalized("Ürün kategorileri", "Product categories")}
                 >
                   {categoryLinks.map((link) => (
                     <button
@@ -705,7 +705,7 @@ export function ThreeMashProductsPage(props: Props) {
             ) : null}
 
             {showProductSkeletons ? (
-              <div className="tm-products-grid" aria-label="Ürünler yükleniyor">
+              <div className="tm-products-grid" aria-label={tLocalized("Ürünler yükleniyor", "Loading products")}>
                 {Array.from({ length: 8 }, (_, index) => (
                   <ProductCardSkeleton index={index} key={index} />
                 ))}
@@ -723,14 +723,14 @@ export function ThreeMashProductsPage(props: Props) {
               </div>
             ) : (
               <div className="tm-products-empty">
-                <h2>{props.emptyTitle || "Ürün bulunamadı"}</h2>
+                <h2>{props.emptyTitle || tLocalized("Ürün bulunamadı", "Product not found")}</h2>
                 <p>
                   {props.emptyMessage ||
                     (trimmedSearch
-                      ? "Aramanızla eşleşen aktif ürün bulunamadı."
+                      ? tLocalized("Aramanızla eşleşen aktif ürün bulunamadı.", "No active products matching your search were found.")
                       : isCategoryProductsPage
-                        ? "Bu kategoriye bağlı aktif ürün yok."
-                        : "Bu listeye bağlı aktif ürün yok veya filtreler sonucu ürün kalmadı.")}
+                        ? tLocalized("Bu kategoriye bağlı aktif ürün yok.", "There are no active products in this category.")
+                        : tLocalized("Bu listeye bağlı aktif ürün yok veya filtreler sonucu ürün kalmadı.", "There are no active products linked to this list, or none remain after filtering."))}
                 </p>
               </div>
             )}
@@ -741,7 +741,7 @@ export function ThreeMashProductsPage(props: Props) {
                 disabled={!hasProductListPrevPage(productList)}
                 onClick={() => goToPage((productList.page || 1) - 1)}
               >
-                {props.prevPageText || "Önceki"}
+                {props.prevPageText || tLocalized("Önceki", "Previous")}
               </button>
               <span>{productList.page || 1}</span>
               <button

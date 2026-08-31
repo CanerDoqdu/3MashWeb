@@ -393,9 +393,9 @@ function photoTransformStyle(photo: { imageOffsetY?: string; imageScale?: string
 }
 
 function localizeAddToCartText(text?: string): string {
-  if (!isEnglishLocale()) return text || "Sepete ekle →";
+  if (!isEnglishLocale()) return text || tLocalized("Sepete ekle →", "Add to cart →");
   const normalized = (text || "").toLowerCase().trim();
-  if (!normalized || normalized.includes("sepet") || normalized === "ekle") {
+  if (!normalized || normalized.includes(tLocalized("sepet", "cart")) || normalized === tLocalized("ekle", "add")) {
     return text && text === text.toUpperCase() ? "ADD TO CART" : "Add to Cart →";
   }
   return text || "Add to Cart →";
@@ -411,9 +411,9 @@ function localizeAddingToCartText(text?: string): string {
 }
 
 function localizeOutOfStockText(text?: string): string {
-  if (!isEnglishLocale()) return text || "Stok yok";
+  if (!isEnglishLocale()) return text || tLocalized("Stok yok", "Out of stock");
   const normalized = (text || "").toLowerCase().trim();
-  if (!normalized || normalized.includes("stok") || normalized.includes(tLocalized("tükendi", "Out of Stock"))) {
+  if (!normalized || normalized.includes(tLocalized("stok", "stok")) || normalized.includes(tLocalized("tükendi", "Out of Stock"))) {
     return text && text === text.toUpperCase() ? "OUT OF STOCK" : "Out of stock";
   }
   return text || "Out of stock";
@@ -422,7 +422,7 @@ function localizeOutOfStockText(text?: string): string {
 function localizeSummarySuffix(suffix?: string): string {
   if (!isEnglishLocale()) return suffix || "";
   const normalized = (suffix || "").toLowerCase().trim();
-  if (normalized.includes("uyumluluk") || normalized.includes("parametre") || normalized.includes("teknik destek")) {
+  if (normalized.includes("uyumluluk") || normalized.includes("parametre") || normalized.includes(tLocalized("teknik destek", "technical support"))) {
     return "— compatibility check & technical support included.";
   }
   return suffix || "";
@@ -433,7 +433,7 @@ function Configurator(props: Props) {
   const hasManySwatches = props.variantGroups.some((group) => group.values.some((value) => value.color) && group.values.length > 12);
 
   const rawMessage = props.message || "";
-  const displayedMessage = isEnglishLocale() && (rawMessage.toLowerCase().includes("stok") || rawMessage.toLowerCase().includes(tLocalized("tükendi", "Out of Stock")))
+  const displayedMessage = isEnglishLocale() && (rawMessage.toLowerCase().includes(tLocalized("stok", "stok")) || rawMessage.toLowerCase().includes(tLocalized("tükendi", "Out of Stock")))
     ? "Out of stock"
     : rawMessage;
 
@@ -493,7 +493,7 @@ function Configurator(props: Props) {
         </div>
       ) : null}
       <div className="tmpdt-sum">
-        {isEnglishLocale() && (props.data.hero.selectedPrefix === "Seçiminiz:" || !props.data.hero.selectedPrefix) ? "Selected:" : props.data.hero.selectedPrefix} <b>{props.selectedSummary}</b> {localizeSummarySuffix(props.data.hero.summarySuffix)}
+        {isEnglishLocale() && (props.data.hero.selectedPrefix === tLocalized("Seçiminiz:", "Your selection:") || !props.data.hero.selectedPrefix) ? "Selected:" : props.data.hero.selectedPrefix} <b>{props.selectedSummary}</b> {localizeSummarySuffix(props.data.hero.summarySuffix)}
       </div>
       <div className="tmpdt-act">
        <button
@@ -544,7 +544,7 @@ function productJsonLd(props: Props): string {
     image: images.length ? images : undefined,
     brand: {
       "@type": "Brand",
-      name: "3MASH",
+      name: tLocalized("3MASH", "3MASH"),
     },
     offers: {
       "@type": "Offer",
@@ -569,7 +569,7 @@ function productJsonLd(props: Props): string {
         "@type": "ListItem",
         position: 2,
         name: data.breadcrumb.categoryText || tLocalized("Kategori", "Category"),
-        item: data.breadcrumb.categoryHref || "/kategori",
+        item: data.breadcrumb.categoryHref || tLocalized("/kategori", "/kategori"),
       },
       {
         "@type": "ListItem",
@@ -745,11 +745,11 @@ export function ProductDetailUseCasesSection({ data }: { data: ProductDetailTemp
           <div className="tmpdt-pstrip">
             {useCases.photos.map((photo, index) => (
               <article
-                className={`tmpdt-pshot tmpdt-pshot-${index + 1}${photo.imageFit === "cover" ? " is-cover" : ""}${photo.imageBackground === "white" ? " is-white-media" : ""}${photo.mediaType === "video" ? " is-video" : ""}`}
+                className={`tmpdt-pshot tmpdt-pshot-${index + 1}${photo.imageFit === "cover" ? " is-cover" : ""}${photo.imageBackground === "white" ? " is-white-media" : ""}${photo.mediaType === tLocalized("video", "video") ? tLocalized("is-video", "is-video") : ""}`}
                 key={photo.title}
               >
                 <div className="tmpdt-pshot-im">
-                  {photo.mediaType === "video" ? (
+                  {photo.mediaType === tLocalized("video", "video") ? (
                     <video
                       src={photo.src}
                       aria-label={photo.alt}
@@ -967,7 +967,7 @@ export function ProductDetailRelatedSection({
     <section className="tmpdt-section tmpdt-section-tight">
       <div className="tmpdt-wrap">
         <SectionIndex index={related?.index || "07"} label={related?.label ? (isEnglishLocale() && related.label === tLocalized("İlgili Ürünler", "Related Products") ? "Related Products" : related.label) : tLocalized("İlgili Ürünler", "Related Products")} />
-        <SectionHead titleHtml={titleHtml || related?.titleHtml || (isEnglishLocale() ? 'Working <span class="em">together in the same case.</span>' : 'Aynı vakada <span class="em">birlikte çalışanlar.</span>')} wide />
+        <SectionHead titleHtml={titleHtml || related?.titleHtml || (isEnglishLocale() ? 'Working <span class="em">together in the same case.</span>' : tLocalized("Aynı vakada <span class=\"em\">birlikte çalışanlar.</span>", "Those who <span class=\"em\">work together</span> on the same case."))} wide />
         {shouldUseLiveProducts ? (
           <div className="tmpdt-rshell">
             {liveProducts.length > 4 ? (

@@ -36,7 +36,7 @@ export function makePlaceholderBase(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— ek açıklama metni.", "— additional description text."),
       buyHrefBase: "#",
-      whatsappHref: "https://wa.me/905314326577?text=Urun%20hakkinda%20bilgi%20almak%20istiyorum",
+      whatsappHref: tLocalized("https://wa.me/905314326577?text=Urun%20hakkinda%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=Urun%20hakkinda%20bilgi%20almak%20istiyorum"),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask on WhatsApp"),
       addToCartText: tLocalized("Sepete ekle", "Add to Cart"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),

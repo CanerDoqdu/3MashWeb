@@ -47,19 +47,19 @@ type FormStatus = "idle" | "loading" | "success" | "error";
 // ─── Constants ─────────────────────────────────────────────────────────────
 
 const phoneCountries = [
-  { iso: "TR", name: "Türkiye", dialCode: "+90" },
-  { iso: "US", name: "United States", dialCode: "+1" },
-  { iso: "GB", name: "United Kingdom", dialCode: "+44" },
-  { iso: "DE", name: "Germany", dialCode: "+49" },
-  { iso: "FR", name: "France", dialCode: "+33" },
-  { iso: "NL", name: "Netherlands", dialCode: "+31" },
-  { iso: "IT", name: "Italy", dialCode: "+39" },
-  { iso: "ES", name: "Spain", dialCode: "+34" },
-  { iso: "AE", name: "United Arab Emirates", dialCode: "+971" },
-  { iso: "SA", name: "Saudi Arabia", dialCode: "+966" },
-  { iso: "IQ", name: "Iraq", dialCode: "+964" },
-  { iso: "AZ", name: "Azerbaijan", dialCode: "+994" },
-  { iso: "SL", name: "Sierra Leone", dialCode: "+232" },
+  { iso: "TR", name: tLocalized("Türkiye", "Turkey"), dialCode: "+90" },
+  { iso: "US", name: tLocalized("United States", "United States"), dialCode: "+1" },
+  { iso: "GB", name: tLocalized("United Kingdom", "United Kingdom"), dialCode: "+44" },
+  { iso: "DE", name: tLocalized("Germany", "Germany"), dialCode: "+49" },
+  { iso: "FR", name: tLocalized("France", "france"), dialCode: "+33" },
+  { iso: "NL", name: tLocalized("Netherlands", "Netherlands"), dialCode: "+31" },
+  { iso: "IT", name: tLocalized("Italy", "Italy"), dialCode: "+39" },
+  { iso: "ES", name: tLocalized("Spain", "spain"), dialCode: "+34" },
+  { iso: "AE", name: tLocalized("United Arab Emirates", "United Arab Emirates"), dialCode: "+971" },
+  { iso: "SA", name: tLocalized("Saudi Arabia", "Saudi Arabia"), dialCode: "+966" },
+  { iso: "IQ", name: tLocalized("Iraq", "Iraq"), dialCode: "+964" },
+  { iso: "AZ", name: tLocalized("Azerbaijan", "Azerbaijan"), dialCode: "+994" },
+  { iso: "SL", name: tLocalized("Sierra Leone", "Sierra Leone"), dialCode: "+232" },
 ];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
@@ -167,20 +167,20 @@ export function isStudioEnvironment() {
 export const mockStudioCustomer: IkasCustomer = {
   id: "studio-preview-customer",
   firstName: "Caner",
-  lastName: "Doğdu",
+  lastName: tLocalized("Doğdu", "Born"),
   email: "info@3mash.com",
   phone: "+905321234567",
   addresses: [
     {
       id: "addr-studio-1",
       title: "Ofis Adresi",
-      address: "Antalya Teknokent, Ar-Ge 2 Binası, Konyaaltı",
+      address: tLocalized("Antalya Teknokent, Ar-Ge 2 Binası, Konyaaltı", "Antalya Teknokent, R&D Building 2, Konyaaltı"),
       city: { name: "Antalya" } as any,
-      district: { name: "Konyaaltı" } as any,
-      country: { name: "Türkiye" } as any,
+      district: { name: tLocalized("Konyaaltı", "Konyaaltı") } as any,
+      country: { name: tLocalized("Türkiye", "Turkey") } as any,
       postalCode: "07070",
       firstName: "Caner",
-      lastName: "Doğdu",
+      lastName: tLocalized("Doğdu", "Born"),
       phone: "+905321234567",
     } as any,
   ],
@@ -412,7 +412,7 @@ export function AccountProfileForm({
 
         <div className="tmai-field tmau-field">
           <span className="is-required">
-            * {text(props.emailLabel, "Email", "Email")}
+            * {text(props.emailLabel, tLocalized("Email", "E-mail"), tLocalized("Email", "E-mail"))}
           </span>
           <input value={form.email} autoComplete="email" type="email" disabled />
         </div>
@@ -592,7 +592,7 @@ export function ForgotPasswordView({ props }: { props: DashboardProps }) {
       <form className="tmau-auth-inner-form" onSubmit={submit}>
         <label className="tmau-auth-field tmai-field">
           <span>
-            <b>* </b>Email
+            <b>* </b>{tLocalized("Email", "E-mail")}
           </span>
           <input
             type="email"

@@ -9,7 +9,7 @@ export function ThreeMashMashBrandListingPage(props: Props) {
       {...listingProps(props, {
         eyebrowText: tLocalized("MARKA KOLEKSİYONU", "BRAND COLLECTION"),
         titleText: "MASH",
-        descriptionText: "MASH yazıcı, reçine ve üretim ekosistemi için canlı ürün envanteri.",
+        descriptionText: tLocalized("MASH yazıcı, reçine ve üretim ekosistemi için canlı ürün envanteri.", "Live product inventory for the MASH printer, resin, and production ecosystem."),
       })}
     />
   );

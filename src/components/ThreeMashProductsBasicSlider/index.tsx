@@ -2,11 +2,12 @@ import { useEffect, useRef } from "preact/hooks";
 import { basicSliderImages } from "../../assets/basic-slider-images-data";
 import { Props } from "./types";
 import { resolveSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { tLocalized } from "../../utils/i18n";
 
 const DEFAULT_IMAGES = basicSliderImages;
-const DEFAULT_INTRO_TITLE = "Uyumlu Cihazlar";
+const DEFAULT_INTRO_TITLE = tLocalized("Uyumlu Cihazlar", "Compatible Devices");
 const DEFAULT_INTRO_DESCRIPTION =
-  "<p>Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> olarak gerçekleştirmekteyiz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.</p>";
+  tLocalized("<p>Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> olarak gerçekleştirmekteyiz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.</p>", "<p>As the <b>official distributor</b> of Custom Resin Solutions, we carry out parameter matching <b>free of charge</b>, regardless of which 3D printer brand you use. We're with you with after-sales user training and <b>24/7 technical support</b>.</p>");
 
 type SliderImage = {
   src: string;
@@ -56,8 +57,8 @@ function boolValue(value: unknown): boolean | undefined {
   }
 
   const normalized = propString(value).trim().toLocaleLowerCase("tr");
-  if (["false", "0", "no", "hayir", "hayır", "kapali", "kapalı", "off"].includes(normalized)) return false;
-  if (["true", "1", "yes", "evet", "acik", "açık", "on"].includes(normalized)) return true;
+  if (["false", "0", "no", "hayir", tLocalized("hayır", "no"), "kapali", tLocalized("kapalı", "closed"), "off"].includes(normalized)) return false;
+  if (["true", "1", "yes", "evet", "acik", tLocalized("açık", "open"), "on"].includes(normalized)) return true;
   return undefined;
 }
 
@@ -328,7 +329,7 @@ export function ThreeMashProductsBasicSlider(props: Props) {
             <div className="tmpbs-track">{items}</div>
           </div>
         ) : (
-          <div className="tmpbs-setup">{props.setupMessage || "Slider görseli ekleyin."}</div>
+          <div className="tmpbs-setup">{props.setupMessage || tLocalized("Slider görseli ekleyin.", "Add a slider image.")}</div>
         )}
       </div>
     </section>

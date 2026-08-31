@@ -244,7 +244,7 @@ function productsShareCategory(product: IkasProduct, currentProduct: IkasProduct
   const categoryFamily = (item: IkasProduct) => {
     const identity = searchKey(`${item.name} ${getProductHref(item) || ""}`);
     if (["recine", "resin", "composite", "gingiva", "denture", "splint", "aligner", "guide", "model", "tray", "flexit", "trial", "study", "clear", "crs"].some((term) => identity.includes(term))) return "resin";
-    if (["yikama", "kurleme", "wash", "cure", "w1e", "c1e", "uw02", "uw03"].some((term) => identity.includes(term))) return "wash-cure";
+    if ([tLocalized("yikama", "yikama"), tLocalized("kurleme", "kurleme"), "wash", "cure", "w1e", "c1e", "uw02", "uw03"].some((term) => identity.includes(term))) return "wash-cure";
     if (["yazici", "printer", "p16l", "p1d", "curie", "halot"].some((term) => identity.includes(term))) return "printer";
     if (["tarayici", "scanner", "3shape", "e2", "e3", "e4"].some((term) => identity.includes(term))) return "scanner";
     if (["zirkon", "zircon", "argenz"].some((term) => identity.includes(term))) return "zircon";
@@ -457,15 +457,15 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
         {hasHeader ? (
           <div className="tmpcc-head">
             <div>
-              <h2>{text((p as any).titleText, categoryName(category) ? `Diğer ${categoryName(category)} Ürünleri` : "Diğer Ürünler")}</h2>
+              <h2>{text((p as any).titleText, categoryName(category) ? `Diğer ${categoryName(category)} Ürünleri` : tLocalized("Diğer Ürünler", "Other Products"))}</h2>
               {text((p as any).descriptionHtml) ? <div className="tmpcc-description" dangerouslySetInnerHTML={html((p as any).descriptionHtml)} /> : null}
             </div>
             {(p as any).showArrows !== false && products.length > 1 ? (
               <div className="tmpcc-arrows">
-                <button type="button" aria-label="Önceki ürünler" onClick={() => scroll(-1)}>
+                <button type="button" aria-label={tLocalized("Önceki ürünler", "Previous products")} onClick={() => scroll(-1)}>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
                 </button>
-                <button type="button" aria-label="Sonraki ürünler" onClick={() => scroll(1)}>
+                <button type="button" aria-label={tLocalized("Sonraki ürünler", "Next products")} onClick={() => scroll(1)}>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
                 </button>
               </div>
@@ -476,11 +476,11 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
         {products.length ? (
           <div className="tmpcc-shell">
             {!hasHeader && (p as any).showArrows !== false && products.length > 1 ? (
-              <button type="button" className="tmpcc-side tmpcc-side-left" aria-label="Önceki ürünler" onClick={() => scroll(-1)}>
+              <button type="button" className="tmpcc-side tmpcc-side-left" aria-label={tLocalized("Önceki ürünler", "Previous products")} onClick={() => scroll(-1)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
               </button>
             ) : null}
-            <div ref={scrollerRef} className="tmpcc-track" aria-label="Kategori ürünleri">
+            <div ref={scrollerRef} className="tmpcc-track" aria-label={tLocalized("Kategori ürünleri", "Category products")}>
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -492,7 +492,7 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
               ))}
             </div>
             {!hasHeader && (p as any).showArrows !== false && products.length > 1 ? (
-              <button type="button" className="tmpcc-side tmpcc-side-right" aria-label="Sonraki ürünler" onClick={() => scroll(1)}>
+              <button type="button" className="tmpcc-side tmpcc-side-right" aria-label={tLocalized("Sonraki ürünler", "Next products")} onClick={() => scroll(1)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
               </button>
             ) : null}
@@ -500,8 +500,8 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
         ) : (
           <div className="tmpcc-setup">
             {isLoading
-              ? "Ürünler yükleniyor..."
-              : (p as any).setupMessage || "İlgili ürünler kısa süre içinde burada listelenecek."}
+              ? tLocalized("Ürünler yükleniyor...", "Loading products...")
+              : (p as any).setupMessage || tLocalized("İlgili ürünler kısa süre içinde burada listelenecek.", "Related products will be listed here shortly.")}
           </div>
         )}
       </div>
