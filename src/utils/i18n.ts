@@ -1,4 +1,4 @@
-import { I18n } from "@ikas/bp-storefront";
+import { I18n, IkasStorefrontConfig } from "@ikas/bp-storefront";
 import trLocaleJson from "../locales/tr.json";
 import enLocaleJson from "../locales/en.json";
 import allTranslationsJson from "./all_translations.json";
@@ -29,80 +29,157 @@ export const translations: Record<Locale, Record<string, string>> = {
   en: flatEn,
 };
 
+let _clientCachedLocale: Locale | null = null;
+
 /**
- * Resolves current storefront locale ('tr' | 'en')
+ * Resolves current storefront locale ('tr' | 'en') on both SSR and Client.
+ * On SSR: reads directly from IkasStorefrontConfig and I18n on every render.
+ * On Client: reads URL pathname, DOM attributes, IkasStorefrontConfig, and persistence.
  */
 export function getCurrentLocale(): Locale {
   try {
-    if (typeof window !== "undefined") {
-      // 0. Check immediate root document attribute (set synchronously by early head script)
-      const docAttr = document.documentElement.getAttribute("data-3mash-locale") || document.documentElement.lang?.toLowerCase?.();
-      if (docAttr?.startsWith("en")) return "en";
-      if (docAttr?.startsWith("tr")) return "tr";
-
-      // 1. Check URL pathname if starts with /en
-      const pathname = window.location.pathname.toLowerCase();
-      if (pathname === "/en" || pathname.startsWith("/en/")) {
-        return "en";
-      }
-
-      // 2. Check URL query params (e.g. ?lang=en or ?locale=en)
+    // -------------------------------------------------------------
+    // 1. SSR (Server-Side Rendering on ikas Node.js server)
+    // -------------------------------------------------------------
+    if (typeof window === "undefined") {
       try {
-        const searchParams = new URLSearchParams(window.location.search);
-        const urlLang = searchParams.get("lang") || searchParams.get("locale");
-        if (urlLang) {
-          const clean = urlLang.toLowerCase();
-          if (clean.startsWith("en")) return "en";
-          if (clean.startsWith("tr")) return "tr";
+        // A. Check IkasStorefrontConfig routing locale
+        if (typeof IkasStorefrontConfig !== "undefined") {
+          const configLocale = IkasStorefrontConfig.getCurrentLocale?.()?.toLowerCase?.();
+          if (configLocale) {
+            if (configLocale.startsWith("en")) return "en";
+            if (configLocale.startsWith("tr")) return "tr";
+          }
+
+          const routing = IkasStorefrontConfig.getCurrentRouting?.();
+          const routingLocale = routing?.locale?.toLowerCase?.();
+          if (routingLocale) {
+            if (routingLocale.startsWith("en")) return "en";
+            if (routingLocale.startsWith("tr")) return "tr";
+          }
+
+          const currentPath = IkasStorefrontConfig.getCurrentPath?.()?.toLowerCase?.();
+          if (currentPath === "en" || currentPath === "/en" || currentPath?.startsWith("en/") || currentPath?.startsWith("/en/")) {
+            return "en";
+          }
+        }
+
+        // B. Check I18n service
+        if (typeof I18n !== "undefined" && typeof I18n.getLocale === "function") {
+          const ikasLocale = I18n.getLocale()?.toLowerCase?.();
+          if (ikasLocale) {
+            if (ikasLocale.startsWith("en")) return "en";
+            if (ikasLocale.startsWith("tr")) return "tr";
+          }
         }
       } catch { }
 
-      // 3. Check persistent localStorage
-      try {
-        const stored = localStorage.getItem("3mash_locale") || localStorage.getItem("3mash_lang") || localStorage.getItem("locale");
-        if (stored) {
-          const clean = stored.toLowerCase();
-          if (clean.startsWith("en")) return "en";
-          if (clean.startsWith("tr")) return "tr";
-        }
-      } catch { }
-
-      // 4. Check persistent cookies
-      try {
-        const match = document.cookie.match(/(?:^|;\s*)(?:3mash_locale|3mash_lang|locale)=([^;]+)/);
-        if (match && match[1]) {
-          const clean = decodeURIComponent(match[1]).toLowerCase();
-          if (clean.startsWith("en")) return "en";
-          if (clean.startsWith("tr")) return "tr";
-        }
-      } catch { }
-
-      // 5. Check document lang attribute
-      const docLang = document.documentElement.lang?.toLowerCase?.();
-      if (docLang?.startsWith("en")) {
-        return "en";
-      }
+      return "tr";
     }
 
-    const ikasLocale =
-      typeof I18n !== "undefined" && typeof I18n.getLocale === "function"
-        ? I18n.getLocale()?.toLowerCase()
-        : undefined;
-    if (ikasLocale) {
-      if (ikasLocale.startsWith("en")) return "en";
-      if (ikasLocale.startsWith("tr")) return "tr";
+    // -------------------------------------------------------------
+    // 2. Client-Side (Browser)
+    // -------------------------------------------------------------
+    // Priority 1: URL Path (authoritative because ikas routes /en/ for English)
+    const pathname = window.location.pathname.toLowerCase();
+    if (pathname === "/en" || pathname.startsWith("/en/")) {
+      _clientCachedLocale = "en";
+      return "en";
     }
-  } catch (_e) {
-    // Fallback to default 'tr'
-  }
+
+    // Priority 2: IkasStorefrontConfig on browser
+    try {
+      if (typeof IkasStorefrontConfig !== "undefined") {
+        const configLocale = IkasStorefrontConfig.getCurrentLocale?.()?.toLowerCase?.();
+        if (configLocale?.startsWith("en")) {
+          _clientCachedLocale = "en";
+          return "en";
+        }
+        const currentPath = IkasStorefrontConfig.getCurrentPath?.()?.toLowerCase?.();
+        if (currentPath === "en" || currentPath === "/en" || currentPath?.startsWith("en/") || currentPath?.startsWith("/en/")) {
+          _clientCachedLocale = "en";
+          return "en";
+        }
+      }
+    } catch { }
+
+    // Priority 3: I18n service on browser
+    try {
+      if (typeof I18n !== "undefined" && typeof I18n.getLocale === "function") {
+        const ikasLocale = I18n.getLocale()?.toLowerCase?.();
+        if (ikasLocale?.startsWith("en")) {
+          _clientCachedLocale = "en";
+          return "en";
+        }
+      }
+    } catch { }
+
+    // Priority 4: Document root attributes
+    const docAttr = document.documentElement.getAttribute("data-3mash-locale") || document.documentElement.lang?.toLowerCase?.();
+    if (docAttr?.startsWith("en")) return "en";
+    if (docAttr?.startsWith("tr")) return "tr";
+
+    // Priority 5: Cached client state
+    if (_clientCachedLocale) return _clientCachedLocale;
+
+    // Priority 6: URL query params (e.g. ?lang=en or ?locale=en)
+    try {
+      const searchParams = new URLSearchParams(window.location.search);
+      const urlLang = searchParams.get("lang") || searchParams.get("locale");
+      if (urlLang) {
+        const clean = urlLang.toLowerCase();
+        if (clean.startsWith("en")) return "en";
+        if (clean.startsWith("tr")) return "tr";
+      }
+    } catch { }
+
+    // Priority 7: localStorage
+    try {
+      const stored = localStorage.getItem("3mash_locale") || localStorage.getItem("3mash_lang") || localStorage.getItem("locale");
+      if (stored) {
+        const clean = stored.toLowerCase();
+        if (clean.startsWith("en")) return "en";
+        if (clean.startsWith("tr")) return "tr";
+      }
+    } catch { }
+
+    // Priority 8: Cookies
+    try {
+      const match = document.cookie.match(/(?:^|;\s*)(?:3mash_locale|3mash_lang|locale)=([^;]+)/);
+      if (match?.[1]) {
+        const clean = decodeURIComponent(match[1]).toLowerCase();
+        if (clean.startsWith("en")) return "en";
+        if (clean.startsWith("tr")) return "tr";
+      }
+    } catch { }
+  } catch (_e) { }
+
   return "tr";
 }
 
+if (typeof window !== "undefined") {
+  try {
+    document.documentElement.classList.add("tm-ready");
+  } catch { }
+}
+
 /**
- * Persists the preferred locale to localStorage and cookies across all pages
+ * Persists the preferred locale to localStorage, cookies, document DOM, and in-memory cache.
  */
 export function setPreferredLocale(locale: Locale): void {
   if (typeof window === "undefined") return;
+  _clientCachedLocale = locale;
+  try {
+    document.documentElement.setAttribute("data-3mash-locale", locale);
+    document.documentElement.lang = locale;
+    if (locale === "en") {
+      document.documentElement.classList.add("tm-locale-en");
+      document.documentElement.classList.remove("tm-locale-tr");
+    } else {
+      document.documentElement.classList.add("tm-locale-tr");
+      document.documentElement.classList.remove("tm-locale-en");
+    }
+  } catch { }
   try {
     localStorage.setItem("3mash_locale", locale);
     localStorage.setItem("3mash_lang", locale);
@@ -626,8 +703,9 @@ export function translateText(text?: string | null): string {
 }
 
 /**
- * Normalizes internal site links so valid routes are preserved without breaking ikas routing.
- * Since locale preference is persisted in localStorage & cookies, standard paths retain the chosen language.
+ * Normalizes internal site links and prepends /en/ when English locale is active.
+ * This ensures the server receives /en/slug paths and renders English HTML at first paint,
+ * fully eliminating the Turkish-then-English flash.
  */
 export function localizedHref(path?: string | null): string {
   if (!path || typeof path !== "string") return "";
@@ -644,14 +722,20 @@ export function localizedHref(path?: string | null): string {
     return trimmed;
   }
 
-  // Strip redundant /en/ prefix if present to ensure proper ikas route matching
-  if (trimmed === "/en" || trimmed === "/en/") {
-    return "/";
-  }
-  if (trimmed.startsWith("/en/")) {
-    return trimmed.replace(/^\/en\//, "/");
+  // Normalise: strip any existing /en/ prefix first to avoid double-prefixing
+  let bare = trimmed;
+  if (bare === "/en" || bare === "/en/") {
+    bare = "/";
+  } else if (bare.startsWith("/en/")) {
+    bare = bare.replace(/^\/en\//, "/");
   }
 
-  return trimmed;
+  // If English locale is active, prepend /en/
+  if (isEnglishLocale()) {
+    if (bare === "/" || bare === "") return "/en";
+    return `/en${bare.startsWith("/") ? bare : `/${bare}`}`;
+  }
+
+  return bare;
 }
 

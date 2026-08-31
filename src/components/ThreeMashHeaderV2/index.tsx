@@ -2447,13 +2447,13 @@ export function ThreeMashHeaderV2(props: any) {
                       setIsLangOpen(false);
                       setPreferredLocale("tr");
                       if (typeof window === "undefined") return;
-                      const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
+                      // Strip /en/ prefix to get the bare Turkish path
+                      const bare = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
                       const searchParams = new URLSearchParams(window.location.search);
                       searchParams.delete("lang");
                       searchParams.delete("locale");
                       const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
-                      const hash = window.location.hash;
-                      window.location.href = path + search + hash;
+                      window.location.href = bare + search + window.location.hash;
                     }}
                   >
                     <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2475,13 +2475,14 @@ export function ThreeMashHeaderV2(props: any) {
                       setIsLangOpen(false);
                       setPreferredLocale("en");
                       if (typeof window === "undefined") return;
-                      const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
+                      // Strip /en/ if already present then prepend to get /en/slug
+                      const bare = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
+                      const enPath = bare === "/" ? "/en" : `/en${bare.startsWith("/") ? bare : `/${bare}`}`;
                       const searchParams = new URLSearchParams(window.location.search);
                       searchParams.delete("lang");
                       searchParams.delete("locale");
                       const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
-                      const hash = window.location.hash;
-                      window.location.href = path + search + hash;
+                      window.location.href = enPath + search + window.location.hash;
                     }}
                   >
                     <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2773,9 +2774,9 @@ export function ThreeMashHeaderV2(props: any) {
                 type="button"
                 className={`tmh-mobile-lang-btn ${!isEnglishLocale() ? "is-active" : ""}`}
                 onClick={() => {
-                  setPreferredLocale("tr");
-                  const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
-                  window.location.href = path + window.location.search + window.location.hash;
+                   setPreferredLocale("tr");
+                   const bare = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
+                   window.location.href = bare + window.location.search + window.location.hash;
                 }}
               >
                 <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2790,9 +2791,10 @@ export function ThreeMashHeaderV2(props: any) {
                 type="button"
                 className={`tmh-mobile-lang-btn ${isEnglishLocale() ? "is-active" : ""}`}
                 onClick={() => {
-                  setPreferredLocale("en");
-                  const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
-                  window.location.href = path + window.location.search + window.location.hash;
+                   setPreferredLocale("en");
+                   const bare = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
+                   const enPath = bare === "/" ? "/en" : `/en${bare.startsWith("/") ? bare : `/${bare}`}`;
+                   window.location.href = enPath + window.location.search + window.location.hash;
                 }}
               >
                 <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
