@@ -35,6 +35,11 @@ export const translations: Record<Locale, Record<string, string>> = {
 export function getCurrentLocale(): Locale {
   try {
     if (typeof window !== "undefined") {
+      // 0. Check immediate root document attribute (set synchronously by early head script)
+      const docAttr = document.documentElement.getAttribute("data-3mash-locale") || document.documentElement.lang?.toLowerCase?.();
+      if (docAttr?.startsWith("en")) return "en";
+      if (docAttr?.startsWith("tr")) return "tr";
+
       // 1. Check URL pathname if starts with /en
       const pathname = window.location.pathname.toLowerCase();
       if (pathname === "/en" || pathname.startsWith("/en/")) {

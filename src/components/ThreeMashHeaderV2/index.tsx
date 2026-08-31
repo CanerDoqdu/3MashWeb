@@ -856,8 +856,34 @@ function firstPaintAnnouncementScript() {
   const payload = JSON.stringify(firstPaintAnnouncementMap).replace(/</g, "\\u003c");
   return `
 (function(){
+  try {
+    var isEn = false;
+    var p = (window.location.pathname || "").toLowerCase();
+    if (p === "/en" || p.indexOf("/en/") === 0) isEn = true;
+    if (!isEn && window.location.search) {
+      var s = window.location.search.toLowerCase();
+      if (s.indexOf("lang=en") !== -1 || s.indexOf("locale=en") !== -1) isEn = true;
+    }
+    if (!isEn && window.localStorage) {
+      var loc = (localStorage.getItem("3mash_locale") || localStorage.getItem("3mash_lang") || localStorage.getItem("locale") || "").toLowerCase();
+      if (loc.indexOf("en") === 0) isEn = true;
+    }
+    if (!isEn && document.cookie) {
+      if (/(?:^|;\\s*)(?:3mash_locale|3mash_lang|locale)=en/i.test(document.cookie)) isEn = true;
+    }
+    if (isEn) {
+      document.documentElement.lang = "en";
+      document.documentElement.setAttribute("data-3mash-locale", "en");
+      document.documentElement.classList.add("tm-locale-en");
+      return;
+    } else {
+      document.documentElement.lang = "tr";
+      document.documentElement.setAttribute("data-3mash-locale", "tr");
+      document.documentElement.classList.add("tm-locale-tr");
+    }
+  } catch(e){}
+
   var path=(window.location.pathname||"").toLocaleLowerCase("tr").replace(/^\\/+|\\/+$/g,"").split("/").pop()||"";
-  if(window.location.pathname.indexOf("/en")===0||(document.documentElement&&document.documentElement.lang==="en")||(window.localStorage&&(localStorage.getItem("3mash_locale")==="en"||localStorage.getItem("3mash_lang")==="en")))return;
   var map=${payload};
   var ann=map[path];
   if(!ann)return;
