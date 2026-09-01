@@ -1,31 +1,52 @@
 const { execSync } = require('child_process');
-const fs = require('fs');
+
+const ALLOW_WRITE = process.env.TURKISH_CLEANUP_ALLOW_WRITE === 'true';
+
+if (!ALLOW_WRITE) {
+  console.log('Turkish prop cleanup is disabled by default. This script will not mutate content unless TURKISH_CLEANUP_ALLOW_WRITE=true is set.');
+  process.exit(0);
+}
+
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 function cleanText(str) {
   if (!str) return '';
-  return str.replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim()
-    .toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/ı/g,'i').replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u')
-    .replace(/ö/g,'o').replace(/ç/g,'c').replace(/[–—]/g,'-');
+  return str.replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLocaleLowerCase('tr-TR')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ı/g, 'i')
+    .replace(/ş/g, 's')
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/ö/g, 'o')
+    .replace(/ç/g, 'c')
+    .replace(/[–—]/g, '-');
 }
 
 function isTurkishText(text) {
   if (!text) return false;
   if (/[ışğüöçİŞĞÜÖÇ]/.test(text)) return true;
-  const c = cleanText(text);
+
+  const normalized = cleanText(text);
   const trKeywords = [
-    'bir','bu','ve','veya','ile','icin','her','neden','nasil','sebebi','kaynagi','yaygin',
-    'katina','cikabilir','edildiginde','birlikte','bagli','oturan','isler','aciklama',
-    'basligi','urunler','urun','hakkimizda','bilgi','adres','siparis','kurleme','yikama',
-    'sepet','hesabim','giris','kayit','sifre','tekrar','kayip','tasarruf','hesapla',
-    'ornek','cozum','uretim','dayanim','dogruluk','salinimi','faturasi','turkiye',
-    'bizimle','uretiyor','sorulanlar','azaltalim','dayanak','bilimsel','sebep','baski',
-    'referans','arama','kapat','market','detay','gonder','tamamla','incele','kesfet'
+    'bir', 'bu', 've', 'veya', 'ile', 'icin', 'her', 'neden', 'nasil', 'sebebi', 'kaynagi', 'yaygin',
+    'katina', 'cikabilir', 'edildiginde', 'birlikte', 'bagli', 'oturan', 'isler', 'aciklama',
+    'basligi', 'urunler', 'urun', 'hakkimizda', 'bilgi', 'adres', 'siparis', 'kurleme', 'yikama',
+    'sepet', 'hesabim', 'giris', 'kayit', 'sifre', 'tekrar', 'kayip', 'tasarruf', 'hesapla',
+    'ornek', 'cozum', 'uretim', 'dayanim', 'dogruluk', 'salinimi', 'faturasi', 'turkiye',
+    'bizimle', 'uretiyor', 'sorulanlar', 'azaltalim', 'dayanak', 'bilimsel', 'sebep', 'baski',
+    'referans', 'arama', 'kapat', 'market', 'detay', 'gonder', 'tamamla', 'incele', 'kesfet'
   ];
-  return trKeywords.some(w => c.includes(w));
+
+  return trKeywords.some((keyword) => new RegExp(`\\b${escapeRegex(keyword)}\\b`).test(normalized));
 }
 
-// Props that should NEVER be cleared regardless of content
 const SKIP_PROPS = /href|url|icon|svg|image|img|logo|src|class|style|regex|queryparam|param|port|email|phone|mode|align|spacing|fontsize|color|weight|^id$/i;
 
 function shouldSkipProp(propName) {
@@ -45,11 +66,10 @@ function run() {
       const secList = JSON.parse(secListRaw).sections || [];
       if (!secList.length) continue;
 
-      const elementIds = secList.map(s => s.elementId).join(',');
+      const elementIds = secList.map((s) => s.elementId).join(',');
       const secDataRaw = execSync(`npx ikas-component get-section-values --page-id ${page.id} --element-ids ${elementIds}`, { encoding: 'utf8' });
       const secData = JSON.parse(secDataRaw).sections || [];
 
-      // Build per-section updates
       const sectionsToUpdate = [];
 
       for (const sectionObj of secData) {
@@ -81,7 +101,6 @@ function run() {
         continue;
       }
 
-      // Split into batches of 20 sections to avoid arg size limits
       const BATCH_SIZE = 20;
       for (let i = 0; i < sectionsToUpdate.length; i += BATCH_SIZE) {
         const batch = sectionsToUpdate.slice(i, i + BATCH_SIZE);
@@ -95,17 +114,16 @@ function run() {
           if (parsed.ok) {
             const count = batch.reduce((sum, s) => sum + s.updates.length, 0);
             totalCleared += count;
-            console.log(`[${page.name || page.pageType}] Batch ${Math.floor(i/BATCH_SIZE)+1}: Cleared ${count} Turkish props across ${batch.length} sections.`);
+            console.log(`[${page.name || page.pageType}] Batch ${Math.floor(i / BATCH_SIZE) + 1}: Cleared ${count} Turkish props across ${batch.length} sections.`);
           } else {
-            console.error(`[${page.name || page.pageType}] Batch ${Math.floor(i/BATCH_SIZE)+1} returned not-ok:`, result);
+            console.error(`[${page.name || page.pageType}] Batch ${Math.floor(i / BATCH_SIZE) + 1} returned not-ok:`, result);
             totalErrors++;
           }
         } catch (err) {
-          console.error(`[${page.name || page.pageType}] Batch ${Math.floor(i/BATCH_SIZE)+1} error:`, err.message);
+          console.error(`[${page.name || page.pageType}] Batch ${Math.floor(i / BATCH_SIZE) + 1} error:`, err.message);
           totalErrors++;
         }
       }
-
     } catch (err) {
       console.error(`Error processing page ${page.id} (${page.name}):`, err.message);
       totalErrors++;

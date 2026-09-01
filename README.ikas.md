@@ -4,23 +4,25 @@ An ikas code components project.
 
 ## Getting Started
 
-1. Install dependencies:
+1. Install dependencies with pnpm:
    ```bash
-   npm install
+   pnpm install
    ```
+
+   > This project relies on the pnpm patch configuration in `pnpm-lock.yaml` and `patches/@ikas__component-cli@2.6.1.patch`. Using npm skips that patch and can break the Windows build silently.
 
 2. Start the development server:
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 3. Open the ikas editor and connect to the dev server from the Dev Components panel.
 
 ## Commands
 
-- `npm run dev` - Start development server with live editor updates
-- `npm run build` - Build components for production
-- `npm run add` - Add a new component to the project
+- `pnpm run dev` - Start development server with live editor updates
+- `pnpm run build` - Build components for production
+- `pnpm run add` - Add a new component to the project
 
 ## Project Structure
 
@@ -39,4 +41,4 @@ An ikas code components project.
 
 ## Building for Production
 
-Run `npm run build` to compile your components. The output will be ready to upload to the ikas editor.
+Run `pnpm run build` to compile your components. The output will be ready to upload to the ikas editor.

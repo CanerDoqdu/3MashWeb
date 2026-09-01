@@ -99,15 +99,15 @@ export function ThreeMashRegisterPage(props: Props) {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(true);
-  const [marketingAccepted, setMarketingAccepted] = useState(true);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [marketingAccepted, setMarketingAccepted] = useState(false);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
 
   async function submit(event: Event) {
     event.preventDefault();
-    if (status === "loading") return;
+    if (status === "loading" || !termsAccepted || !marketingAccepted) return;
 
     setStatus("loading");
     const result = await register(
@@ -255,30 +255,7 @@ export function ThreeMashRegisterPage(props: Props) {
             />
           </label>
 
-          <label className="tmrpg-auth-check">
-            <input
-              type="checkbox"
-              checked={marketingAccepted}
-              onInput={(event) =>
-                setMarketingAccepted(
-                  (event.currentTarget as HTMLInputElement).checked,
-                )
-              }
-            />
-            <span>
-              {t("auth.marketingConsentPrefix", "Kampanyalardan haberdar olmak için")}{" "}
-              <a
-                href={href(
-                  props.marketingHref,
-                  "/pages/ticari-elektronik-ileti-onayi",
-                )}
-              >
-                {t("auth.marketingConsentLink", "Ticari Elektronik İleti Onayı")}
-              </a>{" "}
-              {t("auth.marketingConsentSuffix", "metnini okudum, onaylıyorum. Tarafınızdan gönderilecek ticari elektronik iletileri almak istiyorum.")}
-            </span>
-          </label>
-
+          {/* 1. Üyelik Sözleşmesi & KVKK Aydınlatma Metni — Zorunlu, tiksiz gelir */}
           <label className="tmrpg-auth-check">
             <input
               type="checkbox"
@@ -294,18 +271,44 @@ export function ThreeMashRegisterPage(props: Props) {
               <a href={href(props.termsHref, "/pages/uyelik-sozlesmesi")}>
                 {t("auth.termsMembershipLink", tLocalized("Üyelik Sözleşmesi", "Membership Agreement"))}
               </a>{" "}
-              {t("auth.termsAnd", "ve")}{" "}
+              {t("auth.termsAnd", tLocalized("ve", "and"))}{" "}
               <a href={href(props.kvkkHref, tLocalized("/pages/gizlilik-politikasi-ve-kvkk", "/pages/gizlilik-politikasi-ve-kvkk"))}>
                 {t("auth.termsKvkkLink", tLocalized("KVKK Aydınlatma Metni", "KVKK Clarification Text"))}
               </a>
-              {t("auth.termsSuffix", "ni okudum, kabul ediyorum.")}
+              {t("auth.termsSuffix", tLocalized("'ni okudum, kabul ediyorum. *", " have been read and agreed to. *"))}
+            </span>
+          </label>
+
+          {/* 2. Ticari Elektronik İleti Onayı — Zorunlu, tiksiz gelir */}
+          <label className="tmrpg-auth-check">
+            <input
+              type="checkbox"
+              checked={marketingAccepted}
+              required
+              onInput={(event) =>
+                setMarketingAccepted(
+                  (event.currentTarget as HTMLInputElement).checked,
+                )
+              }
+            />
+            <span>
+              {t("auth.marketingConsentPrefix", tLocalized("Kampanya, indirim ve duyurulardan haberdar olmak için", "To be informed about campaigns and updates,"))}{" "}
+              <a
+                href={href(
+                  props.marketingHref,
+                  "/pages/ticari-elektronik-ileti-onayi",
+                )}
+              >
+                {t("auth.marketingConsentLink", tLocalized("Ticari Elektronik İleti Onayı", "Commercial Electronic Message Consent"))}
+              </a>{" "}
+              {t("auth.marketingConsentSuffix", tLocalized("metnini okudum, onaylıyorum. Tarafıma ticari elektronik ileti gönderilmesini kabul ediyorum. *", " text, I have read and agree to receive commercial electronic messages. *"))}
             </span>
           </label>
 
           <button
             className="tmrpg-auth-submit"
             type="submit"
-            disabled={status === "loading" || !termsAccepted}
+            disabled={status === "loading" || !termsAccepted || !marketingAccepted}
           >
             {status === "loading"
               ? text(props.loadingText, tLocalized("Kaydınız oluşturuluyor...", "Creating account..."), "Creating account...")

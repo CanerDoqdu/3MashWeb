@@ -125,11 +125,11 @@ export function ThreeMashAccountPage(props: Props) {
             cust.email ||
             "";
           if (name) {
-            localStorage.setItem("tm_customer_name", name);
             sessionStorage.setItem("tm_customer_name", name);
           }
-          localStorage.setItem("tm_customer_cache", JSON.stringify(cust));
-          sessionStorage.setItem("tm_customer_cache", JSON.stringify(cust));
+          localStorage.removeItem("tm_customer_name");
+          localStorage.removeItem("tm_customer_cache");
+          sessionStorage.removeItem("tm_customer_cache");
         } catch {}
       }
       setTimeout(() => Router.navigate("/account"), 350);

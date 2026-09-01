@@ -390,6 +390,8 @@ export const printersCategoryData: CategoryLandingData = {
         title: tLocalized("MASH P16L", "MASH P16L"),
         descriptionHtml: tLocalized("385 nm profesyonel dental yazıcı. <b>16K</b> ultra çözünürlük ve termal kontrolle en detaylı yüzey ve keskin marjin.", "385 nm professional dental printer. The most detailed surface and sharp margins with <b>16K</b> ultra resolution and thermal control."),
         href: "/mash-p16l-385nm-16k-dental-3d-yazici",
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e47e604b-5052-4935-800f-57d4ead78ced/1080/mash-p16l.webp",
+        imageAlt: tLocalized("MASH P16L dental 3D yazıcı", "MASH P16L dental 3D printer"),
         tag: tLocalized("EN YÜKSEK ÇÖZÜNÜRLÜK", "HIGHEST RESOLUTION"),
         status: tLocalized("Satışta", "For sale"),
         hot: true,

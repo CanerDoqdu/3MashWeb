@@ -6,4 +6,15 @@ dist/
 .DS_Store
 *.log
 .ikas-dev-state.json
-asd
+
+# Generated / local artefacts that should not be versioned
+lighthouse-audit/
+tmp/
+outputs/
+assest/
+
+# Project-generated data exports
+scripts/inventory_result.json
+scripts/to_translate.json
+scripts/extracted_turkish_strings.json
+ikas-components.json

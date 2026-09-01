@@ -40,4 +40,5 @@ export interface Props {
   bottomBannerText?: string;
   ctaText?: string;
   ctaHref?: string;
+  backgroundColor?: string;
 }

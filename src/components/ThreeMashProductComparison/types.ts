@@ -46,4 +46,5 @@ export interface Props {
   bottomNote?: string;
   ctaText?: string;
   ctaHref?: string;
+  backgroundColor?: string;
 }

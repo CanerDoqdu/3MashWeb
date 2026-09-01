@@ -45,4 +45,5 @@ export interface Props {
   cert4ActionText?: string;
   cert4ActionHref?: string;
   complianceNotice?: string;
+  backgroundColor?: string;
 }

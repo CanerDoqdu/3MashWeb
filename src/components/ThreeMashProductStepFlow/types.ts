@@ -27,4 +27,5 @@ export interface Props {
   ctaDescription?: string;
   ctaButtonText?: string;
   ctaButtonHref?: string;
+  backgroundColor?: string;
 }

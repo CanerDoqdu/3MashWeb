@@ -1,6 +1,7 @@
 import { tLocalized } from "../../utils/i18n";
 import { useMemo } from "preact/hooks";
 import { renderFooterHtml, ThreeMashStaticSection } from "../../sub-components/ThreeMashSectionRenderer";
+import { ThreeMashCookieConsent } from "../ThreeMashCookieConsent";
 import { Props } from "./types";
 
 function organizationJsonLd(props: Props): string {
@@ -32,7 +33,7 @@ function organizationJsonLd(props: Props): string {
     ],
   };
 
-  return JSON.stringify(schema);
+  return JSON.stringify(schema).replace(/</g, "\\u003c");
 }
 
 export function ThreeMashFooter(props: Props) {
@@ -43,6 +44,7 @@ export function ThreeMashFooter(props: Props) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <ThreeMashStaticSection props={{ ...liveFooterProps, sectionHtml: renderFooterHtml(liveFooterProps) }} />
+      <ThreeMashCookieConsent />
     </>
   );
 }

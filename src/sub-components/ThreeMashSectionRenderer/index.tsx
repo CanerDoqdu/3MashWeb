@@ -98,6 +98,7 @@ export const defaultFinalHtml = `<section id="iletisim-cta" class="tmr-final"><d
 
 const defaultFooterLegalLinks: Array<[string, string]> = [
   ["KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
+  [tLocalized("Çerez Politikası", "Cookie Policy"), "/pages/cerez-politikasi"],
   [tLocalized("İade &amp; Garanti", "Return &amp; Warranty"), "/pages/iade-ve-garanti"],
   [tLocalized("Mesafeli Satış", "Distance Sales"), "/pages/mesafeli-satis-sozlesmesi"],
 ];
@@ -570,6 +571,11 @@ function normalizedInternalRouteHref(href: string) {
     "/2tplvqpo-commercial-electronic-page": "/pages/ticari-elektronik-ileti-onayi",
     "/pages/ticari-elektronik-ileti-onayi": "/pages/ticari-elektronik-ileti-onayi",
     "/pages/ticari-elektronik-ileti": "/pages/ticari-elektronik-ileti-onayi",
+    "/pages/cerez-politikasi": "/pages/cerez-politikasi",
+    "/pages/cerez": "/pages/cerez-politikasi",
+    "/cerez-politikasi": "/pages/cerez-politikasi",
+    "/cookie-policy": "/pages/cerez-politikasi",
+    "/pages/cookie-policy": "/pages/cerez-politikasi",
     "/pages/sss": "/pages/sss",
     "/pages/faq": "/pages/sss",
     "/urunler/3d-yazicilar": "/3d-yazicilar",
@@ -1910,6 +1916,9 @@ function footerHrefForLabel(label: unknown, href: string) {
     "ticari elektronik ileti": "/pages/ticari-elektronik-ileti-onayi",
     "ticari elektronik ileti onayı": "/pages/ticari-elektronik-ileti-onayi",
     "ticari elektronik ileti onayi": "/pages/ticari-elektronik-ileti-onayi",
+    "çerez politikası": "/pages/cerez-politikasi",
+    "cerez politikasi": "/pages/cerez-politikasi",
+    "cookie policy": "/pages/cerez-politikasi",
     "sıkça sorulan sorular": "/pages/sss",
     "sikca sorulan sorular": "/pages/sss",
     sss: "/pages/sss",
@@ -1947,14 +1956,22 @@ function footerLegalLinks(props: ThreeMashSectionRenderProps) {
   const links = en
     ? [
       ["Privacy &amp; KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
+      ["Cookie Policy", "/pages/cerez-politikasi"],
+      ["Cookie Settings", "#cookie-settings"],
       ["Return &amp; Warranty", "/pages/iade-ve-garanti"],
       ["Distance Selling", "/pages/mesafeli-satis-sozlesmesi"],
     ]
-    : defaultFooterLegalLinks;
+    : [
+      ["KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
+      ["Çerez Politikası", "/pages/cerez-politikasi"],
+      ["Çerez Tercihleri", "#cerez-ayarlari"],
+      ["İade &amp; Garanti", "/pages/iade-ve-garanti"],
+      ["Mesafeli Satış", "/pages/mesafeli-satis-sozlesmesi"],
+    ];
   return links
     .map(
       ([text, target]) =>
-        `<a href="${escapeAttr(internalSiteHref(target))}">${text}</a>`,
+        `<a href="${target.startsWith('#') ? target : escapeAttr(internalSiteHref(target))}" class="${target.startsWith('#') ? 'tm-open-cookie-settings' : ''}">${text}</a>`,
     )
     .join("<span>·</span>");
 }

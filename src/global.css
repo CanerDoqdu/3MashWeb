@@ -27,6 +27,7 @@
 /* src/global.css */
 
 @import "./components/ThreeMashAccountUtilityPage/styles.css";
+@import "./components/ThreeMashCookieConsent/styles.css";
 
 /* existing global CSS below */
 html {

@@ -12,6 +12,7 @@ import {
   getSelectedProductVariant,
   initProductList,
   initCustomerStore,
+  logout,
   removeItem,
   searchProductList as updateProductSearchList,
   
@@ -1906,6 +1907,31 @@ const cartItems =
     }, 2200);
   }
 
+  async function handleHeaderLogout(event: Event, targetHref?: string) {
+    event.preventDefault();
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.removeItem("tm_customer_name");
+        localStorage.removeItem("tm_customer_cache");
+        sessionStorage.removeItem("tm_customer_name");
+        sessionStorage.removeItem("tm_customer_cache");
+        localStorage.removeItem("customer");
+        sessionStorage.removeItem("customer");
+      } catch {}
+    }
+
+    try {
+      await logout(customerStore);
+    } catch {}
+
+    setIsLoggedIn(false);
+
+    if (typeof window !== "undefined") {
+      const dest = targetHref || localizedHref("/account/login");
+      window.location.href = dest;
+    }
+  }
+
   const profileLinks = [
     {
       label: richTextValue(
@@ -1916,6 +1942,7 @@ const cartItems =
         props.profileLink1Href,
         "/account/orders"
       ),
+      isLogout: false,
     },
     {
       label: richTextValue(
@@ -1926,6 +1953,7 @@ const cartItems =
         props.profileLink2Href,
         "/account/addresses"
       ),
+      isLogout: false,
     },
     {
       label: richTextValue(
@@ -1935,6 +1963,7 @@ const cartItems =
       link: academyPageTarget(
         props.profileLink5Href
       ),
+      isLogout: false,
     },
     {
       label: richTextValue(
@@ -1945,6 +1974,7 @@ const cartItems =
         props.profileLink6Href,
         "/account/logout"
       ),
+      isLogout: true,
     },
   ];
   const accountMenuTitle = tLocalized("Hesabım", "My Account");
@@ -2616,7 +2646,11 @@ async function removeCartItem(
                   <p dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuDescription, tLocalized("Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın.", "Quickly access your orders, support, and account settings.")), props)} />
                   <div className="tmh-panel-links">
                     {profileLinks.map((item) => (
-                      <a href={href(item.link)} dangerouslySetInnerHTML={richText(item.label, props)} />
+                      <a
+                        href={href(item.link)}
+                        dangerouslySetInnerHTML={richText(item.label, props)}
+                        onClick={item.isLogout ? (e) => handleHeaderLogout(e, href(item.link)) : undefined}
+                      />
                     ))}
                   </div>
                 </div>

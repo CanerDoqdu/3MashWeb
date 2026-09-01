@@ -8,4 +8,5 @@ export interface Props {
   image?: IkasImage | null;
   /** CRS kaynaklı reusable ürün template datası. Doluysa source'da karşılığı olmayan bu section ürün template'inde render edilmez. */
   productTemplateJson?: string;
+  backgroundColor?: string;
 }

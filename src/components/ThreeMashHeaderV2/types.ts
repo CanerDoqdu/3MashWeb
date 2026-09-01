@@ -95,4 +95,5 @@ export interface Props {
   product7Title?: string;
   product7Description?: string;
   product7Href?: string;
+  backgroundColor?: string;
 }

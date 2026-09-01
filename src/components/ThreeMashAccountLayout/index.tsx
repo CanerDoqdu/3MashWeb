@@ -24,7 +24,7 @@ import {
   text,
   type DashboardProps,
 } from "../ThreeMashAccountUtilityPage";
-import { t, tLocalized } from "../../utils/i18n";
+import { t, tLocalized, localizedHref } from "../../utils/i18n";
 
 // Critical CSS injected inline — ikas Studio does not bundle sub-component CSS files.
 // The registered page's own styles.css (ThreeMashAccountInfoPage/styles.css) covers
@@ -244,18 +244,8 @@ function getInitialSidebarName(customer: any): string {
   }
   if (typeof window !== "undefined") {
     try {
-      const cached =
-        localStorage.getItem("tm_customer_name") ||
-        sessionStorage.getItem("tm_customer_name");
+      const cached = sessionStorage.getItem("tm_customer_name");
       if (cached) return cached;
-      const cachedCustomer =
-        localStorage.getItem("tm_customer_cache") ||
-        sessionStorage.getItem("tm_customer_cache");
-      if (cachedCustomer) {
-        const parsed = JSON.parse(cachedCustomer);
-        const name = customerName(parsed);
-        if (name) return name;
-      }
     } catch {}
   }
   return "";
@@ -353,14 +343,6 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
   const [customer, setCustomer] = useState<IkasCustomer | null>(() => {
     if (customerStore.customer) return customerStore.customer;
     if (isStudio) return mockStudioCustomer;
-    if (typeof window !== "undefined") {
-      try {
-        const cached =
-          localStorage.getItem("tm_customer_cache") ||
-          sessionStorage.getItem("tm_customer_cache");
-        if (cached) return JSON.parse(cached);
-      } catch {}
-    }
     return null;
   });
 
@@ -388,12 +370,8 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
     if (nextName) {
       setSidebarName(nextName);
       try {
-        localStorage.setItem("tm_customer_name", nextName);
         sessionStorage.setItem("tm_customer_name", nextName);
-        if (customer) {
-          localStorage.setItem("tm_customer_cache", JSON.stringify(customer));
-          sessionStorage.setItem("tm_customer_cache", JSON.stringify(customer));
-        }
+        localStorage.removeItem("tm_customer_name");
       } catch {}
     }
   }, [customer]);
@@ -435,17 +413,10 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
               currentCustomer.email ||
               "";
             if (name) {
-              localStorage.setItem("tm_customer_name", name);
               sessionStorage.setItem("tm_customer_name", name);
             }
-            localStorage.setItem(
-              "tm_customer_cache",
-              JSON.stringify(currentCustomer),
-            );
-            sessionStorage.setItem(
-              "tm_customer_cache",
-              JSON.stringify(currentCustomer),
-            );
+            localStorage.removeItem("tm_customer_name");
+            localStorage.removeItem("tm_customer_cache");
           } catch {}
         } else if (isStudio) {
           setCustomer(mockStudioCustomer);
@@ -453,8 +424,21 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
 
         setReady(true);
 
+        // Security check: if not logged in and not in Studio, redirect to login immediately
         if (!currentCustomer) {
-          if (isStudio && mode === "orders") setOrders(mockStudioOrders);
+          if (isStudio && mode === "orders") {
+            setOrders(mockStudioOrders);
+          } else if (!isStudio && typeof window !== "undefined") {
+            try {
+              localStorage.removeItem("tm_customer_name");
+              localStorage.removeItem("tm_customer_cache");
+              sessionStorage.removeItem("tm_customer_name");
+              sessionStorage.removeItem("tm_customer_cache");
+            } catch {}
+            const loginTarget = localizedHref(normalizeHref(props?.loginHref, "/account/login"));
+            window.location.replace(loginTarget);
+            return;
+          }
           return;
         }
 
@@ -525,10 +509,20 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
       localStorage.removeItem("tm_customer_cache");
       sessionStorage.removeItem("tm_customer_name");
       sessionStorage.removeItem("tm_customer_cache");
+      localStorage.removeItem("customer");
+      sessionStorage.removeItem("customer");
     } catch {}
 
-    await logout(customerStore);
-    Router.navigate(normalizeHref(props?.loginHref, "/account/login"));
+    try {
+      await logout(customerStore);
+    } catch {}
+
+    setCustomer(null);
+
+    if (typeof window !== "undefined") {
+      const loginTarget = localizedHref(normalizeHref(props?.loginHref, "/account/login"));
+      window.location.href = loginTarget;
+    }
   }
 
   // ── Href helpers ──────────────────────────────────────────────────

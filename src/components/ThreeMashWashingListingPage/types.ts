@@ -3,4 +3,5 @@ import type { IkasProductList } from "@ikas/bp-storefront";
 
 export interface Props {
   productList?: IkasProductList;
+  backgroundColor?: string;
 }

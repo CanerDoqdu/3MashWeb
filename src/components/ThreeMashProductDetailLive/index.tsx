@@ -1343,29 +1343,35 @@ async function handleAddToCart() {
       image ? [getDefaultSrc(image)] : []
     );
 
-const result = await addItemToCart(
-  variant,
-  product,
-  1
-);
+    const result = await addItemToCart(
+      variant,
+      product,
+      1
+    );
 
-if (result.success) {
-  // IKAS store'u anında global state'e yayınla.
-  publishCartFromIkasStore();
+    if (result.success) {
+      // IKAS store'u anında global state'e yayınla.
+      publishCartFromIkasStore();
 
-  // Header cart panelini aç.
-  window.dispatchEvent(
-    new CustomEvent("ikas:open-cart-sidebar")
-  );
+      // Header cart panelini aç.
+      window.dispatchEvent(
+        new CustomEvent("ikas:open-cart-sidebar")
+      );
 
-  // Server'dan arkada doğrula.
-  void refreshGlobalCart();
-} else {
-  setMessage(
-    props.addToCartErrorMessage ||
-      tLocalized("Ürün sepete eklenemedi.", "The product could not be added to the cart.")
-  );
-}
+      // Server'dan arkada doğrula.
+      void refreshGlobalCart();
+    } else {
+      setMessage(
+        props.addToCartErrorMessage ||
+          tLocalized("Ürün sepete eklenemedi.", "The product could not be added to the cart.")
+      );
+    }
+  } catch (error) {
+    console.error("ThreeMashProductDetailLive add to cart failed", error);
+    setMessage(
+      props.addToCartErrorMessage ||
+        tLocalized("Ürün sepete eklenemedi. Lütfen daha sonra tekrar deneyin.", "The product could not be added to the cart. Please try again.")
+    );
   } finally {
     setIsAdding(false);
   }

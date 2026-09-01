@@ -11,7 +11,7 @@ function numberValue(value: number | undefined, fallback: number) {
 }
 
 function pageKey(mode: string | undefined): LegalPageKey {
-  return mode === 'iade' || mode === 'mesafeli' || mode === 'ticari' || mode === 'uyelik' ? mode : 'kvkk';
+  return mode === 'iade' || mode === 'mesafeli' || mode === 'ticari' || mode === 'uyelik' || mode === 'cerez' ? mode : 'kvkk';
 }
 
 function normalizeContentHtml(key: LegalPageKey, contentHtml: string) {
@@ -25,6 +25,7 @@ function normalizeContentHtml(key: LegalPageKey, contentHtml: string) {
 
 function titleText(key: LegalPageKey, value: string | undefined, fallback: string) {
   if (key === 'ticari') return tLocalized("TİCARİ ELEKTRONİK İLETİ ONAYI", "COMMERCIAL ELECTRONIC MESSAGE CONSENT");
+  if (key === 'cerez') return tLocalized("ÇEREZ POLİTİKASI", "COOKIE POLICY");
   return text(value, fallback);
 }
 

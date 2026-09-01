@@ -583,7 +583,7 @@ function productJsonLd(props: Props): string {
     ],
   };
 
-  return JSON.stringify([productSchema, breadcrumbSchema]);
+  return JSON.stringify([productSchema, breadcrumbSchema]).replace(/</g, "\\u003c");
 }
 
 export function ProductDetailHeroSection(props: Props) {

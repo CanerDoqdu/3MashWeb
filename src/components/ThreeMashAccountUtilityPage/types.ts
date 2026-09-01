@@ -12,4 +12,5 @@ export interface Props {
   accountHref?: string;
   emptyText?: string;
   backgroundImageUrl?: IkasImage | null;
+  backgroundColor?: string;
 }

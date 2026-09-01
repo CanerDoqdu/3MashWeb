@@ -11341,6 +11341,12 @@
           "required": false,
           "description": "CRS kaynaklı reusable ürün template datası. Doluysa source'da karşılığı olmayan bu section ürün template'inde render edilmez.",
           "groupId": "template"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -24631,6 +24637,12 @@
           "required": false,
           "defaultValue": "Kayıtlı adresiniz bulunmuyor.",
           "groupId": "empty"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -24742,6 +24754,12 @@
           "required": false,
           "defaultValue": "Henüz siparişiniz bulunmuyor.",
           "groupId": "empty"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -24853,6 +24871,12 @@
           "required": false,
           "defaultValue": "Beğendiğiniz ürün bulunmuyor.",
           "groupId": "empty"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -24964,6 +24988,12 @@
           "required": false,
           "defaultValue": null,
           "groupId": "media"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -25075,6 +25105,12 @@
           "required": false,
           "defaultValue": null,
           "groupId": "media"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -26719,6 +26755,12 @@
           "required": false,
           "defaultValue": "transparent",
           "groupId": "appearance"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -27475,6 +27517,12 @@
           "type": "TEXT",
           "required": false,
           "groupId": "footer"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -27826,6 +27874,12 @@
           "type": "TEXT",
           "required": false,
           "groupId": "banner"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -28074,6 +28128,12 @@
           "type": "TEXT",
           "required": false,
           "groupId": "cta"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -28436,6 +28496,12 @@
           "type": "TEXT",
           "required": false,
           "groupId": "footer"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ],
       "propGroups": [
@@ -28971,6 +29037,12 @@
           "type": "TEXT",
           "required": false,
           "defaultValue": "/masasustu-tarayicilar"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ]
     },
@@ -28986,6 +29058,12 @@
           "displayName": "Product List",
           "type": "PRODUCT_LIST",
           "required": false
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false
         }
       ]
     },
@@ -29000,6 +29078,12 @@
           "name": "productList",
           "displayName": "Product List",
           "type": "PRODUCT_LIST",
+          "required": false
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "Arka Plan Rengi",
+          "type": "COLOR",
           "required": false
         }
       ]

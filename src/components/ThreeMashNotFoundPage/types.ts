@@ -10,4 +10,5 @@ export interface Props {
   textColor?: string;
   buttonTextColor?: string;
   buttonBackgroundColor?: string;
+  backgroundColor?: string;
 }
