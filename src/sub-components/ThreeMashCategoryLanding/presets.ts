@@ -1,17 +1,12 @@
 import { tLocalized } from "../../utils/i18n";
+import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import type { CategoryLandingData } from "./index";
 
 const curieM1MainImage =
   "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/302ffc22-20c4-49b7-8d16-b303e079f0cf/1080/1.webp";
 
 function normalizeCategoryKey(value: string | undefined) {
-  const decoded = (() => {
-    try {
-      return decodeURIComponent(value || "");
-    } catch {
-      return value || "";
-    }
-  })();
+  const decoded = safeDecodeURI(value || "");
 
   return decoded
     .toLocaleLowerCase("tr-TR")

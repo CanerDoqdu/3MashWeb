@@ -12,6 +12,8 @@ import {
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import { tLocalized, isEnglishLocale, translateText, localizedHref } from "../../utils/i18n";
+import { safeDecodeURI } from "../../utils/safeDecodeURI";
+import { safeRedirect } from "../../utils/safeRedirect";
 
 export type CategoryButton = {
   label: string;
@@ -423,15 +425,15 @@ function smoothCategoryClick(event: MouseEvent, rawHref: string) {
     event.preventDefault();
     event.stopPropagation();
     try {
-      localStorage.setItem("tmcl-pending-anchor-scroll", JSON.stringify({ sectionId: decodeURIComponent(hash.slice(1)).trim(), block: "center", fromTop: true }));
+      localStorage.setItem("tmcl-pending-anchor-scroll", JSON.stringify({ sectionId: safeDecodeURI(hash.slice(1)).trim(), block: "center", fromTop: true }));
     } catch {
       // Storage can be unavailable
     }
-    window.location.href = normalizedTargetPath;
+    window.location.href = safeRedirect(normalizedTargetPath);
     return;
   }
 
-  const targetId = decodeURIComponent(hash.slice(1)).trim();
+  const targetId = safeDecodeURI(hash.slice(1)).trim();
   const section = document.getElementById(targetId) || document.querySelector(hash);
   if (!section) return;
 

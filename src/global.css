@@ -30,7 +30,7 @@
 @import "./components/ThreeMashCookieConsent/styles.css";
 
 /* existing global CSS below */
-html {
+:root {
   scroll-behavior: smooth;
 }
 

@@ -15,17 +15,14 @@ import {
 } from "./presets";
 import type { CategoryLandingData } from "./index";
 import { tLocalized } from "../../utils/i18n";
+import { safeDecodeURI } from "../../utils/safeDecodeURI";
 
 function stringValue(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
 
 function decodeText(value: string) {
-  try {
-    return decodeURIComponent(value);
-  } catch {
-    return value;
-  }
+  return safeDecodeURI(value);
 }
 
 function normalizedSlug(value: unknown) {

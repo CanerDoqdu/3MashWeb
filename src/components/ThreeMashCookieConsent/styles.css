@@ -409,38 +409,6 @@
   flex: 1;
 }
 
-/* ── Discrete Floating Re-open Button ── */
-.tm-cookie-reopen-btn {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #FFFFFF;
-  border: 1px solid #E6E6E0;
-  color: #0E0E0C;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 99999;
-  box-shadow: 0 4px 12px rgba(14, 14, 12, 0.08);
-  transition: all 0.2s ease;
-  padding: 0;
-}
-
-.tm-cookie-reopen-btn:hover {
-  background: #FAFAF7;
-  border-color: #0E0E0C;
-  transform: scale(1.06);
-}
-
-.tm-cookie-reopen-btn:focus-visible {
-  outline: 2px solid #0E0E0C;
-  outline-offset: 2px;
-}
-
 /* ── Responsive Behavior (Mobile Bottom Card) ── */
 @media (max-width: 640px) {
   .tm-cookie-banner {

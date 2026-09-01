@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useState } from "preact/hooks";
 
 import {
   createMediaSrcset,
@@ -156,10 +156,6 @@ export function isStudioEnvironment() {
   return (
     window.location.hostname.includes("ikasapps.com") ||
     window.location.hostname.includes("myikas.com") ||
-    window.location.search.includes("studio=") ||
-    window.location.search.includes("preview=") ||
-    document.referrer.includes("ikasapps.com") ||
-    document.referrer.includes("myikas.com") ||
     (typeof window.parent !== "undefined" && window.parent !== window)
   );
 }
@@ -645,6 +641,17 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
     if (typeof window === "undefined") return "";
     return new URLSearchParams(window.location.search).get(name) || "";
   }
+
+  const token = getQueryParam("token");
+
+  useLayoutEffect(() => {
+    if (token) {
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+  }, [token]);
+
+  // The recovery page should set a no-referrer policy in the host document.
+  // The ikas host is responsible for the actual <meta name="referrer" ...> tag.
 
   async function submit(event: Event) {
     event.preventDefault();

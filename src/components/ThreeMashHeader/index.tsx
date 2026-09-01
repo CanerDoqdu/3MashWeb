@@ -27,6 +27,8 @@ import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
 import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale } from "../../utils/i18n";
+import { safeDecodeURI } from "../../utils/safeDecodeURI";
+import { safeRedirect } from "../../utils/safeRedirect";
 import {
   ACF_FEP_FILM_SLUG,
   ARGENZ_HT_MULTILAYER_SLUG,
@@ -1123,7 +1125,7 @@ function handleReferencesClick(event: MouseEvent, homeHref: string | undefined, 
   }
 
   savePendingReferencesScroll(targetId);
-  window.location.href = homeTarget;
+  window.location.href = safeRedirect(homeTarget);
 }
 
 function handleAnnouncementClick(event: MouseEvent, targetHref: string) {
@@ -1626,11 +1628,11 @@ function scrollToSectionWithOffset(sectionId: string, onAlreadyAtSection?: () =>
   if (currentPath !== "/") {
     if (isTopTarget) {
       savePendingReferencesScroll("__top__");
-      window.location.href = "/";
+      window.location.href = safeRedirect("/");
       return;
     }
     savePendingReferencesScroll(cleanId);
-    window.location.href = `/#${cleanId}`;
+    window.location.href = safeRedirect(`/#${cleanId}`);
     return;
   }
 
@@ -1758,7 +1760,7 @@ function handleHeaderAnchorNavigation(event: MouseEvent, rawHref: string | undef
 
   if (url.origin !== window.location.origin || !url.hash || url.hash.length <= 1) return;
 
-  const sectionId = decodeURIComponent(url.hash.slice(1)).trim();
+  const sectionId = safeDecodeURI(url.hash.slice(1)).trim();
   event.preventDefault();
   event.stopPropagation();
   scrollToSectionWithOffset(sectionId);
@@ -1928,7 +1930,7 @@ const cartItems =
 
     if (typeof window !== "undefined") {
       const dest = targetHref || localizedHref("/account/login");
-      window.location.href = dest;
+      window.location.href = safeRedirect(dest);
     }
   }
 
@@ -2098,7 +2100,7 @@ const cartItems =
     }
 
     const scrollToPendingSection = () => {
-      const sectionId = decodeURIComponent(pendingHash.slice(1));
+      const sectionId = safeDecodeURI(pendingHash.slice(1));
       const section = document.getElementById(sectionId) || document.querySelector(pendingHash);
       if (!section) {
         attempts += 1;
@@ -2206,7 +2208,7 @@ const cartItems =
       }
 
       if (!hash || hash.length <= 1) return;
-      const sectionId = decodeURIComponent(hash.slice(1));
+      const sectionId = safeDecodeURI(hash.slice(1));
       const section = document.getElementById(sectionId) || document.querySelector(hash);
       if (!section || !samePath && !document.getElementById(sectionId)) return;
 
@@ -2305,9 +2307,9 @@ const cartItems =
     try {
       const url = new URL(target, "https://3mash.local");
       url.searchParams.set(param, query);
-      window.location.href = `${url.pathname}${url.search}${url.hash}`;
+      window.location.href = safeRedirect(`${url.pathname}${url.search}${url.hash}`);
     } catch {
-      window.location.href = `${target}${target.includes("?") ? "&" : "?"}${encodeURIComponent(param)}=${encodeURIComponent(query)}`;
+      window.location.href = safeRedirect(`${target}${target.includes("?") ? "&" : "?"}${encodeURIComponent(param)}=${encodeURIComponent(query)}`);
     }
   }
 
@@ -2319,7 +2321,7 @@ const cartItems =
     if (firstSuggestion) {
       const productHref = getProductHref(firstSuggestion);
       if (productHref && productHref !== "#") {
-        window.location.href = productHref;
+        window.location.href = safeRedirect(productHref);
         return;
       }
     }
@@ -2446,7 +2448,7 @@ async function removeCartItem(
                         searchParams.delete("lang");
                         searchParams.delete("locale");
                         const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
-                        window.location.href = bare + search + window.location.hash;
+                        window.location.href = safeRedirect(bare + search + window.location.hash);
                       }}
                     >
                       <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2474,7 +2476,7 @@ async function removeCartItem(
                         searchParams.delete("lang");
                         searchParams.delete("locale");
                         const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
-                        window.location.href = enPath + search + window.location.hash;
+                        window.location.href = safeRedirect(enPath + search + window.location.hash);
                       }}
                     >
                       <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2773,7 +2775,7 @@ const image = imageCandidates[0];
                 onClick={() => {
                   setPreferredLocale("tr");
                   const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
-                  window.location.href = path + window.location.search + window.location.hash;
+                  window.location.href = safeRedirect(path + window.location.search + window.location.hash);
                 }}
               >
                 <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2791,7 +2793,7 @@ const image = imageCandidates[0];
                   setPreferredLocale("en");
                   const bare = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
                   const enPath = bare === "/" ? "/en" : `/en${bare.startsWith("/") ? bare : `/${bare}`}`;
-                  window.location.href = enPath + window.location.search + window.location.hash;
+                  window.location.href = safeRedirect(enPath + window.location.search + window.location.hash);
                 }}
               >
                 <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

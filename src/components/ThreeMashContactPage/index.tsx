@@ -163,7 +163,7 @@ export function ThreeMashContactPage(props: Props) {
               <a
                 href="https://maps.google.com/?q=Antalya%20Teknokent%20Konyaalt%C4%B1"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 {tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Technopark, Konyaalti")}
               </a>
@@ -336,7 +336,7 @@ export function ThreeMashContactPage(props: Props) {
                 <a
                   href={href(props.kvkkHref, tLocalized("/pages/gizlilik-politikasi-ve-kvkk", "/pages/gizlilik-politikasi-ve-kvkk"))}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   {text(props.kvkkLinkText, tLocalized("okudum, onaylıyorum", "I have read and agree"), "I have read and agree")}
                 </a>

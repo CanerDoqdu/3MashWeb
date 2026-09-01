@@ -1,4 +1,5 @@
 import { tLocalized } from "../../utils/i18n";
+import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import {
   useEffect,
   useLayoutEffect,
@@ -180,7 +181,7 @@ function smoothAnchorClick(event: MouseEvent, targetHref?: string) {
 
   if (!hash || hash.length <= 1) return;
 
-  const targetId = decodeURIComponent(hash.slice(1)).trim();
+  const targetId = safeDecodeURI(hash.slice(1)).trim();
   const section = document.getElementById(targetId);
 
   if (!section) return;

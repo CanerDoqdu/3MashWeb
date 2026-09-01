@@ -237,7 +237,7 @@ function ActionLink({
       className={`tmref-action tmref-action-${variant}`}
       href={href}
       target={isExternalHref(href) ? "_blank" : undefined}
-      rel={isExternalHref(href) ? "noreferrer" : undefined}
+      rel={isExternalHref(href) ? "noopener noreferrer" : undefined}
     >
       {children}
     </a>

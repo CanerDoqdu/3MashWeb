@@ -2,6 +2,7 @@ import { I18n, IkasStorefrontConfig } from "@ikas/bp-storefront";
 import trLocaleJson from "../locales/tr.json";
 import enLocaleJson from "../locales/en.json";
 import allTranslationsJson from "./all_translations.json";
+import { safeDecodeURI } from "./safeDecodeURI";
 
 export type Locale = "tr" | "en";
 
@@ -147,7 +148,7 @@ export function getCurrentLocale(): Locale {
     try {
       const match = document.cookie.match(/(?:^|;\s*)(?:3mash_locale|3mash_lang|locale)=([^;]+)/);
       if (match?.[1]) {
-        const clean = decodeURIComponent(match[1]).toLowerCase();
+        const clean = safeDecodeURI(match[1]).toLowerCase();
         if (clean.startsWith("en")) return "en";
         if (clean.startsWith("tr")) return "tr";
       }

@@ -67,6 +67,14 @@ function applyConsentEffects(consent: CookieConsentState) {
 
     if (cookiesToPurge.length > 0 && typeof document !== "undefined") {
       const hostname = window.location.hostname;
+      const allowedDomains = ["3mash.com", "myikas.com", "ikasapps.com"];
+      const isAllowedDomain = allowedDomains.some((allowed) => hostname.endsWith(allowed));
+
+      if (!isAllowedDomain) {
+        console.warn("CookieConsent: hostname not in allowlist, skipping purge");
+        return;
+      }
+
       const domainParts = hostname.split(".");
       const domains = [
         "",
@@ -300,7 +308,7 @@ export function ThreeMashCookieConsent() {
               <button
                 type="button"
                 className="tm-cookie-modal-close"
-                onClick={() => setIsPreferencesOpen(false)}
+                onClick={handleCloseButton}
                 aria-label={tLocalized("Kapat", "Close")}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -452,27 +460,6 @@ export function ThreeMashCookieConsent() {
         </div>
       )}
 
-      {/* ── Floating Discrete Re-open Trigger (When Closed) ── */}
-      {!isOpen && (
-        <button
-          type="button"
-          className="tm-cookie-reopen-btn"
-          onClick={() => {
-            setIsPreferencesOpen(true);
-            setIsOpen(true);
-          }}
-          aria-label={tLocalized("Çerez Tercihleri", "Cookie Preferences")}
-          title={tLocalized("Çerez Tercihleri", "Cookie Preferences")}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5z" />
-            <path d="M8.5 8.5v.01" />
-            <path d="M7.5 15.5v.01" />
-            <path d="M15.5 14.5v.01" />
-            <path d="M12 12v.01" />
-          </svg>
-        </button>
-      )}
     </>
   );
 }

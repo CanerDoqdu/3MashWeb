@@ -25,6 +25,7 @@ import {
   type DashboardProps,
 } from "../ThreeMashAccountUtilityPage";
 import { t, tLocalized, localizedHref } from "../../utils/i18n";
+import { safeRedirect } from "../../utils/safeRedirect";
 
 // Critical CSS injected inline — ikas Studio does not bundle sub-component CSS files.
 // The registered page's own styles.css (ThreeMashAccountInfoPage/styles.css) covers
@@ -483,7 +484,7 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
     // Push URL without full navigation — sidebar stays mounted
     if (typeof window !== "undefined") {
       try {
-        window.history.pushState({}, "", nextHref);
+        window.history.pushState({}, "", safeRedirect(nextHref));
       } catch {
         // iframe-safe
       }
@@ -521,7 +522,7 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
 
     if (typeof window !== "undefined") {
       const loginTarget = localizedHref(normalizeHref(props?.loginHref, "/account/login"));
-      window.location.href = loginTarget;
+      window.location.href = safeRedirect(loginTarget);
     }
   }
 
