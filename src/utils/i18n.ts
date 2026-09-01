@@ -182,22 +182,15 @@ export function setPreferredLocale(locale: Locale): void {
     }
   } catch { }
   try {
+    // Write only primary key; deprecated keys are read-only for backward compat
     localStorage.setItem("3mash_locale", locale);
-    localStorage.setItem("3mash_lang", locale);
-    localStorage.setItem("locale", locale);
   } catch { }
   try {
     // Secure flag added for HTTPS protection (prevents downgrade attacks)
     const secureSuffix = typeof window !== "undefined" && window.location.protocol === "https:" ? "; Secure" : "";
     
-    // Primary cookie (new standard)
+    // Write only primary cookie; deprecated keys are kept for backward-compat reads only
     document.cookie = `3mash_locale=${locale}; path=/; max-age=31536000; SameSite=Lax${secureSuffix}`;
-    
-    // Deprecated legacy key - keep for backward compat but will be cleaned up on next read
-    document.cookie = `3mash_lang=${locale}; path=/; max-age=31536000; SameSite=Lax${secureSuffix}`;
-    
-    // Deprecated legacy key - keep for backward compat but will be cleaned up on next read
-    document.cookie = `locale=${locale}; path=/; max-age=31536000; SameSite=Lax${secureSuffix}`;
   } catch { }
 }
 

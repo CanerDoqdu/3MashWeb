@@ -657,8 +657,10 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
     }
   }, [token]);
 
-  // The recovery page should set a no-referrer policy in the host document.
-  // The ikas host is responsible for the actual <meta name="referrer" ...> tag.
+  // Security: Token is extracted then immediately removed from URL via history.replaceState().
+  // Host document MUST have <meta name="referrer" content="no-referrer"> to prevent
+  // token leakage to third-party scripts or external links. No third-party trackers
+  // should be loaded on this recovery flow.
 
   async function submit(event: Event) {
     event.preventDefault();
