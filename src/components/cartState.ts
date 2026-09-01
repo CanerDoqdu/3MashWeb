@@ -43,10 +43,9 @@ function writeCache(cart: IkasCart | null) {
       return;
     }
 
-    sessionStorage.setItem(
-      CART_CACHE_KEY,
-      JSON.stringify(cart)
-    );
+    // PII security: cart cache disabled to prevent sensitive order/line item data leakage
+    // sessionStorage.setItem(CART_CACHE_KEY, JSON.stringify(cart));
+    // (Keep reading old cache for backward compatibility if it exists)
   } catch {
     // Cache hata verse bile gerçek cart çalışmaya devam eder.
   }

@@ -243,12 +243,7 @@ function getInitialSidebarName(customer: any): string {
     const storeDirect = customerName(customerStore.customer);
     if (storeDirect) return storeDirect;
   }
-  if (typeof window !== "undefined") {
-    try {
-      const cached = sessionStorage.getItem("tm_customer_name");
-      if (cached) return cached;
-    } catch {}
-  }
+  // PII storage disabled: no longer reading cached customer name
   return "";
 }
 
@@ -370,10 +365,7 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
       customerName(customer) || getInitialSidebarName(customer);
     if (nextName) {
       setSidebarName(nextName);
-      try {
-        sessionStorage.setItem("tm_customer_name", nextName);
-        localStorage.removeItem("tm_customer_name");
-      } catch {}
+      // PII storage disabled: customer name should not be cached client-side
     }
   }, [customer]);
 
@@ -408,14 +400,8 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
         const currentCustomer = customerStore.customer;
         if (currentCustomer) {
           setCustomer(currentCustomer);
+          // PII storage disabled: customer name should not be cached client-side
           try {
-            const name =
-              `${currentCustomer.firstName ?? ""} ${currentCustomer.lastName ?? ""}`.trim() ||
-              currentCustomer.email ||
-              "";
-            if (name) {
-              sessionStorage.setItem("tm_customer_name", name);
-            }
             localStorage.removeItem("tm_customer_name");
             localStorage.removeItem("tm_customer_cache");
           } catch {}
