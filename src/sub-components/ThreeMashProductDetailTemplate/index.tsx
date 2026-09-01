@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { ComponentChildren } from "preact";
 import { resolveProductDetailData } from "../ThreeMashProductDetailData";
 import { tLocalized, isEnglishLocale, translateText } from "../../utils/i18n";
+import { safeJsonLdScript, sanitizeHtml } from "../../utils/sanitizeHtml";
 
 export type ProductGalleryItem = {
   src: string;
@@ -250,7 +251,7 @@ export function ProductDetailSectionScope({ data, children }: { data: ProductDet
 }
 
 function html(value: string) {
-  return { __html: translateText(value) };
+  return { __html: sanitizeHtml(translateText(value)) };
 }
 
 function t(value?: string | null): string {
@@ -583,7 +584,7 @@ function productJsonLd(props: Props): string {
     ],
   };
 
-  return JSON.stringify([productSchema, breadcrumbSchema]).replace(/</g, "\\u003c");
+  return safeJsonLdScript([productSchema, breadcrumbSchema]);
 }
 
 export function ProductDetailHeroSection(props: Props) {

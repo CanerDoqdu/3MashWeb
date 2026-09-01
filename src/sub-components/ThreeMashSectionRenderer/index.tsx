@@ -21,6 +21,7 @@ import {
   profileMehmet,
 } from "../../assets/remaining-assets-data";
 import { tLocalized, isEnglishLocale, tProp, isTurkishText, localizedHref } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   ecoBlocksIcon,
   ecoCuringIcon,
@@ -245,7 +246,8 @@ export interface ThreeMashSectionRenderProps {
 }
 
 function html(value?: string, fallback = "") {
-  return { __html: value && value.trim() ? value : fallback };
+  const source = value && value.trim() ? value : fallback;
+  return { __html: sanitizeHtml(source) };
 }
 
 function value(value: unknown, fallback: string) {
@@ -281,11 +283,13 @@ function stripInlineTypographyStyles(markup: string) {
 }
 
 function inlineHtml(value: string) {
-  return stripInlineTypographyStyles(
-    value
-      .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
-      .replace(/^<p[^>]*>/i, "")
-      .replace(/<\/p>$/i, ""),
+  return sanitizeHtml(
+    stripInlineTypographyStyles(
+      value
+        .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+        .replace(/^<p[^>]*>/i, "")
+        .replace(/<\/p>$/i, ""),
+    ),
   );
 }
 

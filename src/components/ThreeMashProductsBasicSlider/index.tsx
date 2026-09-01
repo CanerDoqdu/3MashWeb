@@ -3,6 +3,7 @@ import { basicSliderImages } from "../../assets/basic-slider-images-data";
 import { Props } from "./types";
 import { resolveSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { tLocalized } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 const DEFAULT_IMAGES = basicSliderImages;
 const DEFAULT_INTRO_TITLE = tLocalized("Uyumlu Cihazlar", "Compatible Devices");
@@ -320,7 +321,7 @@ export function ThreeMashProductsBasicSlider(props: Props) {
         {hasIntro ? (
           <div className={`tmpbs-intro tmpbs-intro-${props.introAlign || "center"}`}>
             {introTitle ? <h2>{introTitle}</h2> : null}
-            {introDescriptionHtml ? <div className="tmpbs-intro-copy" dangerouslySetInnerHTML={{ __html: introDescriptionHtml }} /> : null}
+            {introDescriptionHtml ? <div className="tmpbs-intro-copy" dangerouslySetInnerHTML={{ __html: sanitizeHtml(introDescriptionHtml) }} /> : null}
           </div>
         ) : null}
 

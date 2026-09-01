@@ -2,6 +2,7 @@ import { tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
 import { machineP16L, resinBottle } from "../../assets/remaining-assets-data";
 import p1dPrinterImage from "../../assets/p1d-printer-data";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 function href(value?: string) {
   return value && value.trim() ? value : "#";
@@ -34,7 +35,7 @@ function styleTextChunks(markup: string, props?: Props) {
 }
 
 function richText(value?: string, props?: Props) {
-  return { __html: styleTextChunks(inlineHtml(value), props) };
+  return { __html: styleTextChunks(sanitizeHtml(inlineHtml(value)), props) };
 }
 
 function imageIdToUrl(value: string) {

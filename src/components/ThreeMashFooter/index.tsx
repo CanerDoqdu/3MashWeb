@@ -2,6 +2,7 @@ import { tLocalized } from "../../utils/i18n";
 import { useMemo } from "preact/hooks";
 import { renderFooterHtml, ThreeMashStaticSection } from "../../sub-components/ThreeMashSectionRenderer";
 import { ThreeMashCookieConsent } from "../ThreeMashCookieConsent";
+import { safeJsonLdScript } from "../../utils/sanitizeHtml";
 import { Props } from "./types";
 
 function organizationJsonLd(props: Props): string {
@@ -33,7 +34,7 @@ function organizationJsonLd(props: Props): string {
     ],
   };
 
-  return JSON.stringify(schema).replace(/</g, "\\u003c");
+  return safeJsonLdScript(schema);
 }
 
 export function ThreeMashFooter(props: Props) {

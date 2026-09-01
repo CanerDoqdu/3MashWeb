@@ -1,6 +1,7 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 function trimmedText(value: unknown, fallback = ""): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -103,7 +104,7 @@ export function ThreeMashProductPackageContent(props: Props) {
         </div>
 
         <div className="tm-pkg-head">
-          <h2 dangerouslySetInnerHTML={{ __html: titleHtml }} />
+          <h2 dangerouslySetInnerHTML={{ __html: sanitizeHtml(titleHtml) }} />
           <p className="tm-pkg-side" dangerouslySetInnerHTML={{ __html: sideHtml }} />
         </div>
 

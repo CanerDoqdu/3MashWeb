@@ -2,6 +2,7 @@ import { Props } from "./types";
 import crsCompositeSararmaImage from "../../assets/crs-composite-sararma-data";
 import { crsModelBottleImage } from "../../assets/crs-model-data";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   machineP16L,
   machineUW02,
@@ -211,7 +212,7 @@ function richHtml(value: string | undefined, fallback: string) {
     .replace(/^<p[^>]*>/i, "")
     .replace(/<\/p>$/i, "");
 
-  return { __html: cleaned };
+  return { __html: sanitizeHtml(cleaned) };
 }
 
 function safeHref(value: string | undefined, fallback: string) {

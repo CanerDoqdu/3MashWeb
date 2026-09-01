@@ -14,6 +14,7 @@ import {
 import { tLocalized, isEnglishLocale, translateText, localizedHref } from "../../utils/i18n";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeRedirect } from "../../utils/safeRedirect";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 export type CategoryButton = {
   label: string;
@@ -313,7 +314,7 @@ type CategoryAnnouncementWindow = Window & {
 };
 
 function rich(value: string) {
-  return { __html: normalizeHtmlLinks(translateText(value)) };
+  return { __html: sanitizeHtml(normalizeHtmlLinks(translateText(value))) };
 }
 
 function textValue(value: string | undefined, fallback: string) {

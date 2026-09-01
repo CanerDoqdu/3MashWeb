@@ -5,6 +5,7 @@ import {
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import { tLocalized, tProp } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -161,7 +162,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
         {/* ── Article body ───────────────────────────────────────────────── */}
         <div
           className="tm-bda-body"
-          dangerouslySetInnerHTML={{ __html: blog.blogContent?.content || "" }}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(blog.blogContent?.content || "") }}
         />
 
       </div>

@@ -1,6 +1,7 @@
 import { faqSections } from "../ThreeMashPageData/sourceData";
 import { Props } from "./types";
 import { t, tLocalized, tProp } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
   return tProp(value, fallbackTr, fallbackEn || fallbackTr);
@@ -141,7 +142,7 @@ export function ThreeMashFaqPage(props: Props) {
                   </summary>
                   <div
                     className="tmfaq-answer"
-                    dangerouslySetInnerHTML={{ __html: item.answerHtml }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(item.answerHtml) }}
                   />
                 </details>
               ))}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
 import { Props } from "./types";
 import { isEnglishLocale, tLocalized, tProp } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 type CostMode = "klinik" | "lab";
 

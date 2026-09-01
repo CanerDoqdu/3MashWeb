@@ -27,6 +27,7 @@ import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
 import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeRedirect } from "../../utils/safeRedirect";
 import {
@@ -1340,7 +1341,7 @@ function styleTextChunks(markup: string, phrase?: string, enabled?: boolean, cla
 
 function richText(value?: string, props?: Props) {
   const raw = isEnglishLocale() ? translateText(value) : value;
-  const markup = inlineHtml(raw);
+  const markup = sanitizeHtml(inlineHtml(raw));
   if (!props) return { __html: markup };
   return {
     __html: styleTextChunks(markup, props.styledPhrase, props.wordStyleEnabled !== false),

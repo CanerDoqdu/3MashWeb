@@ -2,6 +2,7 @@ import { useLayoutEffect } from "preact/hooks";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
 import { translateText, tLocalized } from "../../utils/i18n";
 import { safeRedirect } from "../../utils/safeRedirect";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 const curieM1MainImage =
   "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/302ffc22-20c4-49b7-8d16-b303e079f0cf/1080/1.webp";
@@ -110,7 +111,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
           <h1>
             {textValue(props.heroTitlePrefix, tLocalized("±20 mikron", "±20 microns"))} <span className="em">{textValue(props.heroTitleEmphasis, tLocalized("burada doğar.", "is born here."))}</span>
           </h1>
-          <p className="sub" dangerouslySetInnerHTML={{ __html: props.heroDescriptionHtml || tLocalized("Hassasiyet tesadüf değildir; <b>doğru dalga boyu</b>, termal stabilite ve kalibrasyonla kurulur. 3mash yazıcıları malzemeye göre tasarlanır: <b>385 nm</b> ışık reçinenin kürlenme spektrumuna tam uyar, entegre ısıtma viskoziteyi sabitler. Üstelik <b>gizli lisans veya RFID ücreti yok</b> — istediğiniz reçineyle çalışırsınız.", "Precision is not a coincidence; it's built with <b>the right wavelength</b>, thermal stability, and calibration. 3mash printers are designed around the material: <b>385 nm</b> light matches the resin's curing spectrum exactly, and integrated heating stabilizes viscosity. What's more, <b>there are no hidden license or RFID fees</b> — you can work with any resin you want.") }} />
+          <p className="sub" dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.heroDescriptionHtml || tLocalized("Hassasiyet tesadüf değildir; <b>doğru dalga boyu</b>, termal stabilite ve kalibrasyonla kurulur. 3mash yazıcıları malzemeye göre tasarlanır: <b>385 nm</b> ışık reçinenin kürlenme spektrumuna tam uyar, entegre ısıtma viskoziteyi sabitler. Üstelik <b>gizli lisans veya RFID ücreti yok</b> — istediğiniz reçineyle çalışırsınız.", "Precision is not a coincidence; it's built with <b>the right wavelength</b>, thermal stability, and calibration. 3mash printers are designed around the material: <b>385 nm</b> light matches the resin's curing spectrum exactly, and integrated heating stabilizes viscosity. What's more, <b>there are no hidden license or RFID fees</b> — you can work with any resin you want.")) }} />
           <div className="cta">
             <a className="btn lime" href={compareHref} onClick={(event) => smoothAnchorClick(event, compareHref)}>{props.primaryButtonText || tLocalized("Yazıcıları karşılaştır ↓", "Compare printers ↓")}</a>
             <a className="btn line" href={props.secondaryButtonHref || tLocalized("/pages/iletisim", "/pages/iletisim")}>{props.secondaryButtonText || tLocalized("Bana uygun olanı öner", "Recommend the right one for me")}</a>

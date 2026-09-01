@@ -1,5 +1,6 @@
 import { tLocalized } from "../../utils/i18n";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   useEffect,
   useLayoutEffect,
@@ -139,12 +140,12 @@ function styleTextChunks(markup: string, props?: Props) {
 }
 
 function richText(value?: string, props?: Props) {
-  return { __html: styleTextChunks(inlineHtml(value), props) };
+  return { __html: styleTextChunks(sanitizeHtml(inlineHtml(value)), props) };
 }
 
 function statRichText(value?: string) {
   return {
-    __html: inlineHtml(value)
+    __html: sanitizeHtml(inlineHtml(value))
       .replace(/\sclass=("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
       .replace(/\s(?:color|bgcolor)=("[^"]*"|'[^']*'|[^\s>]+)/gi, ""),
   };

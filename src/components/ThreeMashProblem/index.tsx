@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { isEnglishLocale, tProp, tLocalized } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { Props } from "./types";
 
 function stripInlineTypographyStyles(markup: string) {
@@ -46,7 +47,7 @@ function styleTextChunks(markup: string, props?: Props) {
 }
 
 function html(value?: string, props?: Props) {
-  return { __html: styleTextChunks(inlineHtml(value), props) };
+  return { __html: styleTextChunks(sanitizeHtml(inlineHtml(value)), props) };
 }
 
 function RichInline({ value, className, wordStyle }: { value?: string; className?: string; wordStyle?: Props }) {

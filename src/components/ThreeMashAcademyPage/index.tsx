@@ -1,6 +1,7 @@
 import { academyEvent1Image, academyEvent2Image, academyIntroImage } from "./source-assets";
 import { Props } from "./types";
 import { tLocalized } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 function value(input: string | undefined, fallback: string) {
   const trimmed = input?.trim();
@@ -38,7 +39,7 @@ function styledHtml(markup: string, props: Props) {
 }
 
 function richText(input: string | undefined, props: Props, fallback = "") {
-  return { __html: styledHtml(inlineHtml(input, fallback), props) };
+  return { __html: styledHtml(sanitizeHtml(inlineHtml(input, fallback)), props) };
 }
 
 function imageUrl(input: unknown, fallback: string) {

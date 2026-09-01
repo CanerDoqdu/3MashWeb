@@ -1,5 +1,6 @@
 import { Props } from "./types";
 import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 function trimmedText(value: unknown, fallback = ""): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -94,7 +95,7 @@ export function ThreeMashProductComparison(props: Props) {
         </div>
 
         <div className="tm-cmp-head">
-          <h2 dangerouslySetInnerHTML={{ __html: titleHtml }} />
+          <h2 dangerouslySetInnerHTML={{ __html: sanitizeHtml(titleHtml) }} />
           <p className="tm-cmp-side" dangerouslySetInnerHTML={{ __html: sideHtml }} />
         </div>
 
