@@ -195,16 +195,16 @@ export function ThreeMashCostDetailPage(props: Props) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // NOTE: Setting global window property for inter-component communication.
-      (window as any)._remakeTotal = Math.round(total);
+      // NOTE: _remakeTotal is typed in src/types/globals.d.ts (inter-component communication).
+      window._remakeTotal = Math.round(total);
     }
   }, [total]);
 
   const handleUseBtn = () => {
     const rounded = Math.round(total);
     if (typeof window !== "undefined") {
-      // NOTE: Setting global window property for inter-component communication.
-      (window as any)._remakeTotal = rounded;
+      // NOTE: _remakeTotal is typed in src/types/globals.d.ts (inter-component communication).
+      window._remakeTotal = rounded;
       try {
         localStorage.setItem("mash_remake_cost", String(rounded));
         localStorage.setItem(

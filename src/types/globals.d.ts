@@ -62,6 +62,18 @@ declare global {
       page?: string;
       [key: string]: any;
     };
+
+    /**
+     * Three Mash cookie consent state (inter-component communication).
+     * Set by ThreeMashCookieConsent; read by other components to check consent status.
+     */
+    __tmCookieConsent?: Record<string, any>;
+
+    /**
+     * Three Mash cost detail total (inter-component communication).
+     * Set by ThreeMashCostDetailPage; read by other components to access current total.
+     */
+    _remakeTotal?: number;
   }
 }
 

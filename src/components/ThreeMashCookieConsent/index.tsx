@@ -95,7 +95,7 @@ function applyConsentEffects(consent: CookieConsentState) {
 
   // 4. Dispatch global event for external scripts & ikas components
   try {
-    (window as any).__tmCookieConsent = consent;
+    window.__tmCookieConsent = consent;
     window.dispatchEvent(
       new CustomEvent("tm_cookie_consent_updated", { detail: consent })
     );
