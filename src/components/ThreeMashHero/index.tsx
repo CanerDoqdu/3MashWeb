@@ -667,7 +667,7 @@ export function ThreeMashHero(props: Props) {
       0,
       100,
     ),
-  } as any;
+  } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 
   return (
   <section className={`three-mash-hero${heroReady ? " is-ready" : ""}`} style={themeStyle}>
@@ -833,6 +833,7 @@ export function ThreeMashHero(props: Props) {
                   max={active.workMax}
                   step={active.workStep}
                   value={work}
+                  // NOTE: CSS-in-JS with custom property for range progress visualization
                   style={
                     {
                       "--p": `${rangeProgress(work, active.workMin, active.workMax)}%`,
@@ -863,6 +864,7 @@ export function ThreeMashHero(props: Props) {
                   max={active.rptMax}
                   step={active.rptStep}
                   value={rpt}
+                  // NOTE: CSS-in-JS with custom property for range progress visualization
                   style={
                     {
                       "--p": `${rangeProgress(rpt, active.rptMin, active.rptMax)}%`,
@@ -893,6 +895,7 @@ export function ThreeMashHero(props: Props) {
                   max={Math.max(active.costMax, cost)}
                   step={active.costStep}
                   value={cost}
+                  // NOTE: CSS-in-JS with custom property for range progress visualization
                   style={
                     {
                       "--p": `${rangeProgress(cost, active.costMin, Math.max(active.costMax, cost))}%`,

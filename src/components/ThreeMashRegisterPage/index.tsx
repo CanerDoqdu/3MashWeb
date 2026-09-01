@@ -174,7 +174,7 @@ export function ThreeMashRegisterPage(props: Props) {
     ),
     "--tmrpg-auth-dark": "var(--tm-theme-dark, #0E0E0C)",
     "--tmrpg-auth-visual": `url(${image})`,
-  } as any;
+  } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 
   return (
     <section className="three-mash-register-page" style={style}>

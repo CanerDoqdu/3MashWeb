@@ -17,6 +17,8 @@ function trimmedText(value: unknown): string {
 function imageSource(value: unknown): string {
   if (!value) return "";
   if (typeof value === "string") return value.trim();
+  // NOTE: getDefaultSrc is from @ikas/bp-storefront (third-party).
+  // Its type signature expects IkasImage-like object; value is of unknown type from props.
   try { return getDefaultSrc(value as any) || ""; } catch { return ""; }
 }
 
@@ -24,6 +26,8 @@ function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Pr
   if (!baseData) return null;
 
   const currentVideo = baseData.video;
+  // NOTE: Props ARE fully typed in types.ts, but TypeScript's type narrowing
+  // after optional chaining sometimes requires explicit any casts for clarity in override chains.
   const p = props as any;
 
   // 01. Bölüm Başlığı

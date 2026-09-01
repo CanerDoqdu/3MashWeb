@@ -1404,6 +1404,9 @@ async function handleAddToCart() {
                 if (item.groupId && item.valueId) setPreviewSelection((current) => ({ ...current, [item.groupId as string]: item.valueId as string }));
                 return;
               }
+              // NOTE: selectVariantValue is from @ikas/bp-storefront (third-party).
+              // Its type signature is not available at compile time, so we use any here.
+              // The value is from internal component callbacks (trusted source).
               selectVariantValue(product, value as any, true);
               setSelectedImageIndex(0);
               setMessage("");
@@ -1435,6 +1438,9 @@ async function handleAddToCart() {
             if (item.groupId && item.valueId) setPreviewSelection((current) => ({ ...current, [item.groupId as string]: item.valueId as string }));
             return;
           }
+          // NOTE: selectVariantValue is from @ikas/bp-storefront (third-party).
+          // Its type signature is not available at compile time, so we use any here.
+          // The value is from internal component callbacks (trusted source).
           selectVariantValue(product, value as any, true);
           setSelectedImageIndex(0);
           setMessage("");

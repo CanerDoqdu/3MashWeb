@@ -178,6 +178,7 @@ export const mockStudioCustomer: IkasCustomer = {
       id: "addr-studio-1",
       title: "Ofis Adresi",
       address: tLocalized("Antalya Teknokent, Ar-Ge 2 Binası, Konyaaltı", "Antalya Teknokent, R&D Building 2, Konyaaltı"),
+      // NOTE: Mock data objects for studio preview — intentionally incomplete.
       city: { name: "Antalya" } as any,
       district: { name: tLocalized("Konyaaltı", "Konyaaltı") } as any,
       country: { name: tLocalized("Türkiye", "Turkey") } as any,
@@ -198,7 +199,7 @@ export const mockStudioOrders: IkasOrder[] = [
     totalFinalPrice: 18750,
     currencySymbol: "₺",
     currencyCode: "TRY",
-  } as any,
+  } as any, // NOTE: Mock data for studio preview — intentionally incomplete.
 ];
 
 // ─── Sub-components ────────────────────────────────────────────────────────

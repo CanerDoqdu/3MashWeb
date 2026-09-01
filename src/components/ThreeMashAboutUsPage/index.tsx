@@ -48,6 +48,8 @@ function splitTitle(value: string) {
 }
 
 export function ThreeMashAboutUsPage(props: Props) {
+  // NOTE: Dynamic property access via template literals (e.g., `block${index + 1}Html`) requires
+  // type narrowing to 'any' because TypeScript cannot statically verify computed property names.
   const blocks = aboutPage.blocks.map((block, index) => ({
     ...block,
     html: html((props as any)[`block${index + 1}Html`], block.html),
@@ -58,6 +60,7 @@ export function ThreeMashAboutUsPage(props: Props) {
     imageAlt: text((props as any)[`block${index + 1}ImageAlt`], block.imageAlt),
   }));
 
+  // NOTE: Same dynamic property access pattern for values.
   const values = aboutPage.values.map((value, index) => ({
     ...value,
     title: text((props as any)[`value${index + 1}Title`], value.title),
@@ -104,7 +107,7 @@ export function ThreeMashAboutUsPage(props: Props) {
     "--tmabout-accent": "var(--tm-theme-accent, #C7F136)",
     "--tmabout-dark": "var(--tm-theme-dark, #0E0E0C)",
     "--tmabout-max": `${numberValue(props.maxWidth, 1180)}px`,
-  } as any;
+  } as any; // CSS-in-JS: dynamic properties use CSS custom variable names
 
   return (
     <section className="three-mash-about-page" style={style}>

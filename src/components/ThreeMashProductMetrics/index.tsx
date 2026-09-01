@@ -18,6 +18,8 @@ function overrideMetricsData(baseData: ProductDetailTemplateData | null, props: 
   if (!baseData) return null;
 
   const currentMetrics = baseData.metrics;
+  // NOTE: Props ARE fully typed, but TypeScript's type narrowing after optional chaining
+  // sometimes requires explicit any casts for clarity in override chains.
   const metrics = {
     index: trimmedText((props as any).sectionIndex) || currentMetrics?.index || "02",
     label: trimmedText((props as any).sectionLabel) || currentMetrics?.label || tLocalized("TEKNİK ÖZELLİKLER", "TECHNICAL SPECIFICATIONS"),
@@ -27,6 +29,9 @@ function overrideMetricsData(baseData: ProductDetailTemplateData | null, props: 
   };
 
   // 3 Beyaz Kart Overrides
+  // NOTE: Dynamic property access via template literals (e.g., `card${i}Title`) requires
+  // type narrowing to 'any' because TypeScript cannot statically verify computed property names,
+  // even though all card1Title/card2Title/card3Title/etc. ARE defined in the Props interface.
   for (let i = 1; i <= 3; i++) {
     const rawTitle = (props as any)[`card${i}Title`];
     const title = trimmedText(rawTitle);
@@ -51,6 +56,7 @@ function overrideMetricsData(baseData: ProductDetailTemplateData | null, props: 
   }
 
   // Siyah Teknik Vurgu ve Tablo Kartı (Spec Highlight) Overrides
+  // NOTE: Props ARE fully typed, but casts clarify the override chain.
   let specHighlight = baseData.specHighlight ? { ...baseData.specHighlight } : undefined;
   const specTag = trimmedText((props as any).specTag);
   const specTitleHtml = trimmedText((props as any).specTitleHtml);
@@ -70,6 +76,9 @@ function overrideMetricsData(baseData: ProductDetailTemplateData | null, props: 
   }
 
   // Tablo Satırları (1..5)
+  // NOTE: Dynamic property access via template literals (e.g., `specRow${r}Label`) requires
+  // type narrowing to 'any' because TypeScript cannot statically verify computed property names,
+  // even though all specRow1Label/specRow2Label/etc. ARE defined in the Props interface.
   if (specHighlight) {
     const rows = [...(specHighlight.rows || [])];
     for (let r = 1; r <= 5; r++) {

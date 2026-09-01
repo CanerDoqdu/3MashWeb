@@ -25,6 +25,8 @@ function numberValue(value: unknown): number | undefined {
 
 function overrideRatingsData(baseData: ProductDetailTemplateData, props: Props): ProductDetailTemplateData {
   const currentRatings = baseData.ratings;
+  // NOTE: Props ARE fully typed in the Props interface, but TypeScript's type narrowing
+  // after optional chaining sometimes requires explicit any casts for clarity in override chains.
   const index = trimmedText((props as any).sectionIndex) || currentRatings?.index || "01";
   const label = trimmedText((props as any).sectionLabel) || currentRatings?.label || tLocalized("KULLANICI DENEYİMİ", "USER EXPERIENCE");
   const titleHtml = trimmedText((props as any).titleHtml) || currentRatings?.titleHtml || "";

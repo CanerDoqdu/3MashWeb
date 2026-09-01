@@ -195,6 +195,7 @@ export function ThreeMashCostDetailPage(props: Props) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      // NOTE: Setting global window property for inter-component communication.
       (window as any)._remakeTotal = Math.round(total);
     }
   }, [total]);
@@ -202,6 +203,7 @@ export function ThreeMashCostDetailPage(props: Props) {
   const handleUseBtn = () => {
     const rounded = Math.round(total);
     if (typeof window !== "undefined") {
+      // NOTE: Setting global window property for inter-component communication.
       (window as any)._remakeTotal = rounded;
       try {
         localStorage.setItem("mash_remake_cost", String(rounded));
@@ -228,7 +230,7 @@ export function ThreeMashCostDetailPage(props: Props) {
     "--sub": props.mutedTextColor || "#55554E",
     "--lime": props.accentColor || "#C7F136",
     "--line": props.lineColor || "#E6E6E0",
-  } as any;
+  } as any; // CSS-in-JS: dynamic properties use CSS custom variable names
 
   return (
     <div className="three-mash-cost-detail-page" style={customStyle}>
@@ -306,6 +308,7 @@ export function ThreeMashCostDetailPage(props: Props) {
                     </span>
                     <b id={`lb_${f.id}`}>{valText}</b>
                   </div>
+                  {/* NOTE: style with custom CSS property --p for range progress visualization */}
                   <input
                     type="range"
                     id={f.id}

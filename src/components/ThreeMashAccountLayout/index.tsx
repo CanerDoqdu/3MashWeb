@@ -315,7 +315,7 @@ function dashboardStyle(props: DashboardProps) {
     "--tmai-max": `${numeric(props.maxWidth, 1180, 960, 1760)}px`,
     "--tmai-pad-top": `${numeric(props.sectionPaddingTop, 52, 0, 180)}px`,
     "--tmai-pad-bottom": `${numeric(props.sectionPaddingBottom, 86, 24, 240)}px`,
-  } as any;
+  } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 }
 
 // ─── Shell Component ─────────────────────────────────────────────────────────

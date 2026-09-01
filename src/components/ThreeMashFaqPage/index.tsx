@@ -38,6 +38,8 @@ function sectionsFromProps(props: Props) {
   const resin = faqSections[0];
   const printer = faqSections[1];
 
+  // NOTE: Dynamic property access via template literals (e.g., `resinQuestion${index + 1}`) requires
+  // type narrowing to 'any' because TypeScript cannot statically verify computed property names.
   return [
     {
       title: propText(props.resinSectionTitle, resin.title),
@@ -100,7 +102,7 @@ export function ThreeMashFaqPage(props: Props) {
     "--tmfaq-accent": "var(--tm-theme-accent, #C7F136)",
     "--tmfaq-dark": "var(--tm-theme-dark, #0E0E0C)",
     "--tmfaq-max": `${numberValue(props.maxWidth, 1180)}px`,
-  } as any;
+  } as any; // CSS-in-JS: dynamic properties use CSS custom variable names
   const pageTitle = text(props.titleText, tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"), "Frequently Asked Questions");
 
   return (

@@ -1,3 +1,5 @@
+import { stringValue, castObject, isString } from "../types/typeGuards";
+
 type BusinessConfig = {
   merchantId: string;
   whatsappNumber: string;
@@ -13,19 +15,18 @@ const defaultConfig: BusinessConfig = {
 };
 
 function getRuntimeConfig(): BusinessConfig {
+  // Environment variables (from build or runtime)
   const runtimeEnv =
-    (globalThis as typeof globalThis & {
-      __THREEMASH_ENV__?: Record<string, string | undefined>;
-      process?: { env?: Record<string, string | undefined> };
-    }).__THREEMASH_ENV__ ??
-    (globalThis as typeof globalThis & { process?: { env?: Record<string, string | undefined> } }).process?.env ??
-    {};
+    typeof window !== "undefined" && (window as any).__THREEMASH_ENV__
+      ? (window as any).__THREEMASH_ENV__
+      : typeof process !== "undefined"
+        ? process.env
+        : {};
 
-  const runtime =
-    typeof window !== "undefined"
-      ? ((window as typeof window & { __THREEMASH_CONFIG__?: Partial<BusinessConfig> }).__THREEMASH_CONFIG__ ?? {})
-      : {};
+  // Runtime config object (merchant-provided)
+  const runtime = window.__THREEMASH_CONFIG__ ?? {};
 
+  // Merge and return
   return {
     merchantId:
       runtime.merchantId ??

@@ -104,7 +104,8 @@ function currentPageStrings() {
   const terms: string[] = [];
   if (typeof window !== "undefined") {
     terms.push(window.location.pathname, window.location.href);
-    const nextSlug = (window as any).__NEXT_DATA__?.query?.slug;
+    // NOTE: __NEXT_DATA__ is typed in src/types/globals.d.ts (Next.js runtime API)
+    const nextSlug = window.__NEXT_DATA__?.query?.slug;
     if (typeof nextSlug === "string") terms.push(nextSlug);
   }
   if (typeof document !== "undefined") {

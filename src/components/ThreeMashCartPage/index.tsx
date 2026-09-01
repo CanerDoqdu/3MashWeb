@@ -367,7 +367,7 @@ const items =
       props.buttonTextColor,
       "var(--tm-theme-text, #0e0e0c)",
     ),
-  } as any;
+  } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 async function applyCoupon() {
   const code = couponCode.trim();
 

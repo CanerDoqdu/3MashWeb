@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { tLocalized, localizedHref } from "../../utils/i18n";
+import { stringValue, safeFunctionCall } from "../../types/typeGuards";
 import cookiePrinterImage from "../../assets/cookie-printer-image-data";
 
 export interface CookieConsentState {
@@ -31,26 +32,18 @@ function applyConsentEffects(consent: CookieConsentState) {
   if (typeof window === "undefined") return;
 
   // 1. Meta Pixel consent control
-  try {
-    const win = window as any;
-    if (typeof win.fbq === "function") {
-      win.fbq("consent", consent.marketing ? "grant" : "revoke");
-    }
-  } catch {}
+  // window.fbq is typed in src/types/globals.d.ts
+  safeFunctionCall(window.fbq, "consent", consent.marketing ? "grant" : "revoke");
 
   // 2. Google Consent Mode
-  try {
-    const win = window as any;
-    if (typeof win.gtag === "function") {
-      win.gtag("consent", "update", {
-        analytics_storage: consent.analytics ? "granted" : "denied",
-        ad_storage: consent.marketing ? "granted" : "denied",
-        functionality_storage: consent.functional ? "granted" : "denied",
-        personalization_storage: consent.marketing ? "granted" : "denied",
-        security_storage: "granted",
-      });
-    }
-  } catch {}
+  // window.gtag is typed in src/types/globals.d.ts
+  safeFunctionCall(window.gtag, "consent", "update", {
+    analytics_storage: consent.analytics ? "granted" : "denied",
+    ad_storage: consent.marketing ? "granted" : "denied",
+    functionality_storage: consent.functional ? "granted" : "denied",
+    personalization_storage: consent.marketing ? "granted" : "denied",
+    security_storage: "granted",
+  });
 
   // 3. Purge non-consented tracking cookies from document
   try {
@@ -71,7 +64,9 @@ function applyConsentEffects(consent: CookieConsentState) {
       const isAllowedDomain = allowedDomains.some((allowed) => hostname.endsWith(allowed));
 
       if (!isAllowedDomain) {
-        console.warn("CookieConsent: hostname not in allowlist, skipping purge");
+        if (typeof process !== "undefined" && process.env?.NODE_ENV === "development") {
+          console.warn("CookieConsent: hostname not in allowlist, skipping purge");
+        }
         return;
       }
 

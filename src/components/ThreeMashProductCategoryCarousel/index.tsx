@@ -295,6 +295,9 @@ function sourceRelatedProduct(product: IkasProduct): ProductDetailRelatedProduct
 }
 
 export function ThreeMashProductCategoryCarousel(props: Props) {
+  // NOTE: Props interface auto-generated and may be incomplete for runtime-injected properties.
+  // Using "as any" allows access to properties that exist at runtime but not in types.ts.
+  // This is a known limitation of the ikas CLI auto-generation process.
   const p = props as any;
   const rawSourceData = resolveSharedProductDetailData(props.product, p.productTemplateJson);
 

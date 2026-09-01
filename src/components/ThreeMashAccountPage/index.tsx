@@ -177,7 +177,7 @@ export function ThreeMashAccountPage(props: Props) {
     ),
     "--tma-auth-dark": "var(--tm-theme-dark, #0E0E0C)",
     "--tma-auth-visual": `url(${image})`,
-  } as any;
+  } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 
   return (
     <section className="three-mash-auth-page tma-login-page" style={style}>

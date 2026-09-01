@@ -1774,6 +1774,7 @@ function Logo({ props }: { props: Props }) {
 
   return (
     <a className="tmh-logo" href={headerRouteHref(logoHref, "/")} aria-label={logoText}>
+      {/* NOTE: CSS-in-JS style for logo image wrapper dimensions */}
       <span
         className="tmh-logo-image-wrap"
         style={{
@@ -2520,6 +2521,7 @@ async function removeCartItem(
                 <div
                   className="tmh-mega tmh-products-mega"
                   hidden={activeMenu !== "products"}
+                  // NOTE: CSS-in-JS with dynamic positioning for mega menu
                   style={productsMenuLeft == null ? undefined : { "--tmh-products-mega-left": `${productsMenuLeft}px`, "--tmh-products-translate-x": "0px" } as any}
                 >
                   <a className="tmh-feature" href={href(c4pRouteHref(text(props.productsFeatureHref, defaultProductsFeature.href)))}>
@@ -2557,6 +2559,7 @@ async function removeCartItem(
                 <div
                   className="tmh-mega tmh-flow-mega"
                   hidden={activeMenu !== "why"}
+                  // NOTE: CSS-in-JS with dynamic positioning for mega menu
                   style={whyMenuLeft == null ? undefined : { "--tmh-flow-mega-left": `${whyMenuLeft}px`, "--tmh-flow-translate-x": "0px" } as any}
                 >
                   <div className="tmh-flow-grid">
