@@ -187,9 +187,17 @@ export function setPreferredLocale(locale: Locale): void {
     localStorage.setItem("locale", locale);
   } catch { }
   try {
-    document.cookie = `3mash_locale=${locale}; path=/; max-age=31536000; SameSite=Lax`;
-    document.cookie = `3mash_lang=${locale}; path=/; max-age=31536000; SameSite=Lax`;
-    document.cookie = `locale=${locale}; path=/; max-age=31536000; SameSite=Lax`;
+    // Secure flag added for HTTPS protection (prevents downgrade attacks)
+    const secureSuffix = typeof window !== "undefined" && window.location.protocol === "https:" ? "; Secure" : "";
+    
+    // Primary cookie (new standard)
+    document.cookie = `3mash_locale=${locale}; path=/; max-age=31536000; SameSite=Lax${secureSuffix}`;
+    
+    // Deprecated legacy key - keep for backward compat but will be cleaned up on next read
+    document.cookie = `3mash_lang=${locale}; path=/; max-age=31536000; SameSite=Lax${secureSuffix}`;
+    
+    // Deprecated legacy key - keep for backward compat but will be cleaned up on next read
+    document.cookie = `locale=${locale}; path=/; max-age=31536000; SameSite=Lax${secureSuffix}`;
   } catch { }
 }
 

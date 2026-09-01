@@ -151,6 +151,12 @@ export function pageDescription(mode: string) {
   );
 }
 
+/**
+ * Detects studio/preview mode based on structural signals only.
+ * Hostname and iframe checks are the only reliable indicators.
+ * URL parameters (?studio=, ?preview=) and document.referrer are NOT checked
+ * because they are attacker-controllable.
+ */
 export function isStudioEnvironment() {
   if (typeof window === "undefined") return false;
   return (
