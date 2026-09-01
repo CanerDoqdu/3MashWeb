@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "preact/hooks";
 import { apiSearchProducts, getProductListInitialData, initProductList, type IkasProduct, type IkasProductList } from "@ikas/bp-storefront";
 import { renderSolutionHtml, ThreeMashStaticSection } from "../../sub-components/ThreeMashSectionRenderer";
 import { Props } from "./types";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { debugError } from "../../utils/debugError";
 
 type SelectedProductRef = {
   productId: string;
@@ -197,7 +199,7 @@ export function ThreeMashSolution(props: Props) {
         if (isMounted && recentProducts.length > 0) setResolvedProducts(recentProducts);
       })
       .catch((error) => {
-        console.error("ThreeMashSolution product list refresh failed", error);
+        debugError("ThreeMashSolution product list refresh failed", error);
       });
 
     return () => {

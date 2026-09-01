@@ -478,10 +478,23 @@ function anchorScrollTarget(section: HTMLElement, sectionId: string) {
   return section.querySelector(".tmcl-section-head") || section;
 }
 
-function normalizeHtmlLinks(value: string) {
-  return value.replace(/\shref=(["'])(.*?)\1/gi, (_match, quote: string, rawHref: string) => {
-    return ` href=${quote}${categoryHref(rawHref)}${quote}`;
-  });
+function normalizeHtmlLinks(value: string): string {
+  if (typeof window === "undefined" || typeof DOMParser === "undefined") {
+    return value;
+  }
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(`<div>${value}</div>`, "text/html");
+    const links = doc.querySelectorAll("a[href]");
+    links.forEach((link) => {
+      const href = link.getAttribute("href") || "";
+      link.setAttribute("href", categoryHref(href));
+    });
+    return doc.body.innerHTML;
+  } catch {
+    // If parsing fails, return original value unchanged
+    return value;
+  }
 }
 
 function normalize(value: string | undefined) {

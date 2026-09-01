@@ -20,6 +20,8 @@ import {
   type ProductDetailRelatedProduct,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { tLocalized } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { debugError } from "../../utils/debugError";
 
 function propString(value: unknown) {
   if (typeof value === "string") return value;
@@ -352,7 +354,7 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
         setResolvedProducts(relatedProducts.slice(0, limit));
       })
       .catch((error) => {
-        console.error("ThreeMashProductCategoryCarousel product fetch failed", error);
+        debugError("ThreeMashProductCategoryCarousel product fetch failed", error);
         if (isMounted) setResolvedProducts([]);
       })
       .finally(() => {

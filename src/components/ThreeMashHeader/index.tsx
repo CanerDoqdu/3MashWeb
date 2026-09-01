@@ -28,6 +28,7 @@ import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
 import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { debugError } from "../../utils/debugError";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeRedirect } from "../../utils/safeRedirect";
 import {
@@ -2057,7 +2058,7 @@ const cartItems =
         if (isMounted) setResolvedSearchProductList({ ...productList, data: productList.data || [] } as IkasProductList);
       })
       .catch((error) => {
-        console.error("ThreeMashHeader search product list load failed", error);
+        debugError("ThreeMashHeader search product list load failed", error);
       });
 
     return () => {

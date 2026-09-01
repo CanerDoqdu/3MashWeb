@@ -25,6 +25,7 @@ import ThreeMashAccountLayout from "../ThreeMashAccountLayout";
 import { Props } from "./types";
 import type { Props as AccountInfoProps } from "../ThreeMashAccountInfoPage/types";
 import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
+import { businessConfig } from "../../utils/businessConfig";
 
 export type DashboardProps = Props &
   Partial<AccountInfoProps> & {
@@ -170,7 +171,7 @@ export const mockStudioCustomer: IkasCustomer = {
   id: "studio-preview-customer",
   firstName: "Caner",
   lastName: tLocalized("Doğdu", "Born"),
-  email: "info@3mash.com",
+  email: businessConfig.recipientEmail,
   phone: "+905321234567",
   addresses: [
     {

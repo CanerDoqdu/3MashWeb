@@ -2,12 +2,14 @@ type BusinessConfig = {
   merchantId: string;
   whatsappNumber: string;
   mapsQuery: string;
+  recipientEmail: string;
 };
 
 const defaultConfig: BusinessConfig = {
   merchantId: "cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2",
   whatsappNumber: "905314326577",
   mapsQuery: "Antalya Teknokent, Konyaaltı",
+  recipientEmail: "info@3mash.com",
 };
 
 function getRuntimeConfig(): BusinessConfig {
@@ -37,6 +39,10 @@ function getRuntimeConfig(): BusinessConfig {
       runtime.mapsQuery ??
       runtimeEnv.VITE_THREEMASH_MAPS_QUERY ??
       defaultConfig.mapsQuery,
+    recipientEmail:
+      runtime.recipientEmail ??
+      runtimeEnv.VITE_THREEMASH_RECIPIENT_EMAIL ??
+      defaultConfig.recipientEmail,
   };
 }
 

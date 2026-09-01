@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks";
 import { Props } from "./types";
 import { t, tLocalized, tProp } from "../../utils/i18n";
+import { businessConfig } from "../../utils/businessConfig";
 
 type ContactForm = {
   firstName: string;
@@ -84,7 +85,7 @@ export function ThreeMashContactPage(props: Props) {
   const [kvkkAccepted, setKvkkAccepted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const recipient = text(props.recipientEmail, "info@3mash.com");
+  const recipient = text(props.recipientEmail, businessConfig.recipientEmail);
   const style = {
     "--tm-contact-bg": themeColor(
       props.backgroundColor,

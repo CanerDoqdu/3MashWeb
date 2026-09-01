@@ -43,6 +43,8 @@ import ThreeMashProductDetailTemplate, {
 import { publishSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
 import { isEnglishLocale, isTurkishText, tLocalized } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { debugError } from "../../utils/debugError";
 import { Props } from "./types";
 
 type PlainObject = Record<string, unknown>;
@@ -1265,7 +1267,7 @@ export function ThreeMashProductDetailLive(props: Props) {
         setRelatedProducts(liveRelatedProducts.length ? liveRelatedProducts : []);
       })
       .catch((error) => {
-        console.error("ThreeMashProductDetailLive related products failed", error);
+        debugError("ThreeMashProductDetailLive related products failed", error);
         if (isMounted) setRelatedProducts([]);
       });
     return () => {
@@ -1367,7 +1369,7 @@ async function handleAddToCart() {
       );
     }
   } catch (error) {
-    console.error("ThreeMashProductDetailLive add to cart failed", error);
+    debugError("ThreeMashProductDetailLive add to cart failed", error);
     setMessage(
       props.addToCartErrorMessage ||
         tLocalized("Ürün sepete eklenemedi. Lütfen daha sonra tekrar deneyin.", "The product could not be added to the cart. Please try again.")
