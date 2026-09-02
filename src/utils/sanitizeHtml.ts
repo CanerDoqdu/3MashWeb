@@ -86,12 +86,14 @@ function sanitizeAttributes(element: Element) {
     const name = attribute.name.toLowerCase();
     const value = attribute.value;
 
+    // Remove all event handlers (on*), data attributes, and forbidden attributes
     if (name.startsWith("on") || FORBIDDEN_ATTRS.has(name) || name.startsWith("data-")) {
       element.removeAttribute(attribute.name);
       return;
     }
 
-    if ((name === "href" || name === "src") && /^(javascript:|vbscript:|data:text\/html|data:application\/javascript)/i.test(value.trim())) {
+    // Block javascript: and data: URIs in href/src/xlink:href
+    if ((name === "href" || name === "src" || name === "xlink:href") && /^(javascript:|vbscript:|data:text\/html|data:application\/javascript)/i.test(value.trim())) {
       element.removeAttribute(attribute.name);
       return;
     }
@@ -138,4 +140,44 @@ export function safeJsonLdScript(data: unknown): string {
     .replace(/&/g, "\\u0026")
     .replace(/\u2028/g, "\\u2028")
     .replace(/\u2029/g, "\\u2029");
+}
+
+export function sanitizeSvgMarkup(input: string | null | undefined): string {
+  if (!input) return "";
+
+  const svg = input.trim();
+  if (!svg) return "";
+
+  if (typeof DOMParser === "undefined") {
+    return svg
+      .replace(/<script[\s\S]*?<\/script>/gi, "")
+      .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
+      .replace(/on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+      .replace(/\sstyle\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "");
+  }
+
+  const doc = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">${svg}</svg>`, "image/svg+xml");
+  const root = doc.documentElement;
+  if (!root || doc.querySelector("parsererror")) {
+    return "";
+  }
+
+  root.querySelectorAll("script, iframe, foreignObject, object, embed, meta, link, style").forEach((node) => node.remove());
+  root.querySelectorAll("*").forEach((element) => {
+    Array.from(element.attributes).forEach((attribute) => {
+      const name = attribute.name.toLowerCase();
+      if (name.startsWith("on") || name === "style" || name.startsWith("data-") || name === "href" || name === "xlink:href") {
+        const value = attribute.value.trim();
+        if (name === "href" || name === "xlink:href") {
+          if (/^(?:javascript:|vbscript:|data:)/i.test(value)) {
+            element.removeAttribute(attribute.name);
+            return;
+          }
+        }
+        element.removeAttribute(attribute.name);
+      }
+    });
+  });
+
+  return root.innerHTML;
 }

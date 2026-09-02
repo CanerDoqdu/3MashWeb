@@ -1,6 +1,7 @@
 import { aboutPage } from "../ThreeMashPageData/sourceData";
 import { Props } from "./types";
 import { tLocalized } from "../../utils/i18n";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
@@ -122,11 +123,11 @@ export function ThreeMashAboutUsPage(props: Props) {
             <blockquote>
               <div
                 className="tmabout-hero-title"
-                dangerouslySetInnerHTML={{ __html: heroTitle }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(heroTitle) }}
               />
               <div
                 className="tmabout-quote"
-                dangerouslySetInnerHTML={{ __html: heroQuote }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(heroQuote) }}
               />
             </blockquote>
           </div>
@@ -137,7 +138,7 @@ export function ThreeMashAboutUsPage(props: Props) {
             <span className="tmabout-section-code">01</span>
             <div
               className="tmabout-rich"
-              dangerouslySetInnerHTML={{ __html: blocks[0]?.html || "" }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(blocks[0]?.html || "") }}
             />
           </div>
           <figure className="tmabout-story-media">
@@ -163,7 +164,7 @@ export function ThreeMashAboutUsPage(props: Props) {
             <span className="tmabout-section-code">02</span>
             <div
               className="tmabout-rich"
-              dangerouslySetInnerHTML={{ __html: blocks[1]?.html || "" }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(blocks[1]?.html || "") }}
             />
           </div>
         </section>

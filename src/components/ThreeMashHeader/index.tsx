@@ -27,10 +27,10 @@ import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
 import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale } from "../../utils/i18n";
-import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { sanitizeHtml, sanitizeSvgMarkup } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
-import { safeRedirect } from "../../utils/safeRedirect";
+import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import {
   ACF_FEP_FILM_SLUG,
   ARGENZ_HT_MULTILAYER_SLUG,
@@ -218,11 +218,24 @@ const defaultReferencesHomeHref = "/";
 const defaultReferencesSectionId = "guven";
 const pendingReferencesScrollKey = "tmh-pending-references-scroll";
 const legacyAcademyRouteKeys = new Set(["academy", "mash-academy", "pages-mash-academy", "2tplvqpo-rovtvwz53h"]);
-const defaultProductsMenuText = tLocalized("Ürünler", "Products");
-const defaultWhyMenuText = tLocalized("Neden 3mash?", "Why 3mash?");
-const defaultReferencesText = tLocalized("Referanslar", "References");
-const defaultAcademyText = "Academy";
-const defaultMobileMenuLabel = tLocalized("Menü", "Menu");
+/**
+ * Nav text functions — computed at render time to reflect language changes.
+ */
+function getDefaultProductsMenuText() {
+  return tLocalized("Ürünler", "Products");
+}
+function getDefaultWhyMenuText() {
+  return tLocalized("Neden 3mash?", "Why 3mash?");
+}
+function getDefaultReferencesText() {
+  return tLocalized("Referanslar", "References");
+}
+function getDefaultAcademyText() {
+  return "Academy";
+}
+function getDefaultMobileMenuLabel() {
+  return tLocalized("Menü", "Menu");
+}
 
 // Critical header styles live with the markup so route changes cannot briefly
 // paint the header in its unstyled/default browser state before the component
@@ -719,15 +732,21 @@ const criticalHeaderCss = `
 }
 `;
 
-const defaultAnnouncement = {
-  highlightText: tLocalized("⚡ Fırsatı kaçırmayın.", "⚡ Don't miss out."),
-  text: tLocalized(
-    "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
-    "Calculate your clinic's silent loss in 30 seconds; see how to reduce it with free analysis."
-  ),
-  ctaText: tLocalized("Hemen hesaplayın", "Calculate now"),
-  href: "#hesap",
-};
+/**
+ * Computes default announcement dynamically so it reflects language changes on client-side.
+ * At SSR, first paint script sets correct lang; at client render, this function gets fresh locale value.
+ */
+function getDefaultAnnouncement() {
+  return {
+    highlightText: tLocalized("⚡ Fırsatı kaçırmayın.", "⚡ Don't miss out."),
+    text: tLocalized(
+      "Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.",
+      "Calculate your clinic's silent loss in 30 seconds; see how to reduce it with free analysis."
+    ),
+    ctaText: tLocalized("Hemen hesaplayın", "Calculate now"),
+    href: "#hesap",
+  };
+}
 
 function announcementOverridePayload(value: unknown): HeaderAnnouncementOverride | null {
   if (!value || typeof value !== "object") return null;
@@ -735,6 +754,11 @@ function announcementOverridePayload(value: unknown): HeaderAnnouncementOverride
   if (data.enabled === false) return null;
   if (!data.highlightText && !data.text && !data.ctaText) return null;
   return data;
+}
+
+function safeLocationPathname() {
+  if (typeof window === "undefined") return "";
+  return window.location.pathname;
 }
 
 function currentProductAnnouncement() {
@@ -746,8 +770,8 @@ function currentProductAnnouncement() {
 }
 
 function currentRouteKey() {
-  if (typeof window === "undefined") return "";
-  return window.location.pathname
+  const pathname = safeLocationPathname();
+  return pathname
     .toLocaleLowerCase("tr")
     .replace(/^\/+|\/+$/g, "")
     .split("/")
@@ -859,7 +883,13 @@ const firstPaintAnnouncementMap = Object.fromEntries(
 );
 
 function firstPaintAnnouncementScript() {
-  const payload = JSON.stringify(firstPaintAnnouncementMap).replace(/</g, "\\u003c");
+  const payload = JSON.stringify(firstPaintAnnouncementMap)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026")
+    .replace(/`/g, "\\u0060")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
   return `
 (function(){
   try {
@@ -927,9 +957,7 @@ const defaultProductSecondary: Required<MenuItem>[] = [
 ];
 
 function href(value?: string) {
-  const trimmed = value?.trim();
-  if (!trimmed) return "#";
-  return trimmed;
+  return safeNavigationHref(value, "#");
 }
 
 function headerRouteHref(value: string | undefined, fallback: string) {
@@ -1131,7 +1159,8 @@ function handleReferencesClick(event: MouseEvent, homeHref: string | undefined, 
 }
 
 function handleAnnouncementClick(event: MouseEvent, targetHref: string) {
-  if (targetHref !== "#karsilastirma-tablosu" || typeof window === "undefined") return;
+  const safeTarget = safeNavigationHref(targetHref, "#");
+  if (safeTarget !== "#karsilastirma-tablosu" || typeof window === "undefined") return;
 
   const section = document.getElementById("karsilastirma-tablosu");
   if (!section) return;
@@ -1362,13 +1391,13 @@ function RichInline({ value, className, wordStyle }: { value?: string; className
 
 function svgMarkup(value: unknown) {
   if (typeof value === "string") {
-    return value.trim();
+    return sanitizeSvgMarkup(value);
   }
 
   if (value && typeof value === "object") {
     const asset = value as { svg?: unknown; value?: unknown; url?: unknown; src?: unknown };
-    if (typeof asset.svg === "string") return asset.svg.trim();
-    if (typeof asset.value === "string") return asset.value.trim();
+    if (typeof asset.svg === "string") return sanitizeSvgMarkup(asset.svg);
+    if (typeof asset.value === "string") return sanitizeSvgMarkup(asset.value);
     if (typeof asset.url === "string") return `<img src="${asset.url}" alt="" />`;
     if (typeof asset.src === "string") return `<img src="${asset.src}" alt="" />`;
   }
@@ -1823,7 +1852,6 @@ const [cart, setCart] = useState<IkasCart | null>(
   const [removingCartItemId, setRemovingCartItemId] = useState("");
   const [productsMenuLeft, setProductsMenuLeft] = useState<number | null>(null);
   const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
-  const [productAnnouncement, setProductAnnouncement] = useState<HeaderAnnouncementOverride | null>(() => currentProductAnnouncement());
   const [resolvedSearchProductList, setResolvedSearchProductList] = useState<IkasProductList | undefined>(() => normalizeSearchProductList(props.searchProductList));
   const searchInputRef = useRef<HTMLInputElement>(null);
   const committedSuggestionSearchRef = useRef("");
@@ -1831,6 +1859,10 @@ const [cart, setCart] = useState<IkasCart | null>(
   const headerRef = useRef<HTMLElement>(null);
   const productsMenuRef = useRef<HTMLLIElement>(null);
   const whyMenuRef = useRef<HTMLLIElement>(null);
+
+  // ── Compute announcement fresh on every render (no stale content) ──
+  const productAnnouncement = currentProductAnnouncement();
+
   const showActionIcons = props.showActionIcons !== false;
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
   const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
@@ -1846,14 +1878,17 @@ const cartItems =
       Number(item.quantity || 0) > 0
   ) || []; const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
   const visibleCartItems = cartItems.slice(0, 4);
-  const productsMenuText = sourceRichText(props.productsMenuText, defaultProductsMenuText);
-  const whyMenuText = sourceRichText(props.whyMenuText, defaultWhyMenuText);
-  const referencesText = sourceRichText(props.referencesText, defaultReferencesText);
-  const academyText = sourceRichText(props.academyText, defaultAcademyText, ["akademi"]);
-  const mobileMenuLabel = richTextValue(props.mobileMenuLabel, defaultMobileMenuLabel);
-  const announcementHighlightText = richTextValue(productAnnouncement?.highlightText ?? props.announcementHighlightText, defaultAnnouncement.highlightText);
-  const announcementText = richTextValue(productAnnouncement?.text ?? props.announcementText, defaultAnnouncement.text);
-  const announcementCtaText = richTextValue(productAnnouncement?.ctaText ?? props.announcementCtaText, defaultAnnouncement.ctaText);
+  
+  // Compute all dynamic text at render time so they reflect language changes
+  const defaultAnn = getDefaultAnnouncement();
+  const productsMenuText = props.productsMenuText || getDefaultProductsMenuText();
+  const whyMenuText = props.whyMenuText || getDefaultWhyMenuText();
+  const referencesText = props.referencesText || getDefaultReferencesText();
+  const academyText = props.academyText || getDefaultAcademyText();
+  const mobileMenuLabel = richTextValue(props.mobileMenuLabel, getDefaultMobileMenuLabel());
+  const announcementHighlightText = richTextValue(productAnnouncement?.highlightText ?? props.announcementHighlightText, defaultAnn.highlightText);
+  const announcementText = richTextValue(productAnnouncement?.text ?? props.announcementText, defaultAnn.text);
+  const announcementCtaText = richTextValue(productAnnouncement?.ctaText ?? props.announcementCtaText, defaultAnn.ctaText);
   const announcementHref = productAnnouncement?.href ?? props.announcementHref;
   const effectiveAnnouncementHref = currentRouteKey() === "3d-yazicilar" ? "#karsilastirma-tablosu" : announcementHref;
   const productsCol1Title = sourceRichText(props.productsCol1Title, tLocalized("ÜRETİM", "PRODUCTION"), [tLocalized("uretim", "uretim")]);
@@ -2164,10 +2199,12 @@ const cartItems =
   }, []);
 
   useLayoutEffect(() => {
-    setProductAnnouncement(currentProductAnnouncement());
-
+    // Announcement is now computed fresh on every render, so no state update needed.
+    // Event listener kept for potential future dynamic announcement updates.
     function handleProductAnnouncement(event: Event) {
-      setProductAnnouncement(announcementOverridePayload((event as CustomEvent).detail) || routeAnnouncementOverride());
+      // The announcement will be re-computed on the next render via currentProductAnnouncement()
+      // which reads from window.__THREE_MASH_PRODUCT_ANNOUNCEMENT__
+      // For immediate UI update, a state trigger could be added here if needed.
     }
 
     window.addEventListener("three-mash:product-announcement", handleProductAnnouncement);
@@ -2393,8 +2430,8 @@ async function removeCartItem(
               <span data-tmh-ann-text dangerouslySetInnerHTML={announcementRichText(announcementText, props)} />
               <a
                 data-tmh-ann-link
-                href={href(text(effectiveAnnouncementHref, defaultAnnouncement.href))}
-                onClick={(event) => handleAnnouncementClick(event, text(effectiveAnnouncementHref, defaultAnnouncement.href))}
+                href={href(text(effectiveAnnouncementHref, defaultAnn.href))}
+                onClick={(event) => handleAnnouncementClick(event, text(effectiveAnnouncementHref, defaultAnn.href))}
                 dangerouslySetInnerHTML={announcementRichText(announcementCtaText, props)}
               />
               <div className="tmh-announcement-lang" ref={langDropdownRef}>

@@ -2,6 +2,7 @@ import { useState } from "preact/hooks";
 import { Props } from "./types";
 import { t, tLocalized, tProp } from "../../utils/i18n";
 import { businessConfig } from "../../utils/businessConfig";
+import { safeMailAddress, safeMailtoHref, safeNavigationHref } from "../../utils/safeRedirect";
 
 type ContactForm = {
   firstName: string;
@@ -32,8 +33,7 @@ function text(value: string | undefined, fallbackTr: string, fallbackEn?: string
 }
 
 function href(value: string | undefined, fallback: string) {
-  const next = value?.trim();
-  return next && next !== "#" ? next : fallback;
+  return safeNavigationHref(value, fallback);
 }
 
 function themeColor(
@@ -56,21 +56,18 @@ function themeColor(
 }
 
 function mailHref(recipient: string, form: ContactForm, dialCode: string) {
-  const subject = encodeURIComponent(
-    `3mash İletişim Formu - ${form.firstName} ${form.lastName}`.trim(),
-  );
+  const safeRecipient = safeMailAddress(recipient, businessConfig.recipientEmail) || businessConfig.recipientEmail;
+  const subject = `3mash İletişim Formu - ${form.firstName} ${form.lastName}`.trim();
   const phone = form.phone.trim() ? `${dialCode} ${form.phone.trim()}` : "-";
-  const body = encodeURIComponent(
-    [
-      `Ad: ${form.firstName}`,
-      `Soyad: ${form.lastName}`,
-      `Email: ${form.email}`,
-      `Telefon: ${phone}`,
-      "",
-      form.message,
-    ].join("\n"),
-  );
-  return `mailto:${recipient}?subject=${subject}&body=${body}`;
+  const body = [
+    `Ad: ${form.firstName}`,
+    `Soyad: ${form.lastName}`,
+    `Email: ${form.email}`,
+    `Telefon: ${phone}`,
+    "",
+    form.message,
+  ].join("\n");
+  return safeMailtoHref(safeRecipient, subject, body);
 }
 
 export function ThreeMashContactPage(props: Props) {
@@ -85,7 +82,7 @@ export function ThreeMashContactPage(props: Props) {
   const [kvkkAccepted, setKvkkAccepted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const recipient = text(props.recipientEmail, businessConfig.recipientEmail);
+  const recipient = safeMailAddress(text(props.recipientEmail, businessConfig.recipientEmail), businessConfig.recipientEmail) || businessConfig.recipientEmail;
   const style = {
     "--tm-contact-bg": themeColor(
       props.backgroundColor,
@@ -160,13 +157,13 @@ export function ThreeMashContactPage(props: Props) {
               </p>
             </div>
             <div className="tm-contact-direct">
-              <a href={`mailto:${recipient}`}>{recipient}</a>
+              <a href={safeMailtoHref(recipient, tLocalized("3mash İletişim", "3mash Contact"), "")}>{recipient}</a>
               <a
                 href="https://maps.google.com/?q=Antalya%20Teknokent%20Konyaalt%C4%B1"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Technopark, Konyaalti")}
+                {tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Teknokent, Konyaaltı")}
               </a>
               <span>{tLocalized("Teknik destek ve ürün danışmanlığı", "Technical support & product consulting")}</span>
             </div>
@@ -194,7 +191,7 @@ export function ThreeMashContactPage(props: Props) {
               </div>
               <div>
                 <b>{tLocalized("Lokasyon", "Location")}</b>
-                <span>{tLocalized("Antalya Teknokent", "Antalya Technocity")}</span>
+                <span>{tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Teknokent, Konyaaltı")}</span>
               </div>
             </div>
           </aside>

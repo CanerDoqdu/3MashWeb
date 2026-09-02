@@ -714,12 +714,17 @@ export function localizedHref(path?: string | null): string {
   const trimmed = path.trim();
   if (!trimmed) return "";
 
+  if (/^(?:javascript:|data:|vbscript:|file:)/i.test(trimmed)) {
+    return "#";
+  }
+
   // External links, protocol handlers, or pure hash anchors remain unchanged
   if (
     /^(?:[a-z0-9+.-]+:|\/\/|#)/i.test(trimmed) ||
     trimmed.startsWith("mailto:") ||
     trimmed.startsWith("tel:") ||
-    trimmed.startsWith("javascript:")
+    trimmed.startsWith("sms:") ||
+    trimmed.startsWith("whatsapp:")
   ) {
     return trimmed;
   }

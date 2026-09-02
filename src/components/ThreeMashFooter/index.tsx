@@ -17,9 +17,9 @@ function organizationJsonLd(props: Props): string {
     address: {
       "@type": "PostalAddress",
       addressLocality: tLocalized("Antalya", "Antalya"),
-      addressRegion: tLocalized("Konyaaltı", "Konyaalti"),
+      addressRegion: tLocalized("Konyaaltı", "Konyaaltı"),
       addressCountry: "TR",
-      streetAddress: tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Technopark, Konyaalti"),
+      streetAddress: tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Teknokent, Konyaaltı"),
     },
     contactPoint: {
       "@type": "ContactPoint",

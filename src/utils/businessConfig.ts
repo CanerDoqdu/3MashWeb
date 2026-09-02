@@ -23,8 +23,11 @@ function getRuntimeConfig(): BusinessConfig {
         ? process.env
         : {};
 
-  // Runtime config object (merchant-provided)
-  const runtime = window.__THREEMASH_CONFIG__ ?? {};
+  // Runtime config object (merchant-provided). Do not touch window during SSR/module evaluation.
+  const runtime =
+    typeof window !== "undefined" && (window as any).__THREEMASH_CONFIG__
+      ? (window as any).__THREEMASH_CONFIG__
+      : {};
 
   // Merge and return
   return {

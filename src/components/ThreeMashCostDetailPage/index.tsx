@@ -247,14 +247,14 @@ export function ThreeMashCostDetailPage(props: Props) {
             &nbsp;/&nbsp; {props.breadcrumbCurrentText || tLocalized("Bir tekrarın maliyeti", "Cost of a remake")}
           </div>
           {props.heroTitle ? (
-            <h1 dangerouslySetInnerHTML={{ __html: props.heroTitle }} />
+            <h1 dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.heroTitle) }} />
           ) : (
             <h1>
               {tLocalized("Bir tekrarın gerçek maliyeti neden", "Why does a remake really cost")}<br /><span className="em">{tLocalized("~500 dolar?", "~$500?")}</span>
             </h1>
           )}
           {props.heroAnswer ? (
-            <p className="answer" dangerouslySetInnerHTML={{ __html: props.heroAnswer }} />
+            <p className="answer" dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.heroAnswer) }} />
           ) : (
             <p className="answer">
               {tLocalized(

@@ -2,10 +2,11 @@ import { tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
 import { machineP16L, resinBottle } from "../../assets/remaining-assets-data";
 import p1dPrinterImage from "../../assets/p1d-printer-data";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 function href(value?: string) {
-  return value && value.trim() ? value : "#";
+  return safeNavigationHref(value, "#");
 }
 
 function inlineHtml(value?: string) {

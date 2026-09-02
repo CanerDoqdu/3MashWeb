@@ -533,13 +533,18 @@ function relatedProduct(product: IkasProduct): ProductDetailRelatedProduct {
   };
 }
 
+function safeLocationPathname() {
+  if (typeof window === "undefined") return "";
+  return window.location.pathname;
+}
+
 function productSlug(product: IkasProduct | null) {
   const data = product as unknown as { slug?: unknown; handle?: unknown; url?: unknown; path?: unknown } | null;
   const raw = stringValue(data?.slug) || stringValue(data?.handle) || stringValue(data?.url) || stringValue(data?.path) || (product ? slugify(product.name) : "");
   const productDataSlug = raw.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop();
   if (productDataSlug) return productDataSlug;
-  if (typeof window === "undefined") return "";
-  return window.location.pathname.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop() || "";
+  const pathname = safeLocationPathname();
+  return pathname.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop() || "";
 }
 
 function isCrsComposite(product: IkasProduct | null) {
@@ -572,19 +577,28 @@ function normalizedVariantKey(value: string | undefined) {
 
 const SHADE_COLORS: Record<string, string> = {
   a1: "#ede9d0",
-  "1m1": "#f4ede4",
-  "1-m-1": "#f4ede4",
-  "1.m.1": "#f4ede4",
-  "1 m 1": "#f4ede4",
-  a2: "#efe4cf",
-  a3: "#e8d7b8",
-  "a3.5": "#e0cba6",
-  b1: "#f4efe2",
+  a2: "#ede9d0",
+  a3: "#ede9d0",
+  a4: "#efead4",
+  c1: "#e1d6b5",
+  c2: "#e1d6b5",
+  d2: "#dcd4b4",
+  "1m1": "#F4EDE4",
+  "1-m-1": "#F4EDE4",
+  "1.m.1": "#F4EDE4",
+  "1 m 1": "#F4EDE4",
+  "a3.5": "#e1d6b5",
+  b1: "#dcd4b4",
   b2: "#ebe3c7",
   b3: "#e1d7b2",
   sand: "#ebc686",
   gray: "#767a83",
   grey: "#767a83",
+  black: "#000000",
+  siyah: "#000000",
+  cosmetic: "#000000",
+  "cosmetik": "#000000",
+  kosmetik: "#000000",
   white: "#ffffff",
   pinkish: "#ba6c74",
   pink: "#f18789",
@@ -599,6 +613,11 @@ const SHADE_COLORS: Record<string, string> = {
   transparent: "#f9f9f9",
   orange: "#f5b62f",
   turuncu: "#f5b62f",
+  lightorange: "#f5b62f",
+  "light-orange": "#f5b62f",
+  "light orange": "#f5b62f",
+  cast: "#f5b62f",
+  "cast-orange": "#f5b62f",
   bleach: "#faf9f5",
   peach: "#ffdab9",
   seftali: "#ffdab9",
@@ -1137,9 +1156,9 @@ function previewVariantGroups(selection: PreviewSelection): ProductVariantGroup[
       id: "preview-color",
       name: tLocalized("Renk", "Colour"),
       values: [
-        { id: tLocalized("A1", "A1"), name: tLocalized("A1", "A1"), color: "#f3ede0" },
-        { id: tLocalized("A2", "A2"), name: tLocalized("A2", "A2"), color: "#efe4cf" },
-        { id: tLocalized("A3", "A3"), name: tLocalized("A3", "A3"), color: "#e8d7b8" },
+        { id: tLocalized("A1", "A1"), name: tLocalized("A1", "A1"), color: "#ede9d0" },
+        { id: tLocalized("A2", "A2"), name: tLocalized("A2", "A2"), color: "#efead4" },
+        { id: tLocalized("A3", "A3"), name: tLocalized("A3", "A3"), color: "#e1d6b5" },
       ].map((value) => ({
         ...value,
         selected: (selection["preview-color"] || tLocalized("A1", "A1")) === value.id,
@@ -1175,7 +1194,7 @@ function variantGroups(product: IkasProduct): ProductVariantGroup[] {
         name: item.variantValue.name || "",
         selected: !!item.isSelected,
         hasStock: !!item.hasStock,
-        color: isColor ? color || "#f3ede0" : undefined,
+        color: isColor ? color || "#ede9d0" : undefined,
         rawValue: item.variantValue,
       };
     });

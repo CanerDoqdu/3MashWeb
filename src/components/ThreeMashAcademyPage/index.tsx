@@ -1,6 +1,7 @@
 import { academyEvent1Image, academyEvent2Image, academyIntroImage } from "./source-assets";
 import { Props } from "./types";
 import { tLocalized } from "../../utils/i18n";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 function value(input: string | undefined, fallback: string) {
@@ -9,8 +10,7 @@ function value(input: string | undefined, fallback: string) {
 }
 
 function href(input: string | undefined, fallback = "#") {
-  const trimmed = input?.trim();
-  return trimmed || fallback;
+  return safeNavigationHref(input, fallback);
 }
 
 function inlineHtml(input: string | undefined, fallback = "") {
@@ -101,7 +101,7 @@ function themeColor(input: string | undefined, fallback: string, token: string, 
 function htmlParts(input: string | undefined, props: Props, fallback = "") {
   return inlineHtml(input, fallback)
     .split(/(?:<br\s*\/?>\s*){2,}/gi)
-    .map((part) => styledHtml(part.trim(), props))
+    .map((part) => sanitizeHtml(styledHtml(part.trim(), props)))
     .filter(Boolean);
 }
 

@@ -388,7 +388,10 @@ const categoryRouteAliases: Record<string, string> = {
 
 function categoryHref(value: string) {
   const trimmed = value.trim();
-  if (!trimmed || /^(#|mailto:|tel:|whatsapp:)/i.test(trimmed)) return trimmed || "#";
+  if (!trimmed) return "#";
+  if (/^(#|javascript:|data:|vbscript:|file:|mailto:|tel:|whatsapp:)/i.test(trimmed)) {
+    return trimmed || "#";
+  }
 
   try {
     const url = new URL(trimmed);

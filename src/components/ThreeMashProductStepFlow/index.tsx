@@ -1,6 +1,7 @@
 import { Props } from "./types";
 import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 function trimmedText(value: unknown, fallback = ""): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -56,7 +57,7 @@ export function ThreeMashProductStepFlow(props: Props) {
     )
   );
   const ctaBtnText = trimmedText(props.ctaButtonText, tLocalized("Aksiyon Buton Metni →", "Action Button Text →"));
-  const ctaBtnHref = trimmedText(
+  const ctaBtnHref = safeNavigationHref(
     props.ctaButtonHref,
     "#"
   );
@@ -72,7 +73,7 @@ export function ThreeMashProductStepFlow(props: Props) {
 
         <div className="tm-flow-head">
           <h2 dangerouslySetInnerHTML={{ __html: sanitizeHtml(titleHtml) }} />
-          <p className="tm-flow-side" dangerouslySetInnerHTML={{ __html: sideHtml }} />
+          <p className="tm-flow-side" dangerouslySetInnerHTML={{ __html: sanitizeHtml(sideHtml) }} />
         </div>
 
         <div className="tm-flow-steps">

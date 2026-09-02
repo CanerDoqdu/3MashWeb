@@ -3,9 +3,7 @@ import {
   customerStore,
   getFavoriteProducts,
   getOrders,
-  initCustomerStore,
   logout,
-  Router,
   type IkasCustomer,
   type IkasOrder,
   type IkasProduct,
@@ -25,7 +23,8 @@ import {
   type DashboardProps,
 } from "../ThreeMashAccountUtilityPage";
 import { t, tLocalized, localizedHref } from "../../utils/i18n";
-import { safeRedirect } from "../../utils/safeRedirect";
+import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
+import ProtectedRoute from "../../sub-components/ProtectedRoute";
 
 // Critical CSS injected inline — ikas Studio does not bundle sub-component CSS files.
 // The registered page's own styles.css (ThreeMashAccountInfoPage/styles.css) covers
@@ -171,26 +170,6 @@ const criticalLayoutCss = `
 }
 `;
 
-// ─── Customer store eager init ──────────────────────────────────────────────
-
-let customerStoreInitPromise: Promise<void> | null = null;
-let customerStoreInitResolved = false;
-
-function ensureCustomerStoreReady() {
-  if (!customerStoreInitPromise) {
-    customerStoreInitPromise = initCustomerStore(customerStore).then(() => {
-      customerStoreInitResolved = true;
-    });
-  }
-  return customerStoreInitPromise;
-}
-
-if (typeof window !== "undefined" && !customerStore._initialized) {
-  ensureCustomerStoreReady();
-} else if (typeof window !== "undefined") {
-  customerStoreInitResolved = true;
-}
-
 // ─── Mode helpers ───────────────────────────────────────────────────────────
 
 type AccountMode =
@@ -226,8 +205,7 @@ function modeFromHref(nextHref: string, fallback: AccountMode): AccountMode {
 }
 
 function normalizeHref(value: string | undefined, fallback: string) {
-  const next = value?.trim();
-  return next && next !== "#" ? next : fallback;
+  return safeNavigationHref(value, fallback);
 }
 
 function customerName(customer: any) {
@@ -320,7 +298,7 @@ function dashboardStyle(props: DashboardProps) {
 
 // ─── Shell Component ─────────────────────────────────────────────────────────
 
-export default function ThreeMashAccountLayout(props: DashboardProps) {
+function AccountLayoutContent(props: DashboardProps) {
   const isStudio = isStudioEnvironment();
 
   // ── Initial mode from URL (or prop if set by ikas Studio preview) ──
@@ -346,9 +324,6 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
     () => (isStudio ? mockStudioOrders : []),
   );
   const [favorites, setFavorites] = useState<IkasProduct[]>([]);
-  const [ready, setReady] = useState(
-    isStudio || customerStore._initialized || customerStoreInitResolved,
-  );
 
   // ── Sidebar name ──────────────────────────────────────────────────
   const [sidebarName, setSidebarName] = useState(() =>
@@ -392,11 +367,6 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
 
     async function load() {
       try {
-        if (!customerStore._initialized) {
-          await ensureCustomerStoreReady();
-        }
-        if (!mounted) return;
-
         const currentCustomer = customerStore.customer;
         if (currentCustomer) {
           setCustomer(currentCustomer);
@@ -407,26 +377,6 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
           } catch {}
         } else if (isStudio) {
           setCustomer(mockStudioCustomer);
-        }
-
-        setReady(true);
-
-        // Security check: if not logged in and not in Studio, redirect to login immediately
-        if (!currentCustomer) {
-          if (isStudio && mode === "orders") {
-            setOrders(mockStudioOrders);
-          } else if (!isStudio && typeof window !== "undefined") {
-            try {
-              localStorage.removeItem("tm_customer_name");
-              localStorage.removeItem("tm_customer_cache");
-              sessionStorage.removeItem("tm_customer_name");
-              sessionStorage.removeItem("tm_customer_cache");
-            } catch {}
-            const loginTarget = localizedHref(normalizeHref(props?.loginHref, "/account/login"));
-            window.location.replace(loginTarget);
-            return;
-          }
-          return;
         }
 
         if (mode === "orders") {
@@ -440,7 +390,6 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
         }
       } catch {
         if (mounted) {
-          setReady(true);
           if (isStudio) {
             setCustomer(mockStudioCustomer);
             if (mode === "orders") setOrders(mockStudioOrders);
@@ -541,22 +490,12 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
 
   // ── Right panel content ───────────────────────────────────────────
   function renderContent() {
-    if (!ready) {
-      return (
-        <div className="tmai-form-loading">
-          <div className="tmai-loading-title" />
-          <div className="tmai-loading-line" />
-          <div className="tmai-loading-fields" />
-        </div>
-      );
-    }
-
     switch (mode) {
       case "account":
         return (
           <AccountProfileForm
             customer={effectiveCustomer || ({} as IkasCustomer)}
-            ready={ready}
+            ready={true}
             setCustomer={setCustomer}
             props={props}
           />
@@ -652,5 +591,16 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
 
       </section>
     </section>
+  );
+}
+
+export default function ThreeMashAccountLayout(props: DashboardProps) {
+  return (
+    <ProtectedRoute
+      loginHref={props.loginHref}
+      isStudio={isStudioEnvironment()}
+    >
+      <AccountLayoutContent {...props} />
+    </ProtectedRoute>
   );
 }

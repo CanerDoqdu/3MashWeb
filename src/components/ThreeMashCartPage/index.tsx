@@ -30,6 +30,7 @@ import {
   subscribeCart,
 } from "../cartState";
 import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 const categoryProductsPageHref = "/dental-3d-yazici-recineleri";
 const legacyContinueShoppingHrefs = new Set([
@@ -44,8 +45,7 @@ function text(value: string | undefined, fallbackTr: string, fallbackEn?: string
 }
 
 function href(value: string | undefined, fallback: string) {
-  const next = value?.trim();
-  return next && next !== "#" ? next : fallback;
+  return safeNavigationHref(value, fallback);
 }
 
 

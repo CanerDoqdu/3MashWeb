@@ -7,6 +7,7 @@ import {
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import { t, tLocalized, tProp } from "../../utils/i18n";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 const defaultAuthImage =
   "https://cdn.myikas.com/images/theme-images/a6f9541f-702d-431d-9744-9d4f494c94af/image_1080.webp";
@@ -21,8 +22,7 @@ function text(value: string | undefined, fallbackTr: string, fallbackEn?: string
 }
 
 function href(value: string | undefined, fallback: string) {
-  const next = value?.trim();
-  return next && next !== "#" ? next : fallback;
+  return safeNavigationHref(value, fallback);
 }
 
 function themeColor(

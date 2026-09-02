@@ -2,6 +2,7 @@ import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 function trimmedText(value: unknown, fallback = ""): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -47,7 +48,7 @@ export function ThreeMashProductCertificates(props: Props) {
       reportNo: trimmedText(props.cert1ReportNo, "RAPOR-NO-01"),
       issuer: trimmedText(props.cert1Issuer, "Akredite Test Kurumu 1"),
       actionText: trimmedText(props.cert1ActionText, tLocalized("Raporu İncele (PDF) →", "View Report (PDF) →")),
-      actionHref: trimmedText(props.cert1ActionHref, "#"),
+      actionHref: safeNavigationHref(props.cert1ActionHref, "#"),
     },
     {
       showImage: globalShowImages && props.cert2ShowImage !== false,
@@ -61,7 +62,7 @@ export function ThreeMashProductCertificates(props: Props) {
       reportNo: trimmedText(props.cert2ReportNo, "RAPOR-NO-02"),
       issuer: trimmedText(props.cert2Issuer, "Akredite Test Kurumu 2"),
       actionText: trimmedText(props.cert2ActionText, tLocalized("Standardı Görüntüle →", "View Standard →")),
-      actionHref: trimmedText(props.cert2ActionHref, "#"),
+      actionHref: safeNavigationHref(props.cert2ActionHref, "#"),
     },
     {
       showImage: globalShowImages && props.cert3ShowImage !== false,
@@ -75,7 +76,7 @@ export function ThreeMashProductCertificates(props: Props) {
       reportNo: trimmedText(props.cert3ReportNo, "RAPOR-NO-03"),
       issuer: trimmedText(props.cert3Issuer, "Akredite Test Kurumu 3"),
       actionText: trimmedText(props.cert3ActionText, tLocalized("Test Raporu Detayı →", "Test Report Details →")),
-      actionHref: trimmedText(props.cert3ActionHref, "#"),
+      actionHref: safeNavigationHref(props.cert3ActionHref, "#"),
     },
     {
       showImage: globalShowImages && props.cert4ShowImage !== false,
@@ -89,7 +90,7 @@ export function ThreeMashProductCertificates(props: Props) {
       reportNo: trimmedText(props.cert4ReportNo, "RAPOR-NO-04"),
       issuer: trimmedText(props.cert4Issuer, "Akredite Test Kurumu 4"),
       actionText: trimmedText(props.cert4ActionText, tLocalized("Klinik Raporu İncele →", "Review the Clinical Report →")),
-      actionHref: trimmedText(props.cert4ActionHref, "#"),
+      actionHref: safeNavigationHref(props.cert4ActionHref, "#"),
     },
   ];
 
@@ -109,7 +110,7 @@ export function ThreeMashProductCertificates(props: Props) {
 
         <div className="tm-cert-head">
           <h2 dangerouslySetInnerHTML={{ __html: sanitizeHtml(titleHtml) }} />
-          <p className="tm-cert-side" dangerouslySetInnerHTML={{ __html: sideHtml }} />
+          <p className="tm-cert-side" dangerouslySetInnerHTML={{ __html: sanitizeHtml(sideHtml) }} />
         </div>
 
         <div className="tm-cert-grid">

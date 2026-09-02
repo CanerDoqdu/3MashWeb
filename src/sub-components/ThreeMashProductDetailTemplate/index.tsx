@@ -885,7 +885,7 @@ function faqJsonLd(faq: ProductDetailTemplateData["faq"]): string | null {
       },
     })),
   };
-  return JSON.stringify(faqSchema);
+  return safeJsonLdScript(faqSchema);
 }
 
 export function ProductDetailFaqSection({ data }: { data: ProductDetailTemplateData }) {

@@ -1,5 +1,6 @@
 import { tLocalized } from "../../utils/i18n";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   useEffect,
@@ -39,8 +40,8 @@ const defaultConsultationWhatsappHref =
 const costDetailPageHref = "/pages/hesaplama";
 
 function href(value?: string) {
-  const next = value?.trim();
-  if (!next) return "#";
+  const next = safeNavigationHref(value, "#");
+  if (next === "#") return next;
 
   const key = routeKey(next);
   if (

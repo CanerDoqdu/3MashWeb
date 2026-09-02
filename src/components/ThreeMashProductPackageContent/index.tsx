@@ -2,6 +2,7 @@ import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 function trimmedText(value: unknown, fallback = ""): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -89,7 +90,7 @@ export function ThreeMashProductPackageContent(props: Props) {
     tLocalized("Kutu içeriği veya teslimat garantisi ile ilgili alt bilgilendirme metni buraya gelecek.", "Footer information text about box contents or delivery guarantee will go here.")
   );
   const ctaText = trimmedText(props.ctaText, tLocalized("Aksiyon Butonu Metni →", "Action Button Text →"));
-  const ctaHref = trimmedText(
+  const ctaHref = safeNavigationHref(
     props.ctaHref,
     "#"
   );
@@ -105,7 +106,7 @@ export function ThreeMashProductPackageContent(props: Props) {
 
         <div className="tm-pkg-head">
           <h2 dangerouslySetInnerHTML={{ __html: sanitizeHtml(titleHtml) }} />
-          <p className="tm-pkg-side" dangerouslySetInnerHTML={{ __html: sideHtml }} />
+          <p className="tm-pkg-side" dangerouslySetInnerHTML={{ __html: sanitizeHtml(sideHtml) }} />
         </div>
 
         <div className="tm-pkg-grid">

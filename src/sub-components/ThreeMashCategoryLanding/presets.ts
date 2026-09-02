@@ -538,7 +538,7 @@ export const washCureCategoryData: CategoryLandingData = {
   kind: "wash-cure",
   announcement: {
     highlight: tLocalized("⚡ Baskı sonrası sonucu sabitleyin", "⚡ Lock in your post-print result"),
-    text: tLocalized("Yıkama ve kürleme adımı doğru mekanik değerler için kritik; W1E ve C1E cihazlarını iş akışınıza göre birlikte seçin.", "The washing and curing step is critical for correct mechanical values; choose the W1E and C1E devices together based on your workflow."),
+    text: tLocalized("Yıkama ve kürleme kritik; W1E ve C1E cihazlarını birlikte kullanın.", "Washing & curing critical; choose W1E and C1E together."),
     href: "#cihaz",
     ctaText: tLocalized("Cihaza git →", "Go to device →"),
   },

@@ -26,6 +26,7 @@ import { Props } from "./types";
 import type { Props as AccountInfoProps } from "../ThreeMashAccountInfoPage/types";
 import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
 import { businessConfig } from "../../utils/businessConfig";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 export type DashboardProps = Props &
   Partial<AccountInfoProps> & {
@@ -70,8 +71,7 @@ export function text(value: string | undefined, fallbackTr: string, fallbackEn?:
 }
 
 export function href(value: string | undefined, fallback: string) {
-  const next = value?.trim();
-  return next && next !== "#" ? next : fallback;
+  return safeNavigationHref(value, fallback);
 }
 
 function detectPhoneCountry(value: string | null | undefined) {
