@@ -411,7 +411,14 @@ export function AccountProfileForm({
           <span className="is-required">
             * {text(props.emailLabel, tLocalized("Email", "E-mail"), tLocalized("Email", "E-mail"))}
           </span>
-          <input value={form.email} autoComplete="email" type="email" disabled />
+          <input
+            value={form.email}
+            autoComplete="email"
+            type="email"
+            disabled
+            readOnly
+            style={{ cursor: "not-allowed", opacity: 0.85 }}
+          />
         </div>
       </div>
 

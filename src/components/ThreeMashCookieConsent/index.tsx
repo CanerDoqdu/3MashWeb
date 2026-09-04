@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useState, useRef } from "preact/hooks";
 import { tLocalized, localizedHref } from "../../utils/i18n";
 import { stringValue, safeFunctionCall } from "../../types/typeGuards";
 import cookiePrinterImage from "../../assets/cookie-printer-image-data";
@@ -152,13 +152,17 @@ export function ThreeMashCookieConsent() {
     }
   }
 
+  const consentRef = useRef<CookieConsentState | null>(consent);
+  consentRef.current = consent;
+
   function closeModal() {
     setIsOpen(false);
     setIsPreferencesOpen(false);
-    if (consent) {
-      setAnalytics(consent.analytics);
-      setMarketing(consent.marketing);
-      setFunctional(consent.functional);
+    const c = consentRef.current;
+    if (c) {
+      setAnalytics(c.analytics);
+      setMarketing(c.marketing);
+      setFunctional(c.functional);
     }
     clearHashIfCookieSettings();
   }
@@ -166,7 +170,7 @@ export function ThreeMashCookieConsent() {
   // Listen for global open requests (e.g. from footer links or #cerez-ayarlari)
   useEffect(() => {
     function handleOpen() {
-      const current = consent || getStoredConsent();
+      const current = consentRef.current || getStoredConsent();
       if (current) {
         setAnalytics(current.analytics);
         setMarketing(current.marketing);
@@ -219,7 +223,7 @@ export function ThreeMashCookieConsent() {
       window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("click", handleClick);
     };
-  }, [consent]);
+  }, []);
 
   function saveConsent(state: Omit<CookieConsentState, "necessary" | "timestamp" | "version">) {
     const fullState: CookieConsentState = {

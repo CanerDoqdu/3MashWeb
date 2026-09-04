@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import {
- 
+  cartStore,
   createMediaSrcset,
   customerStore,
  
@@ -12,8 +12,6 @@ import {
   getSelectedProductVariant,
   IkasStorefrontConfig,
   initProductList,
-  initCustomerStore,
-  logout,
   removeItem,
   searchProductList as updateProductSearchList,
   
@@ -32,6 +30,7 @@ import { sanitizeHtml, sanitizeSvgMarkup } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
+import { performLogout, isCustomerAuthenticated } from "../../utils/auth";
 import {
   ACF_FEP_FILM_SLUG,
   ARGENZ_HT_MULTILAYER_SLUG,
@@ -85,7 +84,9 @@ import {
 import { Props } from "./types";
 import {
   getCurrentCart,
+  hasCartItemsInMemory,
   initGlobalCart,
+  isCartInitialized,
   publishCartFromIkasStore,
   refreshGlobalCart,
   subscribeCart,
@@ -200,7 +201,7 @@ function handleOrderLineImageError(
 
 function cartProductHref(item: IkasOrderLineItem) {
   const slug = item.variant?.slug?.trim();
-  return slug ? `/${slug.replace(/^\/+/, "")}` : "#";
+  return slug ? localizedHref(`/${slug.replace(/^\/+/, "")}`) : "#";
 }
 
 function cartItemTitle(item: IkasOrderLineItem) {
@@ -980,17 +981,17 @@ function href(value?: string) {
 
 function headerRouteHref(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
-  if (!trimmed || trimmed === "#") return fallback;
+  if (!trimmed || trimmed === "#") return localizedHref(fallback);
   const internal = internalSiteHref(trimmed);
   const normalized = routeAliasKey(internal || trimmed);
   const slug = routeTextKey(internal || trimmed);
 
-  if (normalized === "/" && fallback === "/cart") return "/cart";
-  if (slug === "account-login" || slug === "login" || slug === tLocalized("hesabim", "hesabim") || slug === "account") return "/account/login";
-  if (slug === "cart" || slug === tLocalized("sepet", "cart")) return "/cart";
-  if (slug === "search" || slug === tLocalized("arama", "search")) return "/search";
-  if (productCategoryRoutes[slug]) return productCategoryRoutes[slug];
-  return internal || fallback;
+  if (normalized === "/" && fallback === "/cart") return localizedHref("/cart");
+  if (slug === "account-login" || slug === "login" || slug === tLocalized("hesabim", "hesabim") || slug === "account") return localizedHref("/account/login");
+  if (slug === "cart" || slug === tLocalized("sepet", "cart")) return localizedHref("/cart");
+  if (slug === "search" || slug === tLocalized("arama", "search")) return localizedHref("/search");
+  if (productCategoryRoutes[slug]) return localizedHref(productCategoryRoutes[slug]);
+  return localizedHref(internal || fallback);
 }
 
 function searchPageHref(value?: string) {
@@ -1633,7 +1634,7 @@ function getElementHeaderScrollTop(targetEl: HTMLElement, sectionId?: string): n
 
   if (sectionId === tLocalized("cozum", "cozum")) {
     return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 10 : 20));
-  } else if (sectionId === tLocalized("sebep", "reason") || sectionId === "sorun") {
+  } else if (sectionId === "sebep" || sectionId === "reason" || sectionId === "sorun") {
     return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 12 : 24));
   } else if (sectionId === tLocalized("kurleme", "kurleme")) {
     return Math.max(0, elementAbsoluteTop - headerOffset - (isMobile ? 10 : 18));
@@ -1645,8 +1646,8 @@ function findSectionTargetElement(sectionId: string): HTMLElement | null {
   const cleanId = sectionId.replace(/^#+/, "").trim();
   if (!cleanId) return null;
 
-  if (cleanId === tLocalized("sebep", "reason") || cleanId === "sorun") {
-    return document.querySelector(tLocalized("#sebep, #sorun, .three-mash-problem, .tmproblem-head, .tmproblem", "#sebep, #sorun, .three-mash-problem, .tmproblem-head, .tmproblem"));
+  if (cleanId === "sebep" || cleanId === "reason" || cleanId === "sorun") {
+    return document.querySelector("#sebep, #reason, #sorun, .three-mash-problem, .tmproblem-head, .tmproblem");
   }
   if (cleanId === tLocalized("cozum", "cozum")) {
     return document.querySelector(tLocalized("#cozum, .three-mash-solution, .tmr-solution, .tmr-head", "#cozum, .three-mash-solution, .tmr-solution, .tmr-head"));
@@ -1672,18 +1673,18 @@ function findSectionTargetElement(sectionId: string): HTMLElement | null {
 function scrollToSectionWithOffset(sectionId: string, onAlreadyAtSection?: () => void) {
   if (typeof window === "undefined") return;
 
-  const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+  const currentPath = (window.location.pathname.replace(/\/+$/, "") || "/").replace(/^\/en(?=\/|$)/, "") || "/";
   const cleanId = sectionId.replace(/^#+/, "").trim();
   const isTopTarget = !cleanId || cleanId === "__top__" || cleanId === tLocalized("giris", "giris") || cleanId === "/" || cleanId === "top";
 
   if (currentPath !== "/") {
     if (isTopTarget) {
       savePendingReferencesScroll("__top__");
-      window.location.href = safeRedirect("/");
+      window.location.href = safeRedirect(localizedHref("/"));
       return;
     }
     savePendingReferencesScroll(cleanId);
-    window.location.href = safeRedirect(`/#${cleanId}`);
+    window.location.href = safeRedirect(localizedHref(`/#${cleanId}`));
     return;
   }
 
@@ -1730,7 +1731,7 @@ function FlowLink({
   onToast?: (msg: string) => void;
   onCloseMenu?: () => void;
 }) {
-  const itemHref = href(item.href);
+  const itemHref = localizedHref(item.href) || "#";
   const sectionId = flowSectionId(item);
   const isFirstItem = item.number === "01" || itemHref === "/" || !sectionId || sectionId === tLocalized("giris", "giris");
 
@@ -1868,7 +1869,9 @@ export function ThreeMashHeader(props: Props) {
 const [cart, setCart] = useState<IkasCart | null>(
   () => getCurrentCart()
 );
-  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(customerStore.customer));
+const [isCartReady, setIsCartReady] = useState(
+  () => isCartInitialized() || hasCartItemsInMemory()
+);
   const [removingCartItemId, setRemovingCartItemId] = useState("");
   const [productsMenuLeft, setProductsMenuLeft] = useState<number | null>(null);
   const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
@@ -1882,6 +1885,9 @@ const [cart, setCart] = useState<IkasCart | null>(
 
   // ── Compute announcement fresh on every render (no stale content) ──
   const productAnnouncement = currentProductAnnouncement();
+
+  const authState = isCustomerAuthenticated();
+  const isAuthenticated = authState === "authenticated";
 
   const showActionIcons = props.showActionIcons !== false;
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
@@ -1949,7 +1955,7 @@ const cartItems =
 
   const whyItems: FlowItem[] = [
     { number: text(props.why1Number, "01"), title: text(props.why1Title, tLocalized("Yılda $126K'ya varan görünmez kayıp", "Invisible loss up to $126K per year")), description: text(props.why1Description, tLocalized("Tekrarlanan işlerin kliniğinize gerçek maliyeti", "The true cost of remakes to your clinic")), href: "/" },
-    { number: text(props.why2Number, "02"), title: text(props.why2Title, tLocalized("Sebep: ölçüsel hassasiyet", "Reason: dimensional accuracy")), description: text(props.why2Description, tLocalized("250–500µm sapma bandı vs ±20µm güvenli bölge", "250–500µm deviation band vs ±20µm safe zone")), href: whyMenuHref(tLocalized("/#sebep", "/#sebep")) },
+    { number: text(props.why2Number, "02"), title: text(props.why2Title, tLocalized("Sebep: ölçüsel hassasiyet", "Reason: dimensional accuracy")), description: text(props.why2Description, tLocalized("250–500µm sapma bandı vs ±20µm güvenli bölge", "250–500µm deviation band vs ±20µm safe zone")), href: whyMenuHref(tLocalized("/#sebep", "/#reason")) },
     { number: text(props.why3Number, "03"), title: text(props.why3Title, tLocalized("Çözüm: uyumlu ekosistem", "Solution: compatible ecosystem")), description: text(props.why3Description, tLocalized("Yazıcı + reçine + parametre bilgisi, birlikte kalibre", "Printer + resin + parameter knowledge, calibrated together")), href: whyMenuHref(tLocalized("/#cozum", "/#cozum")) },
     { number: text(props.why4Number, "04"), title: text(props.why4Title, tLocalized("Ve kürleme — son %20'lik fark", "And curing — the final 20% difference")), description: text(props.why4Description, tLocalized("Doğru basılan iş, yanlış kürlenirse yine başarısız olur", "A properly printed job fails if improperly cured")), href: whyMenuHref(tLocalized("/#kurleme", "/#kurleme")) },
   ];
@@ -1967,77 +1973,84 @@ const cartItems =
     }, 2200);
   }
 
-  async function handleHeaderLogout(event: Event, targetHref?: string) {
+  async function handleHeaderLogout(event: Event) {
     event.preventDefault();
-    if (typeof window !== "undefined") {
-      try {
-        localStorage.removeItem("tm_customer_name");
-        localStorage.removeItem("tm_customer_cache");
-        sessionStorage.removeItem("tm_customer_name");
-        sessionStorage.removeItem("tm_customer_cache");
-        localStorage.removeItem("customer");
-        sessionStorage.removeItem("customer");
-      } catch {}
-    }
-
-    try {
-      await logout(customerStore);
-    } catch {}
-
-    setIsLoggedIn(false);
-
-    if (typeof window !== "undefined") {
-      const dest = targetHref || localizedHref("/account/login");
-      window.location.href = safeRedirect(dest);
-    }
+    // performLogout clears storage, clears cart, and redirects protected routes.
+    await performLogout();
   }
+
+  // ── Profile links in dropdown ─────────────────────────────────────
+  const registerTarget = localizedHref("/account/register");
+  const loginTarget = headerRouteHref(props.accountHref, "/account/login");
 
   const profileLinks = [
     {
-      label: richTextValue(
+      label: tProp(
         props.profileLink1Text,
-        tLocalized("Siparişlerim", "My Orders")
+        "Siparişlerim",
+        "My Orders",
       ),
-      link: headerRouteHref(
-        props.profileLink1Href,
-        "/account/orders"
-      ),
+      link: isAuthenticated
+        ? headerRouteHref(props.profileLink1Href, "/account/orders")
+        : registerTarget,
+      isProtected: true,
       isLogout: false,
     },
     {
-      label: richTextValue(
+      label: tProp(
         props.profileLink2Text,
-        tLocalized("Adreslerim", "My Addresses")
+        "Adreslerim",
+        "My Addresses",
       ),
-      link: headerRouteHref(
-        props.profileLink2Href,
-        "/account/addresses"
-      ),
+      link: isAuthenticated
+        ? headerRouteHref(props.profileLink2Href, "/account/addresses")
+        : registerTarget,
+      isProtected: true,
       isLogout: false,
     },
     {
-      label: richTextValue(
+      label: tProp(
         props.profileLink5Text,
-        tLocalized("Mash Academy", "Mash Academy")
+        "Mash Academy",
+        "Mash Academy",
       ),
       link: academyPageTarget(
         props.profileLink5Href
       ),
+      authHref: academyPageTarget(props.profileLink5Href),
+      isProtected: false,
       isLogout: false,
     },
     {
-      label: richTextValue(
-        props.profileLink6Text,
-        tLocalized("Çıkış yap", "Sign out")
-      ),
-      link: headerRouteHref(
-        props.profileLink6Href,
-        "/account/logout"
-      ),
-      isLogout: true,
+      label: isAuthenticated
+        ? tProp(
+            props.profileLink6Text,
+            "Çıkış yap",
+            "Sign Out",
+          )
+        : tLocalized("Giriş Yap", "Log In"),
+      link: isAuthenticated ? "#" : loginTarget,
+      isProtected: false,
+      isLogout: isAuthenticated,
     },
   ];
+
+  function handleDropdownLinkClick(event: MouseEvent, item: (typeof profileLinks)[0]) {
+    if (item.isLogout) {
+      handleHeaderLogout(event);
+      return;
+    }
+    if (item.isProtected) {
+      event.preventDefault();
+      window.location.href = safeRedirect(item.link);
+    }
+  }
   const accountMenuTitle = tLocalized("Hesabım", "My Account");
+  const accountMenuDescription = tProp(
+    props.profileMenuDescription,
+    "Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın.",
+    "Quickly access your orders, support, and account settings.",
+  );
 
   const themeStyle = {
     "--tmh-bg": sourceThemeToken("#FAFAF7", "--tm-theme-bg"),
@@ -2233,15 +2246,30 @@ const cartItems =
 
 
  useEffect(() => {
+  let mounted = true;
   const unsubscribe = subscribeCart(
     (nextCart) => {
+      if (!mounted) return;
       setCart(nextCart);
+      setIsCartReady(true);
     }
   );
 
-  void initGlobalCart();
+  void initGlobalCart().finally(() => {
+    if (mounted) setIsCartReady(true);
+  });
 
-  return unsubscribe;
+  const syncCart = () => {
+    setCart(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
+    setIsCartReady(true);
+  };
+  window.addEventListener("3mash-cart-updated", syncCart);
+
+  return () => {
+    mounted = false;
+    unsubscribe();
+    window.removeEventListener("3mash-cart-updated", syncCart);
+  };
 }, []);
   useEffect(() => {
     function smoothSamePageAnchor(event: MouseEvent) {
@@ -2581,7 +2609,7 @@ async function removeCartItem(
                   // NOTE: CSS-in-JS with dynamic positioning for mega menu
                   style={productsMenuLeft == null ? undefined : { "--tmh-products-mega-left": `${productsMenuLeft}px`, "--tmh-products-translate-x": "0px" } as any}
                 >
-                  <a className="tmh-feature" href={href(c4pRouteHref(text(props.productsFeatureHref, defaultProductsFeature.href)))}>
+                  <a className="tmh-feature" href={localizedHref(c4pRouteHref(text(props.productsFeatureHref, defaultProductsFeature.href)))}>
                     <span className="tmh-micro" dangerouslySetInnerHTML={richText(productsFeatureEyebrow, props)} />
                     <b dangerouslySetInnerHTML={richText(productsFeatureTitle, props)} />
                     <span dangerouslySetInnerHTML={richText(productsFeatureDescription, props)} />
@@ -2707,13 +2735,13 @@ async function removeCartItem(
                 >
                   <span className="tmh-action-panel-kicker">3Mash</span>
                   <b dangerouslySetInnerHTML={richText(accountMenuTitle, props)} />
-                  <p dangerouslySetInnerHTML={richText(richTextValue(props.profileMenuDescription, tLocalized("Sipariş, destek ve hesap işlemlerinize hızlıca ulaşın.", "Quickly access your orders, support, and account settings.")), props)} />
+                  <p dangerouslySetInnerHTML={richText(accountMenuDescription, props)} />
                   <div className="tmh-panel-links">
                     {profileLinks.map((item) => (
                       <a
-                        href={href(item.link)}
+                        href={item.isLogout ? "#" : href(item.link)}
                         dangerouslySetInnerHTML={richText(item.label, props)}
-                        onClick={item.isLogout ? (e) => handleHeaderLogout(e, href(item.link)) : undefined}
+                        onClick={(e) => handleDropdownLinkClick(e, item)}
                       />
                     ))}
                   </div>
@@ -2785,13 +2813,18 @@ const image = imageCandidates[0];
                           );
                         })}
                       </div>
-                      <a className="tmh-cart-market-button tmh-cart-go-button" href="/cart">{tLocalized("Sepete git", "Go to Cart")}</a>
+                      <a className="tmh-cart-market-button tmh-cart-go-button" href={localizedHref("/cart")}>{tLocalized("Sepete git", "Go to Cart")}</a>
+                    </div>
+                  ) : !isCartReady ? (
+                    <div className="tmh-cart-empty-card tmh-cart-loading">
+                      <span className="tmh-cart-spinner" aria-hidden="true" />
+                      <span>{tLocalized("Sepet yükleniyor...", "Loading cart...")}</span>
                     </div>
                   ) : (
                     <div className="tmh-cart-empty-card">
                       <a
                         className="tmh-cart-market-button"
-                        href="/search"
+                        href={localizedHref("/search")}
                         dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git", "Go to Store"), props)}
                       />
                     </div>

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
 import { Props } from "./types";
-import { isEnglishLocale, tLocalized, tProp } from "../../utils/i18n";
+import { isEnglishLocale, localizedHref, tLocalized, tProp } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -217,8 +217,8 @@ export function ThreeMashCostDetailPage(props: Props) {
     }
   };
 
-  const baseHomeUrl = safeNavigationHref(props.useButtonHref, "/");
-  const calculatorUrl = safeNavigationHref(`${baseHomeUrl}#hesap`, `${baseHomeUrl}#hesap`);
+  const baseHomeUrl = localizedHref(safeNavigationHref(props.useButtonHref, "/"));
+  const calculatorUrl = localizedHref(`${baseHomeUrl}#hesap`);
   const homeMode = mode === "lab" ? "lab" : "clinic";
   const homeHref = baseHomeUrl.includes("?")
     ? `${baseHomeUrl}&rc=${Math.round(total)}&mode=${homeMode}#hesap`

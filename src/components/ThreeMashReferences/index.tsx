@@ -19,177 +19,190 @@ import trustLogo4 from "../../assets/trust-logo-4-data";
 import trustLogo5 from "../../assets/trust-logo-5-data";
 import { tLocalized } from "../../utils/i18n";
 
-const defaultDescription = tLocalized(
-  "3MASH ekosistemi; kliniklerin, laboratuvarların ve çözüm ortaklarının günlük üretiminde aynı hedefe çalışır: doğru cihaz, doğru malzeme, doğru parametre ve kesintisiz teknik destek.",
-  "The 3MASH ecosystem works toward the same goal in daily production for clinics, laboratories, and solution partners: the right device, the right material, the right parameters, and continuous technical support."
-);
+function getReferenceData() {
+  const defaultDescription = tLocalized(
+    "3MASH ekosistemi; kliniklerin, laboratuvarların ve çözüm ortaklarının günlük üretiminde aynı hedefe çalışır: doğru cihaz, doğru malzeme, doğru parametre ve kesintisiz teknik destek.",
+    "The 3MASH ecosystem works toward the same goal in daily production for clinics, laboratories, and solution partners: the right device, the right material, the right parameters, and continuous technical support."
+  );
 
-const testimonials = [
-  {
-    name: tLocalized("Mehmet İşlek", "Mehmet İşlek"),
-    role: tLocalized("ATTELIA - Kurucu Başhekim", "ATTELIA - Founding Chief Physician"),
-    image: profileMehmet,
-    quote: tLocalized(
-      "Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.",
-      "Professionals trust professionals for absolute success. We collaborate with Mash in equipment selection, supply, training, and operation."
-    ),
-    meta: tLocalized("22 yıldır gülümseme tasarlayan klinik", "Clinic designing smiles for 22 years"),
-  },
-  {
-    name: tLocalized("Berkan Öztaş", "Berkan Öztaş"),
-    role: tLocalized("DENTEK - Genel Müd. Yard.", "DENTEK - Asst. General Manager"),
-    image: profileBerkan,
-    quote: tLocalized(
-      "Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.",
-      "Innovative and creative. A long-term, successful partnership across hardware, software, and materials."
-    ),
-    meta: tLocalized("Dijital üretim ve laboratuvar operasyonu", "Digital production and laboratory operation"),
-  },
-  {
-    name: tLocalized("Göksel Pişkin", "Göksel Pişkin"),
-    role: tLocalized("MIKRO LAB - Kurucu Ortak", "MIKRO LAB - Co-founder"),
-    image: profileGoksel,
-    quote: tLocalized(
-      "Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim, mükemmel sonuçlar.",
-      "They solved issues before we even encountered them. Consistent production quality and excellent results every time."
-    ),
-    meta: tLocalized("Tekrarlanabilir üretim ve teknik süreç", "Repeatable production and technical process"),
-  },
-];
+  const testimonials = [
+    {
+      name: tLocalized("Mehmet İşlek", "Mehmet İşlek"),
+      role: tLocalized("ATTELIA - Kurucu Başhekim", "ATTELIA - Founding Chief Physician"),
+      image: profileMehmet,
+      quote: tLocalized(
+        "Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.",
+        "Professionals trust professionals for absolute success. We collaborate with Mash in equipment selection, supply, training, and operation."
+      ),
+      meta: tLocalized("22 yıldır gülümseme tasarlayan klinik", "Clinic designing smiles for 22 years"),
+    },
+    {
+      name: tLocalized("Berkan Öztaş", "Berkan Öztaş"),
+      role: tLocalized("DENTEK - Genel Müd. Yard.", "DENTEK - Asst. General Manager"),
+      image: profileBerkan,
+      quote: tLocalized(
+        "Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.",
+        "Innovative and creative. A long-term, successful partnership across hardware, software, and materials."
+      ),
+      meta: tLocalized("Dijital üretim ve laboratuvar operasyonu", "Digital production and laboratory operation"),
+    },
+    {
+      name: tLocalized("Göksel Pişkin", "Göksel Pişkin"),
+      role: tLocalized("MIKRO LAB - Kurucu Ortak", "MIKRO LAB - Co-founder"),
+      image: profileGoksel,
+      quote: tLocalized(
+        "Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim, mükemmel sonuçlar.",
+        "They solved issues before we even encountered them. Consistent production quality and excellent results every time."
+      ),
+      meta: tLocalized("Tekrarlanabilir üretim ve teknik süreç", "Repeatable production and technical process"),
+    },
+  ];
 
-const referenceEntries = [
-  ...testimonials.map((item) => ({
-    ...item,
-    type: tLocalized("Kullanıcı yorumu", "User Review"),
-  })),
-  {
-    name: tLocalized("Dr. Barbaros Baran", "Dr. Barbaros Baran"),
-    role: tLocalized("Diş Hekimi", "Dentist"),
-    quote: tLocalized(
-      "CRS Composite Resin ile tamamen dijital olarak üretilen All-on-Six geçici restorasyon, düşük ağırlığı ve takip edilebilir klinik iş akışıyla öne çıktı.",
-      "The All-on-Six temporary restoration produced entirely digitally with CRS Composite Resin stood out with its lightweight structure and traceable clinical workflow."
-    ),
-    meta: tLocalized("All-on-Six geçici restorasyon vakası", "All-on-Six provisional restoration case"),
-    type: tLocalized("Klinik vaka", "Clinical Case"),
-  },
-  {
-    name: tLocalized("Yapı Dental", "Yapı Dental"),
-    role: tLocalized("Dental ürün ve teknoloji iş ortağı", "Dental products & technology partner"),
-    quote: tLocalized(
-      "Phrozen cihazları üzerinde 3MASH ortaklığıyla geliştirme, ayarlama ve kalibrasyon süreci yürütüldü; CRS reçineleriyle uyum aynı ekosistemde değerlendirildi.",
-      "Development, calibration, and adjustment processes were carried out on Phrozen devices in partnership with 3MASH; compatibility with CRS resins was verified in the same ecosystem."
-    ),
-    meta: tLocalized("Kalibre edilmiş cihaz ve reçine iş akışı", "Calibrated device & resin workflow"),
-    type: tLocalized("İş ortaklığı", "Partnership"),
-  },
-  {
-    name: tLocalized("Serdent", "serdent"),
-    role: tLocalized("Diş hekimliği ve laboratuvar malzemeleri çözüm ağı", "Dental and lab supplies solution network"),
-    quote: tLocalized(
-      "Klinik ve laboratuvarlara ürün, eğitim ve teknik servis desteği sunan portföy içinde CRS ve 3MASH markaları birlikte konumlanıyor.",
-      "CRS and 3MASH brands are positioned together within a portfolio offering product, training, and technical service support to clinics and laboratories."
-    ),
-    meta: tLocalized("Bölgesel çözüm ve destek ağı", "Regional solution & support network"),
-    type: tLocalized("Çözüm ortağı", "Solution Partner"),
-  },
-  {
-    name: tLocalized("Özel Manas Diş Protez Laboratuvarı", "Ozel Manas Dental Prosthesis Laboratory"),
-    role: tLocalized("Diş protez laboratuvarı", "Dental prosthesis laboratory"),
-    quote: tLocalized(
-      "Laboratuvar üretim paylaşımlarında #3mash, #crs ve #digitaldentistry etiketleriyle dijital dental üretim çalışmalarını öne çıkarıyor.",
-      "Highlights digital dental production work with #3mash, #crs, and #digitaldentistry tags in laboratory production shares."
-    ),
-    meta: tLocalized("Kullanıcı üretimi ve laboratuvar paylaşımı", "User production & laboratory share"),
-    type: tLocalized("Kullanıcı çalışması", "User Showcase"),
-  },
-  {
-    name: tLocalized("Mümin Tuğra", "Mümin Tuğra"),
-    role: tLocalized("Dental laboratuvar içerik üreticisi", "Dental laboratory content creator"),
-    quote: tLocalized(
-      "CRS Model ve dijital dental üretim odağındaki paylaşımlarıyla 3MASH ekosistemine bağlı kullanıcı içeriği havuzunda yer alıyor.",
-      "Included in the 3MASH ecosystem user content pool with focus on CRS Model and digital dental fabrication."
-    ),
-    meta: tLocalized("CRS Model odaklı üretim içeriği", "CRS Model focused production content"),
-    type: tLocalized("Kullanıcı içeriği", "User Content"),
-  },
-  {
-    name: tLocalized("Batuhan Arabacı", "Batuhan Arabacı"),
-    role: tLocalized("Dental sektör profesyoneli", "Dental industry professional"),
-    quote: tLocalized(
-      "Ürünler için sektöre güçlü giriş yapan ve rakip tanımayan bir çizgi vurgusu yapan olumlu tanıtım ifadesiyle öne çıkıyor.",
-      "Stands out with positive commentary highlighting a strong market entrance and unrivaled quality."
-    ),
-    meta: tLocalized("Sektör yorumu", "Industry review"),
-    type: tLocalized("Profesyonel görüş", "Professional Opinion"),
-  },
-];
+  const referenceEntries = [
+    ...testimonials.map((item) => ({
+      ...item,
+      type: tLocalized("Kullanıcı yorumu", "User Review"),
+    })),
+    {
+      name: tLocalized("Dr. Barbaros Baran", "Dr. Barbaros Baran"),
+      role: tLocalized("Diş Hekimi", "Dentist"),
+      quote: tLocalized(
+        "CRS Composite Resin ile tamamen dijital olarak üretilen All-on-Six geçici restorasyon, düşük ağırlığı ve takip edilebilir klinik iş akışıyla öne çıktı.",
+        "The All-on-Six temporary restoration produced entirely digitally with CRS Composite Resin stood out with its lightweight structure and traceable clinical workflow."
+      ),
+      meta: tLocalized("All-on-Six geçici restorasyon vakası", "All-on-Six provisional restoration case"),
+      type: tLocalized("Klinik vaka", "Clinical Case"),
+    },
+    {
+      name: tLocalized("Yapı Dental", "Yapı Dental"),
+      role: tLocalized("Dental ürün ve teknoloji iş ortağı", "Dental products & technology partner"),
+      quote: tLocalized(
+        "Phrozen cihazları üzerinde 3MASH ortaklığıyla geliştirme, ayarlama ve kalibrasyon süreci yürütüldü; CRS reçineleriyle uyum aynı ekosistemde değerlendirildi.",
+        "Development, calibration, and adjustment processes were carried out on Phrozen devices in partnership with 3MASH; compatibility with CRS resins was verified in the same ecosystem."
+      ),
+      meta: tLocalized("Kalibre edilmiş cihaz ve reçine iş akışı", "Calibrated device & resin workflow"),
+      type: tLocalized("İş ortaklığı", "Partnership"),
+    },
+    {
+      name: tLocalized("Serdent", "serdent"),
+      role: tLocalized("Diş hekimliği ve laboratuvar malzemeleri çözüm ağı", "Dental and lab supplies solution network"),
+      quote: tLocalized(
+        "Klinik ve laboratuvarlara ürün, eğitim ve teknik servis desteği sunan portföy içinde CRS ve 3MASH markaları birlikte konumlanıyor.",
+        "CRS and 3MASH brands are positioned together within a portfolio offering product, training, and technical service support to clinics and laboratories."
+      ),
+      meta: tLocalized("Bölgesel çözüm ve destek ağı", "Regional solution & support network"),
+      type: tLocalized("Çözüm ortağı", "Solution Partner"),
+    },
+    {
+      name: tLocalized("Özel Manas Diş Protez Laboratuvarı", "Ozel Manas Dental Prosthesis Laboratory"),
+      role: tLocalized("Diş protez laboratuvarı", "Dental prosthesis laboratory"),
+      quote: tLocalized(
+        "Laboratuvar üretim paylaşımlarında #3mash, #crs ve #digitaldentistry etiketleriyle dijital dental üretim çalışmalarını öne çıkarıyor.",
+        "Highlights digital dental production work with #3mash, #crs, and #digitaldentistry tags in laboratory production shares."
+      ),
+      meta: tLocalized("Kullanıcı üretimi ve laboratuvar paylaşımı", "User production & laboratory share"),
+      type: tLocalized("Kullanıcı çalışması", "User Showcase"),
+    },
+    {
+      name: tLocalized("Mümin Tuğra", "Mümin Tuğra"),
+      role: tLocalized("Dental laboratuvar içerik üreticisi", "Dental laboratory content creator"),
+      quote: tLocalized(
+        "CRS Model ve dijital dental üretim odağındaki paylaşımlarıyla 3MASH ekosistemine bağlı kullanıcı içeriği havuzunda yer alıyor.",
+        "Included in the 3MASH ecosystem user content pool with focus on CRS Model and digital dental fabrication."
+      ),
+      meta: tLocalized("CRS Model odaklı üretim içeriği", "CRS Model focused production content"),
+      type: tLocalized("Kullanıcı içeriği", "User Content"),
+    },
+    {
+      name: tLocalized("Batuhan Arabacı", "Batuhan Arabacı"),
+      role: tLocalized("Dental sektör profesyoneli", "Dental industry professional"),
+      quote: tLocalized(
+        "Ürünler için sektöre güçlü giriş yapan ve rakip tanımayan bir çizgi vurgusu yapan olumlu tanıtım ifadesiyle öne çıkıyor.",
+        "Stands out with positive commentary highlighting a strong market entrance and unrivaled quality."
+      ),
+      meta: tLocalized("Sektör yorumu", "Industry review"),
+      type: tLocalized("Profesyonel görüş", "Professional Opinion"),
+    },
+  ];
 
-const proofStats = [
-  { value: "580+", label: tLocalized("laboratuvar ve klinik", "laboratories and clinics") },
-  { value: String(referenceEntries.length), label: tLocalized("referans kaydı", "reference records") },
-  { value: "A-Z", label: tLocalized("kurulumdan desteğe", "from installation to support") },
-];
+  const proofStats = [
+    { value: "580+", label: tLocalized("laboratuvar ve klinik", "laboratories and clinics") },
+    { value: String(referenceEntries.length), label: tLocalized("referans kaydı", "reference records") },
+    { value: "A-Z", label: tLocalized("kurulumdan desteğe", "from installation to support") },
+  ];
 
-const proofCategories = [
-  tLocalized("Klinik vaka", "Clinical Case"),
-  tLocalized("Kullanıcı yorumu", "User Review"),
-  tLocalized("İş ortaklığı", "Partnership"),
-  tLocalized("Laboratuvar paylaşımı", "Lab Showcase"),
-];
+  const proofCategories = [
+    tLocalized("Klinik vaka", "Clinical Case"),
+    tLocalized("Kullanıcı yorumu", "User Review"),
+    tLocalized("İş ortaklığı", "Partnership"),
+    tLocalized("Laboratuvar paylaşımı", "Lab Showcase"),
+  ];
 
-const partnerCards = [
-  {
-    name: tLocalized("Yapı Dental", "Yapı Dental"),
-    title: tLocalized("Kalibre edilmiş dental üretim ekosistemi", "Calibrated dental production ecosystem"),
-    text: tLocalized(
-      "Phrozen cihazları, CRS Dental reçineleri ve 3MASH teknik birikimi aynı üretim hattında buluşur. Cihaz seçimi, ışık dağılımı, Z ekseni stabilitesi ve reçine parametreleri birlikte değerlendirilir.",
-      "Phrozen hardware, CRS Dental resins, and 3MASH technical expertise unite on the same line. Device selection, light uniformity, Z-axis stability, and resin parameters are evaluated together."
-    ),
-    image: machineP16L,
-  },
-  {
-    name: tLocalized("Serdent", "serdent"),
-    title: tLocalized("Bölgesel çözüm ve teknik servis ağı", "Regional solution & technical service network"),
-    text: tLocalized(
-      "Klinik ve laboratuvarlara ürün, eğitim ve teknik servis desteği sunan çözüm ağı içinde CRS ve 3MASH markaları birlikte konumlanır.",
-      "CRS and 3MASH brands are positioned together within a solution network delivering product, training, and service support to clinics and labs."
-    ),
-    image: resinBottle,
-  },
-];
+  const partnerCards = [
+    {
+      name: tLocalized("Yapı Dental", "Yapı Dental"),
+      title: tLocalized("Kalibre edilmiş dental üretim ekosistemi", "Calibrated dental production ecosystem"),
+      text: tLocalized(
+        "Phrozen cihazları, CRS Dental reçineleri ve 3MASH teknik birikimi aynı üretim hattında buluşur. Cihaz seçimi, ışık dağılımı, Z ekseni stabilitesi ve reçine parametreleri birlikte değerlendirilir.",
+        "Phrozen hardware, CRS Dental resins, and 3MASH technical expertise unite on the same line. Device selection, light uniformity, Z-axis stability, and resin parameters are evaluated together."
+      ),
+      image: machineP16L,
+    },
+    {
+      name: tLocalized("Serdent", "serdent"),
+      title: tLocalized("Bölgesel çözüm ve teknik servis ağı", "Regional solution & technical service network"),
+      text: tLocalized(
+        "Klinik ve laboratuvarlara ürün, eğitim ve teknik servis desteği sunan çözüm ağı içinde CRS ve 3MASH markaları birlikte konumlanır.",
+        "CRS and 3MASH brands are positioned together within a solution network delivering product, training, and service support to clinics and labs."
+      ),
+      image: resinBottle,
+    },
+  ];
 
-const workflowCards = [
-  {
-    title: tLocalized("Cihaz", "Hardware"),
-    text: tLocalized(
-      "3D yazıcı, yıkama-kürleme ve tarayıcı seçimi üretim hedefiyle birlikte planlanır.",
-      "3D printer, wash-cure, and scanner selections are planned alongside production goals."
-    ),
-    image: p16lPrimaryImage,
-  },
-  {
-    title: tLocalized("Malzeme", "Material"),
-    text: tLocalized(
-      "CRS reçine hattı; model, kompozit, tray ve restoratif uygulamalarda doğru parametreyle çalışır.",
-      "The CRS resin line operates with validated parameters for model, composite, tray, and restorative applications."
-    ),
-    image: crsModelBottleImage,
-  },
-  {
-    title: tLocalized("Destek", "Support"),
-    text: tLocalized(
-      "Kurulum, eğitim, reçine uyumlama ve satış sonrası teknik destek aynı ekip tarafından takip edilir.",
-      "Installation, training, resin profiling, and after-sales support are handled by the same team."
-    ),
-    image: machineUW02,
-  },
-];
+  const workflowCards = [
+    {
+      title: tLocalized("Cihaz", "Hardware"),
+      text: tLocalized(
+        "3D yazıcı, yıkama-kürleme ve tarayıcı seçimi üretim hedefiyle birlikte planlanır.",
+        "3D printer, wash-cure, and scanner selections are planned alongside production goals."
+      ),
+      image: p16lPrimaryImage,
+    },
+    {
+      title: tLocalized("Malzeme", "Material"),
+      text: tLocalized(
+        "CRS reçine hattı; model, kompozit, tray ve restoratif uygulamalarda doğru parametreyle çalışır.",
+        "The CRS resin line operates with validated parameters for model, composite, tray, and restorative applications."
+      ),
+      image: crsModelBottleImage,
+    },
+    {
+      title: tLocalized("Destek", "Support"),
+      text: tLocalized(
+        "Kurulum, eğitim, reçine uyumlama ve satış sonrası teknik destek aynı ekip tarafından takip edilir.",
+        "Installation, training, resin profiling, and after-sales support are handled by the same team."
+      ),
+      image: machineUW02,
+    },
+  ];
 
-const storyPoints = [
-  tLocalized("Üst ve alt All-on-Six geçici restorasyon üretimi", "Upper and lower All-on-Six provisional restoration fabrication"),
-  tLocalized("Metal bar üzerinde 3D baskılı kompozit köprü yaklaşımı", "3D-printed composite bridge on metal bar framework"),
-  tLocalized("Düşük ağırlık, takip edilebilir dijital iş akışı ve klinik adaptasyon odağı", "Low weight, traceable digital workflow, and clinical adaptation focus"),
-];
+  const storyPoints = [
+    tLocalized("Üst ve alt All-on-Six geçici restorasyon üretimi", "Upper and lower All-on-Six provisional restoration fabrication"),
+    tLocalized("Metal bar üzerinde 3D baskılı kompozit köprü yaklaşımı", "3D-printed composite bridge on metal bar framework"),
+    tLocalized("Düşük ağırlık, takip edilebilir dijital iş akışı ve klinik adaptasyon odağı", "Low weight, traceable digital workflow, and clinical adaptation focus"),
+  ];
+
+  return {
+    defaultDescription,
+    testimonials,
+    referenceEntries,
+    proofStats,
+    proofCategories,
+    partnerCards,
+    workflowCards,
+    storyPoints,
+  };
+}
 
 const logos = [trustLogo1, trustLogo2, trustLogo3, trustLogo4, trustLogo5];
 
@@ -246,6 +259,16 @@ function ActionLink({
 }
 
 export function ThreeMashReferences(props: Props) {
+  const {
+    defaultDescription,
+    testimonials,
+    referenceEntries,
+    proofStats,
+    proofCategories,
+    partnerCards,
+    workflowCards,
+    storyPoints,
+  } = getReferenceData();
   const maxWidth = numberValue(props.maxWidth, 1220);
   const paddingTop = numberValue(props.paddingTop, 84);
   const paddingBottom = numberValue(props.paddingBottom, 92);

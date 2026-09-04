@@ -1,0 +1,118 @@
+- generic [ref=f24e3]:
+  - generic [ref=f24e6]:
+    - generic [ref=f24e8]:
+      - generic [ref=f24e9]: ⚡ Don't miss out.
+      - generic [ref=f24e10]: Calculate your clinic's silent loss in 30 seconds; see how to reduce it with free analysis.
+      - link "Calculate now" [ref=f24e11] [cursor=pointer]:
+        - /url: "#hesap"
+      - 'button "Language: English" [ref=f24e13] [cursor=pointer]':
+        - generic [ref=f24e20]: EN
+    - generic [ref=f24e24]:
+      - link "mash" [ref=f24e25] [cursor=pointer]:
+        - /url: /en
+        - img "3mash" [ref=f24e27]
+      - navigation "Menu" [ref=f24e28]:
+        - list [ref=f24e29]:
+          - listitem [ref=f24e30]:
+            - button "Products" [ref=f24e31] [cursor=pointer]
+          - listitem [ref=f24e35]:
+            - button "Why 3mash?" [ref=f24e36] [cursor=pointer]
+          - listitem [ref=f24e40]:
+            - link "References" [ref=f24e41] [cursor=pointer]:
+              - /url: /en#guven
+          - listitem [ref=f24e43]:
+            - link "Academy" [ref=f24e44] [cursor=pointer]:
+              - /url: /en/pages/mash-academy
+      - generic [ref=f24e46]:
+        - button "Ara" [ref=f24e48] [cursor=pointer]
+        - generic [ref=f24e53]:
+          - button [ref=f24e54] [cursor=pointer]
+          - text: → → → →
+        - button [ref=f24e60] [cursor=pointer]
+  - generic [ref=f24e70]:
+    - generic [ref=f24e71]:
+      - generic [ref=f24e72]: HESAP
+      - heading "Log in to your 3mash account." [level=1] [ref=f24e73]
+      - paragraph [ref=f24e74]: Manage your orders, favorites, and account information from one place.
+      - text: 3MASH
+    - generic [ref=f24e75]:
+      - button "Member Login" [ref=f24e76] [cursor=pointer]
+      - button "Register" [ref=f24e77] [cursor=pointer]
+    - generic [ref=f24e78]:
+      - generic [ref=f24e79]: "* Email"
+      - textbox "* Email" [ref=f24e80]
+    - generic [ref=f24e81]:
+      - generic [ref=f24e82]: "* Password"
+      - textbox "* Password" [ref=f24e83]
+    - button "Member Login" [ref=f24e84] [cursor=pointer]
+    - link "Forgot My Password" [ref=f24e85] [cursor=pointer]:
+      - /url: /account/forgot-password
+    - generic [ref=f24e86]:
+      - generic [ref=f24e87]: Don't have an account yet?
+      - button "Create Account" [ref=f24e88] [cursor=pointer]
+  - contentinfo [ref=f24e93]:
+    - generic [ref=f24e94]:
+      - generic [ref=f24e95]:
+        - generic [ref=f24e96]:
+          - link [ref=f24e97] [cursor=pointer]:
+            - /url: /en
+            - img "3mash" [ref=f24e98]
+          - paragraph [ref=f24e99]: "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together."
+        - generic [ref=f24e100]:
+          - paragraph [ref=f24e101]: PRODUCTS
+          - link "3D Printers" [ref=f24e102] [cursor=pointer]:
+            - /url: /en/3d-yazicilar
+          - link "Dental Resins" [ref=f24e103] [cursor=pointer]:
+            - /url: /en/dental-3d-yazici-recineleri
+          - link "Wash & Cure" [ref=f24e104] [cursor=pointer]:
+            - /url: /en/yikama-kurleme-cihazlari
+          - link "Desktop Scanners" [ref=f24e105] [cursor=pointer]:
+            - /url: /en/masasustu-tarayicilar
+          - link "Zirconia Blocks" [ref=f24e106] [cursor=pointer]:
+            - /url: /en/zirkon-bloklar
+          - link "Dental Furnaces" [ref=f24e107] [cursor=pointer]:
+            - /url: /en/dental-firinlar
+        - generic [ref=f24e108]:
+          - paragraph [ref=f24e109]: COMPANY
+          - link "About Us" [ref=f24e110] [cursor=pointer]:
+            - /url: /en/pages/about-us
+          - link "Mash Academy" [ref=f24e111] [cursor=pointer]:
+            - /url: /en/pages/mash-academy
+          - link "Blog" [ref=f24e112] [cursor=pointer]:
+            - /url: /en/blog
+          - link "FAQ" [ref=f24e113] [cursor=pointer]:
+            - /url: /en/pages/sss
+        - generic [ref=f24e114]:
+          - text: CONTACT
+          - paragraph
+          - link "info@3mash.com" [ref=f24e115] [cursor=pointer]:
+            - /url: mailto:info@3mash.com
+          - link "Antalya Teknokent, Konyaaltı" [ref=f24e116] [cursor=pointer]:
+            - /url: https://www.google.com/maps/search/?api=1&query=Antalya%20Teknokent%2C%20Konyaalt%C4%B1
+          - generic [ref=f24e117]:
+            - link "Facebook" [ref=f24e118] [cursor=pointer]:
+              - /url: https://www.facebook.com/3mashsocial/
+            - link "Instagram" [ref=f24e121] [cursor=pointer]:
+              - /url: https://instagram.com/3mashsocial
+            - link "YouTube" [ref=f24e126] [cursor=pointer]:
+              - /url: https://www.youtube.com/@3mashsocial
+            - link "LinkedIn" [ref=f24e130] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/3mash
+          - generic "Payment methods" [ref=f24e133]:
+            - img "Visa" [ref=f24e134]: VISA
+            - img "Maestro" [ref=f24e135]
+            - img "Mastercard" [ref=f24e138]
+      - generic [ref=f24e141]:
+        - generic [ref=f24e142]: © 2026 3MASH Technology Inc. All rights reserved.
+        - generic [ref=f24e143]:
+          - link "Privacy & KVKK" [ref=f24e144] [cursor=pointer]:
+            - /url: /en/pages/gizlilik-politikasi-ve-kvkk
+          - generic [ref=f24e145]: ·
+          - link "Cookie Settings" [ref=f24e146] [cursor=pointer]:
+            - /url: "#cookie-settings"
+          - generic [ref=f24e147]: ·
+          - link "Return & Warranty" [ref=f24e148] [cursor=pointer]:
+            - /url: /en/pages/iade-ve-garanti
+          - generic [ref=f24e149]: ·
+          - link "Distance Selling" [ref=f24e150] [cursor=pointer]:
+            - /url: /en/pages/mesafeli-satis-sozlesmesi

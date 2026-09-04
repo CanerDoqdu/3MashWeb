@@ -633,7 +633,7 @@ export function productAnnouncementPayload(data: ProductDetailTemplateData): Pro
     highlightText: announcement.strongText,
     text: announcement.longText || "",
     ctaText: announcement.ctaText,
-    href: announcement.ctaHref,
+    href: announcement.ctaHref === "#satinal" ? "#uygulama" : announcement.ctaHref,
   };
 }
 

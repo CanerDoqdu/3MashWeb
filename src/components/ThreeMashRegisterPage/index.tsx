@@ -123,6 +123,11 @@ export function ThreeMashRegisterPage(props: Props) {
       );
       if (result.isSuccess) {
         setStatus("success");
+        if (typeof window !== "undefined") {
+          try {
+            sessionStorage.removeItem("tm_studio_logged_out");
+          } catch {}
+        }
         setTimeout(() => Router.navigate("/account"), 350);
         return;
       }

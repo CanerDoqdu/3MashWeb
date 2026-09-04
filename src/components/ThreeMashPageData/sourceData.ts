@@ -1,7 +1,8 @@
 import { tLocalized } from "../../utils/i18n";
 export type LegalPageKey = 'kvkk' | 'iade' | 'mesafeli' | 'ticari' | 'uyelik' | 'cerez';
 
-export const legalPages = {
+export function getLegalPages() {
+  return {
   "kvkk": {
     "title": tLocalized("Gizlilik Politikası ve KVKK Aydınlatma Metni", "Privacy Policy and KVKK Clarification Text"),
     "description": tLocalized(
@@ -71,9 +72,11 @@ export const legalPages = {
       "<h2>COOKIE POLICY</h2><p><b>3 MASH TECHNOLOGY INC.</b></p><p>Last Updated: September 1, 2026</p><p>As 3 MASH TECHNOLOGY INC. (“3 MASH”), we place great importance on the privacy and personal data protection of visitors (“User” or “Visitor”) to our website www.3mash.com (“Site”). This Cookie Policy has been prepared to inform you about the types of cookies used on our Site, their purposes, third-party tracking tools, and how you can manage your cookie preferences in compliance with GDPR, KVKK (Law No. 6698), and relevant privacy regulations.</p><h3>1. What is a Cookie?</h3><p>Cookies are small text files stored on your computer, tablet, or mobile device through your browser when you visit a website. Cookies enable secure and efficient website operation, personalize user experience, remember preferences, and analyze visitor interactions.</p><h3>2. Cookie Categories Used and Third-Party Trackers</h3><p><b>a) Essential / Technical Cookies (Strictly Necessary):</b> Required for core website functions, session management, shopping cart operations, language preference (3mash_locale), and security validations. These cookies do not require consent as they are necessary for the website to function.</p><p><b>b) Performance and Analytics Cookies:</b> Help us anonymously and aggregately analyze how visitors interact with the site (visited pages, dwell time, click patterns), identify technical errors, and optimize performance.<br>• <b>Zoho PageSense (cookie: zfccn):</b> Used for page optimization, heatmaps, and A/B testing. Loaded only upon your explicit consent.</p><p><b>c) Marketing and Targeting Cookies:</b> Used to deliver personalized product campaigns and advertisements tailored to your interests, and to measure advertising effectiveness.<br>• <b>Meta Pixel / Facebook (cookies: fr, _fbp):</b> Used for conversion tracking and targeted advertising on Meta platforms. Loaded and executed strictly upon your explicit consent.</p><p><b>d) Functional Cookies:</b> Used to provide enhanced features such as live support and visitor engagement.<br>• <b>Zoho SalesIQ:</b> Used for customer support chat and relationship management. Operates based on your consent preferences.</p><h3>3. How Can You Manage Cookie Preferences and Consent?</h3><p>You can customize non-essential cookie categories (Analytics, Marketing, Functional), accept all, or reject all via the Cookie Preferences Banner displayed on your first visit. You can modify or withdraw your consent at any time by clicking the <b>“Cookie Settings”</b> link in the website footer.</p><p>Additionally, you can manage, delete, or block cookies at any time through your browser settings:</p><p>• <b>Google Chrome:</b> Settings &gt; Privacy and Security &gt; Cookies and Other Site Data</p><p>• <b>Mozilla Firefox:</b> Preferences &gt; Privacy &amp; Security &gt; Cookies and Site Data</p><p>• <b>Apple Safari:</b> Preferences &gt; Privacy &gt; Manage Website Data</p><p>• <b>Microsoft Edge:</b> Settings &gt; Cookies and Site Permissions</p><h3>4. Your Rights Under GDPR &amp; KVKK</h3><p>Under GDPR and KVKK Article 11, you have the right to learn whether your personal data is processed, request information, request correction or erasure, and object to unlawful processing. You may submit your requests to <b>info@3mash.com</b>.</p>"
     )
   }
-} as const;
+  };
+}
 
-export const faqSections = [
+export function getFaqSections() {
+  return [
   {
     "title": tLocalized("3D Yazıcı Reçineleri", "3D Printer Resins"),
     "questions": [
@@ -135,10 +138,11 @@ export const faqSections = [
         "answerHtml": tLocalized("<p>Tasarım programları ile ilgili ücretli eğitim vermiyoruz. Fakat düzenli olarak yaptığımız Webinar’lar ile bizi takip eden bütün teknisyen arkadaşlarımıza tasarım programları ile ilgili bilgilerimizi aktarıyoruz.</p>", "<p>We do not offer paid training on design software. However, through the webinars we hold regularly, we share our knowledge of design software with all the technicians who follow us.</p>")
       }
     ]
-  }
-] as const;
+  }];
+}
 
-export const aboutPage = {
+export function getAboutPage() {
+  return {
   "title": tLocalized("Hakkımızda", "About Us"),
   "description": tLocalized(
     "Mash, her biri kendi alanında uzman bir grup tutkulu insanın, kişisel kariyerlerindeki hızlı yükselişin getirdiği konfor alanlarından çıkarak, ülkelerinin ilerlemesine ve insanlığın ortak mirasına azami katkıda bulunmak amacıyla başlattıkları bir oluşumdur. Mevcut durumda, ağız ve diş sağlığı, kuyumculuk, odyoloji sektörleri iyileştirmeyi ve dönüştürmeyi arzuladığımız hizmet alanlarıdır.",
@@ -202,4 +206,23 @@ export const aboutPage = {
       "imageAlt": "ilham-verici-logo"
     }
   ]
-} as const;
+  } as const;
+}
+
+export const legalPages = new Proxy({} as ReturnType<typeof getLegalPages>, {
+  get(_target, prop) {
+    return (getLegalPages() as any)[prop];
+  },
+});
+
+export const faqSections = new Proxy([] as unknown as ReturnType<typeof getFaqSections>, {
+  get(_target, prop) {
+    return (getFaqSections() as any)[prop];
+  },
+});
+
+export const aboutPage = new Proxy({} as ReturnType<typeof getAboutPage>, {
+  get(_target, prop) {
+    return (getAboutPage() as any)[prop];
+  },
+});

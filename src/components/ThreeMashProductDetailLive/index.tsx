@@ -42,10 +42,12 @@ import ThreeMashProductDetailTemplate, {
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { publishSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
-import { isEnglishLocale, isTurkishText, tLocalized } from "../../utils/i18n";
+import { isEnglishLocale, isTurkishText, localizedHref, tLocalized } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
 import { Props } from "./types";
+import { isCustomerAuthenticated } from "../../utils/auth";
+import { safeRedirect } from "../../utils/safeRedirect";
 
 type PlainObject = Record<string, unknown>;
 type PreviewSelection = Record<string, string>;
@@ -1339,6 +1341,14 @@ export function ThreeMashProductDetailLive(props: Props) {
 
 async function handleAddToCart() {
   if (!product || !variant || !isInStock || isAdding) return;
+
+  if (isCustomerAuthenticated() !== "authenticated") {
+    setMessage(tLocalized("Lütfen giriş yapın.", "Please sign in."));
+    window.setTimeout(() => {
+      window.location.href = safeRedirect(localizedHref("/account/login"));
+    }, 250);
+    return;
+  }
 
   if (!hasProductValidOptionValues(product)) {
     setMessage(

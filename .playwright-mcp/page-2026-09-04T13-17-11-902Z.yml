@@ -1,0 +1,118 @@
+- generic [ref=f23e3]:
+  - generic [ref=f23e6]:
+    - generic [ref=f23e8]:
+      - generic [ref=f23e9]: ⚡ Fırsatı kaçırmayın.
+      - generic [ref=f23e10]: Kliniğinizin sessiz kaybını 30 saniyede hesaplayın; ücretsiz analizle nasıl azaltabileceğinizi birlikte görelim.
+      - link "Hemen hesaplayın" [ref=f23e11] [cursor=pointer]:
+        - /url: "#hesap"
+      - 'button "Dil: Türkçe" [ref=f23e13] [cursor=pointer]':
+        - generic [ref=f23e19]: TR
+    - generic [ref=f23e23]:
+      - link "mash" [ref=f23e24] [cursor=pointer]:
+        - /url: /
+        - img "3mash" [ref=f23e26]
+      - navigation "Menü" [ref=f23e27]:
+        - list [ref=f23e28]:
+          - listitem [ref=f23e29]:
+            - button "Ürünler" [ref=f23e30] [cursor=pointer]
+          - listitem [ref=f23e34]:
+            - button "Neden 3mash?" [ref=f23e35] [cursor=pointer]
+          - listitem [ref=f23e39]:
+            - link "Referanslar" [ref=f23e40] [cursor=pointer]:
+              - /url: /#guven
+          - listitem [ref=f23e42]:
+            - link "Academy" [ref=f23e43] [cursor=pointer]:
+              - /url: /pages/mash-academy
+      - generic [ref=f23e45]:
+        - button "Ara" [ref=f23e47] [cursor=pointer]
+        - generic [ref=f23e52]:
+          - button [ref=f23e53] [cursor=pointer]
+          - text: → → → →
+        - button [ref=f23e59] [cursor=pointer]
+  - generic [ref=f23e69]:
+    - generic [ref=f23e70]:
+      - generic [ref=f23e71]: HESAP
+      - heading "3mash hesabınıza giriş yapın." [level=1] [ref=f23e72]
+      - paragraph [ref=f23e73]: Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.
+      - text: 3MASH
+    - generic [ref=f23e74]:
+      - button "Üye Girişi" [ref=f23e75] [cursor=pointer]
+      - button "Üye Ol" [ref=f23e76] [cursor=pointer]
+    - generic [ref=f23e77]:
+      - generic [ref=f23e78]: "* Email"
+      - textbox "* Email" [ref=f23e79]
+    - generic [ref=f23e80]:
+      - generic [ref=f23e81]: "* Şifre"
+      - textbox "* Şifre" [ref=f23e82]
+    - button "Üye Girişi" [ref=f23e83] [cursor=pointer]
+    - link "Parolamı Unuttum" [ref=f23e84] [cursor=pointer]:
+      - /url: /account/forgot-password
+    - generic [ref=f23e85]:
+      - generic [ref=f23e86]: Henüz hesabınız yok mu?
+      - button "Hesap oluştur" [ref=f23e87] [cursor=pointer]
+  - contentinfo [ref=f23e92]:
+    - generic [ref=f23e93]:
+      - generic [ref=f23e94]:
+        - generic [ref=f23e95]:
+          - link [ref=f23e96] [cursor=pointer]:
+            - /url: /
+            - img "3mash" [ref=f23e97]
+          - paragraph [ref=f23e98]: "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada."
+        - generic [ref=f23e99]:
+          - paragraph [ref=f23e100]: Ürünler
+          - link "3D Yazıcılar" [ref=f23e101] [cursor=pointer]:
+            - /url: /3d-yazicilar
+          - link "Dental Reçineler" [ref=f23e102] [cursor=pointer]:
+            - /url: /dental-3d-yazici-recineleri
+          - link "Yıkama & Kürleme" [ref=f23e103] [cursor=pointer]:
+            - /url: /yikama-kurleme-cihazlari
+          - link "Masaüstü Tarayıcılar" [ref=f23e104] [cursor=pointer]:
+            - /url: /masasustu-tarayicilar
+          - link "Zirkon Bloklar" [ref=f23e105] [cursor=pointer]:
+            - /url: /zirkon-bloklar
+          - link "Dental Fırınlar" [ref=f23e106] [cursor=pointer]:
+            - /url: /dental-firinlar
+        - generic [ref=f23e107]:
+          - paragraph [ref=f23e108]: ŞİRKET
+          - link "Hakkımızda" [ref=f23e109] [cursor=pointer]:
+            - /url: /pages/about-us
+          - link "Mash Academy" [ref=f23e110] [cursor=pointer]:
+            - /url: /pages/mash-academy
+          - link "Blog" [ref=f23e111] [cursor=pointer]:
+            - /url: /blog
+          - link "SSS" [ref=f23e112] [cursor=pointer]:
+            - /url: /pages/sss
+        - generic [ref=f23e113]:
+          - text: İLETİŞİM
+          - paragraph
+          - link "info@3mash.com" [ref=f23e114] [cursor=pointer]:
+            - /url: mailto:info@3mash.com
+          - link "Antalya Teknokent, Konyaaltı" [ref=f23e115] [cursor=pointer]:
+            - /url: https://www.google.com/maps/search/?api=1&query=Antalya%20Teknokent%2C%20Konyaalt%C4%B1
+          - generic [ref=f23e116]:
+            - link "Facebook" [ref=f23e117] [cursor=pointer]:
+              - /url: https://www.facebook.com/3mashsocial/
+            - link "Instagram" [ref=f23e120] [cursor=pointer]:
+              - /url: https://instagram.com/3mashsocial
+            - link "YouTube" [ref=f23e125] [cursor=pointer]:
+              - /url: https://www.youtube.com/@3mashsocial
+            - link "LinkedIn" [ref=f23e129] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/3mash
+          - generic "Ödeme yöntemleri" [ref=f23e132]:
+            - img "Visa" [ref=f23e133]: VISA
+            - img "Maestro" [ref=f23e134]
+            - img "Mastercard" [ref=f23e137]
+      - generic [ref=f23e140]:
+        - generic [ref=f23e141]: © 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.
+        - generic [ref=f23e142]:
+          - link "KVKK" [ref=f23e143] [cursor=pointer]:
+            - /url: /pages/gizlilik-politikasi-ve-kvkk
+          - generic [ref=f23e144]: ·
+          - link "Çerez Tercihleri" [ref=f23e145] [cursor=pointer]:
+            - /url: "#cerez-ayarlari"
+          - generic [ref=f23e146]: ·
+          - link "İade & Garanti" [ref=f23e147] [cursor=pointer]:
+            - /url: /pages/iade-ve-garanti
+          - generic [ref=f23e148]: ·
+          - link "Mesafeli Satış" [ref=f23e149] [cursor=pointer]:
+            - /url: /pages/mesafeli-satis-sozlesmesi

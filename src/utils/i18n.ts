@@ -84,7 +84,25 @@ export function getCurrentLocale(): Locale {
     // -------------------------------------------------------------
     // 2. Client-Side (Browser)
     // -------------------------------------------------------------
-    // Priority 1: URL Path (authoritative because ikas routes /en/ for English)
+    // The rendered document is authoritative after client-side auth redirects.
+    // A redirect can briefly retain the previous URL while the storefront DOM
+    // has already been rendered in the active locale.
+    try {
+      const documentLocale = (
+        document.documentElement.getAttribute("data-3mash-locale") ||
+        document.documentElement.lang
+      ).toLowerCase();
+      if (documentLocale.startsWith("en")) {
+        _clientCachedLocale = "en";
+        return "en";
+      }
+      if (documentLocale.startsWith("tr")) {
+        _clientCachedLocale = "tr";
+        return "tr";
+      }
+    } catch { }
+
+    // Fall back to the URL when the document has no locale marker yet.
     const pathname = window.location.pathname.toLowerCase();
     if (pathname === "/en" || pathname.startsWith("/en/")) {
       _clientCachedLocale = "en";

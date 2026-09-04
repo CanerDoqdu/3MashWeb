@@ -51,7 +51,7 @@ const academyPageHref = "/pages/mash-academy";
 const consultationWhatsappHref =
   "https://wa.me/905314326577?text=Merhaba%2C%20%C3%BCcretsiz%20dan%C4%B1%C5%9Fmanl%C4%B1k%20almak%20istiyorum";
 
-const solutionSetupHtml = tLocalized("<div class=\"tmr-products-setup\">Ürünler kısa süre içinde burada listelenecek.</div>", "<div class=\"tmr-products-setup\">Products will be listed here shortly.</div>");
+const solutionSetupHtml = () => tLocalized("<div class=\"tmr-products-setup\">Ürünler kısa süre içinde burada listelenecek.</div>", "<div class=\"tmr-products-setup\">Products will be listed here shortly.</div>");
 
 const legacyThemeCategoryNames = new Set([
   "clothing",
@@ -72,7 +72,7 @@ export const defaultSolutionHtml = `
   <div class="tmr-wrap">
     <div class="tmr-index"><span class="tmr-index-number">03</span><span class="tmr-index-text">Çözüm · Üretim Ekosistemi</span><span class="tmr-index-line"></span></div>
     <div class="tmr-head"><h2>Hassasiyet cihazdan çıkmaz; <span>uyumdan çıkar.</span></h2><div class="tmr-side">Kuronun oturması üç şeyin senkronuna bağlı: <b>yazıcı, reçine, kürleme.</b> Biz üçünü birlikte kalibre edip saha birikimiyle teslim ediyoruz — elinizdeki başka marka cihaza bile.</div></div>
-    ${solutionSetupHtml}
+    <div class="tmr-products-setup">Ürünler kısa süre içinde burada listelenecek.</div>
   </div>
 </section>`;
 
@@ -87,7 +87,16 @@ export const defaultCuringHtml = `
   </div>
 </section>`;
 
-export const defaultRoiHtml = tLocalized("<div class=\"tmr-roi\"><div class=\"tmr-wrap\"><div class=\"tmr-roi-num\"><span>YATIRIMIN GERİ DÖNÜŞÜ</span><b>&lt; 6 ay</b></div><p>3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b></p><a class=\"tmr-btn\" href=\"/\">Kliniğiniz için hesaplayalım →</a></div></div>", "<div class=\"tmr-roi\"><div class=\"tmr-wrap\"><div class=\"tmr-roi-num\"><span>RETURN ON INVESTMENT</span><b>&lt; 6 months</b></div><p>A clinic that switches to the 3mash ecosystem has the potential to recover its investment in <b>less than 6 months</b>. After that, this efficiency continues every year: <b>up to $72–162K in potential annual savings.</b></p><a class=\"tmr-btn\" href=\"/\">Let's calculate it for your clinic →</a></div></div>");
+export function getDefaultRoiHtml() {
+  return tLocalized("<div class=\"tmr-roi\"><div class=\"tmr-wrap\"><div class=\"tmr-roi-num\"><span>YATIRIMIN GERİ DÖNÜŞÜ</span><b>&lt; 6 ay</b></div><p>3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b></p><a class=\"tmr-btn\" href=\"/\">Kliniğiniz için hesaplayalım →</a></div></div>", "<div class=\"tmr-roi\"><div class=\"tmr-wrap\"><div class=\"tmr-roi-num\"><span>RETURN ON INVESTMENT</span><b>&lt; 6 months</b></div><p>A clinic that switches to the 3mash ecosystem has the potential to recover its investment in <b>less than 6 months</b>. After that, this efficiency continues every year: <b>up to $72–162K in potential annual savings.</b></p><a class=\"tmr-btn\" href=\"/\">Let's calculate it for your clinic →</a></div></div>");
+}
+
+export const defaultRoiHtml = new Proxy({} as { toString(): string }, {
+  get(_target, prop) {
+    const val = getDefaultRoiHtml();
+    return typeof (val as any)[prop] === "function" ? (val as any)[prop].bind(val) : (val as any)[prop];
+  },
+});
 
 export const defaultEcosystemHtml = `<section id="ekosistem" class="tmr-section"><div class="tmr-wrap"><div class="tmr-index"><span class="tmr-index-number">05</span><span class="tmr-index-text">Uçtan Uca</span><span class="tmr-index-line"></span></div><div class="tmr-head"><h2>Dijital akışın her parçası, <span>tek çatı altında.</span></h2><div class="tmr-side">Cihaz satıp gitmiyoruz: doğru ürün için <b>danışmanlık</b>, sürdürülebilirlik için <b>Academy eğitimleri</b>, satış sonrasında teknisyen + mühendis <b>teknik destek.</b></div></div><div class="tmr-eco"><a href="/3d-yazicilar"><span class="tmr-eco-icon"><img src="${ecoPrinterIcon}" alt="" aria-hidden="true"></span><span>3D Yazıcılar</span></a><a href="/dental-3d-yazici-recineleri"><span class="tmr-eco-icon"><img src="${ecoResinIcon}" alt="" aria-hidden="true"></span><span>Dental Reçineler</span></a><a href="/yikama-kurleme-cihazlari"><span class="tmr-eco-icon"><img src="${ecoScannerIcon}" alt="" aria-hidden="true"></span><span>Yıkama &amp; Kürleme</span></a><a href="/masasustu-tarayicilar"><span class="tmr-eco-icon"><img src="${ecoCuringIcon}" alt="" aria-hidden="true"></span><span>Masaüstü Tarayıcılar</span></a><a href="/zirkon-bloklar"><span class="tmr-eco-icon"><img src="${ecoBlocksIcon}" alt="" aria-hidden="true"></span><span>Zirkon Bloklar</span></a><a href="/dental-firinlar"><span class="tmr-eco-icon"><img src="${ecoOvenIcon}" alt="" aria-hidden="true"></span><span>Dental Fırınlar</span></a></div></div></section>`;
 
@@ -97,44 +106,53 @@ export const defaultFaqHtml = `<section id="sss" class="tmr-section tmr-section-
 
 export const defaultFinalHtml = `<section id="iletisim-cta" class="tmr-final"><div class="tmr-wrap"><h2>Bu görünmez kaybı <span>birlikte azaltalım.</span></h2><p>Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b class="tmr-final-white">elinizdeki cihazlarla bile.</b></p><div><a class="tmr-btn tmr-btn-lime" href="${consultationWhatsappHref}">Uzmana danış — ücretsiz</a><a class="tmr-btn tmr-btn-invert" href="${academyPageHref}">Mash Academy'yi keşfet</a></div></div></section>`;
 
-const defaultFooterLegalLinks: Array<[string, string]> = [
-  ["KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
-  [tLocalized("İade &amp; Garanti", "Return &amp; Warranty"), "/pages/iade-ve-garanti"],
-  [tLocalized("Mesafeli Satış", "Distance Sales"), "/pages/mesafeli-satis-sozlesmesi"],
-];
-const footerDescriptionText = tLocalized(
-  "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada.",
-  "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together."
-);
-const defaultFooterProductLinks: Array<[string, string]> = [
-  [tLocalized("3D Yazıcılar", "3D Printers"), "/3d-yazicilar"],
-  [tLocalized("Dental Reçineler", "Dental Resins"), "/dental-3d-yazici-recineleri"],
-  [tLocalized("Yıkama &amp; Kürleme", "Wash &amp; Cure"), "/yikama-kurleme-cihazlari"],
-  [tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), "/masasustu-tarayicilar"],
-  [tLocalized("Zirkon Bloklar", "Zirconia Blocks"), "/zirkon-bloklar"],
-  [tLocalized("Dental Fırınlar", "Dental Furnaces"), "/dental-firinlar"],
-];
-const defaultFooterCompanyLinks: Array<[string, string]> = [
-  [tLocalized("Hakkımızda", "About Us"), "/pages/about-us"],
-  [tLocalized("Mash Academy", "Mash Academy"), academyPageHref],
-  [tLocalized("Blog", "Blog"), "/blog"],
-  [tLocalized("Sıkça Sorulan Sorular", "FAQ"), "/pages/sss"],
-];
-const defaultFooterContactLinks: Array<[string, string]> = [
-  ["info@3mash.com", "mailto:info@3mash.com"],
-  [tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Teknokent, Konyaaltı"), footerMapsHref],
-];
-const footerLegalLinksHtml = defaultFooterLegalLinks
-  .map(([label, href]) => `<a href="${href}">${label}</a>`)
-  .join("<span>·</span>");
-const defaultFooterProductsHtml = defaultFooterProductLinks
-  .map(([label, href]) => `<a href="${href}">${label}</a>`)
-  .join("");
-const defaultFooterCompanyHtml = defaultFooterCompanyLinks
-  .map(([label, href]) => `<a href="${href}">${label}</a>`)
-  .join("");
+export function getDefaultFooterHtml() {
+  const defaultFooterLegalLinks: Array<[string, string]> = [
+    ["KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
+    [tLocalized("İade &amp; Garanti", "Return &amp; Warranty"), "/pages/iade-ve-garanti"],
+    [tLocalized("Mesafeli Satış", "Distance Sales"), "/pages/mesafeli-satis-sozlesmesi"],
+  ];
+  const footerDescriptionText = tLocalized(
+    "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada.",
+    "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together."
+  );
+  const defaultFooterProductLinks: Array<[string, string]> = [
+    [tLocalized("3D Yazıcılar", "3D Printers"), "/3d-yazicilar"],
+    [tLocalized("Dental Reçineler", "Dental Resins"), "/dental-3d-yazici-recineleri"],
+    [tLocalized("Yıkama &amp; Kürleme", "Wash &amp; Cure"), "/yikama-kurleme-cihazlari"],
+    [tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), "/masasustu-tarayicilar"],
+    [tLocalized("Zirkon Bloklar", "Zirconia Blocks"), "/zirkon-bloklar"],
+    [tLocalized("Dental Fırınlar", "Dental Furnaces"), "/dental-firinlar"],
+  ];
+  const defaultFooterCompanyLinks: Array<[string, string]> = [
+    [tLocalized("Hakkımızda", "About Us"), "/pages/about-us"],
+    [tLocalized("Mash Academy", "Mash Academy"), academyPageHref],
+    [tLocalized("Blog", "Blog"), "/blog"],
+    [tLocalized("Sıkça Sorulan Sorular", "FAQ"), "/pages/sss"],
+  ];
+  const defaultFooterContactLinks: Array<[string, string]> = [
+    ["info@3mash.com", "mailto:info@3mash.com"],
+    [tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Teknokent, Konyaaltı"), footerMapsHref],
+  ];
+  const footerLegalLinksHtml = defaultFooterLegalLinks
+    .map(([label, href]) => `<a href="${localizedHref(href)}">${label}</a>`)
+    .join("<span>·</span>");
+  const defaultFooterProductsHtml = defaultFooterProductLinks
+    .map(([label, href]) => `<a href="${localizedHref(href)}">${label}</a>`)
+    .join("");
+  const defaultFooterCompanyHtml = defaultFooterCompanyLinks
+    .map(([label, href]) => `<a href="${localizedHref(href)}">${label}</a>`)
+    .join("");
 
-export const defaultFooterHtml = `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="/"><img src="${threeMashFullLogoImage}" alt="3mash"></a><p>${footerDescriptionText}</p></div><div class="tmr-footer-link-col"><p class="tmr-footer-col-title">${tLocalized("Ürünler", "Products")}</p>${defaultFooterProductsHtml}</div><div class="tmr-footer-link-col"><p class="tmr-footer-col-title">${tLocalized("ŞİRKET", "COMPANY")}</p>${defaultFooterCompanyHtml}</div><div class="tmr-footer-link-col"><p class="tmr-footer-col-title">${tLocalized("İLETİŞİM", "CONTACT")}</p><a href="mailto:info@3mash.com">info@3mash.com</a><a href="${footerMapsHref}" target="_blank" rel="noopener noreferrer">${tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Teknokent, Konyaaltı")}</a><div class="tmr-footer-social"><a href="https://www.facebook.com/3mashsocial/" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H13c-1.1 0-2 .9-2 2v2H8.8v3H11v5h3v-5h2.2l.5-3H14v-1.5c0-.3.2-.5.5-.5h2V8z"></path></svg></a><a href="https://instagram.com/3mashsocial" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle></svg></a><a href="https://www.youtube.com/@3mashsocial" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5c.2-1.4 1-2.2 2.4-2.4C8.2 6 10.1 6 12 6s3.8 0 5.1.1c1.4.2 2.2 1 2.4 2.4.1.9.2 2.1.2 3.5s-.1 2.6-.2 3.5c-.2 1.4-1 2.2-2.4 2.4-1.3.1-3.2.1-5.1.1s-3.8 0-5.1-.1c-1.4-.2-2.2-1-2.4-2.4-.1-.9-.2-2.1-.2-3.5s.1-2.6.2-3.5z"></path><path d="m10.5 9.5 4 2.5-4 2.5z"></path></svg></a><a href="https://www.linkedin.com/company/3mash" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 10v8"></path><path d="M6.5 6.5v.1"></path><path d="M10.5 18v-8"></path><path d="M10.5 13.5c0-2.1 1.2-3.5 3.1-3.5s3 1.3 3 3.7V18"></path></svg></a></div>${footerPaymentBadges()}</div></div><div class="tmr-base"><span>${tLocalized("© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.", "© 2026 3MASH Technology Inc. All rights reserved.")}</span><div class="tmr-base-meta">${footerLegalLinksHtml}</div></div></div></footer>`;
+  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="/"><img src="${threeMashFullLogoImage}" alt="3mash"></a><p>${footerDescriptionText}</p></div><div class="tmr-footer-link-col"><p class="tmr-footer-col-title">${tLocalized("Ürünler", "Products")}</p>${defaultFooterProductsHtml}</div><div class="tmr-footer-link-col"><p class="tmr-footer-col-title">${tLocalized("ŞİRKET", "COMPANY")}</p>${defaultFooterCompanyHtml}</div><div class="tmr-footer-link-col"><p class="tmr-footer-col-title">${tLocalized("İLETİŞİM", "CONTACT")}</p><a href="mailto:info@3mash.com">info@3mash.com</a><a href="${footerMapsHref}" target="_blank" rel="noopener noreferrer">${tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Teknokent, Konyaaltı")}</a><div class="tmr-footer-social"><a href="https://www.facebook.com/3mashsocial/" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H13c-1.1 0-2 .9-2 2v2H8.8v3H11v5h3v-5h2.2l.5-3H14v-1.5c0-.3.2-.5.5-.5h2V8z"></path></svg></a><a href="https://instagram.com/3mashsocial" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle></svg></a><a href="https://www.youtube.com/@3mashsocial" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5c.2-1.4 1-2.2 2.4-2.4C8.2 6 10.1 6 12 6s3.8 0 5.1.1c1.4.2 2.2 1 2.4 2.4.1.9.2 2.1.2 3.5s-.1 2.6-.2 3.5c-.2 1.4-1 2.2-2.4 2.4-1.3.1-3.2.1-5.1.1s-3.8 0-5.1-.1c-1.4-.2-2.2-1-2.4-2.4-.1-.9-.2-2.1-.2-3.5s.1-2.6.2-3.5z"></path><path d="m10.5 9.5 4 2.5-4 2.5z"></path></svg></a><a href="https://www.linkedin.com/company/3mash" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 10v8"></path><path d="M6.5 6.5v.1"></path><path d="M10.5 18v-8"></path><path d="M10.5 13.5c0-2.1 1.2-3.5 3.1-3.5s3 1.3 3 3.7V18"></path></svg></a></div>${footerPaymentBadges()}</div></div><div class="tmr-base"><span>${tLocalized("© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.", "© 2026 3MASH Technology Inc. All rights reserved.")}</span><div class="tmr-base-meta">${footerLegalLinksHtml}</div></div></div></footer>`;
+}
+
+export const defaultFooterHtml = new Proxy({} as { toString(): string }, {
+  get(_target, prop) {
+    const val = getDefaultFooterHtml();
+    return typeof (val as any)[prop] === "function" ? (val as any)[prop].bind(val) : (val as any)[prop];
+  },
+});
 
 export interface ThreeMashSectionRenderProps {
   productList?: IkasProductList;
@@ -1961,8 +1979,20 @@ function footerHrefForLabel(label: unknown, href: string) {
     "ticari elektronik ileti onayı": "/pages/ticari-elektronik-ileti-onayi",
     "ticari elektronik ileti onayi": "/pages/ticari-elektronik-ileti-onayi",
     "çerez politikası": "/pages/gizlilik-politikasi-ve-kvkk",
-    "cerez politikasi": "/pages/gizlilik-politikasi-ve-kvkk",
-    "cookie policy": "/pages/gizlilik-politikasi-ve-kvkk",
+    "privacy & kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
+    "privacy and kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
+    "privacy policy": "/pages/gizlilik-politikasi-ve-kvkk",
+    "return & warranty": "/pages/iade-ve-garanti",
+    "return and warranty": "/pages/iade-ve-garanti",
+    "return & warranty policy": "/pages/iade-ve-garanti",
+    "distance selling": "/pages/mesafeli-satis-sozlesmesi",
+    "distance selling agreement": "/pages/mesafeli-satis-sozlesmesi",
+    "distance sales": "/pages/mesafeli-satis-sozlesmesi",
+    "distance sales agreement": "/pages/mesafeli-satis-sozlesmesi",
+    "cookie settings": "#cookie-settings",
+    "cookie preferences": "#cookie-settings",
+    "cerez tercihleri": "#cerez-ayarlari",
+    "çerez tercihleri": "#cerez-ayarlari",
     "sıkça sorulan sorular": "/pages/sss",
     "sikca sorulan sorular": "/pages/sss",
     sss: "/pages/sss",
@@ -1999,16 +2029,16 @@ function footerLegalLinks(props: ThreeMashSectionRenderProps) {
   const en = isEnglishLocale();
   const links = en
     ? [
-      ["Privacy &amp; KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
+      ["Privacy &amp; KVKK", localizedHref("/pages/gizlilik-politikasi-ve-kvkk")],
       ["Cookie Settings", "#cookie-settings"],
-      ["Return &amp; Warranty", "/pages/iade-ve-garanti"],
-      ["Distance Selling", "/pages/mesafeli-satis-sozlesmesi"],
+      ["Return &amp; Warranty", localizedHref("/pages/iade-ve-garanti")],
+      ["Distance Selling", localizedHref("/pages/mesafeli-satis-sozlesmesi")],
     ]
     : [
-      ["KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
+      ["KVKK", localizedHref("/pages/gizlilik-politikasi-ve-kvkk")],
       ["Çerez Tercihleri", "#cerez-ayarlari"],
-      ["İade &amp; Garanti", "/pages/iade-ve-garanti"],
-      ["Mesafeli Satış", "/pages/mesafeli-satis-sozlesmesi"],
+      ["İade &amp; Garanti", localizedHref("/pages/iade-ve-garanti")],
+      ["Mesafeli Satış", localizedHref("/pages/mesafeli-satis-sozlesmesi")],
     ];
   return links
     .map(
@@ -2133,13 +2163,18 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
       ["SSS", "/pages/sss"],
     ];
 
+  const contactLinks: Array<[string, string]> = [
+    ["info@3mash.com", "mailto:info@3mash.com"],
+    ["Antalya Teknokent, Konyaaltı", footerMapsHref],
+  ];
+
   const products = linkList("product", en ? "PRODUCTS" : "Ürünler", productLinks);
   const company = linkList("company", en ? "COMPANY" : "ŞİRKET", companyLinks);
   const socialLinks = footerSocialLinks(props);
   const paymentBadges = footerPaymentBadges();
   const contact = value(
     undefined,
-    linkList("contact", en ? "CONTACT" : "İLETİŞİM", defaultFooterContactLinks) +
+    linkList("contact", en ? "CONTACT" : "İLETİŞİM", contactLinks) +
     socialLinks +
     paymentBadges,
   );

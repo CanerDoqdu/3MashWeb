@@ -1,0 +1,468 @@
+- generic [ref=f14e3]:
+  - generic [ref=f14e6]:
+    - generic [ref=f14e8]:
+      - generic [ref=f14e9]: ⚡ Don't miss out.
+      - generic [ref=f14e10]: Calculate your clinic's silent loss in 30 seconds; see how to reduce it with free analysis.
+      - link "Calculate now" [ref=f14e11] [cursor=pointer]:
+        - /url: /pages/hesaplama
+      - 'button "Language: English" [ref=f14e13] [cursor=pointer]':
+        - generic [ref=f14e20]: EN
+    - generic [ref=f14e24]:
+      - link "mash" [ref=f14e25] [cursor=pointer]:
+        - /url: /en
+        - img "3mash" [ref=f14e27]
+      - navigation "Menu" [ref=f14e28]:
+        - list [ref=f14e29]:
+          - listitem [ref=f14e30]:
+            - button "Products" [ref=f14e31] [cursor=pointer]
+          - listitem [ref=f14e35]:
+            - button "Why 3mash?" [active] [ref=f14e36] [cursor=pointer]
+            - generic [ref=f14e511]:
+              - link "01 Invisible loss up to $126K per year The true cost of remakes to your clinic" [ref=f14e512] [cursor=pointer]:
+                - /url: /en
+                - generic [ref=f14e513]: "01"
+                - generic [ref=f14e514]:
+                  - generic [ref=f14e515]: Invisible loss up to $126K per year
+                  - generic [ref=f14e516]: The true cost of remakes to your clinic
+              - 'link "02 Reason: dimensional accuracy 250–500µm deviation band vs ±20µm safe zone" [ref=f14e517] [cursor=pointer]':
+                - /url: /en/#sebep
+                - generic [ref=f14e518]: "02"
+                - generic [ref=f14e519]:
+                  - generic [ref=f14e520]: "Reason: dimensional accuracy"
+                  - generic [ref=f14e521]: 250–500µm deviation band vs ±20µm safe zone
+              - 'link "03 Solution: compatible ecosystem Printer + resin + parameter knowledge, calibrated together" [ref=f14e522] [cursor=pointer]':
+                - /url: /en/#cozum
+                - generic [ref=f14e523]: "03"
+                - generic [ref=f14e524]:
+                  - generic [ref=f14e525]: "Solution: compatible ecosystem"
+                  - generic [ref=f14e526]: Printer + resin + parameter knowledge, calibrated together
+              - link "04 And curing — the final 20% difference A properly printed job fails if improperly cured" [ref=f14e527] [cursor=pointer]:
+                - /url: /en/#kurleme
+                - generic [ref=f14e528]: "04"
+                - generic [ref=f14e529]:
+                  - generic [ref=f14e530]: And curing — the final 20% difference
+                  - generic [ref=f14e531]: A properly printed job fails if improperly cured
+          - listitem [ref=f14e40]:
+            - link "References" [ref=f14e41] [cursor=pointer]:
+              - /url: /en#guven
+          - listitem [ref=f14e43]:
+            - link "Academy" [ref=f14e44] [cursor=pointer]:
+              - /url: /en/pages/mash-academy
+      - generic [ref=f14e46]:
+        - button "Ara" [ref=f14e48] [cursor=pointer]
+        - generic [ref=f14e53]:
+          - button [ref=f14e54] [cursor=pointer]
+          - text: → → → →
+        - button [ref=f14e60] [cursor=pointer]
+  - generic [ref=f14e69]:
+    - generic [ref=f14e70]:
+      - generic [ref=f14e71]:
+        - generic [ref=f14e72]: The Hidden Cost of Dental Manufacturing
+        - heading "Your clinic loses $72.000 silently every year Without even realizing it." [level=1] [ref=f14e498]:
+          - generic [ref=f14e76]: Your clinic loses
+          - generic [ref=f14e77]:
+            - generic [ref=f14e78]: $72.000
+            - text: silently
+          - generic [ref=f14e79]: every year
+          - generic [ref=f14e80]: Without even realizing it.
+        - paragraph [ref=f14e82]: This money doesn't go to ads or new equipment. Because of work that doesn't seat on the first try , it silently turns into production waste. Adjust the values on the right to your own numbers — and the figure above instantly updates for your clinic.
+        - generic [ref=f14e83]:
+          - link "See why ↓" [ref=f14e84] [cursor=pointer]:
+            - /url: "#sebep"
+          - link "Free consultation" [ref=f14e86] [cursor=pointer]:
+            - /url: /en/pages/iletisim
+          - generic [ref=f14e88]: No commitment · 20 min
+      - generic [ref=f14e90]:
+        - generic [ref=f14e91]:
+          - generic [ref=f14e92]: SAVINGS CALCULATOR
+          - generic [ref=f14e93]: ESTIMATED
+        - generic [ref=f14e94]:
+          - button "Clinic" [ref=f14e95] [cursor=pointer]
+          - button "Lab" [ref=f14e97] [cursor=pointer]
+        - generic [ref=f14e99]:
+          - generic [ref=f14e100]:
+            - generic [ref=f14e101]: Monthly restorative cases
+            - generic [ref=f14e102]: "120"
+          - slider "Monthly restorative cases" [ref=f14e103] [cursor=pointer]: "120"
+        - generic [ref=f14e104]:
+          - generic [ref=f14e105]:
+            - generic [ref=f14e106]: Current remake rate (RPT)
+            - generic [ref=f14e107]: "%10"
+          - slider "Current remake rate (RPT)" [ref=f14e108] [cursor=pointer]: "10"
+        - generic [ref=f14e109]:
+          - generic [ref=f14e110]:
+            - generic [ref=f14e111]: Cost to you per remake
+            - generic [ref=f14e112]: $500
+          - slider "Cost to you per remake" [ref=f14e113] [cursor=pointer]: "500"
+          - link "What does this cost include? Calculate item by item →" [ref=f14e114] [cursor=pointer]:
+            - /url: /en/pages/iletisim
+        - generic [ref=f14e115]:
+          - generic [ref=f14e116]:
+            - generic [ref=f14e117]: Estimated annual loss · at current rate
+            - generic [ref=f14e118]: −$72.000
+          - generic [ref=f14e119]:
+            - generic [ref=f14e120]: At target rate · ≤3%, with 3mash support
+            - generic [ref=f14e121]: −$21.600
+        - generic [ref=f14e122]:
+          - generic [ref=f14e123]: YOUR ANNUAL SAVINGS POTENTIAL
+          - generic [ref=f14e124]: +$50.400
+        - generic [ref=f14e125]:
+          - text: This is a simplified estimate; results vary by workflow. For precise analysis,
+          - link "free consultation" [ref=f14e126] [cursor=pointer]:
+            - /url: /en/pages/iletisim
+          - text: .
+    - generic [ref=f14e127]:
+      - generic [ref=f14e128]:
+        - generic [ref=f14e129]:
+          - text: ±20
+          - emphasis [ref=f14e130]: µm
+        - generic [ref=f14e131]: dimensional accuracy on every print — half a human hair
+      - generic [ref=f14e132]:
+        - generic [ref=f14e133]: ≤%3
+        - generic [ref=f14e134]: remake rate in 3mash customers (down from 7-12%)
+      - generic [ref=f14e135]:
+        - generic [ref=f14e136]:
+          - text: <6
+          - emphasis [ref=f14e137]: ay
+        - generic [ref=f14e138]: investment payback potential
+      - generic [ref=f14e139]:
+        - generic [ref=f14e140]:
+          - text: "580"
+          - emphasis [ref=f14e141]: +
+        - generic [ref=f14e142]: dental labs & clinics produce with this system
+  - generic [ref=f14e146]:
+    - generic [ref=f14e147]:
+      - generic [ref=f14e148]: "02"
+      - generic [ref=f14e149]: Root of the Problem
+    - generic [ref=f14e151]:
+      - 'heading "The unseen cause of loss: dimensional accuracy." [level=2] [ref=f14e152]'
+      - generic [ref=f14e153]: Dentistry went digital; everyone has access to similar machines. The real difference is whether your restoration seats on the first try.
+    - generic [ref=f14e154]:
+      - article [ref=f14e155]:
+        - generic [ref=f14e156]: Common market setup
+        - generic [ref=f14e157]: 250–500µm
+        - generic [ref=f14e158]: With wrong parameters, resin mismatch, and lack of calibration, deviation can reach 2-5x the safe limit.
+      - article [ref=f14e159]:
+        - generic [ref=f14e160]: 3mash
+        - generic [ref=f14e161]: ±20µm
+        - generic [ref=f14e162]: "When printer, resin, and curing are calibrated together: repeatable precision and minimal remake rate on every print."
+    - paragraph [ref=f14e165]: "For scale: a human hair is ~70 µm. Market deviation can reach 5x the thickness of a hair; we work at half the thickness of a human hair — and we commit to this on every print, not just once."
+    - paragraph [ref=f14e166]:
+      - text: "Scientific basis: Full-arch model accuracy varies from 3–190 µm across systems ("
+      - link "Etemad-Shahidi et al., J Clin Med 2020" [ref=f14e167] [cursor=pointer]:
+        - /url: https://doi.org/10.3390/jcm9103357
+      - text: ); SLA/DLP/PolyJet are among the most accurate technologies (
+      - link "Németh et al., J Dentistry 2023" [ref=f14e168] [cursor=pointer]:
+        - /url: https://doi.org/10.1016/j.jdent.2023.104532
+      - text: "). Repeatability and its contributing factors:"
+      - link "McCracken et al., J Prosthodont 2019" [ref=f14e169] [cursor=pointer]:
+        - /url: https://doi.org/10.1111/jopr.12995
+      - text: .
+  - generic [ref=f14e175]:
+    - generic [ref=f14e176]:
+      - generic [ref=f14e177]: "03"
+      - generic [ref=f14e178]: Solution · Production Ecosystem
+    - generic [ref=f14e180]:
+      - heading "Precision doesn't come from the device; it comes from compatibility." [level=2] [ref=f14e181]
+      - generic [ref=f14e182]: "A crown seating depends on three things in sync: printer, resin, curing. We calibrate all three together and deliver with field-proven knowledge — even for your existing third-party device."
+    - generic "Solution products" [ref=f14e183]:
+      - article [ref=f14e184]:
+        - generic [ref=f14e185]:
+          - generic [ref=f14e186]: PROFESSIONAL
+          - img "MASH P1D" [ref=f14e187]
+        - generic [ref=f14e188]:
+          - heading "MASH P1D" [level=3] [ref=f14e189]
+          - paragraph [ref=f14e190]: Professional DLP production with an optical system designed for the material. The engine of high-volume labs and clinics.
+          - generic [ref=f14e191]:
+            - generic [ref=f14e192]:
+              - generic [ref=f14e193]: Light source
+              - generic [ref=f14e194]: 385 nm DLP
+            - generic [ref=f14e195]:
+              - generic [ref=f14e196]: Accuracy
+              - generic [ref=f14e197]: ±20 µm
+            - generic [ref=f14e198]:
+              - generic [ref=f14e199]: Character
+              - generic [ref=f14e200]: Repeatability
+          - link "Explore →" [ref=f14e201] [cursor=pointer]:
+            - /url: /en/3d-yazicilar
+      - article [ref=f14e202]:
+        - generic [ref=f14e203]:
+          - generic [ref=f14e204]: ENTRY LEVEL
+          - img "MASH P16L" [ref=f14e205]
+        - generic [ref=f14e206]:
+          - heading "MASH P16L" [level=3] [ref=f14e207]
+          - paragraph [ref=f14e208]: 3mash-revised LCD printer for those new to digital. Same parameter support, same technical team.
+          - generic [ref=f14e209]:
+            - generic [ref=f14e210]:
+              - generic [ref=f14e211]: Technology
+              - generic [ref=f14e212]: LCD · revised
+            - generic [ref=f14e213]:
+              - generic [ref=f14e214]: Role
+              - generic [ref=f14e215]: Entry to ecosystem
+            - generic [ref=f14e216]:
+              - generic [ref=f14e217]: Support
+              - generic [ref=f14e218]: Setup + training
+          - link "Explore →" [ref=f14e219] [cursor=pointer]:
+            - /url: /en/3d-yazicilar
+      - article [ref=f14e220]:
+        - generic [ref=f14e221]:
+          - generic [ref=f14e222]: OFFICIAL DISTRIBUTOR
+          - img "CRS Tray Resin"
+          - img "CRS Model Resin"
+          - img "CRS Denture Resin"
+        - generic [ref=f14e223]:
+          - heading "CRS Resins" [level=3] [ref=f14e224]
+          - paragraph [ref=f14e225]: CE Class IIa biocompatible & model resins; delivered calibrated together with your device parameters.
+          - generic [ref=f14e226]:
+            - generic [ref=f14e227]:
+              - generic [ref=f14e228]: Certificate
+              - generic [ref=f14e229]: CE Class IIa
+            - generic [ref=f14e230]:
+              - generic [ref=f14e231]: Application
+              - generic [ref=f14e232]: Model · temp · splint · guide
+            - generic [ref=f14e233]:
+              - generic [ref=f14e234]: Compatibility
+              - generic [ref=f14e235]: Brand independent
+          - link "Explore →" [ref=f14e236] [cursor=pointer]:
+            - /url: /en/dental-3d-yazici-recineleri
+  - generic [ref=f14e242]:
+    - generic [ref=f14e243]:
+      - generic [ref=f14e244]: "04"
+      - generic [ref=f14e245]: Critical Final Step
+    - generic [ref=f14e247]:
+      - heading "Not just the printer. Curing completes the result." [level=2] [ref=f14e248]:
+        - text: Not just the printer.
+        - generic [ref=f14e249]: Curing
+        - text: completes the result.
+      - generic [ref=f14e250]: "The print is not finished when it leaves the device. A poorly cured job, even if correctly printed, will fail. Here are three reasons:"
+    - generic [ref=f14e251]:
+      - article [ref=f14e252]:
+        - generic [ref=f14e253]: REASON 01
+        - heading "Mechanical strength" [level=3] [ref=f14e254]
+        - paragraph [ref=f14e255]: Undercure means brittleness — the most common hidden cause of frequent fractures in provisional crowns and bridges.
+      - article [ref=f14e256]:
+        - generic [ref=f14e257]: REASON 02
+        - heading "Dimensional accuracy" [level=3] [ref=f14e258]
+        - paragraph [ref=f14e259]: Overcure shrinks and deforms the material. The ±20 µm accuracy achieved in the printer is lost in the curing unit.
+      - article [ref=f14e260]:
+        - generic [ref=f14e261]: REASON 03
+        - heading "Biocompatibility & color" [level=3] [ref=f14e262]
+        - paragraph [ref=f14e263]: Proper degree of conversion prevents monomer elution; ensures color stability and patient safety.
+    - generic [ref=f14e264]:
+      - article [ref=f14e265]:
+        - generic [ref=f14e266]:
+          - generic [ref=f14e267]: WASHING
+          - img "Mash W1E Ultrasonic Washing Device" [ref=f14e268]
+        - generic [ref=f14e269]:
+          - heading "Mash W1E Ultrasonic Washing Device" [level=3] [ref=f14e270]
+          - paragraph [ref=f14e271]: Removes excess resin remaining on the surface after printing in a short time with ultrasonic cleaning; provides a clean surface before curing.
+          - generic [ref=f14e272]:
+            - generic [ref=f14e273]:
+              - generic [ref=f14e274]: Process
+              - generic [ref=f14e275]: Ultrasonic cleaning
+            - generic [ref=f14e276]:
+              - generic [ref=f14e277]: Workflow
+              - generic [ref=f14e278]: Washing → curing prep
+          - link "Explore →" [ref=f14e279] [cursor=pointer]:
+            - /url: /en/mash-w1e-ultrasonik-yikama-cihazi
+      - article [ref=f14e280]:
+        - generic [ref=f14e281]:
+          - generic [ref=f14e282]: CURING
+          - img "Mash C1E UV Curing Device" [ref=f14e283]
+        - generic [ref=f14e284]:
+          - heading "Mash C1E UV Curing Device" [level=3] [ref=f14e285]
+          - paragraph [ref=f14e286]: Provides homogenous UV post-curing with its 24-LED 360° curing system and 360-530 nm wide spectrum support; completes mechanical strength, dimensional accuracy and surface quality goals.
+          - generic [ref=f14e287]:
+            - generic [ref=f14e288]:
+              - generic [ref=f14e289]: Light
+              - generic [ref=f14e290]: 24 LED / 360°
+            - generic [ref=f14e291]:
+              - generic [ref=f14e292]: Spectrum
+              - generic [ref=f14e293]: 360-530nm
+          - link "Explore →" [ref=f14e294] [cursor=pointer]:
+            - /url: /en/mash-c1e-uv-kurleme-cihazi
+    - paragraph [ref=f14e295]:
+      - text: "For those who want to dive deeper, from Mash Academy:"
+      - link "What is Overcure and Undercure?" [ref=f14e296] [cursor=pointer]:
+        - /url: /en/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber
+      - text: ·
+      - link "385nm or 405nm?" [ref=f14e297] [cursor=pointer]:
+        - /url: /en/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi
+  - generic [ref=f14e303]:
+    - generic [ref=f14e304]:
+      - generic [ref=f14e305]: RETURN ON INVESTMENT
+      - text: < 6 ay
+    - paragraph [ref=f14e306]: "A clinic switching to the 3mash ecosystem has the potential to recoup its investment in under 6 months. After that, the efficiency continues every year: savings potential of $72–162K per year."
+    - link "Calculate for your clinic →" [ref=f14e307] [cursor=pointer]:
+      - /url: /en
+  - generic [ref=f14e313]:
+    - generic [ref=f14e314]:
+      - generic [ref=f14e315]: "05"
+      - generic [ref=f14e316]: End to End
+    - generic [ref=f14e318]:
+      - heading "Every part of the digital workflow, under one roof." [level=2] [ref=f14e319]
+      - generic [ref=f14e320]: "We don't just sell devices: consulting for the right product, Academy training for sustainability, technician + engineer technical support after the sale."
+    - generic [ref=f14e321]:
+      - link "3D Printers" [ref=f14e322] [cursor=pointer]:
+        - /url: /en/3d-yazicilar
+      - link "Dental Resins" [ref=f14e326] [cursor=pointer]:
+        - /url: /en/dental-3d-yazici-recineleri
+      - link "Wash & Cure" [ref=f14e330] [cursor=pointer]:
+        - /url: /en/yikama-kurleme-cihazlari
+      - link "Desktop Scanners" [ref=f14e334] [cursor=pointer]:
+        - /url: /en/masasustu-tarayicilar
+      - link "Zirconia Blocks" [ref=f14e338] [cursor=pointer]:
+        - /url: /en/zirkon-bloklar
+      - link "Dental Furnaces" [ref=f14e342] [cursor=pointer]:
+        - /url: /en/dental-firinlar
+  - generic [ref=f14e351]:
+    - generic [ref=f14e352]:
+      - generic [ref=f14e353]: "06"
+      - generic [ref=f14e354]: References
+    - generic [ref=f14e356]:
+      - heading "Why do Turkey's largest labs produce with us?" [level=2] [ref=f14e357]
+      - generic [ref=f14e358]: "The short answer is always the same: consistency. 580+ dental labs and clinics produce with this system because the result is the same every single time."
+    - generic [ref=f14e359]:
+      - article [ref=f14e360]:
+        - generic [ref=f14e361]: “
+        - paragraph [ref=f14e362]: Professionals trust professionals for absolute success. We collaborate with Mash in equipment selection, supply, training, and operation.
+        - generic [ref=f14e363]:
+          - img "Mehmet İşlek" [ref=f14e364]
+          - generic [ref=f14e365]:
+            - generic [ref=f14e366]: Mehmet İşlek
+            - generic [ref=f14e367]: ATTELIA · Chief Physician & Founder — Designing smiles for 22 years
+      - article [ref=f14e368]:
+        - generic [ref=f14e369]: “
+        - paragraph [ref=f14e370]: Innovative and creative. A long-term, successful collaboration across hardware, software, and materials.
+        - generic [ref=f14e371]:
+          - img "Berkan Öztaş" [ref=f14e372]
+          - generic [ref=f14e373]:
+            - generic [ref=f14e374]: Berkan Öztaş
+            - generic [ref=f14e375]: DENTEK · Deputy General Manager
+      - article [ref=f14e376]:
+        - generic [ref=f14e377]: “
+        - paragraph [ref=f14e378]: They solved problems before we even encountered them. Consistent production quality every single time — excellent results.
+        - generic [ref=f14e379]:
+          - img "Göksel Pişkin" [ref=f14e380]
+          - generic [ref=f14e381]:
+            - generic [ref=f14e382]: Göksel Pişkin
+            - generic [ref=f14e383]: MIKRO LAB · Founding Partner
+    - generic [ref=f14e384]:
+      - generic [ref=f14e385]: Trusted by
+      - generic [ref=f14e387]:
+        - img "Trusted brand 1" [ref=f14e389]
+        - img "Trusted brand 2" [ref=f14e391]
+        - img "Trusted brand 4" [ref=f14e393]
+        - img "Trusted brand 5" [ref=f14e395]
+  - generic [ref=f14e401]:
+    - generic [ref=f14e402]:
+      - generic [ref=f14e403]: "07"
+      - generic [ref=f14e404]: Frequently Asked Questions
+    - generic [ref=f14e406]:
+      - heading "Short, clear answers." [level=2] [ref=f14e407]
+      - generic [ref=f14e408]: To help you make critical decisions quickly, we've compiled the most common questions from clinics and labs with clear answers.
+    - generic [ref=f14e409]:
+      - group [ref=f14e410]:
+        - generic "Why is dimensional accuracy so critical in dental 3D printing? +" [ref=f14e411] [cursor=pointer]:
+          - text: Why is dimensional accuracy so critical in dental 3D printing?
+          - generic [ref=f14e412]: +
+      - group [ref=f14e413]:
+        - generic "How much does a crown remake actually cost? +" [ref=f14e414] [cursor=pointer]:
+          - text: How much does a crown remake actually cost?
+          - generic [ref=f14e415]: +
+      - group [ref=f14e416]:
+        - generic "Why is post-curing so critical in 3D printing? +" [ref=f14e417] [cursor=pointer]:
+          - text: Why is post-curing so critical in 3D printing?
+          - generic [ref=f14e418]: +
+      - group [ref=f14e419]:
+        - generic "Does 3mash only sell equipment? +" [ref=f14e420] [cursor=pointer]:
+          - text: Does 3mash only sell equipment?
+          - generic [ref=f14e421]: +
+      - group [ref=f14e422]:
+        - generic "Can you work with my existing third-party printer? +" [ref=f14e423] [cursor=pointer]:
+          - text: Can you work with my existing third-party printer?
+          - generic [ref=f14e424]: +
+  - generic [ref=f14e430]:
+    - heading "Let's reduce this invisible loss together." [level=2] [ref=f14e431]
+    - paragraph [ref=f14e432]: Let's review your current workflow together; we'll identify where the loss occurs and set up the right ecosystem for you — even with your existing equipment.
+    - generic [ref=f14e433]:
+      - link "Talk to an expert — free" [ref=f14e434] [cursor=pointer]:
+        - /url: https://api.whatsapp.com/send/?ph
+      - link "Explore Mash Academy" [ref=f14e435] [cursor=pointer]:
+        - /url: /en/pages/mash-academy
+  - generic [ref=f14e437]:
+    - contentinfo [ref=f14e440]:
+      - generic [ref=f14e441]:
+        - generic [ref=f14e442]:
+          - generic [ref=f14e443]:
+            - link [ref=f14e444] [cursor=pointer]:
+              - /url: /en
+              - img "3mash" [ref=f14e445]
+            - paragraph [ref=f14e446]: "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together."
+          - generic [ref=f14e447]:
+            - paragraph [ref=f14e448]: PRODUCTS
+            - link "3D Printers" [ref=f14e449] [cursor=pointer]:
+              - /url: /en/3d-yazicilar
+            - link "Dental Resins" [ref=f14e450] [cursor=pointer]:
+              - /url: /en/dental-3d-yazici-recineleri
+            - link "Wash & Cure" [ref=f14e451] [cursor=pointer]:
+              - /url: /en/yikama-kurleme-cihazlari
+            - link "Desktop Scanners" [ref=f14e452] [cursor=pointer]:
+              - /url: /en/masasustu-tarayicilar
+            - link "Zirconia Blocks" [ref=f14e453] [cursor=pointer]:
+              - /url: /en/zirkon-bloklar
+            - link "Dental Furnaces" [ref=f14e454] [cursor=pointer]:
+              - /url: /en/dental-firinlar
+          - generic [ref=f14e455]:
+            - paragraph [ref=f14e456]: COMPANY
+            - link "About Us" [ref=f14e457] [cursor=pointer]:
+              - /url: /en/pages/about-us
+            - link "Mash Academy" [ref=f14e458] [cursor=pointer]:
+              - /url: /en/pages/mash-academy
+            - link "Blog" [ref=f14e459] [cursor=pointer]:
+              - /url: /en/blog
+            - link "FAQ" [ref=f14e460] [cursor=pointer]:
+              - /url: /en/pages/sss
+          - generic [ref=f14e461]:
+            - text: CONTACT
+            - paragraph
+            - link "info@3mash.com" [ref=f14e462] [cursor=pointer]:
+              - /url: mailto:info@3mash.com
+            - link "Antalya Teknokent, Konyaaltı" [ref=f14e463] [cursor=pointer]:
+              - /url: https://www.google.com/maps/search/?api=1&query=Antalya%20Teknokent%2C%20Konyaalt%C4%B1
+            - generic [ref=f14e464]:
+              - link "Facebook" [ref=f14e465] [cursor=pointer]:
+                - /url: https://www.facebook.com/3mashsocial/
+              - link "Instagram" [ref=f14e468] [cursor=pointer]:
+                - /url: https://instagram.com/3mashsocial
+              - link "YouTube" [ref=f14e473] [cursor=pointer]:
+                - /url: https://www.youtube.com/@3mashsocial
+              - link "LinkedIn" [ref=f14e477] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/3mash
+            - generic "Payment methods" [ref=f14e480]:
+              - img "Visa" [ref=f14e481]: VISA
+              - img "Maestro" [ref=f14e482]
+              - img "Mastercard" [ref=f14e485]
+        - generic [ref=f14e488]:
+          - generic [ref=f14e489]: © 2026 3MASH Technology Inc. All rights reserved.
+          - generic [ref=f14e490]:
+            - link "Privacy & KVKK" [ref=f14e491] [cursor=pointer]:
+              - /url: /en/pages/gizlilik-politikasi-ve-kvkk
+            - generic [ref=f14e492]: ·
+            - link "Cookie Settings" [ref=f14e493] [cursor=pointer]:
+              - /url: "#cookie-settings"
+            - generic [ref=f14e494]: ·
+            - link "Return & Warranty" [ref=f14e495] [cursor=pointer]:
+              - /url: /en/pages/iade-ve-garanti
+            - generic [ref=f14e496]: ·
+            - link "Distance Selling" [ref=f14e497] [cursor=pointer]:
+              - /url: /en/pages/mesafeli-satis-sozlesmesi
+    - dialog [ref=f14e499]:
+      - button "Close cookie settings" [ref=f14e500] [cursor=pointer]
+      - generic [ref=f14e504]:
+        - img "3MASH Dental 3D Printer"
+      - heading "We Use Cookies" [level=2] [ref=f14e505]
+      - paragraph [ref=f14e506]: We use cookies to improve your experience, understand how our website is used, and provide relevant content. You can choose which optional cookies you allow.
+      - generic [ref=f14e507]:
+        - button "Accept all cookies" [ref=f14e508] [cursor=pointer]
+        - button "Manage cookies" [ref=f14e509] [cursor=pointer]

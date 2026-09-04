@@ -34,6 +34,12 @@ function readCache(): IkasCart | null {
   }
 }
 
+function sanitizeCartForCache(cart: IkasCart): Partial<IkasCart> {
+  // Strip sensitive customer and address data to prevent PII exposure
+  const { customer, shippingAddress, billingAddress, ...safeCart } = cart as any;
+  return safeCart;
+}
+
 function writeCache(cart: IkasCart | null) {
   if (typeof window === "undefined") return;
 
@@ -43,9 +49,8 @@ function writeCache(cart: IkasCart | null) {
       return;
     }
 
-    // PII security: cart cache disabled to prevent sensitive order/line item data leakage
-    // sessionStorage.setItem(CART_CACHE_KEY, JSON.stringify(cart));
-    // (Keep reading old cache for backward compatibility if it exists)
+    // Cache sanitized line items and totals (no PII) for instant page-to-page navigation
+    sessionStorage.setItem(CART_CACHE_KEY, JSON.stringify(sanitizeCartForCache(cart)));
   } catch {
     // Cache hata verse bile gerçek cart çalışmaya devam eder.
   }
@@ -72,6 +77,22 @@ export function getCurrentCart() {
   return currentCart;
 }
 
+export function isCartInitialized(): boolean {
+  if (initialized) return true;
+  if (typeof window !== "undefined" && (cartStore as any)?.isCartInitialLoadFinished === true) {
+    return true;
+  }
+  return false;
+}
+
+export function hasCartItemsInMemory(): boolean {
+  const c = currentCart || (cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
+  if (!c?.orderLineItems) return false;
+  return c.orderLineItems.some(
+    (item) => !item.deleted && Number(item.quantity || 0) > 0
+  );
+}
+
 export function subscribeCart(listener: CartListener) {
   listeners.add(listener);
 
@@ -85,15 +106,20 @@ export function publishCartFromIkasStore() {
 
   if (!nextCart) return;
 
+  initialized = true;
   publish(nextCart);
 }
 
 export async function refreshGlobalCart() {
-  await waitForCartStoreInit(cartStore);
-
-  await getCart();
-
-  publish(cloneCart());
+  try {
+    await waitForCartStoreInit(cartStore);
+    await getCart();
+  } catch {
+    // Network error handling
+  } finally {
+    initialized = true;
+    publish(cloneCart());
+  }
 }
 
 export function initGlobalCart() {
@@ -116,12 +142,25 @@ export function initGlobalCart() {
       await getCart();
 
       publish(cloneCart());
-
-      initialized = true;
+    } catch {
+      // Network hatası olsa bile arayüz kilitlenmesin
     } finally {
+      initialized = true;
       initializing = null;
+      notify();
     }
   })();
 
   return initializing;
 }
+
+export function clearGlobalCart() {
+  currentCart = null;
+  initialized = true;
+  if (typeof window !== "undefined") {
+    try {
+      sessionStorage.removeItem(CART_CACHE_KEY);
+    } catch {}
+  }
+  notify();
+}

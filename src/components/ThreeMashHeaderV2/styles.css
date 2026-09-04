@@ -1501,39 +1501,42 @@
   top: 86px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(14, 14, 12, 0.94);
-  color: #FAFAF7;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(199, 241, 54, 0.45);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.94);
+  color: #0E0E0C;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(14, 14, 12, 0.08);
+  box-shadow: 0 16px 40px rgba(14, 14, 12, 0.12), 0 2px 8px rgba(14, 14, 12, 0.04), 0 0 0 1px rgba(199, 241, 54, 0.45);
   border-radius: 999px;
-  padding: 10px 22px;
+  padding: 8px 18px 8px 12px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 13.5px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  gap: 8px;
+  font-family: var(--tm-theme-font-body, "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
   z-index: 999999;
-  animation: tmhToastSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: tmhToastSlideDown 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   pointer-events: none;
   white-space: nowrap;
 }
 
 .tmh-toast-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #C7F136;
-  box-shadow: 0 0 10px #C7F136;
+  border: 1.5px solid #0E0E0C;
+  box-shadow: 0 0 6px rgba(199, 241, 54, 0.6);
   flex-shrink: 0;
 }
 
 @keyframes tmhToastSlideDown {
   from {
     opacity: 0;
-    transform: translate(-50%, -14px) scale(0.96);
+    transform: translate(-50%, -10px) scale(0.97);
   }
   to {
     opacity: 1;

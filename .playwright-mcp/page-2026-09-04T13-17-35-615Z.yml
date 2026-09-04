@@ -1,0 +1,327 @@
+- generic [ref=f26e3]:
+  - generic [ref=f26e6]:
+    - generic [ref=f26e8]:
+      - generic [ref=f26e9]: Spare part support.
+      - generic [ref=f26e10]: We check the compatible device together and deliver the right part with installation support.
+      - link "Check compatibility →" [ref=f26e11] [cursor=pointer]:
+        - /url: "#satinal"
+    - generic [ref=f26e13]:
+      - link "mash" [ref=f26e14] [cursor=pointer]:
+        - /url: /
+        - img "3mash" [ref=f26e16]
+      - text: → → → →
+      - button "Menü" [ref=f26e17] [cursor=pointer]
+  - generic [ref=f26e23]:
+    - generic [ref=f26e24]:
+      - link "Ana sayfa" [ref=f26e25] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f26e26]: /
+      - link "3D Yazıcı Yedek Parçaları" [ref=f26e27] [cursor=pointer]:
+        - /url: /3d-yazici-yedek-parcalari
+      - generic [ref=f26e28]: /
+      - generic [ref=f26e29]: MASH P16L Ana Kart
+    - generic [ref=f26e30]:
+      - img "MASH P16L Main Board" [ref=f26e33]
+      - generic [ref=f26e34]:
+        - generic [ref=f26e35]: MASH P16L · Kontrol Kartı
+        - heading "P16L control is unified on the mainboard." [level=1] [ref=f26e36]
+        - paragraph [ref=f26e37]: The MASH P16L Mainboard is the central component that manages the device's electronic control processes. It is used for maintenance and repair purposes in critical tasks such as motor control, sensor management, and data communication.
+        - generic [ref=f26e38]:
+          - generic [ref=f26e39]: MASH P16L uyumlu
+          - generic [ref=f26e40]: Kontrol kartı
+          - generic [ref=f26e41]: Motor & sensör yönetimi
+          - generic [ref=f26e42]: Bakım / onarım
+        - generic [ref=f26e43]:
+          - strong [ref=f26e45]: € 237.59
+          - generic [ref=f26e46]: "Seçiminiz: MASH P16L Ana Kart — uyumluluk kontrolü ve teknik destek dahil."
+          - generic [ref=f26e47]:
+            - button "Sepete ekle →" [ref=f26e48]
+            - link "WhatsApp'tan sor" [ref=f26e49] [cursor=pointer]:
+              - /url: https://wa.me/905314326577?text=MASH%20P16L%20Main%20Board%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum
+          - generic [ref=f26e50]:
+            - generic [ref=f26e51]: Ücretsiz kargo
+            - generic [ref=f26e54]: Koşulsuz iade
+            - generic [ref=f26e57]: Güvenli ödeme
+  - generic [ref=f26e64]:
+    - generic [ref=f26e65]:
+      - generic [ref=f26e66]: "01"
+      - generic [ref=f26e67]: Servis Güveni
+    - generic [ref=f26e69]:
+      - heading "Doğru parça, kesintisiz üretim için seçilir." [level=2] [ref=f26e70]
+      - generic [ref=f26e71]: Yazıcı yedek parçalarında kritik nokta; cihaz uyumu, doğru montaj ve baskı sürecinin tekrar stabil hale gelmesidir.
+    - generic [ref=f26e72]:
+      - generic [ref=f26e73]:
+        - heading "MASH P16L Ana Kart için kontrol listesi." [level=3] [ref=f26e74]
+        - generic [ref=f26e75]: Servis ve bakım iş akışında kontrol edilen temel noktalar.
+      - generic [ref=f26e76]:
+        - generic [ref=f26e77]: Cihaz modeli ve parça uyumu satın alma öncesi kontrol edilir.
+        - generic [ref=f26e78]: "%0"
+      - generic [ref=f26e81]: Montaj sonrası baskı stabilitesi için kalibrasyon ve test baskısı önerilir.
+      - generic [ref=f26e83]: Sarf ve elektronik parçalar için temiz çalışma alanı ve doğru kurulum sırası önemlidir.
+  - generic [ref=f26e89]:
+    - generic [ref=f26e90]:
+      - generic [ref=f26e91]: "02"
+      - generic [ref=f26e92]: Teknik Özellikler
+    - generic [ref=f26e94]:
+      - heading "Elektronik kontrolün merkezi parçası." [level=2] [ref=f26e95]
+      - generic [ref=f26e96]: Ana kart değişiminde cihaz revizyonu, bağlantılar ve servis kurulumu kritik kontrollerdir.
+    - generic [ref=f26e97]:
+      - article [ref=f26e98]:
+        - generic [ref=f26e99]: Parça Tipi
+        - generic [ref=f26e100]:
+          - text: Ana
+          - emphasis [ref=f26e101]: Kart
+        - generic [ref=f26e102]: Kontrol
+        - generic [ref=f26e103]: P16L cihazının merkezi elektronik kontrol bileşeni.
+      - article [ref=f26e104]:
+        - generic [ref=f26e105]: Görev
+        - generic [ref=f26e106]:
+          - text: Motor
+          - emphasis [ref=f26e107]: + sensör
+        - generic [ref=f26e108]: I/O
+        - generic [ref=f26e109]: Motor kontrolü, sensör yönetimi ve veri iletişimi süreçlerini yönetir.
+      - article [ref=f26e110]:
+        - generic [ref=f26e111]: Kullanım
+        - generic [ref=f26e112]:
+          - text: Bakım
+          - emphasis [ref=f26e113]: / onarım
+        - generic [ref=f26e114]: Servis
+        - generic [ref=f26e115]: Teknik servis, bakım ve arıza durumlarında değişim amacıyla kullanılır.
+    - generic [ref=f26e116]:
+      - generic [ref=f26e117]:
+        - generic [ref=f26e118]: MASH P16L · MAINBOARD · SERVICE
+        - heading "Motor, sensör ve iletişim tek kartta." [level=3] [ref=f26e119]
+        - paragraph [ref=f26e120]: MASH P16L Ana Kart, cihazın farklı bileşenleriyle modüler şekilde çalışır. Değişim öncesi arıza teşhisi ve bağlantı uyumu kontrol edilmelidir.
+        - link "Uyumluluğu seç →" [ref=f26e121] [cursor=pointer]:
+          - /url: "#satinal"
+      - generic [ref=f26e122]:
+        - generic [ref=f26e123]:
+          - generic [ref=f26e124]: Cihaz
+          - generic [ref=f26e125]: MASH P16L
+        - generic [ref=f26e126]:
+          - generic [ref=f26e127]: Parça
+          - generic [ref=f26e128]: Ana kart
+        - generic [ref=f26e129]:
+          - generic [ref=f26e130]: Görev
+          - generic [ref=f26e131]: Kontrol yönetimi
+        - generic [ref=f26e132]:
+          - generic [ref=f26e133]: Kullanım
+          - generic [ref=f26e134]: Bakım / onarım
+        - generic [ref=f26e135]:
+          - generic [ref=f26e136]: Kategori
+          - generic [ref=f26e137]: Yedek parça
+  - generic [ref=f26e140]:
+    - generic [ref=f26e142]:
+      - generic [ref=f26e143]:
+        - generic [ref=f26e144]: "03"
+        - generic [ref=f26e145]: Uygulama & Uyumluluk
+      - generic [ref=f26e147]:
+        - heading "Nerede kullanılır, neyle çalışır?" [level=2] [ref=f26e148]
+        - generic [ref=f26e149]: Ana kart değişimi, elektronik kontrol ve bağlantı kaynaklı servis süreçlerinde değerlendirilir.
+      - generic [ref=f26e150]:
+        - article [ref=f26e151]:
+          - img "MASH P16L ana kart elektronik kontrol" [ref=f26e153]
+          - generic [ref=f26e154]:
+            - generic [ref=f26e155]: Elektronik kontrol
+            - generic [ref=f26e156]: Motor, sensör ve veri iletişimi süreçlerinin merkezi.
+        - article [ref=f26e157]:
+          - img "MASH P16L ana kart servis değişimi" [ref=f26e159]
+          - generic [ref=f26e160]:
+            - generic [ref=f26e161]: Servis değişimi
+            - generic [ref=f26e162]: Arıza teşhisi sonrası bakım/onarım için kullanılır.
+        - article [ref=f26e163]:
+          - img "MASH P16L ana kart bağlantı kontrolü" [ref=f26e165]
+          - generic [ref=f26e166]:
+            - generic [ref=f26e167]: Bağlantı kontrolü
+            - generic [ref=f26e168]: Modüler bağlantı noktaları montajda doğrulanır.
+      - generic [ref=f26e169]:
+        - article [ref=f26e170]:
+          - generic [ref=f26e171]: Kullanım Alanları
+          - heading "Ne zaman değerlendirilir?" [level=3] [ref=f26e172]
+          - list [ref=f26e173]:
+            - listitem [ref=f26e174]: Elektronik kontrol arızalarında
+            - listitem [ref=f26e175]: Motor veya sensör yönetimi hatalarında
+            - listitem [ref=f26e176]: Teknik servis bakım/onarım sürecinde
+        - article [ref=f26e177]:
+          - generic [ref=f26e178]: Servis Notu
+          - heading "Neler kontrol edilir?" [level=3] [ref=f26e179]
+          - list [ref=f26e180]:
+            - listitem [ref=f26e181]: Cihaz revizyonu ve kart uyumu
+            - listitem [ref=f26e182]: Kablo/soket bağlantıları
+            - listitem [ref=f26e183]: Değişim sonrası hareket ve sensör testleri
+      - generic [ref=f26e184]:
+        - generic [ref=f26e185]: Uyumlu Cihazlar
+        - heading "MASH P16L ile çalışır" [level=3] [ref=f26e186]
+        - paragraph [ref=f26e187]: MASH P16L cihazının ana kontrol kartıdır. Değişim öncesi arıza belirtisini ve cihaz revizyonunu birlikte kontrol etmek gerekir.
+        - generic [ref=f26e188]:
+          - generic [ref=f26e189]: MASH P16L
+          - generic [ref=f26e190]: Ana kart
+          - generic [ref=f26e191]: Motor / sensör
+          - generic [ref=f26e192]: Servis kontrolü
+    - generic [ref=f26e194]:
+      - generic [ref=f26e195]:
+        - generic [ref=f26e196]: "04"
+        - generic [ref=f26e197]: Servis Ekosistemi
+      - generic [ref=f26e199]:
+        - heading "Ana kart değişimi, servis teşhisiyle yapılmalı." [level=3] [ref=f26e200]
+        - paragraph [ref=f26e201]: Kontrol kartı değişiminde güç bağlantısı, motor çıkışları, sensör girişleri ve ilk çalışma testi birlikte ele alınır.
+        - generic [ref=f26e202]:
+          - generic [ref=f26e203]: Ana kart
+          - generic [ref=f26e204]: Bağlantı kontrolü
+          - generic [ref=f26e205]: Sensör testi
+          - generic [ref=f26e206]: Teknik servis
+        - generic [ref=f26e207]:
+          - link "Teknik destek al" [ref=f26e208] [cursor=pointer]:
+            - /url: /pages/iletisim
+          - link "Yedek parçaları gör" [ref=f26e209] [cursor=pointer]:
+            - /url: /3d-yazici-yedek-parcalari
+  - generic [ref=f26e214]:
+    - generic [ref=f26e215]:
+      - generic [ref=f26e216]: "05"
+      - generic [ref=f26e217]: Sık Sorulanlar
+    - generic [ref=f26e219]:
+      - heading "MASH P16L Ana Kart hakkında." [level=2] [ref=f26e220]
+      - generic [ref=f26e221]: Satın alma öncesi cihaz modeli ve parça uyumu birlikte kontrol edilmelidir.
+    - generic [ref=f26e222]:
+      - group [ref=f26e224]:
+        - generic "MASH P16L Ana Kart ne işe yarar? +" [ref=f26e225] [cursor=pointer]:
+          - text: MASH P16L Ana Kart ne işe yarar?
+          - generic [ref=f26e226]: +
+        - generic [ref=f26e227]: Cihazın elektronik kontrol süreçlerini yöneten merkezi bileşendir.
+      - group [ref=f26e229]:
+        - generic "Hangi durumlarda değiştirilir? +" [ref=f26e230] [cursor=pointer]:
+          - text: Hangi durumlarda değiştirilir?
+          - generic [ref=f26e231]: +
+      - group [ref=f26e233]:
+        - generic "Satın almadan önce ne kontrol edilmeli? +" [ref=f26e234] [cursor=pointer]:
+          - text: Satın almadan önce ne kontrol edilmeli?
+          - generic [ref=f26e235]: +
+  - generic [ref=f26e240]:
+    - generic [ref=f26e241]:
+      - generic [ref=f26e242]: "04"
+      - generic [ref=f26e243]: VİDEO
+    - generic:
+      - heading [level=2]
+    - link [ref=f26e245] [cursor=pointer]:
+      - /url: "#"
+  - generic [ref=f26e251]:
+    - generic [ref=f26e253]:
+      - generic [ref=f26e254]:
+        - generic [ref=f26e255]: "07"
+        - generic [ref=f26e256]: İlgili Yedek Parçalar
+      - heading "Aynı cihazda birlikte çalışanlar." [level=2] [ref=f26e259]
+      - generic [ref=f26e260]:
+        - article [ref=f26e261]:
+          - link "P16L MASH P16L 16K Monokrom LCD Ekran MASH P16L 16K LCD Ekran 16K UHD monokrom LCD ekran; 385 nm P16L ışık sistemiyle uyumlu yedek parça. İncele →" [ref=f26e262] [cursor=pointer]:
+            - /url: /mash-p16l-16k-monokrom-lcd-ekran-yedek-parca
+            - generic [ref=f26e263]:
+              - generic [ref=f26e264]: P16L
+              - img "MASH P16L 16K Monokrom LCD Ekran"
+            - generic [ref=f26e265]:
+              - heading "MASH P16L 16K LCD Ekran" [level=3] [ref=f26e266]
+              - generic [ref=f26e267]: 16K UHD monokrom LCD ekran; 385 nm P16L ışık sistemiyle uyumlu yedek parça.
+              - generic [ref=f26e268]: İncele →
+        - article [ref=f26e269]:
+          - link "TABLA MASH P16L Büyük Baskı Tablası MASH P16L Büyük Baskı Tablası 211x118 mm geniş baskı alanı; yüksek hacimli dental üretimler için standart tabla. İncele →" [ref=f26e270] [cursor=pointer]:
+            - /url: /mash-p16l-buyuk-baski-tablasi-211x118mm
+            - generic [ref=f26e271]:
+              - generic [ref=f26e272]: TABLA
+              - img "MASH P16L Büyük Baskı Tablası"
+            - generic [ref=f26e273]:
+              - heading "MASH P16L Büyük Baskı Tablası" [level=3] [ref=f26e274]
+              - generic [ref=f26e275]: 211x118 mm geniş baskı alanı; yüksek hacimli dental üretimler için standart tabla.
+              - generic [ref=f26e276]: İncele →
+        - article [ref=f26e277]:
+          - link "TANK MASH P16L Reçine Tankı MASH P16L Reçine Tankı 800 ml alüminyum reçine tankı; hızlı kilit ve ısıtma sistemiyle uyumlu yapı. İncele →" [ref=f26e278] [cursor=pointer]:
+            - /url: /mash-p16l-recine-tanki-800ml
+            - generic [ref=f26e279]:
+              - generic [ref=f26e280]: TANK
+              - img "MASH P16L Reçine Tankı"
+            - generic [ref=f26e281]:
+              - heading "MASH P16L Reçine Tankı" [level=3] [ref=f26e282]
+              - generic [ref=f26e283]: 800 ml alüminyum reçine tankı; hızlı kilit ve ısıtma sistemiyle uyumlu yapı.
+              - generic [ref=f26e284]: İncele →
+        - article [ref=f26e285]:
+          - link "SARF Şeffaf ACF Film Şeffaf ACF Film LCD/DLP reçine yazıcılarda UV geçirgenliği ve stabil katman oluşumu için sarf film. İncele →" [ref=f26e286] [cursor=pointer]:
+            - /url: /seffaf-fep-film-3d-yazici
+            - generic [ref=f26e287]:
+              - generic [ref=f26e288]: SARF
+              - img "Şeffaf ACF Film"
+            - generic [ref=f26e289]:
+              - heading "Şeffaf ACF Film" [level=3] [ref=f26e290]
+              - generic [ref=f26e291]: LCD/DLP reçine yazıcılarda UV geçirgenliği ve stabil katman oluşumu için sarf film.
+              - generic [ref=f26e292]: İncele →
+    - generic [ref=f26e294]:
+      - heading "MASH P16L Ana Kart için uyumluluğu birlikte kontrol edelim." [level=2] [ref=f26e295]
+      - paragraph [ref=f26e296]: Cihaz modeli, parça revizyonu ve kurulum adımlarını birlikte netleştirip doğru yedek parçayı teknik destekle teslim edelim.
+      - generic [ref=f26e297]:
+        - link "Sepete dön ↑" [ref=f26e298] [cursor=pointer]:
+          - /url: "#satinal"
+        - link "Uzmana danış" [ref=f26e299] [cursor=pointer]:
+          - /url: /pages/iletisim
+  - contentinfo [ref=f26e304]:
+    - generic [ref=f26e305]:
+      - generic [ref=f26e306]:
+        - generic [ref=f26e307]:
+          - link [ref=f26e308] [cursor=pointer]:
+            - /url: /
+            - img "3mash" [ref=f26e309]
+          - paragraph [ref=f26e310]: "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada."
+        - generic [ref=f26e311]:
+          - paragraph [ref=f26e312]: Ürünler
+          - link "3D Yazıcılar" [ref=f26e313] [cursor=pointer]:
+            - /url: /3d-yazicilar
+          - link "Dental Reçineler" [ref=f26e314] [cursor=pointer]:
+            - /url: /dental-3d-yazici-recineleri
+          - link "Yıkama & Kürleme" [ref=f26e315] [cursor=pointer]:
+            - /url: /yikama-kurleme-cihazlari
+          - link "Masaüstü Tarayıcılar" [ref=f26e316] [cursor=pointer]:
+            - /url: /masasustu-tarayicilar
+          - link "Zirkon Bloklar" [ref=f26e317] [cursor=pointer]:
+            - /url: /zirkon-bloklar
+          - link "Dental Fırınlar" [ref=f26e318] [cursor=pointer]:
+            - /url: /dental-firinlar
+        - generic [ref=f26e319]:
+          - paragraph [ref=f26e320]: ŞİRKET
+          - link "Hakkımızda" [ref=f26e321] [cursor=pointer]:
+            - /url: /pages/about-us
+          - link "Mash Academy" [ref=f26e322] [cursor=pointer]:
+            - /url: /pages/mash-academy
+          - link "Blog" [ref=f26e323] [cursor=pointer]:
+            - /url: /blog
+          - link "SSS" [ref=f26e324] [cursor=pointer]:
+            - /url: /pages/sss
+        - generic [ref=f26e325]:
+          - text: İLETİŞİM
+          - paragraph
+          - link "info@3mash.com" [ref=f26e326] [cursor=pointer]:
+            - /url: mailto:info@3mash.com
+          - link "Antalya Teknokent, Konyaaltı" [ref=f26e327] [cursor=pointer]:
+            - /url: https://www.google.com/maps/search/?api=1&query=Antalya%20Teknokent%2C%20Konyaalt%C4%B1
+          - generic [ref=f26e328]:
+            - link "Facebook" [ref=f26e329] [cursor=pointer]:
+              - /url: https://www.facebook.com/3mashsocial/
+            - link "Instagram" [ref=f26e332] [cursor=pointer]:
+              - /url: https://instagram.com/3mashsocial
+            - link "YouTube" [ref=f26e337] [cursor=pointer]:
+              - /url: https://www.youtube.com/@3mashsocial
+            - link "LinkedIn" [ref=f26e341] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/3mash
+          - generic "Ödeme yöntemleri" [ref=f26e344]:
+            - img "Visa" [ref=f26e345]: VISA
+            - img "Maestro" [ref=f26e346]
+            - img "Mastercard" [ref=f26e349]
+      - generic [ref=f26e352]:
+        - generic [ref=f26e353]: © 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.
+        - generic [ref=f26e354]:
+          - link "KVKK" [ref=f26e355] [cursor=pointer]:
+            - /url: /pages/gizlilik-politikasi-ve-kvkk
+          - generic [ref=f26e356]: ·
+          - link "Çerez Tercihleri" [ref=f26e357] [cursor=pointer]:
+            - /url: "#cerez-ayarlari"
+          - generic [ref=f26e358]: ·
+          - link "İade & Garanti" [ref=f26e359] [cursor=pointer]:
+            - /url: /pages/iade-ve-garanti
+          - generic [ref=f26e360]: ·
+          - link "Mesafeli Satış" [ref=f26e361] [cursor=pointer]:
+            - /url: /pages/mesafeli-satis-sozlesmesi

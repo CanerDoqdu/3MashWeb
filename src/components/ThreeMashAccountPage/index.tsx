@@ -133,9 +133,9 @@ export function ThreeMashAccountPage(props: Props) {
             );
       if (result.isSuccess) {
         setStatus("success");
-        if (typeof window !== "undefined" && customerStore.customer) {
+        if (typeof window !== "undefined") {
           try {
-            // PII storage disabled: customer name should not be cached client-side
+            sessionStorage.removeItem("tm_studio_logged_out");
             localStorage.removeItem("tm_customer_name");
             localStorage.removeItem("tm_customer_cache");
             sessionStorage.removeItem("tm_customer_cache");

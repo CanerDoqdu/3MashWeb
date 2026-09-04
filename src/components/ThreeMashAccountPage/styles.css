@@ -44,6 +44,8 @@
   grid-row: 1 / span 20;
   display: grid;
   align-content: end;
+  align-self: start;
+  height: 638px;
   min-width: 0;
   min-height: 520px;
   overflow: hidden;
@@ -349,6 +351,7 @@
   }
 
   .tma-auth-copy {
+    height: auto;
     min-height: 320px;
   }
 }

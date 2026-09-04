@@ -390,7 +390,7 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     "--tmpcc-arrow-ink": text((p as any).arrowColor, "#0E0E0C"),
     "--tmpcc-mw": cssLength((p as any).maxWidth, 1280, 480, 2560),
     "--tmpcc-pt": cssLength((p as any).paddingTop, 64, 0, 320),
-    "--tmpcc-pb": cssLength((p as any).paddingBottom, 64, 0, 320),
+    "--tmpcc-pb": cssLength((p as any).paddingBottom, 0, 0, 320),
     "--tmpcc-gap": cssLength((p as any).cardGap, 56, 0, 120),
     "--tmpcc-desktop": numberValue((p as any).visibleCardsDesktop, 4, 1, 6),
     "--tmpcc-tablet": numberValue((p as any).visibleCardsTablet, 3, 1, 4),

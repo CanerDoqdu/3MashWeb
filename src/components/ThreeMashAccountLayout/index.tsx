@@ -3,7 +3,8 @@ import {
   customerStore,
   getFavoriteProducts,
   getOrders,
-  logout,
+  initCustomerStore,
+  reaction,
   type IkasCustomer,
   type IkasOrder,
   type IkasProduct,
@@ -25,6 +26,12 @@ import {
 import { t, tLocalized, localizedHref } from "../../utils/i18n";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import ProtectedRoute from "../../sub-components/ProtectedRoute";
+import {
+  performLogout,
+  hasCustomerToken,
+  isCustomerAuthenticated,
+  isStudioPreviewActive,
+} from "../../utils/auth";
 
 // Critical CSS injected inline — ikas Studio does not bundle sub-component CSS files.
 // The registered page's own styles.css (ThreeMashAccountInfoPage/styles.css) covers
@@ -182,11 +189,15 @@ type AccountMode =
 
 function modeFromPathname(pathname: string, fallback: AccountMode): AccountMode {
   const p = pathname.replace(/\/+$/, "");
-  if (p === "/account") return "account";
-  if (p === "/account/addresses") return "addresses";
-  if (p === "/account/favorites" || p === "/account/favorite-products")
+  if (p === "/account" || p === "/hesabim") return "account";
+  if (p === "/account/addresses" || p === "/adreslerim") return "addresses";
+  if (
+    p === "/account/favorites" ||
+    p === "/account/favorite-products" ||
+    p === "/favorilerim"
+  )
     return "favorites";
-  if (p === "/account/orders") return "orders";
+  if (p === "/account/orders" || p === "/siparislerim") return "orders";
   if (p === "/account/forgot-password") return "forgot-password";
   if (p === "/account/recover-password") return "recover-password";
   return fallback;
@@ -299,7 +310,7 @@ function dashboardStyle(props: DashboardProps) {
 // ─── Shell Component ─────────────────────────────────────────────────────────
 
 function AccountLayoutContent(props: DashboardProps) {
-  const isStudio = isStudioEnvironment();
+  const isStudio = isStudioPreviewActive();
 
   // ── Initial mode from URL (or prop if set by ikas Studio preview) ──
   const [mode, setMode] = useState<AccountMode>(() => {
@@ -344,11 +355,25 @@ function AccountLayoutContent(props: DashboardProps) {
     }
   }, [customer]);
 
-  // ── Listen to browser popstate (back/forward) ─────────────────────
+  // ── Listen to browser popstate (back/forward) & pageshow (bfcache) ─
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    function handleAuthVerification() {
+      if (isStudio) return true;
+      if (isCustomerAuthenticated() === "unauthenticated") {
+        setCustomer(null);
+        setOrders([]);
+        setFavorites([]);
+        setSidebarName("");
+        window.location.replace(safeRedirect(localizedHref("/")));
+        return false;
+      }
+      return true;
+    }
+
     function handlePopState() {
+      if (!handleAuthVerification()) return;
       setMode(
         modeFromPathname(
           window.location.pathname.replace(/\/+$/, ""),
@@ -358,8 +383,19 @@ function AccountLayoutContent(props: DashboardProps) {
     }
 
     window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, [props.mode]);
+    const disposeAuthReaction = reaction(
+      () => [
+        customerStore._token,
+        customerStore._initialized,
+        customerStore.customer,
+      ],
+      handleAuthVerification,
+    );
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      disposeAuthReaction();
+    };
+  }, [props.mode, isStudio]);
 
   // ── Load customer + section data on mount / mode change ───────────
   useEffect(() => {
@@ -367,16 +403,26 @@ function AccountLayoutContent(props: DashboardProps) {
 
     async function load() {
       try {
-        const currentCustomer = customerStore.customer;
-        if (currentCustomer) {
-          setCustomer(currentCustomer);
-          // PII storage disabled: customer name should not be cached client-side
+        let currentCustomer = customerStore.customer;
+        if (!currentCustomer && hasCustomerToken()) {
           try {
-            localStorage.removeItem("tm_customer_name");
-            localStorage.removeItem("tm_customer_cache");
+            await initCustomerStore(customerStore);
+            currentCustomer = customerStore.customer;
           } catch {}
-        } else if (isStudio) {
-          setCustomer(mockStudioCustomer);
+        }
+
+        if (mounted) {
+          if (currentCustomer) {
+            setCustomer(currentCustomer);
+            setSidebarName(customerName(currentCustomer));
+            try {
+              localStorage.removeItem("tm_customer_name");
+              localStorage.removeItem("tm_customer_cache");
+            } catch {}
+          } else if (isStudio) {
+            setCustomer(mockStudioCustomer);
+            setSidebarName(customerName(mockStudioCustomer));
+          }
         }
 
         if (mode === "orders") {
@@ -440,25 +486,12 @@ function AccountLayoutContent(props: DashboardProps) {
 
   async function handleLogout(event: Event) {
     event.preventDefault();
-    try {
-      localStorage.removeItem("tm_customer_name");
-      localStorage.removeItem("tm_customer_cache");
-      sessionStorage.removeItem("tm_customer_name");
-      sessionStorage.removeItem("tm_customer_cache");
-      localStorage.removeItem("customer");
-      sessionStorage.removeItem("customer");
-    } catch {}
-
-    try {
-      await logout(customerStore);
-    } catch {}
-
     setCustomer(null);
-
-    if (typeof window !== "undefined") {
-      const loginTarget = localizedHref(normalizeHref(props?.loginHref, "/account/login"));
-      window.location.href = safeRedirect(loginTarget);
-    }
+    setOrders([]);
+    setFavorites([]);
+    setSidebarName("");
+    // performLogout clears storage, clears cart, and redirects protected routes.
+    await performLogout();
   }
 
   // ── Href helpers ──────────────────────────────────────────────────
@@ -492,10 +525,20 @@ function AccountLayoutContent(props: DashboardProps) {
   function renderContent() {
     switch (mode) {
       case "account":
+        if (!effectiveCustomer && !isStudio) {
+          return (
+            <div
+              className="tmai-loading-placeholder"
+              style={{ minHeight: "360px", display: "flex", alignItems: "center", justifyContent: "center" }}
+            >
+              <span className="tmai-panel-spinner" style={{ display: "inline-block" }} />
+            </div>
+          );
+        }
         return (
           <AccountProfileForm
             customer={effectiveCustomer || ({} as IkasCustomer)}
-            ready={true}
+            ready={Boolean(effectiveCustomer)}
             setCustomer={setCustomer}
             props={props}
           />
@@ -597,8 +640,8 @@ function AccountLayoutContent(props: DashboardProps) {
 export default function ThreeMashAccountLayout(props: DashboardProps) {
   return (
     <ProtectedRoute
-      loginHref={props.loginHref}
-      isStudio={isStudioEnvironment()}
+      redirectHref="/"
+      isStudio={isStudioPreviewActive()}
     >
       <AccountLayoutContent {...props} />
     </ProtectedRoute>

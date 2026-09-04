@@ -6,9 +6,15 @@ import { tLocalized } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 const DEFAULT_IMAGES = basicSliderImages;
-const DEFAULT_INTRO_TITLE = tLocalized("Uyumlu Cihazlar", "Compatible Devices");
-const DEFAULT_INTRO_DESCRIPTION =
-  tLocalized("<p>Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> olarak gerçekleştirmekteyiz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.</p>", "<p>As the <b>official distributor</b> of Custom Resin Solutions, we carry out parameter matching <b>free of charge</b>, regardless of which 3D printer brand you use. We're with you with after-sales user training and <b>24/7 technical support</b>.</p>");
+function defaultIntroTitle() {
+  return tLocalized("Uyumlu Cihazlar", "Compatible Devices");
+}
+function defaultIntroDescription() {
+  return tLocalized(
+    "<p>Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> olarak gerçekleştirmekteyiz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.</p>",
+    "<p>As the <b>official distributor</b> of Custom Resin Solutions, we carry out parameter matching <b>free of charge</b>, regardless of which 3D printer brand you use. We're with you with after-sales user training and <b>24/7 technical support</b>.</p>"
+  );
+}
 
 type SliderImage = {
   src: string;
@@ -301,8 +307,8 @@ export function ThreeMashProductsBasicSlider(props: Props) {
     "--tmpbs-tablet-items": numberValue(props.visibleImagesTablet, 3, 1, 4),
   } as any;
 
-  const introTitle = text(props.introTitle, DEFAULT_INTRO_TITLE);
-  const introDescriptionHtml = text(props.introDescriptionHtml, DEFAULT_INTRO_DESCRIPTION);
+  const introTitle = text(props.introTitle, defaultIntroTitle());
+  const introDescriptionHtml = text(props.introDescriptionHtml, defaultIntroDescription());
   const hasIntro = props.showIntro !== false && (introTitle || introDescriptionHtml);
   const noPause = props.pauseOnHover === false ? " is-no-pause" : "";
   const single = itemCount === 1 ? " is-single" : "";
