@@ -386,6 +386,18 @@ const categoryRouteAliases: Record<string, string> = {
   "titanyum-diskler": "/titanyum-diskler",
 };
 
+const englishProductRoutes: Record<string, string> = {
+  "mash-p16l-385nm-16k-dental-3d-yazici": "/en/mash-p16l-385nm-16k-dental-3d-printer",
+  "mash-curie-m1-dental-3d-yazici": "/en/mash-curie-m1-dental-dlp-3d-printer",
+  "creality-halot-sky-6k": "/en/creality-halot-sky-6k-dental-3d-printer",
+  "mash-w1e-ultrasonik-yikama-cihazi": "/en/mash-w1e-ultrasonic-washing-unit",
+  "mash-c1e-uv-kurleme-cihazi": "/en/mash-c1e-smart-uv-curing-unit",
+  "creality-washcure-uw-02": "/en/creality-wash-and-cure-uw-03",
+  "argenz-ht-plus-zirkon-blok": "/en/argenz-ht-plus-zirconia-disc",
+  "argenz-st-multilayer-zirkon-blok": "/en/argenz-st-multilayer-zirconia-disc",
+  "argenz-ht-multilayer-zirkon-blok": "/en/argenz-ht-plus-multilayer-zirconia-disc",
+};
+
 function categoryHref(value: string) {
   const trimmed = value.trim();
   if (!trimmed) return "#";
@@ -395,7 +407,9 @@ function categoryHref(value: string) {
 
   try {
     const url = new URL(trimmed);
-    if (url.hostname !== "3mash.com" && url.hostname !== "www.3mash.com" && url.hostname !== "studio.ikasapps.com") {
+    const isCurrentStorefront = typeof window !== "undefined" && url.origin === window.location.origin;
+    const isIkasStorefront = url.hostname === "studio.ikasapps.com" || url.hostname.endsWith(".ikas.shop");
+    if (!isCurrentStorefront && url.hostname !== "3mash.com" && url.hostname !== "www.3mash.com" && !isIkasStorefront) {
       return trimmed;
     }
     const route = `${url.pathname}${url.search}${url.hash}` || "/";
@@ -405,6 +419,21 @@ function categoryHref(value: string) {
     const mapped = categoryRouteAliases[routeKey(trimmed)];
     return mapped || trimmed;
   }
+}
+
+function categoryProductHref(value: string) {
+  const normalized = categoryHref(value);
+  if (!isEnglishLocale() || normalized.startsWith("#") || /^[a-z][a-z0-9+.-]*:/i.test(normalized)) {
+    return localizedHref(normalized);
+  }
+
+  const hashIndex = normalized.indexOf("#");
+  const hash = hashIndex >= 0 ? normalized.slice(hashIndex) : "";
+  const pathAndQuery = hashIndex >= 0 ? normalized.slice(0, hashIndex) : normalized;
+  const englishRoute = englishProductRoutes[routeKey(pathAndQuery)];
+  if (englishRoute) return `${englishRoute}${hash}`;
+  const separator = pathAndQuery.includes("?") ? "&" : "?";
+  return `${pathAndQuery}${separator}lang=en${hash}`;
 }
 
 function parentCategoryHref(data: CategoryLandingData) {
@@ -741,7 +770,7 @@ function ProductCard({
   const variant = product ? safeVariant(product) : null;
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image;
-  const href = localizedHref(categoryHref(product ? getProductHref(product) : card.href));
+  const href = categoryProductHref(product ? getProductHref(product) : card.href);
   const liveImageSrc = image ? getDefaultSrc(image) : "";
   const imageSrc = card.sourceIcon ? "" : card.imageSrc || liveImageSrc;
   const imageAlt = card.imageAlt || image?.altText || card.title;
@@ -844,7 +873,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
     return button;
   });
 
-  const heroMetrics = data.hero.metrics.map((metric, index) => {
+  const baseHeroMetrics = data.hero.metrics.map((metric, index) => {
     if (index === 0) {
       return {
         ...metric,
@@ -991,8 +1020,15 @@ export default function ThreeMashCategoryLanding(props: Props) {
     liveProducts.forEach((product) => map.set(normalize(product.name), product));
     return map;
   }, [liveProducts]);
+  const heroMetrics = baseHeroMetrics.map((metric, index) => {
+    const priceMetricIndex = data.kind === "washing" ? 1 : data.kind === "curing" || data.kind === "zircon" ? 3 : data.kind === "wash-cure" ? 3 : -1;
+    if (index !== priceMetricIndex) return metric;
+    const liveProduct = findLiveProduct(liveProducts, data.selector.products[0]?.title || "");
+    const livePrice = liveProduct ? liveProductStatus(liveProduct) : "";
+    return livePrice ? { ...metric, value: livePrice, emphasis: "" } : { ...metric, value: "", emphasis: "" };
+  });
   const productCards = useMemo(
-    () => liveProductCards(liveProducts, data.selector.products, data.selector.filters, data.kind === "wash-cure" || data.kind === "resins"),
+    () => liveProductCards(liveProducts, data.selector.products, data.selector.filters, data.kind === "wash-cure" || data.kind === "resins" || data.kind === "zircon"),
     [data.selector.filters, data.selector.products, liveProducts],
   );
   const visibleCards = productCards.filter((card) => activeFilter === "all" || card.filterId === activeFilter);

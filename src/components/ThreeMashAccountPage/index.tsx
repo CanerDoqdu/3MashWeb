@@ -4,6 +4,7 @@ import { safeNavigationHref } from "../../utils/safeRedirect";
 import {
   customerLogin,
   customerStore,
+  register,
   Router,
   type IkasImage,
 } from "@ikas/bp-storefront";
@@ -95,32 +96,60 @@ function imageSource(
 }
 
 export function ThreeMashAccountPage(props: Props) {
+  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [marketingAccepted, setMarketingAccepted] = useState(false);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+
+  function switchTab(tab: "login" | "register") {
+    setActiveTab(tab);
+    setStatus("idle");
+  }
 
   async function submit(event: Event) {
     event.preventDefault();
     if (status === "loading") return;
 
     setStatus("loading");
-    const result = await customerLogin(customerStore, email, password);
-    if (result.isSuccess) {
-      setStatus("success");
-      if (typeof window !== "undefined" && customerStore.customer) {
-        try {
-          // PII storage disabled: customer name should not be cached client-side
-          localStorage.removeItem("tm_customer_name");
-          localStorage.removeItem("tm_customer_cache");
-          sessionStorage.removeItem("tm_customer_cache");
-        } catch {}
+    try {
+      const result =
+        activeTab === "login"
+          ? await customerLogin(customerStore, email, password)
+          : await register(
+              customerStore,
+              firstName,
+              lastName,
+              email,
+              password,
+              marketingAccepted,
+              [],
+              null,
+            );
+      if (result.isSuccess) {
+        setStatus("success");
+        if (typeof window !== "undefined" && customerStore.customer) {
+          try {
+            // PII storage disabled: customer name should not be cached client-side
+            localStorage.removeItem("tm_customer_name");
+            localStorage.removeItem("tm_customer_cache");
+            sessionStorage.removeItem("tm_customer_cache");
+          } catch {}
+        }
+        setTimeout(() => Router.navigate("/account"), 350);
+        return;
       }
-      setTimeout(() => Router.navigate("/account"), 350);
-      return;
+      setStatus("error");
+    } catch {
+      setStatus("error");
+    } finally {
+      setStatus((current) => (current === "loading" ? "error" : current));
     }
-    setStatus("error");
   }
 
   const image = imageSource(props.backgroundImageUrl, defaultAuthImage);
@@ -187,67 +216,181 @@ export function ThreeMashAccountPage(props: Props) {
           </div>
 
           <div className="tma-auth-tabs">
-            <span className="is-active">
+            <button
+              className={activeTab === "login" ? "is-active" : ""}
+              type="button"
+              onClick={() => switchTab("login")}
+            >
               {text(props.loginTabText, tLocalized("Üye Girişi", "Member Login"))}
-            </span>
-            <a href={href(props.registerTabHref, "/account/register")}>
+            </button>
+            <button
+              className={activeTab === "register" ? "is-active" : ""}
+              type="button"
+              onClick={() => switchTab("register")}
+            >
               {text(props.registerTabText, tLocalized("Üye Ol", "Register"))}
-            </a>
+            </button>
           </div>
 
-          <label className="tma-auth-field">
-            <span>* {text(props.emailLabel, tLocalized("Email", "E-mail"))}</span>
-            <input
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={email}
-              required
-              onInput={(event) =>
-                setEmail((event.currentTarget as HTMLInputElement).value)
-              }
-            />
-          </label>
+          {activeTab === "login" ? (
+            <>
+              <label className="tma-auth-field">
+                <span>* {text(props.emailLabel, tLocalized("Email", "E-mail"))}</span>
+                <input
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  required
+                  onInput={(event) =>
+                    setEmail((event.currentTarget as HTMLInputElement).value)
+                  }
+                />
+              </label>
 
-          <label className="tma-auth-field">
-            <span>* {text(props.passwordLabel, tLocalized("Şifre", "Password"))}</span>
-            <input
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              required
-              onInput={(event) =>
-                setPassword((event.currentTarget as HTMLInputElement).value)
-              }
-            />
-          </label>
+              <label className="tma-auth-field">
+                <span>* {text(props.passwordLabel, tLocalized("Şifre", "Password"))}</span>
+                <input
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  value={password}
+                  required
+                  onInput={(event) =>
+                    setPassword((event.currentTarget as HTMLInputElement).value)
+                  }
+                />
+              </label>
+            </>
+          ) : (
+            <>
+              <label className="tma-auth-field">
+                <span>* {tLocalized("Ad", "First Name")}</span>
+                <input
+                  name="firstName"
+                  autoComplete="given-name"
+                  value={firstName}
+                  required
+                  onInput={(event) =>
+                    setFirstName((event.currentTarget as HTMLInputElement).value)
+                  }
+                />
+              </label>
+
+              <label className="tma-auth-field">
+                <span>* {tLocalized("Soyad", "Last Name")}</span>
+                <input
+                  name="lastName"
+                  autoComplete="family-name"
+                  value={lastName}
+                  required
+                  onInput={(event) =>
+                    setLastName((event.currentTarget as HTMLInputElement).value)
+                  }
+                />
+              </label>
+
+              <label className="tma-auth-field">
+                <span>* {text(props.emailLabel, tLocalized("Email", "E-mail"))}</span>
+                <input
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  required
+                  onInput={(event) =>
+                    setEmail((event.currentTarget as HTMLInputElement).value)
+                  }
+                />
+              </label>
+
+              <label className="tma-auth-field">
+                <span>* {text(props.passwordLabel, tLocalized("Şifre", "Password"))}</span>
+                <input
+                  name="password"
+                  type="password"
+                  autoComplete="new-password"
+                  value={password}
+                  required
+                  onInput={(event) =>
+                    setPassword((event.currentTarget as HTMLInputElement).value)
+                  }
+                />
+              </label>
+
+              <label className="tma-auth-check">
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  required
+                  onInput={(event) =>
+                    setTermsAccepted((event.currentTarget as HTMLInputElement).checked)
+                  }
+                />
+                <span>
+                  <a href="/pages/uyelik-sozlesmesi">{tLocalized("Üyelik Sözleşmesi", "Membership Agreement")}</a>{" "}
+                  {tLocalized("ve", "and")}{" "}
+                  <a href="/pages/gizlilik-politikasi-ve-kvkk">{tLocalized("KVKK Aydınlatma Metni", "KVKK Clarification Text")}</a>{" "}
+                  {tLocalized("'ni okudum, kabul ediyorum. *", "have been read and agreed to. *")}
+                </span>
+              </label>
+
+              <label className="tma-auth-check">
+                <input
+                  type="checkbox"
+                  checked={marketingAccepted}
+                  onInput={(event) =>
+                    setMarketingAccepted((event.currentTarget as HTMLInputElement).checked)
+                  }
+                />
+                <span>
+                  {tLocalized("Kampanya, indirim ve duyurulardan haberdar olmak için", "To be informed about campaigns and updates,")}{" "}
+                  <a href="/pages/ticari-elektronik-ileti-onayi">{tLocalized("Ticari Elektronik İleti Onayı", "Commercial Electronic Message Consent")}</a>{" "}
+                  {tLocalized("metnini okudum, onaylıyorum. Tarafıma ticari elektronik ileti gönderilmesini kabul ediyorum. *", "text, I have read and agree to receive commercial electronic messages. *")}
+                </span>
+              </label>
+            </>
+          )}
 
           <button
             className="tma-auth-submit"
             type="submit"
-            disabled={status === "loading"}
+            disabled={
+              status === "loading" ||
+              (activeTab === "register" && !termsAccepted)
+            }
           >
             {status === "loading"
-              ? text(props.loadingText, tLocalized("Giriş yapılıyor...", "Logging in..."))
-              : text(props.submitButtonText, tLocalized("Üye Girişi", "Member Login"))}
+              ? text(
+                  props.loadingText,
+                  activeTab === "login"
+                    ? tLocalized("Giriş yapılıyor...", "Logging in...")
+                    : tLocalized("Kaydınız oluşturuluyor...", "Creating account..."),
+                )
+              : activeTab === "login"
+                ? text(props.submitButtonText, tLocalized("Üye Girişi", "Member Login"))
+                : tLocalized("Hesap Oluştur", "Create Account")}
           </button>
 
-          <a
-            className="tma-auth-underlink"
-            href={href(props.forgotPasswordHref, "/account/forgot-password")}
-          >
-            {text(props.forgotPasswordText, tLocalized("Parolamı Unuttum", "Forgot My Password"))}
-          </a>
+          {activeTab === "login" && (
+            <>
+              <a
+                className="tma-auth-underlink"
+                href={href(props.forgotPasswordHref, "/account/forgot-password")}
+              >
+                {text(props.forgotPasswordText, tLocalized("Parolamı Unuttum", "Forgot My Password"))}
+              </a>
 
-          <div className="tma-auth-register-callout">
-            <span>
-              {text(props.registerPromptText, tLocalized("Henüz hesabınız yok mu?", "Don't have an account yet?"))}
-            </span>
-            <a href={href(props.registerButtonHref, "/account/register")}>
-              {text(props.registerButtonText, tLocalized("Hesap oluştur", "Create Account"))}
-            </a>
-          </div>
+              <div className="tma-auth-register-callout">
+                <span>
+                  {text(props.registerPromptText, tLocalized("Henüz hesabınız yok mu?", "Don't have an account yet?"))}
+                </span>
+                <button type="button" onClick={() => switchTab("register")}>
+                  {text(props.registerButtonText, tLocalized("Hesap oluştur", "Create Account"))}
+                </button>
+              </div>
+            </>
+          )}
 
           {status !== "idle" && (
             <p className={`tma-auth-status is-${status}`}>

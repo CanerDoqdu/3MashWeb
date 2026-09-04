@@ -92,7 +92,7 @@ export function ThreeMashProductPackageContent(props: Props) {
   const ctaText = trimmedText(props.ctaText, tLocalized("Aksiyon Butonu Metni →", "Action Button Text →"));
   const ctaHref = safeNavigationHref(
     props.ctaHref,
-    "#"
+    "/search"
   );
 
   return (

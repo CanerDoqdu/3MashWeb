@@ -41,9 +41,12 @@ const costDetailPageHref = "/pages/hesaplama";
 
 function href(value?: string) {
   const next = safeNavigationHref(value, "#");
-  if (next === "#") return next;
+  if (next === "#") return isEnglishLocale() ? "/en/pages/iletisim" : "/pages/iletisim";
 
   const key = routeKey(next);
+  if (key === "pages-iletisim" || key === "iletisim" || key === "contact") {
+    return isEnglishLocale() ? "/en/pages/iletisim" : "/pages/iletisim";
+  }
   if (
     key === tLocalized("3mash-maliyet-detay-html", "3mash-maliyet-detay-html") ||
     key === tLocalized("maliyet-detay", "maliyet-detay") ||
@@ -740,7 +743,7 @@ export function ThreeMashHero(props: Props) {
                   props,
                 )}
               />{" "}
-              <RichInline value={props.subtitleMiddle?.startsWith(",") ? props.subtitleMiddle : `, ${props.subtitleMiddle}`} wordStyle={props} />{" "}
+              <RichInline value={props.subtitleMiddle} wordStyle={props} />{" "}
               <b
                 dangerouslySetInnerHTML={richText(
                   props.subtitleStrongTwo,

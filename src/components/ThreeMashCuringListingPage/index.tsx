@@ -5,7 +5,7 @@ import type { Props } from "./types";
 
 export function ThreeMashCuringListingPage(props: Props) {
   if (!isCurrentCategory("curing", props.productList)) return null;
-  return <ThreeMashCategoryLanding {...props} data={curingCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={curingCategoryData()} productList={props.productList} />;
 }
 
 export default ThreeMashCuringListingPage;

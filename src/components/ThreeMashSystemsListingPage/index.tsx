@@ -5,7 +5,7 @@ import type { Props } from "./types";
 
 export function ThreeMashSystemsListingPage(props: Props) {
   if (!isCurrentCategory("systems", props.productList)) return null;
-  return <ThreeMashCategoryLanding {...props} data={systemsCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={systemsCategoryData()} productList={props.productList} />;
 }
 
 export default ThreeMashSystemsListingPage;

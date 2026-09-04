@@ -5,7 +5,7 @@ import type { Props } from "./types";
 
 export function ThreeMashDentalOvensListingPage(props: Props) {
   if (!isCurrentCategory("furnaces", props.productList)) return null;
-  return <ThreeMashCategoryLanding {...props} data={dentalFurnacesCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={dentalFurnacesCategoryData()} productList={props.productList} />;
 }
 
 export default ThreeMashDentalOvensListingPage;

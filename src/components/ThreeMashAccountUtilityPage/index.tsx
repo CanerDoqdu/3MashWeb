@@ -25,6 +25,8 @@ import ThreeMashAccountLayout from "../ThreeMashAccountLayout";
 import { Props } from "./types";
 import type { Props as AccountInfoProps } from "../ThreeMashAccountInfoPage/types";
 import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
+export { isStudioEnvironment } from "../../utils/isStudioEnvironment";
+import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 import { businessConfig } from "../../utils/businessConfig";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -158,15 +160,6 @@ export function pageDescription(mode: string) {
  * URL parameters (?studio=, ?preview=) and document.referrer are NOT checked
  * because they are attacker-controllable.
  */
-export function isStudioEnvironment() {
-  if (typeof window === "undefined") return false;
-  return (
-    window.location.hostname.includes("ikasapps.com") ||
-    window.location.hostname.includes("myikas.com") ||
-    (typeof window.parent !== "undefined" && window.parent !== window)
-  );
-}
-
 export const mockStudioCustomer: IkasCustomer = {
   id: "studio-preview-customer",
   firstName: "Caner",

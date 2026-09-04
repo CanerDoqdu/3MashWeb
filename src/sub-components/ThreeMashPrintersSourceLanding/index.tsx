@@ -1,6 +1,6 @@
 import { useLayoutEffect } from "preact/hooks";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
-import { translateText, tLocalized } from "../../utils/i18n";
+import { isEnglishLocale, translateText, tLocalized, localizedHref } from "../../utils/i18n";
 import { safeRedirect } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
@@ -69,6 +69,10 @@ function crossPageAnchorClick(event: Event, path: string, sectionId: string, blo
   window.location.href = safeRedirect(path);
 }
 
+function printerProductHref(turkishPath: string, englishPath: string) {
+  return isEnglishLocale() ? englishPath : turkishPath;
+}
+
 export default function ThreeMashPrintersSourceLanding(props: Props) {
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
@@ -106,7 +110,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
       <div className="hero">
         <div className="wrap">
           <div className="crumb">
-            <a href="/">Ana sayfa</a> &nbsp;/&nbsp; <a href="/search">{tLocalized("Ürünler", "Products")}</a> &nbsp;/&nbsp; <span aria-current="page">{tLocalized("3D Yazıcılar", "3D Printers")}</span>
+            <a href={localizedHref("/")}>{tLocalized("Ana sayfa", "Home")}</a> &nbsp;/&nbsp; <a href={localizedHref("/search")}>{tLocalized("Ürünler", "Products")}</a> &nbsp;/&nbsp; <span aria-current="page">{tLocalized("3D Yazıcılar", "3D Printers")}</span>
           </div>
           <h1>
             {textValue(props.heroTitlePrefix, tLocalized("±20 mikron", "±20 microns"))} <span className="em">{textValue(props.heroTitleEmphasis, tLocalized("burada doğar.", "is born here."))}</span>
@@ -155,7 +159,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
                   <div><span>{tLocalized("Işık", "Light")}</span><b>385 nm UV</b></div>
                   <div><span>{tLocalized("Kalibrasyon", "Calibration")}</span><b>8 nokta dikey kilit</b></div>
                 </div>
-                <a className="go" href="/mash-p16l-385nm-16k-dental-3d-yazici">{tLocalized("İncele", "View")} <span>→</span></a>
+                <a className="go" href={printerProductHref("/mash-p16l-385nm-16k-dental-3d-yazici", "/en/mash-p16l-385nm-16k-dental-3d-printer")}>{tLocalized("İncele", "View")} <span>→</span></a>
               </div>
             </div>
             <div className="pc">
@@ -168,7 +172,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
                   <div><span>{tLocalized("Hız", "Speed")}</span><b>{tLocalized("14 dk'da geçici kron", "Temporary crown in 14 minutes")}</b></div>
                   <div><span>{tLocalized("Kalibrasyon", "Calibration")}</span><b>{tLocalized("6 aya kadar gerekmez", "Not required for up to 6 months")}</b></div>
                 </div>
-                <a className="go" href="/mash-curie-m1-dental-3d-yazici">{tLocalized("İncele", "View")} <span>→</span></a>
+                <a className="go" href={printerProductHref("/mash-curie-m1-dental-3d-yazici", "/en/mash-curie-m1-dental-dlp-3d-printer")}>{tLocalized("İncele", "View")} <span>→</span></a>
               </div>
             </div>
             <div className="pc">
@@ -181,7 +185,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
                   <div><span>Hassasiyet</span><b>{tLocalized("±15 µm (arttırılmış)", "±15 µm (enhanced)")}</b></div>
                   <div><span>{tLocalized("Versiyon", "Version")}</span><b>{tLocalized("Fabrika / Arttırılmış", "Factory / Enhanced")}</b></div>
                 </div>
-                <a className="go" href="/creality-halot-sky-6k">{tLocalized("İncele", "View")} <span>→</span></a>
+                <a className="go" href={printerProductHref("/creality-halot-sky-6k", "/en/creality-halot-sky-6k-dental-3d-printer")}>{tLocalized("İncele", "View")} <span>→</span></a>
               </div>
             </div>
           </div>

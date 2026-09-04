@@ -6,6 +6,7 @@ import {
 import { Props } from "./types";
 import { tLocalized, tProp } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -94,7 +95,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
         {/* ← Back link — quiet, editorial */}
         <a
           className="tm-bda-back"
-          href={props.backLinkHref || tLocalized("/blog", "/blog")}
+          href={safeNavigationHref(props.backLinkHref, tLocalized("/blog", "/blog"))}
           aria-label={props.backLinkText || tLocalized("Blog'a dön", "Back to blog")}
         >
           <span aria-hidden="true">←</span>

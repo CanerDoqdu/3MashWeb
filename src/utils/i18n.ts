@@ -2,7 +2,6 @@ import { I18n, IkasStorefrontConfig } from "@ikas/bp-storefront";
 import trLocaleJson from "../locales/tr.json";
 import enLocaleJson from "../locales/en.json";
 import allTranslationsJson from "./all_translations.json";
-import { safeDecodeURI } from "./safeDecodeURI";
 
 export type Locale = "tr" | "en";
 
@@ -46,6 +45,14 @@ export function getCurrentLocale(): Locale {
       try {
         // A. Check IkasStorefrontConfig routing locale
         if (typeof IkasStorefrontConfig !== "undefined") {
+          const currentPath = IkasStorefrontConfig.getCurrentPath?.()?.toLowerCase?.();
+          if (currentPath) {
+            if (currentPath === "en" || currentPath === "/en" || currentPath.startsWith("en/") || currentPath.startsWith("/en/")) {
+              return "en";
+            }
+            return "tr";
+          }
+
           const configLocale = IkasStorefrontConfig.getCurrentLocale?.()?.toLowerCase?.();
           if (configLocale) {
             if (configLocale.startsWith("en")) return "en";
@@ -59,10 +66,6 @@ export function getCurrentLocale(): Locale {
             if (routingLocale.startsWith("tr")) return "tr";
           }
 
-          const currentPath = IkasStorefrontConfig.getCurrentPath?.()?.toLowerCase?.();
-          if (currentPath === "en" || currentPath === "/en" || currentPath?.startsWith("en/") || currentPath?.startsWith("/en/")) {
-            return "en";
-          }
         }
 
         // B. Check I18n service
@@ -88,71 +91,19 @@ export function getCurrentLocale(): Locale {
       return "en";
     }
 
-    // Priority 2: IkasStorefrontConfig on browser
-    try {
-      if (typeof IkasStorefrontConfig !== "undefined") {
-        const configLocale = IkasStorefrontConfig.getCurrentLocale?.()?.toLowerCase?.();
-        if (configLocale?.startsWith("en")) {
-          _clientCachedLocale = "en";
-          return "en";
-        }
-        const currentPath = IkasStorefrontConfig.getCurrentPath?.()?.toLowerCase?.();
-        if (currentPath === "en" || currentPath === "/en" || currentPath?.startsWith("en/") || currentPath?.startsWith("/en/")) {
-          _clientCachedLocale = "en";
-          return "en";
-        }
-      }
-    } catch { }
-
-    // Priority 3: I18n service on browser
-    try {
-      if (typeof I18n !== "undefined" && typeof I18n.getLocale === "function") {
-        const ikasLocale = I18n.getLocale()?.toLowerCase?.();
-        if (ikasLocale?.startsWith("en")) {
-          _clientCachedLocale = "en";
-          return "en";
-        }
-      }
-    } catch { }
-
-    // Priority 4: Document root attributes
-    const docAttr = document.documentElement.getAttribute("data-3mash-locale") || document.documentElement.lang?.toLowerCase?.();
-    if (docAttr?.startsWith("en")) return "en";
-    if (docAttr?.startsWith("tr")) return "tr";
-
-    // Priority 5: Cached client state
-    if (_clientCachedLocale) return _clientCachedLocale;
-
-    // Priority 6: URL query params (e.g. ?lang=en or ?locale=en)
+    // Ikas uses /en/ as the English route prefix; every other storefront path
+    // is Turkish. Persisted preferences must not override the current route.
     try {
       const searchParams = new URLSearchParams(window.location.search);
       const urlLang = searchParams.get("lang") || searchParams.get("locale");
-      if (urlLang) {
-        const clean = urlLang.toLowerCase();
-        if (clean.startsWith("en")) return "en";
-        if (clean.startsWith("tr")) return "tr";
+      if (urlLang?.toLowerCase().startsWith("en")) {
+        _clientCachedLocale = "en";
+        return "en";
       }
     } catch { }
 
-    // Priority 7: localStorage
-    try {
-      const stored = localStorage.getItem("3mash_locale") || localStorage.getItem("3mash_lang") || localStorage.getItem("locale");
-      if (stored) {
-        const clean = stored.toLowerCase();
-        if (clean.startsWith("en")) return "en";
-        if (clean.startsWith("tr")) return "tr";
-      }
-    } catch { }
-
-    // Priority 8: Cookies
-    try {
-      const match = document.cookie.match(/(?:^|;\s*)(?:3mash_locale|3mash_lang|locale)=([^;]+)/);
-      if (match?.[1]) {
-        const clean = safeDecodeURI(match[1]).toLowerCase();
-        if (clean.startsWith("en")) return "en";
-        if (clean.startsWith("tr")) return "tr";
-      }
-    } catch { }
+    _clientCachedLocale = "tr";
+    return "tr";
   } catch (_e) { }
 
   return "tr";
@@ -557,6 +508,10 @@ export const AUTO_TRANSLATION_MAP: Record<string, string> = {
   "ticari elektronik ileti": "Commercial Electronic Message",
   "üyelik sözleşmesi": "Membership Agreement",
   "çerez politikası": "Cookie Policy",
+  "dental klinik ve laboratuvarlar için entegre 3d baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada.":
+    "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together.",
+  "dental klinik ve laboratuvarlar icin entegre 3d baski ekosistemi: yazici, recine, kurleme cozumleri ve uretim uzmanligi bir arada.":
+    "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together.",
   "tüm hakları saklıdır.": "All rights reserved.",
   "türkiye geneline hızlı teslimat": "Fast delivery across Turkey",
   "uzman teknik destek": "Expert technical support",
@@ -587,6 +542,31 @@ export const AUTO_TRANSLATION_MAP: Record<string, string> = {
 export const NORMALIZED_AUTO_MAP: Record<string, string> = {};
 for (const [key, val] of Object.entries(AUTO_TRANSLATION_MAP)) {
   NORMALIZED_AUTO_MAP[cleanText(key)] = val;
+}
+
+export const NORMALIZED_REVERSE_MAP: Record<string, string> = {};
+for (const [tr, en] of Object.entries(AUTO_TRANSLATION_MAP)) {
+  NORMALIZED_REVERSE_MAP[cleanText(en)] = tr;
+}
+
+const AUTO_MAP_REVERSE: ReadonlyArray<readonly [string, string]> = Object.entries(AUTO_TRANSLATION_MAP)
+  .map(([turkish, english]) => [english, turkish] as const)
+  .sort(([left], [right]) => right.length - left.length);
+
+function replaceKnownTranslations(value: string, reverse: boolean) {
+  const entries: ReadonlyArray<readonly [string, string]> = reverse
+    ? AUTO_MAP_REVERSE
+    : Object.entries(AUTO_TRANSLATION_MAP).sort(([left], [right]) => right.length - left.length);
+  return entries.reduce((result, [source, target]) => {
+    const pattern = new RegExp(escapeRegExp(source), "gi");
+    return result.replace(pattern, target);
+  }, value);
+}
+
+export function translateForLocale(value: string, sourceLocale: Locale): string {
+  const targetLocale = getCurrentLocale();
+  if (sourceLocale === targetLocale || !value) return value;
+  return replaceKnownTranslations(value, sourceLocale === "tr");
 }
 
 function stripHtmlTags(html?: string | null): string {
@@ -677,7 +657,20 @@ export function tProp(
     return trFallback;
   }
 
-  return propValue && propValue.trim() !== "" ? propValue : trFallback;
+  if (propValue && propValue.trim() !== "") {
+    const cProp = cleanText(propValue);
+    // If prop matches the English fallback, return the Turkish fallback
+    if (enFallback && cProp === cleanText(enFallback) && trFallback) {
+      return trFallback;
+    }
+    // If prop is in English and we have a reverse translation to Turkish
+    if (NORMALIZED_REVERSE_MAP[cProp]) {
+      return NORMALIZED_REVERSE_MAP[cProp];
+    }
+    return propValue;
+  }
+
+  return trFallback;
 }
 
 /**

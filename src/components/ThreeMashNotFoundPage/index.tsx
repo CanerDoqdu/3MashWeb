@@ -1,5 +1,6 @@
 import { Props } from "./types";
 import { tLocalized, tProp } from "../../utils/i18n";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 const defaultBackgroundImage =
   "https://cdn.myikas.com/images/theme-images/ebbf8195-570a-4650-893b-b460bab2c034/image_1080.webp";
@@ -80,7 +81,7 @@ export function ThreeMashNotFoundPage(props: Props) {
               "This link may have been moved, removed, or mistyped. You can return to the homepage to explore 3mash products and content."
             )}
           </p>
-          <a className="tm-404-link" href={text(props.buttonHref, "/")}>
+          <a className="tm-404-link" href={safeNavigationHref(text(props.buttonHref, "/"), "/")}>
             {text(props.buttonText, tLocalized("Ana sayfaya dön", "Back to home"), "Back to home")}
           </a>
         </div>

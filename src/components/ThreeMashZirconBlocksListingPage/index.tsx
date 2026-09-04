@@ -5,7 +5,7 @@ import type { Props } from "./types";
 
 export function ThreeMashZirconBlocksListingPage(props: Props) {
   if (!isCurrentCategory("zircon", props.productList)) return null;
-  return <ThreeMashCategoryLanding {...props} data={zirconBlocksCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={zirconBlocksCategoryData()} productList={props.productList} />;
 }
 
 export default ThreeMashZirconBlocksListingPage;

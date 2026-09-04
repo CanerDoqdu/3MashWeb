@@ -104,15 +104,32 @@ function sanitizeAttributes(element: Element) {
   });
 }
 
+function stripUnsafeUrlAttributes(input: string, blockAllData = false) {
+  const unsafeScheme = blockAllData
+    ? /^(?:javascript:|vbscript:|data:)/i
+    : /^(?:javascript:|vbscript:|data:text\/html|data:application\/javascript)/i;
+
+  return input.replace(
+    /\s(?:href|src|xlink:href)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi,
+    (attribute) => {
+      const value = attribute.replace(/^\s*(?:href|src|xlink:href)\s*=\s*/i, "").trim();
+      const unquoted = value.replace(/^("|')|("|')$/g, "").trim();
+      return unsafeScheme.test(unquoted) ? "" : attribute;
+    },
+  );
+}
+
 export function sanitizeHtml(input?: string | null): string {
   if (!input) return "";
 
   if (typeof DOMParser === "undefined") {
-    return String(input)
-      .replace(/<script[\s\S]*?<\/script>/gi, "")
-      .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
-      .replace(/on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
-      .replace(/\sstyle\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "");
+    return stripUnsafeUrlAttributes(
+      String(input)
+        .replace(/<script[\s\S]*?<\/script>/gi, "")
+        .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
+        .replace(/on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+        .replace(/\sstyle\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, ""),
+    );
   }
 
   const doc = new DOMParser().parseFromString(`<div>${String(input)}</div>`, "text/html");
@@ -149,11 +166,14 @@ export function sanitizeSvgMarkup(input: string | null | undefined): string {
   if (!svg) return "";
 
   if (typeof DOMParser === "undefined") {
-    return svg
-      .replace(/<script[\s\S]*?<\/script>/gi, "")
-      .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
-      .replace(/on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
-      .replace(/\sstyle\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "");
+    return stripUnsafeUrlAttributes(
+      svg
+        .replace(/<script[\s\S]*?<\/script>/gi, "")
+        .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
+        .replace(/on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+        .replace(/\sstyle\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, ""),
+      true,
+    );
   }
 
   const doc = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">${svg}</svg>`, "image/svg+xml");

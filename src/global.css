@@ -110,6 +110,38 @@
   --tm-theme-font-serif: "Newsreader", serif;
   --tm-theme-font-emphasis: var(--tm-theme-font-serif);
   --tm-theme-font-logo: "Baloo 2", sans-serif;
+
+  /* ThreeMash Section Renderer global fallback tokens */
+  --tmr-bg: var(--tm-theme-bg);
+  --tmr-text: var(--tm-theme-text);
+  --tmr-sub: var(--tm-theme-sub);
+  --tmr-muted: var(--tm-theme-muted);
+  --tmr-line: var(--tm-theme-line);
+  --tmr-accent: var(--tm-theme-accent);
+  --tmr-final-bg: var(--tm-theme-dark);
+  --tmr-final-text: #FFFFFF;
+  --tmr-final-sub: #A5A59A;
+  --tmr-final-primary-bg: var(--tm-theme-accent);
+  --tmr-final-primary-text: var(--tm-theme-text);
+  --tmr-final-secondary-text: #FFFFFF;
+  --tmr-footer-bg: var(--tm-theme-dark);
+  --tmr-footer-text: #FFFFFF;
+  --tmr-footer-muted: #8B8B80;
+  --tmr-footer-line: #26261F;
+
+  /* ThreeMash Product Detail Template global fallback tokens */
+  --tmpdt-bg: var(--tm-theme-bg);
+  --tmpdt-ink: var(--tm-theme-text);
+  --tmpdt-sub: var(--tm-theme-sub);
+  --tmpdt-mut: var(--tm-theme-muted);
+  --tmpdt-line: var(--tm-theme-line);
+  --tmpdt-line2: var(--tm-theme-line-strong);
+  --tmpdt-lime: var(--tm-theme-accent);
+  --tmpdt-lime-ink: var(--tm-theme-accent-text);
+  --tmpdt-lime-soft: var(--tm-theme-accent-soft);
+  --tmpdt-red: var(--tm-theme-danger);
+  --tmpdt-panel: var(--tm-theme-panel);
+  --tmpdt-dark: var(--tm-theme-dark);
 }
 
 :where([class^="three-mash"], [class*=" three-mash"]),
@@ -155,6 +187,7 @@
   .tmr-faq summary,
   .tmr-final h2,
   .tmr-footer h6,
+  .tmr-footer .tmr-footer-col-title,
   .tmr-payment-badge
 ) {
   font-family: var(--tm-theme-font-heading) !important;
@@ -208,7 +241,8 @@
   .tmr-index-text,
   .tmr-tag,
   .tmr-roi-num span,
-  .tmr-footer h6
+  .tmr-footer h6,
+  .tmr-footer .tmr-footer-col-title
 ) {
   font-family: var(--tm-theme-font-heading) !important;
   letter-spacing: 0.16em !important;
@@ -227,7 +261,7 @@
   letter-spacing: 0.12em !important;
 }
 
-:where([class^="three-mash"], [class*=" three-mash"]) :where(.tmr-footer h6) {
+:where([class^="three-mash"], [class*=" three-mash"]) :where(.tmr-footer h6, .tmr-footer .tmr-footer-col-title) {
   letter-spacing: 0.1em !important;
 }
 

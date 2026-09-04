@@ -107,25 +107,31 @@ export function ThreeMashRegisterPage(props: Props) {
 
   async function submit(event: Event) {
     event.preventDefault();
-    if (status === "loading" || !termsAccepted || !marketingAccepted) return;
+    if (status === "loading" || !termsAccepted) return;
 
     setStatus("loading");
-    const result = await register(
-      customerStore,
-      firstName,
-      lastName,
-      email,
-      password,
-      marketingAccepted,
-      [],
-      null,
-    );
-    if (result.isSuccess) {
-      setStatus("success");
-      setTimeout(() => Router.navigate("/account"), 350);
-      return;
+    try {
+      const result = await register(
+        customerStore,
+        firstName,
+        lastName,
+        email,
+        password,
+        marketingAccepted,
+        [],
+        null,
+      );
+      if (result.isSuccess) {
+        setStatus("success");
+        setTimeout(() => Router.navigate("/account"), 350);
+        return;
+      }
+      setStatus("error");
+    } catch {
+      setStatus("error");
+    } finally {
+      setStatus((current) => (current === "loading" ? "error" : current));
     }
-    setStatus("error");
   }
 
   const image = imageSource(props.backgroundImageUrl, defaultAuthImage);
@@ -284,7 +290,6 @@ export function ThreeMashRegisterPage(props: Props) {
             <input
               type="checkbox"
               checked={marketingAccepted}
-              required
               onInput={(event) =>
                 setMarketingAccepted(
                   (event.currentTarget as HTMLInputElement).checked,
@@ -308,7 +313,7 @@ export function ThreeMashRegisterPage(props: Props) {
           <button
             className="tmrpg-auth-submit"
             type="submit"
-            disabled={status === "loading" || !termsAccepted || !marketingAccepted}
+            disabled={status === "loading" || !termsAccepted}
           >
             {status === "loading"
               ? text(props.loadingText, tLocalized("Kaydınız oluşturuluyor...", "Creating account..."), "Creating account...")

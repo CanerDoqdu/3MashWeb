@@ -5,7 +5,7 @@ import type { Props } from "./types";
 
 export function ThreeMashTitaniumDiscsListingPage(props: Props) {
   if (!isCurrentCategory("titanium", props.productList)) return null;
-  return <ThreeMashCategoryLanding {...props} data={titaniumDiscsCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={titaniumDiscsCategoryData()} productList={props.productList} />;
 }
 
 export default ThreeMashTitaniumDiscsListingPage;

@@ -5,7 +5,7 @@ import type { Props } from "./types";
 
 export function ThreeMashPrinterSparePartsListingPage(props: Props) {
   if (!isCurrentCategory("spares", props.productList)) return null;
-  return <ThreeMashCategoryLanding {...props} data={printerSparePartsCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={printerSparePartsCategoryData()} productList={props.productList} />;
 }
 
 export default ThreeMashPrinterSparePartsListingPage;

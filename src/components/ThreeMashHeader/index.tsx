@@ -10,6 +10,7 @@ import {
   getProductListInitialData,
   getProductVariantMainImage,
   getSelectedProductVariant,
+  IkasStorefrontConfig,
   initProductList,
   initCustomerStore,
   logout,
@@ -51,7 +52,7 @@ import {
   CRS_SPLINT_HARD_SLUG,
   CRS_SPLINT_SOFT_SLUG,
   CRS_TRAY_SLUG,
-  LAB_PRODUCT_DETAIL_DATA_BY_SLUG,
+  labProductDetailDataBySlug,
   MASH_C1E_UV_CURING_SLUG,
   MASH_CLEAR_SLUG,
   MASH_CURIE_M1_DENTAL_SLUG,
@@ -79,7 +80,7 @@ import {
   THREESHAPE_E4_SLUG,
   TRASFORMER_COMP_FLOW_SLUG,
   TRASFORMER_LIGHT_GLASS_SLUG,
-  ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG,
+  zirconBlockDetailDataBySlug,
 } from "../../sub-components/ThreeMashProductDetailData";
 import { Props } from "./types";
 import {
@@ -757,15 +758,24 @@ function announcementOverridePayload(value: unknown): HeaderAnnouncementOverride
 }
 
 function safeLocationPathname() {
-  if (typeof window === "undefined") return "";
-  return window.location.pathname;
+  if (typeof window !== "undefined") return window.location.pathname;
+
+  try {
+    const currentPath = IkasStorefrontConfig.getCurrentPath?.();
+    return typeof currentPath === "string" ? currentPath : "";
+  } catch {
+    return "";
+  }
 }
 
 function currentProductAnnouncement() {
-  if (typeof window === "undefined") return null;
+  const browserAnnouncement = typeof window !== "undefined"
+    ? announcementOverridePayload((window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown }).__THREE_MASH_PRODUCT_ANNOUNCEMENT__)
+    : null;
+  const routeAnnouncement = routeAnnouncementOverride();
   return (
-    announcementOverridePayload((window as unknown as { __THREE_MASH_PRODUCT_ANNOUNCEMENT__?: unknown }).__THREE_MASH_PRODUCT_ANNOUNCEMENT__) ||
-    routeAnnouncementOverride()
+    routeAnnouncement ||
+    browserAnnouncement
   );
 }
 
@@ -792,11 +802,12 @@ function productAnnouncementFromData(data: ReturnType<typeof resolveProductDetai
 
 function announcementForRouteKey(routeKey: string): HeaderAnnouncementOverride | null {
   if (!routeKey) return null;
+  const resolvedRouteKey = englishProductRouteAliases[routeKey] || routeKey;
 
-  const productAnnouncement = productAnnouncementFromData(resolveProductDetailData({ slug: routeKey }));
+  const productAnnouncement = productAnnouncementFromData(resolveProductDetailData({ slug: resolvedRouteKey }));
   if (productAnnouncement) return productAnnouncement;
 
-  const categoryData = categoryLandingDataFromKey(routeKey);
+  const categoryData = categoryLandingDataFromKey(resolvedRouteKey);
   if (categoryData) {
     return {
       enabled: true,
@@ -809,6 +820,18 @@ function announcementForRouteKey(routeKey: string): HeaderAnnouncementOverride |
 
   return null;
 }
+
+const englishProductRouteAliases: Record<string, string> = {
+  "mash-p16l-385nm-16k-dental-3d-printer": "mash-p16l-385nm-16k-dental-3d-yazici",
+  "mash-curie-m1-dental-dlp-3d-printer": "mash-curie-m1-dental-3d-yazici",
+  "creality-halot-sky-6k-dental-3d-printer": "creality-halot-sky-6k",
+  "mash-w1e-ultrasonic-washing-unit": "mash-w1e-ultrasonik-yikama-cihazi",
+  "mash-c1e-smart-uv-curing-unit": "mash-c1e-uv-kurleme-cihazi",
+  "creality-wash-and-cure-uw-03": "creality-washcure-uw-02",
+  "argenz-ht-plus-zirconia-disc": "argenz-ht-plus-zirkon-blok",
+  "argenz-st-multilayer-zirconia-disc": "argenz-st-multilayer-zirkon-blok",
+  "argenz-ht-plus-multilayer-zirconia-disc": "argenz-ht-multilayer-zirkon-blok",
+};
 
 function routeAnnouncementOverride(): HeaderAnnouncementOverride | null {
   return announcementForRouteKey(currentRouteKey());
@@ -872,18 +895,21 @@ const firstPaintProductRouteKeys = [
   TRASFORMER_COMP_FLOW_SLUG,
   TRASFORMER_LIGHT_GLASS_SLUG,
   ...Object.keys(PRINTER_SPARE_PART_DETAIL_DATA_BY_SLUG),
-  ...Object.keys(ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG),
-  ...Object.keys(LAB_PRODUCT_DETAIL_DATA_BY_SLUG),
+  ...Object.keys(zirconBlockDetailDataBySlug()),
+  ...Object.keys(labProductDetailDataBySlug()),
+  ...Object.keys(englishProductRouteAliases),
 ];
 
-const firstPaintAnnouncementMap = Object.fromEntries(
-  Array.from(new Set([...firstPaintCategoryRouteKeys, ...firstPaintProductRouteKeys]))
-    .map((routeKey) => [routeKey, announcementForRouteKey(routeKey)] as const)
-    .filter((entry): entry is readonly [string, HeaderAnnouncementOverride] => Boolean(entry[1])),
-);
+function firstPaintAnnouncementMap() {
+  return Object.fromEntries(
+    Array.from(new Set([...firstPaintCategoryRouteKeys, ...firstPaintProductRouteKeys]))
+      .map((routeKey) => [routeKey, announcementForRouteKey(routeKey)] as const)
+      .filter((entry): entry is readonly [string, HeaderAnnouncementOverride] => Boolean(entry[1])),
+  );
+}
 
 function firstPaintAnnouncementScript() {
-  const payload = JSON.stringify(firstPaintAnnouncementMap)
+  const payload = JSON.stringify(firstPaintAnnouncementMap())
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026")
@@ -900,18 +926,10 @@ function firstPaintAnnouncementScript() {
       var s = window.location.search.toLowerCase();
       if (s.indexOf("lang=en") !== -1 || s.indexOf("locale=en") !== -1) isEn = true;
     }
-    if (!isEn && window.localStorage) {
-      var loc = (localStorage.getItem("3mash_locale") || localStorage.getItem("3mash_lang") || localStorage.getItem("locale") || "").toLowerCase();
-      if (loc.indexOf("en") === 0) isEn = true;
-    }
-    if (!isEn && document.cookie) {
-      if (/(?:^|;\\s*)(?:3mash_locale|3mash_lang|locale)=en/i.test(document.cookie)) isEn = true;
-    }
     if (isEn) {
       document.documentElement.lang = "en";
       document.documentElement.setAttribute("data-3mash-locale", "en");
       document.documentElement.classList.add("tm-locale-en");
-      return;
     } else {
       document.documentElement.lang = "tr";
       document.documentElement.setAttribute("data-3mash-locale", "tr");
@@ -922,12 +940,12 @@ function firstPaintAnnouncementScript() {
   var path=(window.location.pathname||"").toLocaleLowerCase("tr").replace(/^\\/+|\\/+$/g,"").split("/").pop()||"";
   var map=${payload};
   var ann=map[path];
-  if(!ann)return;
   var root=document.currentScript&&document.currentScript.closest&&document.currentScript.closest(".three-mash-header");
   if(!root)return;
   var strong=root.querySelector("[data-tmh-ann-highlight]");
   var text=root.querySelector("[data-tmh-ann-text]");
   var link=root.querySelector("[data-tmh-ann-link]");
+  if(!ann)return;
   if(strong)strong.textContent=ann.highlightText||"";
   if(text)text.textContent=ann.text||"";
   if(link){link.textContent=ann.ctaText||"";if(ann.href)link.setAttribute("href",ann.href);}
@@ -1078,10 +1096,12 @@ function sectionHash(sectionId: string | undefined, fallback: string) {
 
 function homeRouteTarget(value: string | undefined) {
   const trimmed = value?.trim();
-  if (!trimmed || trimmed === "#" || trimmed.startsWith("#")) return defaultReferencesHomeHref;
+  if (!trimmed || trimmed === "#" || trimmed.startsWith("#")) {
+    return localizedHref(defaultReferencesHomeHref);
+  }
   const internal = internalSiteHref(trimmed);
   const withoutHash = internal.split("#")[0] || defaultReferencesHomeHref;
-  return withoutHash;
+  return localizedHref(withoutHash);
 }
 
 function referencesSectionTarget(homeHref?: string, sectionId?: string) {

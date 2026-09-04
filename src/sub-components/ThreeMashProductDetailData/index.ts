@@ -1,4 +1,4 @@
-import { tLocalized } from "../../utils/i18n";
+import { isEnglishLocale, tLocalized } from "../../utils/i18n";
 import type { ProductDetailTemplateData, ProductGalleryItem } from "../ThreeMashProductDetailTemplate";
 import { useEffect, useMemo, useState } from "preact/hooks";
 import {
@@ -491,7 +491,8 @@ const MASH_TRIAL_WHITE_GALLERY: ProductGalleryItem[] = [
   },
 ];
 
-export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_COMPOSITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_COMPOSITE_SLUG,
   announcement: {
     enabled: true,
@@ -741,8 +742,10 @@ export const CRS_COMPOSITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_SPLINT_HARD_SLUG,
   announcement: {
     enabled: true,
@@ -987,8 +990,10 @@ export const CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_SPLINT_SOFT_SLUG,
   announcement: {
     enabled: true,
@@ -1237,8 +1242,10 @@ export const CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_GUIDE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_GUIDE_SLUG,
   announcement: {
     enabled: true,
@@ -1495,8 +1502,10 @@ export const CRS_GUIDE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_IBT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_IBT_SLUG,
   announcement: {
     enabled: true,
@@ -1761,8 +1770,10 @@ export const CRS_IBT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_FLEXIT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_FLEXIT_SLUG,
   announcement: {
     enabled: true,
@@ -2031,8 +2042,10 @@ export const CRS_FLEXIT_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_ALIGNER_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_ALIGNER_SLUG,
   announcement: {
     enabled: true,
@@ -2249,8 +2262,10 @@ export const CRS_ALIGNER_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_DENTURE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_DENTURE_SLUG,
   announcement: {
     enabled: true,
@@ -2449,8 +2464,10 @@ export const CRS_DENTURE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_GINGIVA_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_GINGIVA_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_GINGIVA_SLUG,
   announcement: {
     enabled: true,
@@ -2649,8 +2666,10 @@ export const CRS_GINGIVA_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_MODEL_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_MODEL_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_MODEL_SLUG,
   announcement: {
     enabled: true,
@@ -2837,8 +2856,10 @@ export const CRS_MODEL_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_TRAY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_TRAY_SLUG,
   announcement: {
     enabled: true,
@@ -3025,8 +3046,10 @@ export const CRS_TRAY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const MASH_CLEAR_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function MASH_CLEAR_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: MASH_CLEAR_SLUG,
   announcement: {
     enabled: true,
@@ -3213,8 +3236,10 @@ export const MASH_CLEAR_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const CRS_CAST_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function CRS_CAST_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: CRS_CAST_SLUG,
   announcement: {
     enabled: true,
@@ -3378,8 +3403,10 @@ export const CRS_CAST_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const MASH_STUDY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function MASH_STUDY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: MASH_STUDY_SLUG,
   announcement: {
     enabled: true,
@@ -3519,8 +3546,10 @@ export const MASH_STUDY_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: MASH_TRIAL_PINK_SLUG,
   announcement: {
     enabled: true,
@@ -3661,8 +3690,10 @@ export const MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
-export const MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
+export function MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
+  return {
   key: MASH_TRIAL_WHITE_SLUG,
   announcement: {
     enabled: true,
@@ -3803,6 +3834,7 @@ export const MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
 type PrinterSparePartConfig = {
   slug: string;
@@ -4730,7 +4762,15 @@ function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData
   };
 }
 
-const ZIRCON_BLOCK_CONFIGS: ZirconBlockConfig[] = [
+let cachedZirconLocale: "tr" | "en" | null = null;
+let cachedZirconConfigs: ZirconBlockConfig[] | null = null;
+
+function zirconBlockConfigs(): ZirconBlockConfig[] {
+  const locale = isEnglishLocale() ? "en" : "tr";
+  if (cachedZirconLocale === locale && cachedZirconConfigs) return cachedZirconConfigs;
+
+  cachedZirconLocale = locale;
+  cachedZirconConfigs = [
   {
     slug: ARGENZ_ST_MULTILAYER_SLUG,
     productText: tLocalized("ArgenZ ST Multilayer Zirkon Blok", "ArgenZ ST Multilayer Zircon Block"),
@@ -4869,11 +4909,20 @@ const ZIRCON_BLOCK_CONFIGS: ZirconBlockConfig[] = [
       { question: tLocalized("Nesting neden önemli?", "Why is nesting important?"), answerHtml: tLocalized("Multilayer disklerde restorasyonun disk içindeki konumu renk geçişini doğrudan etkiler.", "In multilayer discs, the restoration's position within the disc directly affects the color gradient.") },
     ],
   },
-];
+  ];
+  return cachedZirconConfigs;
+}
 
-export const ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG: Record<string, ProductDetailTemplateData> = Object.fromEntries(
-  ZIRCON_BLOCK_CONFIGS.map((config) => [config.slug, zirconBlockDetail(config)]),
-);
+let cachedZirconDataLocale: "tr" | "en" | null = null;
+let cachedZirconData: Record<string, ProductDetailTemplateData> | null = null;
+
+export function zirconBlockDetailDataBySlug(): Record<string, ProductDetailTemplateData> {
+  const locale = isEnglishLocale() ? "en" : "tr";
+  if (cachedZirconDataLocale === locale && cachedZirconData) return cachedZirconData;
+  cachedZirconDataLocale = locale;
+  cachedZirconData = Object.fromEntries(zirconBlockConfigs().map((config) => [config.slug, zirconBlockDetail(config)]));
+  return cachedZirconData;
+}
 
 const ZIRCON_BLOCK_ALIASES: Record<string, string[]> = {
   [ARGENZ_ST_MULTILAYER_SLUG]: ["argenz-st-multilayer", "st-multilayer-zirkon", "stml"],
@@ -5035,7 +5084,7 @@ function labPhotoSrc(config: LabProductConfig, index: number | undefined) {
 }
 
 function labRelatedItems(config: LabProductConfig): NonNullable<ProductDetailTemplateData["related"]>["items"] {
-  return LAB_PRODUCT_CONFIGS.filter((item) => {
+  return labProductConfigs().filter((item) => {
     return item.category.href === config.category.href && item.slug !== config.slug;
   }).map((item) => ({
     tag: item.galleryBadge || item.category.label.toLocaleUpperCase("tr"),
@@ -5053,21 +5102,50 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
   const gallery = normalizedGallery(config.images, config.productText);
   const mainImage = config.images[0] || gallery[0]?.src || "";
   const quoteOnly = config.category === PRINTER_CATEGORY || config.category === WASH_CURE_CATEGORY;
+  const isWashCureProduct = [MASH_W1E_ULTRASONIC_WASH_SLUG, MASH_C1E_UV_CURING_SLUG, CREALITY_WASH_CURE_UW03_SLUG].includes(config.slug);
+  const productText = config.slug === MASH_W1E_ULTRASONIC_WASH_SLUG
+    ? tLocalized("Mash W1E Ultrasonik Yıkama Cihazı", "Mash W1E Ultrasonic Washing Device")
+    : config.slug === MASH_C1E_UV_CURING_SLUG
+      ? tLocalized("Mash C1E UV Kürleme Cihazı", "Mash C1E UV Curing Device")
+      : config.slug === CREALITY_WASH_CURE_UW03_SLUG
+        ? tLocalized("Creality Wash&Cure UW-03", "Creality Wash&Cure UW-03")
+        : config.productText;
+  const categoryText = isWashCureProduct
+    ? tLocalized("Yıkama & Kürleme Cihazları", "Washing & Curing Devices")
+    : config.category === PRINTER_CATEGORY
+      ? tLocalized("3D Yazıcılar", "3D Printers")
+      : config.category === SCANNER_CATEGORY
+        ? tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners")
+        : config.category === FURNACE_CATEGORY
+          ? tLocalized("Dental Fırınlar", "Dental Furnaces")
+          : config.category === SYSTEM_CATEGORY
+            ? tLocalized("Sistemler", "Systems")
+            : config.category.text;
+  const announcementStrong = isWashCureProduct
+    ? tLocalized("Post-process kontrolü.", "Post-process check.")
+    : config.category === PRINTER_CATEGORY
+      ? tLocalized("Yazıcı seçimi.", "Printer selection.")
+      : config.category.announcementStrong;
+  const announcementText = isWashCureProduct
+    ? tLocalized("Yıkama ve kürleme adımlarını kullandığınız reçineyle birlikte netleştiriyoruz.", "We clarify the washing and curing steps together with the resin you use.")
+    : config.category === PRINTER_CATEGORY
+      ? tLocalized("Uygulama, materyal ve üretim hacminize göre doğru 3D yazıcıyı birlikte seçiyoruz.", "We help you choose the right 3D printer together, based on your application, material, and production volume.")
+      : config.category.announcementText;
   return {
     key: config.slug,
     announcement: {
       enabled: true,
-      strongText: config.category.announcementStrong,
-      longText: config.category.announcementText,
+      strongText: announcementStrong,
+      longText: announcementText,
       ctaText: tLocalized("Uyumu kontrol et →", "Check compatibility →"),
       ctaHref: "#satinal",
     },
     breadcrumb: {
       homeText: tLocalized("Ana sayfa", "Home"),
       homeHref: "/",
-      categoryText: config.category.text,
+      categoryText,
       categoryHref: config.category.href,
-      productText: config.productText,
+      productText,
     },
     hero: {
       kicker: config.kicker,
@@ -5092,7 +5170,10 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       label: tLocalized("Seçim Kontrolü", "Selection Check"),
       titleHtml: tLocalized("Doğru ürün, <span class=\"hl\">iş akışına</span> göre seçilir.", "The right product is selected <span class=\"hl\">according to the workflow.</span>"),
       sideHtml: config.metricSideHtml,
-      panelTitleHtml: `${config.productText} için <span class="em">kontrol listesi.</span>`,
+      panelTitleHtml: tLocalized(
+        `${config.productText} için <span class="em">kontrol listesi.</span>`,
+        `Checklist for <span class="em">${config.productText}.</span>`,
+      ),
       note: tLocalized("Satın alma öncesi kontrol edilmesi gereken başlıklar.", "Items that should be checked before purchase."),
       items: [
         { descriptionHtml: tLocalized("Ürün, laboratuvarın mevcut cihaz ve üretim akışıyla <b>uyumlu</b> seçilmelidir.", "The product should be chosen to be <b>compatible</b> with the lab's existing devices and production workflow.") },
@@ -5154,7 +5235,10 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
     faq: {
       index: "05",
       label: tLocalized("Sık Sorulanlar", "Frequently Asked Questions"),
-      titleHtml: `${config.productText} <span class="em">hakkında.</span>`,
+      titleHtml: tLocalized(
+        `${config.productText} <span class="em">hakkında.</span>`,
+        `About <span class="em">${config.productText}.</span>`,
+      ),
       sideHtml: tLocalized("Uyumluluk, kapasite ve kullanım akışı satın alma öncesi netleştirilmelidir.", "Compatibility, capacity, and usage workflow should be clarified before purchase."),
       openFirst: true,
       items: config.faqItems,
@@ -5180,7 +5264,10 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       items: labRelatedItems(config),
     },
     finalCta: {
-      titleHtml: `${config.productText} için <span class=\"em\">uyumu birlikte kontrol edelim.</span>`,
+      titleHtml: tLocalized(
+        `${config.productText} için <span class=\"em\">uyumu birlikte kontrol edelim.</span>`,
+        `<span class=\"em\">Let's check compatibility</span> for ${config.productText} together.`,
+      ),
       textHtml: tLocalized("Cihaz, materyal, varyant ve laboratuvar iş akışınızı birlikte değerlendirip doğru seçeneği netleştirelim.", "Let's evaluate your device, material, variant, and lab workflow together and clarify the right option."),
       primaryText: tLocalized("Sepete dön ↑", "Back to cart ↑"),
       primaryHref: "#satinal",
@@ -5190,7 +5277,15 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
   };
 }
 
-const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
+let cachedLabLocale: "tr" | "en" | null = null;
+let cachedLabConfigs: LabProductConfig[] | null = null;
+
+function labProductConfigs(): LabProductConfig[] {
+  const locale = isEnglishLocale() ? "en" : "tr";
+  if (cachedLabLocale === locale && cachedLabConfigs) return cachedLabConfigs;
+
+  cachedLabLocale = locale;
+  cachedLabConfigs = [
   {
     slug: MASH_P16L_PRINTER_SLUG,
     category: PRINTER_CATEGORY,
@@ -5205,7 +5300,6 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
       "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/b92468e1-e607-46f2-b5fd-c7001c066fd8/1080/mash-p16l.webp",
       p16lPrinterOpenImage,
     ],
-    galleryBadge: tLocalized("16K", "16K"),
     metricTitleHtml: tLocalized("Mikron hassasiyet için <span class=\"em\">profesyonel LCD.</span>", "A <span class=\"em\">professional LCD</span> for micron-level precision."),
     metricSideHtml: tLocalized("P16L, dental restorasyonlarda 385 nm ışık sistemi ve 16K çözünürlükle hassas baskı akışına odaklanır.", "The P16L focuses on a precise printing workflow for dental restorations with a 385 nm light system and 16K resolution."),
     metrics: [
@@ -6179,14 +6273,23 @@ const LAB_PRODUCT_CONFIGS: LabProductConfig[] = [
     videoTitle: tLocalized("Trasformer Light Glass teknik destek", "Trasformer Light Glass technical support"),
     videoText: tLocalized("Mufla sistemi, Comp Flow uyumu ve tam çene kompozit vaka akışı için uzman desteği alın.", "Get expert support for the muffle system, Comp Flow compatibility, and the full-arch composite case workflow."),
   },
-];
+  ];
+  return cachedLabConfigs;
+}
 
-export const LAB_PRODUCT_DETAIL_DATA_BY_SLUG: Record<string, ProductDetailTemplateData> = Object.fromEntries(
-  LAB_PRODUCT_CONFIGS.map((config) => [config.slug, labProductDetail(config)]),
-);
+let cachedLabDataLocale: "tr" | "en" | null = null;
+let cachedLabData: Record<string, ProductDetailTemplateData> | null = null;
+
+export function labProductDetailDataBySlug(): Record<string, ProductDetailTemplateData> {
+  const locale = isEnglishLocale() ? "en" : "tr";
+  if (cachedLabDataLocale === locale && cachedLabData) return cachedLabData;
+  cachedLabDataLocale = locale;
+  cachedLabData = Object.fromEntries(labProductConfigs().map((config) => [config.slug, labProductDetail(config)]));
+  return cachedLabData;
+}
 
 const LAB_PRODUCT_ALIASES: Record<string, string[]> = {
-  [MASH_W1E_ULTRASONIC_WASH_SLUG]: ["mash-w1e", "w1e", tLocalized("ultrasonik-yikama", "ultrasonik-yikama"), "washing-device"],
+  [MASH_W1E_ULTRASONIC_WASH_SLUG]: ["mash-w1e", "w1e", tLocalized("ultrasonik-yikama", "ultrasonik-yikama"), "washing-device", "washing-unit", "mash-w1e-ultrasonic-washing-unit", "ultrasonic-washing-unit"],
   [MASH_C1E_UV_CURING_SLUG]: ["mash-c1e", "c1e", tLocalized("uv-kurleme", "uv-kurleme"), "dental-post-cure"],
   [CREALITY_WASH_CURE_UW03_SLUG]: ["creality-wash-cure-uw-03", "creality-washcure-uw-03", "uw-03", "uw-02"],
   [THREESHAPE_E2_SLUG]: ["3shape-e2", "e2-yuksek-uretkenlik"],
@@ -6353,14 +6456,14 @@ function zirconBlockData(product: unknown) {
   const slug = productSlug(product);
   const name = slugifyProduct(stringValue((product as { name?: unknown } | null)?.name));
   const haystack = `${slug} ${name}`;
-  const direct = ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG[slug];
+  const direct = zirconBlockDetailDataBySlug()[slug];
   if (direct) return direct;
 
-  for (const config of ZIRCON_BLOCK_CONFIGS) {
+  for (const config of zirconBlockConfigs()) {
     const productText = slugifyProduct(config.productText);
     const aliases = [config.slug, productText, ...(ZIRCON_BLOCK_ALIASES[config.slug] || [])];
     if (aliases.some((alias) => alias && haystack.includes(alias))) {
-      return ZIRCON_BLOCK_DETAIL_DATA_BY_SLUG[config.slug];
+      return zirconBlockDetailDataBySlug()[config.slug];
     }
   }
 
@@ -6371,14 +6474,14 @@ function labProductData(product: unknown) {
   const slug = productSlug(product);
   const name = slugifyProduct(stringValue((product as { name?: unknown } | null)?.name));
   const haystack = `${slug} ${name}`;
-  const direct = LAB_PRODUCT_DETAIL_DATA_BY_SLUG[slug];
+  const direct = labProductDetailDataBySlug()[slug];
   if (direct) return direct;
 
-  for (const config of LAB_PRODUCT_CONFIGS) {
+  for (const config of labProductConfigs()) {
     const productText = slugifyProduct(config.productText);
     const aliases = [config.slug, productText, ...(LAB_PRODUCT_ALIASES[config.slug] || [])];
     if (aliases.some((alias) => alias && haystack.includes(alias))) {
-      return LAB_PRODUCT_DETAIL_DATA_BY_SLUG[config.slug];
+      return labProductDetailDataBySlug()[config.slug];
     }
   }
 
@@ -6419,39 +6522,39 @@ export function resolveProductDetailData(product: unknown, productTemplateJson?:
       : labData
         ? labData
     : productLooksLikeTrialWhite(product)
-    ? MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA
+    ? MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA()
     : productLooksLikeTrialPink(product)
-      ? MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA
+      ? MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA()
       : productLooksLikeStudy(product)
-        ? MASH_STUDY_PRODUCT_DETAIL_DATA
+        ? MASH_STUDY_PRODUCT_DETAIL_DATA()
         : productLooksLikeCast(product)
-          ? CRS_CAST_PRODUCT_DETAIL_DATA
+          ? CRS_CAST_PRODUCT_DETAIL_DATA()
           : productLooksLikeMashClear(product)
-            ? MASH_CLEAR_PRODUCT_DETAIL_DATA
+            ? MASH_CLEAR_PRODUCT_DETAIL_DATA()
             : productLooksLikeTray(product)
-              ? CRS_TRAY_PRODUCT_DETAIL_DATA
+              ? CRS_TRAY_PRODUCT_DETAIL_DATA()
               : productLooksLikeModel(product)
-                ? CRS_MODEL_PRODUCT_DETAIL_DATA
+                ? CRS_MODEL_PRODUCT_DETAIL_DATA()
                 : productLooksLikeGingiva(product)
-                  ? CRS_GINGIVA_PRODUCT_DETAIL_DATA
+                  ? CRS_GINGIVA_PRODUCT_DETAIL_DATA()
                   : productLooksLikeDenture(product)
-                    ? CRS_DENTURE_PRODUCT_DETAIL_DATA
+                    ? CRS_DENTURE_PRODUCT_DETAIL_DATA()
                     : productLooksLikeAligner(product)
-                      ? CRS_ALIGNER_PRODUCT_DETAIL_DATA
+                      ? CRS_ALIGNER_PRODUCT_DETAIL_DATA()
                       : productLooksLikeFlexit(product)
-                        ? CRS_FLEXIT_PRODUCT_DETAIL_DATA
+                        ? CRS_FLEXIT_PRODUCT_DETAIL_DATA()
                         : productLooksLikeIbt(product)
-                          ? CRS_IBT_PRODUCT_DETAIL_DATA
+                          ? CRS_IBT_PRODUCT_DETAIL_DATA()
                           : productLooksLikeGuide(product)
-                            ? CRS_GUIDE_PRODUCT_DETAIL_DATA
+                            ? CRS_GUIDE_PRODUCT_DETAIL_DATA()
                             : productLooksLikeSplintSoft(product)
-                              ? CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA
+                              ? CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA()
                               : productLooksLikeSplintHard(product)
-                                ? CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA
+                                ? CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA()
                                 : productLooksLikeCrsComposite(product)
-                                  ? CRS_COMPOSITE_PRODUCT_DETAIL_DATA
+                                  ? CRS_COMPOSITE_PRODUCT_DETAIL_DATA()
                                   : override
-                                    ? CRS_COMPOSITE_PRODUCT_DETAIL_DATA
+                                    ? CRS_COMPOSITE_PRODUCT_DETAIL_DATA()
                                     : null;
   if (!baseData) return null;
   const data = override ? deepMerge(baseData, override) : baseData;

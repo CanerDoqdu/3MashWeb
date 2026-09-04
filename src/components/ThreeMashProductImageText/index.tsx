@@ -10,6 +10,7 @@ import {
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderUseCases } from "../../sub-components/ThreeMashProductSectionPlaceholder";
 import { isEnglishLocale, isTurkishText } from "../../utils/i18n";
+import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 
 function trimmedText(value: unknown): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -165,11 +166,14 @@ function overrideUseCasesData(baseData: ProductDetailTemplateData | null, props:
 }
 
 export function ThreeMashProductImageText(props: Props) {
+  const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
-  const rawData = sharedData || fallbackData || makePlaceholderUseCases();
+  const rawData = sharedData || fallbackData || (isStudio ? makePlaceholderUseCases() : null);
 
-  const data = overrideUseCasesData(rawData, props) || makePlaceholderUseCases();
+  if (!rawData) return null;
+
+  const data = overrideUseCasesData(rawData, props) || rawData;
 
   return (
     <ProductDetailSectionScope data={data}>

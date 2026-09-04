@@ -5,7 +5,7 @@ import type { Props } from "./types";
 
 export function ThreeMashWashingListingPage(props: Props) {
   if (!isCurrentCategory("washing", props.productList)) return null;
-  return <ThreeMashCategoryLanding {...props} data={washingCategoryData} productList={props.productList} />;
+  return <ThreeMashCategoryLanding {...props} data={washingCategoryData()} productList={props.productList} />;
 }
 
 export default ThreeMashWashingListingPage;

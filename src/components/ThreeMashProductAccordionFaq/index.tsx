@@ -4,6 +4,7 @@ import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-
 import { ProductDetailFaqSection, ProductDetailSectionScope, type ProductDetailTemplateData } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderFaq } from "../../sub-components/ThreeMashProductSectionPlaceholder";
 import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
+import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 
 type FaqItem = {
   question: string;
@@ -46,11 +47,14 @@ function overrideFaqData(baseData: ProductDetailTemplateData | null, props: Prop
 }
 
 export function ThreeMashProductAccordionFaq(props: Props) {
+  const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
-  const rawData = sharedData || fallbackData || makePlaceholderFaq();
+  const rawData = sharedData || fallbackData || (isStudio ? makePlaceholderFaq() : null);
 
-  const data = overrideFaqData(rawData, props) || makePlaceholderFaq();
+  if (!rawData) return null;
+
+  const data = overrideFaqData(rawData, props) || rawData;
 
   return (
     <ProductDetailSectionScope data={data}>

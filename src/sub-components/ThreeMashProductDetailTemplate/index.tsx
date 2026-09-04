@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { ComponentChildren } from "preact";
 import { resolveProductDetailData } from "../ThreeMashProductDetailData";
-import { tLocalized, isEnglishLocale, translateText } from "../../utils/i18n";
+import { tLocalized, isEnglishLocale, translateText, localizedHref } from "../../utils/i18n";
 import { safeJsonLdScript, sanitizeHtml } from "../../utils/sanitizeHtml";
 
 export type ProductGalleryItem = {
@@ -596,9 +596,9 @@ export function ProductDetailHeroSection(props: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <div className="tmpdt-wrap">
         <div className="tmpdt-crumb">
-          <a href={props.data.breadcrumb.homeHref}>{isEnglishLocale() && (props.data.breadcrumb.homeText === tLocalized("Ana sayfa", "Home") || props.data.breadcrumb.homeText === tLocalized("Anasayfa", "Home")) ? "Home" : props.data.breadcrumb.homeText}</a>
+          <a href={localizedHref(props.data.breadcrumb.homeHref)}>{isEnglishLocale() && (props.data.breadcrumb.homeText === tLocalized("Ana sayfa", "Home") || props.data.breadcrumb.homeText === tLocalized("Anasayfa", "Home")) ? "Home" : props.data.breadcrumb.homeText}</a>
           <span>/</span>
-          <a href={props.data.breadcrumb.categoryHref}>{props.data.breadcrumb.categoryText}</a>
+          <a href={localizedHref(props.data.breadcrumb.categoryHref)}>{props.data.breadcrumb.categoryText}</a>
           <span>/</span>
           <span>{props.data.breadcrumb.productText}</span>
         </div>

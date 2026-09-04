@@ -29,7 +29,12 @@ const phoneCountries = [
 ];
 
 function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
-  return tProp(value, fallbackTr, fallbackEn || fallbackTr);
+  const legacyTurkishDefaults = new Set(["Ad", "Soyad", "Mesaj"]);
+  return tProp(
+    legacyTurkishDefaults.has(value?.trim() || "") ? undefined : value,
+    fallbackTr,
+    fallbackEn || fallbackTr,
+  );
 }
 
 function href(value: string | undefined, fallback: string) {

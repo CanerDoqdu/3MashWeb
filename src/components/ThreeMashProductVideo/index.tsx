@@ -7,6 +7,7 @@ import {
   type ProductDetailTemplateData,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { isEnglishLocale, isTurkishText, tLocalized } from "../../utils/i18n";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 function trimmedText(value: unknown): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -37,7 +38,10 @@ function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Pr
   const sideHtml = trimmedText(p.sideHtml) || currentVideo?.sideHtml || "";
 
   // 02. Video Bağlantısı ve Kapak
-  const href = trimmedText(p.videoHref) || currentVideo?.href || "";
+  const href = safeNavigationHref(
+    trimmedText(p.videoHref) || currentVideo?.href,
+    "#"
+  );
   const image = imageSource(p.posterImage) || currentVideo?.image || "";
   const imageAlt = trimmedText(p.posterImageAlt) || currentVideo?.imageAlt || "";
 

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "preact/hooks";
 import { Props } from "./types";
 import { isEnglishLocale, tLocalized, tProp } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 type CostMode = "klinik" | "lab";
 
@@ -216,7 +217,8 @@ export function ThreeMashCostDetailPage(props: Props) {
     }
   };
 
-  const baseHomeUrl = props.useButtonHref || "/";
+  const baseHomeUrl = safeNavigationHref(props.useButtonHref, "/");
+  const calculatorUrl = safeNavigationHref(`${baseHomeUrl}#hesap`, `${baseHomeUrl}#hesap`);
   const homeMode = mode === "lab" ? "lab" : "clinic";
   const homeHref = baseHomeUrl.includes("?")
     ? `${baseHomeUrl}&rc=${Math.round(total)}&mode=${homeMode}#hesap`
@@ -237,11 +239,11 @@ export function ThreeMashCostDetailPage(props: Props) {
       <div className="top">
         <div className="wrap">
           <div className="crumb">
-            <a href={props.useButtonHref || "/"}>
+            <a href={baseHomeUrl}>
               {props.breadcrumbHomeText || tLocalized("Ana sayfa", "Home")}
             </a>{" "}
             &nbsp;/&nbsp;{" "}
-            <a href={(props.useButtonHref || "/") + "#hesap"}>
+            <a href={calculatorUrl}>
               {props.breadcrumbParentText || tLocalized("Tasarruf hesaplayıcı", "Savings calculator")}
             </a>{" "}
             &nbsp;/&nbsp; {props.breadcrumbCurrentText || tLocalized("Bir tekrarın maliyeti", "Cost of a remake")}

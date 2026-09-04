@@ -99,7 +99,6 @@ export const defaultFinalHtml = `<section id="iletisim-cta" class="tmr-final"><d
 
 const defaultFooterLegalLinks: Array<[string, string]> = [
   ["KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
-  [tLocalized("Çerez Politikası", "Cookie Policy"), "/pages/cerez-politikasi"],
   [tLocalized("İade &amp; Garanti", "Return &amp; Warranty"), "/pages/iade-ve-garanti"],
   [tLocalized("Mesafeli Satış", "Distance Sales"), "/pages/mesafeli-satis-sozlesmesi"],
 ];
@@ -323,6 +322,17 @@ function numberInRange(
   const parsed = typeof value === "number" ? value : Number(value);
   if (!Number.isFinite(parsed)) return fallback;
   return Math.min(max, Math.max(min, parsed));
+}
+
+function parseOptionalDimension(
+  value: unknown,
+  min = 20,
+  max = 600,
+): string | undefined {
+  if (value === undefined || value === null || value === "") return undefined;
+  const parsed = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(parsed)) return undefined;
+  return `${Math.min(max, Math.max(min, parsed))}px`;
 }
 
 function percentage(
@@ -929,6 +939,17 @@ function solutionDefaultCards(props: ThreeMashSectionRenderProps) {
 }
 
 export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
+  const curingImageWidth = parseOptionalDimension(
+    raw(props, "productImageWidth"),
+    20,
+    560,
+  );
+  const curingImageHeight = parseOptionalDimension(
+    raw(props, "productImageHeight"),
+    20,
+    360,
+  );
+
   return {
     "--tmr-bg": "var(--bg, #FAFAF7)",
     "--tmr-text": "var(--ink, #0E0E0C)",
@@ -994,8 +1015,18 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-curing-product-media-end": "#14140F",
     "--tmr-curing-reason-radius": `${numberInRange(raw(props, "reasonCardRadius"), 18, 0, 36)}px`,
     "--tmr-curing-product-radius": `${numberInRange(raw(props, "productCardRadius"), 20, 0, 36)}px`,
-    "--tmr-curing-image-width": `${numberInRange(raw(props, "productImageWidth"), 226, 48, 380)}px`,
-    "--tmr-curing-image-height": `${numberInRange(raw(props, "productImageHeight"), 206, 48, 340)}px`,
+    ...(curingImageWidth
+      ? {
+          "--tmr-curing-image-width": curingImageWidth,
+          "--tmr-curing-image-max-width": "100%",
+        }
+      : {}),
+    ...(curingImageHeight
+      ? {
+          "--tmr-curing-image-height": curingImageHeight,
+          "--tmr-curing-image-max-height": "100%",
+        }
+      : {}),
     "--tmr-curing-image-x": `${numberInRange(raw(props, "productImageXOffset"), 0, -90, 90)}px`,
     "--tmr-curing-image-y": `${numberInRange(raw(props, "productImageYOffset"), 0, -90, 90)}px`,
     "--tmr-curing-image-fit": imageFit(raw(props, "productImageFit")),
@@ -1906,6 +1937,9 @@ function isFooterMapsLabel(label: unknown) {
 function footerHrefForLabel(label: unknown, href: string) {
   const normalizedLabel = plainText(label).toLocaleLowerCase("tr-TR");
   const labelRoutes: Record<string, string> = {
+    "mash academy": "/pages/mash-academy",
+    "mash academy'yi keşfet": "/pages/mash-academy",
+    "mash academy yi kesfet": "/pages/mash-academy",
     hakkımızda: "/pages/about-us",
     hakkimizda: "/pages/about-us",
     "about us": "/pages/about-us",
@@ -1926,16 +1960,16 @@ function footerHrefForLabel(label: unknown, href: string) {
     "ticari elektronik ileti": "/pages/ticari-elektronik-ileti-onayi",
     "ticari elektronik ileti onayı": "/pages/ticari-elektronik-ileti-onayi",
     "ticari elektronik ileti onayi": "/pages/ticari-elektronik-ileti-onayi",
-    "çerez politikası": "/pages/cerez-politikasi",
-    "cerez politikasi": "/pages/cerez-politikasi",
-    "cookie policy": "/pages/cerez-politikasi",
+    "çerez politikası": "/pages/gizlilik-politikasi-ve-kvkk",
+    "cerez politikasi": "/pages/gizlilik-politikasi-ve-kvkk",
+    "cookie policy": "/pages/gizlilik-politikasi-ve-kvkk",
     "sıkça sorulan sorular": "/pages/sss",
     "sikca sorulan sorular": "/pages/sss",
     sss: "/pages/sss",
     faq: "/pages/sss",
   };
 
-  if (labelRoutes[normalizedLabel]) return labelRoutes[normalizedLabel];
+  if (labelRoutes[normalizedLabel]) return localizedHref(labelRoutes[normalizedLabel]);
   return isFooterMapsLabel(label) ? footerMapsHref : href;
 }
 
@@ -1966,14 +2000,12 @@ function footerLegalLinks(props: ThreeMashSectionRenderProps) {
   const links = en
     ? [
       ["Privacy &amp; KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
-      ["Cookie Policy", "/pages/cerez-politikasi"],
       ["Cookie Settings", "#cookie-settings"],
       ["Return &amp; Warranty", "/pages/iade-ve-garanti"],
       ["Distance Selling", "/pages/mesafeli-satis-sozlesmesi"],
     ]
     : [
       ["KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
-      ["Çerez Politikası", "/pages/cerez-politikasi"],
       ["Çerez Tercihleri", "#cerez-ayarlari"],
       ["İade &amp; Garanti", "/pages/iade-ve-garanti"],
       ["Mesafeli Satış", "/pages/mesafeli-satis-sozlesmesi"],
@@ -1981,7 +2013,7 @@ function footerLegalLinks(props: ThreeMashSectionRenderProps) {
   return links
     .map(
       ([text, target]) =>
-        `<a href="${target.startsWith('#') ? target : escapeAttr(internalSiteHref(target))}" class="${target.startsWith('#') ? 'tm-open-cookie-settings' : ''}">${text}</a>`,
+        `<a href="${target.startsWith('#') ? target : escapeAttr(target)}" class="${target.startsWith('#') ? 'tm-open-cookie-settings' : ''}">${text}</a>`,
     )
     .join("<span>·</span>");
 }
@@ -2078,32 +2110,52 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
       ["Zirconia Blocks", "/zirkon-bloklar"],
       ["Dental Furnaces", "/dental-firinlar"],
     ]
-    : defaultFooterProductLinks;
+    : [
+      ["3D Yazıcılar", "/3d-yazicilar"],
+      ["Dental Reçineler", "/dental-3d-yazici-recineleri"],
+      ["Yıkama &amp; Kürleme", "/yikama-kurleme-cihazlari"],
+      ["Masaüstü Tarayıcılar", "/masasustu-tarayicilar"],
+      ["Zirkon Bloklar", "/zirkon-bloklar"],
+      ["Dental Fırınlar", "/dental-firinlar"],
+    ];
 
   const companyLinks: Array<[string, string]> = en
     ? [
       ["About Us", "/pages/about-us"],
-      [tLocalized("Mash Academy", "Mash Academy"), academyPageHref],
-      [tLocalized("Blog", "Blog"), "/blog"],
-      ["FAQ", "/pages/sss"],
+      ["Mash Academy", academyPageHref],
+      ["Blog", "/blog"],
+      ["FAQ", "/pages/faq"],
     ]
-    : defaultFooterCompanyLinks;
+    : [
+      ["Hakkımızda", "/pages/about-us"],
+      ["Mash Academy", academyPageHref],
+      ["Blog", "/blog"],
+      ["SSS", "/pages/sss"],
+    ];
 
-  const products = linkList("product", en ? "PRODUCTS" : tLocalized("Ürünler", "Products"), productLinks);
-  const company = linkList("company", en ? "COMPANY" : tLocalized("ŞİRKET", "COMPANY"), companyLinks);
+  const products = linkList("product", en ? "PRODUCTS" : "Ürünler", productLinks);
+  const company = linkList("company", en ? "COMPANY" : "ŞİRKET", companyLinks);
   const socialLinks = footerSocialLinks(props);
   const paymentBadges = footerPaymentBadges();
   const contact = value(
     undefined,
-    linkList("contact", en ? "CONTACT" : tLocalized("İLETİŞİM", "CONTACT"), defaultFooterContactLinks) +
+    linkList("contact", en ? "CONTACT" : "İLETİŞİM", defaultFooterContactLinks) +
     socialLinks +
     paymentBadges,
   );
   const copyrightText = tLocalized("© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.", "© 2026 3MASH Technology Inc. All rights reserved.");
-  const descriptionText = en
-    ? "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together."
-    : footerDescriptionText;
-  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="${escapeAttr(internalSiteHref(field(props, "logoHref", "/")))}">${logoVisual}</a><p>${descriptionText}</p></div><div class="tmr-footer-link-col">${products}</div><div class="tmr-footer-link-col">${company}</div><div class="tmr-footer-link-col">${contact}</div></div><div class="tmr-base"><span>${copyrightText}</span><div class="tmr-base-meta">${footerLegalLinks(props)}</div></div></div></footer>`;
+  const fallbackDescTr =
+    "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada.";
+  const fallbackDescEn =
+    "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together.";
+  const descriptionText = field(
+    props,
+    "descriptionText",
+    fallbackDescTr,
+    fallbackDescEn,
+  );
+  const logoHref = en ? "/en" : internalSiteHref(field(props, "logoHref", "/"));
+  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="${escapeAttr(logoHref)}">${logoVisual}</a><p>${descriptionText}</p></div><div class="tmr-footer-link-col">${products}</div><div class="tmr-footer-link-col">${company}</div><div class="tmr-footer-link-col">${contact}</div></div><div class="tmr-base"><span>${copyrightText}</span><div class="tmr-base-meta">${footerLegalLinks(props)}</div></div></div></footer>`;
 }
 
 export function ThreeMashStaticSection({
@@ -2248,7 +2300,7 @@ export function ThreeMashStaticSection({
           );
           if (!sourceLinks.length) return;
 
-          const title = column.querySelector("h6")?.cloneNode(true);
+          const title = column.querySelector("h6, .tmr-footer-col-title")?.cloneNode(true);
           const seen = new Set<string>();
           const links = sourceLinks
             .map((link) => {

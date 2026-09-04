@@ -2,6 +2,7 @@ import { ThreeMashFooter } from "../ThreeMashFooter";
 import { ThreeMashHeader } from "../ThreeMashHeader";
 import type { Props } from "./types";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 
 function hasContent(props: Props) {
   return Boolean(props.titleText || props.descriptionHtml || props.primaryButtonText);
@@ -9,6 +10,7 @@ function hasContent(props: Props) {
 
 export function ThreeMashWashCurePage(props: Props) {
   const contentVisible = hasContent(props);
+  const primaryButtonHref = safeNavigationHref(props.primaryButtonHref, "/");
 
   return (
     <>
@@ -22,7 +24,7 @@ export function ThreeMashWashCurePage(props: Props) {
             {props.eyebrowText ? <span>{props.eyebrowText}</span> : null}
             {props.titleText ? <h1>{props.titleText}</h1> : null}
             {props.descriptionHtml ? <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.descriptionHtml) }} /> : null}
-            {props.primaryButtonText ? <a href={props.primaryButtonHref || "/"}>{props.primaryButtonText}</a> : null}
+            {props.primaryButtonText ? <a href={primaryButtonHref}>{props.primaryButtonText}</a> : null}
           </section>
         ) : null}
       </main>

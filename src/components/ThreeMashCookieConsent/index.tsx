@@ -137,19 +137,52 @@ export function ThreeMashCookieConsent() {
     }
   }, []);
 
+  function clearHashIfCookieSettings() {
+    if (typeof window !== "undefined" && window.location.hash) {
+      const hash = window.location.hash.toLowerCase();
+      if (
+        hash === "#cerez-ayarlari" ||
+        hash === "#cookie-preferences" ||
+        hash === "#cookie-settings"
+      ) {
+        try {
+          history.replaceState(null, "", window.location.pathname + window.location.search);
+        } catch {}
+      }
+    }
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+    setIsPreferencesOpen(false);
+    if (consent) {
+      setAnalytics(consent.analytics);
+      setMarketing(consent.marketing);
+      setFunctional(consent.functional);
+    }
+    clearHashIfCookieSettings();
+  }
+
   // Listen for global open requests (e.g. from footer links or #cerez-ayarlari)
   useEffect(() => {
     function handleOpen() {
+      const current = consent || getStoredConsent();
+      if (current) {
+        setAnalytics(current.analytics);
+        setMarketing(current.marketing);
+        setFunctional(current.functional);
+      }
       setIsPreferencesOpen(true);
       setIsOpen(true);
     }
 
     function checkHash() {
       if (typeof window !== "undefined") {
+        const hash = window.location.hash.toLowerCase();
         if (
-          window.location.hash === "#cerez-ayarlari" ||
-          window.location.hash === "#cookie-preferences" ||
-          window.location.hash === "#cookie-settings"
+          hash === "#cerez-ayarlari" ||
+          hash === "#cookie-preferences" ||
+          hash === "#cookie-settings"
         ) {
           handleOpen();
         }
@@ -158,15 +191,19 @@ export function ThreeMashCookieConsent() {
 
     function handleClick(event: MouseEvent) {
       const target = event.target as HTMLElement | null;
-      if (target?.closest(".tm-open-cookie-settings, [href*='#cerez-ayarlari'], [href*='#cookie-settings']")) {
+      if (
+        target?.closest(
+          ".tm-open-cookie-settings, [href*='#cerez-ayarlari'], [href*='#cookie-settings'], [href*='#cookie-preferences']"
+        )
+      ) {
         event.preventDefault();
         handleOpen();
       }
     }
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape" && isPreferencesOpen) {
-        setIsPreferencesOpen(false);
+      if (event.key === "Escape") {
+        closeModal();
       }
     }
 
@@ -182,7 +219,7 @@ export function ThreeMashCookieConsent() {
       window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("click", handleClick);
     };
-  }, [isPreferencesOpen]);
+  }, [consent]);
 
   function saveConsent(state: Omit<CookieConsentState, "necessary" | "timestamp" | "version">) {
     const fullState: CookieConsentState = {
@@ -205,6 +242,7 @@ export function ThreeMashCookieConsent() {
     applyConsentEffects(fullState);
     setIsOpen(false);
     setIsPreferencesOpen(false);
+    clearHashIfCookieSettings();
   }
 
   function handleAcceptAll() {
@@ -215,8 +253,8 @@ export function ThreeMashCookieConsent() {
     saveConsent({ analytics: false, marketing: false, functional: false });
   }
 
-  function handleCloseButton() {
-    // Closing without choice treats as necessary cookies only to respect privacy
+  function handleCloseBanner() {
+    // Closing banner without choice treats as necessary cookies only to respect privacy
     handleOnlyNecessary();
   }
 
@@ -239,7 +277,7 @@ export function ThreeMashCookieConsent() {
           <button
             type="button"
             className="tm-cookie-close-btn"
-            onClick={handleCloseButton}
+            onClick={handleCloseBanner}
             aria-label={tLocalized("Çerez ayarlarını kapat", "Close cookie settings")}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -293,7 +331,17 @@ export function ThreeMashCookieConsent() {
 
       {/* ── Cookie Preferences Modal / Panel ── */}
       {isOpen && isPreferencesOpen && (
-        <div className="tm-cookie-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="tm-pref-heading">
+        <div
+          className="tm-cookie-modal-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="tm-pref-heading"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              closeModal();
+            }
+          }}
+        >
           <div className="tm-cookie-modal-card">
             {/* Modal Header */}
             <div className="tm-cookie-modal-header">
@@ -303,7 +351,7 @@ export function ThreeMashCookieConsent() {
               <button
                 type="button"
                 className="tm-cookie-modal-close"
-                onClick={handleCloseButton}
+                onClick={closeModal}
                 aria-label={tLocalized("Kapat", "Close")}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -318,7 +366,7 @@ export function ThreeMashCookieConsent() {
                 "Aşağıda sitemizde kullanılan çerez kategorilerini inceleyebilir ve tercihlerinizi özelleştirebilirsiniz.",
                 "Review the cookie categories used on our website below and customize your preferences."
               )}{" "}
-              <a href={localizedHref("/pages/cerez-politikasi")} target="_blank" rel="noopener noreferrer" className="tm-cookie-policy-text-link">
+              <a href={localizedHref("/pages/gizlilik-politikasi-ve-kvkk")} target="_blank" rel="noopener noreferrer" className="tm-cookie-policy-text-link">
                 {tLocalized("Çerez Politikası →", "Cookie Policy →")}
               </a>
             </p>

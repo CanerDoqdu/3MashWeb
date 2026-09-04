@@ -1,6 +1,8 @@
-import { tLocalized } from "../../utils/i18n";
+import { getCurrentLocale, tLocalized } from "../../utils/i18n";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import type { CategoryLandingData } from "./index";
+
+export const categoryPresetLocale = getCurrentLocale();
 
 const curieM1MainImage =
   "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/302ffc22-20c4-49b7-8d16-b303e079f0cf/1080/1.webp";
@@ -26,7 +28,8 @@ function categoryKeyMatches(key: string, categoryKey: string) {
   return key === categoryKey || key.startsWith(`${categoryKey} `) || key.endsWith(` ${categoryKey}`) || key.includes(` ${categoryKey} `);
 }
 
-export const dentalResinsCategoryData: CategoryLandingData = {
+export function dentalResinsCategoryData(): CategoryLandingData {
+  return {
   kind: "resins",
   announcement: {
     highlight: tLocalized("⚡ Doğru reçineyi mi arıyorsunuz?", "⚡ Looking for the right resin?"),
@@ -340,8 +343,10 @@ export const dentalResinsCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const printersCategoryData: CategoryLandingData = {
+export function printersCategoryData(): CategoryLandingData {
+  return {
   kind: "printers",
   announcement: {
     highlight: tLocalized("⚡ Hangi yazıcı size uygun?", "⚡ Which printer suits you?"),
@@ -533,8 +538,10 @@ export const printersCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const washCureCategoryData: CategoryLandingData = {
+export function washCureCategoryData(): CategoryLandingData {
+  return {
   kind: "wash-cure",
   announcement: {
     highlight: tLocalized("⚡ Baskı sonrası sonucu sabitleyin", "⚡ Lock in your post-print result"),
@@ -582,7 +589,7 @@ export const washCureCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp",
         imageAlt: tLocalized("Mash W1E ultrasonik yıkama cihazı", "Mash W1E ultrasonic washing device"),
         tag: tLocalized("YIKAMA", "WASHING"),
-        status: "16.453 TRY",
+        status: "",
         hot: true,
         tone: "#F1F1EC",
         specs: [
@@ -599,7 +606,7 @@ export const washCureCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e7c22c86-93e4-4c53-92f8-969d358e0c0f/1080/mash-c1e-dental-post-cure-cihazi.webp",
         imageAlt: tLocalized("Mash C1E UV kürleme cihazı", "Mash C1E UV curing device"),
         tag: tLocalized("KÜRLEME", "CURING"),
-        status: "76.782 TRY",
+        status: "",
         tone: "#F2F8DC",
         specs: [
           { label: tLocalized("Işık", "Light"), value: "360° / 24 LED" },
@@ -615,7 +622,7 @@ export const washCureCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
         imageAlt: tLocalized("Creality UW02 yıkama ve kürleme cihazı", "Creality UW02 washing and curing device"),
         tag: tLocalized("YIKAMA + KÜRLEME", "WASHING + CURING"),
-        status: "17.506 TRY",
+        status: "",
         tone: "#F1F1EC",
         specs: [
           { label: tLocalized("İşlem", "Process"), value: tLocalized("Yıkama + kürleme", "Washing + curing") },
@@ -727,8 +734,10 @@ export const washCureCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const washingCategoryData: CategoryLandingData = {
+export function washingCategoryData(): CategoryLandingData {
+  return {
   kind: "washing",
   announcement: {
     highlight: tLocalized("⚡ Baskı sonrası temizlikte kayıp yaşamayın", "⚡ Don't lose out on post-print cleaning"),
@@ -777,7 +786,7 @@ export const washingCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp",
         imageAlt: tLocalized("Mash W1E ultrasonik yıkama cihazı", "Mash W1E ultrasonic washing device"),
         tag: tLocalized("YIKAMA", "WASHING"),
-        status: "16.453 TRY",
+        status: "",
         hot: true,
         tone: "#F1F1EC",
         specs: [
@@ -794,7 +803,7 @@ export const washingCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
         imageAlt: tLocalized("Creality UW02 yıkama ve kürleme cihazı", "Creality UW02 washing and curing device"),
         tag: tLocalized("YIKAMA SEÇENEĞİ", "WASHING OPTION"),
-        status: "17.506 TRY",
+        status: "",
         tone: "#F1F1EC",
         specs: [
           { label: tLocalized("İşlem", "Process"), value: tLocalized("Geniş yıkama haznesi", "Large wash chamber") },
@@ -900,8 +909,10 @@ export const washingCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const curingCategoryData: CategoryLandingData = {
+export function curingCategoryData(): CategoryLandingData {
+  return {
   kind: "curing",
   announcement: {
     highlight: tLocalized("⚡ Mekanik dayanım ve biyouyumluluğu tamamlayın", "⚡ Complete your mechanical strength and biocompatibility"),
@@ -950,7 +961,7 @@ export const curingCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e7c22c86-93e4-4c53-92f8-969d358e0c0f/1080/mash-c1e-dental-post-cure-cihazi.webp",
         imageAlt: tLocalized("Mash C1E UV kürleme cihazı", "Mash C1E UV curing device"),
         tag: tLocalized("AKILLI KÜRLEME", "SMART CURING"),
-        status: "76.782 TRY",
+        status: "",
         hot: true,
         tone: "#F2F8DC",
         specs: [
@@ -967,7 +978,7 @@ export const curingCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
         imageAlt: tLocalized("Creality UW02 yıkama ve kürleme cihazı", "Creality UW02 washing and curing device"),
         tag: tLocalized("KOMBİNE POST-PROCESS", "COMBINED POST-PROCESS"),
-        status: "17.506 TRY",
+        status: "",
         tone: "#F1F1EC",
         specs: [
           { label: tLocalized("İşlem", "Process"), value: tLocalized("Döner tablalı kürleme", "Curing with a rotating table") },
@@ -1074,8 +1085,10 @@ export const curingCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const zirconBlocksCategoryData: CategoryLandingData = {
+export function zirconBlocksCategoryData(): CategoryLandingData {
+  return {
   kind: "zircon",
   announcement: {
     highlight: tLocalized("⚡ Zirkon seçimini vaka belirler", "⚡ Case determines the zirconia selection"),
@@ -1124,7 +1137,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/bb246f06-b3c4-4a10-b35c-9bf224734b73/1080/6.webp",
         imageAlt: tLocalized("ArgenZ HT+ Zirkon Blok", "ArgenZ HT+ Zircon Block"),
         tag: tLocalized("HT+", "HT+"),
-        status: "7.337 TRY",
+        status: "",
         hot: true,
         tone: "#F1F1EC",
         specs: [
@@ -1141,7 +1154,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/ce6a0485-2b4f-4d5d-82db-b7410f337570/1080/5.webp",
         imageAlt: tLocalized("ArgenZ ST Multilayer Zirkon Blok", "ArgenZ ST Multilayer Zircon Block"),
         tag: tLocalized("ST MULTILAYER", "ST MULTILAYER"),
-        status: "7.337 TRY",
+        status: "",
         tone: "#F1F1EC",
         specs: [
           { label: tLocalized("Kategori sırası", "Category order"), value: "2" },
@@ -1157,7 +1170,7 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/363b392e-4c9b-499b-8590-a5b1f6ad7b85/1080/4.webp",
         imageAlt: tLocalized("ArgenZ HT+ Multilayer Zirkon Blok", "ArgenZ HT+ Multilayer Zircon Block"),
         tag: tLocalized("HT+ MULTILAYER", "HT+ MULTILAYER"),
-        status: "7.337 TRY",
+        status: "",
         tone: "#F1F1EC",
         specs: [
           { label: tLocalized("Kategori sırası", "Category order"), value: "3" },
@@ -1269,8 +1282,10 @@ export const zirconBlocksCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const dentalFurnacesCategoryData: CategoryLandingData = {
+export function dentalFurnacesCategoryData(): CategoryLandingData {
+  return {
   kind: "furnaces",
   announcement: {
     highlight: tLocalized("⚡ Fırın seçimi iş akışına göre yapılır", "⚡ Furnace selection is based on your workflow"),
@@ -1481,8 +1496,10 @@ export const dentalFurnacesCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const desktopScannersCategoryData: CategoryLandingData = {
+export function desktopScannersCategoryData(): CategoryLandingData {
+  return {
   kind: "scanners",
   announcement: {
     highlight: tLocalized("⚡ Tarayıcı seçimi üretim hacmine göre yapılır", "⚡ Scanner selection is based on production volume"),
@@ -1677,8 +1694,10 @@ export const desktopScannersCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const printerSparePartsCategoryData: CategoryLandingData = {
+export function printerSparePartsCategoryData(): CategoryLandingData {
+  return {
   kind: "spares",
   announcement: {
     highlight: tLocalized("⚡ Doğru yedek parça cihaz uyumuyla seçilir", "⚡ The right spare part is chosen for device compatibility"),
@@ -1933,8 +1952,10 @@ export const printerSparePartsCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const systemsCategoryData: CategoryLandingData = {
+export function systemsCategoryData(): CategoryLandingData {
+  return {
   kind: "systems",
   announcement: {
     highlight: tLocalized("⚡ Sistem ürünleri birlikte düşünülür", "⚡ System products are considered together"),
@@ -2093,8 +2114,10 @@ export const systemsCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
-export const titaniumDiscsCategoryData: CategoryLandingData = {
+export function titaniumDiscsCategoryData(): CategoryLandingData {
+  return {
   kind: "titanium",
   announcement: {
     highlight: tLocalized("⚡ Titanyum disk seçimi implant üstü akışla yapılır", "⚡ Titanium disc selection follows the implant-supported workflow"),
@@ -2237,6 +2260,7 @@ export const titaniumDiscsCategoryData: CategoryLandingData = {
     ],
   },
 };
+}
 
 export function categoryLandingDataFromKey(value: string | undefined): CategoryLandingData | null {
   const key = normalizeCategoryKey(value);
@@ -2298,37 +2322,37 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
   ];
 
   if (dentalKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return dentalResinsCategoryData;
+    return dentalResinsCategoryData();
   }
   if (washCureKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return washCureCategoryData;
+    return washCureCategoryData();
   }
   if (washingKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return washingCategoryData;
+    return washingCategoryData();
   }
   if (curingKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return curingCategoryData;
+    return curingCategoryData();
   }
   if (zirconKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return zirconBlocksCategoryData;
+    return zirconBlocksCategoryData();
   }
   if (furnaceKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return dentalFurnacesCategoryData;
+    return dentalFurnacesCategoryData();
   }
   if (scannerKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return desktopScannersCategoryData;
+    return desktopScannersCategoryData();
   }
   if (spareKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return printerSparePartsCategoryData;
+    return printerSparePartsCategoryData();
   }
   if (systemKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return systemsCategoryData;
+    return systemsCategoryData();
   }
   if (titaniumKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return titaniumDiscsCategoryData;
+    return titaniumDiscsCategoryData();
   }
   if (printerKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
-    return printersCategoryData;
+    return printersCategoryData();
   }
   return null;
 }

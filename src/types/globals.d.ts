@@ -75,6 +75,8 @@ declare global {
      */
     _remakeTotal?: number;
   }
+
+  var process: any;
 }
 
 export {};

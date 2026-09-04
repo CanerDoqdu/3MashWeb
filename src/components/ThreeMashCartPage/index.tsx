@@ -65,6 +65,27 @@ function cartItemCount(items: IkasOrderLineItem[]) {
   return items.reduce((total, item) => total + Number(item.quantity || 0), 0);
 }
 
+function cartSubtotal(items: IkasOrderLineItem[]) {
+  return items.reduce(
+    (total, item) => total + Number(item.price || 0),
+    0,
+  );
+}
+
+function adjustmentValue(
+  adjustment: NonNullable<IkasCart["orderAdjustments"]>[number],
+  cart: IkasCart | null,
+) {
+  if (adjustment.amountType === "RATIO") {
+    return `${adjustment.type === "DECREMENT" ? "-" : "+"}${adjustment.amount}%`;
+  }
+
+  const amount = adjustment.type === "DECREMENT"
+    ? -adjustment.amount
+    : adjustment.amount;
+  return money(amount, cart);
+}
+
 function imageUrl(item: IkasOrderLineItem) {
   return orderLineImageUrl(item, 360);
 }
@@ -169,6 +190,7 @@ function CartLine({
   onChanged: () => void;
 }) {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [updateError, setUpdateError] = useState("");
   const imageCandidates = orderLineImageUrlCandidates(item, 360);
   const image = imageCandidates[0] || imageUrl(item);
   const detail = variantText(item);
@@ -177,6 +199,7 @@ async function updateQuantity(quantity: number) {
   if (isUpdating) return;
 
   setIsUpdating(true);
+  setUpdateError("");
 
   try {
     await changeItemQuantity(
@@ -187,6 +210,8 @@ async function updateQuantity(quantity: number) {
     publishCartFromIkasStore();
 
     void refreshGlobalCart();
+  } catch {
+    setUpdateError(tLocalized("Sepet güncellenemedi. Lütfen tekrar deneyin.", "The cart could not be updated. Please try again."));
   } finally {
     setIsUpdating(false);
   }
@@ -198,6 +223,7 @@ async function updateQuantity(quantity: number) {
   if (isUpdating) return;
 
   setIsUpdating(true);
+  setUpdateError("");
 
 try {
   await removeItem(item);
@@ -205,6 +231,8 @@ try {
   publishCartFromIkasStore();
 
   void refreshGlobalCart();
+} catch {
+  setUpdateError(tLocalized("Ürün sepetten kaldırılamadı. Lütfen tekrar deneyin.", "The item could not be removed. Please try again."));
 } finally {
   setIsUpdating(false);
 }
@@ -238,6 +266,7 @@ try {
         >
           {text(props.removeText, tLocalized("Kaldır", "Remove"), "Remove")}
         </button>
+        {updateError ? <p className="tmcart-error" role="alert" aria-live="assertive">{updateError}</p> : null}
       </div>
       <div className="tmcart-qty" aria-label={tLocalized("Adet", "Quantity")}>
         <button
@@ -275,6 +304,7 @@ const [cart, setCartState] =
 
 const [isCheckingOut, setIsCheckingOut] = useState(false);
 const [isCartReady, setIsCartReady] = useState(false);
+const [checkoutError, setCheckoutError] = useState("");
 
 const [couponCode, setCouponCode] = useState("");
 const [couponLoading, setCouponLoading] = useState(false);
@@ -413,6 +443,7 @@ async function deleteCoupon() {
   async function checkout() {
     if (isCheckingOut) return;
     setIsCheckingOut(true);
+    setCheckoutError("");
 
     try {
       await waitForCartStoreInit(cartStore);
@@ -420,9 +451,15 @@ async function deleteCoupon() {
       refreshState();
 
       const checkoutUrl = getCheckoutUrlFromCartStore(cartStore);
-      if (checkoutUrl) {
-        window.location.href = checkoutUrl;
-      }
+      if (!checkoutUrl) throw new Error("Checkout URL unavailable");
+      window.location.href = checkoutUrl;
+    } catch {
+      setCheckoutError(
+        tLocalized(
+          "Ödeme sayfasına yönlendirilemedi, lütfen tekrar deneyin.",
+          "Could not open the checkout page. Please try again.",
+        ),
+      );
     } finally {
       setIsCheckingOut(false);
     }
@@ -524,8 +561,29 @@ if (isCartReady && !hasItems) {
             <h2>{tLocalized("Sipariş Özeti", "Order Summary")}</h2>
             <div className="tmcart-summary-row">
               <span>{text(props.subtotalText, tLocalized("Ara Toplam", "Subtotal"), "Subtotal")}</span>
-              <strong>{money(cart?.totalFinalPrice, cart)}</strong>
+              <strong>{money(cartSubtotal(items), cart)}</strong>
             </div>
+
+            {cart?.orderAdjustments?.map((adjustment) => (
+              <div className="tmcart-summary-row" key={`${adjustment.name}-${adjustment.order}`}>
+                <span>{adjustment.name || tLocalized("Düzeltme", "Adjustment")}</span>
+                <strong>{adjustmentValue(adjustment, cart)}</strong>
+              </div>
+            ))}
+
+            {cart?.shippingLines?.map((shippingLine) => (
+              <div className="tmcart-summary-row" key={`${shippingLine.title}-${shippingLine.shippingZoneRateId}`}>
+                <span>{shippingLine.title || tLocalized("Kargo", "Shipping")}</span>
+                <strong>{money(shippingLine.finalPrice, cart)}</strong>
+              </div>
+            ))}
+
+            {cart?.taxLines?.map((taxLine) => (
+              <div className="tmcart-summary-row" key={`${taxLine.rate}-${taxLine.price}`}>
+                <span>{`${tLocalized("Vergi", "Tax")} (${taxLine.rate}%)`}</span>
+                <strong>{money(taxLine.price, cart)}</strong>
+              </div>
+            ))}
 
             <div className="tmcart-summary-row tmcart-summary-total">
               <span>{tLocalized("Toplam", "Total")}</span>
@@ -601,6 +659,9 @@ if (isCartReady && !hasItems) {
                 <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" />
               </svg>
             </button>
+            {checkoutError ? (
+              <p className="tmcart-error" role="alert" aria-live="assertive">{checkoutError}</p>
+            ) : null}
             <a href={continueShoppingTarget(props.continueShoppingHref)}>
               {text(props.continueShoppingText, tLocalized("Alışverişe devam et", "Continue shopping"), "Continue shopping")}
             </a>

@@ -80,7 +80,8 @@ const CRS_GALLERY: ProductGalleryItem[] = [
   },
 ];
 
-const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
+function CRS_COMPOSITE_TEMPLATE(): ProductDetailTemplateData {
+  return {
   key: CRS_COMPOSITE_SLUG,
   announcement: {
     enabled: true,
@@ -335,6 +336,7 @@ const CRS_COMPOSITE_TEMPLATE: ProductDetailTemplateData = {
     secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
   },
 };
+}
 
 function isPlainObject(value: unknown): value is PlainObject {
   return Boolean(value && typeof value === "object" && !Array.isArray(value));
@@ -895,7 +897,7 @@ function productDetailPropKey(props: Props) {
 }
 
 function propsTemplateData(props: Props): ProductDetailTemplateData {
-  const template = deepMerge(CRS_COMPOSITE_TEMPLATE, parseTemplateJson(props.productTemplateJson));
+  const template = deepMerge(CRS_COMPOSITE_TEMPLATE(), parseTemplateJson(props.productTemplateJson));
   const merged = deepMerge(template, productDetailPropOverrides(props));
   return {
     ...merged,
@@ -1133,7 +1135,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
 
 function templateData(product: IkasProduct, variant: IkasProductVariant | null, props: Props) {
   const resolved = resolveProductDetailData(product);
-  const base = resolved || (isCrsComposite(product) ? CRS_COMPOSITE_TEMPLATE : genericProductData(product, variant, props));
+  const base = resolved || (isCrsComposite(product) ? CRS_COMPOSITE_TEMPLATE() : genericProductData(product, variant, props));
   const fromProps = deepMerge(base, parseTemplateJson(props.productTemplateJson));
   const custom = customJson(product);
   const merged = deepMerge(custom ? deepMerge(fromProps, custom) : fromProps, productDetailPropOverrides(props));

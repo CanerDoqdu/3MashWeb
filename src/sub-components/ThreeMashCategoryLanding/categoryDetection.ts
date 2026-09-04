@@ -205,17 +205,17 @@ function productDataFromProduct(product: unknown) {
 
   for (const value of productKeys) {
     const key = lastPathKey(value);
-    if (PRINTER_PRODUCT_KEYS.has(key)) return printersCategoryData;
-    if (RESIN_PRODUCT_KEYS.has(key)) return dentalResinsCategoryData;
-    if (WASHING_PRODUCT_KEYS.has(key)) return washingCategoryData;
-    if (CURING_PRODUCT_KEYS.has(key)) return curingCategoryData;
-    if (WASH_CURE_PRODUCT_KEYS.has(key)) return washCureCategoryData;
-    if (ZIRCON_PRODUCT_KEYS.has(key)) return zirconBlocksCategoryData;
-    if (FURNACE_PRODUCT_KEYS.has(key)) return dentalFurnacesCategoryData;
-    if (SCANNER_PRODUCT_KEYS.has(key)) return desktopScannersCategoryData;
-    if (SPARE_PRODUCT_KEYS.has(key)) return printerSparePartsCategoryData;
-    if (SYSTEM_PRODUCT_KEYS.has(key)) return systemsCategoryData;
-    if (TITANIUM_PRODUCT_KEYS.has(key)) return titaniumDiscsCategoryData;
+    if (PRINTER_PRODUCT_KEYS.has(key)) return printersCategoryData();
+    if (RESIN_PRODUCT_KEYS.has(key)) return dentalResinsCategoryData();
+    if (WASHING_PRODUCT_KEYS.has(key)) return washingCategoryData();
+    if (CURING_PRODUCT_KEYS.has(key)) return curingCategoryData();
+    if (WASH_CURE_PRODUCT_KEYS.has(key)) return washCureCategoryData();
+    if (ZIRCON_PRODUCT_KEYS.has(key)) return zirconBlocksCategoryData();
+    if (FURNACE_PRODUCT_KEYS.has(key)) return dentalFurnacesCategoryData();
+    if (SCANNER_PRODUCT_KEYS.has(key)) return desktopScannersCategoryData();
+    if (SPARE_PRODUCT_KEYS.has(key)) return printerSparePartsCategoryData();
+    if (SYSTEM_PRODUCT_KEYS.has(key)) return systemsCategoryData();
+    if (TITANIUM_PRODUCT_KEYS.has(key)) return titaniumDiscsCategoryData();
   }
 
   const categories = Array.isArray(data.categories) ? data.categories : [];
@@ -242,16 +242,16 @@ export function productListCategoryData(productList: IkasProductList | undefined
     categorySignals.includes("wash-cure") ||
     categorySignals.includes("washcure")
   ) {
-    return washCureCategoryData;
+    return washCureCategoryData();
   }
 
   const productData = (productList.data || []).slice(0, 24).map(productDataFromProduct);
-  const hasWashingProduct = productData.includes(washingCategoryData);
-  const hasCuringProduct = productData.includes(curingCategoryData);
-  const hasWashCureProduct = productData.includes(washCureCategoryData);
+  const hasWashingProduct = productData.includes(washingCategoryData());
+  const hasCuringProduct = productData.includes(curingCategoryData());
+  const hasWashCureProduct = productData.includes(washCureCategoryData());
 
   if (hasWashingProduct && hasCuringProduct || (hasWashingProduct && hasWashCureProduct) || (hasCuringProduct && hasWashCureProduct)) {
-    return washCureCategoryData;
+    return washCureCategoryData();
   }
 
   const directCategory =
@@ -275,17 +275,17 @@ export function productListCategoryData(productList: IkasProductList | undefined
 
   (productList.data || []).slice(0, 24).forEach((product) => {
     const data = productDataFromProduct(product);
-    if (data === printersCategoryData) printerMatches += 1;
-    if (data === dentalResinsCategoryData) resinMatches += 1;
-    if (data === washCureCategoryData) washCureMatches += 1;
-    if (data === washingCategoryData) washingMatches += 1;
-    if (data === curingCategoryData) curingMatches += 1;
-    if (data === zirconBlocksCategoryData) zirconMatches += 1;
-    if (data === dentalFurnacesCategoryData) furnaceMatches += 1;
-    if (data === desktopScannersCategoryData) scannerMatches += 1;
-    if (data === printerSparePartsCategoryData) spareMatches += 1;
-    if (data === systemsCategoryData) systemMatches += 1;
-    if (data === titaniumDiscsCategoryData) titaniumMatches += 1;
+    if (data?.kind === "printers") printerMatches += 1;
+    if (data?.kind === "resins") resinMatches += 1;
+    if (data?.kind === "wash-cure") washCureMatches += 1;
+    if (data?.kind === "washing") washingMatches += 1;
+    if (data?.kind === "curing") curingMatches += 1;
+    if (data?.kind === "zircon") zirconMatches += 1;
+    if (data?.kind === "furnaces") furnaceMatches += 1;
+    if (data?.kind === "scanners") scannerMatches += 1;
+    if (data?.kind === "spares") spareMatches += 1;
+    if (data?.kind === "systems") systemMatches += 1;
+    if (data?.kind === "titanium") titaniumMatches += 1;
   });
 
   const otherMatches = {
@@ -302,17 +302,17 @@ export function productListCategoryData(productList: IkasProductList | undefined
     titanium: printerMatches + resinMatches + washCureMatches + washingMatches + curingMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches,
   };
 
-  if (printerMatches > 0 && otherMatches.printer === 0) return printersCategoryData;
-  if (resinMatches > 0 && otherMatches.resin === 0) return dentalResinsCategoryData;
-  if (washCureMatches > 0 && otherMatches.washCure === 0) return washCureCategoryData;
-  if (washingMatches > 0 && otherMatches.washing === 0) return washingCategoryData;
-  if (curingMatches > 0 && otherMatches.curing === 0) return curingCategoryData;
-  if (zirconMatches > 0 && otherMatches.zircon === 0) return zirconBlocksCategoryData;
-  if (furnaceMatches > 0 && otherMatches.furnace === 0) return dentalFurnacesCategoryData;
-  if (scannerMatches > 0 && otherMatches.scanner === 0) return desktopScannersCategoryData;
-  if (spareMatches > 0 && otherMatches.spare === 0) return printerSparePartsCategoryData;
-  if (systemMatches > 0 && otherMatches.system === 0) return systemsCategoryData;
-  if (titaniumMatches > 0 && otherMatches.titanium === 0) return titaniumDiscsCategoryData;
+  if (printerMatches > 0 && otherMatches.printer === 0) return printersCategoryData();
+  if (resinMatches > 0 && otherMatches.resin === 0) return dentalResinsCategoryData();
+  if (washCureMatches > 0 && otherMatches.washCure === 0) return washCureCategoryData();
+  if (washingMatches > 0 && otherMatches.washing === 0) return washingCategoryData();
+  if (curingMatches > 0 && otherMatches.curing === 0) return curingCategoryData();
+  if (zirconMatches > 0 && otherMatches.zircon === 0) return zirconBlocksCategoryData();
+  if (furnaceMatches > 0 && otherMatches.furnace === 0) return dentalFurnacesCategoryData();
+  if (scannerMatches > 0 && otherMatches.scanner === 0) return desktopScannersCategoryData();
+  if (spareMatches > 0 && otherMatches.spare === 0) return printerSparePartsCategoryData();
+  if (systemMatches > 0 && otherMatches.system === 0) return systemsCategoryData();
+  if (titaniumMatches > 0 && otherMatches.titanium === 0) return titaniumDiscsCategoryData();
   return null;
 }
 

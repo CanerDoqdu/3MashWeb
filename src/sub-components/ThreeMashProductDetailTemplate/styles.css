@@ -1623,7 +1623,7 @@
 
 .tmpdt-final {
   padding: 100px 0;
-  background: var(--tmpdt-dark);
+  background: var(--tmpdt-dark, var(--tm-theme-dark, #0E0E0C));
   color: #fff;
   text-align: center;
 }
@@ -1637,7 +1637,7 @@
 }
 
 .tmpdt-final .em {
-  color: var(--tmpdt-lime);
+  color: var(--tmpdt-lime, var(--tm-theme-accent, #C7F136));
 }
 
 .tmpdt-final p {

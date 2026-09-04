@@ -7,6 +7,7 @@ import {
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderRatings } from "../../sub-components/ThreeMashProductSectionPlaceholder";
 import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
+import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 
 function trimmedText(value: unknown): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -78,9 +79,12 @@ function overrideRatingsData(baseData: ProductDetailTemplateData, props: Props):
 }
 
 export function ThreeMashProductSplitFeature(props: Props) {
+  const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
-  const rawData = sharedData || fallbackData || makePlaceholderRatings();
+  const rawData = sharedData || fallbackData || (isStudio ? makePlaceholderRatings() : null);
+
+  if (!rawData) return null;
 
   const data = overrideRatingsData(rawData, props);
 

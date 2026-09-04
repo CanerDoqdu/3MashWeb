@@ -4,6 +4,7 @@ import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-
 import { ProductDetailSectionScope, ProductDetailSpecHighlightSection, type ProductDetailTemplateData } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderSpecHighlight } from "../../sub-components/ThreeMashProductSectionPlaceholder";
 import { isEnglishLocale, isTurkishText, tLocalized } from "../../utils/i18n";
+import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 
 function trimmedText(value: unknown): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -22,6 +23,7 @@ function imageSource(value: unknown): string {
 }
 
 export function ThreeMashProductLargeImage(props: Props) {
+  const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
   const src = imageSource(props.image);
@@ -43,7 +45,7 @@ export function ThreeMashProductLargeImage(props: Props) {
     );
   }
 
-  const data = sharedData || fallbackData || makePlaceholderSpecHighlight();
+  const data = sharedData || fallbackData || (isStudio ? makePlaceholderSpecHighlight() : null);
 
   if (data?.specHighlight) {
     return (
@@ -52,6 +54,8 @@ export function ThreeMashProductLargeImage(props: Props) {
       </ProductDetailSectionScope>
     );
   }
+
+  if (!isStudio) return null;
 
   const placeholderData = makePlaceholderSpecHighlight();
   return (

@@ -188,15 +188,15 @@ function productDataFromProduct(product: unknown) {
 
   for (const value of productKeys) {
     const key = lastPathKey(value);
-    if (PRINTER_PRODUCT_KEYS.has(key)) return printersCategoryData;
-    if (RESIN_PRODUCT_KEYS.has(key)) return dentalResinsCategoryData;
-    if (WASH_CURE_PRODUCT_KEYS.has(key)) return washCureCategoryData;
-    if (ZIRCON_PRODUCT_KEYS.has(key)) return zirconBlocksCategoryData;
-    if (FURNACE_PRODUCT_KEYS.has(key)) return dentalFurnacesCategoryData;
-    if (SCANNER_PRODUCT_KEYS.has(key)) return desktopScannersCategoryData;
-    if (SPARE_PRODUCT_KEYS.has(key)) return printerSparePartsCategoryData;
-    if (SYSTEM_PRODUCT_KEYS.has(key)) return systemsCategoryData;
-    if (TITANIUM_PRODUCT_KEYS.has(key)) return titaniumDiscsCategoryData;
+    if (PRINTER_PRODUCT_KEYS.has(key)) return printersCategoryData();
+    if (RESIN_PRODUCT_KEYS.has(key)) return dentalResinsCategoryData();
+    if (WASH_CURE_PRODUCT_KEYS.has(key)) return washCureCategoryData();
+    if (ZIRCON_PRODUCT_KEYS.has(key)) return zirconBlocksCategoryData();
+    if (FURNACE_PRODUCT_KEYS.has(key)) return dentalFurnacesCategoryData();
+    if (SCANNER_PRODUCT_KEYS.has(key)) return desktopScannersCategoryData();
+    if (SPARE_PRODUCT_KEYS.has(key)) return printerSparePartsCategoryData();
+    if (SYSTEM_PRODUCT_KEYS.has(key)) return systemsCategoryData();
+    if (TITANIUM_PRODUCT_KEYS.has(key)) return titaniumDiscsCategoryData();
   }
 
   const categories = Array.isArray(data.categories) ? data.categories : [];
@@ -227,7 +227,7 @@ function productListCategoryData(productList: Props["productList"]) {
     categorySignals.includes("wash-cure") ||
     categorySignals.includes("washcure")
   ) {
-    return washCureCategoryData;
+    return washCureCategoryData();
   }
 
   const directCategory =
@@ -249,15 +249,15 @@ function productListCategoryData(productList: Props["productList"]) {
 
   (productList.data || []).slice(0, 24).forEach((product) => {
     const data = productDataFromProduct(product);
-    if (data === printersCategoryData) printerMatches += 1;
-    if (data === dentalResinsCategoryData) resinMatches += 1;
-    if (data === washCureCategoryData) washCureMatches += 1;
-    if (data === zirconBlocksCategoryData) zirconMatches += 1;
-    if (data === dentalFurnacesCategoryData) furnaceMatches += 1;
-    if (data === desktopScannersCategoryData) scannerMatches += 1;
-    if (data === printerSparePartsCategoryData) spareMatches += 1;
-    if (data === systemsCategoryData) systemMatches += 1;
-    if (data === titaniumDiscsCategoryData) titaniumMatches += 1;
+    if (data?.kind === "printers") printerMatches += 1;
+    if (data?.kind === "resins") resinMatches += 1;
+    if (data?.kind === "wash-cure") washCureMatches += 1;
+    if (data?.kind === "zircon") zirconMatches += 1;
+    if (data?.kind === "furnaces") furnaceMatches += 1;
+    if (data?.kind === "scanners") scannerMatches += 1;
+    if (data?.kind === "spares") spareMatches += 1;
+    if (data?.kind === "systems") systemMatches += 1;
+    if (data?.kind === "titanium") titaniumMatches += 1;
   });
 
   const otherMatches = {
@@ -272,15 +272,15 @@ function productListCategoryData(productList: Props["productList"]) {
     titanium: printerMatches + resinMatches + washCureMatches + zirconMatches + furnaceMatches + scannerMatches + spareMatches + systemMatches,
   };
 
-  if (printerMatches > 0 && otherMatches.printer === 0) return printersCategoryData;
-  if (resinMatches > 0 && otherMatches.resin === 0) return dentalResinsCategoryData;
-  if (washCureMatches > 0 && otherMatches.washCure === 0) return washCureCategoryData;
-  if (zirconMatches > 0 && otherMatches.zircon === 0) return zirconBlocksCategoryData;
-  if (furnaceMatches > 0 && otherMatches.furnace === 0) return dentalFurnacesCategoryData;
-  if (scannerMatches > 0 && otherMatches.scanner === 0) return desktopScannersCategoryData;
-  if (spareMatches > 0 && otherMatches.spare === 0) return printerSparePartsCategoryData;
-  if (systemMatches > 0 && otherMatches.system === 0) return systemsCategoryData;
-  if (titaniumMatches > 0 && otherMatches.titanium === 0) return titaniumDiscsCategoryData;
+  if (printerMatches > 0 && otherMatches.printer === 0) return printersCategoryData();
+  if (resinMatches > 0 && otherMatches.resin === 0) return dentalResinsCategoryData();
+  if (washCureMatches > 0 && otherMatches.washCure === 0) return washCureCategoryData();
+  if (zirconMatches > 0 && otherMatches.zircon === 0) return zirconBlocksCategoryData();
+  if (furnaceMatches > 0 && otherMatches.furnace === 0) return dentalFurnacesCategoryData();
+  if (scannerMatches > 0 && otherMatches.scanner === 0) return desktopScannersCategoryData();
+  if (spareMatches > 0 && otherMatches.spare === 0) return printerSparePartsCategoryData();
+  if (systemMatches > 0 && otherMatches.system === 0) return systemsCategoryData();
+  if (titaniumMatches > 0 && otherMatches.titanium === 0) return titaniumDiscsCategoryData();
   return null;
 }
 
@@ -336,11 +336,11 @@ export function ThreeMashCategoryProductsPage(props: Props) {
   const productListCategory = productListCategoryData(props.productList);
   const routeCategoryData = currentRouteCategoryData();
   const detectedCategoryData =
-    routeCategoryData === washCureCategoryData
-      ? washCureCategoryData
+    routeCategoryData?.kind === "wash-cure"
+      ? washCureCategoryData()
       : productListCategory || routeCategoryData;
 
-  if (detectedCategoryData === printersCategoryData) {
+  if (detectedCategoryData?.kind === "printers") {
     return <ThreeMashPrintersSourceLanding {...props} />;
   }
 
