@@ -1,6 +1,7 @@
 import { getLegalPages, legalPages, type LegalPageKey } from '../ThreeMashPageData/sourceData';
 import { translateText, tLocalized, isEnglishLocale, isTurkishText } from '../../utils/i18n';
 import { sanitizeHtml } from '../../utils/sanitizeHtml';
+import { useMemo } from 'preact/hooks';
 import { Props } from './types';
 
 function text(value: string | undefined, fallback: string) {
@@ -128,6 +129,10 @@ export function ThreeMashLegalPage(props: Props) {
     key,
     configuredContent
   );
+  const renderedContentHtml = useMemo(
+    () => sanitizeHtml(translateText(contentHtml)),
+    [contentHtml, isEn]
+  );
   const showStandaloneTitle = !hasEmbeddedHeading(contentHtml);
   const isKvkk = key === 'kvkk';
   const style = {
@@ -143,7 +148,7 @@ export function ThreeMashLegalPage(props: Props) {
     <section className={`three-mash-legal-page is-${key}`} style={style}>
       <article className="tmlp-shell">
         {showStandaloneTitle ? <h1>{translateText(titleText(key, props.titleText, page.title))}</h1> : null}
-        <div className="tmlp-content" dangerouslySetInnerHTML={{ __html: sanitizeHtml(translateText(contentHtml)) }} />
+        <div className="tmlp-content" dangerouslySetInnerHTML={{ __html: renderedContentHtml }} />
       </article>
     </section>
   );

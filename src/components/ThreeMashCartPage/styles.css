@@ -338,14 +338,15 @@
   min-width: 0;
   padding: 22px;
   border: 1px solid var(--tmcart-line);
-  background: var(--tm-theme-dark, #0e0e0c);
+  border-radius: 16px;
+  background: #fff;
   color: var(--tmcart-button-text);
 }
 
 .tmcart-summary h2 {
   margin: 0;
   padding-bottom: 8px;
-  color: var(--tmcart-button-text);
+  color: var(--tmcart-text);
   font-family: var(
     --tm-theme-font-heading,
     "Space Grotesk",
@@ -363,17 +364,17 @@
   justify-content: space-between;
   gap: 18px;
   padding-top: 14px;
-  border-top: 1px solid rgba(250, 250, 247, 0.16);
+  border-top: 1px solid var(--tmcart-line);
 }
 
 .tmcart-summary-row span {
-  color: #cfcfc6;
+  color: var(--tmcart-muted);
   font-size: 13px;
   font-weight: 600;
 }
 
 .tmcart-summary-row strong {
-  color: #fff;
+  color: var(--tm-theme-accent, #c7f136);
   font-family: var(
     --tm-theme-font-heading,
     "Space Grotesk",
@@ -385,15 +386,16 @@
 }
 
 .tmcart-summary-total strong {
-  color: var(--tm-theme-accent, #c7f136);
+  color: #0e0e0c;
   font-size: 24px;
 }
 
 .tmcart-summary button {
   width: 100%;
   margin-top: 4px;
-  background: var(--tm-theme-accent, #c7f136);
-  color: var(--tm-theme-text, #0e0e0c);
+  border-radius: 12px;
+  background: #000;
+  color: #fff;
 }
 
 .tmcart-summary button svg {
@@ -410,7 +412,7 @@
 
 .tmcart-summary a {
   width: fit-content;
-  color: #fff;
+  color: var(--tmcart-text);
   font-size: 13px;
   font-weight: 800;
   text-decoration: underline;
@@ -535,8 +537,10 @@
   margin: 0 !important;
   padding: 0 16px !important;
   border: 0;
-  background: var(--tm-theme-accent, #c7f136) !important;
-  color: var(--tm-theme-text, #0e0e0c) !important;
+  border-radius: 12px;
+  background: #fff !important;
+  color: var(--tmcart-text) !important;
+  border: 1px solid var(--tmcart-line) !important;
   font-size: 13px !important;
   font-weight: 800 !important;
   cursor: pointer;
@@ -550,7 +554,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   width: 100%;
   height: 52px;
-  border: 1px solid rgba(250, 250, 247, 0.25);
+  border: 1px solid var(--tmcart-line);
   background: #fff;
 }
 
@@ -594,16 +598,16 @@
   width: 100%;
   height: 52px;
   padding-left: 16px;
-  border: 1px solid var(--tm-theme-accent, #c7f136);
+  border: 1px solid var(--tmcart-line);
 }
 
 .tmcart-coupon-applied span {
-  color: #fff;
+  color: var(--tmcart-text);
   font-size: 13px;
 }
 
 .tmcart-coupon-applied b {
-  color: var(--tm-theme-accent, #c7f136);
+  color: var(--tmcart-text);
 }
 
 .tmcart-coupon-applied button {
@@ -613,7 +617,7 @@
   margin: 0 !important;
   padding: 0 !important;
   background: transparent !important;
-  color: #fff !important;
+  color: var(--tmcart-muted) !important;
   font-size: 22px !important;
 }
 

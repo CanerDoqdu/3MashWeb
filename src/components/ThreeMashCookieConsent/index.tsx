@@ -214,14 +214,14 @@ export function ThreeMashCookieConsent() {
     window.addEventListener("tm_open_cookie_settings", handleOpen);
     window.addEventListener("hashchange", checkHash);
     window.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("click", handleClick);
+    document.addEventListener("click", handleClick, true);
     checkHash();
 
     return () => {
       window.removeEventListener("tm_open_cookie_settings", handleOpen);
       window.removeEventListener("hashchange", checkHash);
       window.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", handleClick, true);
     };
   }, []);
 

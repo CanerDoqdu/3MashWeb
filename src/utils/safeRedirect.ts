@@ -7,6 +7,10 @@
  * 3. javascript: and data: schemes are forbidden
  * 4. If invalid, returns "/account/login" (safe fallback)
  */
+function isAllowedProtocol(value: string): boolean {
+  return /^(?:mailto:|tel:|sms:|whatsapp:)/i.test(value);
+}
+
 function isBlockedScheme(value: string): boolean {
   return /^(?:javascript|data|vbscript|file):/i.test(value);
 }
@@ -30,6 +34,9 @@ export function safeRedirect(url?: string): string {
   if (!trimmed) return "/account/login";
   if (trimmed.startsWith("//") || isBlockedScheme(trimmed)) {
     return "/account/login";
+  }
+  if (isAllowedProtocol(trimmed) || trimmed.startsWith("#")) {
+    return trimmed;
   }
 
   const relative = normalizeSameOriginPath(trimmed);
@@ -59,6 +66,7 @@ export function safeNavigationHref(url?: string, fallback = "/"): string {
 
   if (trimmed.startsWith("#")) return trimmed;
   if (trimmed.startsWith("//") || isBlockedScheme(trimmed)) return fallback;
+  if (isAllowedProtocol(trimmed)) return trimmed;
 
   if (trimmed.startsWith("/")) {
     const normalized = normalizeSameOriginPath(trimmed);

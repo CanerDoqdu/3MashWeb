@@ -9,6 +9,15 @@ test('safeNavigationHref blocks protocol-relative external paths', () => {
   assert.equal(safeNavigationHref('//evil.com', '/'), '/');
 });
 
+test('safeNavigationHref keeps valid protocol links while blocking dangerous schemes', () => {
+  assert.equal(safeNavigationHref('mailto:test@example.com', '/'), 'mailto:test@example.com');
+  assert.equal(safeNavigationHref('tel:+123456789', '/'), 'tel:+123456789');
+  assert.equal(safeNavigationHref('sms:+123456789', '/'), 'sms:+123456789');
+  assert.equal(safeNavigationHref('whatsapp://send?text=hello', '/'), 'whatsapp://send?text=hello');
+  assert.equal(safeNavigationHref('javascript:alert(1)', '/'), '/');
+  assert.equal(safeNavigationHref('data:text/html;base64,PHNjcmlwdD4=', '/'), '/');
+});
+
 test('safeJsonLdScript escapes script-breaking characters', () => {
   const value = safeJsonLdScript({ text: '</script><script>alert(1)</script>' });
   assert.ok(!value.includes('</script>'));

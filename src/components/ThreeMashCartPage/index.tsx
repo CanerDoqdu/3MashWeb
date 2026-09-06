@@ -4,13 +4,16 @@ import {
   changeItemQuantity,
   customerStore,
   getCart,
-  saveCouponCode,
-removeCouponCode,
   getCheckoutUrlFromCartStore,
+  getCouponCodeForm,
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getOrderLineItemFormattedFinalUnitPrice,
+  initCouponCodeForm,
   initCustomerStore,
+  removeCouponCodeForm,
   removeItem,
+  setCouponCodeFormCouponCode,
+  submitCouponCodeForm,
   waitForCartStoreInit,
   type IkasCart,
   type IkasCustomer,
@@ -236,7 +239,9 @@ try {
       </div>
       <div className="tmcart-price">
         <strong>{getOrderLineItemFormattedFinalPriceWithQuantity(item)}</strong>
-        <small>{getOrderLineItemFormattedFinalUnitPrice(item)}</small>
+        {Number(item.price || 0) !== 0 ? (
+          <small>{getOrderLineItemFormattedFinalUnitPrice(item)}</small>
+        ) : null}
       </div>
     </article>
   );
@@ -261,6 +266,17 @@ const [couponCode, setCouponCode] = useState("");
 const [couponLoading, setCouponLoading] = useState(false);
 const [couponMessage, setCouponMessage] = useState("");
 const [couponOpen, setCouponOpen] = useState(false);
+  const couponForm = getCouponCodeForm(customerStore);
+
+  useEffect(() => {
+    initCouponCodeForm(couponForm);
+  }, [couponForm]);
+
+  useEffect(() => {
+    if (couponCode) {
+      setCouponCodeFormCouponCode(couponForm, couponCode);
+    }
+  }, [couponCode, couponForm]);
 
   function refreshState() {
     setCustomer(customerStore.customer);
@@ -362,14 +378,16 @@ async function applyCoupon() {
 
   setCouponLoading(true);
   setCouponMessage("");
+  setCouponCodeFormCouponCode(couponForm, code);
 
   try {
-    await saveCouponCode(cartStore.cart, code);
+    const success = await submitCouponCodeForm(couponForm);
     await getCart();
     refreshState();
 
-    if (cartStore.cart?.couponCode) {
+    if (success && cartStore.cart?.couponCode) {
       setCouponMessage(tLocalized("İndirim kodu uygulandı.", "Discount code applied."));
+      setCouponOpen(false);
     } else {
       setCouponMessage(tLocalized("Geçersiz indirim kodu.", "Invalid discount code."));
     }
@@ -387,12 +405,17 @@ async function deleteCoupon() {
   setCouponMessage("");
 
   try {
-    await removeCouponCode(cartStore.cart);
+    const success = await removeCouponCodeForm(couponForm);
     await getCart();
     refreshState();
 
-    setCouponCode("");
-    setCouponMessage("");
+    if (success) {
+      setCouponCode("");
+      setCouponOpen(false);
+      setCouponMessage("");
+    }
+  } catch {
+    setCouponMessage(tLocalized("Promosyon kodu kaldırılamadı.", "Promo code could not be removed."));
   } finally {
     setCouponLoading(false);
   }
@@ -476,21 +499,14 @@ async function deleteCoupon() {
               <strong>{money(hasItems ? cartSubtotal(items) : 0, cart)}</strong>
             </div>
 
-            {hasItems && cart?.orderAdjustments?.map((adjustment) => (
+            {hasItems && cart?.orderAdjustments?.filter((adjustment) => Number(adjustment.amount || 0) !== 0).map((adjustment) => (
               <div className="tmcart-summary-row" key={`${adjustment.name}-${adjustment.order}`}>
                 <span>{adjustment.name || tLocalized("Düzeltme", "Adjustment")}</span>
                 <strong>{adjustmentValue(adjustment, cart)}</strong>
               </div>
             ))}
 
-            {hasItems && cart?.shippingLines?.map((shippingLine) => (
-              <div className="tmcart-summary-row" key={`${shippingLine.title}-${shippingLine.shippingZoneRateId}`}>
-                <span>{shippingLine.title || tLocalized("Kargo", "Shipping")}</span>
-                <strong>{money(shippingLine.finalPrice, cart)}</strong>
-              </div>
-            ))}
-
-            {hasItems && cart?.taxLines?.map((taxLine) => (
+            {hasItems && cart?.taxLines?.filter((taxLine) => Number(taxLine.price || 0) !== 0).map((taxLine) => (
               <div className="tmcart-summary-row" key={`${taxLine.rate}-${taxLine.price}`}>
                 <span>{`${tLocalized("Vergi", "Tax")} (${taxLine.rate}%)`}</span>
                 <strong>{money(taxLine.price, cart)}</strong>
@@ -551,6 +567,7 @@ async function deleteCoupon() {
                   >
                     {couponLoading ? "..." : tLocalized("KULLAN", "APPLY")}
                   </button>
+                  {couponMessage ? <p className="tmcart-error" role="alert" aria-live="assertive">{couponMessage}</p> : null}
                 </div>
               ) : (
                 <button

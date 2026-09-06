@@ -834,6 +834,18 @@ const englishProductRouteAliases: Record<string, string> = {
   "argenz-ht-plus-multilayer-zirconia-disc": "argenz-ht-multilayer-zirkon-blok",
 };
 
+const englishLocaleQueryFallbacks: Record<string, string> = {
+  "mash-p16l-ana-kart": "/mash-p16l-ana-kart?lang=en",
+};
+
+function englishLocalePath(pathname: string, search: string, hash: string): string {
+  const bare = pathname.replace(/^\/en(\/|$)/, "/") || "/";
+  const routeKey = bare.replace(/^\/+|\/+$/g, "").toLocaleLowerCase("tr").split("/").pop() || "";
+  const fallback = englishLocaleQueryFallbacks[routeKey];
+  if (fallback) return `${fallback}${search ? `&${search.slice(1)}` : ""}${hash}`;
+  return `${bare === "/" ? "/en" : `/en${bare.startsWith("/") ? bare : `/${bare}`}`}${search}${hash}`;
+}
+
 function routeAnnouncementOverride(): HeaderAnnouncementOverride | null {
   return announcementForRouteKey(currentRouteKey());
 }
@@ -954,26 +966,34 @@ function firstPaintAnnouncementScript() {
 }
 
 
-const defaultProductsFeature = {
-  eyebrow: tLocalized("YENİ · DÜNYADA İLK", "NEW · WORLD'S FIRST"),
-  title: tLocalized("MASH C1E<br>Akıllı Kürleme Cihazı", "MASH C1E<br>Smart Curing Unit"),
-  description: tLocalized(
-    "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
-    "Eliminates user error in post-curing: automatically manages time, temperature, and wavelength based on resin."
-  ),
-  ctaText: tLocalized("Keşfet →", "Discover →"),
-  href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
-};
-const defaultProductPrimary: Required<MenuItem>[] = [
-  { title: tLocalized("3D Yazıcılar", "3D Printers"), description: tLocalized("P1D / P16L hassas baskı", "P1D / P16L precision printing"), href: "/3d-yazicilar", icon: ecoPrinterIcon },
-  { title: tLocalized("Yıkama & Kürleme", "Wash & Cure"), description: tLocalized("Yıkama ve akıllı kürleme", "Wash and smart curing"), href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"), icon: ecoScannerIcon },
-  { title: tLocalized("Dental Reçineler", "Dental Resins"), description: tLocalized("Dental reçine seçenekleri", "Dental resin options"), href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
-];
-const defaultProductSecondary: Required<MenuItem>[] = [
-  { title: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), description: tLocalized("Lab tarafında hassas veri", "Precise lab data"), href: "/masasustu-tarayicilar", icon: ecoCuringIcon },
-  { title: tLocalized("Zirkon Bloklar & Titanyum", "Zirconia Blocks & Titanium"), description: tLocalized("Freze tarafının sarfları", "Milling consumables"), href: "/zirkon-bloklar", icon: ecoBlocksIcon },
-  { title: tLocalized("Dental Fırınlar", "Dental Furnaces"), description: tLocalized("Sinterleme çözümleri", "Sintering solutions"), href: "/dental-firinlar", icon: ecoOvenIcon },
-];
+function getDefaultProductsFeature() {
+  return {
+    eyebrow: tLocalized("YENİ · DÜNYADA İLK", "NEW · WORLD'S FIRST"),
+    title: tLocalized("MASH C1E<br>Akıllı Kürleme Cihazı", "MASH C1E<br>Smart Curing Unit"),
+    description: tLocalized(
+      "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
+      "Eliminates user error in post-curing: automatically manages time, temperature, and wavelength based on resin."
+    ),
+    ctaText: tLocalized("Keşfet →", "Discover →"),
+    href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
+  };
+}
+
+function getDefaultProductPrimary(): Required<MenuItem>[] {
+  return [
+    { title: tLocalized("3D Yazıcılar", "3D Printers"), description: tLocalized("P1D / P16L hassas baskı", "P1D / P16L precision printing"), href: "/3d-yazicilar", icon: ecoPrinterIcon },
+    { title: tLocalized("Yıkama & Kürleme", "Wash & Cure"), description: tLocalized("Yıkama ve akıllı kürleme", "Wash and smart curing"), href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"), icon: ecoScannerIcon },
+    { title: tLocalized("Dental Reçineler", "Dental Resins"), description: tLocalized("Dental reçine seçenekleri", "Dental resin options"), href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
+  ];
+}
+
+function getDefaultProductSecondary(): Required<MenuItem>[] {
+  return [
+    { title: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), description: tLocalized("Lab tarafında hassas veri", "Precise lab data"), href: "/masasustu-tarayicilar", icon: ecoCuringIcon },
+    { title: tLocalized("Zirkon Bloklar & Titanyum", "Zirconia Blocks & Titanium"), description: tLocalized("Freze tarafının sarfları", "Milling consumables"), href: "/zirkon-bloklar", icon: ecoBlocksIcon },
+    { title: tLocalized("Dental Fırınlar", "Dental Furnaces"), description: tLocalized("Sinterleme çözümleri", "Sintering solutions"), href: "/dental-firinlar", icon: ecoOvenIcon },
+  ];
+}
 
 function href(value?: string) {
   return safeNavigationHref(value, "#");
@@ -1908,6 +1928,9 @@ const cartItems =
   // Compute all dynamic text at render time so they reflect language changes
   const defaultAnn = getDefaultAnnouncement();
   const productsMenuText = props.productsMenuText || getDefaultProductsMenuText();
+  const defaultProductsFeature = getDefaultProductsFeature();
+  const defaultProductPrimary = getDefaultProductPrimary();
+  const defaultProductSecondary = getDefaultProductSecondary();
   const whyMenuText = props.whyMenuText || getDefaultWhyMenuText();
   const referencesText = props.referencesText || getDefaultReferencesText();
   const academyText = props.academyText || getDefaultAcademyText();
@@ -2558,13 +2581,11 @@ async function removeCartItem(
                         setIsLangOpen(false);
                         setPreferredLocale("en");
                         if (typeof window === "undefined") return;
-                        const bare = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
-                        const enPath = bare === "/" ? "/en" : `/en${bare.startsWith("/") ? bare : `/${bare}`}`;
                         const searchParams = new URLSearchParams(window.location.search);
                         searchParams.delete("lang");
                         searchParams.delete("locale");
                         const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
-                        window.location.href = safeRedirect(enPath + search + window.location.hash);
+                        window.location.href = safeRedirect(englishLocalePath(window.location.pathname, search, window.location.hash));
                       }}
                     >
                       <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2886,9 +2907,11 @@ const image = imageCandidates[0];
                 className={`tmh-mobile-lang-btn ${isEnglishLocale() ? "is-active" : ""}`}
                 onClick={() => {
                   setPreferredLocale("en");
-                  const bare = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
-                  const enPath = bare === "/" ? "/en" : `/en${bare.startsWith("/") ? bare : `/${bare}`}`;
-                  window.location.href = safeRedirect(enPath + window.location.search + window.location.hash);
+                  const searchParams = new URLSearchParams(window.location.search);
+                  searchParams.delete("lang");
+                  searchParams.delete("locale");
+                  const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
+                  window.location.href = safeRedirect(englishLocalePath(window.location.pathname, search, window.location.hash));
                 }}
               >
                 <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
