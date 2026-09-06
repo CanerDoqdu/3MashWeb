@@ -61,7 +61,9 @@ function applyConsentEffects(consent: CookieConsentState) {
     if (cookiesToPurge.length > 0 && typeof document !== "undefined") {
       const hostname = window.location.hostname;
       const allowedDomains = ["3mash.com", "myikas.com", "ikasapps.com"];
-      const isAllowedDomain = allowedDomains.some((allowed) => hostname.endsWith(allowed));
+      const isAllowedDomain = allowedDomains.some(
+        (allowed) => hostname === allowed || hostname.endsWith(`.${allowed}`),
+      );
 
       if (!isAllowedDomain) {
         if (typeof process !== "undefined" && process.env?.NODE_ENV === "development") {

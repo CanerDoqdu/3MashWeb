@@ -106,3 +106,21 @@ export function safeMailtoHref(recipient: string, subject: string, body: string)
 
   return `mailto:${safeRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
+
+export function safeCheckoutHref(url?: string): string {
+  const trimmed = (url ?? "").trim();
+  if (!trimmed || isBlockedScheme(trimmed) || isAllowedProtocol(trimmed)) return "";
+  if (trimmed.startsWith("//")) return "";
+
+  if (trimmed.startsWith("/")) {
+    return normalizeSameOriginPath(trimmed);
+  }
+
+  try {
+    const parsed = new URL(trimmed, typeof window === "undefined" ? "https://3mash.com" : window.location.href);
+    if (parsed.protocol !== "https:") return "";
+    return parsed.href;
+  } catch {
+    return "";
+  }
+}

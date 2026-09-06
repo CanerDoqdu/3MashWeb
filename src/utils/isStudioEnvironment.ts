@@ -1,8 +1,12 @@
+function isTrustedHost(hostname: string, domain: string) {
+  return hostname === domain || hostname.endsWith(`.${domain}`);
+}
+
 export function isStudioEnvironment() {
   if (typeof window === "undefined") return false;
+  const hostname = window.location.hostname.toLowerCase();
   return (
-    window.location.hostname.includes("ikasapps.com") ||
-    window.location.hostname.includes("myikas.com") ||
-    (typeof window.parent !== "undefined" && window.parent !== window)
+    isTrustedHost(hostname, "ikasapps.com") ||
+    isTrustedHost(hostname, "myikas.com")
   );
 }

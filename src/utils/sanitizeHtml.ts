@@ -61,6 +61,7 @@ const FORBIDDEN_TAGS = new Set([
   "iframe",
   "object",
   "embed",
+  "foreignobject",
   "math",
   "noscript",
   "form",
@@ -93,7 +94,7 @@ function sanitizeAttributes(element: Element) {
     }
 
     // Block javascript: and data: URIs in href/src/xlink:href
-    if ((name === "href" || name === "src" || name === "xlink:href") && /^(javascript:|vbscript:|data:text\/html|data:application\/javascript)/i.test(value.trim())) {
+    if ((name === "href" || name === "src" || name === "xlink:href") && isUnsafeUrlValue(value)) {
       element.removeAttribute(attribute.name);
       return;
     }
@@ -104,19 +105,39 @@ function sanitizeAttributes(element: Element) {
   });
 }
 
-function stripUnsafeUrlAttributes(input: string, blockAllData = false) {
-  const unsafeScheme = blockAllData
+function isUnsafeUrlValue(value: string, blockAllData = false) {
+  const normalized = value.trim().replace(/[\u0000-\u0020]+/g, "");
+  const pattern = blockAllData
     ? /^(?:javascript:|vbscript:|data:)/i
     : /^(?:javascript:|vbscript:|data:text\/html|data:application\/javascript)/i;
+  return pattern.test(normalized);
+}
 
+function stripUnsafeUrlAttributes(input: string, blockAllData = false) {
   return input.replace(
     /\s(?:href|src|xlink:href)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi,
     (attribute) => {
       const value = attribute.replace(/^\s*(?:href|src|xlink:href)\s*=\s*/i, "").trim();
       const unquoted = value.replace(/^("|')|("|')$/g, "").trim();
-      return unsafeScheme.test(unquoted) ? "" : attribute;
+      return isUnsafeUrlValue(unquoted, blockAllData) ? "" : attribute;
     },
   );
+}
+
+function stripForbiddenTags(input: string) {
+  const forbiddenTags = Array.from(FORBIDDEN_TAGS).join("|");
+  const block = new RegExp(`<(${forbiddenTags})\\b[^>]*>[\\s\\S]*?<\\/\\1\\s*>`, "gi");
+  const selfClosing = new RegExp(`<(${forbiddenTags})\\b[^>]*\\/?>`, "gi");
+  return input.replace(block, "").replace(selfClosing, "");
+}
+
+function stripUnsafeAttributes(input: string) {
+  return input
+    .replace(/\s(?:on[\w:-]+|style|srcdoc|xmlns|data-[\w:-]+)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(/\s(?:href|src|xlink:href)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, (attribute) => {
+      const value = attribute.replace(/^\s*[^=]+\s*=\s*/i, "").replace(/^("|')|("|')$/g, "").trim();
+      return isUnsafeUrlValue(value, true) ? "" : attribute;
+    });
 }
 
 export function sanitizeHtml(input?: string | null): string {
@@ -124,11 +145,9 @@ export function sanitizeHtml(input?: string | null): string {
 
   if (typeof DOMParser === "undefined") {
     return stripUnsafeUrlAttributes(
-      String(input)
-        .replace(/<script[\s\S]*?<\/script>/gi, "")
-        .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
-        .replace(/on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
-        .replace(/\sstyle\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, ""),
+      stripUnsafeAttributes(
+        stripForbiddenTags(String(input)),
+      ),
     );
   }
 

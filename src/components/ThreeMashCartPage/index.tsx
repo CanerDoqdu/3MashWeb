@@ -35,7 +35,7 @@ import {
   subscribeCart,
 } from "../cartState";
 import { t, tLocalized, tProp, isEnglishLocale, localizedHref } from "../../utils/i18n";
-import { safeNavigationHref } from "../../utils/safeRedirect";
+import { safeCheckoutHref, safeNavigationHref } from "../../utils/safeRedirect";
 
 const categoryProductsPageHref = "/dental-3d-yazici-recineleri";
 const legacyContinueShoppingHrefs = new Set([
@@ -221,6 +221,7 @@ try {
         {updateError ? <p className="tmcart-error" role="alert" aria-live="assertive">{updateError}</p> : null}
       </div>
       <div className="tmcart-qty" aria-label={tLocalized("Adet", "Quantity")}>
+        <span className="tmcart-qty-label">{tLocalized("Adet", "Quantity")}</span>
         <button
           type="button"
           disabled={isUpdating || item.quantity <= 1}
@@ -228,7 +229,7 @@ try {
         >
           -
         </button>
-        <span>{item.quantity}</span>
+        <span className="tmcart-qty-value">{item.quantity}</span>
         <button
           type="button"
           disabled={isUpdating}
@@ -430,8 +431,8 @@ async function deleteCoupon() {
       await getCart();
       refreshState();
 
-      const checkoutUrl = getCheckoutUrlFromCartStore(cartStore);
-      if (!checkoutUrl) throw new Error("Checkout URL unavailable");
+      const checkoutUrl = safeCheckoutHref(getCheckoutUrlFromCartStore(cartStore));
+      if (!checkoutUrl) throw new Error("Checkout URL unavailable or unsafe");
       window.location.href = checkoutUrl;
     } catch {
       setCheckoutError(
@@ -457,7 +458,6 @@ async function deleteCoupon() {
     >
       <div className="tmcart-wrap">
         <header className="tmcart-head">
-          <span>{tLocalized("SEPET", "CART")}</span>
           <h1>{text(props.titleText, tLocalized("Sepetim", "My Cart"), "My Cart")}</h1>
           <p>
             {isLoading
