@@ -422,9 +422,6 @@ export function ThreeMashAccountPage(props: Props) {
         </form>
       </div>
 
-      <div className="tma-auth-image" aria-hidden="true">
-        <img src={image} alt="" />
-      </div>
     </section>
   );
 }

@@ -358,9 +358,6 @@ function LegacyThreeMashRegisterPage(props: Props) {
         </form>
       </div>
 
-      <div className="tmrpg-auth-image" aria-hidden="true">
-        <img src={image} alt="" />
-      </div>
     </section>
   );
 }
