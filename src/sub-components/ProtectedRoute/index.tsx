@@ -211,31 +211,56 @@ export default function ProtectedRoute({
   if (authStatus !== "authenticated") {
     return (
       <div
+        className="tm-auth-loading-shell"
         role="status"
         aria-label="Loading"
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "calc(100vh - 78px)",
-          height: "calc(100vh - 78px)",
-          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "minmax(220px, .42fr) minmax(0, 1fr)",
+          gap: "24px",
+          alignItems: "stretch",
+          width: "min(100%, 1180px)",
+          minHeight: "560px",
+          margin: "0 auto",
+          padding: "clamp(40px, 5vw, 64px) 24px clamp(64px, 8vw, 110px)",
           background: "var(--tmrpg-auth-bg, var(--tm-theme-bg, #fafaf7))",
         }}
       >
-        <style>{`@keyframes tm-auth-spin { to { transform: rotate(360deg); } }`}</style>
-        <span
-          aria-hidden="true"
+        <style>{`
+          @keyframes tm-auth-pulse { 50% { opacity: .52; } }
+          .tm-auth-loading-block { animation: tm-auth-pulse 1.2s ease-in-out infinite; }
+          @media (max-width: 760px) {
+            .tm-auth-loading-shell { grid-template-columns: 1fr !important; }
+            .tm-auth-loading-sidebar { min-height: 190px !important; }
+          }
+        `}</style>
+        <div
+          className="tm-auth-loading-sidebar"
           style={{
-            display: "block",
-            width: "36px",
-            height: "36px",
-            border: "3px solid rgba(250,250,247,.28)",
-            borderTopColor: "#c7f136",
-            borderRadius: "50%",
-            animation: "tm-auth-spin .65s linear infinite",
+            minHeight: "100%",
+            padding: "clamp(34px, 4vw, 48px)",
+            background: "var(--tm-theme-dark, #0e0e0c)",
           }}
-        />
+        >
+          <span className="tm-auth-loading-block" style={{ display: "block", width: "92px", height: "20px", background: "rgba(250,250,247,.16)" }} />
+          <span className="tm-auth-loading-block" style={{ display: "block", width: "68%", height: "34px", marginTop: "42px", background: "rgba(250,250,247,.16)" }} />
+          <span className="tm-auth-loading-block" style={{ display: "block", width: "82%", height: "14px", marginTop: "28px", background: "rgba(250,250,247,.12)" }} />
+        </div>
+        <div
+          className="tm-auth-loading-block"
+          style={{
+            minHeight: "100%",
+            padding: "clamp(34px, 4vw, 48px)",
+            background: "#fff",
+            border: "1px solid var(--tm-theme-line, #e6e6e0)",
+          }}
+        >
+          <span style={{ display: "block", width: "100%", height: "58px", background: "var(--tm-theme-panel, #f1f1ec)" }} />
+          <span style={{ display: "block", width: "42%", height: "26px", marginTop: "34px", background: "var(--tm-theme-panel, #f1f1ec)" }} />
+          <span style={{ display: "block", width: "100%", height: "52px", marginTop: "28px", background: "var(--tm-theme-panel, #f1f1ec)" }} />
+          <span style={{ display: "block", width: "100%", height: "52px", marginTop: "18px", background: "var(--tm-theme-panel, #f1f1ec)" }} />
+          <span style={{ display: "block", width: "100%", height: "52px", marginTop: "18px", background: "var(--tm-theme-panel, #f1f1ec)" }} />
+        </div>
       </div>
     );
   }
