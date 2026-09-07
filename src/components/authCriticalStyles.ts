@@ -40,6 +40,8 @@ const authCriticalStyles = `
   grid-row: 1 / span 24;
   display: grid;
   align-content: end;
+  align-self: start;
+  height: 638px;
   min-width: 0;
   min-height: 620px;
   overflow: hidden;
@@ -114,6 +116,7 @@ const authCriticalStyles = `
 .tmrpg-auth-submit,
 .tmrpg-auth-status,
 .tmrpg-auth-login-callout { grid-column: 2; }
+.tma-auth-cart-link { display: none !important; }
 .tma-auth-tabs,
 .tmrpg-auth-tabs {
   display: grid;
