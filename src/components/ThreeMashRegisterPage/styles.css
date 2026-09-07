@@ -187,6 +187,37 @@
     var(--tmrpg-auth-line, var(--tm-theme-line, #e6e6e0));
 }
 
+.tmrpg-auth-tabs > a {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tmrpg-auth-tabs > span.is-active {
+  background: #fff !important;
+  box-shadow: inset 0 0 0 1px
+    var(--tmrpg-auth-line, var(--tm-theme-line, #e6e6e0)) !important;
+}
+
+.tmrpg-auth-tabs > .tab-active {
+  background: #fff !important;
+  box-shadow: inset 0 0 0 1px var(--tmrpg-auth-line, #e6e6e0) !important;
+}
+
+.tmrpg-auth-tabs > .tab-inactive {
+  background: var(--tmrpg-auth-panel, #f1f1ec) !important;
+  box-shadow: none !important;
+}
+
+.is-register-page .tmrpg-auth-tabs > a {
+  background: var(--tmrpg-auth-panel, #f1f1ec) !important;
+  box-shadow: none !important;
+}
+
+.is-register-page .tmrpg-auth-tabs > span {
+  background: #fff !important;
+  box-shadow: inset 0 0 0 1px var(--tmrpg-auth-line, #e6e6e0) !important;
+}
+
 .tmrpg-auth-field {
   display: grid;
   gap: 8px;

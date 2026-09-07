@@ -270,18 +270,17 @@
 }
 
 .tmcart-qty {
-  display: inline-grid;
-  grid-template-columns: auto 34px 34px 34px;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-height: 34px;
   color: var(--tmcart-text);
   white-space: nowrap;
 }
 
-.tmcart-qty::before {
-  content: "Adet";
+.tmcart-qty-label {
   color: var(--tmcart-muted);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -304,11 +303,15 @@
   opacity: 0.34;
 }
 
-.tmcart-qty span {
+.tmcart-qty-value {
+  display: inline-grid;
+  place-items: center;
   min-width: 34px;
+  height: 34px;
   text-align: center;
   font-size: 14px;
   font-weight: 800;
+  line-height: 1;
 }
 
 .tmcart-price {
@@ -489,29 +492,79 @@
   }
 
   .tmcart-item {
-    grid-template-columns: 82px minmax(0, 1fr);
+    grid-template-columns: minmax(88px, 104px) minmax(0, 1fr);
+    grid-template-areas:
+      "media copy"
+      "media quantity"
+      "price price";
     gap: 12px;
     padding: 12px;
+    align-items: start;
   }
 
   .tmcart-item-media {
-    width: 82px;
+    grid-area: media;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .tmcart-item-copy {
+    grid-area: copy;
+    min-height: 0;
   }
 
   .tmcart-item-copy a {
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .tmcart-item-copy {
+    gap: 6px;
+  }
+
+  .tmcart-item-copy small {
+    font-size: 12px;
+    line-height: 1.3;
   }
 
   .tmcart-qty {
-    grid-template-columns: auto 30px 30px 30px;
-    gap: 5px;
+    grid-area: quantity;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .tmcart-item-copy {
+    align-self: stretch;
+  }
+
+  .tmcart-qty-label {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .tmcart-price {
+    grid-area: price;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding-top: 10px;
+    border-top: 1px solid var(--tmcart-line);
   }
 
   .tmcart-qty button,
-  .tmcart-qty span {
+  .tmcart-qty-value {
     width: 30px;
     min-width: 30px;
     height: 30px;
+  }
+
+  .tmcart-qty-value {
+    width: 24px;
+    min-width: 24px;
   }
 
   .tmcart-summary {

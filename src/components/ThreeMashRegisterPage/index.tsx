@@ -191,7 +191,7 @@ function LegacyThreeMashRegisterPage(props: Props) {
   } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 
   return (
-    <section className="three-mash-register-page" style={style}>
+    <section className="three-mash-register-page is-register-page" style={style}>
       <style dangerouslySetInnerHTML={{ __html: authCriticalStyles }} />
       <div className="tmrpg-auth-panel">
         <form className="tmrpg-auth-form" onSubmit={submit}>
@@ -208,10 +208,18 @@ function LegacyThreeMashRegisterPage(props: Props) {
           </div>
 
           <div className="tmrpg-auth-tabs">
-            <a href={href(props.loginTabHref, "/account/login")}>
+            <a
+              className="tab-inactive"
+              href={href(props.loginTabHref, "/account/login")}
+              style={{ backgroundColor: "var(--tmrpg-auth-panel, #f1f1ec)" }}
+            >
               {text(props.loginTabText, tLocalized("Üye Girişi", "Member Login"), "Sign In")}
             </a>
-            <span className="is-active">
+            <span
+              className="tab-active"
+              aria-current="page"
+              style={{ backgroundColor: "#fff" }}
+            >
               {text(props.registerTabText, tLocalized("Üye Ol", "Register"), "Register")}
             </span>
           </div>

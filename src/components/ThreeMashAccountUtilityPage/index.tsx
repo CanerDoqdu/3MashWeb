@@ -22,6 +22,7 @@ import {
 } from "@ikas/bp-storefront";
 
 import ThreeMashAccountLayout from "../ThreeMashAccountLayout";
+import ThreeMashAccountPage from "../ThreeMashAccountPage";
 import { Props } from "./types";
 import type { Props as AccountInfoProps } from "../ThreeMashAccountInfoPage/types";
 import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
@@ -771,6 +772,24 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
 // ─── Main export — delegates to the unified account layout shell ──
 
 export function ThreeMashAccountUtilityPage(props: DashboardProps) {
+  const pathname =
+    typeof window !== "undefined"
+      ? window.location.pathname.replace(/\/+$/, "")
+      : "";
+  const isForgotPasswordRoute =
+    props.mode === "forgot-password" || pathname === "/account/forgot-password";
+  const isRecoverPasswordRoute =
+    props.mode === "recover-password" || pathname === "/account/recover-password";
+
+  if (isForgotPasswordRoute || isRecoverPasswordRoute) {
+    return (
+      <ThreeMashAccountPage
+        {...(props as any)}
+        mode={isRecoverPasswordRoute ? "recover-password" : "forgot-password"}
+      />
+    );
+  }
+
   // Route to the unified account layout with the mode passed from ikas config.
   // Each registered page (addresses, orders, favorites) sets a different mode prop.
   return <ThreeMashAccountLayout {...props} />;

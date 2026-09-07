@@ -51,4 +51,6 @@ export interface Props {
   errorMessage?: string;
   /** Canlı 3mash login/register ekranındaki sağ görsel. */
   backgroundImageUrl?: IkasImage | null;
+  recoverPasswordText?: string;
+  recoverPasswordHref?: string;
 }

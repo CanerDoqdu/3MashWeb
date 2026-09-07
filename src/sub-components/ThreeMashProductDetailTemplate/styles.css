@@ -102,6 +102,24 @@
   object-fit: contain;
 }
 
+.tmpdt-gal-loader {
+  position: absolute;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  border: 3px solid transparent;
+  border-top-color: var(--tmpdt-lime);
+  border-right-color: color-mix(in srgb, var(--tmpdt-lime) 38%, transparent);
+  border-radius: 50%;
+  animation: tmpdt-gal-spin 780ms linear infinite;
+}
+
+@keyframes tmpdt-gal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .tmpdt-cebadge {
   position: absolute;
   top: 16px;

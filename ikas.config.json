@@ -23662,6 +23662,20 @@
           "required": false,
           "description": "Canlı 3mash login/register ekranındaki sağ görsel.",
           "groupId": "media"
+        },
+        {
+          "name": "recoverPasswordText",
+          "displayName": "Şifremi Kurtar Yazısı",
+          "type": "RICH_TEXT",
+          "required": false,
+          "groupId": "form"
+        },
+        {
+          "name": "recoverPasswordHref",
+          "displayName": "Şifremi Kurtar Linki",
+          "type": "TEXT",
+          "required": false,
+          "groupId": "form"
         }
       ],
       "propGroups": [
@@ -23750,7 +23764,7 @@
           "displayName": "Favoriler Linki",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/account/favorites",
+          "defaultValue": "/account/favorite-products",
           "groupId": "links"
         },
         {
@@ -24611,7 +24625,7 @@
           "displayName": "Favoriler Linki",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/account/favorites",
+          "defaultValue": "/account/favorite-products",
           "groupId": "links"
         },
         {
@@ -24728,7 +24742,7 @@
           "displayName": "Favoriler Linki",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/account/favorites",
+          "defaultValue": "/account/favorite-products",
           "groupId": "links"
         },
         {
@@ -24845,7 +24859,7 @@
           "displayName": "Favoriler Linki",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/account/favorites",
+          "defaultValue": "/account/favorite-products",
           "groupId": "links"
         },
         {
@@ -24954,7 +24968,7 @@
           "displayName": "Favoriler Linki",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/account/favorites",
+          "defaultValue": "/account/favorite-products",
           "groupId": "links"
         },
         {
@@ -25071,7 +25085,7 @@
           "displayName": "Favoriler Linki",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/account/favorites",
+          "defaultValue": "/account/favorite-products",
           "groupId": "links"
         },
         {

@@ -1,8 +1,12 @@
 import { tLocalized } from "../../utils/i18n";
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
+  apiSearchProducts,
+  addProductToFavorites,
   createMediaSrcset,
+  customerStore,
   getDefaultSrc,
+  getFavoriteProductsIds,
   getProductHref,
   getProductListFilterCategories,
   getProductListInitialData,
@@ -16,6 +20,7 @@ import {
   hasProductListPrevPage,
   hasProductVariantDiscount,
   initProductList,
+  removeProductFromFavorites,
   searchProductList,
   setSortType,
   type IkasProduct,
@@ -26,6 +31,7 @@ import {
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
 
+
 type ListingLink = {
   label: string;
   id: string;
@@ -33,6 +39,12 @@ type ListingLink = {
 };
 
 const ALL_PRODUCTS_FILTER_ID = "all-products";
+const RESIN_FALLBACK_SEARCHES = [
+  "Mash Study",
+  "Mash Clear",
+  "Mash Trial White",
+  "Mash Trial Pink",
+] as const;
 
 function safeVariant(product: IkasProduct): IkasProductVariant | null {
   try {
@@ -81,18 +93,18 @@ function localizeSortLabel(value: string | undefined) {
   const normalized = searchKey(label);
 
   if (!normalized) return label;
-  if (normalized === tLocalized("sirala", "sirala")) return tLocalized("Sırala", "Sort");
-  if (normalized.includes("default") || normalized.includes("varsayilan")) return tLocalized("Varsayılan", "Default");
-  if (normalized.includes("most relevant") || normalized.includes("relevant")) return tLocalized("En Alakalı", "Most Relevant");
+  if (normalized === tLocalized("sirala", "sirala")) return tLocalized("Önerilen", "Recommended");
+  if (normalized.includes("default") || normalized.includes("varsayilan")) return tLocalized("Önerilen", "Recommended");
+  if (normalized.includes("most relevant") || normalized.includes("relevant")) return tLocalized("Önerilen", "Recommended");
   if (normalized.includes("newest") || normalized.includes(tLocalized("en yeni", "newest")) || normalized === "new") return tLocalized("En Yeni", "Newest");
-  if (normalized.includes("oldest") || normalized.includes("en eski")) return "En Eski";
+  if (normalized.includes("oldest") || normalized.includes("en eski")) return tLocalized("En Eski", "Oldest");
   if (normalized.includes("price") && (normalized.includes("low") || normalized.includes("asc") || normalized.includes("cheap"))) return tLocalized("Fiyat: Artan", "Price: Low to High");
   if (normalized.includes("price") && (normalized.includes("high") || normalized.includes("desc") || normalized.includes("expensive"))) return tLocalized("Fiyat: Azalan", "Price: High to Low");
   if (normalized.includes("name") && normalized.includes("az")) return tLocalized("İsim: A-Z", "Name: A-Z");
   if (normalized.includes("name") && normalized.includes("za")) return tLocalized("İsim: Z-A", "Name: Z-A");
   if (normalized.includes("increasing price")) return tLocalized("Fiyat: Artan", "Price: Low to High");
   if (normalized.includes("decreasing price")) return tLocalized("Fiyat: Azalan", "Price: High to Low");
-  if (normalized.includes("last added")) return "Son Eklenen";
+  if (normalized.includes("last added")) return tLocalized("Son Eklenen", "Recently Added");
   if (normalized.includes("first added")) return tLocalized("İlk Eklenen", "First Added");
   if (normalized.includes("increasing discount")) return tLocalized("İndirim: Artan", "Discount: Ascending");
   if (normalized.includes("decreasing discount")) return tLocalized("İndirim: Azalan", "Discount: Descending");
@@ -165,11 +177,15 @@ function productCategoryMatches(product: IkasProduct, category: ListingLink) {
 function ProductCard({
   product,
   props,
-  isCategoryPage = false,
+  index = 0,
+  isFavorite = false,
+  onToggleFavorite,
 }: {
   product: IkasProduct;
   props: Props;
-  isCategoryPage?: boolean;
+  index?: number;
+  isFavorite?: boolean;
+  onToggleFavorite?: (productId: string) => void;
 }) {
   const variant = safeVariant(product);
   const media = variant ? getProductVariantMainImage(variant) : undefined;
@@ -187,81 +203,133 @@ function ProductCard({
   }, [imageSrc]);
 
   return (
-    <a
-      className={`tm-products-card${isCategoryPage ? " is-category-card" : ""}`}
-      href={getProductHref(product)}
-    >
-      <div className="tm-products-card-media">
-        {imageSrc && !isMediaLoaded ? <div className="tm-products-card-media-loader" aria-hidden="true" /> : null}
-        <div className="tm-products-card-badges">
-          {hasDiscount ? <span>{props.discountText || tLocalized("İndirim", "Discount")}</span> : null}
-        </div>
-        {image ? (
-          media?.isVideo ? (
-            <video
-              src={imageSrc}
-              muted
-              playsInline
-              loop
-              autoPlay
-              onLoadedData={() => setIsMediaLoaded(true)}
-              onError={() => setIsMediaLoaded(true)}
-            />
-          ) : (
-            <img
-              src={imageSrc}
-              srcSet={createMediaSrcset(image)}
-              alt={image.altText || product.name}
-              loading="lazy"
-              decoding="async"
-              ref={(node) => {
-                if (node?.complete) setIsMediaLoaded(true);
-              }}
-              onLoad={() => setIsMediaLoaded(true)}
-              onError={() => setIsMediaLoaded(true)}
-            />
-          )
-        ) : (
-          <div className="tm-products-card-fallback" aria-hidden="true">
-            {product.name.slice(0, 1)}
+    <div className="tm-products-card">
+      <div className="tm-products-card-media-wrap">
+        <a
+          href={getProductHref(product)}
+          className="tm-products-card-media-link"
+          aria-label={product.name}
+        >
+          <div className="tm-products-card-media">
+            {imageSrc && !isMediaLoaded ? (
+              <div className="tm-products-card-media-loader" aria-hidden="true" />
+            ) : null}
+
+            {image ? (
+              media?.isVideo ? (
+                <video
+                  src={imageSrc}
+                  muted
+                  playsInline
+                  loop
+                  autoPlay
+                  onLoadedData={() => setIsMediaLoaded(true)}
+                  onError={() => setIsMediaLoaded(true)}
+                />
+              ) : (
+                <img
+                  src={imageSrc}
+                  srcSet={createMediaSrcset(image)}
+                  alt={image.altText || product.name}
+                  loading="lazy"
+                  decoding="async"
+                  ref={(node) => {
+                    if (node?.complete) setIsMediaLoaded(true);
+                  }}
+                  onLoad={() => setIsMediaLoaded(true)}
+                  onError={() => setIsMediaLoaded(true)}
+                />
+              )
+            ) : (
+              <div className="tm-products-card-fallback" aria-hidden="true">
+                {product.name.slice(0, 1)}
+              </div>
+            )}
           </div>
-        )}
+        </a>
+
+        {/* Top Badges & Wishlist */}
+        <div className="tm-products-card-top-actions">
+          {hasDiscount ? (
+            <span className="tm-products-badge-popular">
+              {props.discountText || tLocalized("İndirim", "Discount")}
+            </span>
+          ) : <span />}
+
+          <button
+            type="button"
+            className={`tm-products-card-fav-btn${isFavorite ? " is-active" : ""}`}
+            aria-label={isFavorite ? tLocalized("Favorilerden çıkar", "Remove from favorites") : tLocalized("Favorilere ekle", "Add to favorites")}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggleFavorite?.(product.id);
+            }}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                fill={isFavorite ? "currentColor" : "none"}
+                stroke="currentColor"
+                strokeWidth="1.8"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className="tm-products-card-body">
-        <div className="tm-products-card-meta">
-          {firstCategory ? (
-            <span>{firstCategory}</span>
+        <div className="tm-products-card-info">
+          {product.brand?.name ? (
+            <span className="tm-products-card-brand">{product.brand.name}</span>
           ) : (
-            <span>{props.fallbackCategoryText || tLocalized("3MASH", "3MASH")}</span>
+            <span className="tm-products-card-brand">{props.fallbackCategoryText || "3MASH"}</span>
           )}
-          {product.brand?.name ? <span>{product.brand.name}</span> : null}
+
+          <a href={getProductHref(product)} className="tm-products-card-title-link">
+            <h3 className="tm-products-card-title">{product.name}</h3>
+          </a>
+
+          {firstCategory ? (
+            <span className="tm-products-card-category">{firstCategory}</span>
+          ) : null}
         </div>
 
-        <div className="tm-products-card-title">
-          <h3>{product.name}</h3>
-        </div>
-
-        {props.showSku !== false && variant?.sku ? (
-          <p className="tm-products-sku">
-            <span>{props.skuText || "SKU"}</span>
-            {variant.sku}
-          </p>
-        ) : null}
-
-        <div className="tm-products-card-bottom">
-          <div className="tm-products-price">
+        <div className="tm-products-card-footer">
+          <div className="tm-products-card-price-wrap">
             {price ? (
-              <strong>{price}</strong>
+              <strong className="tm-products-card-price">{price}</strong>
             ) : (
-              <strong>{props.priceRequestText || tLocalized("Teklif Alın", "Get a Quote")}</strong>
+              <strong className="tm-products-card-price is-quote">
+                {props.priceRequestText || tLocalized("Teklif Alın", "Get a Quote")}
+              </strong>
             )}
-            {comparePrice ? <span>{comparePrice}</span> : null}
+            {comparePrice ? (
+              <span className="tm-products-card-compare-price">{comparePrice}</span>
+            ) : null}
           </div>
-          <em>{props.viewProductText || tLocalized("Ürünü İncele", "View Product")}</em>
+
+          <a
+            href={getProductHref(product)}
+            className="tm-products-card-cta-btn"
+          >
+            <span>{props.viewProductText || tLocalized("Ürünü İncele", "View Product")}</span>
+            <svg
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M4.167 10h11.666M10.833 5l5 5-5 5" />
+            </svg>
+          </a>
         </div>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -286,49 +354,85 @@ export function ThreeMashProductsPage(props: Props) {
   );
   const [activeFilterId, setActiveFilterId] = useState(ALL_PRODUCTS_FILTER_ID);
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
+  const [gridLayout, setGridLayout] = useState<"grid-4" | "grid-3">("grid-4");
+  const [favoriteIds, setFavoriteIds] = useState<Record<string, boolean>>({});
+  const [favoritePendingIds, setFavoritePendingIds] = useState<Record<string, boolean>>({});
+
   const committedSearchRef = useRef(productList?.searchKeyword || "");
   const appliedUrlSearchRef = useRef(false);
   const unfilteredProductsRef = useRef<IkasProduct[]>(products);
-  const sortControlRef = useRef<HTMLLabelElement>(null);
+  const sortControlRef = useRef<HTMLDivElement>(null);
+  const categoriesScrollRef = useRef<HTMLDivElement>(null);
   const categoryRequestRef = useRef(0);
+
+  useEffect(() => {
+    if (!customerStore.customer) return;
+    let mounted = true;
+    getFavoriteProductsIds(customerStore)
+      .then((favorites) => {
+        if (!mounted) return;
+        setFavoriteIds(
+          favorites.reduce<Record<string, boolean>>((result, favorite) => {
+            if (favorite.productId) result[favorite.productId] = true;
+            return result;
+          }, {}),
+        );
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   const sortOptions = productList ? getProductListSortOptions(productList) : [];
   const selectedSort =
     sortOptions.find((option) => option.isSelected)?.value || "";
   const selectedSortLabel =
     localizeSortLabel(sortOptions.find((option) => option.value === selectedSort)?.label) ||
     props.sortLabel ||
-    tLocalized("Sırala", "Sort");
+    tLocalized("Önerilen", "Recommended");
+
   const pageTitle =
     normalizedText(props.eyebrowText) === tLocalized("ürün kategorisi", "product category")
       ? props.titleText || productList?.category?.name || productList?.brand?.name || tLocalized("Ürünler", "Products")
       : tLocalized("Tüm Ürünler", "All Products");
-  const eyebrowText = props.eyebrowText?.trim() || "";
-  const categoryLinks: ListingLink[] = [
-    {
-      id: ALL_PRODUCTS_FILTER_ID,
-      label: tLocalized("Tüm Ürünler", "All Products"),
-      group: "Kategori",
-    },
-    ...((categoryCatalog ? availableProductCategories(categoryCatalog) : [])
-      .filter((category) => Boolean(category.id))
-      .map((category) => ({
-        id: category.id,
-        label: categoryLabel(category),
-        group: "Kategori" as const,
-      }))),
+
+  const fallbackCategories = [
+    { id: ALL_PRODUCTS_FILTER_ID, label: tLocalized("Tüm Ürünler", "All Products"), group: "Kategori" as const },
+    { id: "3d-yazicilar", label: tLocalized("3D Yazıcılar", "3D Printers"), group: "Kategori" as const },
+    { id: "3d-yazici-yedek-parcalari", label: tLocalized("3D Yazıcı Yedek Parçaları", "3D Printer Spare Parts"), group: "Kategori" as const },
+    { id: "recineler", label: tLocalized("Reçineler", "Resins"), group: "Kategori" as const },
+    { id: "kurleme-cihazlari", label: tLocalized("Kürleme Cihazları", "Curing Devices"), group: "Kategori" as const },
+    { id: "tarayicilar", label: tLocalized("Tarayıcılar", "Scanners"), group: "Kategori" as const },
+    { id: "masaustu-tarayicilar", label: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), group: "Kategori" as const },
+    { id: "sistemler", label: tLocalized("Sistemler", "Systems"), group: "Kategori" as const },
+    { id: "yazilimlar", label: tLocalized("Yazılımlar", "Software"), group: "Kategori" as const },
   ];
-  const isCategoryProductsPage =
-    normalizedText(eyebrowText) === tLocalized("ürün kategorisi", "product category");
-  const isDentalResinCategoryPage =
-    isCategoryProductsPage && normalizedText(pageTitle) === tLocalized("dental reçineler", "Dental Resins");
+
+  const fetchedCategories = (categoryCatalog ? availableProductCategories(categoryCatalog) : [])
+    .filter((category) => Boolean(category.id))
+    .map((category) => ({
+      id: category.id,
+      label: categoryLabel(category),
+      group: "Kategori" as const,
+    }));
+
+  const categoryLinks: ListingLink[] = fetchedCategories.length > 0
+    ? [
+        {
+          id: ALL_PRODUCTS_FILTER_ID,
+          label: tLocalized("Tüm Ürünler", "All Products"),
+          group: "Kategori",
+        },
+        ...fetchedCategories,
+      ]
+    : fallbackCategories;
+
   const showSearchControl = props.showSearch !== false;
-  const showSortControl =
-    !isCategoryProductsPage &&
-    props.showSort !== false &&
-    sortOptions.length > 0;
-  const showListControls = showSearchControl || showSortControl;
-  const showNavigationControls = !isCategoryProductsPage;
-  const displayEyebrowText = eyebrowText || tLocalized("ÜRÜN KATEGORİSİ", "PRODUCT CATEGORY");
+  // Keep sorting visible on the product listing toolbar.
+  const showSortControl = true;
+  const showNavigationControls = props.showNavigation !== false;
+
   const trimmedSearch = searchValue.trim();
   const fallbackProducts =
     unfilteredProductsRef.current.length > 0
@@ -345,7 +449,7 @@ export function ThreeMashProductsPage(props: Props) {
   const style = {
     "--tm-products-bg": themeToken(
       props.backgroundColor,
-      "#f6f7f3",
+      "#f7f8f4",
       "--tm-theme-bg",
     ),
     "--tm-products-text": themeToken(
@@ -365,7 +469,7 @@ export function ThreeMashProductsPage(props: Props) {
     ),
     "--tm-products-line": themeToken(
       props.lineColor,
-      "#dfe3da",
+      "#e5e8e0",
       "--tm-theme-line",
     ),
     "--tm-products-accent": themeToken(
@@ -505,7 +609,7 @@ export function ThreeMashProductsPage(props: Props) {
       },
     });
 
-    void getProductListInitialData(categoryProductList).then(() => {
+    void getProductListInitialData(categoryProductList).then(async () => {
       if (requestId !== categoryRequestRef.current) return;
 
       const productsById = new Map<string, IkasProduct>();
@@ -513,11 +617,36 @@ export function ThreeMashProductsPage(props: Props) {
         productsById.set(product.id, product);
       });
 
-      if (productsById.size === 0 && categoryCatalog) {
+      if (categoryCatalog) {
         (categoryCatalog.data || []).forEach((product) => {
-          if (productCategoryMatches(product, link)) {
+          const productName = searchKey(product.name);
+          const isMissingResin =
+            searchKey(link.label).includes("recine") &&
+            RESIN_FALLBACK_SEARCHES.some((name) => productName.includes(searchKey(name)));
+          if (productCategoryMatches(product, link) || isMissingResin) {
             productsById.set(product.id, product);
           }
+        });
+      }
+
+      if (searchKey(link.label).includes("recine")) {
+        const missingSearches = RESIN_FALLBACK_SEARCHES.filter(
+          (name) => !Array.from(productsById.values()).some((product) => searchKey(product.name).includes(searchKey(name))),
+        );
+        const fallbackResults = await Promise.all(
+          missingSearches.map(async (query) => {
+            try {
+              const response = await apiSearchProducts({
+                input: { query, page: 1, perPage: 10 },
+              } as Parameters<typeof apiSearchProducts>[0]);
+              return response?.data?.data || [];
+            } catch {
+              return [];
+            }
+          }),
+        );
+        fallbackResults.flat().forEach((product) => {
+          productsById.set(product.id, product);
         });
       }
 
@@ -557,203 +686,360 @@ export function ThreeMashProductsPage(props: Props) {
     getProductListPage(productList, page);
   }
 
+  function scrollCategories(direction: "left" | "right") {
+    if (!categoriesScrollRef.current) return;
+    const scrollAmount = 260;
+    categoriesScrollRef.current.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  }
+
+  async function handleToggleFavorite(productId: string) {
+    if (!customerStore.customer) {
+      window.location.href = "/account/login";
+      return;
+    }
+
+    if (favoritePendingIds[productId]) return;
+    const isFavorite = Boolean(favoriteIds[productId]);
+    setFavoritePendingIds((prev) => ({ ...prev, [productId]: true }));
+    try {
+      const success = isFavorite
+        ? await removeProductFromFavorites(customerStore, productId)
+        : await addProductToFavorites(customerStore, productId);
+      if (success) {
+        setFavoriteIds((prev) => ({ ...prev, [productId]: !isFavorite }));
+      }
+    } finally {
+      setFavoritePendingIds((prev) => {
+        const next = { ...prev };
+        delete next[productId];
+        return next;
+      });
+    }
+  }
+
   return (
-    <section
-      className={`three-mash-products-page${isCategoryProductsPage ? " is-category-products-page" : " is-search-products-page"}${isDentalResinCategoryPage ? " is-dental-resin-category-page" : ""}`}
-      style={style}
-    >
+    <section className="three-mash-products-page" style={style}>
       <div className="tm-products-wrap">
-        <div className="tm-products-head">
-          <div>
-            {isCategoryProductsPage ? (
-              <>
-                <p className="tm-products-eyebrow">{displayEyebrowText}</p>
-                <h1>{pageTitle}</h1>
-                {props.descriptionText ? <p>{props.descriptionText}</p> : null}
-              </>
-            ) : (
-              <>
-                <h1>{pageTitle}</h1>
-              </>
-            )}
+        {/* Top Hero & Header Container */}
+        <div className="tm-products-hero-container">
+          {/* Breadcrumb Navigation */}
+          <nav className="tm-products-breadcrumb" aria-label="Breadcrumb">
+            <a href="/" className="tm-products-breadcrumb-link">
+              {tLocalized("Ana Sayfa", "Home")}
+            </a>
+            <span className="tm-products-breadcrumb-sep" aria-hidden="true">&gt;</span>
+            <span className="tm-products-breadcrumb-current">{pageTitle}</span>
+          </nav>
+
+          <div className="tm-products-hero-main">
+            <div className="tm-products-hero-text">
+              <h1 className="tm-products-hero-title">{pageTitle}</h1>
+              <p className="tm-products-hero-subtitle">
+                {props.descriptionText ||
+                  tLocalized(
+                    "Profesyonel 3D baskı ve dental çözümlerini keşfedin.",
+                    "Explore professional 3D printing and dental solutions."
+                  )}
+              </p>
+            </div>
           </div>
+
+          {/* Pill Search Input Bar */}
+          {showSearchControl ? (
+            <div className="tm-products-search-pill-container">
+              <div className="tm-products-search-pill">
+                <svg
+                  className="tm-products-search-pill-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                </svg>
+
+                <input
+                  type="search"
+                  className="tm-products-search-pill-input"
+                  value={searchValue}
+                  placeholder={
+                    props.searchPlaceholder ||
+                    tLocalized("Ürün adı veya marka ara...", "Search product name or brand...")
+                  }
+                  onInput={handleSearch}
+                  onKeyDown={handleSearchKeyDown}
+                  aria-label={props.searchLabel || tLocalized("Ürün adı veya marka ara...", "Search product name or brand...")}
+                />
+
+                <button
+                  type="button"
+                  className="tm-products-search-pill-btn"
+                  aria-label={tLocalized("Ara", "Search")}
+                  onClick={commitSearch}
+                >
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="M4.167 10h11.666M10.833 5l5 5-5 5" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          ) : null}
         </div>
 
-        {!productList ? (
-          <div className="tm-products-setup">
-            {props.setupMessage ||
-              tLocalized("Ürünler kısa süre içinde burada listelenecek.", "Products will be listed here shortly.")}
+        {/* Categories Bar ("Kategoriler") */}
+        {showNavigationControls ? (
+          <div className="tm-products-categories-section">
+            <h2 className="tm-products-categories-heading">
+              {tLocalized("Kategoriler", "Categories")}
+            </h2>
+
+            <div
+              className="tm-products-categories-scroll"
+              ref={categoriesScrollRef}
+              role="tablist"
+            >
+              {categoryLinks.map((link) => {
+                const isActive = activeFilterId === link.id;
+                return (
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    className={`tm-products-category-pill${isActive ? " is-active" : ""}`}
+                    onClick={() => handleListingFilter(link)}
+                    key={`${link.group}-${link.id}`}
+                  >
+                    {link.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="tm-products-categories-arrows" aria-hidden="true">
+              <button
+                type="button"
+                className="tm-products-category-arrow-btn"
+                aria-label={tLocalized("Geri", "Previous categories")}
+                onClick={() => scrollCategories("left")}
+              >
+                &lt;
+              </button>
+              <button
+                type="button"
+                className="tm-products-category-arrow-btn"
+                aria-label={tLocalized("İleri", "Next categories")}
+                onClick={() => scrollCategories("right")}
+              >
+                &gt;
+              </button>
+            </div>
           </div>
-        ) : (
-          <>
-            {showListControls ? (
-              <div className="tm-products-toolbar">
-                {showSearchControl ? (
-                  <label className="tm-products-search">
-                    <span>{props.searchLabel || tLocalized("Arama", "Search")}</span>
-                    <div className="tm-products-search-control">
-                      <input
-                        type="search"
-                        value={searchValue}
-                        placeholder={
-                          props.searchPlaceholder || tLocalized("Ürün adı, marka", "Product name, brand")
-                        }
-                        onInput={handleSearch}
-                        onKeyDown={handleSearchKeyDown}
-                      />
-                      <button
-                        type="button"
-                        className="tm-products-search-icon"
-                        aria-label={tLocalized("Ara", "Search")}
-                        onClick={commitSearch}
-                      >
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <circle cx="11" cy="11" r="7" />
-                          <line x1="16.5" y1="16.5" x2="21" y2="21" />
-                        </svg>
-                      </button>
-                    </div>
-                  </label>
-                ) : (
-                  <span />
-                )}
+        ) : null}
 
-                {showSortControl ? (
-                  <label className="tm-products-sort" ref={sortControlRef}>
-                    <span>{props.sortLabel || tLocalized("Sırala", "Sort")}</span>
-                    <button
-                      className="tm-products-sort-trigger"
-                      type="button"
-                      aria-haspopup="listbox"
-                      aria-expanded={sortMenuOpen}
-                      onClick={() => setSortMenuOpen((isOpen) => !isOpen)}
-                    >
-                      <span>{selectedSortLabel}</span>
-                      <svg
-                        viewBox="0 0 12 8"
-                        aria-hidden="true"
-                        focusable="false"
-                      >
-                        <path d="M1 1.5 6 6.5l5-5" />
-                      </svg>
-                    </button>
-                    {sortMenuOpen ? (
-                      <div className="tm-products-sort-menu" role="listbox">
-                        {sortOptions.map((option) => (
-                          <button
-                            type="button"
-                            role="option"
-                            aria-selected={option.value === selectedSort}
-                            className={
-                              option.value === selectedSort ? "is-selected" : ""
-                            }
-                            onClick={() =>
-                              handleSortValue(
-                                option.value as IkasProductListSortType,
-                              )
-                            }
-                            key={option.value}
-                          >
-                            {localizeSortLabel(option.label)}
-                          </button>
-                        ))}
-                      </div>
-                    ) : null}
-                  </label>
-                ) : null}
-              </div>
-            ) : null}
-
+        {/* Toolbar Sub-Bar (Sorting and Grid Layout Toggle) */}
+        <div className="tm-products-toolbar-row">
+          {/* Left: active search query + sort dropdown */}
+          <div className="tm-products-toolbar-left">
             {trimmedSearch ? (
-              <div className="tm-products-active-query">
-                <span>
-                  {tLocalized("Arama:", "Search:")} <b>{trimmedSearch}</b>
-                </span>
-                <button type="button" onClick={() => setSearchValue("")}>
-                  Temizle
+              <div className="tm-products-active-query-pill">
+                <span>{tLocalized("Arama:", "Search:")} <b>{trimmedSearch}</b></span>
+                <button
+                  type="button"
+                  aria-label={tLocalized("Aramayı temizle", "Clear search")}
+                  onClick={() => setSearchValue("")}
+                >
+                  ✕
                 </button>
               </div>
             ) : null}
 
-            {showNavigationControls ? (
-              <div className="tm-products-nav-shell">
-                <div className="tm-products-nav-tabs" aria-label={tLocalized("Liste türü", "List type")}>
-                  <span className="is-active">Kategoriler</span>
-                </div>
-                <nav
-                  className="tm-products-nav"
-                  aria-label={tLocalized("Ürün kategorileri", "Product categories")}
+            {/* Sort Dropdown — grid ikonlarının solunda */}
+            {showSortControl ? (
+              <div className="tm-products-sort-wrapper" ref={sortControlRef}>
+                <span className="tm-products-sort-label">
+                  {props.sortLabel || tLocalized("Sırala:", "Sort:")}
+                </span>
+
+                <button
+                  type="button"
+                  className="tm-products-sort-btn"
+                  aria-haspopup="listbox"
+                  aria-expanded={sortMenuOpen}
+                  onClick={() => setSortMenuOpen((isOpen) => !isOpen)}
                 >
-                  {categoryLinks.map((link) => (
-                    <button
-                      type="button"
-                      className={
-                        activeFilterId === link.id
-                          ? "is-active"
-                          : ""
-                      }
-                      data-group={link.group}
-                      aria-pressed={activeFilterId === link.id}
-                      onClick={() => handleListingFilter(link)}
-                      key={`${link.group}-${link.id}`}
-                    >
-                      {link.label}
-                    </button>
-                  ))}
-                </nav>
+                  <span>{selectedSortLabel}</span>
+                  {/* Heroicons: chevron-down */}
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
+                    className="tm-products-sort-arrow"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+
+                {sortMenuOpen ? (
+                  <div className="tm-products-sort-dropdown" role="listbox">
+                    {sortOptions.map((option) => (
+                      <button
+                        type="button"
+                        role="option"
+                        aria-selected={option.value === selectedSort}
+                        className={`tm-products-sort-option${option.value === selectedSort ? " is-selected" : ""}`}
+                        onClick={() =>
+                          handleSortValue(option.value as IkasProductListSortType)
+                        }
+                        key={option.value}
+                      >
+                        {localizeSortLabel(option.label)}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             ) : null}
+          </div>
 
-            {showProductSkeletons ? (
-              <div className="tm-products-grid" aria-label={tLocalized("Ürünler yükleniyor", "Loading products")}>
-                {Array.from({ length: 8 }, (_, index) => (
-                  <ProductCardSkeleton index={index} key={index} />
-                ))}
-              </div>
-            ) : displayedProducts.length > 0 ? (
-              <div className="tm-products-grid">
-                {displayedProducts.map((product) => (
-                  <ProductCard
-                    product={product}
-                    props={props}
-                    isCategoryPage={isCategoryProductsPage}
-                    key={product.id}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="tm-products-empty">
-                <h2>{props.emptyTitle || tLocalized("Ürün bulunamadı", "Product not found")}</h2>
-                <p>
-                  {props.emptyMessage ||
-                    (trimmedSearch
-                      ? tLocalized("Aramanızla eşleşen aktif ürün bulunamadı.", "No active products matching your search were found.")
-                      : isCategoryProductsPage
-                        ? tLocalized("Bu kategoriye bağlı aktif ürün yok.", "There are no active products in this category.")
-                        : tLocalized("Bu listeye bağlı aktif ürün yok veya filtreler sonucu ürün kalmadı.", "There are no active products linked to this list, or none remain after filtering."))}
-                </p>
-              </div>
-            )}
-
-            <div className="tm-products-pagination">
+          {/* Grid Layout Switcher */}
+            <div className="tm-products-layout-switcher" role="group" aria-label={tLocalized("Grid görünümü", "Grid layout")}>
               <button
                 type="button"
-                disabled={!hasProductListPrevPage(productList)}
-                onClick={() => goToPage((productList.page || 1) - 1)}
+                className={`tm-products-layout-btn${gridLayout === "grid-4" ? " is-active" : ""}`}
+                aria-label={tLocalized("4'lü Görünüm", "4 Columns View")}
+                onClick={() => setGridLayout("grid-4")}
               >
-                {props.prevPageText || tLocalized("Önceki", "Previous")}
+                {/* 4 squares in 2x2 = represents 4-column grid */}
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                  <rect x="1" y="1" width="6" height="6" rx="1" />
+                  <rect x="9" y="1" width="6" height="6" rx="1" />
+                  <rect x="1" y="9" width="6" height="6" rx="1" />
+                  <rect x="9" y="9" width="6" height="6" rx="1" />
+                </svg>
               </button>
-              <span>{productList.page || 1}</span>
+
               <button
                 type="button"
-                disabled={!hasProductListNextPage(productList)}
-                onClick={() => goToPage((productList.page || 1) + 1)}
+                className={`tm-products-layout-btn${gridLayout === "grid-3" ? " is-active" : ""}`}
+                aria-label={tLocalized("3'lü Görünüm", "3 Columns View")}
+                onClick={() => setGridLayout("grid-3")}
               >
-                {props.nextPageText || "Sonraki"}
+                {/* 3 vertical bars = represents 3-column grid */}
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                  <rect x="1" y="1" width="4" height="14" rx="1" />
+                  <rect x="6" y="1" width="4" height="14" rx="1" />
+                  <rect x="11" y="1" width="4" height="14" rx="1" />
+                </svg>
               </button>
             </div>
-          </>
+          </div>
+
+        {/* Product Cards Grid Area */}
+        {!productList ? (
+          <div className="tm-products-setup-box">
+            {props.setupMessage ||
+              tLocalized(
+                "Ürünler kısa süre içinde burada listelenecek.",
+                "Products will be listed here shortly."
+              )}
+          </div>
+        ) : showProductSkeletons ? (
+          <div className={`tm-products-grid ${gridLayout}`} aria-label={tLocalized("Ürünler yükleniyor", "Loading products")}>
+            {Array.from({ length: 8 }, (_, index) => (
+              <ProductCardSkeleton index={index} key={index} />
+            ))}
+          </div>
+        ) : displayedProducts.length > 0 ? (
+          <div className={`tm-products-grid ${gridLayout}`}>
+            {displayedProducts.map((product, index) => (
+              <ProductCard
+                product={product}
+                props={props}
+                index={index}
+                isFavorite={Boolean(favoriteIds[product.id])}
+                onToggleFavorite={handleToggleFavorite}
+                key={product.id}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="tm-products-empty-box">
+            <div className="tm-products-empty-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                <line x1="8" y1="11" x2="14" y2="11" />
+              </svg>
+            </div>
+            <h2>{props.emptyTitle || tLocalized("Ürün bulunamadı", "Product not found")}</h2>
+            <p>
+              {props.emptyMessage ||
+                (trimmedSearch
+                  ? tLocalized(
+                      "Aramanızla eşleşen aktif ürün bulunamadı. Lütfen farklı kelimelerle tekrar deneyin.",
+                      "No active products matching your search were found. Please try with different keywords."
+                    )
+                  : tLocalized(
+                      "Bu kategoride listelenecek ürün bulunamadı.",
+                      "No products found in this category."
+                    ))}
+            </p>
+          </div>
         )}
+
+        {/* Pagination Section */}
+        {productList && (hasProductListPrevPage(productList) || hasProductListNextPage(productList)) ? (
+          <div className="tm-products-pagination-container">
+            <button
+              type="button"
+              className="tm-products-pagination-btn"
+              disabled={!hasProductListPrevPage(productList)}
+              onClick={() => goToPage((productList.page || 1) - 1)}
+            >
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M15.5 10H4.5M9 5.5 4.5 10 9 14.5" />
+              </svg>
+              <span>{props.prevPageText || tLocalized("Önceki", "Previous")}</span>
+            </button>
+            <span className="tm-products-pagination-current">
+              {productList.page || 1}
+            </span>
+            <button
+              type="button"
+              className="tm-products-pagination-btn"
+              disabled={!hasProductListNextPage(productList)}
+              onClick={() => goToPage((productList.page || 1) + 1)}
+            >
+              <span>{props.nextPageText || tLocalized("Sonraki", "Next")}</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M4.5 10h11M11 5.5l4.5 4.5-4.5 4.5" />
+              </svg>
+            </button>
+          </div>
+        ) : null}
+
       </div>
     </section>
   );

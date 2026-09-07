@@ -1,7 +1,8 @@
 .three-mash-auth-page {
   display: grid;
   width: 100%;
-  min-height: auto;
+  container: tma-auth / inline-size;
+  min-height: calc(100vh - 78px);
   overflow: hidden;
   background: var(--tma-auth-bg, var(--tm-theme-bg, #fafaf7));
   color: var(--tma-auth-text, var(--tm-theme-text, #0e0e0c));
@@ -18,11 +19,11 @@
   position: relative;
   z-index: 2;
   display: grid;
-  align-items: start;
+  align-items: center;
   width: min(100%, 1180px);
-  min-height: auto;
+  min-height: inherit;
   margin: 0 auto;
-  padding: clamp(28px, 3vw, 42px) 24px clamp(34px, 4vw, 56px);
+  padding: clamp(42px, 5.4vw, 76px) 24px 24px;
 }
 
 .tma-auth-form {
@@ -33,47 +34,19 @@
   row-gap: 0;
   align-items: stretch;
   width: 100%;
-  min-height: 680px;
+  min-height: 680px !important;
+  height: 680px !important;
   padding: 20px;
   border: 1px solid var(--tma-auth-line, var(--tm-theme-line, #e6e6e0));
   background: #fff;
 }
 
-.tma-auth-form-loading {
-  position: absolute;
-  inset: 20px 20px 20px 50%;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.78);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.16s ease;
-}
-
-.tma-auth-form-loading.is-visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.tma-auth-form-spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid var(--tma-auth-line, #e6e6e0);
-  border-top-color: var(--tma-auth-accent, #c7f136);
-  border-radius: 50%;
-  animation: tma-auth-spin 0.65s linear infinite;
-}
-
-@keyframes tma-auth-spin {
-  to { transform: rotate(360deg); }
-}
 
 .tma-auth-form > .tma-auth-tabs,
 .tma-auth-form > .tma-auth-field,
 .tma-auth-form > .tma-auth-check,
 .tma-auth-form > .tma-auth-submit,
+.tma-auth-form > .tma-auth-password-links,
 .tma-auth-form > .tma-auth-underlink,
 .tma-auth-form > .tma-auth-register-callout,
 .tma-auth-form > .tma-auth-status {
@@ -82,6 +55,16 @@
 
 .tma-auth-form > :last-child {
   margin-bottom: 0;
+}
+
+.tma-auth-secondary-title {
+  grid-column: 2;
+  margin: 12px 0 10px;
+  color: var(--tma-auth-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", sans-serif);
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1;
+  text-align: center;
 }
 
 .tma-auth-form.is-register {
@@ -94,12 +77,13 @@
   position: relative;
   grid-column: 1;
   grid-row: 1 / span 20;
+  width: 100%;
   display: grid;
   align-content: end;
   align-self: start;
-  height: 638px;
+  height: 638px !important;
   min-width: 0;
-  min-height: 520px;
+  min-height: 638px !important;
   overflow: hidden;
   padding: clamp(30px, 4vw, 48px);
   background: var(--tma-auth-dark, var(--tm-theme-dark, #0e0e0c));
@@ -177,6 +161,10 @@
   letter-spacing: 0;
 }
 
+.tma-auth-copy .is-secondary-copy {
+  visibility: hidden;
+}
+
 .tma-auth-copy p {
   max-width: 420px;
   margin: 22px 0 0;
@@ -189,6 +177,7 @@
 .tma-auth-cart-link,
 .tma-auth-field,
 .tma-auth-submit,
+.tma-auth-password-links,
 .tma-auth-underlink,
 .tma-auth-register-callout,
 .tma-auth-status {
@@ -233,6 +222,16 @@
   background: #fff;
   box-shadow: inset 0 0 0 1px
     var(--tma-auth-line, var(--tm-theme-line, #e6e6e0));
+}
+
+.tma-auth-tabs .tab-active {
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--tma-auth-line, #e6e6e0);
+}
+
+.tma-auth-tabs .tab-inactive {
+  background: var(--tma-auth-panel, #f1f1ec);
+  box-shadow: none;
 }
 
 .tma-auth-cart-link {
@@ -331,6 +330,8 @@
   line-height: 1;
   text-align: center;
   cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .tma-auth-submit:disabled {
@@ -347,6 +348,23 @@
   line-height: 1.5;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.tma-auth-password-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px !important;
+}
+
+.is-register-page .tma-auth-tabs > button:first-child {
+  background: var(--tma-auth-panel, #f1f1ec) !important;
+  box-shadow: none !important;
+}
+
+.is-register-page .tma-auth-tabs > button:last-child {
+  background: #fff !important;
+  box-shadow: inset 0 0 0 1px var(--tma-auth-line, #e6e6e0) !important;
 }
 
 .tma-auth-register-callout {
@@ -408,15 +426,12 @@
     background: transparent;
   }
 
-  .tma-auth-form-loading {
-    inset: 0;
-  }
-
   .tma-auth-copy,
   .tma-auth-tabs,
   .tma-auth-cart-link,
   .tma-auth-field,
   .tma-auth-submit,
+  .tma-auth-password-links,
   .tma-auth-underlink,
   .tma-auth-register-callout,
   .tma-auth-status {
@@ -424,7 +439,7 @@
   }
 
   .tma-auth-copy {
-    height: auto;
+    align-self: start;
     min-height: 320px;
   }
 }
@@ -464,7 +479,70 @@
   }
 
   .tma-auth-panel {
+    width: 100%;
     padding: 26px 16px 32px;
+  }
+
+  .tma-auth-form {
+    width: 100%;
+    min-height: 0 !important;
+    height: fit-content !important;
+  }
+
+  .tma-auth-secondary-title {
+    margin: 8px 0 18px;
+    font-size: clamp(28px, 8vw, 38px);
+  }
+
+  .tma-auth-field input {
+    height: 50px;
+  }
+
+  .tma-auth-password-links {
+    gap: 12px !important;
+    justify-content: flex-start;
+  }
+}
+
+@container tma-auth (max-width: 700px) {
+  .tma-auth-panel {
+    width: 100%;
+    min-height: auto;
+    padding: 24px 16px 36px;
+  }
+
+  .tma-auth-form {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    height: fit-content;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .tma-auth-copy {
+    display: none;
+  }
+
+
+  .tma-auth-tabs,
+  .tma-auth-field,
+  .tma-auth-submit,
+  .tma-auth-password-links,
+  .tma-auth-underlink,
+  .tma-auth-register-callout,
+  .tma-auth-status,
+  .tma-auth-secondary-title {
+    grid-column: auto;
+  }
+
+  .tma-auth-secondary-title {
+    margin: 8px 0 18px;
+    font-size: clamp(28px, 8vw, 38px);
+  }
+
+  .tma-auth-password-links {
+    gap: 12px !important;
   }
 }
 

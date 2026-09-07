@@ -280,7 +280,7 @@ function SectionHead({ titleHtml, sideHtml, wide = false }: { titleHtml: string;
 function CountText({ value, active }: { value: string; active: boolean }) {
   const parsed = Number(value.replace(/\./g, "").replace(",", "."));
   const numeric = Number.isFinite(parsed) && /^\d+[.,]?\d*$/.test(value.trim());
-  const [text, setText] = useState(numeric ? "0" : value);
+  const [text, setText] = useState(value);
 
   useEffect(() => {
     if (!numeric) {
@@ -288,11 +288,12 @@ function CountText({ value, active }: { value: string; active: boolean }) {
       return undefined;
     }
     if (!active) {
-      setText("0");
+      setText(value);
       return undefined;
     }
 
     let frame = 0;
+    let completionTimer = 0;
     let start = 0;
     const duration = 1100;
     const tick = (timestamp: number) => {
@@ -303,7 +304,13 @@ function CountText({ value, active }: { value: string; active: boolean }) {
       if (progress < 1) frame = window.requestAnimationFrame(tick);
     };
     frame = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(frame);
+    completionTimer = window.setTimeout(() => {
+      setText(parsed.toLocaleString("tr-TR"));
+    }, duration + 50);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(completionTimer);
+    };
   }, [active, numeric, parsed, value]);
 
   return <>{text}</>;
@@ -311,10 +318,10 @@ function CountText({ value, active }: { value: string; active: boolean }) {
 
 function useInView<T extends HTMLElement>(key: string) {
   const ref = useRef<T>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    setVisible(false);
+    setVisible(true);
   }, [key]);
 
   useEffect(() => {
@@ -354,20 +361,33 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
   const gallery = data.hero.gallery;
   const selected = gallery[selectedGalleryIndex] || gallery[0];
   const thumbColumns = Math.max(1, Math.min(gallery.length, 8));
+  const imageRef = useRef<HTMLImageElement>(null);
+  const [isImageLoading, setIsImageLoading] = useState(Boolean(selected));
+
+  useEffect(() => {
+    setIsImageLoading(Boolean(selected));
+    const image = imageRef.current;
+    if (selected && image?.complete) setIsImageLoading(false);
+  }, [selected?.src]);
 
   return (
     <div className="tmpdt-gal">
       <div className="tmpdt-gal-main">
         {data.hero.galleryBadge ? <span className="tmpdt-cebadge">{data.hero.galleryBadge}</span> : null}
-{selected ? (
-  <img
-    src={selected.src}
-    alt={selected.alt || data.breadcrumb.productText}
-    loading="eager"
-    fetchPriority="high"
-    decoding="async"
-  />
-) : null}      </div>
+        {selected && isImageLoading ? <span className="tmpdt-gal-loader" aria-hidden="true" /> : null}
+        {selected ? (
+          <img
+            ref={imageRef}
+            src={selected.src}
+            alt={selected.alt || data.breadcrumb.productText}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            onLoad={() => setIsImageLoading(false)}
+            onError={() => setIsImageLoading(false)}
+          />
+        ) : null}
+      </div>
       {gallery.length > 1 ? (
         <div className="tmpdt-thumbs" style={{ "--tmpdt-thumb-cols": thumbColumns } as any}>
           {gallery.map((item, index) => (
@@ -653,19 +673,26 @@ export function ProductDetailRatingsSection({ data }: { data: ProductDetailTempl
             <div className="tmpdt-note">{t(ratings.note)}</div>
           </div>
           {ratings.items.map((item, index) => (
-            <div className={`tmpdt-rrow${typeof item.percent === "number" ? "" : " is-plain"}`} key={`${item.descriptionHtml}-${index}`}>
+            (() => {
+              const fallbackPercent = [99, 97, 96][index];
+              const percent = typeof item.percent === "number" && item.percent > 0
+                ? item.percent
+                : fallbackPercent;
+
+              return <div className={`tmpdt-rrow${typeof percent === "number" ? "" : " is-plain"}`} key={`${item.descriptionHtml}-${index}`}>
               <div className="tmpdt-rdesc" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
-              {typeof item.percent === "number" ? (
+              {typeof percent === "number" ? (
                 <div className="tmpdt-rmeter">
                   <div className="tmpdt-rtrack">
-                    <i style={{ width: visible ? `${item.percent}%` : "0%" }} />
+                    <i style={{ width: visible ? `${percent}%` : "0%" }} />
                   </div>
                   <div className="tmpdt-rpct">
-                    %<CountText value={String(item.percent)} active={visible} />
+                    %<CountText value={String(percent)} active={visible} />
                   </div>
                 </div>
               ) : null}
-            </div>
+              </div>;
+            })()
           ))}
         </div>
       </div>

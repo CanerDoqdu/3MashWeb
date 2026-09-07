@@ -2715,9 +2715,9 @@ export function CRS_MODEL_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     panelTitleHtml: tLocalized("CRS Model Reçinesi'ni satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>", "Buyers of CRS Model Resin — <span class=\"em\">how did they rate it?</span>"),
     note: tLocalized("Model baskılarında boyutsal kararlılık, implant analog uyumu ve renk seçenekleri öne çıkar.", "Dimensional stability, implant analog compatibility, and color options stand out in model prints."),
     items: [
-      { descriptionHtml: tLocalized("Baskı sonrası boyut değiştirmemesi sayesinde <b>uyum sorunu yaşanmadığı</b> belirtilir.", "Because it doesn't change size after printing, <b>no fit issues occur</b>, it's noted.") },
-      { descriptionHtml: tLocalized("Yüksek doğruluğu sayesinde implant analoglarıyla <b>mükemmel uyum</b> sağladığı ifade edilir.", "It is stated that, thanks to its high accuracy, it provides <b>excellent fit</b> with implant analogs.") },
-      { descriptionHtml: tLocalized("Renk seçenekleri, hasta ve hekimlere <b>kron renklerini göstermeyi</b> kolaylaştırır.", "Color options make it easier to <b>show crown colors</b> to patients and clinicians.") },
+      { descriptionHtml: tLocalized("Baskı sonrası boyut değiştirmemesi sayesinde <b>uyum sorunu yaşanmadığı</b> belirtilir.", "Because it doesn't change size after printing, <b>no fit issues occur</b>, it's noted."), percent: 99 },
+      { descriptionHtml: tLocalized("Yüksek doğruluğu sayesinde implant analoglarıyla <b>mükemmel uyum</b> sağladığı ifade edilir.", "It is stated that, thanks to its high accuracy, it provides <b>excellent fit</b> with implant analogs."), percent: 97 },
+      { descriptionHtml: tLocalized("Renk seçenekleri, hasta ve hekimlere <b>kron renklerini göstermeyi</b> kolaylaştırır.", "Color options make it easier to <b>show crown colors</b> to patients and clinicians."), percent: 96 },
     ],
   },
   metrics: {

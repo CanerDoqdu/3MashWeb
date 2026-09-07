@@ -1,10 +1,12 @@
 import { tLocalized } from "../../utils/i18n";
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 import {
   customerLogin,
   customerStore,
+  forgotPassword,
   register,
+  recoverPassword,
   Router,
   type IkasImage,
 } from "@ikas/bp-storefront";
@@ -96,63 +98,107 @@ function imageSource(
   return fallback;
 }
 
+type AuthMode = "login" | "register" | "forgot-password" | "recover-password";
+
+function authModeFromPathname(pathname: string): AuthMode {
+  const normalized = pathname.replace(/\/+$/, "") || "/";
+  if (normalized === "/register" || normalized === "/account/register") return "register";
+  if (normalized === "/account/forgot-password") return "forgot-password";
+  if (normalized === "/account/recover-password") return "recover-password";
+  return "login";
+}
+
+function authModeFromProps(props: Props): AuthMode | undefined {
+  const configuredMode = (props as Props & { mode?: string }).mode;
+  if (
+    configuredMode === "login" ||
+    configuredMode === "register" ||
+    configuredMode === "forgot-password" ||
+    configuredMode === "recover-password"
+  ) {
+    return configuredMode;
+  }
+  return undefined;
+}
+
+function authModeFromCurrentRoute(): AuthMode | undefined {
+  if (typeof window === "undefined") return undefined;
+  const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
+  if (pathname === "/register" || pathname === "/account/register") return "register";
+  if (pathname === "/account/forgot-password") return "forgot-password";
+  if (pathname === "/account/recover-password") return "recover-password";
+  if (pathname === "/login" || pathname === "/account/login") return "login";
+  return undefined;
+}
+
 export function ThreeMashAccountPage(props: Props) {
-  const [activeTab, setActiveTab] = useState<"login" | "register">(() => {
+  const [authMode, setAuthMode] = useState<AuthMode>(() => {
+    const currentRouteMode = authModeFromCurrentRoute();
+    if (currentRouteMode) return currentRouteMode;
+    const configuredMode = authModeFromProps(props);
+    if (configuredMode) return configuredMode;
     if (typeof window !== "undefined") {
-      const pathname = window.location.pathname.replace(/\/+$/, "");
-      if (pathname === "/account/register") return "register";
+      return authModeFromPathname(window.location.pathname);
     }
     return "login";
   });
+  const activeTab = authMode === "register" ? "register" : "login";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [passwordAgain, setPasswordAgain] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [marketingAccepted, setMarketingAccepted] = useState(false);
+  const [recoveryToken] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return new URLSearchParams(window.location.search).get("token") || "";
+  });
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
-  const [isRouteLoading, setIsRouteLoading] = useState(false);
-  const routeLoadingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    if (authMode === "recover-password" && recoveryToken) {
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+
     function handlePopState() {
-      const pathname = window.location.pathname.replace(/\/+$/, "");
-      const nextTab = pathname === "/account/register" ? "register" : "login";
-      setIsRouteLoading(true);
-      setActiveTab(nextTab);
+      const nextMode = authModeFromPathname(window.location.pathname);
+      setAuthMode(nextMode);
       setStatus("idle");
-      if (routeLoadingTimerRef.current) clearTimeout(routeLoadingTimerRef.current);
-      routeLoadingTimerRef.current = setTimeout(() => {
-        setIsRouteLoading(false);
-      }, 180);
     }
 
     window.addEventListener("popstate", handlePopState);
     return () => {
       window.removeEventListener("popstate", handlePopState);
-      if (routeLoadingTimerRef.current) clearTimeout(routeLoadingTimerRef.current);
     };
   }, []);
 
+  function navigateToMode(mode: AuthMode, nextHref: string) {
+    if (mode === authMode) return;
+    if (typeof window !== "undefined") {
+      try {
+        window.history.pushState({}, "", nextHref);
+      } catch {
+        // Studio iframe navigation can reject history updates.
+      }
+    }
+    setAuthMode(mode);
+    setStatus("idle");
+  }
+
   function switchTab(tab: "login" | "register") {
     if (tab === activeTab) return;
-    const nextHref = tab === "register"
-      ? href(props.registerTabHref, "/account/register")
-      : "/account/login";
-    if (typeof window !== "undefined") {
-      window.history.pushState({}, "", nextHref);
-    }
-    setIsRouteLoading(true);
-    setActiveTab(tab);
-    setStatus("idle");
-    if (routeLoadingTimerRef.current) clearTimeout(routeLoadingTimerRef.current);
-    routeLoadingTimerRef.current = setTimeout(() => {
-      setIsRouteLoading(false);
-    }, 180);
+    navigateToMode(
+      tab,
+      tab === "register" ? href(props.registerTabHref, "/account/register") : "/account/login",
+    );
+  }
+
+  function navigateToLogin() {
+    navigateToMode("login", "/account/login");
   }
 
   async function submit(event: Event) {
@@ -161,19 +207,31 @@ export function ThreeMashAccountPage(props: Props) {
 
     setStatus("loading");
     try {
-      const result =
-        activeTab === "login"
-          ? await customerLogin(customerStore, email, password)
-          : await register(
-              customerStore,
-              firstName,
-              lastName,
-              email,
-              password,
-              marketingAccepted,
-              [],
-              null,
-            );
+      if (authMode === "forgot-password") {
+        const success = await forgotPassword(customerStore, email);
+        setStatus(success ? "success" : "error");
+        return;
+      }
+
+      if (authMode === "recover-password") {
+        if (password !== passwordAgain || !recoveryToken) {
+          setStatus("error");
+          return;
+        }
+        const success = await recoverPassword(
+          customerStore,
+          password,
+          passwordAgain,
+          recoveryToken,
+        );
+        setStatus(success ? "success" : "error");
+        if (success) setTimeout(navigateToLogin, 800);
+        return;
+      }
+
+      const result = activeTab === "login"
+        ? await customerLogin(customerStore, email, password)
+        : await register(customerStore, firstName, lastName, email, password, marketingAccepted, [], null);
       if (result.isSuccess) {
         setStatus("success");
         if (typeof window !== "undefined") {
@@ -244,7 +302,7 @@ export function ThreeMashAccountPage(props: Props) {
   } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 
   return (
-    <section className="three-mash-auth-page tma-login-page" style={style}>
+    <section className={`three-mash-auth-page tma-login-page${authMode === "register" ? " is-register-page" : ""}`} style={style}>
       <style dangerouslySetInnerHTML={{ __html: authCriticalStyles }} />
       <div className="tma-auth-panel">
         <form
@@ -252,9 +310,19 @@ export function ThreeMashAccountPage(props: Props) {
           onSubmit={submit}
         >
           <div className="tma-auth-copy">
-            <span>{text(props.eyebrowText, "HESAP")}</span>
-            <h1>{text(props.titleText, tLocalized("3mash hesabınıza giriş yapın.", "Log in to your 3mash account."))}</h1>
-            <p>
+            {(authMode === "login" || authMode === "register") && (
+              <span>{text(props.eyebrowText, "HESAP")}</span>
+            )}
+            <h1
+              className={authMode === "forgot-password" || authMode === "recover-password" ? "is-secondary-copy" : ""}
+              aria-hidden={authMode === "forgot-password" || authMode === "recover-password"}
+            >
+              {text(props.titleText, tLocalized("3mash hesabınıza giriş yapın.", "Log in to your 3mash account."))}
+            </h1>
+            <p
+              className={authMode === "forgot-password" || authMode === "recover-password" ? "is-secondary-copy" : ""}
+              aria-hidden={authMode === "forgot-password" || authMode === "recover-password"}
+            >
               {text(
                 props.subtitleText,
                 tLocalized("Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.", "Manage your orders, favorites, and account information from one place."),
@@ -262,28 +330,75 @@ export function ThreeMashAccountPage(props: Props) {
             </p>
           </div>
 
-          <div className="tma-auth-tabs">
+          {(authMode === "login" || authMode === "register") && <div className="tma-auth-tabs">
             <button
-              className={activeTab === "login" ? "is-active" : ""}
+              className={activeTab === "login" ? "tab-active" : "tab-inactive"}
               type="button"
               onClick={() => switchTab("login")}
             >
               {text(props.loginTabText, tLocalized("Üye Girişi", "Member Login"))}
             </button>
             <button
-              className={activeTab === "register" ? "is-active" : ""}
+              className={activeTab === "register" ? "tab-active" : "tab-inactive"}
               type="button"
               onClick={() => switchTab("register")}
             >
               {text(props.registerTabText, tLocalized("Üye Ol", "Register"))}
             </button>
-          </div>
+          </div>}
 
-          <a className="tma-auth-cart-link" href={href(undefined, "/cart")}>
-            {tLocalized("Sepetim", "My Cart")}
-          </a>
+          {(authMode === "forgot-password" || authMode === "recover-password") && (
+            <h2 className="tma-auth-secondary-title">
+              {authMode === "forgot-password"
+                ? tLocalized("Şifremi Unuttum", "Forgot Password")
+                : tLocalized("Şifremi Kurtar", "Recover Password")}
+            </h2>
+          )}
 
-          {activeTab === "login" ? (
+          {authMode === "forgot-password" ? (
+            <label className="tma-auth-field">
+              <span>* {tLocalized("Email", "E-mail")}</span>
+              <input
+                name="email"
+                type="email"
+                autoComplete="email"
+                value={email}
+                required
+                onInput={(event) =>
+                  setEmail((event.currentTarget as HTMLInputElement).value)
+                }
+              />
+            </label>
+          ) : authMode === "recover-password" ? (
+            <>
+              <label className="tma-auth-field">
+                <span>* {tLocalized("Şifre", "Password")}</span>
+                <input
+                  name="password"
+                  type="password"
+                  autoComplete="new-password"
+                  value={password}
+                  required
+                  onInput={(event) =>
+                    setPassword((event.currentTarget as HTMLInputElement).value)
+                  }
+                />
+              </label>
+              <label className="tma-auth-field">
+                <span>* {tLocalized("Şifre Tekrar", "Confirm Password")}</span>
+                <input
+                  name="passwordAgain"
+                  type="password"
+                  autoComplete="new-password"
+                  value={passwordAgain}
+                  required
+                  onInput={(event) =>
+                    setPasswordAgain((event.currentTarget as HTMLInputElement).value)
+                  }
+                />
+              </label>
+            </>
+          ) : activeTab === "login" ? (
             <>
               <label className="tma-auth-field">
                 <span>* {text(props.emailLabel, tLocalized("Email", "E-mail"))}</span>
@@ -418,19 +533,40 @@ export function ThreeMashAccountPage(props: Props) {
                     ? tLocalized("Giriş yapılıyor...", "Logging in...")
                     : tLocalized("Kaydınız oluşturuluyor...", "Creating account..."),
                 )
-              : activeTab === "login"
-                ? text(props.submitButtonText, tLocalized("Üye Girişi", "Member Login"))
-                : tLocalized("Hesap Oluştur", "Create Account")}
+              : authMode === "forgot-password"
+                ? tLocalized("Gönder", "Send")
+                : authMode === "recover-password"
+                  ? tLocalized("Şifreyi Güncelle", "Update Password")
+                  : activeTab === "login"
+                    ? text(props.submitButtonText, tLocalized("Üye Girişi", "Member Login"))
+                    : tLocalized("Hesap Oluştur", "Create Account")}
           </button>
 
-          {activeTab === "login" && (
+          {authMode === "login" && (
             <>
-              <a
-                className="tma-auth-underlink"
-                href={href(props.forgotPasswordHref, "/account/forgot-password")}
-              >
-                {text(props.forgotPasswordText, tLocalized("Parolamı Unuttum", "Forgot My Password"))}
-              </a>
+              <div className="tma-auth-password-links">
+                <a
+                  className="tma-auth-underlink"
+                  href={href(props.forgotPasswordHref, "/account/forgot-password")}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigateToMode("forgot-password", href(props.forgotPasswordHref, "/account/forgot-password"));
+                  }}
+                >
+                  {text(props.forgotPasswordText, tLocalized("Parolamı Unuttum", "Forgot My Password"))}
+                </a>
+
+                <a
+                  className="tma-auth-underlink"
+                  href={href(props.recoverPasswordHref, "/account/recover-password")}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigateToMode("recover-password", href(props.recoverPasswordHref, "/account/recover-password"));
+                  }}
+                >
+                  {text(props.recoverPasswordText, tLocalized("Şifremi Kurtar", "Recover Password"))}
+                </a>
+              </div>
 
               <div className="tma-auth-register-callout">
                 <span>
@@ -443,28 +579,43 @@ export function ThreeMashAccountPage(props: Props) {
             </>
           )}
 
+          {(authMode === "forgot-password" || authMode === "recover-password") && (
+            <a
+              className="tma-auth-underlink tma-auth-secondary-link"
+              href="/account/login"
+              onClick={(event) => {
+                event.preventDefault();
+                navigateToLogin();
+              }}
+            >
+              {tLocalized("Üye Girişi", "Member Login")}
+            </a>
+          )}
+
           {status !== "idle" && (
             <p className={`tma-auth-status is-${status}`}>
               {status === "success"
-                ? text(
-                    props.successMessage,
-                    tLocalized("Giriş başarılı. Hesabınıza yönlendiriliyorsunuz.", "Login successful. You are being redirected to your account."),
-                  )
+                ? authMode === "forgot-password"
+                  ? tLocalized("Şifre yenileme bağlantısı email adresinize gönderildi.", "The password reset link was sent to your email.")
+                  : authMode === "recover-password"
+                    ? tLocalized("Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz.", "Your password was updated. Redirecting to login.")
+                    : text(
+                        props.successMessage,
+                        tLocalized("Giriş başarılı. Hesabınıza yönlendiriliyorsunuz.", "Login successful. You are being redirected to your account."),
+                      )
                 : status === "error"
-                  ? text(
-                      props.errorMessage,
-                      tLocalized("Email veya şifre hatalı. Lütfen bilgilerinizi kontrol edin.", "Email or password is incorrect. Please check your details."),
-                    )
+                  ? authMode === "forgot-password"
+                    ? tLocalized("İşlem tamamlanamadı. Email adresinizi kontrol edin.", "The request could not be completed. Check your email address.")
+                    : authMode === "recover-password"
+                      ? tLocalized("Şifreler eşleşmiyor veya bağlantı geçersiz.", "The passwords do not match or the link is invalid.")
+                      : text(
+                          props.errorMessage,
+                          tLocalized("Email veya şifre hatalı. Lütfen bilgilerinizi kontrol edin.", "Email or password is incorrect. Please check your details."),
+                        )
                   : text(props.loadingText, tLocalized("Giriş yapılıyor...", "Logging in..."))}
             </p>
           )}
 
-          <div
-            className={`tma-auth-form-loading${isRouteLoading ? " is-visible" : ""}`}
-            aria-hidden="true"
-          >
-            <span className="tma-auth-form-spinner" />
-          </div>
         </form>
       </div>
 

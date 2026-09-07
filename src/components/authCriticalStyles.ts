@@ -3,6 +3,7 @@ const authCriticalStyles = `
 .three-mash-register-page {
   display: grid;
   width: 100%;
+  container: tma-auth / inline-size;
   min-height: calc(100vh - 78px);
   overflow: hidden;
   background: var(--tm-theme-bg, #fafaf7);
@@ -28,7 +29,8 @@ const authCriticalStyles = `
   row-gap: 0;
   align-items: stretch;
   width: 100%;
-  min-height: 680px;
+  min-height: 680px !important;
+  height: 680px !important;
   padding: 20px;
   border: 1px solid var(--tm-theme-line, #e6e6e0);
   background: #fff;
@@ -37,6 +39,7 @@ const authCriticalStyles = `
 .tma-auth-form > .tma-auth-field,
 .tma-auth-form > .tma-auth-check,
 .tma-auth-form > .tma-auth-submit,
+.tma-auth-form > .tma-auth-password-links,
 .tma-auth-form > .tma-auth-underlink,
 .tma-auth-form > .tma-auth-register-callout,
 .tma-auth-form > .tma-auth-status,
@@ -48,6 +51,22 @@ const authCriticalStyles = `
 .tmrpg-auth-form > .tmrpg-auth-status { margin-bottom: 14px; }
 .tma-auth-form > :last-child,
 .tmrpg-auth-form > :last-child { margin-bottom: 0; }
+.tma-auth-secondary-title {
+  grid-column: 2;
+  margin: 12px 0 10px;
+  color: var(--tm-theme-text, #0e0e0c);
+  font-family: var(--tm-theme-font-heading, Space Grotesk, sans-serif);
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1;
+  text-align: center;
+}
+.tma-auth-register-callout button {
+  color: var(--tm-theme-text, #0e0e0c);
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .tmrpg-auth-panel {
   padding: clamp(28px, 3vw, 42px) 24px clamp(34px, 4vw, 56px);
 }
@@ -64,28 +83,6 @@ const authCriticalStyles = `
 .tma-auth-form {
   position: relative;
 }
-.tma-auth-form-loading {
-  position: absolute;
-  inset: 20px 20px 20px 50%;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,.78);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .16s ease;
-}
-.tma-auth-form-loading.is-visible { opacity: 1; pointer-events: auto; }
-.tma-auth-form-spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid var(--tm-theme-line, #e6e6e0);
-  border-top-color: var(--tm-theme-accent, #c7f136);
-  border-radius: 50%;
-  animation: tma-auth-spin .65s linear infinite;
-}
-@keyframes tma-auth-spin { to { transform: rotate(360deg); } }
 .tmrpg-auth-copy {
   height: auto;
   min-height: 0;
@@ -95,19 +92,24 @@ const authCriticalStyles = `
   position: relative;
   grid-column: 1;
   grid-row: 1 / span 24;
+  width: 100%;
   display: grid;
   align-content: end;
   align-self: start;
   height: 638px;
   min-width: 0;
-  min-height: 620px;
+  min-height: 638px;
   overflow: hidden;
   padding: clamp(30px, 4vw, 48px);
   background: var(--tm-theme-dark, #0e0e0c);
 }
+.tma-auth-copy {
+  height: 638px !important;
+  min-height: 638px !important;
+}
 .tmrpg-auth-copy {
-  height: auto;
-  min-height: 0;
+  height: 638px;
+  min-height: 638px;
 }
 .tma-auth-copy::before,
 .tmrpg-auth-copy::before {
@@ -157,6 +159,7 @@ const authCriticalStyles = `
   line-height: .96;
   font-weight: 800;
 }
+.tma-auth-copy .is-secondary-copy { visibility: hidden; }
 .tma-auth-copy p,
 .tmrpg-auth-copy p {
   max-width: 420px;
@@ -206,6 +209,16 @@ const authCriticalStyles = `
 }
 .tma-auth-tabs .is-active,
 .tmrpg-auth-tabs .is-active { background: #fff; box-shadow: inset 0 0 0 1px var(--tm-theme-line, #e6e6e0); }
+.tma-auth-tabs .tab-active,
+.tmrpg-auth-tabs .tab-active { background: #fff !important; box-shadow: inset 0 0 0 1px var(--tm-theme-line, #e6e6e0) !important; }
+.tma-auth-tabs .tab-inactive,
+.tmrpg-auth-tabs .tab-inactive { background: var(--tm-theme-panel, #f1f1ec) !important; box-shadow: none !important; }
+.is-register-page .tmrpg-auth-tabs > a { background: var(--tm-theme-panel, #f1f1ec) !important; box-shadow: none !important; }
+.is-register-page .tmrpg-auth-tabs > span { background: #fff !important; box-shadow: inset 0 0 0 1px var(--tm-theme-line, #e6e6e0) !important; }
+.is-register-page .tma-auth-tabs > button:first-child { background: var(--tm-theme-panel, #f1f1ec) !important; box-shadow: none !important; }
+.is-register-page .tma-auth-tabs > button:last-child { background: #fff !important; box-shadow: inset 0 0 0 1px var(--tm-theme-line, #e6e6e0) !important; }
+.tmrpg-auth-tabs > a { background: transparent !important; box-shadow: none !important; }
+.tmrpg-auth-tabs > span.is-active { background: #fff !important; box-shadow: inset 0 0 0 1px var(--tm-theme-line, #e6e6e0) !important; }
 .tma-auth-field,
 .tmrpg-auth-field { display: grid; gap: 8px; }
 .tma-auth-field span,
@@ -230,12 +243,20 @@ const authCriticalStyles = `
 .tma-auth-underlink,
 .tmrpg-auth-login-callout a,
 .tma-auth-register-callout a { color: var(--tm-theme-text, #0e0e0c); font-size: 14px; font-weight: 800; text-decoration: underline; }
+.tma-auth-password-links { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
 .tma-auth-register-callout,
 .tmrpg-auth-login-callout { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-top: 18px; border-top: 1px solid var(--tm-theme-line, #e6e6e0); color: var(--tm-theme-sub, #55554e); font-size: 14px; line-height: 1.45; }
 @media (max-width: 980px) {
   .tma-auth-form,
-  .tmrpg-auth-form { grid-template-columns: 1fr; row-gap: 0; min-height: 0; padding: 0; border: 0; background: transparent; }
-  .tma-auth-form-loading { inset: 0; }
+  .tmrpg-auth-form {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+    min-height: 0 !important;
+    height: fit-content !important;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
   .tma-auth-copy,
   .tmrpg-auth-copy,
   .tma-auth-tabs,
@@ -253,6 +274,35 @@ const authCriticalStyles = `
 @media (max-width: 560px) {
   .tmrpg-auth-panel { padding-bottom: 0; }
   .tmrpg-auth-copy { display: none; }
+}
+@container tma-auth (max-width: 700px) {
+  .tma-auth-panel {
+    width: 100%;
+    min-height: auto;
+    padding: 24px 16px 36px;
+  }
+  .tma-auth-form {
+    grid-template-columns: 1fr;
+    min-height: 0 !important;
+    height: fit-content !important;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  .tma-auth-copy { display: none; }
+  .tma-auth-tabs,
+  .tma-auth-field,
+  .tma-auth-submit,
+  .tma-auth-password-links,
+  .tma-auth-underlink,
+  .tma-auth-register-callout,
+  .tma-auth-status,
+  .tma-auth-secondary-title { grid-column: auto; }
+  .tma-auth-secondary-title {
+    margin: 8px 0 18px;
+    font-size: clamp(28px, 8vw, 38px);
+  }
+  .tma-auth-password-links { gap: 12px !important; }
 }
 @media (max-width: 768px) {
   .tma-auth-copy,
