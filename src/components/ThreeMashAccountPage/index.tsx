@@ -97,7 +97,13 @@ function imageSource(
 }
 
 export function ThreeMashAccountPage(props: Props) {
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+  const [activeTab, setActiveTab] = useState<"login" | "register">(() => {
+    if (typeof window !== "undefined") {
+      const pathname = window.location.pathname.replace(/\/+$/, "");
+      if (pathname === "/account/register") return "register";
+    }
+    return "login";
+  });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");

@@ -7,6 +7,8 @@ import {
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import authCriticalStyles from "../authCriticalStyles";
+import ThreeMashAccountPage from "../ThreeMashAccountPage";
+import type { Props as AccountProps } from "../ThreeMashAccountPage/types";
 import { t, tLocalized, tProp } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -95,7 +97,7 @@ function imageSource(
   return fallback;
 }
 
-export function ThreeMashRegisterPage(props: Props) {
+function LegacyThreeMashRegisterPage(props: Props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -361,6 +363,10 @@ export function ThreeMashRegisterPage(props: Props) {
       </div>
     </section>
   );
+}
+
+export function ThreeMashRegisterPage(props: Props) {
+  return <ThreeMashAccountPage {...(props as unknown as AccountProps)} />;
 }
 
 export default ThreeMashRegisterPage;
