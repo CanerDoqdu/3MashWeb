@@ -26,6 +26,7 @@
 }
 
 .tma-auth-form {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(280px, 0.72fr) minmax(360px, 0.8fr);
   column-gap: clamp(28px, 4vw, 54px);
@@ -36,6 +37,37 @@
   padding: 20px;
   border: 1px solid var(--tma-auth-line, var(--tm-theme-line, #e6e6e0));
   background: #fff;
+}
+
+.tma-auth-form-loading {
+  position: absolute;
+  inset: 20px 20px 20px 50%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.78);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease;
+}
+
+.tma-auth-form-loading.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tma-auth-form-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--tma-auth-line, #e6e6e0);
+  border-top-color: var(--tma-auth-accent, #c7f136);
+  border-radius: 50%;
+  animation: tma-auth-spin 0.65s linear infinite;
+}
+
+@keyframes tma-auth-spin {
+  to { transform: rotate(360deg); }
 }
 
 .tma-auth-form > .tma-auth-tabs,
@@ -367,12 +399,17 @@
   }
 
   .tma-auth-form {
+    position: relative;
     grid-template-columns: 1fr;
     gap: 0;
     min-height: 0;
     padding: 0;
     border: 0;
     background: transparent;
+  }
+
+  .tma-auth-form-loading {
+    inset: 0;
   }
 
   .tma-auth-copy,

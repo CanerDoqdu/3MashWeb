@@ -1,5 +1,5 @@
 import { tLocalized } from "../../utils/i18n";
-import { useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 import {
   customerLogin,
@@ -113,10 +113,46 @@ export function ThreeMashAccountPage(props: Props) {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [isRouteLoading, setIsRouteLoading] = useState(false);
+  const routeLoadingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    function handlePopState() {
+      const pathname = window.location.pathname.replace(/\/+$/, "");
+      const nextTab = pathname === "/account/register" ? "register" : "login";
+      setIsRouteLoading(true);
+      setActiveTab(nextTab);
+      setStatus("idle");
+      if (routeLoadingTimerRef.current) clearTimeout(routeLoadingTimerRef.current);
+      routeLoadingTimerRef.current = setTimeout(() => {
+        setIsRouteLoading(false);
+      }, 180);
+    }
+
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      if (routeLoadingTimerRef.current) clearTimeout(routeLoadingTimerRef.current);
+    };
+  }, []);
 
   function switchTab(tab: "login" | "register") {
+    if (tab === activeTab) return;
+    const nextHref = tab === "register"
+      ? href(props.registerTabHref, "/account/register")
+      : "/account/login";
+    if (typeof window !== "undefined") {
+      window.history.pushState({}, "", nextHref);
+    }
+    setIsRouteLoading(true);
     setActiveTab(tab);
     setStatus("idle");
+    if (routeLoadingTimerRef.current) clearTimeout(routeLoadingTimerRef.current);
+    routeLoadingTimerRef.current = setTimeout(() => {
+      setIsRouteLoading(false);
+    }, 180);
   }
 
   async function submit(event: Event) {
@@ -422,6 +458,13 @@ export function ThreeMashAccountPage(props: Props) {
                   : text(props.loadingText, tLocalized("Giriş yapılıyor...", "Logging in..."))}
             </p>
           )}
+
+          <div
+            className={`tma-auth-form-loading${isRouteLoading ? " is-visible" : ""}`}
+            aria-hidden="true"
+          >
+            <span className="tma-auth-form-spinner" />
+          </div>
         </form>
       </div>
 

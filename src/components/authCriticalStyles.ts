@@ -61,6 +61,31 @@ const authCriticalStyles = `
   height: fit-content;
   align-content: start;
 }
+.tma-auth-form {
+  position: relative;
+}
+.tma-auth-form-loading {
+  position: absolute;
+  inset: 20px 20px 20px 50%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.78);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .16s ease;
+}
+.tma-auth-form-loading.is-visible { opacity: 1; pointer-events: auto; }
+.tma-auth-form-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--tm-theme-line, #e6e6e0);
+  border-top-color: var(--tm-theme-accent, #c7f136);
+  border-radius: 50%;
+  animation: tma-auth-spin .65s linear infinite;
+}
+@keyframes tma-auth-spin { to { transform: rotate(360deg); } }
 .tmrpg-auth-copy {
   height: auto;
   min-height: 0;
@@ -210,6 +235,7 @@ const authCriticalStyles = `
 @media (max-width: 980px) {
   .tma-auth-form,
   .tmrpg-auth-form { grid-template-columns: 1fr; row-gap: 0; min-height: 0; padding: 0; border: 0; background: transparent; }
+  .tma-auth-form-loading { inset: 0; }
   .tma-auth-copy,
   .tmrpg-auth-copy,
   .tma-auth-tabs,
