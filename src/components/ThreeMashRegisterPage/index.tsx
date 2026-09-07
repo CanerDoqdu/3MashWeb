@@ -6,6 +6,7 @@ import {
   type IkasImage,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import authCriticalStyles from "../authCriticalStyles";
 import { t, tLocalized, tProp } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -189,6 +190,7 @@ export function ThreeMashRegisterPage(props: Props) {
 
   return (
     <section className="three-mash-register-page" style={style}>
+      <style dangerouslySetInnerHTML={{ __html: authCriticalStyles }} />
       <div className="tmrpg-auth-panel">
         <form className="tmrpg-auth-form" onSubmit={submit}>
           <div className="tmrpg-auth-copy">

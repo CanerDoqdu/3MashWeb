@@ -9,6 +9,7 @@ import {
   type IkasImage,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import authCriticalStyles from "../authCriticalStyles";
 
 const defaultAuthImage =
   "https://cdn.myikas.com/images/theme-images/a6f9541f-702d-431d-9744-9d4f494c94af/image_1080.webp";
@@ -202,6 +203,7 @@ export function ThreeMashAccountPage(props: Props) {
 
   return (
     <section className="three-mash-auth-page tma-login-page" style={style}>
+      <style dangerouslySetInnerHTML={{ __html: authCriticalStyles }} />
       <div className="tma-auth-panel">
         <form className="tma-auth-form" onSubmit={submit}>
           <div className="tma-auth-copy">
@@ -231,6 +233,10 @@ export function ThreeMashAccountPage(props: Props) {
               {text(props.registerTabText, tLocalized("Üye Ol", "Register"))}
             </button>
           </div>
+
+          <a className="tma-auth-cart-link" href={href(undefined, "/cart")}>
+            {tLocalized("Sepetim", "My Cart")}
+          </a>
 
           {activeTab === "login" ? (
             <>
