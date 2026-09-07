@@ -29,13 +29,33 @@
   display: grid;
   grid-template-columns: minmax(280px, 0.72fr) minmax(360px, 0.8fr);
   column-gap: clamp(28px, 4vw, 54px);
-  row-gap: 16px;
+  row-gap: 0;
   align-items: stretch;
   width: 100%;
   min-height: 680px;
   padding: 20px;
   border: 1px solid var(--tma-auth-line, var(--tm-theme-line, #e6e6e0));
   background: #fff;
+}
+
+.tma-auth-form > .tma-auth-tabs,
+.tma-auth-form > .tma-auth-field,
+.tma-auth-form > .tma-auth-check,
+.tma-auth-form > .tma-auth-submit,
+.tma-auth-form > .tma-auth-underlink,
+.tma-auth-form > .tma-auth-register-callout,
+.tma-auth-form > .tma-auth-status {
+  margin-bottom: 14px;
+}
+
+.tma-auth-form > :last-child {
+  margin-bottom: 0;
+}
+
+.tma-auth-form.is-register {
+  min-height: 0;
+  height: fit-content;
+  align-content: start;
 }
 
 .tma-auth-copy {
@@ -134,6 +154,7 @@
 }
 
 .tma-auth-tabs,
+.tma-auth-cart-link,
 .tma-auth-field,
 .tma-auth-submit,
 .tma-auth-underlink,
@@ -180,6 +201,20 @@
   background: #fff;
   box-shadow: inset 0 0 0 1px
     var(--tma-auth-line, var(--tm-theme-line, #e6e6e0));
+}
+
+.tma-auth-cart-link {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  color: var(--tma-auth-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", "Inter", sans-serif);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  border: 1px solid var(--tma-auth-line, var(--tm-theme-line, #e6e6e0));
+  background: var(--tma-auth-panel, var(--tm-theme-panel, #f1f1ec));
 }
 
 .tma-auth-field {
@@ -333,8 +368,8 @@
 
   .tma-auth-form {
     grid-template-columns: 1fr;
-    gap: 18px;
-    min-height: 920px;
+    gap: 0;
+    min-height: 0;
     padding: 0;
     border: 0;
     background: transparent;
@@ -342,6 +377,7 @@
 
   .tma-auth-copy,
   .tma-auth-tabs,
+  .tma-auth-cart-link,
   .tma-auth-field,
   .tma-auth-submit,
   .tma-auth-underlink,
@@ -362,12 +398,21 @@
   }
 
   .tma-auth-copy {
-    min-height: 280px;
-    padding: 26px 18px;
+    display: none;
   }
 
   .tma-auth-form {
-    min-height: 940px;
+    min-height: auto;
+    gap: 0;
+  }
+
+  .tma-auth-tabs {
+    order: 0;
+  }
+
+  .tma-auth-cart-link {
+    order: 1;
+    display: inline-flex;
   }
 
   .tma-auth-copy h1 {
@@ -375,3 +420,14 @@
     line-height: 1.02;
   }
 }
+
+@media (max-width: 768px) {
+  .tma-auth-copy {
+    display: none;
+  }
+
+  .tma-auth-panel {
+    padding: 26px 16px 32px;
+  }
+}
+

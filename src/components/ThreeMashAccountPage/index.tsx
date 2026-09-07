@@ -211,7 +211,10 @@ export function ThreeMashAccountPage(props: Props) {
     <section className="three-mash-auth-page tma-login-page" style={style}>
       <style dangerouslySetInnerHTML={{ __html: authCriticalStyles }} />
       <div className="tma-auth-panel">
-        <form className="tma-auth-form" onSubmit={submit}>
+        <form
+          className={`tma-auth-form${activeTab === "register" ? " is-register" : ""}`}
+          onSubmit={submit}
+        >
           <div className="tma-auth-copy">
             <span>{text(props.eyebrowText, "HESAP")}</span>
             <h1>{text(props.titleText, tLocalized("3mash hesabınıza giriş yapın.", "Log in to your 3mash account."))}</h1>
