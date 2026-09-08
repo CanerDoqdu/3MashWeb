@@ -2837,7 +2837,7 @@ const image = imageCandidates[0];
                       <a className="tmh-cart-market-button tmh-cart-go-button" href={localizedHref("/cart")}>{tLocalized("Sepete git", "Go to Cart")}</a>
                     </div>
                   ) : !isCartReady ? (
-                    <div className="tmh-cart-empty-card tmh-cart-loading">
+                    <div className="tmh-cart-live">
                       <span className="tmh-cart-spinner" aria-hidden="true" />
                       <span>{tLocalized("Sepet yükleniyor...", "Loading cart...")}</span>
                     </div>
