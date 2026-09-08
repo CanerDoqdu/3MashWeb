@@ -30,6 +30,7 @@ import {
   performLogout,
   hasCustomerToken,
   isCustomerAuthenticated,
+  isProtectedPath,
   isStudioPreviewActive,
 } from "../../utils/auth";
 
@@ -361,7 +362,11 @@ function AccountLayoutContent(props: DashboardProps) {
 
     function handleAuthVerification() {
       if (isStudio) return true;
-      if (isCustomerAuthenticated() === "unauthenticated") {
+
+      const currentPath = window.location.pathname;
+      const isPublicAuthRoute = !isProtectedPath(currentPath);
+
+      if (isCustomerAuthenticated() === "unauthenticated" && isProtectedPath(currentPath)) {
         setCustomer(null);
         setOrders([]);
         setFavorites([]);
@@ -369,6 +374,15 @@ function AccountLayoutContent(props: DashboardProps) {
         window.location.replace(safeRedirect(localizedHref("/")));
         return false;
       }
+
+      if (isCustomerAuthenticated() === "unauthenticated" && isPublicAuthRoute) {
+        setCustomer(null);
+        setOrders([]);
+        setFavorites([]);
+        setSidebarName("");
+        return true;
+      }
+
       return true;
     }
 

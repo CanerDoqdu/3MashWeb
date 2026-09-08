@@ -725,7 +725,7 @@ function categoryStyle(props: CategoryLandingOverrides) {
 }
 
 function ButtonLink({ button }: { button: CategoryButton }) {
-  const normalizedHref = categoryHref(button.href);
+  const normalizedHref = localizedHref(categoryHref(button.href));
 
   return (
     <a className={`tmcl-btn tmcl-btn-${button.variant || "dark"}`} href={normalizedHref} onClick={(event) => smoothCategoryClick(event, normalizedHref)}>
@@ -1266,7 +1266,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
                 )}
               </h3>
               <p dangerouslySetInnerHTML={rich(richValue(props.featureDescriptionHtml, data.feature.content.descriptionHtml))} />
-              <a href={categoryHref(textValue(props.featureHref, data.feature.content.href))}>
+              <a href={localizedHref(categoryHref(textValue(props.featureHref, data.feature.content.href)))}>
                 {textValue(props.featureCtaText, data.feature.content.ctaText)}
               </a>
             </div>

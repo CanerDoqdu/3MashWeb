@@ -84,9 +84,8 @@ import {
 import { Props } from "./types";
 import {
   getCurrentCart,
-  hasCartItemsInMemory,
+  getCartStatus,
   initGlobalCart,
-  isCartInitialized,
   publishCartFromIkasStore,
   refreshGlobalCart,
   subscribeCart,
@@ -1443,8 +1442,11 @@ function svgMarkup(value: unknown) {
     const asset = value as { svg?: unknown; value?: unknown; url?: unknown; src?: unknown };
     if (typeof asset.svg === "string") return sanitizeSvgMarkup(asset.svg);
     if (typeof asset.value === "string") return sanitizeSvgMarkup(asset.value);
-    if (typeof asset.url === "string") return `<img src="${asset.url}" alt="" />`;
-    if (typeof asset.src === "string") return `<img src="${asset.src}" alt="" />`;
+    const imageUrl = typeof asset.url === "string" ? asset.url : typeof asset.src === "string" ? asset.src : "";
+    if (/^(?:https?:\/\/|\/|data:image\/)/i.test(imageUrl.trim())) {
+      const escapedUrl = imageUrl.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+      return `<img src="${escapedUrl}" alt="" />`;
+    }
   }
 
   return "";
@@ -1893,9 +1895,7 @@ export function ThreeMashHeader(props: Props) {
 const [cart, setCart] = useState<IkasCart | null>(
   () => getCurrentCart()
 );
-const [isCartReady, setIsCartReady] = useState(
-  () => isCartInitialized() || hasCartItemsInMemory()
-);
+const [cartStatus, setCartStatus] = useState(() => getCartStatus());
   const [removingCartItemId, setRemovingCartItemId] = useState("");
   const [productsMenuLeft, setProductsMenuLeft] = useState<number | null>(null);
   const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
@@ -2278,20 +2278,18 @@ const cartItems =
  useEffect(() => {
   let mounted = true;
   const unsubscribe = subscribeCart(
-    (nextCart) => {
+      (nextCart, nextStatus) => {
       if (!mounted) return;
       setCart(nextCart);
-      setIsCartReady(true);
+        setCartStatus(nextStatus);
     }
   );
 
-  void initGlobalCart().finally(() => {
-    if (mounted) setIsCartReady(true);
-  });
+    void initGlobalCart();
 
   const syncCart = () => {
     setCart(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
-    setIsCartReady(true);
+      setCartStatus(getCartStatus());
   };
   window.addEventListener("3mash-cart-updated", syncCart);
 
@@ -2802,7 +2800,23 @@ async function removeCartItem(
                   hidden={activeAction !== "store"}
                 >
                   <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, tLocalized("SEPETİM", "MY CART"))}</span>
-                  {cartItems.length > 0 ? (
+                  {cartStatus === "loading" || cartStatus === "idle" ? (
+                    <div className="tmh-cart-live tmh-cart-loading-state">
+                      <span className="tmh-cart-spinner" aria-hidden="true" />
+                      <span>{tLocalized("Sepet yükleniyor...", "Loading cart...")}</span>
+                    </div>
+                  ) : cartStatus === "error" ? (
+                    <div className="tmh-cart-empty-card tmh-cart-error-state">
+                      <span>{tLocalized("Sepet yüklenemedi.", "The cart could not be loaded.")}</span>
+                      <button
+                        className="tmh-cart-market-button"
+                        type="button"
+                        onClick={() => void refreshGlobalCart()}
+                      >
+                        {tLocalized("Tekrar dene", "Try again")}
+                      </button>
+                    </div>
+                  ) : cartItems.length > 0 ? (
                     <div className="tmh-cart-live">
                       <div className="tmh-cart-count">{cartItemCount} {tLocalized("ürün sepetinizde", "items in your cart")}</div>
                       <div className="tmh-cart-live-list">
@@ -2844,11 +2858,6 @@ const image = imageCandidates[0];
                         })}
                       </div>
                       <a className="tmh-cart-market-button tmh-cart-go-button" href={localizedHref("/cart")}>{tLocalized("Sepete git", "Go to Cart")}</a>
-                    </div>
-                  ) : !isCartReady ? (
-                    <div className="tmh-cart-live">
-                      <span className="tmh-cart-spinner" aria-hidden="true" />
-                      <span>{tLocalized("Sepet yükleniyor...", "Loading cart...")}</span>
                     </div>
                   ) : (
                     <div className="tmh-cart-empty-card">

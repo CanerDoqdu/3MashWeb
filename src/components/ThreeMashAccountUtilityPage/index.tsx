@@ -656,7 +656,27 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
     return new URLSearchParams(window.location.search).get(name) || "";
   }
 
-  const token = getQueryParam("token");
+  const [token] = useState(() => getQueryParam("token"));
+
+  useLayoutEffect(() => {
+    if (typeof document === "undefined") return undefined;
+    const existing = document.head.querySelector('meta[name="referrer"]') as HTMLMetaElement | null;
+    const previousContent = existing?.content;
+    const meta = existing || document.createElement("meta");
+    if (!existing) {
+      meta.name = "referrer";
+      document.head.appendChild(meta);
+    }
+    meta.content = "no-referrer";
+    return () => {
+      if (existing) {
+        if (previousContent === undefined) existing.removeAttribute("content");
+        else existing.content = previousContent;
+      } else {
+        meta.remove();
+      }
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (token) {
@@ -678,7 +698,6 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
       return;
     }
 
-    const token = getQueryParam("token");
     if (!token) {
       setStatus("error");
       return;

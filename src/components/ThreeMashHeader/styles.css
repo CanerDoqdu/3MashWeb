@@ -978,6 +978,19 @@
   margin-top: 12px;
 }
 
+.tmh-cart-loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px 16px;
+  color: var(--tmh-muted);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .tmh-cart-live-list {
   display: grid;
   gap: 0;

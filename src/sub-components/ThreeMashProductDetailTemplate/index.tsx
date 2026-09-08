@@ -277,6 +277,11 @@ function SectionHead({ titleHtml, sideHtml, wide = false }: { titleHtml: string;
   );
 }
 
+function isResinProductDetail(data: ProductDetailTemplateData) {
+  const categoryHref = data.breadcrumb.categoryHref.toLocaleLowerCase("tr-TR");
+  return categoryHref.includes("dental-3d-yazici-recineleri") || categoryHref.includes("dental-recineler");
+}
+
 function CountText({ value, active }: { value: string; active: boolean }) {
   const parsed = Number(value.replace(/\./g, "").replace(",", "."));
   const numeric = Number.isFinite(parsed) && /^\d+[.,]?\d*$/.test(value.trim());
@@ -675,13 +680,13 @@ export function ProductDetailRatingsSection({ data }: { data: ProductDetailTempl
           {ratings.items.map((item, index) => (
             (() => {
               const fallbackPercent = [99, 97, 96][index];
-              const percent = typeof item.percent === "number" && item.percent > 0
+              const percent = isResinProductDetail(data) && (typeof item.percent === "number" && item.percent > 0
                 ? item.percent
-                : fallbackPercent;
+                : fallbackPercent);
 
-              return <div className={`tmpdt-rrow${typeof percent === "number" ? "" : " is-plain"}`} key={`${item.descriptionHtml}-${index}`}>
+              return <div className={`tmpdt-rrow${isResinProductDetail(data) ? "" : " is-plain"}`} key={`${item.descriptionHtml}-${index}`}>
               <div className="tmpdt-rdesc" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
-              {typeof percent === "number" ? (
+              {isResinProductDetail(data) ? (
                 <div className="tmpdt-rmeter">
                   <div className="tmpdt-rtrack">
                     <i style={{ width: visible ? `${percent}%` : "0%" }} />

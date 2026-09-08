@@ -105,12 +105,9 @@ function sanitizeAttributes(element: Element) {
   });
 }
 
-function isUnsafeUrlValue(value: string, blockAllData = false) {
+function isUnsafeUrlValue(value: string) {
   const normalized = value.trim().replace(/[\u0000-\u0020]+/g, "");
-  const pattern = blockAllData
-    ? /^(?:javascript:|vbscript:|data:)/i
-    : /^(?:javascript:|vbscript:|data:text\/html|data:application\/javascript)/i;
-  return pattern.test(normalized);
+  return /^(?:javascript:|vbscript:|data:)/i.test(normalized);
 }
 
 function stripUnsafeUrlAttributes(input: string, blockAllData = false) {
@@ -119,7 +116,7 @@ function stripUnsafeUrlAttributes(input: string, blockAllData = false) {
     (attribute) => {
       const value = attribute.replace(/^\s*(?:href|src|xlink:href)\s*=\s*/i, "").trim();
       const unquoted = value.replace(/^("|')|("|')$/g, "").trim();
-      return isUnsafeUrlValue(unquoted, blockAllData) ? "" : attribute;
+      return isUnsafeUrlValue(unquoted) ? "" : attribute;
     },
   );
 }
@@ -136,7 +133,7 @@ function stripUnsafeAttributes(input: string) {
     .replace(/\s(?:on[\w:-]+|style|srcdoc|xmlns|data-[\w:-]+)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
     .replace(/\s(?:href|src|xlink:href)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, (attribute) => {
       const value = attribute.replace(/^\s*[^=]+\s*=\s*/i, "").replace(/^("|')|("|')$/g, "").trim();
-      return isUnsafeUrlValue(value, true) ? "" : attribute;
+      return isUnsafeUrlValue(value) ? "" : attribute;
     });
 }
 

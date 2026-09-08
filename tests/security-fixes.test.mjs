@@ -58,8 +58,9 @@ test('sanitizeHtml strips script and event handler payloads from svg-like markup
 });
 
 test('sanitizeHtml fallback strips executable URL schemes', () => {
-  const sanitized = sanitizeHtml('<a href="javascript:alert(1)">bad</a><img src="data:text/html,alert(1)">');
+  const sanitized = sanitizeHtml('<a href="javascript:alert(1)">bad</a><a href="data:image/svg+xml,<svg><script>alert(1)</script></svg>">svg</a><img src="data:text/html,alert(1)">');
   assert.ok(!sanitized.includes('javascript:'));
+  assert.ok(!sanitized.includes('data:image/svg+xml'));
   assert.ok(!sanitized.includes('data:text/html'));
 });
 

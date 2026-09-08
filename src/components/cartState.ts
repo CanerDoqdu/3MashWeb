@@ -5,14 +5,18 @@ import {
   type IkasCart,
 } from "@ikas/bp-storefront";
 
-type CartListener = (cart: IkasCart | null) => void;
+export type CartStatus = "idle" | "loading" | "ready" | "error";
+type CartListener = (cart: IkasCart | null, status: CartStatus, error: Error | null) => void;
 
 const CART_CACHE_KEY = "3mash-cart-cache-v1";
+const CART_LOAD_TIMEOUT_MS = 10000;
 
 const listeners = new Set<CartListener>();
 
 let initialized = false;
 let initializing: Promise<void> | null = null;
+let cartStatus: CartStatus = "idle";
+let cartError: Error | null = null;
 
 function cloneCart(): IkasCart | null {
   return cartStore.cart
@@ -61,7 +65,7 @@ let currentCart: IkasCart | null =
 
 function notify() {
   listeners.forEach((listener) => {
-    listener(currentCart);
+    listener(currentCart, cartStatus, cartError);
   });
 }
 
@@ -73,16 +77,38 @@ function publish(cart: IkasCart | null) {
   notify();
 }
 
+function setStatus(status: CartStatus, error: Error | null = null) {
+  cartStatus = status;
+  cartError = error;
+  notify();
+}
+
+function withCartTimeout<T>(promise: Promise<T>) {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => {
+      setTimeout(
+        () => reject(new Error("Cart loading timed out")),
+        CART_LOAD_TIMEOUT_MS,
+      );
+    }),
+  ]);
+}
+
 export function getCurrentCart() {
   return currentCart;
 }
 
 export function isCartInitialized(): boolean {
-  if (initialized) return true;
-  if (typeof window !== "undefined" && (cartStore as any)?.isCartInitialLoadFinished === true) {
-    return true;
-  }
-  return false;
+  return cartStatus === "ready" || cartStatus === "error";
+}
+
+export function getCartStatus(): CartStatus {
+  return cartStatus;
+}
+
+export function getCartError(): Error | null {
+  return cartError;
 }
 
 export function hasCartItemsInMemory(): boolean {
@@ -107,17 +133,23 @@ export function publishCartFromIkasStore() {
   if (!nextCart) return;
 
   initialized = true;
+  setStatus("ready");
   publish(nextCart);
 }
 
 export async function refreshGlobalCart() {
+  setStatus("loading");
+
   try {
-    await waitForCartStoreInit(cartStore);
-    await getCart();
-  } catch {
-    // Network error handling
-  } finally {
+    await withCartTimeout(
+      waitForCartStoreInit(cartStore).then(() => getCart()),
+    );
     initialized = true;
+    setStatus("ready");
+  } catch (error) {
+    initialized = true;
+    setStatus("error", error instanceof Error ? error : new Error("Cart refresh failed"));
+  } finally {
     publish(cloneCart());
   }
 }
@@ -131,21 +163,25 @@ export function initGlobalCart() {
     return initializing;
   }
 
+  setStatus("loading");
+
   initializing = (async () => {
     try {
-      await waitForCartStoreInit(cartStore);
+      await withCartTimeout(waitForCartStoreInit(cartStore));
 
       if (cartStore.cart) {
         publish(cloneCart());
       }
 
-      await getCart();
+      await withCartTimeout(getCart());
 
-      publish(cloneCart());
-    } catch {
-      // Network hatası olsa bile arayüz kilitlenmesin
-    } finally {
       initialized = true;
+      setStatus("ready");
+      publish(cloneCart());
+    } catch (error) {
+      initialized = true;
+      setStatus("error", error instanceof Error ? error : new Error("Cart initialization failed"));
+    } finally {
       initializing = null;
       notify();
     }
@@ -157,10 +193,12 @@ export function initGlobalCart() {
 export function clearGlobalCart() {
   currentCart = null;
   initialized = true;
+  cartError = null;
+  cartStatus = "ready";
   if (typeof window !== "undefined") {
     try {
       sessionStorage.removeItem(CART_CACHE_KEY);
     } catch {}
   }
   notify();
-}
+}

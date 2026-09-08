@@ -154,6 +154,26 @@ export function ThreeMashAccountPage(props: Props) {
     if (token) window.history.replaceState({}, "", window.location.pathname);
   }, [authMode]);
 
+  useLayoutEffect(() => {
+    if (authMode !== "recover-password" || typeof document === "undefined") return undefined;
+    const existing = document.head.querySelector('meta[name="referrer"]') as HTMLMetaElement | null;
+    const previousContent = existing?.content;
+    const meta = existing || document.createElement("meta");
+    if (!existing) {
+      meta.name = "referrer";
+      document.head.appendChild(meta);
+    }
+    meta.content = "no-referrer";
+    return () => {
+      if (existing) {
+        if (previousContent === undefined) existing.removeAttribute("content");
+        else existing.content = previousContent;
+      } else {
+        meta.remove();
+      }
+    };
+  }, [authMode]);
+
   function navigateToMode(mode: AuthMode, nextHref: string) {
     if (mode === authMode) return;
     if (typeof window !== "undefined") {

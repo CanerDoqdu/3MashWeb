@@ -1300,7 +1300,7 @@ export function dentalFurnacesCategoryData(): CategoryLandingData {
     currentLabel: tLocalized("Dental Fırınlar", "Dental Furnaces"),
   },
   hero: {
-    titlePrefix: tLocalized("Restorasyon kalitesi,", "restoration quality,"),
+    titlePrefix: tLocalized("Restorasyon kalitesi,", "Restoration quality,"),
     titleEmphasis: tLocalized("kontrollü ısıyla", "with controlled heat"),
     titleSuffix: tLocalized("tamamlanır.", "is completed."),
     descriptionHtml:

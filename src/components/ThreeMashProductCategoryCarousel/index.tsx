@@ -57,7 +57,7 @@ function searchKey(value: unknown) {
 }
 
 function html(value: unknown) {
-  return { __html: propString(value) };
+  return { __html: sanitizeHtml(propString(value)) };
 }
 
 function escapeHtml(value: string) {

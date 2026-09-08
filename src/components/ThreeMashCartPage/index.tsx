@@ -27,9 +27,8 @@ import {
 import type { Props } from "./types";
 import {
   getCurrentCart,
-  hasCartItemsInMemory,
+  getCartStatus,
   initGlobalCart,
-  isCartInitialized,
   publishCartFromIkasStore,
   refreshGlobalCart,
   subscribeCart,
@@ -256,11 +255,9 @@ const [cart, setCartState] =
   useState<IkasCart | null>(
     () => getCurrentCart()
   );
+const [cartStatus, setCartStatus] = useState(() => getCartStatus());
 
 const [isCheckingOut, setIsCheckingOut] = useState(false);
-const [isCartReady, setIsCartReady] = useState(
-  () => isCartInitialized() || hasCartItemsInMemory()
-);
 const [checkoutError, setCheckoutError] = useState("");
 
 const [couponCode, setCouponCode] = useState("");
@@ -288,11 +285,11 @@ const [couponOpen, setCouponOpen] = useState(false);
   let mounted = true;
 
   const unsubscribe = subscribeCart(
-    (nextCart) => {
+    (nextCart, nextStatus) => {
       if (!mounted) return;
 
       setCartState(nextCart);
-      setIsCartReady(true);
+      setCartStatus(nextStatus);
     }
   );
 
@@ -308,15 +305,7 @@ const [couponOpen, setCouponOpen] = useState(false);
   });
 
   // Server cart arkada doğrulansın.
-  void initGlobalCart().finally(() => {
-    if (!mounted) return;
-    setCartState(
-      cartStore.cart
-        ? ({ ...cartStore.cart } as IkasCart)
-        : getCurrentCart(),
-    );
-    setIsCartReady(true);
-  });
+  void initGlobalCart();
 
   return () => {
     mounted = false;
@@ -331,7 +320,7 @@ const [couponOpen, setCouponOpen] = useState(false);
         ? ({ ...cartStore.cart } as IkasCart)
         : null
     );
-    setIsCartReady(true);
+    setCartStatus(getCartStatus());
   };
 
   window.addEventListener(
@@ -353,7 +342,6 @@ const items =
       Number(item.quantity || 0) > 0
   ) || [];
   const itemCount = cartItemCount(items);
-  const hasItems = items.length > 0;
 
   const style = {
     "--tmcart-bg": text(props.backgroundColor, "var(--tm-theme-bg, #fafaf7)"),
@@ -446,8 +434,10 @@ async function deleteCoupon() {
     }
   }
 
-  const isLoading = !isCartReady && !hasItems;
-  const isEmpty = isCartReady && !hasItems;
+  const isLoading = cartStatus === "idle" || cartStatus === "loading";
+  const isError = cartStatus === "error";
+  const hasItems = cartStatus === "ready" && items.length > 0;
+  const isEmpty = cartStatus === "ready" && !hasItems;
 
   return (
     <section
@@ -474,6 +464,17 @@ async function deleteCoupon() {
             {isLoading ? (
               <div className="tmcart-loading-message">
                 <span className="tmcart-spinner" aria-hidden="true" />
+              </div>
+            ) : isError ? (
+              <div className="tmcart-empty-message tmcart-error-message">
+                <span>{tLocalized("Sepet yüklenemedi.", "The cart could not be loaded.")}</span>
+                <button
+                  type="button"
+                  className="tmcart-empty-button"
+                  onClick={() => void refreshGlobalCart()}
+                >
+                  {tLocalized("Tekrar dene", "Try again")}
+                </button>
               </div>
             ) : isEmpty ? (
               <div className="tmcart-empty-message">
