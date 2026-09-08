@@ -1257,8 +1257,9 @@ export function ThreeMashProductDetailLive(props: Props) {
   }
   const groups = useMemo(() => (product ? variantGroups(product) : previewVariantGroups(previewSelection)), [product?.id, version, previewSelection]);
   const isInStock = !!product && !!variant && hasProductStock(product) && hasProductVariantStock(variant);
+  const requiresVariantSelection = !!product && !hasProductValidOptionValues(product);
   const hasDiscount = !!variant && hasProductVariantDiscount(variant);
-  const addDisabled = !!data?.hero.disableAddToCart || !product || !variant || !isInStock || isAdding;
+  const addDisabled = !isInStock || requiresVariantSelection;
 
   useEffect(() => {
     const productList = categoryProductList(product, 12);

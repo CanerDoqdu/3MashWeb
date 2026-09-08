@@ -1,4 +1,4 @@
-import { tLocalized } from "../../utils/i18n";
+import { localizedHref, tLocalized } from "../../utils/i18n";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
@@ -494,6 +494,16 @@ export function ThreeMashHero(props: Props) {
   );
 
   const importedState = importedCalculatorState();
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.location.search) return;
+
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has("rc") && !url.searchParams.has("mode")) return;
+
+    url.search = "";
+    window.history.replaceState(null, "", `${url.pathname}${url.hash}`);
+  }, []);
+
   const [mode, setMode] = useState<Mode>(importedState.mode);
   const active = presets[mode];
   const [work, setWork] = useState(active.workDefault);
@@ -914,7 +924,7 @@ export function ThreeMashHero(props: Props) {
                 />
                 <a
                   className="tmhero-calc-link"
-                  href={href(active.costDetailHref)}
+                  href={localizedHref(costDetailPageHref)}
                 >
                   <RichInline value={active.costDetailText} wordStyle={props} />
                 </a>

@@ -34,9 +34,11 @@
 .tm-products-breadcrumb {
   display: flex;
   align-items: center;
+  min-height: 16px;
   gap: 8px;
   margin-bottom: 20px;
   font-size: 13px;
+  line-height: 1.2;
   font-weight: 500;
   color: var(--tm-products-muted, #64695f);
 }
@@ -54,6 +56,7 @@
 .tm-products-breadcrumb-sep {
   color: #9ca3af;
   font-size: 14px;
+  line-height: 1.2;
 }
 
 .tm-products-breadcrumb-current {
@@ -266,6 +269,23 @@
   transition: all 140ms ease;
 }
 
+.tm-products-category-arrow-btn svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.tm-products-category-arrow-btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.tm-products-category-arrow-btn:disabled:hover {
+  border-color: var(--tm-products-line, #e2e5dc);
+  background: color-mix(in srgb, var(--tm-products-card, #fff) 76%, transparent);
+  color: var(--tm-products-muted, #64695f);
+}
+
 .tm-products-category-arrow-btn:hover {
   border-color: color-mix(in srgb, var(--tm-products-text, #10120f) 42%, var(--tm-products-line, #e2e5dc));
   background: var(--tm-products-card, #fff);
@@ -359,7 +379,7 @@
   height: 42px;
   justify-content: space-between;
   padding: 0 13px 0 14px;
-  border-radius: 999px;
+  border-radius: 8px;
   border: 1px solid var(--tm-products-line, #e2e5dc);
   background: color-mix(in srgb, var(--tm-products-card, #fff) 78%, transparent);
   color: var(--tm-products-text, #10120f);

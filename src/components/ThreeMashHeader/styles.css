@@ -210,8 +210,7 @@
 .tmh-menu-trigger:hover,
 .tmh-plain-link:hover,
 .tmh-actions > a:hover,
-.tmh-icon-button:hover,
-.tmh-action-button:hover {
+.tmh-icon-button:hover {
   color: color-mix(in srgb, var(--tmh-accent) 42%, var(--tmh-text));
 }
 
@@ -831,7 +830,7 @@
   min-height: 42px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   border: 1px solid color-mix(in srgb, var(--tmh-line) 86%, transparent);
   border-radius: 10px;
   padding: 10px 12px;
@@ -843,12 +842,23 @@
   text-decoration: none;
 }
 
-.tmh-panel-links a::after {
-  content: "→";
+.tmh-panel-link-icon {
+  width: 20px !important;
+  height: 20px !important;
+  flex: 0 0 20px;
+  margin-right: 10px;
   color: var(--tmh-accent-text);
-  font-size: 15px;
-  flex: 0 0 auto;
-  margin-left: 12px;
+}
+
+.tmh-panel-link-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tmh-panel-links a > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .tmh-panel-links a:hover {
@@ -920,14 +930,15 @@
 }
 
 .tmh-cart-empty-card {
-  min-height: 236px;
+  min-height: 0;
   margin-top: 12px;
-  border: none;
+  border: 1px solid var(--tmh-line);
+  border-radius: 12px;
   background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px;
+  padding: 14px;
 }
 
 .tmh-cart-empty-card-market-spinner,
@@ -1090,7 +1101,7 @@
 
 .tmh-cart-market-button {
   min-width: 148px;
-  min-height: 42px;
+  min-height: 40px;
   border-radius: 10px;
   border: 1px solid var(--tmh-line);
   background: var(--tmh-panel);
@@ -1110,6 +1121,13 @@
 .tmh-cart-market-button:hover {
   border-color: color-mix(in srgb, var(--tmh-accent) 70%, var(--tmh-line));
   background: color-mix(in srgb, var(--tmh-accent) 10%, var(--tmh-panel));
+}
+
+.tmh-action-button.tmh-cart:hover {
+  color: var(--tmh-text);
+  background: transparent;
+  filter: none;
+  box-shadow: none;
 }
 
 .tmh-action-panel small {

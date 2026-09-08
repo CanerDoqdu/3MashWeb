@@ -6,9 +6,6 @@ import {
   type IkasImage,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import authCriticalStyles from "../authCriticalStyles";
-import ThreeMashAccountPage from "../ThreeMashAccountPage";
-import type { Props as AccountProps } from "../ThreeMashAccountPage/types";
 import { t, tLocalized, tProp } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -97,7 +94,7 @@ function imageSource(
   return fallback;
 }
 
-function LegacyThreeMashRegisterPage(props: Props) {
+export function ThreeMashRegisterPage(props: Props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -191,8 +188,7 @@ function LegacyThreeMashRegisterPage(props: Props) {
   } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 
   return (
-    <section className="three-mash-register-page is-register-page" style={style}>
-      <style dangerouslySetInnerHTML={{ __html: authCriticalStyles }} />
+    <section className="three-mash-register-page" style={style}>
       <div className="tmrpg-auth-panel">
         <form className="tmrpg-auth-form" onSubmit={submit}>
           <div className="tmrpg-auth-copy">
@@ -208,18 +204,10 @@ function LegacyThreeMashRegisterPage(props: Props) {
           </div>
 
           <div className="tmrpg-auth-tabs">
-            <a
-              className="tab-inactive"
-              href={href(props.loginTabHref, "/account/login")}
-              style={{ backgroundColor: "var(--tmrpg-auth-panel, #f1f1ec)" }}
-            >
+            <a href={href(props.loginTabHref, "/account/login")}>
               {text(props.loginTabText, tLocalized("Üye Girişi", "Member Login"), "Sign In")}
             </a>
-            <span
-              className="tab-active"
-              aria-current="page"
-              style={{ backgroundColor: "#fff" }}
-            >
+            <span className="is-active">
               {text(props.registerTabText, tLocalized("Üye Ol", "Register"), "Register")}
             </span>
           </div>
@@ -366,12 +354,11 @@ function LegacyThreeMashRegisterPage(props: Props) {
         </form>
       </div>
 
+      <div className="tmrpg-auth-image" aria-hidden="true">
+        <img src={image} alt="" />
+      </div>
     </section>
   );
-}
-
-export function ThreeMashRegisterPage(props: Props) {
-  return <ThreeMashAccountPage {...(props as unknown as AccountProps)} />;
 }
 
 export default ThreeMashRegisterPage;

@@ -1,5 +1,5 @@
 import { tLocalized } from "../../utils/i18n";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useState } from "preact/hooks";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 import {
   customerLogin,
@@ -98,47 +98,14 @@ function imageSource(
   return fallback;
 }
 
-type AuthMode = "login" | "register" | "forgot-password" | "recover-password";
-
-function authModeFromPathname(pathname: string): AuthMode {
-  const normalized = pathname.replace(/\/+$/, "") || "/";
-  if (normalized === "/register" || normalized === "/account/register") return "register";
-  if (normalized === "/account/forgot-password") return "forgot-password";
-  if (normalized === "/account/recover-password") return "recover-password";
-  return "login";
-}
-
-function authModeFromProps(props: Props): AuthMode | undefined {
-  const configuredMode = (props as Props & { mode?: string }).mode;
-  if (
-    configuredMode === "login" ||
-    configuredMode === "register" ||
-    configuredMode === "forgot-password" ||
-    configuredMode === "recover-password"
-  ) {
-    return configuredMode;
-  }
-  return undefined;
-}
-
-function authModeFromCurrentRoute(): AuthMode | undefined {
-  if (typeof window === "undefined") return undefined;
-  const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
-  if (pathname === "/register" || pathname === "/account/register") return "register";
-  if (pathname === "/account/forgot-password") return "forgot-password";
-  if (pathname === "/account/recover-password") return "recover-password";
-  if (pathname === "/login" || pathname === "/account/login") return "login";
-  return undefined;
-}
-
 export function ThreeMashAccountPage(props: Props) {
+  type AuthMode = "login" | "register" | "forgot-password" | "recover-password";
   const [authMode, setAuthMode] = useState<AuthMode>(() => {
-    const currentRouteMode = authModeFromCurrentRoute();
-    if (currentRouteMode) return currentRouteMode;
-    const configuredMode = authModeFromProps(props);
-    if (configuredMode) return configuredMode;
     if (typeof window !== "undefined") {
-      return authModeFromPathname(window.location.pathname);
+      const pathname = window.location.pathname.replace(/\/+$/, "");
+      if (pathname === "/account/register") return "register";
+      if (pathname === "/account/forgot-password") return "forgot-password";
+      if (pathname === "/account/recover-password") return "recover-password";
     }
     return "login";
   });
@@ -150,22 +117,26 @@ export function ThreeMashAccountPage(props: Props) {
   const [passwordAgain, setPasswordAgain] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [marketingAccepted, setMarketingAccepted] = useState(false);
-  const [recoveryToken] = useState(() => {
-    if (typeof window === "undefined") return "";
-    return new URLSearchParams(window.location.search).get("token") || "";
-  });
+  const [recoveryToken, setRecoveryToken] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [isFormReady, setIsFormReady] = useState(false);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    if (authMode === "recover-password" && recoveryToken) {
-      window.history.replaceState({}, "", window.location.pathname);
-    }
+    setIsFormReady(true);
 
     function handlePopState() {
-      const nextMode = authModeFromPathname(window.location.pathname);
+      const pathname = window.location.pathname.replace(/\/+$/, "");
+      const nextMode: AuthMode = pathname === "/account/register"
+        ? "register"
+        : pathname === "/account/forgot-password"
+          ? "forgot-password"
+          : pathname === "/account/recover-password"
+            ? "recover-password"
+            : "login";
       setAuthMode(nextMode);
       setStatus("idle");
     }
@@ -175,6 +146,13 @@ export function ThreeMashAccountPage(props: Props) {
       window.removeEventListener("popstate", handlePopState);
     };
   }, []);
+
+  useLayoutEffect(() => {
+    if (authMode !== "recover-password" || typeof window === "undefined") return;
+    const token = new URLSearchParams(window.location.search).get("token") || "";
+    setRecoveryToken(token);
+    if (token) window.history.replaceState({}, "", window.location.pathname);
+  }, [authMode]);
 
   function navigateToMode(mode: AuthMode, nextHref: string) {
     if (mode === authMode) return;
@@ -302,44 +280,46 @@ export function ThreeMashAccountPage(props: Props) {
   } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 
   return (
-    <section className={`three-mash-auth-page tma-login-page${authMode === "register" ? " is-register-page" : ""}`} style={style}>
+    <section className="three-mash-auth-page tma-login-page" style={style}>
       <style dangerouslySetInnerHTML={{ __html: authCriticalStyles }} />
       <div className="tma-auth-panel">
         <form
-          className={`tma-auth-form${activeTab === "register" ? " is-register" : ""}`}
+          className={`tma-auth-form${activeTab === "register" ? " is-register" : ""}${authMode === "forgot-password" || authMode === "recover-password" ? " is-secondary" : ""}${isFormReady ? "" : " is-initial-loading"}`}
           onSubmit={submit}
         >
           <div className="tma-auth-copy">
-            {(authMode === "login" || authMode === "register") && (
-              <span>{text(props.eyebrowText, "HESAP")}</span>
-            )}
-            <h1
-              className={authMode === "forgot-password" || authMode === "recover-password" ? "is-secondary-copy" : ""}
-              aria-hidden={authMode === "forgot-password" || authMode === "recover-password"}
-            >
-              {text(props.titleText, tLocalized("3mash hesabınıza giriş yapın.", "Log in to your 3mash account."))}
-            </h1>
-            <p
-              className={authMode === "forgot-password" || authMode === "recover-password" ? "is-secondary-copy" : ""}
-              aria-hidden={authMode === "forgot-password" || authMode === "recover-password"}
-            >
-              {text(
-                props.subtitleText,
-                tLocalized("Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.", "Manage your orders, favorites, and account information from one place."),
-              )}
+            <span>{text(props.eyebrowText, "HESAP")}</span>
+            <h1>{authMode === "forgot-password"
+              ? tLocalized("Şifremi Unuttum", "Forgot Password")
+              : authMode === "recover-password"
+                ? tLocalized("Şifremi Kurtar", "Recover Password")
+                : text(props.titleText, tLocalized("3mash hesabınıza giriş yapın.", "Log in to your 3mash account."))}</h1>
+            <p>
+              {authMode === "forgot-password"
+                ? tLocalized("Email adresinizi girin; şifre yenileme bağlantısını size gönderelim.", "Enter your email and we will send you a password reset link.")
+                : authMode === "recover-password"
+                  ? tLocalized("Yeni şifrenizi belirleyin ve hesabınıza güvenli şekilde tekrar erişin.", "Set a new password and securely access your account again.")
+                  : text(
+                      props.subtitleText,
+                      tLocalized("Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.", "Manage your orders, favorites, and account information from one place."),
+                    )}
             </p>
+          </div>
+
+          <div className="tma-auth-initial-loader" aria-hidden="true">
+            <span className="tma-auth-form-spinner" />
           </div>
 
           {(authMode === "login" || authMode === "register") && <div className="tma-auth-tabs">
             <button
-              className={activeTab === "login" ? "tab-active" : "tab-inactive"}
+              className={activeTab === "login" ? "is-active" : ""}
               type="button"
               onClick={() => switchTab("login")}
             >
               {text(props.loginTabText, tLocalized("Üye Girişi", "Member Login"))}
             </button>
             <button
-              className={activeTab === "register" ? "tab-active" : "tab-inactive"}
+              className={activeTab === "register" ? "is-active" : ""}
               type="button"
               onClick={() => switchTab("register")}
             >

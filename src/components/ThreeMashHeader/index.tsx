@@ -215,6 +215,10 @@ function cartItemVariantText(item: IkasOrderLineItem) {
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
+const defaultOrdersSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="m4 7 8-4 8 4v10l-8 4-8-4V7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4.5 7.5 7.5 4 7.5-4M12 11.5V21" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+const defaultAddressesSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>`;
+const defaultAcademySvg = `<svg viewBox="0 0 24 24" fill="none"><path d="m3 9 9-4 9 4-9 4-9-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 11.2V15c2.8 2.2 7.2 2.2 10 0v-3.8M21 10v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const defaultLogoutSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M14 5V4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 12h11m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const academyPageHref = "/pages/mash-academy";
 const defaultReferencesHomeHref = "/";
 const defaultReferencesSectionId = "guven";
@@ -2003,11 +2007,11 @@ const cartItems =
   }
 
   // ── Profile links in dropdown ─────────────────────────────────────
-  const registerTarget = localizedHref("/account/register");
   const loginTarget = headerRouteHref(props.accountHref, "/account/login");
 
   const profileLinks = [
     {
+      icon: defaultOrdersSvg,
       label: tProp(
         props.profileLink1Text,
         "Siparişlerim",
@@ -2015,11 +2019,12 @@ const cartItems =
       ),
       link: isAuthenticated
         ? headerRouteHref(props.profileLink1Href, "/account/orders")
-        : registerTarget,
+        : loginTarget,
       isProtected: true,
       isLogout: false,
     },
     {
+      icon: defaultAddressesSvg,
       label: tProp(
         props.profileLink2Text,
         "Adreslerim",
@@ -2027,11 +2032,12 @@ const cartItems =
       ),
       link: isAuthenticated
         ? headerRouteHref(props.profileLink2Href, "/account/addresses")
-        : registerTarget,
+        : loginTarget,
       isProtected: true,
       isLogout: false,
     },
     {
+      icon: defaultAcademySvg,
       label: tProp(
         props.profileLink5Text,
         "Mash Academy",
@@ -2045,6 +2051,7 @@ const cartItems =
       isLogout: false,
     },
     {
+      icon: defaultLogoutSvg,
       label: isAuthenticated
         ? tProp(
             props.profileLink6Text,
@@ -2761,9 +2768,11 @@ async function removeCartItem(
                     {profileLinks.map((item) => (
                       <a
                         href={item.isLogout ? "#" : href(item.link)}
-                        dangerouslySetInnerHTML={richText(item.label, props)}
                         onClick={(e) => handleDropdownLinkClick(e, item)}
-                      />
+                      >
+                        <InlineIcon svg={item.icon} className="tmh-panel-link-icon" />
+                        <span dangerouslySetInnerHTML={richText(item.label, props)} />
+                      </a>
                     ))}
                   </div>
                 </div>

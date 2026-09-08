@@ -1,12 +1,9 @@
-import { tLocalized } from "../../utils/i18n";
+import { isEnglishLocale, tLocalized } from "../../utils/i18n";
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
   apiSearchProducts,
-  addProductToFavorites,
   createMediaSrcset,
-  customerStore,
   getDefaultSrc,
-  getFavoriteProductsIds,
   getProductHref,
   getProductListFilterCategories,
   getProductListInitialData,
@@ -20,7 +17,6 @@ import {
   hasProductListPrevPage,
   hasProductVariantDiscount,
   initProductList,
-  removeProductFromFavorites,
   searchProductList,
   setSortType,
   type IkasProduct,
@@ -162,6 +158,45 @@ function categoryLabel(category: IkasFilterCategory) {
   const data = category as unknown as Record<string, unknown>;
   const label = String(data.name || data.title || data.slug || data.handle || "").trim();
   return label || tLocalized("Kategori", "Category");
+}
+
+function localizedCategoryLabel(category: IkasFilterCategory) {
+  const data = category as unknown as Record<string, unknown>;
+  const rawLabel = categoryLabel(category);
+  const keys = [data.slug, data.handle, rawLabel]
+    .map((value) => searchKey(String(value || "")))
+    .filter(Boolean);
+  const translations: Record<string, string> = {
+    "3d-yazicilar": "3D Printers",
+    "3d-yazici-yedek-parcalari": "3D Printer Spare Parts",
+    "3d-yazici-recineleri": "Dental 3D Printing Resins",
+    "dental-3d-yazici-recineleri": "Dental 3D Printing Resins",
+    "dental-recineler": "Dental Resins",
+    "dental recineler": "Dental Resins",
+    "recineler": "Resins",
+    "kurleme-cihazlari": "Curing Devices",
+    "yikama-kurleme-cihazlari": "Washing and Curing Devices",
+    "yikama & kurleme": "Wash & Cure",
+    "yikama ve kurleme": "Wash and Cure",
+    "tarayicilar": "Scanners",
+    "masaustu-tarayicilar": "Desktop Scanners",
+    "sistemler": "Systems",
+    "yazilimlar": "Software",
+    "zirkon-bloklar": "Zirconia Blocks",
+    "zirkon bloklar": "Zirconia Blocks",
+    "dental-firinlar": "Dental Furnaces",
+    "dental firinlar": "Dental Furnaces",
+    "titanyum-diskler": "Titanium Discs",
+    "titanyum diskler": "Titanium Discs",
+    "yazici-yedek-parca": "Printer Spare Parts",
+    "yazici yedek parca": "Printer Spare Parts",
+    "3d yazicilar": "3D Printers",
+    "3d yazici yedek parcalari": "3D Printer Spare Parts",
+    "dental 3d yazici recineleri": "Dental 3D Printing Resins",
+  };
+
+  if (!isEnglishLocale()) return rawLabel;
+  return keys.map((key) => translations[key]).find(Boolean) || rawLabel;
 }
 
 function productCategoryMatches(product: IkasProduct, category: ListingLink) {
@@ -356,7 +391,6 @@ export function ThreeMashProductsPage(props: Props) {
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [gridLayout, setGridLayout] = useState<"grid-4" | "grid-3">("grid-4");
   const [favoriteIds, setFavoriteIds] = useState<Record<string, boolean>>({});
-  const [favoritePendingIds, setFavoritePendingIds] = useState<Record<string, boolean>>({});
 
   const committedSearchRef = useRef(productList?.searchKeyword || "");
   const appliedUrlSearchRef = useRef(false);
@@ -364,25 +398,6 @@ export function ThreeMashProductsPage(props: Props) {
   const sortControlRef = useRef<HTMLDivElement>(null);
   const categoriesScrollRef = useRef<HTMLDivElement>(null);
   const categoryRequestRef = useRef(0);
-
-  useEffect(() => {
-    if (!customerStore.customer) return;
-    let mounted = true;
-    getFavoriteProductsIds(customerStore)
-      .then((favorites) => {
-        if (!mounted) return;
-        setFavoriteIds(
-          favorites.reduce<Record<string, boolean>>((result, favorite) => {
-            if (favorite.productId) result[favorite.productId] = true;
-            return result;
-          }, {}),
-        );
-      })
-      .catch(() => {});
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   const sortOptions = productList ? getProductListSortOptions(productList) : [];
   const selectedSort =
@@ -413,7 +428,7 @@ export function ThreeMashProductsPage(props: Props) {
     .filter((category) => Boolean(category.id))
     .map((category) => ({
       id: category.id,
-      label: categoryLabel(category),
+      label: localizedCategoryLabel(category),
       group: "Kategori" as const,
     }));
 
@@ -695,29 +710,11 @@ export function ThreeMashProductsPage(props: Props) {
     });
   }
 
-  async function handleToggleFavorite(productId: string) {
-    if (!customerStore.customer) {
-      window.location.href = "/account/login";
-      return;
-    }
-
-    if (favoritePendingIds[productId]) return;
-    const isFavorite = Boolean(favoriteIds[productId]);
-    setFavoritePendingIds((prev) => ({ ...prev, [productId]: true }));
-    try {
-      const success = isFavorite
-        ? await removeProductFromFavorites(customerStore, productId)
-        : await addProductToFavorites(customerStore, productId);
-      if (success) {
-        setFavoriteIds((prev) => ({ ...prev, [productId]: !isFavorite }));
-      }
-    } finally {
-      setFavoritePendingIds((prev) => {
-        const next = { ...prev };
-        delete next[productId];
-        return next;
-      });
-    }
+  function handleToggleFavorite(productId: string) {
+    setFavoriteIds((prev) => ({
+      ...prev,
+      [productId]: !prev[productId],
+    }));
   }
 
   return (

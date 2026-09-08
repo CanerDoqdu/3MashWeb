@@ -22,7 +22,6 @@ import {
 } from "@ikas/bp-storefront";
 
 import ThreeMashAccountLayout from "../ThreeMashAccountLayout";
-import ThreeMashAccountPage from "../ThreeMashAccountPage";
 import { Props } from "./types";
 import type { Props as AccountInfoProps } from "../ThreeMashAccountInfoPage/types";
 import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
@@ -493,12 +492,18 @@ export function OrdersView({
   props: DashboardProps;
 }) {
   const title =
-    props.ordersTitle ||
-    (props.mode === "orders" ? props.titleText : undefined) ||
-    t("account.orders", tLocalized("Siparişlerim", "My Orders"));
+    text(
+      props.ordersTitle ||
+        (props.mode === "orders" ? props.titleText : undefined),
+      "Siparişlerim",
+      "My Orders",
+    );
   const emptyText =
-    (props.mode === "orders" ? props.emptyText : undefined) ||
-    t("account.noOrders", "Henüz siparişiniz bulunmuyor.");
+    text(
+      props.mode === "orders" ? props.emptyText : undefined,
+      "Henüz siparişiniz bulunmuyor.",
+      "You haven't placed any orders yet.",
+    );
 
   return (
     <>
@@ -772,24 +777,6 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
 // ─── Main export — delegates to the unified account layout shell ──
 
 export function ThreeMashAccountUtilityPage(props: DashboardProps) {
-  const pathname =
-    typeof window !== "undefined"
-      ? window.location.pathname.replace(/\/+$/, "")
-      : "";
-  const isForgotPasswordRoute =
-    props.mode === "forgot-password" || pathname === "/account/forgot-password";
-  const isRecoverPasswordRoute =
-    props.mode === "recover-password" || pathname === "/account/recover-password";
-
-  if (isForgotPasswordRoute || isRecoverPasswordRoute) {
-    return (
-      <ThreeMashAccountPage
-        {...(props as any)}
-        mode={isRecoverPasswordRoute ? "recover-password" : "forgot-password"}
-      />
-    );
-  }
-
   // Route to the unified account layout with the mode passed from ikas config.
   // Each registered page (addresses, orders, favorites) sets a different mode prop.
   return <ThreeMashAccountLayout {...props} />;

@@ -19,7 +19,6 @@ type FieldDef = {
   pairsWith?: string;
 };
 
-const STORAGE_KEY = "mash_cost_detail_state";
 const fmt = (n: number) => "$" + Math.round(n).toLocaleString("tr-TR");
 
 function rangeProgress(val: number, min: number, max: number) {
@@ -30,7 +29,6 @@ function rangeProgress(val: number, min: number, max: number) {
 export function ThreeMashCostDetailPage(props: Props) {
   const [mode, setMode] = useState<CostMode>("klinik");
   const [saved, setSaved] = useState(false);
-  const [initialized, setInitialized] = useState(false);
 
   // Klinik input states (initialized from props or defaults)
   const [chairRate, setChairRate] = useState(props.defaultChairRate ?? 375);
@@ -47,74 +45,6 @@ export function ThreeMashCostDetailPage(props: Props) {
   const [labMin, setLabMin] = useState(props.defaultLabMin ?? 70);
   const [shipL, setShipL] = useState(props.defaultShipL ?? 35);
   const [goodwill, setGoodwill] = useState(props.defaultGoodwill ?? 40);
-
-  // Load persisted state from localStorage on mount
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const data = JSON.parse(raw);
-        if (data.mode === "klinik" || data.mode === "lab") {
-          setMode(data.mode);
-        }
-        if (data.values) {
-          if (typeof data.values.chairRate === "number") setChairRate(data.values.chairRate);
-          if (typeof data.values.chairMin === "number") setChairMin(data.values.chairMin);
-          if (typeof data.values.units === "number") setUnits(data.values.units);
-          if (typeof data.values.labFee === "number") setLabFee(data.values.labFee);
-          if (typeof data.values.ship === "number") setShip(data.values.ship);
-          if (typeof data.values.misc === "number") setMisc(data.values.misc);
-          if (typeof data.values.matUnit === "number") setMatUnit(data.values.matUnit);
-          if (typeof data.values.unitsL === "number") setUnitsL(data.values.unitsL);
-          if (typeof data.values.labRate === "number") setLabRate(data.values.labRate);
-          if (typeof data.values.labMin === "number") setLabMin(data.values.labMin);
-          if (typeof data.values.shipL === "number") setShipL(data.values.shipL);
-          if (typeof data.values.goodwill === "number") setGoodwill(data.values.goodwill);
-        }
-      }
-    } catch (_) {}
-    setInitialized(true);
-  }, []);
-
-  // Save state to localStorage whenever any value or mode changes
-  useEffect(() => {
-    if (!initialized) return;
-    try {
-      const stateObj = {
-        mode,
-        values: {
-          chairRate,
-          chairMin,
-          units,
-          labFee,
-          ship,
-          misc,
-          matUnit,
-          unitsL,
-          labRate,
-          labMin,
-          shipL,
-          goodwill,
-        },
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(stateObj));
-    } catch (_) {}
-  }, [
-    initialized,
-    mode,
-    chairRate,
-    chairMin,
-    units,
-    labFee,
-    ship,
-    misc,
-    matUnit,
-    unitsL,
-    labRate,
-    labMin,
-    shipL,
-    goodwill,
-  ]);
 
   const modelData: Record<CostMode, { per: string; fields: FieldDef[] }> = {
     klinik: {
@@ -206,13 +136,6 @@ export function ThreeMashCostDetailPage(props: Props) {
     if (typeof window !== "undefined") {
       // NOTE: _remakeTotal is typed in src/types/globals.d.ts (inter-component communication).
       window._remakeTotal = rounded;
-      try {
-        localStorage.setItem("mash_remake_cost", String(rounded));
-        localStorage.setItem(
-          "mash_calculator_mode",
-          mode === "lab" ? "lab" : "clinic",
-        );
-      } catch (_) {}
       setSaved(true);
     }
   };

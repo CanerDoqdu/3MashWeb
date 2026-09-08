@@ -26,7 +26,6 @@ import {
 import { t, tLocalized, localizedHref } from "../../utils/i18n";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import ProtectedRoute from "../../sub-components/ProtectedRoute";
-import ThreeMashAccountPage from "../ThreeMashAccountPage";
 import {
   performLogout,
   hasCustomerToken,
@@ -216,10 +215,6 @@ function modeFromHref(nextHref: string, fallback: AccountMode): AccountMode {
   }
 }
 
-function isPublicAuthMode(mode: AccountMode | string | undefined) {
-  return mode === "forgot-password" || mode === "recover-password";
-}
-
 function normalizeHref(value: string | undefined, fallback: string) {
   return safeNavigationHref(value, fallback);
 }
@@ -316,7 +311,6 @@ function dashboardStyle(props: DashboardProps) {
 
 function AccountLayoutContent(props: DashboardProps) {
   const isStudio = isStudioPreviewActive();
-  const isPublicAuth = isPublicAuthMode(props.mode);
 
   // ── Initial mode from URL (or prop if set by ikas Studio preview) ──
   const [mode, setMode] = useState<AccountMode>(() => {
@@ -366,7 +360,7 @@ function AccountLayoutContent(props: DashboardProps) {
     if (typeof window === "undefined") return;
 
     function handleAuthVerification() {
-      if (isStudio || isPublicAuth) return true;
+      if (isStudio) return true;
       if (isCustomerAuthenticated() === "unauthenticated") {
         setCustomer(null);
         setOrders([]);
@@ -401,7 +395,7 @@ function AccountLayoutContent(props: DashboardProps) {
       window.removeEventListener("popstate", handlePopState);
       disposeAuthReaction();
     };
-  }, [props.mode, isStudio, isPublicAuth]);
+  }, [props.mode, isStudio]);
 
   // ── Load customer + section data on mount / mode change ───────────
   useEffect(() => {
@@ -503,7 +497,7 @@ function AccountLayoutContent(props: DashboardProps) {
   // ── Href helpers ──────────────────────────────────────────────────
   const accountHref = normalizeHref(props?.accountHref, "/account");
   const addressesHref = normalizeHref(props?.addressesHref, "/account/addresses");
-  const favoritesHref = normalizeHref(props?.favoritesHref, "/account/favorite-products");
+  const favoritesHref = normalizeHref(props?.favoritesHref, "/account/favorites");
   const ordersHref = normalizeHref(props?.ordersHref, "/account/orders");
 
   const personalLinks = [
@@ -644,23 +638,6 @@ function AccountLayoutContent(props: DashboardProps) {
 }
 
 export default function ThreeMashAccountLayout(props: DashboardProps) {
-  const pathname =
-    typeof window !== "undefined"
-      ? window.location.pathname.replace(/\/+$/, "")
-      : "";
-  const isPublicAuth =
-    isPublicAuthMode(props.mode) ||
-    pathname === "/account/forgot-password" ||
-    pathname === "/account/recover-password";
-
-  if (isPublicAuth) {
-    const authMode =
-      props.mode === "recover-password" || pathname === "/account/recover-password"
-        ? "recover-password"
-        : "forgot-password";
-    return <ThreeMashAccountPage {...(props as any)} mode={authMode} />;
-  }
-
   return (
     <ProtectedRoute
       redirectHref="/"

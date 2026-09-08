@@ -422,7 +422,7 @@ async function deleteCoupon() {
   }
 }
   async function checkout() {
-    if (isCheckingOut) return;
+    if (isCheckingOut || !hasItems) return;
     setIsCheckingOut(true);
     setCheckoutError("");
 
@@ -583,8 +583,8 @@ async function deleteCoupon() {
 
             <button
               type="button"
-              onClick={hasItems ? checkout : undefined}
-              disabled={!hasItems || isCheckingOut}
+              onClick={checkout}
+              disabled={isCheckingOut}
             >
               <span>
                 {hasItems
