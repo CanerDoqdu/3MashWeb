@@ -172,7 +172,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
                   <div><span>{tLocalized("Hız", "Speed")}</span><b>{tLocalized("14 dk'da geçici kron", "Temporary crown in 14 minutes")}</b></div>
                   <div><span>{tLocalized("Kalibrasyon", "Calibration")}</span><b>{tLocalized("6 aya kadar gerekmez", "Not required for up to 6 months")}</b></div>
                 </div>
-                <a className="go" href={printerProductHref("/mash-curie-m1-dental-3d-yazici", "/en/mash-curie-m1-dental-dlp-3d-printer")}>{tLocalized("İncele", "View")} <span>→</span></a>
+                <a className="go" href={printerProductHref("/mash-curie-m1-dental-3d-yazici", "/en/mash-curie-m1-dental-3d-printer")}>{tLocalized("İncele", "View")} <span>→</span></a>
               </div>
             </div>
             <div className="pc">
@@ -185,7 +185,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
                   <div><span>Hassasiyet</span><b>{tLocalized("±15 µm (arttırılmış)", "±15 µm (enhanced)")}</b></div>
                   <div><span>{tLocalized("Versiyon", "Version")}</span><b>{tLocalized("Fabrika / Arttırılmış", "Factory / Enhanced")}</b></div>
                 </div>
-                <a className="go" href={printerProductHref("/creality-halot-sky-6k", "/en/creality-halot-sky-6k-dental-3d-printer")}>{tLocalized("İncele", "View")} <span>→</span></a>
+                <a className="go" href={printerProductHref("/creality-halot-sky-6k", "/en/creality-halot-sky-6k-1")}>{tLocalized("İncele", "View")} <span>→</span></a>
               </div>
             </div>
           </div>

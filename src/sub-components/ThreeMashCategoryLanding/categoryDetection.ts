@@ -112,9 +112,8 @@ const ZIRCON_PRODUCT_KEYS = new Set([
 const FURNACE_PRODUCT_KEYS = new Set([
   "naberthem-lht-02-17-lb-speed",
   "naberthem-lht-01-16-turbo-fire",
-  "naberthem-vl-01-12-lb-press-firini",
-  "naberthem-vl-01-12-lb-pres-firini",
-  "naberthem-vl-01-12-lb-porselen-firini",
+  "naberthem-vl-01-12-lb-press-furnace",
+  "naberthem-vl-01-12-lb-porcelain-furnace",
 ]);
 
 const SCANNER_PRODUCT_KEYS = new Set([

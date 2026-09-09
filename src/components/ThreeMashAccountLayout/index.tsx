@@ -30,7 +30,6 @@ import {
   performLogout,
   hasCustomerToken,
   isCustomerAuthenticated,
-  isProtectedPath,
   isStudioPreviewActive,
 } from "../../utils/auth";
 
@@ -204,6 +203,17 @@ function modeFromPathname(pathname: string, fallback: AccountMode): AccountMode 
   return fallback;
 }
 
+function isPublicAuthPath(pathname?: string): boolean {
+  if (!pathname) return false;
+  const p = pathname.replace(/\/+$/, "");
+  return (
+    p === "/account/forgot-password" ||
+    p === "/account/recover-password" ||
+    p === "/account/login" ||
+    p === "/account/register"
+  );
+}
+
 function modeFromHref(nextHref: string, fallback: AccountMode): AccountMode {
   try {
     const pathname =
@@ -362,11 +372,11 @@ function AccountLayoutContent(props: DashboardProps) {
 
     function handleAuthVerification() {
       if (isStudio) return true;
-
-      const currentPath = window.location.pathname;
-      const isPublicAuthRoute = !isProtectedPath(currentPath);
-
-      if (isCustomerAuthenticated() === "unauthenticated" && isProtectedPath(currentPath)) {
+      const currentPath = typeof window !== "undefined" ? window.location.pathname : "";
+      if (isPublicAuthPath(currentPath) || mode === "forgot-password" || mode === "recover-password") {
+        return true;
+      }
+      if (isCustomerAuthenticated() === "unauthenticated") {
         setCustomer(null);
         setOrders([]);
         setFavorites([]);
@@ -374,15 +384,6 @@ function AccountLayoutContent(props: DashboardProps) {
         window.location.replace(safeRedirect(localizedHref("/")));
         return false;
       }
-
-      if (isCustomerAuthenticated() === "unauthenticated" && isPublicAuthRoute) {
-        setCustomer(null);
-        setOrders([]);
-        setFavorites([]);
-        setSidebarName("");
-        return true;
-      }
-
       return true;
     }
 
@@ -652,6 +653,17 @@ function AccountLayoutContent(props: DashboardProps) {
 }
 
 export default function ThreeMashAccountLayout(props: DashboardProps) {
+  const currentPath =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const isPublicAuthMode =
+    props.mode === "forgot-password" ||
+    props.mode === "recover-password" ||
+    isPublicAuthPath(currentPath);
+
+  if (isPublicAuthMode) {
+    return <AccountLayoutContent {...props} />;
+  }
+
   return (
     <ProtectedRoute
       redirectHref="/"

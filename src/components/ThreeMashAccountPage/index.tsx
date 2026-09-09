@@ -101,6 +101,15 @@ function imageSource(
 export function ThreeMashAccountPage(props: Props) {
   type AuthMode = "login" | "register" | "forgot-password" | "recover-password";
   const [authMode, setAuthMode] = useState<AuthMode>(() => {
+    const propMode = (props as any)?.mode;
+    if (
+      propMode === "register" ||
+      propMode === "forgot-password" ||
+      propMode === "recover-password"
+    ) {
+      return propMode;
+    }
+
     if (typeof window !== "undefined") {
       const pathname = window.location.pathname.replace(/\/+$/, "");
       if (pathname === "/account/register") return "register";

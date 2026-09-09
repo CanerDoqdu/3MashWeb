@@ -343,8 +343,11 @@ function routeKey(value: string) {
 
 const categoryRouteAliases: Record<string, string> = {
   "resins": "/dental-3d-yazici-recineleri",
+  "dental-resins": "/dental-3d-yazici-recineleri",
   "printers": "/3d-yazicilar",
+  "3d-printers": "/3d-yazicilar",
   "wash-cure": tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
+  "wash-and-cure-devices": tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
   "washing": tLocalized("/yikama-cihazlari", "/yikama-cihazlari"),
   "curing": tLocalized("/kurleme-cihazlari", "/kurleme-cihazlari"),
   "yikama-cihazlari": tLocalized("/yikama-cihazlari", "/yikama-cihazlari"),
@@ -357,10 +360,16 @@ const categoryRouteAliases: Record<string, string> = {
   "urunler-kurleme-cihazlari": tLocalized("/kurleme-cihazlari", "/kurleme-cihazlari"),
   "zircon": "/zirkon-bloklar",
   "furnaces": "/dental-firinlar",
+  "dental-furnaces": "/dental-firinlar",
   "scanners": "/masasustu-tarayicilar",
+  "desktop-scanners": "/masasustu-tarayicilar",
+  "lab-scanners": "/masasustu-tarayicilar",
   "spares": "/3d-yazici-yedek-parcalari",
   "systems": "/sistemler",
   "titanium": "/titanyum-diskler",
+  "titanium-disc": "/titanyum-diskler",
+  "titanium-discs": "/titanyum-diskler",
+  "titanium-diskler": "/titanyum-diskler",
   "3d-yazicilar": "/3d-yazicilar",
   "3d-yazici": "/3d-yazicilar",
   "urunler-3d-yazicilar": "/3d-yazicilar",
@@ -388,10 +397,10 @@ const categoryRouteAliases: Record<string, string> = {
 
 const englishProductRoutes: Record<string, string> = {
   "mash-p16l-385nm-16k-dental-3d-yazici": "/en/mash-p16l-385nm-16k-dental-3d-printer",
-  "mash-curie-m1-dental-3d-yazici": "/en/mash-curie-m1-dental-dlp-3d-printer",
-  "creality-halot-sky-6k": "/en/creality-halot-sky-6k-dental-3d-printer",
-  "mash-w1e-ultrasonik-yikama-cihazi": "/en/mash-w1e-ultrasonic-washing-unit",
-  "mash-c1e-uv-kurleme-cihazi": "/en/mash-c1e-smart-uv-curing-unit",
+  "mash-curie-m1-dental-3d-yazici": "/en/mash-curie-m1-dental-3d-printer",
+  "creality-halot-sky-6k": "/en/creality-halot-sky-6k-1",
+  "mash-w1e-ultrasonik-yikama-cihazi": "/en/mash-w1e-ultrasonic-washing-device",
+  "mash-c1e-uv-kurleme-cihazi": "/en/mash-c1e-smart-uv-curing-device",
   "creality-washcure-uw-02": "/en/creality-wash-and-cure-uw-03",
   "argenz-ht-plus-zirkon-blok": "/en/argenz-ht-plus-zirconia-disc",
   "argenz-st-multilayer-zirkon-blok": "/en/argenz-st-multilayer-zirconia-disc",
@@ -401,7 +410,10 @@ const englishProductRoutes: Record<string, string> = {
 function categoryHref(value: string) {
   const trimmed = value.trim();
   if (!trimmed) return "#";
-  if (/^(#|javascript:|data:|vbscript:|file:|mailto:|tel:|whatsapp:)/i.test(trimmed)) {
+  if (/^(javascript:|data:|vbscript:|file:)/i.test(trimmed)) {
+    return "#";
+  }
+  if (/^(#|mailto:|tel:|whatsapp:)/i.test(trimmed)) {
     return trimmed || "#";
   }
 
@@ -642,12 +654,85 @@ function liveProductFilterId(
   return match?.id;
 }
 
+export function productMatchesCategoryKind(product: IkasProduct, kind: CategoryLandingData["kind"]) {
+  const signals = [
+    product.name,
+    getProductHref(product) || "",
+    ...(product.categories?.map((category) => category.name).filter(Boolean) || []),
+    product.brand?.name || "",
+    product.metaData?.slug || "",
+  ].filter(Boolean);
+
+  const normalizedSignals = signals.map((signal) => normalize(signal));
+
+  const furnaceSignals = [
+    "naberthem lht 02 17 lb speed",
+    "naberthem lht 01 16 turbo fire",
+    "naberthem vl 01 12 lb pres firini",
+    "naberthem vl 01 12 lb press firini",
+    "naberthem vl 01 12 lb porselen firini",
+  ];
+
+  const scannerSignals = [
+    "3shape e2",
+    "3shape e3",
+    "3shape e4",
+    "e2 yuksek uretkenlik",
+    "implant bar dogrulugu",
+    "hiz ve hassasiyet",
+  ];
+
+  const spareSignals = [
+    "ana kart",
+    "control board",
+    "lcd ekran",
+    "ekran kiti",
+    "baski tablosi",
+    "build plate",
+    "recine tanki",
+    "resin tank",
+    "acf film",
+    "fep film",
+    "film",
+    "piocreat c01",
+    "creality halot sky",
+    "yedek parca",
+  ];
+
+  const systemSignals = [
+    "trasformer comp flow",
+    "comp flow siringa kompozit",
+    "comp flow şırınga kompozit",
+    "trasformer light glass",
+    "light glass mufla sistemi",
+    "trasformer-comp-flow-siringa-kompozit",
+    "trasformer-light-glass-mufla-sistemi",
+    "light glass muffle system",
+  ];
+
+  const matchesAny = (candidates: string[]) => {
+    const normalizedCandidates = candidates.map((candidate) => normalize(candidate));
+
+    return normalizedCandidates.some((candidate) =>
+      normalizedSignals.some((signal) => signal.includes(candidate) || candidate.includes(signal)),
+    );
+  };
+
+  if (kind === "furnaces") return matchesAny(furnaceSignals);
+  if (kind === "scanners") return matchesAny(scannerSignals);
+  if (kind === "spares") return matchesAny(spareSignals);
+  if (kind === "systems") return matchesAny(systemSignals);
+  return true;
+}
+
 function liveProductCards(
   products: IkasProduct[],
   presetCards: CategoryProductCard[],
   filters?: CategoryFilter[],
   preservePresetCards = false,
+  kind?: CategoryLandingData["kind"],
 ): CategoryProductCard[] {
+  const productPool = kind ? products.filter((product) => productMatchesCategoryKind(product, kind)) : products;
   const presetByTitle = new Map(
     presetCards.map((card, index) => [normalize(card.title), { card, index }] as const),
   );
@@ -656,7 +741,7 @@ function liveProductCards(
     return presetCards.map((card) => {
       const cardKey = normalize(card.title);
       const cardHrefKey = normalize(card.href);
-      const liveProduct = products.find((product) => {
+      const liveProduct = productPool.find((product) => {
         const productKey = normalize(product.name);
         const productHrefKey = normalize(getProductHref(product) || "");
         return (
@@ -678,7 +763,7 @@ function liveProductCards(
     });
   }
 
-  return products
+  return productPool
     .map((product, index) => ({ product, index }))
     .sort((left, right) => {
       const leftPreset = presetByTitle.get(normalize(left.product.name));
@@ -1028,8 +1113,15 @@ export default function ThreeMashCategoryLanding(props: Props) {
     return livePrice ? { ...metric, value: livePrice, emphasis: "" } : { ...metric, value: "", emphasis: "" };
   });
   const productCards = useMemo(
-    () => liveProductCards(liveProducts, data.selector.products, data.selector.filters, data.kind === "wash-cure" || data.kind === "resins" || data.kind === "zircon"),
-    [data.selector.filters, data.selector.products, liveProducts],
+    () =>
+      liveProductCards(
+        liveProducts,
+        data.selector.products,
+        data.selector.filters,
+        data.kind === "wash-cure" || data.kind === "resins" || data.kind === "zircon",
+        data.kind,
+      ),
+    [data.selector.filters, data.selector.products, liveProducts, data.kind],
   );
   const visibleCards = productCards.filter((card) => activeFilter === "all" || card.filterId === activeFilter);
   const compare = data.selector.compare;

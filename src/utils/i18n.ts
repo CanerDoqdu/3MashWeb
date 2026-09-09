@@ -84,39 +84,45 @@ export function getCurrentLocale(): Locale {
     // -------------------------------------------------------------
     // 2. Client-Side (Browser)
     // -------------------------------------------------------------
-    // The rendered document is authoritative after client-side auth redirects.
-    // A redirect can briefly retain the previous URL while the storefront DOM
-    // has already been rendered in the active locale.
-    try {
-      const documentLocale = (
-        document.documentElement.getAttribute("data-3mash-locale") ||
-        document.documentElement.lang
-      ).toLowerCase();
-      if (documentLocale.startsWith("en")) {
-        _clientCachedLocale = "en";
-        return "en";
-      }
-      if (documentLocale.startsWith("tr")) {
-        _clientCachedLocale = "tr";
-        return "tr";
-      }
-    } catch { }
-
-    // Fall back to the URL when the document has no locale marker yet.
+    // Prefer the active URL for English/Turkish route detection during first paint.
+    // This avoids showing Turkish cookie/legal copy while the page has already
+    // navigated to /en but the DOM still carries a stale locale attribute.
     const pathname = window.location.pathname.toLowerCase();
     if (pathname === "/en" || pathname.startsWith("/en/")) {
       _clientCachedLocale = "en";
       return "en";
     }
 
-    // Ikas uses /en/ as the English route prefix; every other storefront path
-    // is Turkish. Persisted preferences must not override the current route.
+    if (pathname === "/tr" || pathname.startsWith("/tr/")) {
+      _clientCachedLocale = "tr";
+      return "tr";
+    }
+
     try {
       const searchParams = new URLSearchParams(window.location.search);
       const urlLang = searchParams.get("lang") || searchParams.get("locale");
       if (urlLang?.toLowerCase().startsWith("en")) {
         _clientCachedLocale = "en";
         return "en";
+      }
+      if (urlLang?.toLowerCase().startsWith("tr")) {
+        _clientCachedLocale = "tr";
+        return "tr";
+      }
+    } catch { }
+
+    try {
+      const documentLocale = (
+        document.documentElement.getAttribute("data-3mash-locale") ||
+        document.documentElement.lang
+      )?.toLowerCase?.();
+      if (documentLocale?.startsWith("en")) {
+        _clientCachedLocale = "en";
+        return "en";
+      }
+      if (documentLocale?.startsWith("tr")) {
+        _clientCachedLocale = "tr";
+        return "tr";
       }
     } catch { }
 
@@ -715,6 +721,41 @@ export function translateText(text?: string | null): string {
   return text;
 }
 
+const englishRouteAliases: Record<string, string> = {
+  "/dental-3d-yazici-recineleri": "/dental-resins",
+  "/3d-yazicilar": "/3d-printers",
+  "/yikama-kurleme-cihazlari": "/wash-and-cure-devices",
+  "/masasustu-tarayicilar": "/lab-scanners",
+  "/desktop-scanners": "/lab-scanners",
+  "/dental-firinlar": "/dental-furnaces",
+  "/zirkon-bloklar": "/zircon-blocks",
+  "/mash-p16l-385nm-16k-dental-3d-yazici": "/mash-p16l-385nm-16k-dental-3d-printer",
+  "/mash-curie-m1-dental-3d-yazici": "/mash-curie-m1-dental-3d-printer",
+  "/creality-halot-sky-6k": "/creality-halot-sky-6k-1",
+  "/mash-c1e-uv-kurleme-cihazi": "/mash-c1e-smart-uv-curing-device",
+  "/mash-w1e-ultrasonik-yikama-cihazi": "/mash-w1e-ultrasonic-washing-device",
+  "/creality-washcure-uw-02": "/creality-wash-and-cure-uw-03",
+  "/argenz-ht-plus-zirkon-blok": "/argenz-ht-plus-zirconia-disc",
+  "/argenz-st-multilayer-zirkon-blok": "/argenz-st-multilayer-zirconia-disc",
+  "/argenz-ht-multilayer-zirkon-blok": "/argenz-ht-plus-multilayer-zirconia-disc",
+  "/crs-composite-mukemmel-dayanimli-gecici-recinesi": "/crs-composite-excellent-durable-permanent-resin",
+  "/crs-aligner-memory-shape-ozellikli-aligner-recinesi": "/crs-aligner-shape-memory-aligner-resin",
+  "/crs-cast-cekmeyen-dokum-recinesi": "/crs-denture-biocompatible-denture-resin",
+  "/crs-denture-biouyumlu-protez-recinesi": "/crs-denture-biocompatible-denture-resin",
+  "/crs-flexit-recin-protez-recinesi": "/crs-flexit-resin-flexible-denture-resin",
+  "/crs-gingiva-yirtilmaz-dis-eti-recinesi": "/crs-gingiva-tear-proof-gum-resin",
+  "/crs-ibt-resin-ortodontik-ibt-recinesi": "/crs-ibt-resin-orthodontic-indirect-bonding-tray-resin",
+  "/crs-model-yuksek-hassasiyetli-model-recinesi": "/crs-model-high-precision-model-resin",
+  "/crs-splint-hard-resin-sert-gece-plagi-recinesi": "/crs-splint-hard-resin-hard-night-guard-resin",
+  "/crs-splint-soft-resin-dental-splint-gece-plak-recinesi": "/crs-splint-soft-resin-flexible-night-guard-resin",
+  "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi": "/crs-tray-resin-custom-impression-tray-resin",
+  "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber": "/crs-guide-resin-biocompatible-surgical-guide-resin",
+  "/mash-clear-resin-dental-cerrahi-kilavuz-recinesi": "/mash-clear-resin-dental-surgical-guide-resin",
+  "/mash-study-resin-dental-model-3d-yazici-recinesi": "/mash-study-resin-dental-model-3d-printer-resin",
+  "/mash-trial-pink-resin-dental-try-in-gecici-recinesi": "/mash-trial-pink-resin-dental-temporary-try-in-resin",
+  "/mash-trial-white-resin-gecici-dental-recinesi": "/mash-trial-white-resin-temporary-dental-resin",
+};
+
 /**
  * Normalizes internal site links and prepends /en/ when English locale is active.
  * This ensures the server receives /en/slug paths and renders English HTML at first paint,
@@ -746,6 +787,14 @@ export function localizedHref(path?: string | null): string {
     bare = "/";
   } else if (bare.startsWith("/en/")) {
     bare = bare.replace(/^\/en\//, "/");
+  }
+
+  if (isEnglishLocale()) {
+    const hashIndex = bare.search(/[?#]/);
+    const route = hashIndex >= 0 ? bare.slice(0, hashIndex) : bare;
+    const suffix = hashIndex >= 0 ? bare.slice(hashIndex) : "";
+    const englishRoute = englishRouteAliases[route.replace(/\/$/, "")];
+    if (englishRoute) bare = `${englishRoute}${suffix}`;
   }
 
   // If English locale is active, prepend /en/

@@ -39,10 +39,8 @@ export function safeRedirect(url?: string): string {
     return trimmed;
   }
 
-  const relative = normalizeSameOriginPath(trimmed);
-  if (relative) {
-    if (relative.startsWith("/")) return relative;
-    return relative;
+  if (trimmed.startsWith("/")) {
+    return normalizeSameOriginPath(trimmed) || "/account/login";
   }
 
   if (typeof window === "undefined") {
@@ -123,4 +121,21 @@ export function safeCheckoutHref(url?: string): string {
   } catch {
     return "";
   }
+}
+
+export function safeWhatsAppHref(url?: string, fallback = "https://wa.me/905314326577"): string {
+  const trimmed = (url ?? "").trim();
+  if (!trimmed) return fallback;
+
+  try {
+    const parsed = new URL(trimmed);
+    const hostname = parsed.hostname.toLowerCase();
+    if (parsed.protocol === "https:" && (hostname === "wa.me" || hostname === "api.whatsapp.com")) {
+      return parsed.href;
+    }
+  } catch {
+    return fallback;
+  }
+
+  return fallback;
 }

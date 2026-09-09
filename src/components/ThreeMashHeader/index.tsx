@@ -999,7 +999,7 @@ function getDefaultProductSecondary(): Required<MenuItem>[] {
 }
 
 function href(value?: string) {
-  return safeNavigationHref(value, "#");
+  return localizedHref(safeNavigationHref(value, "#"));
 }
 
 function headerRouteHref(value: string | undefined, fallback: string) {
@@ -1078,6 +1078,9 @@ const productCategoryRoutes: Record<string, string> = {
   "masasustu-tarayicilar": "/masasustu-tarayicilar",
   "masaustu-tarayicilar": "/masasustu-tarayicilar",
   "tarayicilar": "/masasustu-tarayicilar",
+  "scanners": "/masasustu-tarayicilar",
+  "desktop-scanners": "/masasustu-tarayicilar",
+  "lab-scanners": "/masasustu-tarayicilar",
   "zirkon-bloklar": "/zirkon-bloklar",
   "zirkon-bloklar-titanyum": "/zirkon-bloklar",
   "dental-firinlar": "/dental-firinlar",
@@ -2323,10 +2326,11 @@ const cartItems =
         }
       }
 
-      if (!hash || hash.length <= 1) return;
+      if (!hash || hash.length <= 1 || !samePath) return;
+
       const sectionId = safeDecodeURI(hash.slice(1));
       const section = document.getElementById(sectionId) || document.querySelector(hash);
-      if (!section || !samePath && !document.getElementById(sectionId)) return;
+      if (!section) return;
 
       event.preventDefault();
       event.stopPropagation();

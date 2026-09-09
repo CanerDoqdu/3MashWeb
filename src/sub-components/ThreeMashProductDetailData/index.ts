@@ -32,31 +32,31 @@ export const MASH_TRIAL_WHITE_SLUG = "mash-trial-white-resin-gecici-dental-recin
 export const CREALITY_HALOT_SKY_LCD_KIT_SLUG = "creality-halot-sky-lcd-ekran-kiti-6k-mono";
 export const PIOCREAT_C01_LCD_KIT_SLUG = "piocreat-c01-lcd-ekran-kiti";
 export const ACF_FEP_FILM_SLUG = "seffaf-fep-film-3d-yazici";
-export const MASH_P16L_MAINBOARD_SLUG = "mash-p16l-ana-kart";
-export const MASH_P16L_LARGE_BUILD_PLATE_SLUG = tLocalized("mash-p16l-buyuk-baski-tablasi-211x118mm", "mash-p16l-buyuk-baski-tablasi-211x118mm");
-export const MASH_P16L_SMALL_BUILD_PLATE_SLUG = tLocalized("mash-p16l-kucuk-hizli-baski-tablasi", "mash-p16l-kucuk-hizli-baski-tablasi");
-export const MASH_P16L_LCD_SCREEN_SLUG = "mash-p16l-16k-monokrom-lcd-ekran-yedek-parca";
-export const MASH_P16L_RESIN_TANK_SLUG = "mash-p16l-recine-tanki-800ml";
-export const ARGENZ_ST_MULTILAYER_SLUG = "argenz-st-multilayer-zirkon-blok";
-export const ARGENZ_HT_PLUS_SLUG = "argenz-ht-plus-zirkon-blok";
-export const ARGENZ_HT_MULTILAYER_SLUG = "argenz-ht-multilayer-zirkon-blok";
+export const MASH_P16L_MAINBOARD_SLUG = "mash-p16l-main-board";
+export const MASH_P16L_LARGE_BUILD_PLATE_SLUG = "mash-p16l-large-printing-platform";
+export const MASH_P16L_SMALL_BUILD_PLATE_SLUG = "mash-p16l-small-printing-platform";
+export const MASH_P16L_LCD_SCREEN_SLUG = "mash-p16l-16k-monochrome-lcd-screen";
+export const MASH_P16L_RESIN_TANK_SLUG = "mash-p16l-resin-tank";
+export const ARGENZ_ST_MULTILAYER_SLUG = "argenz-st-multilayer-zirconia-block";
+export const ARGENZ_HT_PLUS_SLUG = "argenz-ht-plus-zirconia-block";
+export const ARGENZ_HT_MULTILAYER_SLUG = "argenz-ht-plus-multilayer-zirconia-block";
 export const CREALITY_WASH_CURE_UW03_SLUG = "creality-washcure-uw-02";
 export const THREESHAPE_E2_SLUG = "3shape-e2";
 export const THREESHAPE_E3_SLUG = "3shape-e3";
 export const THREESHAPE_E4_SLUG = "3shape-e4";
 export const NABERTHEM_LHT_02_17_LB_SPEED_SLUG = "naberthem-lht-02-17-lb-speed";
 export const NABERTHEM_LHT_01_16_TURBO_FIRE_SLUG = "naberthem-lht-01-16-turbo-fire";
-export const NABERTHEM_VL_01_12_LB_PRESS_SLUG = "naberthem-vl-01-12-lb-press-firini";
-export const NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG = "naberthem-vl-01-12-lb-porselen-firini";
-export const MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG = "mesa-grade-5-eli-titanyum-disk";
-export const TRASFORMER_COMP_FLOW_SLUG = "trasformer-comp-flow-siringa-kompozit";
-export const TRASFORMER_LIGHT_GLASS_SLUG = "trasformer-light-glass-mufla-sistemi";
+export const NABERTHEM_VL_01_12_LB_PRESS_SLUG = "naberthem-vl-01-12-lb-press-furnace";
+export const NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG = "naberthem-vl-01-12-lb-porcelain-furnace";
+export const MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG = "mesa-titanium-disk-grade-5-eli";
+export const TRASFORMER_COMP_FLOW_SLUG = "transformer-comp-flow-syringe-composite";
+export const TRASFORMER_LIGHT_GLASS_SLUG = "transformer-light-glass-muffle-system";
 export const MASH_P16L_PRINTER_SLUG = "mash-p16l-385nm-16k-dental-3d-yazici";
 export const MASH_CURIE_M1_DENTAL_SLUG = "mash-curie-m1-dental-3d-yazici";
 export const MASH_CURIE_M1_JEWELRY_SLUG = "mash-curie-m1-jewelry-3d-printer";
 export const CREALITY_HALOT_SKY_6K_SLUG = "creality-halot-sky-6k";
-export const MASH_C1E_UV_CURING_SLUG = tLocalized("mash-c1e-uv-kurleme-cihazi", "mash-c1e-uv-kurleme-cihazi");
-export const MASH_W1E_ULTRASONIC_WASH_SLUG = tLocalized("mash-w1e-ultrasonik-yikama-cihazi", "mash-w1e-ultrasonik-yikama-cihazi");
+export const MASH_C1E_UV_CURING_SLUG = "mash-c1e-uv-curing-device";
+export const MASH_W1E_ULTRASONIC_WASH_SLUG = "mash-w1e-ultrasonic-washing-machine";
 
 const CRS_GALLERY: ProductGalleryItem[] = [
   {
@@ -525,9 +525,9 @@ export function CRS_COMPOSITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-composite-mukemmel-dayanimli-gecici-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -586,7 +586,7 @@ export function CRS_COMPOSITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       { label: tLocalized("Eğilme modülü", "Flexural modulus"), value: "5000 MPa" },
       { label: tLocalized("Sertifikasyon", "Certification"), value: "CE Class IIa (MDR)" },
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Geçici + daimi", "Temporary + permanent") },
-      { label: tLocalized("Uyum", "Rapport"), value: tLocalized("Tüm DLP / LCD", "All DLP / LCD") },
+      { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("Tüm DLP / LCD", "All DLP / LCD") },
     ],
   },
   useCases: {
@@ -629,7 +629,7 @@ export function CRS_COMPOSITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -690,7 +690,7 @@ export function CRS_COMPOSITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("CRS Composite uygulama videosu", "CRS Composite application video"),
     title: tLocalized("CRS Composite ile tek seans kron-köprü", "Single-session crown-and-bridge with CRS Composite"),
     text: tLocalized("Baskı parametreleri, post-curing protokolü ve optik glaze adımları; uygulamalı anlatım.", "Print parameters, post-curing protocol, and optical glaze steps; a hands-on walkthrough."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -777,9 +777,9 @@ export function CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-splint-hard-resin-sert-gece-plagi-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Splint%20Hard%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Splint%20Hard%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -837,7 +837,7 @@ export function CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Gece plağı + bruksizm apareyi", "Night guard + bruxism appliance") },
       { label: tLocalized("Malzeme karakteri", "Material character"), value: tLocalized("Sert splint reçinesi", "Hard splint resin") },
       { label: tLocalized("Görünüm", "Appearance"), value: tLocalized("Şeffaf yapı", "Clear structure") },
-      { label: tLocalized("Uyum", "Rapport"), value: "385–405 nm LCD / DLP" },
+      { label: tLocalized("Uyum", "Compatibility"), value: "385–405 nm LCD / DLP" },
       { label: tLocalized("Konfor", "Comfort"), value: tLocalized("Tat ve koku içermez", "Taste- and odor-free") },
     ],
   },
@@ -881,7 +881,7 @@ export function CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -939,7 +939,7 @@ export function CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
     imageAlt: tLocalized("CRS Splint Hard Resin uygulama videosu", "CRS Splint Hard Resin application video"),
     title: tLocalized("CRS Splint Hard Resin ile gece plağı üretimi", "Night guard production with CRS Splint Hard Resin"),
     text: tLocalized("Sert splint, bruksizm apareyi ve oklüzal splint üretimi için ürün odaklı video.", "A product-focused video for hard splint, bruxism appliance, and occlusal splint production."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -1025,9 +1025,9 @@ export function CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-splint-soft-resin-dental-splint-gece-plak-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Splint%20Soft%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Splint%20Soft%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -1085,7 +1085,7 @@ export function CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Dental splint + gece plağı", "Dental splint + night guard") },
       { label: tLocalized("Malzeme karakteri", "Material character"), value: tLocalized("Esnek splint reçinesi", "Flexible splint resin") },
       { label: tLocalized("Renk", "Colour"), value: tLocalized("Şeffaf / transparent", "Transparent / clear") },
-      { label: tLocalized("Uyum", "Rapport"), value: "385–405 nm LCD / DLP" },
+      { label: tLocalized("Uyum", "Compatibility"), value: "385–405 nm LCD / DLP" },
       { label: tLocalized("Kullanım", "Usage"), value: tLocalized("Ağız içi dental uygulamalar", "Intraoral dental applications") },
     ],
   },
@@ -1129,7 +1129,7 @@ export function CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -1191,7 +1191,7 @@ export function CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
     imageAlt: tLocalized("CRS Splint Soft Resin uygulama videosu", "CRS Splint Soft Resin application video"),
     title: tLocalized("CRS Splint Soft Resin ile esnek gece plağı üretimi", "Flexible night guard production with CRS Splint Soft Resin"),
     text: tLocalized("Esnek dental splint, gece plağı ve bruksizm plağı üretimi için ürün odaklı video.", "A product-focused video for flexible dental splint, night guard, and bruxism splint production."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -1277,9 +1277,9 @@ export function CRS_GUIDE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: tLocalized("/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber"),
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Guide%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Guide%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -1337,7 +1337,7 @@ export function CRS_GUIDE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Cerrahi rehber üretimi", "Surgical guide production") },
       { label: tLocalized("Kullanım", "Usage"), value: tLocalized("İmplant cerrahisi", "Implant surgery") },
       { label: tLocalized("Malzeme karakteri", "Material character"), value: tLocalized("Şeffaf ve stabil", "Clear and stable") },
-      { label: tLocalized("Uyum", "Rapport"), value: "385–405 nm LCD / DLP" },
+      { label: tLocalized("Uyum", "Compatibility"), value: "385–405 nm LCD / DLP" },
       { label: tLocalized("Sterilizasyon", "Sterilization"), value: tLocalized("Standart otoklav koşulları", "Standard autoclave conditions") },
     ],
   },
@@ -1381,7 +1381,7 @@ export function CRS_GUIDE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -1451,7 +1451,7 @@ export function CRS_GUIDE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("CRS Guide Resin uygulama videosu", "CRS Guide Resin application video"),
     title: tLocalized("CRS Guide Resin ile cerrahi rehber üretimi", "Surgical guide production with CRS Guide Resin"),
     text: tLocalized("İmplant cerrahisinde kullanılan cerrahi rehberlerin üretimi için ürün odaklı video.", "A product-focused video for producing surgical guides used in implant surgery."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -1537,9 +1537,9 @@ export function CRS_IBT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-ibt-resin-ortodontik-ibt-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20IBT%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20IBT%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -1597,7 +1597,7 @@ export function CRS_IBT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Indirect bonding tray", "Indirect bonding tray") },
       { label: tLocalized("Klinik alan", "clinical area"), value: tLocalized("Ortodontik braket aktarımı", "Orthodontic bracket transfer") },
       { label: tLocalized("Malzeme karakteri", "Material character"), value: tLocalized("Kontrollü esnek + şeffaf", "Controlled flexible + clear") },
-      { label: tLocalized("Uyum", "Rapport"), value: "385–405 nm LCD / DLP" },
+      { label: tLocalized("Uyum", "Compatibility"), value: "385–405 nm LCD / DLP" },
       { label: tLocalized("Süreç", "Process"), value: "IPA temizlik + UV post-curing" },
     ],
   },
@@ -1641,7 +1641,7 @@ export function CRS_IBT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -1719,7 +1719,7 @@ export function CRS_IBT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("CRS IBT Resin uygulama videosu", "CRS IBT Resin application video"),
     title: tLocalized("CRS IBT Resin ile ortodontik IBT üretimi", "Orthodontic IBT production with CRS IBT Resin"),
     text: tLocalized("Braketlerin hassas aktarımı için indirect bonding tray üretimine odaklanan video.", "A video focused on indirect bonding tray production for precise bracket transfer."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -1805,9 +1805,9 @@ export function CRS_FLEXIT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-flexit-recin-protez-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Flexit%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Flexit%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -1865,7 +1865,7 @@ export function CRS_FLEXIT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       { label: tLocalized("Uygulama", "APPLICATION"), value: "Tam + parsiyel protez" },
       { label: tLocalized("Malzeme karakteri", "Material character"), value: tLocalized("Esnek dental reçine", "Flexible dental resin") },
       { label: tLocalized("Estetik", "Aesthetic"), value: tLocalized("Doğal diş eti görünümü", "Natural gum appearance") },
-      { label: tLocalized("Uyum", "Rapport"), value: "385–405 nm LCD / DLP" },
+      { label: tLocalized("Uyum", "Compatibility"), value: "385–405 nm LCD / DLP" },
       { label: tLocalized("Süreç", "Process"), value: "IPA temizlik + UV post-curing" },
     ],
   },
@@ -1909,7 +1909,7 @@ export function CRS_FLEXIT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -1991,7 +1991,7 @@ export function CRS_FLEXIT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("CRS Flexit Reçinesi uygulama videosu", "CRS Flexit Resin application video"),
     title: tLocalized("CRS Flexit Reçinesi ile esnek protez üretimi", "Flexible denture production with CRS Flexit Resin"),
     text: tLocalized("Tam ve parsiyel çıkarılabilir protezlerde dayanım ve konfor dengesine odaklanan video.", "A video focused on the balance of strength and comfort in full and partial removable dentures."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -2077,9 +2077,9 @@ export function CRS_ALIGNER_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-aligner-memory-shape-ozellikli-aligner-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Aligner%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Aligner%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -2181,7 +2181,7 @@ export function CRS_ALIGNER_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -2239,7 +2239,7 @@ export function CRS_ALIGNER_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("CRS Aligner Resin uygulama videosu", "CRS Aligner Resin application video"),
     title: tLocalized("CRS Aligner Resin ile direkt hizalayıcı üretimi", "Direct aligner production with CRS Aligner Resin"),
     text: tLocalized("Memory shape özellikli ortodontik reçineyle kişiye özel hizalayıcı üretimine odaklanan video.", "A video focused on producing custom aligners with memory shape orthodontic resin."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -2297,9 +2297,9 @@ export function CRS_DENTURE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-denture-biouyumlu-protez-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Denture%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Denture%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -2383,7 +2383,7 @@ export function CRS_DENTURE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -2441,7 +2441,7 @@ export function CRS_DENTURE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("CRS Denture Reçinesi uygulama videosu", "CRS Denture Resin application video"),
     title: tLocalized("CRS Denture Reçinesi ile protez tabanı üretimi", "Denture base production with CRS Denture Resin"),
     text: tLocalized("Biyouyumlu protez tabanı reçinesiyle düşük çekme ve doğal görünüm odaklı üretim videosu.", "A production video focused on a biocompatible denture base resin with low shrinkage and a natural appearance."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -2499,9 +2499,9 @@ export function CRS_GINGIVA_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-gingiva-yirtilmaz-dis-eti-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Gingiva%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Gingiva%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -2585,7 +2585,7 @@ export function CRS_GINGIVA_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -2643,7 +2643,7 @@ export function CRS_GINGIVA_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("CRS Gingiva Reçinesi uygulama videosu", "CRS Gingiva Resin application video"),
     title: tLocalized("CRS Gingiva Reçinesi ile diş eti maskesi üretimi", "Gingiva mask production with CRS Gingiva Resin"),
     text: tLocalized("İmplant modelleri için elastik ve yırtılmaz yumuşak doku segmentlerine odaklanan video.", "A video focused on the elastic, tear-resistant soft-tissue segments for implant models."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -2701,9 +2701,9 @@ export function CRS_MODEL_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-model-yuksek-hassasiyetli-model-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Model%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Model%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -2744,7 +2744,7 @@ export function CRS_MODEL_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Ortodontik model", "orthodontic model") },
       { label: tLocalized("Detay", "Detail"), value: tLocalized("Belirgin kole hatları", "Distinct cervical lines") },
       { label: tLocalized("İş akışı", "Workflow"), value: tLocalized("Dijital tarama gösterimleri", "Digital scan demonstrations") },
-      { label: tLocalized("Uyum", "Rapport"), value: tLocalized("Tüm DLP / LCD 3D yazıcılar", "All DLP / LCD 3D printers") },
+      { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("Tüm DLP / LCD 3D yazıcılar", "All DLP / LCD 3D printers") },
     ],
   },
   useCases: {
@@ -2787,7 +2787,7 @@ export function CRS_MODEL_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -2833,7 +2833,7 @@ export function CRS_MODEL_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("CRS Model Reçinesi uygulama videosu", "CRS Model Resin application video"),
     title: tLocalized("CRS Model Reçinesi ile hassas model üretimi", "Precise model production with CRS Model Resin"),
     text: tLocalized("Boyutsal kararlılık, belirgin marjin ve ortodontik model üretimine odaklanan video.", "A video focused on dimensional stability, distinct margins, and orthodontic model production."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -2891,9 +2891,9 @@ export function CRS_TRAY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Tray%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Tray%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -2934,7 +2934,7 @@ export function CRS_TRAY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("İmplant ölçü", "Implant impression") },
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Kron ve köprü ölçü", "Crown and bridge impression") },
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Ortodontik ölçü hazırlığı", "Orthodontic impression preparation") },
-      { label: tLocalized("Uyum", "Rapport"), value: "385–405 nm DLP / LCD" },
+      { label: tLocalized("Uyum", "Compatibility"), value: "385–405 nm DLP / LCD" },
     ],
   },
   useCases: {
@@ -2977,7 +2977,7 @@ export function CRS_TRAY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -3023,7 +3023,7 @@ export function CRS_TRAY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("CRS Tray Resin uygulama videosu", "CRS Tray Resin application video"),
     title: tLocalized("CRS Tray Resin ile kişiye özel ölçü kaşığı üretimi", "Custom impression tray production with CRS Tray Resin"),
     text: tLocalized("Dijital ölçü süreçleri için stabil ve tekrarlanabilir ölçü kaşığı üretimine odaklanan video.", "A video focused on producing stable and repeatable impression trays for digital impression processes."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -3081,9 +3081,9 @@ export function MASH_CLEAR_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/mash-clear-resin-dental-cerrahi-kilavuz-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=Mash%20Clear%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=Mash%20Clear%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -3167,7 +3167,7 @@ export function MASH_CLEAR_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
@@ -3213,7 +3213,7 @@ export function MASH_CLEAR_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("Mash Clear Resin uygulama videosu", "Mash Clear Resin application video"),
     title: tLocalized("Mash Clear Resin ile şeffaf cerrahi kılavuz üretimi", "Clear surgical guide production with Mash Clear Resin"),
     text: tLocalized("Dental implant cerrahisi, splint ve şeffaf intraoral aparatlar için ürün odaklı video.", "Product-focused video for dental implant surgery, splints, and transparent intraoral appliances."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -3266,9 +3266,9 @@ export function CRS_CAST_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-cast-cekmeyen-dokum-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Cast%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Cast%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -3293,7 +3293,7 @@ export function CRS_CAST_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     items: [
       { name: tLocalized("Döküm Karakteri", "Casting Character"), value: tLocalized("Çekmeyen", "Non-shrinking"), unit: "", tag: tLocalized("Cast", "casting"), caption: tLocalized("Dental döküm uygulamalarında çekme davranışını azaltmaya odaklanan reçine.", "A resin focused on reducing shrinkage behavior in dental casting applications.") },
       { name: tLocalized("Yanma Sonrası", "Post-Burnout"), value: tLocalized("Kalıntısız", "Residue-free"), unit: "", tag: tLocalized("Residue-free", "residue-free"), caption: tLocalized("Kalıntı bırakmayan yapı, döküm sonrası temizlik ve uyumu destekler.", "The residue-free structure supports post-casting cleaning and fit.") },
-      { name: tLocalized("Uyum", "Rapport"), value: tLocalized("Tüm", "All"), unit: "Revetman", tag: tLocalized("Investment", "investment"), caption: tLocalized("Geniş uygulama yelpazesinde revetman markalarıyla kullanılabilir.", "Can be used with investment brands across a wide range of applications.") },
+      { name: tLocalized("Uyum", "Compatibility"), value: tLocalized("Tüm", "All"), unit: "Revetman", tag: tLocalized("Investment", "investment"), caption: tLocalized("Geniş uygulama yelpazesinde revetman markalarıyla kullanılabilir.", "Can be used with investment brands across a wide range of applications.") },
     ],
   },
   specHighlight: {
@@ -3308,7 +3308,7 @@ export function CRS_CAST_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Dental döküm", "Dental casting") },
       { label: tLocalized("Döküm karakteri", "Casting character"), value: tLocalized("Çekmeyen", "Non-shrinking") },
       { label: tLocalized("Yanma sonrası", "Post-burnout"), value: tLocalized("Kalıntı bırakmaz", "Leaves no residue") },
-      { label: tLocalized("Uyum", "Rapport"), value: tLocalized("Tüm revetman markaları", "All investment material brands") },
+      { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("Tüm revetman markaları", "All investment material brands") },
     ],
   },
   useCases: {
@@ -3338,7 +3338,7 @@ export function CRS_CAST_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       chips: [
         { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
         { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+        { label: tLocalized("Asiga Max UV", "Asiga Max UV") },
         { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
         { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
         { label: tLocalized("+ tüm DLP / LCD markaları", "+ all DLP / LCD brands"), highlighted: true },
@@ -3427,9 +3427,9 @@ export function MASH_STUDY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/mash-study-resin-dental-model-3d-yazici-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=Mash%20Study%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=Mash%20Study%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -3469,7 +3469,7 @@ export function MASH_STUDY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Ortodontik modeller", "Orthodontic models") },
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Eğitim ve demonstrasyon", "Training and demonstration") },
       { label: tLocalized("Yüzey", "Surface"), value: tLocalized("Pürüzsüz + tarama uyumlu", "Smooth + scan-compatible") },
-      { label: tLocalized("Uyum", "Rapport"), value: tLocalized("Tüm DLP / LCD yazıcılar", "All DLP / LCD printers") },
+      { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("Tüm DLP / LCD yazıcılar", "All DLP / LCD printers") },
     ],
   },
   useCases: {
@@ -3490,7 +3490,7 @@ export function MASH_STUDY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       eyebrow: tLocalized("Uyumlu Cihazlar", "Compatible Devices"),
       title: tLocalized("Tüm DLP & LCD yazıcılarla çalışır", "Works with all DLP & LCD printers"),
       textHtml: tLocalized("Mash Study Resin tüm DLP veya LCD 3D yazıcı markalarıyla uyumludur. Kullandığınız yazıcıya göre parametre uyumlamasını <b>ücretsiz</b> yapıyoruz.", "Mash Study Resin is compatible with all DLP or LCD 3D printer brands. We perform parameter calibration for your printer <b>free of charge</b>."),
-      chips: [{ label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") }, { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") }, { label: tLocalized("Asiga Max UV", "Minimum Max UV") }, { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") }, { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") }, { label: tLocalized("+ tüm DLP / LCD markaları", "+ all DLP / LCD brands"), highlighted: true }],
+      chips: [{ label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") }, { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") }, { label: tLocalized("Asiga Max UV", "Asiga Max UV") }, { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") }, { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") }, { label: tLocalized("+ tüm DLP / LCD markaları", "+ all DLP / LCD brands"), highlighted: true }],
     },
   },
   ecosystem: {
@@ -3524,7 +3524,7 @@ export function MASH_STUDY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
     imageAlt: tLocalized("Mash Study Resin uygulama videosu", "Mash Study Resin application video"),
     title: tLocalized("Mash Study Resin ile dental model üretimi", "Dental model production with Mash Study Resin"),
     text: tLocalized("Ekonomik, yüksek çözünürlüklü ve stabil dental model üretimine odaklanan video.", "A video focused on economical, high-resolution, and stable dental model production."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -3570,9 +3570,9 @@ export function MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/mash-trial-pink-resin-dental-try-in-gecici-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=Mash%20Trial%20Pink%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=Mash%20Trial%20Pink%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -3613,7 +3613,7 @@ export function MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
       { label: tLocalized("Kontrol", "Control"), value: tLocalized("Oklüzyon ve kapanış", "Occlusion and bite") },
       { label: tLocalized("Görünürlük", "Visibility"), value: tLocalized("X-ray ile görünür", "Visible under X-ray") },
       { label: tLocalized("Renk", "Colour"), value: tLocalized("Doğal diş eti tonu", "Natural gum tone") },
-      { label: tLocalized("Uyum", "Rapport"), value: "385–405 nm DLP / LCD" },
+      { label: tLocalized("Uyum", "Compatibility"), value: "385–405 nm DLP / LCD" },
     ],
   },
   useCases: {
@@ -3634,7 +3634,7 @@ export function MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
       eyebrow: tLocalized("Uyumlu Cihazlar", "Compatible Devices"),
       title: tLocalized("385–405 nm LCD & DLP yazıcılarla çalışır", "Works with 385–405 nm LCD & DLP printers"),
       textHtml: tLocalized("Mash Trial Pink Resin, 385–405 nm dalga boyunda çalışan tüm DLP ve LCD 3D yazıcılarla uyumludur. Kullandığınız yazıcıya göre parametre uyumlamasını <b>ücretsiz</b> yapıyoruz.", "Mash Trial Pink Resin is compatible with all DLP and LCD 3D printers operating at a 385–405 nm wavelength. We perform parameter calibration for your printer <b>free of charge</b>."),
-      chips: [{ label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") }, { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") }, { label: tLocalized("Asiga Max UV", "Minimum Max UV") }, { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") }, { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") }, { label: tLocalized("+ tüm 385–405 nm LCD / DLP markaları", "+ all 385–405 nm LCD / DLP brands"), highlighted: true }],
+      chips: [{ label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") }, { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") }, { label: tLocalized("Asiga Max UV", "Asiga Max UV") }, { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") }, { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") }, { label: tLocalized("+ tüm 385–405 nm LCD / DLP markaları", "+ all 385–405 nm LCD / DLP brands"), highlighted: true }],
     },
   },
   ecosystem: {
@@ -3668,7 +3668,7 @@ export function MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
     imageAlt: tLocalized("Mash Trial Pink Resin uygulama videosu", "Mash Trial Pink Resin application video"),
     title: tLocalized("Mash Trial Pink Resin ile geçici try-in üretimi", "Temporary try-in production with Mash Trial Pink Resin"),
     text: tLocalized("Oklüzyon, kapanış ve estetik hasta provası için geçici try-in üretimine odaklanan video.", "A video focused on temporary try-in production for occlusion, bite, and aesthetic patient try-ins."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -3714,9 +3714,9 @@ export function MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateDat
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/mash-trial-white-resin-gecici-dental-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=Mash%20Trial%20White%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=Mash%20Trial%20White%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -3757,7 +3757,7 @@ export function MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateDat
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Protez uyum kontrolü", "Denture fit check") },
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Klinik estetik değerlendirme", "Clinical aesthetic evaluation") },
       { label: tLocalized("Sertifikasyon", "Certification"), value: tLocalized("CE Class I", "CE Class I") },
-      { label: tLocalized("Uyum", "Rapport"), value: "385–405 nm LCD / DLP" },
+      { label: tLocalized("Uyum", "Compatibility"), value: "385–405 nm LCD / DLP" },
     ],
   },
   useCases: {
@@ -3778,7 +3778,7 @@ export function MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateDat
       eyebrow: tLocalized("Uyumlu Cihazlar", "Compatible Devices"),
       title: tLocalized("385–405 nm LCD & DLP yazıcılarla çalışır", "Works with 385–405 nm LCD & DLP printers"),
       textHtml: tLocalized("Mash Trial White Resin, 385 nm ve 405 nm UV ışık kaynağı kullanan LCD ve DLP teknolojisine sahip 3D yazıcılarla uyumludur. Kullandığınız yazıcıya göre parametre uyumlamasını <b>ücretsiz</b> yapıyoruz.", "Mash Trial White Resin is compatible with LCD and DLP-technology 3D printers that use a 385 nm or 405 nm UV light source. We perform parameter calibration for your printer <b>free of charge</b>."),
-      chips: [{ label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") }, { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") }, { label: tLocalized("Asiga Max UV", "Minimum Max UV") }, { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") }, { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") }, { label: tLocalized("+ tüm 385–405 nm LCD / DLP markaları", "+ all 385–405 nm LCD / DLP brands"), highlighted: true }],
+      chips: [{ label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") }, { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") }, { label: tLocalized("Asiga Max UV", "Asiga Max UV") }, { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") }, { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") }, { label: tLocalized("+ tüm 385–405 nm LCD / DLP markaları", "+ all 385–405 nm LCD / DLP brands"), highlighted: true }],
     },
   },
   ecosystem: {
@@ -3812,7 +3812,7 @@ export function MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateDat
     imageAlt: tLocalized("Mash Trial White Resin uygulama videosu", "Mash Trial White Resin application video"),
     title: tLocalized("Mash Trial White Resin ile geçici prova restorasyonu", "Temporary try-in restoration with Mash Trial White Resin"),
     text: tLocalized("Protez uyumu, oklüzyon ve estetik değerlendirme için geçici dental prova üretimine odaklanan video.", "A video focused on temporary dental try-in production for denture fit, occlusion, and aesthetic evaluation."),
-    meta: "Mash Academy · YouTube'da izle",
+    meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
   },
   related: {
     index: "07",
@@ -3972,9 +3972,9 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
       summarySuffix: tLocalized("— uyumluluk kontrolü ve teknik destek dahil.", "— including compatibility check and technical support."),
       buyHrefBase: `/${config.slug}`,
       whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
-      whatsappText: "WhatsApp'tan sor",
+      whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-      addingToCartText: "Ekleniyor...",
+      addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
       outOfStockText: tLocalized("Stok yok", "Out of stock"),
       trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
     },
@@ -4055,7 +4055,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
           imageAlt: `${config.productText} video`,
           title: config.videoTitle,
           text: config.videoText,
-          meta: "Mash Academy · YouTube'da izle",
+          meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
         }
       : undefined,
     related: {
@@ -4096,7 +4096,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     metrics: [
       { name: tLocalized("Ekran Tipi", "Screen Type"), value: tLocalized("6K", "6K"), unit: "Mono", tag: "LCD", caption: tLocalized("Reçine baskılarda yüksek detay aktarımı için mono LCD ekran kiti.", "A mono LCD screen kit for high detail transfer in resin prints.") },
       { name: tLocalized("Ekran Boyutu", "Screen Size"), value: "9.25", unit: tLocalized("inç", "inch"), tag: tLocalized("Touch", "touch"), caption: tLocalized("Geniş dokunmatik ekran yapısı Halot Sky kullanım akışını korur.", "The large touchscreen structure preserves the Halot Sky usage workflow.") },
-      { name: tLocalized("Uyum", "Rapport"), value: "Halot", unit: "Sky", tag: "2022", caption: tLocalized("Halot Sky 2022 ve orijinal Halot Sky modeliyle uyumlu yapı.", "A structure compatible with the Halot Sky 2022 and the original Halot Sky model.") },
+      { name: tLocalized("Uyum", "Compatibility"), value: "Halot", unit: "Sky", tag: "2022", caption: tLocalized("Halot Sky 2022 ve orijinal Halot Sky modeliyle uyumlu yapı.", "A structure compatible with the Halot Sky 2022 and the original Halot Sky model.") },
     ],
     specTag: "CREALITY · HALOT SKY · LCD KIT",
     specTitleHtml: tLocalized("Ekran değişimiyle <span class=\"em\">stabil pozlama.</span>", "<span class=\"em\">Stable exposure</span> with screen replacement."),
@@ -4207,7 +4207,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     metricTitleHtml: tLocalized("UV geçişi ve <span class=\"em\">katman stabilitesi.</span>", "UV transmission and <span class=\"em\">layer stability.</span>"),
     metricSideHtml: tLocalized("Film yüzeyi, reçine baskıda ışık iletimi ve katman ayrımı için kritik sarf parçasıdır.", "The film surface is a critical consumable part for light transmission and layer separation in resin printing."),
     metrics: [
-      { name: tLocalized("Uyum", "Rapport"), value: "LCD", unit: "/ DLP", tag: tLocalized("Reçine", "Resin"), caption: tLocalized("LCD ve DLP teknolojisine sahip reçine 3D yazıcılarda kullanılır.", "Used in resin 3D printers with LCD and DLP technology.") },
+      { name: tLocalized("Uyum", "Compatibility"), value: "LCD", unit: "/ DLP", tag: tLocalized("Reçine", "Resin"), caption: tLocalized("LCD ve DLP teknolojisine sahip reçine 3D yazıcılarda kullanılır.", "Used in resin 3D printers with LCD and DLP technology.") },
       { name: tLocalized("Yüzey", "Surface"), value: "2", unit: "tip", tag: tLocalized("Mat + düz", "Matte + flat"), caption: tLocalized("Bir yüzeyi pürüzsüz, diğer yüzeyi mat formdadır.", "One surface is smooth, the other has a matte finish.") },
       { name: tLocalized("Koruma", "Protection"), value: "Mavi", unit: "jelatin", tag: tLocalized("Kurulum", "Setup"), caption: tLocalized("Ürün mavi koruyucu jelatin ile gönderilir; kullanım öncesi çıkarılır.", "The product is shipped with a blue protective gelatin film; remove before use.") },
     ],
@@ -4507,7 +4507,7 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
       { label: tLocalized("Kapasite", "Capacity"), value: tLocalized("800 ml", "800ml") },
       { label: tLocalized("Gövde", "Body"), value: tLocalized("Alüminyum", "Aluminum") },
       { label: tLocalized("Kilit", "Lock"), value: tLocalized("Vidasız hızlı kilit", "Screwless quick lock") },
-      { label: tLocalized("Uyum", "Rapport"), value: tLocalized("Isıtma sistemi", "Heating system") },
+      { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("Isıtma sistemi", "Heating system") },
     ],
     useCaseSideHtml: tLocalized("P16L reçine tankı, dental üretimde reçine hacmi, film değişimi ve hızlı tank kullanımı için temel yedek parçadır.", "The P16L resin tank is a key spare part for resin volume, film replacement, and quick tank use in dental production."),
     useCasePhotos: [
@@ -4655,9 +4655,9 @@ function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData
       summarySuffix: tLocalized("— vaka uyumu ve teknik destek dahil.", "— including case fit and technical support."),
       buyHrefBase: `/${config.slug}`,
       whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
-      whatsappText: "WhatsApp'tan sor",
+      whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-      addingToCartText: "Ekleniyor...",
+      addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
       outOfStockText: tLocalized("Stok yok", "Out of stock"),
       trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
     },
@@ -4742,7 +4742,7 @@ function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData
       imageAlt: `${config.productText} video`,
       title: `${config.productText} iş akışı`,
       text: tLocalized("Vaka seçimi, nesting ve laboratuvar üretim akışına odaklanan video.", "A video focused on case selection, nesting, and the lab production workflow."),
-      meta: "Mash Academy · YouTube'da izle",
+      meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
     },
     related: {
       index: "07",
@@ -5158,10 +5158,10 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       summarySuffix: tLocalized("— uyumluluk kontrolü ve teknik destek dahil.", "— including compatibility check and technical support."),
       buyHrefBase: `/${config.slug}`,
       whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
-      whatsappText: quoteOnly ? tLocalized("Teklif alın", "Get a quote") : "WhatsApp'tan sor",
+      whatsappText: quoteOnly ? tLocalized("Teklif alın", "Get a quote") : tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       disableAddToCart: quoteOnly,
-      addingToCartText: "Ekleniyor...",
+      addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
       outOfStockText: tLocalized("Stok yok", "Out of stock"),
       trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
     },
@@ -5254,7 +5254,7 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
           imageAlt: `${config.productText} video`,
           title: config.videoTitle,
           text: config.videoText,
-          meta: "Mash Academy · YouTube'da izle",
+          meta: tLocalized("Mash Academy · YouTube'da izle", "Mash Academy · Watch on YouTube"),
         }
       : undefined,
     related: {
@@ -5573,7 +5573,7 @@ function labProductConfigs(): LabProductConfig[] {
     metrics: [
       { name: tLocalized("İşlem", "Process"), value: "Ultrasonik", unit: tLocalized("yıkama", "Washing"), tag: tLocalized("Wash", "wash"), caption: tLocalized("Baskı sonrası parçaların yüzey temizliği için kullanılır.", "Used for surface cleaning of parts after printing.") },
       { name: tLocalized("Akış", "Workflow"), value: "Post", unit: "process", tag: tLocalized("Baskı sonrası", "After printing"), caption: tLocalized("Kürleme öncesi yüzey hazırlığı sağlar.", "Provides surface preparation before curing.") },
-      { name: tLocalized("Uyum", "Rapport"), value: "C1E", unit: tLocalized("ile", "with"), tag: tLocalized("Tamamlayıcı", "Complementary"), caption: tLocalized("W1E yıkama adımı C1E UV kürleme adımıyla birlikte planlanır.", "The W1E washing step is planned together with the C1E UV curing step.") },
+      { name: tLocalized("Uyum", "Compatibility"), value: "C1E", unit: tLocalized("ile", "with"), tag: tLocalized("Tamamlayıcı", "Complementary"), caption: tLocalized("W1E yıkama adımı C1E UV kürleme adımıyla birlikte planlanır.", "The W1E washing step is planned together with the C1E UV curing step.") },
     ],
     specTag: tLocalized("MASH W1E · ULTRASONİK YIKAMA", "MASH W1E · ULTRASONIC WASHING"),
     specTitleHtml: tLocalized("Yüzey temizliği için <span class=\"em\">ayrı kontrol.</span>", "<span class=\"em\">Separate control</span> for surface cleaning."),
@@ -6132,7 +6132,7 @@ function labProductConfigs(): LabProductConfig[] {
       { label: tLocalized("Materyal", "Materiel"), value: "Titanyum Grade 5 ELI" },
       { label: tLocalized("Çap", "Diameter"), value: tLocalized("Ø98.5 mm", "Ø98.5mm") },
       { label: tLocalized("Kullanım", "Usage"), value: tLocalized("İmplant üstü restorasyon", "Implant-supported restoration") },
-      { label: tLocalized("Uyum", "Rapport"), value: "CAD/CAM sistemler" },
+      { label: tLocalized("Uyum", "Compatibility"), value: "CAD/CAM sistemler" },
       { label: tLocalized("Kategori", "Category"), value: tLocalized("Titanyum disk", "Titanium Disc") },
     ],
     useCaseSideHtml: tLocalized("İmplant üstü restorasyonlar ve CAD/CAM frezeleme iş akışlarında kullanılır.", "Used in implant-supported restorations and CAD/CAM milling workflows."),
@@ -6297,8 +6297,8 @@ const LAB_PRODUCT_ALIASES: Record<string, string[]> = {
   [THREESHAPE_E4_SLUG]: ["3shape-e4", tLocalized("hiz-ve-hassasiyet", "hiz-ve-hassasiyet")],
   [NABERTHEM_LHT_02_17_LB_SPEED_SLUG]: ["lht-02-17-lb-speed", "nabertherm-lht-02-17"],
   [NABERTHEM_LHT_01_16_TURBO_FIRE_SLUG]: ["lht-01-16-turbo-fire", "nabertherm-lht-01-16"],
-  [NABERTHEM_VL_01_12_LB_PRESS_SLUG]: ["vl-01-12-lb-press", "vl-01-12-lb-pres", "press-firini", "pres-firini"],
-  [NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG]: ["vl-01-12-lb-porselen", "porcelain-firini", "porselen-firini"],
+  [NABERTHEM_VL_01_12_LB_PRESS_SLUG]: ["vl-01-12-lb-press", "vl-01-12-lb-press-furnace", "vl-01-12-lb-pres", "press-furnace", "press-firini", "pres-firini"],
+  [NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG]: ["vl-01-12-lb-porcelain", "vl-01-12-lb-porcelain-furnace", "porcelain-furnace", "porselen-firini"],
   [MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG]: ["mesa-grade-5-eli", "titanyum-disk", "titanium-disk"],
   [TRASFORMER_COMP_FLOW_SLUG]: ["trasformer-comp-flow", "comp-flow-siringa-kompozit"],
   [TRASFORMER_LIGHT_GLASS_SLUG]: ["trasformer-light-glass", "light-glass-mufla"],

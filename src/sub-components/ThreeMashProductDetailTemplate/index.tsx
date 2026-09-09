@@ -3,6 +3,7 @@ import type { ComponentChildren } from "preact";
 import { resolveProductDetailData } from "../ThreeMashProductDetailData";
 import { tLocalized, isEnglishLocale, translateText, localizedHref } from "../../utils/i18n";
 import { safeJsonLdScript, sanitizeHtml } from "../../utils/sanitizeHtml";
+import { safeWhatsAppHref } from "../../utils/safeRedirect";
 
 export type ProductGalleryItem = {
   src: string;
@@ -432,7 +433,7 @@ function localizeAddToCartText(text?: string): string {
 }
 
 function localizeAddingToCartText(text?: string): string {
-  if (!isEnglishLocale()) return text || "Ekleniyor...";
+  if (!isEnglishLocale()) return text || tLocalized("Ekleniyor...", "Adding...");
   const normalized = (text || "").toLowerCase().trim();
   if (!normalized || normalized.includes("ekleniyor")) {
     return text && text === text.toUpperCase() ? "ADDING..." : "Adding...";
@@ -447,6 +448,12 @@ function localizeOutOfStockText(text?: string): string {
     return text && text === text.toUpperCase() ? "OUT OF STOCK" : "Out of stock";
   }
   return text || "Out of stock";
+}
+
+function localizeWhatsAppText(text?: string): string {
+  if (!isEnglishLocale()) return text || tLocalized("WhatsApp'tan sor", "Ask via WhatsApp");
+  const fallbackText = tLocalized("WhatsApp'tan sor", "Ask via WhatsApp");
+  return !text || text === fallbackText || text === tLocalized("Teklif alın", "Get a quote") ? "Ask via WhatsApp" : text;
 }
 
 function localizeSummarySuffix(suffix?: string): string {
@@ -540,8 +547,8 @@ function Configurator(props: Props) {
     ? localizeAddingToCartText(props.data.hero.addingToCartText)
     : localizeAddToCartText(props.data.hero.addToCartText)}
 </button>
-        <a className="tmpdt-btn tmpdt-line" href={props.data.hero.whatsappHref} target="_blank" rel="noopener noreferrer">
-          {isEnglishLocale() && (props.data.hero.whatsappText === "WhatsApp'tan sor" || !props.data.hero.whatsappText) ? "Ask via WhatsApp" : props.data.hero.whatsappText}
+        <a className="tmpdt-btn tmpdt-line" href={safeWhatsAppHref(props.data.hero.whatsappHref)} target="_blank" rel="noopener noreferrer">
+          {localizeWhatsAppText(props.data.hero.whatsappText)}
         </a>
       </div>
       {displayedMessage ? <p className="tmpdt-msg">{displayedMessage}</p> : null}

@@ -28,9 +28,9 @@ export function makePlaceholderBase(): ProductDetailTemplateData {
         "Product short description text goes here. You can edit from panel or product description."
       ),
       pills: [
-        { label: tLocalized("Örnek Rozet 1", "Sample Badge 1") },
-        { label: tLocalized("Örnek Rozet 2", "Sample Badge 2") },
-        { label: tLocalized("Örnek Rozet 3", "Sample Badge 3") },
+        { label: tLocalized("Örnek Rozet 1", "Material Grade") },
+        { label: tLocalized("Örnek Rozet 2", "Clinical Workflow") },
+        { label: tLocalized("Örnek Rozet 3", "CAD/CAM Ready") },
       ],
       gallery: [],
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
@@ -42,9 +42,9 @@ export function makePlaceholderBase(): ProductDetailTemplateData {
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
       outOfStockText: tLocalized("Stok yok", "Out of stock"),
       trustBadges: [
-        tLocalized("Güven Rozeti 1", "Trust Badge 1"),
-        tLocalized("Güven Rozeti 2", "Trust Badge 2"),
-        tLocalized("Güven Rozeti 3", "Trust Badge 3"),
+        tLocalized("Güven Rozeti 1", "Quality Assured"),
+        tLocalized("Güven Rozeti 2", "Clinical Use"),
+        tLocalized("Güven Rozeti 3", "Lab Ready"),
       ],
     },
   };
@@ -132,32 +132,32 @@ export function makePlaceholderUseCases(): ProductDetailTemplateData {
       ],
       cards: [
         {
-          eyebrow: tLocalized("KART ETİKETİ 1", "CARD LABEL 1"),
-          title: tLocalized("1. Kart Başlığı", "1st Card Title"),
+          eyebrow: tLocalized("KART ETİKETİ 1", "Workflow"),
+          title: tLocalized("1. Kart Başlığı", "Application Overview"),
           items: [
-            tLocalized("1. Madde açıklama metni", "1st Item description text"),
-            tLocalized("2. Madde açıklama metni", "2nd Item description text"),
-            tLocalized("3. Madde açıklama metni", "3rd Item description text"),
+            tLocalized("1. Madde açıklama metni", "Material compatibility"),
+            tLocalized("2. Madde açıklama metni", "Production efficiency"),
+            tLocalized("3. Madde açıklama metni", "Clinical suitability"),
           ],
         },
         {
-          eyebrow: tLocalized("KART ETİKETİ 2", "CARD LABEL 2"),
-          title: tLocalized("2. Kart Başlığı", "2nd Card Title"),
+          eyebrow: tLocalized("KART ETİKETİ 2", "Support"),
+          title: tLocalized("2. Kart Başlığı", "Operational Guidance"),
           items: [
-            tLocalized("1. Madde açıklama metni", "1st Item description text"),
-            tLocalized("2. Madde açıklama metni", "2nd Item description text"),
+            tLocalized("1. Madde açıklama metni", "Setup guidance"),
+            tLocalized("2. Madde açıklama metni", "Usage recommendations"),
           ],
         },
       ],
       devices: {
         eyebrow: tLocalized("UYUMLULUK", "COMPATIBILITY"),
-        title: tLocalized("Sistem ve cihaz uyumluluğu başlığı.", "System and device compatibility title."),
-        textHtml: tLocalized("Cihaz uyumluluğu ile ilgili genel açıklama metni buraya gelecek.", "General description text regarding device compatibility goes here."),
+        title: tLocalized("Sistem ve cihaz uyumluluğu başlığı.", "System and device compatibility."),
+        textHtml: tLocalized("Cihaz uyumluluğu ile ilgili genel açıklama metni buraya gelecek.", "General guidance on device compatibility appears here."),
         chips: [
-          { label: tLocalized("Örnek Cihaz 1", "Sample Device 1"), highlighted: true },
-          { label: tLocalized("Örnek Cihaz 2", "Sample Device 2"), highlighted: true },
-          { label: tLocalized("Örnek Cihaz 3", "Sample Device 3") },
-          { label: tLocalized("Örnek Cihaz 4", "Sample Device 4") },
+          { label: tLocalized("Örnek Cihaz 1", "Dental Workflow"), highlighted: true },
+          { label: tLocalized("Örnek Cihaz 2", "CAD/CAM System"), highlighted: true },
+          { label: tLocalized("Örnek Cihaz 3", "Clinical Setup") },
+          { label: tLocalized("Örnek Cihaz 4", "Lab Integration") },
         ],
       },
     },
@@ -176,16 +176,16 @@ export function makePlaceholderFaq(): ProductDetailTemplateData {
       openFirst: true,
       items: [
         {
-          question: tLocalized("1. Örnek soru metni buraya gelecek?", "1. Sample question text goes here?"),
-          answerHtml: tLocalized("1. Soruya ait detaylı cevap metni buraya gelecek.", "1. Detailed answer text goes here."),
+          question: tLocalized("1. Örnek soru metni buraya gelecek?", "How does this product fit into the workflow?"),
+          answerHtml: tLocalized("1. Soruya ait detaylı cevap metni buraya gelecek.", "A practical overview of how this product integrates into the workflow and supports daily laboratory use."),
         },
         {
-          question: tLocalized("2. Örnek soru metni buraya gelecek?", "2. Sample question text goes here?"),
-          answerHtml: tLocalized("2. Soruya ait detaylı cevap metni buraya gelecek.", "2. Detailed answer text goes here."),
+          question: tLocalized("2. Örnek soru metni buraya gelecek?", "What should be checked before installation?"),
+          answerHtml: tLocalized("2. Soruya ait detaylı cevap metni buraya gelecek.", "Review compatibility, handling requirements, and the expected application to ensure a smooth setup."),
         },
         {
-          question: tLocalized("3. Örnek soru metni buraya gelecek?", "3. Sample question text goes here?"),
-          answerHtml: tLocalized("3. Soruya ait detaylı cevap metni buraya gelecek.", "3. Detailed answer text goes here."),
+          question: tLocalized("3. Örnek soru metni buraya gelecek?", "Which use cases are most suitable?"),
+          answerHtml: tLocalized("3. Soruya ait detaylı cevap metni buraya gelecek.", "Common workflow applications and best-fit scenarios are outlined here to guide selection and adoption."),
         },
       ],
     },

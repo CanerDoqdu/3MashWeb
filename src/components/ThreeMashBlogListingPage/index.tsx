@@ -1,6 +1,7 @@
 import {
   createMediaSrcset,
   getBlogListNextPage,
+  getBlogListPage,
   getBlogListPrevPage,
   getDefaultSrc,
   getIkasBlogCategoryHref,
@@ -71,6 +72,14 @@ export function ThreeMashBlogListingPage(props: Props) {
   const blogList = props.blogList;
   const blogs = blogList?.data || [];
   const categories = props.blogCategoryList?.data || [];
+  const currentPage = blogList?.page ?? 1;
+
+  const handlePageChange = async (targetPage: number) => {
+    if (!blogList || targetPage < 1) return;
+    await getBlogListPage(blogList, targetPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const style = {
     "--tm-blog-bg": themeToken(
       props.backgroundColor,
@@ -151,15 +160,15 @@ export function ThreeMashBlogListingPage(props: Props) {
               <button
                 type="button"
                 disabled={!hasBlogListPrevPage(blogList)}
-                onClick={() => getBlogListPrevPage(blogList)}
+                onClick={() => handlePageChange(currentPage - 1)}
               >
                 {tLocalized("Önceki", "Previous")}
               </button>
-              <span>{blogList.page || 1}</span>
+              <span>{currentPage}</span>
               <button
                 type="button"
                 disabled={!hasBlogListNextPage(blogList)}
-                onClick={() => getBlogListNextPage(blogList)}
+                onClick={() => handlePageChange(currentPage + 1)}
               >
                 {tLocalized("Sonraki", "Next")}
               </button>

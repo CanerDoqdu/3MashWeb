@@ -945,7 +945,7 @@ function solutionResinCategoryCard(props: ThreeMashSectionRenderProps) {
       : [
         ["Sertifika", tLocalized("CE Class IIa", "CE Class IIa")],
         [tLocalized("Uygulama", "APPLICATION"), tLocalized("Model · geçici · splint · guide", "Model · temporary · splint · guide")],
-        [tLocalized("Uyum", "Rapport"), tLocalized("Marka bağımsız", "Brand-independent")],
+        [tLocalized("Uyum", "Compatibility"), tLocalized("Marka bağımsız", "Brand-independent")],
       ],
     ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
     ctaHref: "/dental-3d-yazici-recineleri",
@@ -1435,7 +1435,7 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
       legacy: tLocalized("Yıkama + kürleme", "Washing + curing"),
       next: "24 LED / 360°",
     },
-    curingProduct2Spec2Label: { legacy: tLocalized("Uyum", "Rapport"), next: tLocalized("Spektrum", "Spectrum") },
+    curingProduct2Spec2Label: { legacy: tLocalized("Uyum", "Compatibility"), next: tLocalized("Spektrum", "Spectrum") },
     curingProduct2Spec2Value: {
       legacy: "P16L + CRS",
       next: tLocalized("360-530 nm", "360-530nm"),

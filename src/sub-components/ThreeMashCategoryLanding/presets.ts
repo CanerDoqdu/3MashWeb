@@ -262,7 +262,7 @@ export function dentalResinsCategoryData(): CategoryLandingData {
         { label: tLocalized("Eğilme mukavemeti (ISO 10477)", "Flexural strength (ISO 10477)"), value: "144 MPa" },
         { label: tLocalized("Eğilme modülü (ISO 10477)", "Flexural modulus (ISO 10477)"), value: "5000 MPa" },
         { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Geçici + daimi kron-köprü", "Temporary + permanent crown-bridge") },
-        { label: tLocalized("Uyum", "Rapport"), value: tLocalized("Tüm DLP / LCD yazıcılar", "All DLP / LCD printers") },
+        { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("Tüm DLP / LCD yazıcılar", "All DLP / LCD printers") },
       ],
     },
   },
@@ -1360,12 +1360,12 @@ export function dentalFurnacesCategoryData(): CategoryLandingData {
         ],
       },
       {
-        title: tLocalized("Naberthem VL 01/12 LB Pres Fırını", "Naberthem VL 01/12 LB Press Furnace"),
+        title: tLocalized("Naberthem VL 01/12 LB Press Furnace", "Naberthem VL 01/12 LB Press Furnace"),
         descriptionHtml:
           tLocalized("Press seramik işleri için kaldırma tablalı dental fırın. Kontrollü fırın çevrimi, presleme akışını laboratuvar standardına bağlar.", "A dental furnace with a lift table for press ceramic work. The controlled furnace cycle ties the pressing workflow to laboratory standards."),
-        href: "/naberthem-vl-01-12-lb-press-firini",
+        href: "/naberthem-vl-01-12-lb-press-furnace",
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/c72ba72c-c628-46f6-ac9d-863e3ccb6d8a/1080/firinlar2.webp",
-        imageAlt: tLocalized("Naberthem VL 01/12 LB Pres Fırını", "Naberthem VL 01/12 LB Press Furnace"),
+        imageAlt: tLocalized("Naberthem VL 01/12 LB Press Furnace", "Naberthem VL 01/12 LB Press Furnace"),
         tag: "PRESS",
         status: tLocalized("Teklif alın", "Get a quote"),
         tone: "#F1F1EC",
@@ -1376,13 +1376,13 @@ export function dentalFurnacesCategoryData(): CategoryLandingData {
         ],
       },
       {
-        title: tLocalized("Naberthem VL 01/12 LB Porselen Fırını", "Naberthem VL 01/12 LB Porcelain Furnace"),
+        title: tLocalized("Naberthem VL 01/12 LB Porcelain Furnace", "Naberthem VL 01/12 LB Porcelain Furnace"),
         descriptionHtml:
           tLocalized("Vakumlu ve normal atmosfer porselen pişirimleri için dental fırın. Çepeçevre ısıtma yapısı homojen sıcaklık dağılımını destekler.", "Dental furnace for porcelain firing under vacuum and normal atmosphere. The all-round heating structure supports homogeneous temperature distribution."),
-        href: "/naberthem-vl-01-12-lb-porselen-firini",
+        href: "/naberthem-vl-01-12-lb-porcelain-furnace",
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/3bfdd659-7c98-4939-8573-8fecb1408edc/1080/washcure-website-kopyasi.webp",
-        imageAlt: tLocalized("Naberthem VL 01/12 LB Porselen Fırını", "Naberthem VL 01/12 LB Porcelain Furnace"),
-        tag: "PORSELEN",
+        imageAlt: tLocalized("Naberthem VL 01/12 LB Porcelain Furnace", "Naberthem VL 01/12 LB Porcelain Furnace"),
+        tag: "PORCELEN",
         status: tLocalized("Teklif alın", "Get a quote"),
         tone: "#F1F1EC",
         specs: [
@@ -1733,7 +1733,7 @@ export function printerSparePartsCategoryData(): CategoryLandingData {
     cardCtaText: tLocalized("İncele", "Explore"),
     number: "01",
     label: tLocalized("PARÇA LİSTESİ", "PARTS LIST"),
-    titlePrefix: tLocalized("Elektronik, tabla,", "electronic, tray,"),
+    titlePrefix: tLocalized("Elektronik, tabla,", "Electronic, tray,"),
     titleEmphasis: tLocalized("tank ve film.", "tank and film."),
     sideHtml:
       tLocalized("Kategori içindeki ürünler bakım ve servis akışının farklı noktalarına denk gelir. Ana kart ve LCD ekran elektronik; tabla, tank ve film baskı temas yüzeyidir.", "The products in this category correspond to different points in the maintenance and service workflow. The mainboard and LCD screen are electronic components; the plate, tank, and film are the printing contact surfaces."),
@@ -1784,7 +1784,7 @@ export function printerSparePartsCategoryData(): CategoryLandingData {
         specs: [
           { label: tLocalized("Sıra", "Order"), value: "3" },
           { label: tLocalized("Kullanım", "Usage"), value: tLocalized("Hızlı baskı", "Fast printing") },
-          { label: tLocalized("Uyum", "Rapport"), value: tLocalized("MASH P16L", "MASH P16L") },
+          { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("MASH P16L", "MASH P16L") },
         ],
       },
       {
@@ -1800,7 +1800,7 @@ export function printerSparePartsCategoryData(): CategoryLandingData {
         specs: [
           { label: tLocalized("Sıra", "Order"), value: "4" },
           { label: tLocalized("Ölçü", "Measurement"), value: tLocalized("211x118 mm", "211x118mm") },
-          { label: tLocalized("Uyum", "Rapport"), value: tLocalized("MASH P16L", "MASH P16L") },
+          { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("MASH P16L", "MASH P16L") },
         ],
       },
       {
@@ -1831,7 +1831,7 @@ export function printerSparePartsCategoryData(): CategoryLandingData {
         tone: "#F1F1EC",
         specs: [
           { label: tLocalized("Sıra", "Order"), value: "6" },
-          { label: tLocalized("Uyum", "Rapport"), value: tLocalized("LCD / DLP", "LCD/DLP") },
+          { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("LCD / DLP", "LCD/DLP") },
           { label: tLocalized("Tip", "Medicine"), value: tLocalized("Sarf film", "sarf film") },
         ],
       },
@@ -1958,8 +1958,8 @@ export function systemsCategoryData(): CategoryLandingData {
   return {
   kind: "systems",
   announcement: {
-    highlight: tLocalized("⚡ Sistem ürünleri birlikte düşünülür", "⚡ System products are considered together"),
-    text: tLocalized("Trasformer Comp Flow ve Light Glass akışını tam çene kompozit restorasyon ihtiyacına göre karşılaştırın.", "Compare the Trasformer Comp Flow and Light Glass workflow according to your full-arch composite restoration needs."),
+    highlight: tLocalized("⚡ Sistem ürünleri birlikte düşünülür", "⚡ Systems together"),
+    text: tLocalized("Trasformer Comp Flow ve Light Glass akışını tam çene kompozit restorasyon ihtiyacına göre karşılaştırın.", "Compare Comp Flow and Light Glass for your case."),
     href: "#sistemler",
     ctaText: tLocalized("Sistemleri gör →", "See systems →"),
   },
@@ -2121,9 +2121,9 @@ export function titaniumDiscsCategoryData(): CategoryLandingData {
   kind: "titanium",
   announcement: {
     highlight: tLocalized("⚡ Titanyum disk seçimi implant üstü akışla yapılır", "⚡ Titanium disc selection follows the implant-supported workflow"),
-    text: tLocalized("MESA Grade 5 ELI disk materyal, çap ve CAD/CAM uyumu üzerinden değerlendirilir.", "The MESA Grade 5 ELI disk is evaluated based on material, diameter, and CAD/CAM compatibility."),
+    text: tLocalized("MESA Grade 5 ELI disk materyal, çap ve CAD/CAM uyumu üzerinden değerlendirilir.", "The MESA Grade 5 ELI disc is evaluated by material, diameter, and CAD/CAM compatibility."),
     href: "#titanyum",
-    ctaText: tLocalized("Titanyum diski gör →", "See the titanium disc →"),
+    ctaText: tLocalized("Titanyum diski gör →", "View titanium disc →"),
   },
   breadcrumb: {
     homeLabel: tLocalized("Ana sayfa", "Home"),
@@ -2132,17 +2132,17 @@ export function titaniumDiscsCategoryData(): CategoryLandingData {
     currentLabel: tLocalized("Titanyum Diskler", "Titanium Discs"),
   },
   hero: {
-    titlePrefix: tLocalized("İmplant üstü işlerde", "In implant-supported work"),
+    titlePrefix: tLocalized("İmplant üstü işlerde", "For implant-supported work"),
     titleEmphasis: tLocalized("biyouyumlu titanyum", "biocompatible titanium"),
-    titleSuffix: tLocalized("güven verir.", "builds trust."),
+    titleSuffix: tLocalized("güven verir.", "builds confidence."),
     descriptionHtml:
-      tLocalized("MESA Grade 5 ELI titanyum disk, implant üstü restorasyonlar için yüksek dayanım ve biyouyumluluk sunar. Ø98.5 mm formu ile CAD/CAM freze sistemlerinde kullanılmak üzere konumlanır.", "The MESA Grade 5 ELI titanium disk offers high strength and biocompatibility for implant-supported restorations. With its Ø98.5 mm form, it is positioned for use in CAD/CAM milling systems."),
+      tLocalized("MESA Grade 5 ELI titanyum disk, implant üstü restorasyonlar için yüksek dayanım ve biyouyumluluk sunar. Ø98.5 mm formu ile CAD/CAM freze sistemlerinde kullanılmak üzere konumlanır.", "The MESA Grade 5 ELI titanium disc offers high strength and biocompatibility for implant-supported restorations. With its Ø98.5 mm form, it is designed for use in CAD/CAM milling systems."),
     buttons: [
-      { label: tLocalized("Titanyum diski incele ↓", "Review the titanium disc ↓"), href: "#titanyum", variant: "lime" },
-      { label: tLocalized("Freze uyumunu sor", "Freze uyumunu sor"), href: tLocalized("/pages/iletisim", "/pages/iletisim"), variant: "line" },
+      { label: tLocalized("Titanyum diski incele ↓", "Review titanium disc ↓"), href: "#titanyum", variant: "lime" },
+      { label: tLocalized("Freze uyumunu sor", "Ask about milling compatibility"), href: tLocalized("/pages/iletisim", "/pages/iletisim"), variant: "line" },
     ],
     metrics: [
-      { value: "1", emphasis: tLocalized("ürün", "Ürün"), label: tLocalized("freze iş akışı için titanyum disk", "titanium disc for milling workflows") },
+      { value: "1", emphasis: tLocalized("ürün", "Product"), label: tLocalized("freze iş akışı için titanyum disk", "titanium disc for milling workflows") },
       { value: "Grade", emphasis: "5 ELI", label: tLocalized("titanyum materyal sınıfı", "titanium material class") },
       { value: "Ø98.5", emphasis: "mm", label: tLocalized("CAD/CAM disk formu", "CAD/CAM disc form") },
       { value: "3.930", emphasis: "TRY", label: tLocalized("başlangıç fiyat aralığı", "starting price range") },
@@ -2156,22 +2156,22 @@ export function titaniumDiscsCategoryData(): CategoryLandingData {
     titlePrefix: tLocalized("Grade 5 ELI,", "Grade 5 ELI,"),
     titleEmphasis: tLocalized("implant üstü.", "implant-supported."),
     sideHtml:
-      tLocalized("Titanyum disk seçimi materyal sınıfı, disk formu, freze uyumu ve implant üstü endikasyonla birlikte yapılmalıdır.", "Titanium disc selection should be made together with material class, disc form, milling compatibility, and implant-supported indication."),
+      tLocalized("Titanyum disk seçimi materyal sınıfı, disk formu, freze uyumu ve implant üstü endikasyonla birlikte yapılmalıdır.", "Titanium disc selection should consider material class, disc form, milling compatibility, and implant-supported indication together."),
     products: [
       {
-        title: tLocalized("MESA Titanyum Disk Grade 5 ELI – Dental CAD/CAM İmplant Çözümleri", "MESA Titanium Disk Grade 5 ELI – Dental CAD/CAM Implant Solutions"),
+        title: tLocalized("MESA Titanyum Disk Grade 5 ELI – Dental CAD/CAM İmplant Çözümleri", "MESA Titanium Disc Grade 5 ELI – Dental CAD/CAM Implant Solutions"),
         descriptionHtml:
           tLocalized("İmplant üstü restorasyonlar için yüksek dayanım ve biyouyumluluk sunan <b>Grade 5 ELI</b> titanyum disk.", "A <b>Grade 5 ELI</b> titanium disc offering high strength and biocompatibility for implant-supported restorations."),
         href: "/mesa-grade-5-eli-titanyum-disk?Boyut=10-mm",
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/8eaf20f5-0227-4f18-b8fc-7f054422ce88/1080/mesa-titanyum-disk.webp",
         imageAlt: tLocalized("MESA Titanyum Disk Grade 5 ELI Dental CAD CAM", "MESA Titanium Disc Grade 5 ELI Dental CAD CAM"),
-        tag: tLocalized("GRADE 5 ELI", "GRADE 5 HAND"),
+        tag: tLocalized("GRADE 5 ELI", "GRADE 5 ELI"),
         status: "3.930 TRY",
         hot: true,
         tone: "#F1F1EC",
         specs: [
           { label: tLocalized("Kategori sırası", "Category order"), value: "1" },
-          { label: tLocalized("Çap", "Diameter"), value: tLocalized("Ø98.5 mm", "Ø98.5mm") },
+          { label: tLocalized("Çap", "Diameter"), value: tLocalized("Ø98.5 mm", "Ø98.5 mm") },
           { label: tLocalized("Kullanım", "Usage"), value: tLocalized("İmplant üstü", "Implant-supported") },
         ],
       },
@@ -2207,7 +2207,7 @@ export function titaniumDiscsCategoryData(): CategoryLandingData {
         { label: tLocalized("Materyal", "Materiel"), value: tLocalized("Grade 5 ELI", "Grade 5 ELI") },
         { label: tLocalized("Çap", "Diameter"), value: tLocalized("Ø98.5 mm", "Ø98.5mm") },
         { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("İmplant üstü", "Implant-supported") },
-        { label: tLocalized("Uyum", "Rapport"), value: tLocalized("CAD/CAM", "CAD/CAM") },
+        { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("CAD/CAM", "CAD/CAM") },
       ],
     },
   },
@@ -2265,11 +2265,11 @@ export function titaniumDiscsCategoryData(): CategoryLandingData {
 export function categoryLandingDataFromKey(value: string | undefined): CategoryLandingData | null {
   const key = normalizeCategoryKey(value);
   if (!key) return null;
-  const dentalKeys = ["dental 3d yazici recineleri", "3d yazici recineleri", "dental recineler", "dental recine"];
-  const printerKeys = ["3d yazicilar", "dental 3d yazicilar", tLocalized("mash p16l", "MASH P16L"), "curie m1", "halot sky", "creality halot"];
+  const dentalKeys = ["dental 3d yazici recineleri", "3d yazici recineleri", "dental recineler", "dental recine", "dental resins"];
+  const printerKeys = ["3d yazicilar", "dental 3d yazicilar", "3d printers", tLocalized("mash p16l", "MASH P16L"), "curie m1", "halot sky", "creality halot"];
   const washingKeys = [tLocalized("yikama cihazlari", "yikama cihazlari"), tLocalized("dental yikama", "dental washing"), tLocalized("yikama", "yikama"), "washing", tLocalized("mash w1e", "Mash W1E")];
   const curingKeys = [tLocalized("kurleme cihazlari", "kurleme cihazlari"), tLocalized("dental kurleme", "dental curing"), tLocalized("kurleme", "kurleme"), "curing", tLocalized("mash c1e", "Mash C1E")];
-  const washCureKeys = [tLocalized("yikama kurleme cihazlari", "yikama kurleme cihazlari"), tLocalized("yikama kurleme", "yikama kurleme"), "wash cure", "washcure", "uw 03", "uw 02"];
+  const washCureKeys = [tLocalized("yikama kurleme cihazlari", "yikama kurleme cihazlari"), tLocalized("yikama kurleme", "yikama kurleme"), "wash cure", "wash and cure devices", "washcure", "uw 03", "uw 02"];
   const zirconKeys = ["zirkon bloklar", tLocalized("zirkon blok", "Zirconia Block"), "zircon blocks", "argenz ht plus", tLocalized("argenz st multilayer", "ArgenZ ST Multilayer"), "argenz ht multilayer"];
   const furnaceKeys = [
     "dental firinlar",

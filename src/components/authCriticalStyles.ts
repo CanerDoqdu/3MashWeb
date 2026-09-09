@@ -24,7 +24,7 @@ const authCriticalStyles = `
 .tma-auth-form,
 .tmrpg-auth-form {
   display: grid;
-  grid-template-columns: minmax(280px, .68fr) minmax(360px, .86fr);
+  grid-template-columns: 420px minmax(360px, 1fr);
   column-gap: clamp(28px, 4vw, 54px);
   row-gap: 0;
   align-items: stretch;
@@ -92,12 +92,13 @@ const authCriticalStyles = `
   position: relative;
   grid-column: 1;
   grid-row: 1 / span 24;
-  width: 100%;
+  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
   display: grid;
   align-content: end;
   align-self: start;
   height: 638px;
-  min-width: 0;
   min-height: 638px;
   overflow: hidden;
   padding: clamp(30px, 4vw, 48px);
@@ -151,22 +152,26 @@ const authCriticalStyles = `
 }
 .tma-auth-copy h1,
 .tmrpg-auth-copy h1 {
-  max-width: 470px;
+  max-width: 100%;
   margin: 0;
   color: var(--tm-theme-accent, #c7f136);
   font-family: var(--tm-theme-font-heading, Space Grotesk, Inter, sans-serif);
   font-size: clamp(42px, 5vw, 72px);
   line-height: .96;
   font-weight: 800;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .tma-auth-copy .is-secondary-copy { visibility: hidden; }
 .tma-auth-copy p,
 .tmrpg-auth-copy p {
-  max-width: 420px;
+  max-width: 100%;
   margin: 22px 0 0;
   color: #d8d8d0;
   font-size: 16px;
   line-height: 1.62;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .tma-auth-tabs,
 .tma-auth-field,

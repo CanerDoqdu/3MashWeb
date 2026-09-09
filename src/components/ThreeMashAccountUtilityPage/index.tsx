@@ -22,6 +22,7 @@ import {
 } from "@ikas/bp-storefront";
 
 import ThreeMashAccountLayout from "../ThreeMashAccountLayout";
+import ThreeMashAccountPage from "../ThreeMashAccountPage";
 import { Props } from "./types";
 import type { Props as AccountInfoProps } from "../ThreeMashAccountInfoPage/types";
 import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
@@ -492,18 +493,12 @@ export function OrdersView({
   props: DashboardProps;
 }) {
   const title =
-    text(
-      props.ordersTitle ||
-        (props.mode === "orders" ? props.titleText : undefined),
-      "Siparişlerim",
-      "My Orders",
-    );
+    props.ordersTitle ||
+    (props.mode === "orders" ? props.titleText : undefined) ||
+    t("account.orders", tLocalized("Siparişlerim", "My Orders"));
   const emptyText =
-    text(
-      props.mode === "orders" ? props.emptyText : undefined,
-      "Henüz siparişiniz bulunmuyor.",
-      "You haven't placed any orders yet.",
-    );
+    (props.mode === "orders" ? props.emptyText : undefined) ||
+    t("account.noOrders", "Henüz siparişiniz bulunmuyor.");
 
   return (
     <>
@@ -656,27 +651,7 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
     return new URLSearchParams(window.location.search).get(name) || "";
   }
 
-  const [token] = useState(() => getQueryParam("token"));
-
-  useLayoutEffect(() => {
-    if (typeof document === "undefined") return undefined;
-    const existing = document.head.querySelector('meta[name="referrer"]') as HTMLMetaElement | null;
-    const previousContent = existing?.content;
-    const meta = existing || document.createElement("meta");
-    if (!existing) {
-      meta.name = "referrer";
-      document.head.appendChild(meta);
-    }
-    meta.content = "no-referrer";
-    return () => {
-      if (existing) {
-        if (previousContent === undefined) existing.removeAttribute("content");
-        else existing.content = previousContent;
-      } else {
-        meta.remove();
-      }
-    };
-  }, []);
+  const token = getQueryParam("token");
 
   useLayoutEffect(() => {
     if (token) {
@@ -698,6 +673,7 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
       return;
     }
 
+    const token = getQueryParam("token");
     if (!token) {
       setStatus("error");
       return;
@@ -716,7 +692,7 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
       if (success) {
         setStatus("success");
         setTimeout(() => {
-          Router.navigateToPage("LOGIN");
+          Router.navigate("/account/login");
         }, 650);
         return;
       }
@@ -795,7 +771,17 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
 
 // ─── Main export — delegates to the unified account layout shell ──
 
+function isPublicAuthMode(mode: string | undefined) {
+  return mode === "forgot-password" || mode === "recover-password";
+}
+
 export function ThreeMashAccountUtilityPage(props: DashboardProps) {
+  // Forgot and recover password screens are public auth routes and must not be
+  // wrapped by the protected /account dashboard shell.
+  if (isPublicAuthMode(props.mode)) {
+    return <ThreeMashAccountPage {...props} />;
+  }
+
   // Route to the unified account layout with the mode passed from ikas config.
   // Each registered page (addresses, orders, favorites) sets a different mode prop.
   return <ThreeMashAccountLayout {...props} />;
