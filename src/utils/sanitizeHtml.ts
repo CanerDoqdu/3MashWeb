@@ -125,7 +125,13 @@ function stripForbiddenTags(input: string) {
   const forbiddenTags = Array.from(FORBIDDEN_TAGS).join("|");
   const block = new RegExp(`<(${forbiddenTags})\\b[^>]*>[\\s\\S]*?<\\/\\1\\s*>`, "gi");
   const selfClosing = new RegExp(`<(${forbiddenTags})\\b[^>]*\\/?>`, "gi");
-  return input.replace(block, "").replace(selfClosing, "");
+  let result = input;
+  for (let i = 0; i < 10; i++) {
+    const next = result.replace(block, "").replace(selfClosing, "");
+    if (next === result) break;
+    result = next;
+  }
+  return result;
 }
 
 function stripUnsafeAttributes(input: string) {

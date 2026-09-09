@@ -225,7 +225,7 @@
   font-weight: 600;
   font-family: inherit;
   border: 1px solid color-mix(in srgb, var(--tm-products-line, #e2e5dc) 84%, transparent);
-  background: color-mix(in srgb, var(--tm-products-bg, #f7f8f4) 72%, var(--tm-products-card, #fff));
+  background: #ffffff;
   color: color-mix(in srgb, var(--tm-products-text, #10120f) 84%, var(--tm-products-muted, #64695f));
   cursor: pointer;
   flex-shrink: 0;
@@ -240,7 +240,7 @@
 
 .tm-products-category-pill.is-active {
   border-color: color-mix(in srgb, var(--tm-products-accent, #c7f136) 52%, var(--tm-products-line, #e2e5dc));
-  background: color-mix(in srgb, var(--tm-products-accent, #c7f136) 24%, var(--tm-products-card, #fff));
+  background: #ffffff;
   color: var(--tm-products-text, #10120f);
   font-weight: 700;
 }
@@ -494,7 +494,7 @@
 }
 
 .tm-products-layout-btn.is-active {
-  background: color-mix(in srgb, var(--tm-products-accent, #c7f136) 24%, var(--tm-products-card, #fff));
+  background: #ffffff;
   border-color: color-mix(in srgb, var(--tm-products-accent, #c7f136) 52%, var(--tm-products-line, #e2e5dc));
   color: var(--tm-products-text, #10120f);
 }
@@ -634,7 +634,7 @@
 
 /* "Popüler" rozeti — eski tema renkleri */
 .tm-products-badge-popular {
-  background: color-mix(in srgb, var(--tm-products-accent, #c7f136) 24%, var(--tm-products-card, #fff));
+  background: #ffffff;
   border: 1px solid color-mix(in srgb, var(--tm-products-accent, #c7f136) 52%, var(--tm-products-line, #e2e5dc));
   color: var(--tm-products-text, #10120f);
   font-size: 10px;
@@ -769,7 +769,7 @@
   width: 100%;
   min-height: 40px;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--tm-products-accent, #c7f136) 24%, var(--tm-products-card, #fff));
+  background: #ffffff;
   border: 1px solid color-mix(in srgb, var(--tm-products-accent, #c7f136) 52%, var(--tm-products-line, #e2e5dc));
   color: var(--tm-products-text, #10120f);
   font-size: 13px;

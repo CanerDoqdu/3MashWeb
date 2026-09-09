@@ -368,19 +368,11 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
   const selected = gallery[selectedGalleryIndex] || gallery[0];
   const thumbColumns = Math.max(1, Math.min(gallery.length, 8));
   const imageRef = useRef<HTMLImageElement>(null);
-  const [isImageLoading, setIsImageLoading] = useState(Boolean(selected));
-
-  useEffect(() => {
-    setIsImageLoading(Boolean(selected));
-    const image = imageRef.current;
-    if (selected && image?.complete) setIsImageLoading(false);
-  }, [selected?.src]);
 
   return (
     <div className="tmpdt-gal">
       <div className="tmpdt-gal-main">
         {data.hero.galleryBadge ? <span className="tmpdt-cebadge">{data.hero.galleryBadge}</span> : null}
-        {selected && isImageLoading ? <span className="tmpdt-gal-loader" aria-hidden="true" /> : null}
         {selected ? (
           <img
             ref={imageRef}
@@ -389,8 +381,6 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            onLoad={() => setIsImageLoading(false)}
-            onError={() => setIsImageLoading(false)}
           />
         ) : null}
       </div>

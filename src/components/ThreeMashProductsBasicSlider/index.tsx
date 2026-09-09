@@ -159,7 +159,7 @@ function sectionIsVisible(props: Props) {
 }
 
 function html(value: unknown) {
-  return { __html: propString(value) };
+  return { __html: sanitizeHtml(propString(value)) };
 }
 
 function numberValue(value: number | undefined, fallback: number, min: number, max: number) {

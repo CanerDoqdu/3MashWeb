@@ -233,9 +233,6 @@ function ProductCard({
   const comparePrice =
     variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : "";
 
-  useEffect(() => {
-    setIsMediaLoaded(!imageSrc);
-  }, [imageSrc]);
 
   return (
     <div className="tm-products-card">
@@ -477,11 +474,7 @@ export function ThreeMashProductsPage(props: Props) {
       "#64695f",
       "--tm-theme-muted",
     ),
-    "--tm-products-card": themeToken(
-      props.cardColor,
-      "#ffffff",
-      "--tm-theme-panel",
-    ),
+    "--tm-products-card": props.cardColor?.trim() || "#ffffff",
     "--tm-products-line": themeToken(
       props.lineColor,
       "#e5e8e0",
@@ -508,7 +501,7 @@ export function ThreeMashProductsPage(props: Props) {
     const allProductsList = initProductList({
       type: "ALL",
       sort: sourceProductList.sort || "DEFAULT",
-      limit: Math.max(sourceProductList.limit || 12, 200),
+      limit: Math.max(sourceProductList.limit || 12, 500),
       pageType: "CUSTOM",
       productListPropValue: {
         ...sourceProductList.productListPropValue,

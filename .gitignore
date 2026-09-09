@@ -18,3 +18,10 @@ scripts/inventory_result.json
 scripts/to_translate.json
 scripts/extracted_turkish_strings.json
 ikas-components.json
+
+# Environment and secret files
+.env
+.env.local
+.env.*
+!.env.example
+

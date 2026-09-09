@@ -1930,7 +1930,7 @@ const cartItems =
       !item.deleted &&
       Number(item.quantity || 0) > 0
   ) || []; const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
-  const visibleCartItems = cartItems.slice(0, 4);
+  const visibleCartItems = cartItems;
   
   // Compute all dynamic text at render time so they reflect language changes
   const defaultAnn = getDefaultAnnouncement();

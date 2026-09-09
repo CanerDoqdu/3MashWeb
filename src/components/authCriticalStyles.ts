@@ -9,6 +9,7 @@ const authCriticalStyles = `
   background: var(--tm-theme-bg, #fafaf7);
   color: var(--tm-theme-text, #0e0e0c);
   font-family: var(--tm-theme-font-body, Inter, system-ui, sans-serif);
+  place-items: center;
 }
 .three-mash-auth-page *,
 .three-mash-register-page * { box-sizing: border-box; }
@@ -16,10 +17,11 @@ const authCriticalStyles = `
 .tmrpg-auth-panel {
   display: grid;
   align-items: center;
+  justify-items: center;
   width: min(100%, 1180px);
   min-height: inherit;
   margin: 0 auto;
-  padding: clamp(42px, 5.4vw, 76px) 24px 24px;
+  padding: clamp(18px, 2vw, 30px) 24px clamp(40px, 5vw, 60px);
 }
 .tma-auth-form,
 .tmrpg-auth-form {
@@ -68,7 +70,7 @@ const authCriticalStyles = `
   text-underline-offset: 3px;
 }
 .tmrpg-auth-panel {
-  padding: clamp(28px, 3vw, 42px) 24px clamp(34px, 4vw, 56px);
+  padding: clamp(18px, 2vw, 30px) 24px clamp(40px, 5vw, 60px);
 }
 .tmrpg-auth-form {
   min-height: 0;
@@ -252,6 +254,17 @@ const authCriticalStyles = `
 .tma-auth-register-callout,
 .tmrpg-auth-login-callout { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-top: 18px; border-top: 1px solid var(--tm-theme-line, #e6e6e0); color: var(--tm-theme-sub, #55554e); font-size: 14px; line-height: 1.45; }
 @media (max-width: 980px) {
+  .three-mash-auth-page,
+  .three-mash-register-page {
+    min-height: auto;
+    align-items: start;
+  }
+  .tma-auth-panel,
+  .tmrpg-auth-panel {
+    min-height: auto;
+    align-items: start;
+    padding: 18px 16px 28px;
+  }
   .tma-auth-form,
   .tmrpg-auth-form {
     grid-template-columns: 1fr;
@@ -277,14 +290,32 @@ const authCriticalStyles = `
   .tmrpg-auth-copy { height: auto; }
 }
 @media (max-width: 560px) {
-  .tmrpg-auth-panel { padding-bottom: 0; }
+  .three-mash-auth-page,
+  .three-mash-register-page {
+    min-height: auto;
+    align-items: start;
+  }
+  .tma-auth-panel,
+  .tmrpg-auth-panel {
+    min-height: auto;
+    align-items: start;
+    padding: 12px 14px 20px;
+  }
+  .tmrpg-auth-panel { padding-bottom: 20px; }
   .tmrpg-auth-copy { display: none; }
 }
 @container tma-auth (max-width: 700px) {
-  .tma-auth-panel {
+  .three-mash-auth-page,
+  .three-mash-register-page {
+    min-height: auto;
+    align-items: start;
+  }
+  .tma-auth-panel,
+  .tmrpg-auth-panel {
     width: 100%;
     min-height: auto;
-    padding: 24px 16px 36px;
+    align-items: start;
+    padding: 14px 16px 24px;
   }
   .tma-auth-form {
     grid-template-columns: 1fr;
@@ -310,10 +341,19 @@ const authCriticalStyles = `
   .tma-auth-password-links { gap: 12px !important; }
 }
 @media (max-width: 768px) {
+  .three-mash-auth-page,
+  .three-mash-register-page {
+    min-height: auto;
+    align-items: start;
+  }
   .tma-auth-copy,
   .tmrpg-auth-copy { display: none; }
   .tma-auth-panel,
-  .tmrpg-auth-panel { padding: 26px 16px 32px; }
+  .tmrpg-auth-panel {
+    min-height: auto;
+    align-items: start;
+    padding: 14px 16px 24px;
+  }
 }
 `;
 
