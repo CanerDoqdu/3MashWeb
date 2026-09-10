@@ -1989,10 +1989,13 @@ function footerHrefForLabel(label: unknown, href: string) {
     "distance selling agreement": "/pages/mesafeli-satis-sozlesmesi",
     "distance sales": "/pages/mesafeli-satis-sozlesmesi",
     "distance sales agreement": "/pages/mesafeli-satis-sozlesmesi",
-    "cookie settings": "#cookie-settings",
-    "cookie preferences": "#cookie-settings",
-    "cerez tercihleri": "#cerez-ayarlari",
-    "çerez tercihleri": "#cerez-ayarlari",
+    "cookie settings": "#",
+    "cookie preferences": "#",
+    "cerez tercihleri": "#",
+    "çerez tercihleri": "#",
+    "çerezler": "#",
+    "cerezler": "#",
+    cookies: "#",
     "sıkça sorulan sorular": "/pages/sss",
     "sikca sorulan sorular": "/pages/sss",
     sss: "/pages/sss",
@@ -2030,20 +2033,20 @@ function footerLegalLinks(props: ThreeMashSectionRenderProps) {
   const links = en
     ? [
       ["Privacy &amp; KVKK", localizedHref("/pages/gizlilik-politikasi-ve-kvkk")],
-      ["Cookie Settings", "#cookie-settings"],
+      ["Cookie Settings", "#"],
       ["Return &amp; Warranty", localizedHref("/pages/iade-ve-garanti")],
       ["Distance Selling", localizedHref("/pages/mesafeli-satis-sozlesmesi")],
     ]
     : [
       ["KVKK", localizedHref("/pages/gizlilik-politikasi-ve-kvkk")],
-      ["Çerez Tercihleri", "#cerez-ayarlari"],
+      ["Çerez Tercihleri", "#"],
       ["İade &amp; Garanti", localizedHref("/pages/iade-ve-garanti")],
       ["Mesafeli Satış", localizedHref("/pages/mesafeli-satis-sozlesmesi")],
     ];
   return links
     .map(
       ([text, target]) =>
-        `<a href="${target.startsWith('#') ? target : escapeAttr(target)}" class="${target.startsWith('#') ? 'tm-open-cookie-settings' : ''}">${text}</a>`,
+        `<a href="${escapeAttr(target)}" class="${target === '#' ? 'tm-open-cookie-settings' : ''}">${text}</a>`,
     )
     .join("<span>·</span>");
 }
@@ -2052,32 +2055,40 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
   const en = isEnglishLocale();
   const logoVisual = `<img src="${escapeAttr(threeMashFullLogoImage)}" alt="${escapeAttr(field(props, "logoImageAlt", "3mash"))}">`;
 
-  function navLinkList(
-    list: IkasNavigationLinkList | undefined,
-    title: string,
-  ) {
-    const seen = new Set<string>();
-    const links = (list?.links || [])
-      .map((link) => {
-        const label = link?.label || "";
-        const href = internalSiteHref(linkHref(link, ""));
-        return { ...link, href: footerHrefForLabel(label, href) };
-      })
-      .filter((link) => {
-        if (!link?.label || !link.href) return false;
-        const key = footerLinkKey(link.href);
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      });
-    if (!links.length) return "";
-    return `<p class="tmr-footer-col-title">${title}</p>${links
-      .map(
-        (link) =>
-          `<a href="${escapeAttr(link.href)}"${link.openInNewTab ? ' target="_blank" rel="noopener noreferrer"' : externalLinkAttrs(link.href)}>${escapeHtml(link.label)}</a>`,
-      )
-      .join("")}`;
-  }
+ function isCookieSettingsHref(href: string, label: unknown) {
+  if (href !== "#") return false;
+  const normalized = plainText(label).toLocaleLowerCase("tr-TR");
+  return /(çerez|cerez|cookie)/.test(normalized);
+}
+
+function navLinkList(
+  list: IkasNavigationLinkList | undefined,
+  title: string,
+) {
+  const seen = new Set<string>();
+  const links = (list?.links || [])
+    .map((link) => {
+      const label = link?.label || "";
+      const href = internalSiteHref(linkHref(link, ""));
+      return { ...link, href: footerHrefForLabel(label, href) };
+    })
+    .filter((link) => {
+      if (!link?.label || !link.href) return false;
+      const key = footerLinkKey(link.href);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  if (!links.length) return "";
+  return `<p class="tmr-footer-col-title">${title}</p>${links
+    .map((link) => {
+      const cookieClass = isCookieSettingsHref(link.href, link.label)
+        ? ' class="tm-open-cookie-settings"'
+        : "";
+      return `<a href="${escapeAttr(link.href)}"${cookieClass}${link.openInNewTab ? ' target="_blank" rel="noopener noreferrer"' : externalLinkAttrs(link.href)}>${escapeHtml(link.label)}</a>`;
+    })
+    .join("")}`;
+}
 
   function categoryLinkList(
     categories: IkasCategoryList | undefined,

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "preact/hooks";
-import { tLocalized, localizedHref } from "../../utils/i18n";
+import { t, tLocalized, localizedHref } from "../../utils/i18n";
 import { stringValue, safeFunctionCall } from "../../types/typeGuards";
 import cookiePrinterImage from "../../assets/cookie-printer-image-data";
 
@@ -45,55 +45,61 @@ function applyConsentEffects(consent: CookieConsentState) {
     security_storage: "granted",
   });
 
-  // 3. Purge non-consented tracking cookies from document
-  try {
-    const cookiesToPurge: string[] = [];
-    if (!consent.marketing) {
-      cookiesToPurge.push("fr", "_fbp", "_fbc", "_gcl_au", "tr");
-    }
-    if (!consent.analytics) {
-      cookiesToPurge.push("zfccn", "_ga", "_gid", "_gat", "zpc", "_zohopagesense");
-    }
-    if (!consent.functional) {
-      cookiesToPurge.push("_siq", "_zld", "_zldp", "LS_CSRF_TOKEN");
-    }
+  // 3. Purge non-consented tracking cookies when the browser is idle.
+  const purgeCookies = () => {
+    try {
+      const cookiesToPurge: string[] = [];
+      if (!consent.marketing) {
+        cookiesToPurge.push("fr", "_fbp", "_fbc", "_gcl_au", "tr");
+      }
+      if (!consent.analytics) {
+        cookiesToPurge.push("zfccn", "_ga", "_gid", "_gat", "zpc", "_zohopagesense");
+      }
+      if (!consent.functional) {
+        cookiesToPurge.push("_siq", "_zld", "_zldp", "LS_CSRF_TOKEN");
+      }
 
-    if (cookiesToPurge.length > 0 && typeof document !== "undefined") {
+      if (cookiesToPurge.length === 0 || typeof document === "undefined") return;
+
       const hostname = window.location.hostname;
       const allowedDomains = ["3mash.com", "myikas.com", "ikasapps.com"];
-      const isAllowedDomain = allowedDomains.some(
+      const baseDomain = allowedDomains.find(
         (allowed) => hostname === allowed || hostname.endsWith(`.${allowed}`),
       );
 
-      if (!isAllowedDomain) {
+      if (!baseDomain) {
         if (typeof process !== "undefined" && process.env?.NODE_ENV === "development") {
           console.warn("CookieConsent: hostname not in allowlist, skipping purge");
         }
         return;
       }
 
-      const domainParts = hostname.split(".");
-      const domains = [
-        "",
+      const domainVariants = [...new Set([
         `.${hostname}`,
         hostname,
-        domainParts.length > 2 ? `.${domainParts.slice(-2).join(".")}` : "",
-      ].filter(Boolean);
-
+        `.${baseDomain}`,
+      ])];
       const cookieList = document.cookie.split(";");
       for (const cookie of cookieList) {
         const name = cookie.split("=")[0].trim();
-        for (const pattern of cookiesToPurge) {
-          if (name === pattern || name.startsWith(pattern)) {
-            for (const domain of domains) {
-              document.cookie = `${name}=; Path=/; Domain=${domain}; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax`;
-              document.cookie = `${name}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax`;
-            }
-          }
+        if (!cookiesToPurge.some((pattern) => name === pattern || name.startsWith(pattern))) {
+          continue;
+        }
+
+        // Clear the host-only cookie once, then only the current and base domains.
+        document.cookie = `${name}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax`;
+        for (const domain of domainVariants) {
+          document.cookie = `${name}=; Path=/; Domain=${domain}; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax`;
         }
       }
-    }
-  } catch {}
+    } catch {}
+  };
+
+  if (typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(purgeCookies, { timeout: 1500 });
+  } else {
+    setTimeout(purgeCookies, 0);
+  }
 
   // 4. Dispatch global event for external scripts & ikas components
   try {
@@ -110,17 +116,21 @@ export function ThreeMashCookieConsent() {
   const [isPreferencesOpen, setIsPreferencesOpen] = useState(false);
 
   // Preference switches
-  const [analytics, setAnalytics] = useState(false);
-  const [marketing, setMarketing] = useState(false);
-  const [functional, setFunctional] = useState(false);
+  const [preferences, setPreferences] = useState({
+    analytics: false,
+    marketing: false,
+    functional: false,
+  });
 
   useEffect(() => {
     const existing = getStoredConsent();
     if (existing) {
       setConsent(existing);
-      setAnalytics(existing.analytics);
-      setMarketing(existing.marketing);
-      setFunctional(existing.functional);
+      setPreferences({
+        analytics: existing.analytics,
+        marketing: existing.marketing,
+        functional: existing.functional,
+      });
       applyConsentEffects(existing);
       setIsOpen(false);
     } else {
@@ -139,21 +149,6 @@ export function ThreeMashCookieConsent() {
     }
   }, []);
 
-  function clearHashIfCookieSettings() {
-    if (typeof window !== "undefined" && window.location.hash) {
-      const hash = window.location.hash.toLowerCase();
-      if (
-        hash === "#cerez-ayarlari" ||
-        hash === "#cookie-preferences" ||
-        hash === "#cookie-settings"
-      ) {
-        try {
-          history.replaceState(null, "", window.location.pathname + window.location.search);
-        } catch {}
-      }
-    }
-  }
-
   const consentRef = useRef<CookieConsentState | null>(consent);
   consentRef.current = consent;
 
@@ -162,11 +157,12 @@ export function ThreeMashCookieConsent() {
     setIsPreferencesOpen(false);
     const c = consentRef.current;
     if (c) {
-      setAnalytics(c.analytics);
-      setMarketing(c.marketing);
-      setFunctional(c.functional);
+      setPreferences({
+        analytics: c.analytics,
+        marketing: c.marketing,
+        functional: c.functional,
+      });
     }
-    clearHashIfCookieSettings();
   }
 
   // Listen for global open requests (e.g. from footer links or #cerez-ayarlari)
@@ -174,9 +170,11 @@ export function ThreeMashCookieConsent() {
     function handleOpen() {
       const current = consentRef.current || getStoredConsent();
       if (current) {
-        setAnalytics(current.analytics);
-        setMarketing(current.marketing);
-        setFunctional(current.functional);
+        setPreferences({
+          analytics: current.analytics,
+          marketing: current.marketing,
+          functional: current.functional,
+        });
       }
       setIsPreferencesOpen(true);
       setIsOpen(true);
@@ -203,6 +201,8 @@ export function ThreeMashCookieConsent() {
         )
       ) {
         event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
         handleOpen();
       }
     }
@@ -242,13 +242,14 @@ export function ThreeMashCookieConsent() {
     } catch {}
 
     setConsent(fullState);
-    setAnalytics(fullState.analytics);
-    setMarketing(fullState.marketing);
-    setFunctional(fullState.functional);
+    setPreferences({
+      analytics: fullState.analytics,
+      marketing: fullState.marketing,
+      functional: fullState.functional,
+    });
     applyConsentEffects(fullState);
     setIsOpen(false);
     setIsPreferencesOpen(false);
-    clearHashIfCookieSettings();
   }
 
   function handleAcceptAll() {
@@ -265,7 +266,7 @@ export function ThreeMashCookieConsent() {
   }
 
   function handleSavePreferences() {
-    saveConsent({ analytics, marketing, functional });
+    saveConsent(preferences);
   }
 
   return (
@@ -284,7 +285,7 @@ export function ThreeMashCookieConsent() {
             type="button"
             className="tm-cookie-close-btn"
             onClick={handleCloseBanner}
-            aria-label={tLocalized("Çerez ayarlarını kapat", "Close cookie settings")}
+            aria-label={t("cookies.closePanel", "Close cookie settings")}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" />
@@ -298,19 +299,19 @@ export function ThreeMashCookieConsent() {
               src={cookiePrinterImage}
               alt="3MASH Dental 3D Printer"
               className="tm-cookie-printer-img"
-              loading="eager"
+              loading="lazy"
             />
           </div>
 
           {/* Heading */}
           <h2 id="tm-cookie-heading" className="tm-cookie-heading">
-            {tLocalized("Çerezleri Kullanıyoruz", "We Use Cookies")}
+            {t("cookies.bannerTitle", "We Use Cookies")}
           </h2>
 
           {/* Description */}
           <p id="tm-cookie-desc" className="tm-cookie-desc">
-            {tLocalized(
-              "Sitemizde deneyiminizi geliştirmek, site kullanımını anlamak ve size özel içerikler sunmak amacıyla çerezler kullanıyoruz. İsteğe bağlı çerezleri dilediğiniz gibi yönetebilirsiniz.",
+            {t(
+              "cookies.bannerDesc",
               "We use cookies to improve your experience, understand how our website is used, and provide relevant content. You can choose which optional cookies you allow."
             )}
           </p>
@@ -322,14 +323,14 @@ export function ThreeMashCookieConsent() {
               className="tm-cookie-btn tm-cookie-btn-primary"
               onClick={handleAcceptAll}
             >
-              {tLocalized("Tüm Çerezleri Kabul Et", "Accept all cookies")}
+              {t("cookies.acceptAll", "Accept all cookies")}
             </button>
             <button
               type="button"
               className="tm-cookie-btn tm-cookie-btn-secondary"
               onClick={() => setIsPreferencesOpen(true)}
             >
-              {tLocalized("Çerezleri Yönet", "Manage cookies")}
+              {t("cookies.manageCookies", "Manage cookies")}
             </button>
           </div>
         </aside>
@@ -352,7 +353,7 @@ export function ThreeMashCookieConsent() {
             {/* Modal Header */}
             <div className="tm-cookie-modal-header">
               <h2 id="tm-pref-heading" className="tm-cookie-modal-title">
-                {tLocalized("Çerez Tercihleri", "Cookie Preferences")}
+                {t("cookies.preferencesTitle", "Cookie Preferences")}
               </h2>
               <button
                 type="button"
@@ -368,12 +369,12 @@ export function ThreeMashCookieConsent() {
             </div>
 
             <p className="tm-cookie-modal-desc">
-              {tLocalized(
-                "Aşağıda sitemizde kullanılan çerez kategorilerini inceleyebilir ve tercihlerinizi özelleştirebilirsiniz.",
+              {t(
+                "cookies.preferencesDesc",
                 "Review the cookie categories used on our website below and customize your preferences."
               )}{" "}
               <a href={localizedHref("/pages/gizlilik-politikasi-ve-kvkk")} target="_blank" rel="noopener noreferrer" className="tm-cookie-policy-text-link">
-                {tLocalized("Çerez Politikası →", "Cookie Policy →")}
+                {t("cookies.policyLink", "Cookie Policy →")}
               </a>
             </p>
 
@@ -384,15 +385,15 @@ export function ThreeMashCookieConsent() {
                 <div className="tm-cookie-pref-info">
                   <div className="tm-cookie-pref-title-row">
                     <span className="tm-cookie-pref-name">
-                      {tLocalized("Zorunlu Çerezler", "Strictly Necessary")}
+                      {t("cookies.necessaryTitle", "Strictly Necessary")}
                     </span>
                     <span className="tm-cookie-badge-req">
-                      {tLocalized("Her Zaman Etkin", "Always Active")}
+                      {t("cookies.alwaysActive", "Always Active")}
                     </span>
                   </div>
                   <p className="tm-cookie-pref-desc">
-                    {tLocalized(
-                      "Sitemizin güvenli çalışması, sepet/oturum işlemleri ve dil tercihi için zorunludur. Devre dışı bırakılamaz.",
+                    {t(
+                      "cookies.necessaryDesc",
                       "Essential for core website security, cart/session operations, and language preference. Cannot be disabled."
                     )}
                   </p>
@@ -408,13 +409,13 @@ export function ThreeMashCookieConsent() {
                 <div className="tm-cookie-pref-info">
                   <div className="tm-cookie-pref-title-row">
                     <span className="tm-cookie-pref-name">
-                      {tLocalized("Performans ve Analitik", "Performance & Analytics")}
+                      {t("cookies.analyticsTitle", "Performance & Analytics")}
                     </span>
                     <span className="tm-cookie-tool-tag">Zoho PageSense</span>
                   </div>
                   <p className="tm-cookie-pref-desc">
-                    {tLocalized(
-                      "Ziyaretçi trafiğini ve sayfa etkileşimlerini anonim olarak analiz edip performansı artırmamıza yardımcı olur.",
+                    {t(
+                      "cookies.analyticsDesc",
                       "Helps us anonymously analyze visitor traffic and interactions to improve website performance."
                     )}
                   </p>
@@ -423,8 +424,8 @@ export function ThreeMashCookieConsent() {
                   <input
                     type="checkbox"
                     className="tm-cookie-input-switch"
-                    checked={analytics}
-                    onChange={(e) => setAnalytics((e.target as HTMLInputElement).checked)}
+                    checked={preferences.analytics}
+                    onChange={(e) => setPreferences((current) => ({ ...current, analytics: (e.target as HTMLInputElement).checked }))}
                     aria-label="Analitik Çerezleri"
                   />
                   <span className="tm-cookie-switch-ui" />
@@ -436,13 +437,13 @@ export function ThreeMashCookieConsent() {
                 <div className="tm-cookie-pref-info">
                   <div className="tm-cookie-pref-title-row">
                     <span className="tm-cookie-pref-name">
-                      {tLocalized("Pazarlama ve Hedefleme", "Marketing & Targeting")}
+                      {t("cookies.marketingTitle", "Marketing & Targeting")}
                     </span>
                     <span className="tm-cookie-tool-tag">Meta Pixel</span>
                   </div>
                   <p className="tm-cookie-pref-desc">
-                    {tLocalized(
-                      "İlgi alanlarınıza uygun ürün ve reklam optimizasyonu sunmamızı ve kampanya etkinliğini ölçmemizi sağlar.",
+                    {t(
+                      "cookies.marketingDesc",
                       "Allows us to provide personalized product campaigns and measure advertising effectiveness."
                     )}
                   </p>
@@ -451,8 +452,8 @@ export function ThreeMashCookieConsent() {
                   <input
                     type="checkbox"
                     className="tm-cookie-input-switch"
-                    checked={marketing}
-                    onChange={(e) => setMarketing((e.target as HTMLInputElement).checked)}
+                    checked={preferences.marketing}
+                    onChange={(e) => setPreferences((current) => ({ ...current, marketing: (e.target as HTMLInputElement).checked }))}
                     aria-label="Pazarlama Çerezleri"
                   />
                   <span className="tm-cookie-switch-ui" />
@@ -464,13 +465,13 @@ export function ThreeMashCookieConsent() {
                 <div className="tm-cookie-pref-info">
                   <div className="tm-cookie-pref-title-row">
                     <span className="tm-cookie-pref-name">
-                      {tLocalized("İşlevsel Çerezler", "Functional Cookies")}
+                      {t("cookies.functionalTitle", "Functional Cookies")}
                     </span>
                     <span className="tm-cookie-tool-tag">Zoho SalesIQ</span>
                   </div>
                   <p className="tm-cookie-pref-desc">
-                    {tLocalized(
-                      "Canlı destek sohbeti ve gelişmiş müşteri etkileşim araçlarını çalıştırmak için kullanılır.",
+                    {t(
+                      "cookies.functionalDesc",
                       "Powers live chat customer support and enhanced interactive features."
                     )}
                   </p>
@@ -479,8 +480,8 @@ export function ThreeMashCookieConsent() {
                   <input
                     type="checkbox"
                     className="tm-cookie-input-switch"
-                    checked={functional}
-                    onChange={(e) => setFunctional((e.target as HTMLInputElement).checked)}
+                    checked={preferences.functional}
+                    onChange={(e) => setPreferences((current) => ({ ...current, functional: (e.target as HTMLInputElement).checked }))}
                     aria-label="İşlevsel Çerezler"
                   />
                   <span className="tm-cookie-switch-ui" />
@@ -495,14 +496,14 @@ export function ThreeMashCookieConsent() {
                 className="tm-cookie-btn tm-cookie-btn-primary"
                 onClick={handleSavePreferences}
               >
-                {tLocalized("Tercihleri Kaydet", "Save preferences")}
+                {t("cookies.savePreferences", "Save preferences")}
               </button>
               <button
                 type="button"
                 className="tm-cookie-btn tm-cookie-btn-secondary"
                 onClick={handleAcceptAll}
               >
-                {tLocalized("Tümünü Kabul Et", "Accept All")}
+                {t("cookies.acceptAll", "Accept All")}
               </button>
             </div>
           </div>

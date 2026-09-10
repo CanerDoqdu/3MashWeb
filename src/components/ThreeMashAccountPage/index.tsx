@@ -547,7 +547,7 @@ export function ThreeMashAccountPage(props: Props) {
                 : authMode === "recover-password"
                   ? tLocalized("Şifreyi Güncelle", "Update Password")
                   : activeTab === "login"
-                    ? text(props.submitButtonText, tLocalized("Üye Girişi", "Member Login"))
+                    ? text(props.submitButtonText, tLocalized("Giriş Yap", "Sign In"))
                     : tLocalized("Hesap Oluştur", "Create Account")}
           </button>
 

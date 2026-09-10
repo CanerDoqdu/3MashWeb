@@ -193,6 +193,26 @@
     "blog": "Blog",
     "faq": "FAQ"
   },
+  "cookies": {
+    "bannerTitle": "We Use Cookies",
+    "bannerDesc": "We use cookies to improve your experience, understand how our website is used, and provide relevant content. You can choose which optional cookies you allow.",
+    "acceptAll": "Accept all cookies",
+    "manageCookies": "Manage cookies",
+    "closePanel": "Close cookie settings",
+    "preferencesTitle": "Cookie Preferences",
+    "preferencesDesc": "Review the cookie categories used on our website below and customize your preferences.",
+    "policyLink": "Cookie Policy →",
+    "necessaryTitle": "Strictly Necessary",
+    "alwaysActive": "Always Active",
+    "necessaryDesc": "Essential for core website security, cart/session operations, and language preference. Cannot be disabled.",
+    "analyticsTitle": "Performance & Analytics",
+    "analyticsDesc": "Helps us anonymously analyze visitor traffic and interactions to improve website performance.",
+    "marketingTitle": "Marketing & Targeting",
+    "marketingDesc": "Allows us to provide personalized product campaigns and measure advertising effectiveness.",
+    "functionalTitle": "Functional Cookies",
+    "functionalDesc": "Powers live chat customer support and enhanced interactive features.",
+    "savePreferences": "Save preferences"
+  },
   "sections": {
     "hero": {
       "kicker": "DENTAL 3D PRINTING CONSULTING",

@@ -193,6 +193,26 @@
     "blog": "Blog",
     "faq": "Sıkça Sorulan Sorular"
   },
+  "cookies": {
+    "bannerTitle": "Çerezleri Kullanıyoruz",
+    "bannerDesc": "Sitemizde deneyiminizi geliştirmek, site kullanımını anlamak ve size özel içerikler sunmak amacıyla çerezler kullanıyoruz. İsteğe bağlı çerezleri dilediğiniz gibi yönetebilirsiniz.",
+    "acceptAll": "Tüm Çerezleri Kabul Et",
+    "manageCookies": "Çerezleri Yönet",
+    "closePanel": "Çerez ayarlarını kapat",
+    "preferencesTitle": "Çerez Tercihleri",
+    "preferencesDesc": "Aşağıda sitemizde kullanılan çerez kategorilerini inceleyebilir ve tercihlerinizi özelleştirebilirsiniz.",
+    "policyLink": "Çerez Politikası →",
+    "necessaryTitle": "Zorunlu Çerezler",
+    "alwaysActive": "Her Zaman Etkin",
+    "necessaryDesc": "Sitemizin güvenli çalışması, sepet/oturum işlemleri ve dil tercihi için zorunludur. Devre dışı bırakılamaz.",
+    "analyticsTitle": "Performans ve Analitik",
+    "analyticsDesc": "Ziyaretçi trafiğini ve sayfa etkileşimlerini anonim olarak analiz edip performansı artırmamıza yardımcı olur.",
+    "marketingTitle": "Pazarlama ve Hedefleme",
+    "marketingDesc": "İlgi alanlarınıza uygun ürün ve reklam optimizasyonu sunmamızı ve kampanya etkinliğini ölçmemizi sağlar.",
+    "functionalTitle": "İşlevsel Çerezler",
+    "functionalDesc": "Canlı destek sohbeti ve gelişmiş müşteri etkileşim araçlarını çalıştırmak için kullanılır.",
+    "savePreferences": "Tercihleri Kaydet"
+  },
   "sections": {
     "hero": {
       "kicker": "DENTAL 3D BASKI DANIŞMANLIĞI",
