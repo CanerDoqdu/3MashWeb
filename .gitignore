@@ -8,6 +8,8 @@ dist/
 .ikas-dev-state.json
 
 # Generated / local artefacts that should not be versioned
+.playwright-mcp/
+test-results/.last-run.json
 lighthouse-audit/
 tmp/
 outputs/
