@@ -1946,10 +1946,11 @@ function externalLinkAttrs(href: string) {
 }
 
 function isFooterMapsLabel(label: unknown) {
-  return (
-    plainText(label).toLocaleLowerCase("tr-TR") ===
-    tLocalized("antalya teknokent, konyaaltı", "Antalya Teknokent, Konyaaltı")
-  );
+  const normalized = plainText(label).toLocaleLowerCase("tr-TR");
+  return normalized === tLocalized(
+    "antalya teknokent, konyaaltı",
+    "antalya teknokent, konyaaltı",
+  ) || /antalya teknokent|pınarbaşı|hürriyet cad|konyaaltı/.test(normalized);
 }
 
 function footerHrefForLabel(label: unknown, href: string) {
@@ -2003,6 +2004,7 @@ function footerHrefForLabel(label: unknown, href: string) {
   };
 
   if (labelRoutes[normalizedLabel]) return localizedHref(labelRoutes[normalizedLabel]);
+  if (normalizedLabel === "info@3mash.com") return "mailto:info@3mash.com";
   return isFooterMapsLabel(label) ? footerMapsHref : href;
 }
 
