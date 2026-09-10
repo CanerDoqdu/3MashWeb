@@ -679,8 +679,11 @@
 .tmh-actions > a,
 .tmh-icon-button,
 .tmh-action-button {
-  width: 44px;
-  height: 44px;
+  width: auto;
+  min-width: 44px;
+  min-height: 44px;
+  height: auto;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -724,8 +727,10 @@
 
 .tmh-action-wrap {
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
   flex: 0 0 auto;
 }
 
@@ -1459,7 +1464,9 @@
   .tmh-action-button,
   .tmh-action-wrap {
     width: 44px;
+    min-width: 44px;
     height: 44px;
+    min-height: 44px;
   }
 
   .tmh-action-panel {
@@ -1575,8 +1582,10 @@
   .tmh-icon-button,
   .tmh-action-button,
   .tmh-action-wrap {
-    width: 20px;
-    height: 20px;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
   }
 
   .tmh-action-panel {
