@@ -679,11 +679,12 @@
 .tmh-actions > a,
 .tmh-icon-button,
 .tmh-action-button {
-  width: auto;
+  width: 44px;
   min-width: 44px;
   min-height: 44px;
-  height: auto;
+  height: 44px;
   padding: 10px;
+  margin: -10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -709,8 +710,8 @@
 
 .tmh-cart-badge {
   position: absolute;
-  right: -8px;
-  top: -8px;
+  right: 3px;
+  top: 3px;
   min-width: 16px;
   height: 16px;
   border-radius: 999px;
@@ -727,10 +728,10 @@
 
 .tmh-action-wrap {
   position: relative;
-  width: 44px;
-  min-width: 44px;
-  height: 44px;
-  min-height: 44px;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  min-height: 24px;
   flex: 0 0 auto;
 }
 
@@ -1184,6 +1185,10 @@
   justify-content: center;
 }
 
+.tmh-actions:not(.is-search-open) .tmh-inline-search .tmh-action-svg {
+  transform: scale(1.2);
+}
+
 .tmh-action-svg svg {
   width: min(var(--tmh-action-icon-svg-width), 36px);
   height: min(var(--tmh-action-icon-svg-height), 36px);
@@ -1461,12 +1466,18 @@
 
   .tmh-actions > a,
   .tmh-icon-button,
-  .tmh-action-button,
-  .tmh-action-wrap {
+  .tmh-action-button {
     width: 44px;
     min-width: 44px;
     height: 44px;
     min-height: 44px;
+  }
+
+  .tmh-action-wrap {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px;
   }
 
   .tmh-action-panel {
@@ -1580,12 +1591,18 @@
 
   .tmh-actions > a,
   .tmh-icon-button,
-  .tmh-action-button,
-  .tmh-action-wrap {
+  .tmh-action-button {
     width: 44px;
     min-width: 44px;
     height: 44px;
     min-height: 44px;
+  }
+
+  .tmh-action-wrap {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px;
   }
 
   .tmh-action-panel {

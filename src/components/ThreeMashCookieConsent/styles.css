@@ -38,10 +38,8 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  width: auto;
-  min-width: 44px;
-  min-height: 44px;
-  height: auto;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,7 +48,7 @@
   border-radius: 50%;
   color: #6B6B63;
   cursor: pointer;
-  padding: 6px;
+  padding: 0;
   transition: all 0.15s ease;
 }
 
@@ -131,6 +129,7 @@
   box-sizing: border-box;
   text-decoration: none;
   text-align: center;
+  white-space: nowrap;
 }
 
 .tm-cookie-btn:focus-visible {
@@ -189,7 +188,6 @@
   width: 100%;
   max-width: 520px;
   max-height: 90vh;
-  min-height: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -230,10 +228,8 @@
 .tm-cookie-modal-close {
   background: transparent;
   border: none;
-  width: auto;
-  min-width: 44px;
-  min-height: 44px;
-  height: auto;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -241,7 +237,7 @@
   color: #6B6B63;
   cursor: pointer;
   transition: all 0.15s ease;
-  padding: 6px;
+  padding: 0;
 }
 
 .tm-cookie-modal-close:hover {

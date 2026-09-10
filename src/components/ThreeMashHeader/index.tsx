@@ -652,12 +652,12 @@ const criticalHeaderCss = `
 .three-mash-header .tmh-actions > a,
 .three-mash-header .tmh-icon-button,
 .three-mash-header .tmh-action-button {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  min-height: 24px;
-  padding: 0;
-  margin: 0;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  margin: -10px;
   border: 0;
   background: transparent;
   display: flex;
@@ -2710,11 +2710,13 @@ async function removeCartItem(
           </nav>
 
           <div className={`tmh-actions${isSearchOpen ? " is-search-open" : ""}`}>
-            <form className="tmh-inline-search" onSubmit={submitSearch}>
+            <form className="tmh-inline-search" role="search" onSubmit={submitSearch}>
               {isSearchOpen && (
                 <input
                   ref={searchInputRef}
                   className="tmh-inline-search-input"
+                  type="search"
+                  name="q"
                   value={searchQuery}
                   placeholder={props.searchPlaceholder || ""}
                   aria-label={props.searchPlaceholder || ""}
