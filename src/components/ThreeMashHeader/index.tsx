@@ -652,12 +652,12 @@ const criticalHeaderCss = `
 .three-mash-header .tmh-actions > a,
 .three-mash-header .tmh-icon-button,
 .three-mash-header .tmh-action-button {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 10px;
-  margin: -10px;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0;
+  margin: 0;
   border: 0;
   background: transparent;
   display: flex;
