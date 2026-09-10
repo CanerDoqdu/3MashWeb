@@ -1,6 +1,7 @@
 import { ThreeMashFooter } from "../ThreeMashFooter";
 import { ThreeMashHeader } from "../ThreeMashHeader";
 import type { Props } from "./types";
+import { localizedHref } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -10,7 +11,7 @@ function hasContent(props: Props) {
 
 export function ThreeMashDentalResinsPage(props: Props) {
   const contentVisible = hasContent(props);
-  const primaryButtonHref = safeNavigationHref(props.primaryButtonHref, "/");
+  const primaryButtonHref = safeNavigationHref(localizedHref(props.primaryButtonHref || "/"), "/");
 
   return (
     <>

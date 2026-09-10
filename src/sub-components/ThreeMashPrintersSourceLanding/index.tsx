@@ -66,7 +66,7 @@ function crossPageAnchorClick(event: Event, path: string, sectionId: string, blo
   } catch {
     // Continue with normal route navigation if storage is unavailable.
   }
-  window.location.href = safeRedirect(path);
+  window.location.href = safeRedirect(localizedHref(path));
 }
 
 function printerProductHref(turkishPath: string, englishPath: string) {

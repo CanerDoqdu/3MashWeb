@@ -1,4 +1,4 @@
-import { tLocalized } from "../../utils/i18n";
+import { localizedHref, tLocalized } from "../../utils/i18n";
 import { useEffect, useLayoutEffect, useState } from "preact/hooks";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 import {
@@ -26,7 +26,7 @@ function text(value: string | undefined, fallback: string) {
 }
 
 function href(value: string | undefined, fallback: string) {
-  return safeNavigationHref(value, fallback);
+  return safeNavigationHref(localizedHref(value || fallback), fallback);
 }
 
 function themeColor(
@@ -187,7 +187,7 @@ export function ThreeMashAccountPage(props: Props) {
     if (mode === authMode) return;
     if (typeof window !== "undefined") {
       try {
-        window.history.pushState({}, "", nextHref);
+        window.history.pushState({}, "", localizedHref(nextHref));
       } catch {
         // Studio iframe navigation can reject history updates.
       }
@@ -200,12 +200,14 @@ export function ThreeMashAccountPage(props: Props) {
     if (tab === activeTab) return;
     navigateToMode(
       tab,
-      tab === "register" ? href(props.registerTabHref, "/account/register") : "/account/login",
+      localizedHref(
+        tab === "register" ? href(props.registerTabHref, "/account/register") : "/account/login",
+      ),
     );
   }
 
   function navigateToLogin() {
-    navigateToMode("login", "/account/login");
+    navigateToMode("login", localizedHref("/account/login"));
   }
 
   async function submit(event: Event) {
@@ -249,7 +251,7 @@ export function ThreeMashAccountPage(props: Props) {
             sessionStorage.removeItem("tm_customer_cache");
           } catch {}
         }
-        setTimeout(() => Router.navigate("/account"), 350);
+        setTimeout(() => Router.navigate(localizedHref("/account")), 350);
         return;
       }
       setStatus("error");

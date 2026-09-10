@@ -116,9 +116,9 @@ function CRS_COMPOSITE_TEMPLATE(): ProductDetailTemplateData {
     summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
     buyHrefBase: "/crs-composite-mukemmel-dayanimli-gecici-recinesi",
     whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: "WhatsApp'tan sor",
+    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
     addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: "Ekleniyor...",
+    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
     outOfStockText: tLocalized("Stok yok", "Out of stock"),
     trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
   },
@@ -177,14 +177,14 @@ function CRS_COMPOSITE_TEMPLATE(): ProductDetailTemplateData {
       { label: tLocalized("Eğilme modülü", "Flexural modulus"), value: "5000 MPa" },
       { label: tLocalized("Sertifikasyon", "Certification"), value: "CE Class IIa (MDR)" },
       { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Geçici + daimi", "Temporary + permanent") },
-      { label: tLocalized("Uyum", "Rapport"), value: tLocalized("Tüm DLP / LCD", "All DLP / LCD") },
+      { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("Tüm DLP / LCD", "All DLP / LCD") },
     ],
   },
   useCases: {
     index: "03",
     label: tLocalized("Uygulama & Uyumluluk", "Application & Compatibility"),
     titleHtml: tLocalized("Nerede kullanılır, <span class=\"em\">neyle çalışır?</span>", "Where is it used, <span class=\"em\">what does it work with?</span>"),
-    sideHtml: tLocalized("Hepsi tek bakışta: uygulama alanları, öne çıkan özellikler ve uyumlu 3D yazıcılar.", "Everything at a glance: application areas, standout features, and compatible 3D printers."),
+    sideHtml: tLocalized("Uygulama alanları ve uyumlu cihazlar hakkında bilgi alın.", "Learn about applications and compatible devices."),
     photos: [
       { src: CRS_GALLERY[1].src, alt: tLocalized("CRS Composite ile üretilmiş kron restorasyonu", "Crown restoration produced with CRS Composite"), title: tLocalized("Aynı gün kron", "Same-day crown"), text: tLocalized("Porselen benzeri güç ve estetik, tek seansta.", "Porcelain-like strength and aesthetics, in a single session.") },
       { src: CRS_GALLERY[2].src, alt: tLocalized("CRS Composite ile üretilmiş köprü restorasyonu", "Bridge restoration produced with CRS Composite"), title: tLocalized("Köprü restorasyonları", "Bridge restorations"), text: tLocalized("144 MPa dayanım; kırılmadan uzun süre kullanım.", "144 MPa strength; long-lasting use without breaking.") },
@@ -940,7 +940,7 @@ function makeWhatsappHref(product: IkasProduct) {
 
 function genericProductData(product: IkasProduct, variant: IkasProductVariant | null, labels: Pick<Props, "addToCartText" | "addingToCartText" | "outOfStockText">): ProductDetailTemplateData {
   const firstCategory = product.categories?.[0];
-  const categoryText = categoryName(firstCategory) || tLocalized("Kategori Adı", "Category Name");
+  const categoryText = categoryName(firstCategory) || tLocalized("Ürünler", "Products");
   const categoryLink = categoryHref(firstCategory);
   const gallery = productMediaGallery(product, variant);
   const href = getProductHref(product) || `/${productSlug(product)}`;
@@ -957,93 +957,89 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
     hero: {
       kicker: categoryText,
       titleHtml: product.name,
-      leadHtml: summaryText(product) || tLocalized("Ürün kısa açıklama metni buraya gelecek. Panelden veya ürün açıklamasından düzenleyebilirsiniz.", "The short product description text will go here. You can edit it from the panel or the product description."),
-      pills: [
-        { label: tLocalized("Örnek Rozet 1", "Sample Badge 1") },
-        { label: tLocalized("Örnek Rozet 2", "Sample Badge 2") },
-        { label: tLocalized("Örnek Rozet 3", "Sample Badge 3") },
-      ],
+      leadHtml: summaryText(product) || tLocalized("Bu ürün hakkında detaylı bilgi için bizimle iletişime geçebilirsiniz.", "Contact us for detailed information about this product."),
+      pills: [],
       gallery,
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: "",
       buyHrefBase: href,
       whatsappHref: makeWhatsappHref(product),
-      whatsappText: "WhatsApp'tan sor",
+      whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: labels.addToCartText || tLocalized("Sepete ekle", "Add to cart"),
-      addingToCartText: labels.addingToCartText || "Ekleniyor...",
+      addingToCartText: labels.addingToCartText || tLocalized("Ekleniyor...", "Adding..."),
       outOfStockText: labels.outOfStockText || tLocalized("Stok yok", "Out of stock"),
-      trustBadges: [tLocalized("Güven Rozeti 1", "Trust Badge 1"), tLocalized("Güven Rozeti 2", "Trust Badge 2"), tLocalized("Güven Rozeti 3", "Trust Badge 3")],
+      trustBadges: [],
     },
     ratings: {
       index: "01",
-      label: tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"),
-      titleHtml: tLocalized("Kullanıcı deneyimi <span class=\"em\">başlığı buraya gelecek.</span>", "User experience <span class=\"em\">heading will go here.</span>"),
-      sideHtml: tLocalized("Bu bölümün sağ tarafındaki detaylı açıklama metni buraya gelecek.", "The detailed description text for the right side of this section will go here."),
+      label: tLocalized("Ürün Bilgileri", "Product Information"),
+      titleHtml: tLocalized("Kullanıcı deneyimi ve ürün kullanımı.", "Product experience and usage."),
+      sideHtml: tLocalized("Ürün bilgileri ve kullanım detayları.", "Product information and usage details."),
       panelTitleHtml: tLocalized("Geri Bildirim &amp; Deneyim Başlığı", "Feedback &amp; Experience Title"),
       note: tLocalized("Örnek açıklama veya araştırma notu", "Sample description or research note"),
       items: [
-        { descriptionHtml: tLocalized("1. Deneyim maddesi açıklama metni buraya gelecek", "1. Experience item description text goes here"), percent: 95 },
-        { descriptionHtml: tLocalized("2. Deneyim maddesi açıklama metni buraya gelecek", "2. Experience item description text goes here"), percent: 90 },
-        { descriptionHtml: tLocalized("3. Deneyim maddesi açıklama metni buraya gelecek", "3. Experience item description text goes here") },
+        { descriptionHtml: tLocalized("Ürün kullanım deneyimi hakkında bilgi.", "Information about the product experience."), percent: 95 },
+        { descriptionHtml: tLocalized("Günlük iş akışına uyum sağlayan kullanım.", "Usage designed to fit the daily workflow."), percent: 90 },
+        { descriptionHtml: tLocalized("Teknik destek ve yönlendirme için bizimle iletişime geçin.", "Contact us for technical support and guidance.") },
       ],
     },
     metrics: {
       index: "02",
       label: tLocalized("TEKNİK ÖZELLİKLER", "TECHNICAL SPECIFICATIONS"),
       titleHtml: tLocalized("Bölüm ana başlığı ve <span class=\"em\">vurgulu metin.</span>", "Section main heading and <span class=\"em\">highlighted text.</span>"),
-      sideHtml: tLocalized("Teknik özellikler bölümü için sağ tarafta yer alan genel açıklama metni.", "The general description text on the right side for the technical specifications section."),
+      sideHtml: tLocalized("Teknik özellikler ve ürün detayları hakkında bilgi alın.", "Learn about technical specifications and product details."),
       items: [
-        { name: tLocalized("Özellik 1", "Feature 1"), value: "01", unit: "Birim", caption: tLocalized("1. kart açıklama metni buraya gelecek", "1. Card description text will go here") },
-        { name: tLocalized("Özellik 2", "Feature 2"), value: "02", unit: "Birim", caption: tLocalized("2. kart açıklama metni buraya gelecek", "2. Card description text will go here") },
-        { name: tLocalized("Özellik 3", "Feature 3"), value: "03", unit: "Birim", caption: tLocalized("3. kart açıklama metni buraya gelecek", "3. Card description text will go here") },
+        { name: tLocalized("Ürün özelliği", "Product feature"), value: "01", unit: tLocalized("Bilgi", "Info"), caption: tLocalized("Ürün özellikleri için ürün açıklamasını inceleyin.", "See the product description for specifications.") },
+        { name: tLocalized("Kullanım", "Usage"), value: "02", unit: tLocalized("Bilgi", "Info"), caption: tLocalized("Kullanım detayları için bizimle iletişime geçin.", "Contact us for usage details.") },
+        { name: tLocalized("Destek", "Support"), value: "03", unit: tLocalized("Bilgi", "Info"), caption: tLocalized("Teknik destek seçenekleri hakkında bilgi alın.", "Learn about technical support options.") },
       ],
     },
     useCases: {
       index: "03",
       label: tLocalized("KULLANIM ALANLARI", "APPLICATION AREAS"),
       titleHtml: tLocalized("Kullanım alanları ve <span class=\"em\">uygulama seçenekleri.</span>", "Application areas and <span class=\"em\">usage options.</span>"),
-      sideHtml: tLocalized("Uygulama alanları bölümünün sağ üst genel açıklama metni buraya gelecek.", "The general description text for the top right of the application areas section will go here."),
+      sideHtml: tLocalized("Ürününüz için uygun kullanım alanlarını keşfedin.", "Explore suitable applications for your product."),
       photos: [
         {
           src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/deb67f5e-a02a-4fa6-9cb8-595a277d69fd/1080/composite-apps-10.webp",
           alt: tLocalized("1. Görsel", "1. Image"),
           title: tLocalized("1. Görsel Başlığı", "1. Image Title"),
-          text: tLocalized("1. Görsel açıklama metni buraya gelecek.", "1. Image description text goes here."),
+          text: tLocalized("Ürün kullanımından bir görünüm.", "A view of the product in use."),
         },
         {
           src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/9d7bb34c-1f0d-4b36-8f0e-ce9a41863d55/1080/composite-apps-11.webp",
           alt: tLocalized("2. Görsel", "2. Image"),
           title: tLocalized("2. Görsel Başlığı", "2. Image Title"),
-          text: tLocalized("2. Görsel açıklama metni buraya gelecek.", "2. Image description text goes here."),
+          text: tLocalized("Ürünün iş akışındaki kullanımını inceleyin.", "See the product in the workflow."),
         },
         {
           src: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/1080/composite-apps-12.webp",
           alt: tLocalized("3. Görsel", "3. Image"),
           title: tLocalized("3. Görsel Başlığı", "3. Image Title"),
-          text: tLocalized("3. Görsel açıklama metni buraya gelecek.", "3. Image description text goes here."),
+          text: tLocalized("Detaylı ürün bilgileri için iletişime geçin.", "Contact us for detailed product information."),
         },
       ],
       cards: [
         {
           eyebrow: tLocalized("KART ETİKETİ 1", "CARD LABEL 1"),
           title: tLocalized("1. Kart Başlığı", "1. Card Title"),
-          items: [tLocalized("1. Madde açıklama metni", "1. Item description text"), tLocalized("2. Madde açıklama metni", "2. Item description text"), tLocalized("3. Madde açıklama metni", "3. Item description text")],
+          items: [tLocalized("Ürün özellikleri", "Product features"), tLocalized("Kullanım seçenekleri", "Usage options"), tLocalized("Teknik destek", "Technical support")],
         },
         {
           eyebrow: tLocalized("KART ETİKETİ 2", "CARD LABEL 2"),
           title: tLocalized("2. Kart Başlığı", "2. Card Title"),
-          items: [tLocalized("1. Madde açıklama metni", "1. Item description text"), tLocalized("2. Madde açıklama metni", "2. Item description text")],
+          items: [tLocalized("Kurulum desteği", "Setup support"), tLocalized("Kullanım önerileri", "Usage guidance")],
         },
       ],
       devices: {
         eyebrow: "UYUMLULUK",
         title: tLocalized("Sistem ve cihaz uyumluluğu başlığı.", "System and device compatibility heading."),
-        textHtml: tLocalized("Cihaz uyumluluğu ile ilgili genel açıklama metni buraya gelecek.", "The general description text about device compatibility will go here."),
+        textHtml: tLocalized("Uyumluluk bilgileri için ürün detaylarını ve teknik desteği inceleyin.", "Review the product details and technical support for compatibility information."),
         chips: [
-          { label: tLocalized("Örnek Cihaz 1", "Sample Device 1"), highlighted: true },
-          { label: tLocalized("Örnek Cihaz 2", "Sample Device 2"), highlighted: true },
-          { label: tLocalized("Örnek Cihaz 3", "Sample Device 3") },
-          { label: tLocalized("Örnek Cihaz 4", "Sample Device 4") },
+          { label: tLocalized("Uyumlu cihaz", "Compatible device"), highlighted: true },
+          { label: tLocalized("Teknik uyumluluk", "Technical compatibility"), highlighted: true },
+          { label: tLocalized("Kurulum desteği", "Setup support") },
+          { label: tLocalized("İş akışı desteği", "Workflow support") },
         ],
       },
     },
@@ -1055,23 +1051,23 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
       openFirst: true,
       items: [
         {
-          question: tLocalized("1. Örnek soru metni buraya gelecek?", "1. Sample question text will go here?"),
-          answerHtml: tLocalized("1. Soruya ait detaylı cevap metni buraya gelecek.", "1. The detailed answer text for the question will go here."),
+          question: tLocalized("Bu ürün hangi iş akışlarına uygundur?", "Which workflows is this product suitable for?"),
+          answerHtml: tLocalized("Ürünün iş akışınıza uygunluğu hakkında bilgi almak için bizimle iletişime geçin.", "Contact us to learn how the product fits your workflow."),
         },
         {
-          question: tLocalized("2. Örnek soru metni buraya gelecek?", "2. Sample question text will go here?"),
-          answerHtml: tLocalized("2. Soruya ait detaylı cevap metni buraya gelecek.", "2. The detailed answer text for the question will go here."),
+          question: tLocalized("Kurulumdan önce neler kontrol edilmelidir?", "What should be checked before installation?"),
+          answerHtml: tLocalized("Kurulum ve kullanım öncesi gereksinimler ürün detaylarına göre değişebilir; ekibimiz yardımcı olur.", "Pre-installation and usage requirements vary by product; our team can help."),
         },
         {
-          question: tLocalized("3. Örnek soru metni buraya gelecek?", "3. Sample question text will go here?"),
-          answerHtml: tLocalized("3. Soruya ait detaylı cevap metni buraya gelecek.", "3. The detailed answer text for the question will go here."),
+          question: tLocalized("Bu ürün için nasıl bilgi alabilirim?", "How can I get more information about this product?"),
+          answerHtml: tLocalized("Uygulama seçenekleri ve teknik özellikler için ürün bilgilerini inceleyin.", "Review the product information for applications and technical specifications."),
         },
       ],
     },
     specHighlight: {
       tag: tLocalized("ÖNE ÇIKAN DETAY", "FEATURED DETAIL"),
       titleHtml: tLocalized("Siyah kutu başlığı ve <span class=\"em\">vurgulu metin.</span>", "Black box heading and <span class=\"em\">highlighted text.</span>"),
-      descriptionHtml: tLocalized("Siyah kutu içerisindeki detaylı ürün açıklaması metni buraya gelecek.", "The detailed product description text inside the black box will go here."),
+      descriptionHtml: tLocalized("Ürün özellikleri ve kullanım seçenekleri hakkında bilgi alın.", "Learn about product features and usage options."),
       ctaText: tLocalized("İncele →", "View →"),
       ctaHref: "#satinal",
       rows: [
@@ -1083,13 +1079,13 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
     },
     related: {
       index: "07",
-      label: tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"),
+      label: tLocalized("İlgili Ürünler", "Related Products"),
       titleHtml: tLocalized("Aynı kategorideki <span class=\"em\">diğer ürünler.</span>", "<span class=\"em\">Other products</span> in the same category."),
       items: [
         {
           tag: tLocalized("1. KATEGORİ", "1. CATEGORY"),
           title: tLocalized("1. Örnek İlgili Ürün", "1. Sample Related Product"),
-          descriptionHtml: tLocalized("1. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.", "1. The short introductory description of the related product will go here."),
+          descriptionHtml: tLocalized("Aynı ürün ailesindeki seçenekleri inceleyin.", "Explore options from the same product family."),
           href: "#",
           linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
@@ -1098,7 +1094,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
         {
           tag: tLocalized("2. KATEGORİ", "2. CATEGORY"),
           title: tLocalized("2. Örnek İlgili Ürün", "2. Sample Related Product"),
-          descriptionHtml: tLocalized("2. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.", "2. The short introductory description of the related product will go here."),
+          descriptionHtml: tLocalized("İhtiyacınıza uygun alternatif ürünleri keşfedin.", "Discover alternative products for your needs."),
           href: "#",
           linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
@@ -1107,7 +1103,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
         {
           tag: tLocalized("3. KATEGORİ", "3. CATEGORY"),
           title: tLocalized("3. Örnek İlgili Ürün", "3. Sample Related Product"),
-          descriptionHtml: tLocalized("3. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.", "3. The short introductory description of the related product will go here."),
+          descriptionHtml: tLocalized("Uyumlu ürün ve aksesuar seçeneklerini görün.", "View compatible products and accessories."),
           href: "#",
           linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
@@ -1116,7 +1112,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
         {
           tag: tLocalized("4. KATEGORİ", "4. CATEGORY"),
           title: tLocalized("4. Örnek İlgili Ürün", "4. Sample Related Product"),
-          descriptionHtml: tLocalized("4. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.", "4. The short introductory description of the related product will go here."),
+          descriptionHtml: tLocalized("Ürün seçiminde ekibimizden destek alın.", "Get help from our team with product selection."),
           href: "#",
           linkText: tLocalized("İncele", "Explore"),
           background: "#0E0E0C",
@@ -1125,11 +1121,11 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
       ],
     },
     finalCta: {
-      titleHtml: tLocalized("Son aksiyon alanı <span class=\"em\">ana başlığı buraya gelecek.</span>", "The final call-to-action area's <span class=\"em\">main heading will go here.</span>"),
-      textHtml: tLocalized("Kullanıcıyı iletişime geçmeye veya satın almaya yönlendiren açıklama metni buraya gelecek.", "Descriptive text directing the user to get in touch or make a purchase will go here."),
-      primaryText: "1. Aksiyon Butonu",
+      titleHtml: tLocalized("Ürün seçiminiz için <span class=\"em\">yanınızdayız.</span>", "We are <span class=\"em\">here to help</span> with your product selection."),
+      textHtml: tLocalized("Ürün ve satın alma seçenekleri hakkında bilgi almak için ekibimizle iletişime geçin.", "Contact our team for product and purchase information."),
+      primaryText: tLocalized("İletişime geç", "Contact us"),
       primaryHref: "#",
-      secondaryText: "2. Aksiyon Butonu",
+      secondaryText: tLocalized("Satın alma seçenekleri", "Purchase options"),
       secondaryHref: "#",
     },
   };

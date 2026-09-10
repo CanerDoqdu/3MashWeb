@@ -82,6 +82,7 @@ test('Scenario 2 & 3: Component style output with unset, set, and changed editor
     function m() { return '100%'; }
     function imageFit(v) { return v || 'contain'; }
     function P(v) { return v || 'contain'; }
+    function H(v) { return v || 'contain'; }
     return ${funcCode};
   `);
   const threeMashThemeStyle = factory();
@@ -211,6 +212,7 @@ test('Scenario 4: Shrinking with small (60), very small (25), and negative (-50)
     function m() { return '100%'; }
     function imageFit(v) { return v || 'contain'; }
     function P(v) { return v || 'contain'; }
+    function H(v) { return v || 'contain'; }
     return ${funcCode};
   `);
   const threeMashThemeStyle = factory();

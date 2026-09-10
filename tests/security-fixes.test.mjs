@@ -162,7 +162,7 @@ test('recover password success redirects to the account login route instead of h
   const utilityFile = fileURLToPath(new URL('../src/components/ThreeMashAccountUtilityPage/index.tsx', import.meta.url));
   const utilityText = readFileSync(utilityFile, 'utf8');
 
-  assert.match(utilityText, /Router\.navigate\("\/account\/login"\)/);
+  assert.match(utilityText, /Router\.navigate\(localizedHref\("\/account\/login"\)\)/);
   assert.doesNotMatch(utilityText, /Router\.navigateToPage\("LOGIN"\)/);
 });
 

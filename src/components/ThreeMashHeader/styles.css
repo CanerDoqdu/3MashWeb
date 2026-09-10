@@ -679,8 +679,8 @@
 .tmh-actions > a,
 .tmh-icon-button,
 .tmh-action-button {
-  width: 24px;
-  height: 24px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1458,8 +1458,8 @@
   .tmh-icon-button,
   .tmh-action-button,
   .tmh-action-wrap {
-    width: 22px;
-    height: 22px;
+    width: 44px;
+    height: 44px;
   }
 
   .tmh-action-panel {

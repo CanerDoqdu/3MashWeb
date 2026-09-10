@@ -25,7 +25,7 @@ import ThreeMashAccountLayout from "../ThreeMashAccountLayout";
 import ThreeMashAccountPage from "../ThreeMashAccountPage";
 import { Props } from "./types";
 import type { Props as AccountInfoProps } from "../ThreeMashAccountInfoPage/types";
-import { t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
+import { localizedHref, t, tLocalized, tProp, isEnglishLocale } from "../../utils/i18n";
 export { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 import { businessConfig } from "../../utils/businessConfig";
@@ -74,7 +74,7 @@ export function text(value: string | undefined, fallbackTr: string, fallbackEn?:
 }
 
 export function href(value: string | undefined, fallback: string) {
-  return safeNavigationHref(value, fallback);
+  return safeNavigationHref(localizedHref(value || fallback), fallback);
 }
 
 function detectPhoneCountry(value: string | null | undefined) {
@@ -311,11 +311,13 @@ export function AccountProfileForm({
     setStatus("error");
   }
 
-  const formTitle =
+  const formTitle = text(
     props.profileTitle ||
-    props.formTitle ||
-    (props.mode === "account" ? props.titleText : undefined) ||
-    t("account.profile", tLocalized("Kişisel Bilgilerim", "My Personal Information"));
+      props.formTitle ||
+      (props.mode === "account" ? props.titleText : undefined),
+    "Kişisel Bilgilerim",
+    "My Personal Information",
+  );
 
   return (
     <form className="tmai-form tmau-form" onSubmit={submit}>
@@ -365,7 +367,7 @@ export function AccountProfileForm({
           <div className="tmai-phone-input tmau-phone-input">
             <label
               className="tmai-phone-country tmau-phone-country"
-              aria-label={t("account.phoneCountryAria", "Telefon ülke kodu")}
+              aria-label={t("account.phoneCountryAria", "Phone country code")}
             >
               <img
                 src={`https://cdn.myikas.com/sf/assets/flags/3x2/${phoneCountry.iso}.svg`}
@@ -457,13 +459,17 @@ export function AddressesView({
   addresses: IkasCustomerAddress[];
   props: DashboardProps;
 }) {
-  const title =
+  const title = text(
     props.addressesTitle ||
-    (props.mode === "addresses" ? props.titleText : undefined) ||
-    t("account.addresses", tLocalized("Adreslerim", "My Addresses"));
-  const emptyText =
-    (props.mode === "addresses" ? props.emptyText : undefined) ||
-    t("account.noAddresses", "Kayıtlı adresiniz bulunmuyor.");
+      (props.mode === "addresses" ? props.titleText : undefined),
+    "Adreslerim",
+    "My Addresses",
+  );
+  const emptyText = text(
+    props.mode === "addresses" ? props.emptyText : undefined,
+    "Kayıtlı adresiniz bulunmuyor.",
+    "No registered addresses found.",
+  );
 
   return (
     <>
@@ -492,13 +498,17 @@ export function OrdersView({
   orders: IkasOrder[];
   props: DashboardProps;
 }) {
-  const title =
+  const title = text(
     props.ordersTitle ||
-    (props.mode === "orders" ? props.titleText : undefined) ||
-    t("account.orders", tLocalized("Siparişlerim", "My Orders"));
-  const emptyText =
-    (props.mode === "orders" ? props.emptyText : undefined) ||
-    t("account.noOrders", "Henüz siparişiniz bulunmuyor.");
+      (props.mode === "orders" ? props.titleText : undefined),
+    "Siparişlerim",
+    "My Orders",
+  );
+  const emptyText = text(
+    props.mode === "orders" ? props.emptyText : undefined,
+    "Henüz siparişiniz bulunmuyor.",
+    "You haven't placed any orders yet.",
+  );
 
   return (
     <>
@@ -531,13 +541,17 @@ export function FavoritesView({
   favorites: IkasProduct[];
   props: DashboardProps;
 }) {
-  const title =
+  const title = text(
     props.favoritesTitle ||
-    (props.mode === "favorites" ? props.titleText : undefined) ||
-    t("account.favorites", tLocalized("Beğendiğim Ürünler", "My Favorites"));
-  const emptyText =
-    (props.mode === "favorites" ? props.emptyText : undefined) ||
-    t("account.noFavorites", "Beğendiğiniz ürün bulunmuyor.");
+      (props.mode === "favorites" ? props.titleText : undefined),
+    "Beğendiğim Ürünler",
+    "My Favorites",
+  );
+  const emptyText = text(
+    props.mode === "favorites" ? props.emptyText : undefined,
+    "Beğendiğiniz ürün bulunmuyor.",
+    "You have no favorite products.",
+  );
 
   return (
     <>
@@ -577,9 +591,11 @@ export function ForgotPasswordView({ props }: { props: DashboardProps }) {
     }
   }
 
-  const title =
-    (props.mode === "forgot-password" ? props.titleText : undefined) ||
-    t("auth.forgotPassword", "Parolamı Unuttum");
+  const title = text(
+    props.mode === "forgot-password" ? props.titleText : undefined,
+    "Şifremi Unuttum",
+    "Forgot Password",
+  );
 
   return (
     <div className="tmau-auth-form-wrap">
@@ -589,7 +605,7 @@ export function ForgotPasswordView({ props }: { props: DashboardProps }) {
         <p>
           {t(
             "auth.forgotPasswordDesc",
-            "Lütfen üye olurken kullandığınız email adresinizi giriniz. Şifreniz email adresinize gönderilecektir."
+            "Please enter the email address used during registration. Reset link will be sent to your email."
           )}
         </p>
       </header>
@@ -615,16 +631,16 @@ export function ForgotPasswordView({ props }: { props: DashboardProps }) {
           type="submit"
           disabled={status === "loading"}
         >
-          {status === "loading" ? t("common.sending", "Gönderiliyor...") : t("common.send", "Gönder")}
+          {status === "loading" ? t("common.sending", "Sending...") : t("common.send", "Send")}
         </button>
 
         {status !== "idle" && (
           <p className={`tmai-status tmau-status is-${status}`}>
             {status === "success"
-              ? t("auth.resetLinkSent", "Şifre yenileme bağlantısı email adresinize gönderildi.")
+              ? t("auth.resetLinkSent", "Password reset link has been sent to your email address.")
               : status === "error"
-                ? t("auth.resetLinkError", "İşlem tamamlanamadı. Email adresini kontrol edin.")
-                : t("common.sending", "Gönderiliyor...")}
+                ? t("auth.resetLinkError", "Could not complete operation. Please verify the email address.")
+                : t("common.sending", "Sending...")}
           </p>
         )}
       </form>
@@ -633,7 +649,7 @@ export function ForgotPasswordView({ props }: { props: DashboardProps }) {
         className="tmau-auth-login-link"
         href={href(props.loginHref, "/account/login")}
       >
-        {t("auth.loginTitle", "Üye Girişi")}
+        {t("auth.loginTitle", "Sign In")}
       </a>
     </div>
   );
@@ -692,7 +708,7 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
       if (success) {
         setStatus("success");
         setTimeout(() => {
-          Router.navigate("/account/login");
+          Router.navigate(localizedHref("/account/login"));
         }, 650);
         return;
       }
@@ -711,7 +727,7 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
         <p>
           {t(
             "auth.recoverPasswordDesc",
-            "Yeni şifrenizi belirleyin ve hesabınıza güvenli şekilde tekrar erişin."
+            "Set your new password to regain access to your account securely."
           )}
         </p>
       </header>
@@ -731,7 +747,7 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
         </label>
 
         <label className="tmau-auth-field tmai-field">
-          <span>* {t("auth.passwordAgain", "Şifre Tekrar")}</span>
+          <span>* {t("auth.passwordAgain", "Confirm Password")}</span>
           <input
             type="password"
             value={passwordAgain}
@@ -750,18 +766,18 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
           type="submit"
           disabled={status === "loading"}
         >
-          {status === "loading" ? t("common.saving", tLocalized("Kaydediliyor...", "Saving...")) : t("auth.updatePassword", "Şifreyi Güncelle")}
+          {status === "loading" ? t("account.saving", "Saving...") : t("auth.updatePassword", "Update Password")}
         </button>
 
         {status !== "idle" && (
           <p className={`tmai-status tmau-status is-${status}`}>
             {status === "success"
-              ? t("auth.passwordUpdated", "Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz.")
+              ? t("auth.passwordUpdated", "Your password has been updated. Redirecting to login page.")
               : status === "mismatch"
-                ? t("auth.passwordMismatch", "Şifreler eşleşmiyor.")
+                ? t("auth.passwordMismatch", "Passwords do not match.")
                 : status === "error"
-                  ? t("auth.operationFailed", "İşlem tamamlanamadı.")
-                  : t("common.saving", tLocalized("Kaydediliyor...", "Saving..."))}
+                  ? t("auth.operationFailed", "Operation failed.")
+                  : t("account.saving", "Saving...")}
           </p>
         )}
       </form>

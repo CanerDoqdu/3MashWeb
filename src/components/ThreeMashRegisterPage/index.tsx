@@ -6,7 +6,7 @@ import {
   type IkasImage,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { t, tLocalized, tProp } from "../../utils/i18n";
+import { localizedHref, t, tLocalized, tProp } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
 const defaultAuthImage =
@@ -22,7 +22,7 @@ function text(value: string | undefined, fallbackTr: string, fallbackEn?: string
 }
 
 function href(value: string | undefined, fallback: string) {
-  return safeNavigationHref(value, fallback);
+  return safeNavigationHref(localizedHref(value || fallback), fallback);
 }
 
 function themeColor(
@@ -128,7 +128,7 @@ export function ThreeMashRegisterPage(props: Props) {
             sessionStorage.removeItem("tm_studio_logged_out");
           } catch {}
         }
-        setTimeout(() => Router.navigate("/account"), 350);
+        setTimeout(() => Router.navigate(localizedHref("/account")), 350);
         return;
       }
       setStatus("error");

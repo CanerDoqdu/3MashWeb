@@ -474,7 +474,7 @@ function smoothCategoryClick(event: MouseEvent, rawHref: string) {
     } catch {
       // Storage can be unavailable
     }
-    window.location.href = safeRedirect(normalizedTargetPath);
+    window.location.href = safeRedirect(localizedHref(normalizedTargetPath));
     return;
   }
 
