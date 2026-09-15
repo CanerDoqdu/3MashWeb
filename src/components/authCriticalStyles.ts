@@ -53,6 +53,20 @@ const authCriticalStyles = `
 .tmrpg-auth-form > .tmrpg-auth-status { margin-bottom: 14px; }
 .tma-auth-form > :last-child,
 .tmrpg-auth-form > :last-child { margin-bottom: 0; }
+.tma-auth-tabs button,
+.tma-auth-tabs a,
+.tma-auth-tabs span {
+  font-family: var(--tm-theme-font-heading, Space Grotesk, Inter, sans-serif) !important;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.tma-auth-submit {
+  font-family: var(--tm-theme-font-heading, Space Grotesk, Inter, sans-serif) !important;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+}
 .tma-auth-secondary-title {
   grid-column: 2;
   margin: 12px 0 10px;
@@ -77,7 +91,8 @@ const authCriticalStyles = `
   height: fit-content;
   align-content: start;
 }
-.tma-auth-form.is-register {
+.tma-auth-form.is-register,
+.tma-auth-form.is-secondary {
   min-height: 0;
   height: fit-content;
   align-content: start;
@@ -147,8 +162,8 @@ const authCriticalStyles = `
   min-height: 26px;
   margin-bottom: 20px;
   padding: 0 11px;
-  background: var(--tm-theme-accent, #c7f136);
-  color: #3d4d0e;
+  background: var(--tm-theme-accent, #dbfa37);
+  color: #0e0e0c;
   font-size: 12px;
   font-weight: 800;
 }
@@ -156,7 +171,7 @@ const authCriticalStyles = `
 .tmrpg-auth-copy h1 {
   max-width: 100%;
   margin: 0;
-  color: var(--tm-theme-accent, #c7f136);
+  color: var(--tm-theme-accent, #dbfa37);
   font-family: var(--tm-theme-font-heading, Space Grotesk, Inter, sans-serif);
   font-size: clamp(30px, 3.1vw, 54px);
   line-height: .96;
@@ -232,12 +247,28 @@ const authCriticalStyles = `
 .is-register-page .tmrpg-auth-tabs > span { background: #fff !important; box-shadow: inset 0 0 0 1px var(--tm-theme-line, #e6e6e0) !important; }
 .is-register-page .tma-auth-tabs > button:first-child { background: var(--tm-theme-panel, #f1f1ec) !important; box-shadow: none !important; }
 .is-register-page .tma-auth-tabs > button:last-child { background: #fff !important; box-shadow: inset 0 0 0 1px var(--tm-theme-line, #e6e6e0) !important; }
-.tmrpg-auth-tabs > a { background: transparent !important; box-shadow: none !important; }
+.tmrpg-auth-tabs > a {
+  min-height: 0;
+  padding: 0;
+  color: var(--tm-theme-text, #0e0e0c);
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: transparent !important;
+  border: 0;
+  box-shadow: none !important;
+}
 .tmrpg-auth-tabs > span.is-active { background: #fff !important; box-shadow: inset 0 0 0 1px var(--tm-theme-line, #e6e6e0) !important; }
 .tma-auth-field,
 .tmrpg-auth-field { display: grid; gap: 8px; }
 .tma-auth-field span,
-.tmrpg-auth-field span { color: var(--tm-theme-sub, #55554e); font-size: 13px; font-weight: 700; line-height: 1.35; }
+.tmrpg-auth-field span {
+  color: var(--tm-theme-sub, #55554e);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
 .tma-auth-field input,
 .tmrpg-auth-field input {
   width: 100%;
@@ -248,19 +279,81 @@ const authCriticalStyles = `
   color: var(--tm-theme-text, #0e0e0c);
   padding: 0 14px;
   font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+}
+.tma-password-wrap,
+.tmrpg-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.tma-password-wrap input,
+.tmrpg-password-wrap input {
+  padding-right: 48px !important;
+}
+.tma-password-toggle,
+.tmrpg-password-toggle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--tm-theme-sub, #777771);
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: color 0.15s ease;
+}
+.tma-password-toggle:hover,
+.tmrpg-password-toggle:hover {
+  color: var(--tm-theme-text, #0e0e0c);
 }
 .tma-auth-check,
 .tmrpg-auth-check { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 11px; align-items: start; color: var(--tm-theme-sub, #55554e); font-size: 13px; line-height: 1.5; }
 .tma-auth-check input,
-.tmrpg-auth-check input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--tm-theme-accent, #c7f136); }
+.tmrpg-auth-check input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--tm-theme-accent, #dbfa37); }
 .tma-auth-submit,
-.tmrpg-auth-submit { display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 54px; border: 0; border-radius: 0; background: var(--tm-theme-accent, #c7f136); color: var(--tm-theme-text, #0e0e0c); font: inherit; font-weight: 800; cursor: pointer; }
+.tmrpg-auth-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 54px;
+  border: 0;
+  border-radius: 0;
+  background: var(--tm-theme-accent, #dbfa37);
+  color: var(--tm-theme-text, #0e0e0c);
+  font: inherit;
+  font-family: var(--tm-theme-font-heading, Space Grotesk, Inter, sans-serif) !important;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+}
 .tma-auth-underlink,
 .tmrpg-auth-login-callout a,
-.tma-auth-register-callout a { color: var(--tm-theme-text, #0e0e0c); font-size: 14px; font-weight: 800; text-decoration: none; }
+.tma-auth-register-callout a {
+  width: max-content;
+  color: var(--tm-theme-text, #0e0e0c);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+  text-decoration: none;
+}
 .tma-auth-password-links { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
 .tma-auth-register-callout,
 .tmrpg-auth-login-callout { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-top: 18px; border-top: 1px solid var(--tm-theme-line, #e6e6e0); color: var(--tm-theme-sub, #55554e); font-size: 14px; line-height: 1.45; }
+.tma-auth-register-callout .tma-auth-secondary-link { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 980px) {
   .three-mash-auth-page,
   .three-mash-register-page {

@@ -3,7 +3,7 @@ import {
   cartStore,
   createMediaSrcset,
   customerStore,
- 
+  initCustomerStore,
   getDefaultSrc,
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getProductHref,
@@ -14,7 +14,7 @@ import {
   initProductList,
   removeItem,
   searchProductList as updateProductSearchList,
-  
+
   type IkasCart,
   type IkasOrderLineItem,
   type IkasProduct,
@@ -30,7 +30,13 @@ import { sanitizeHtml, sanitizeSvgMarkup } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
-import { performLogout, isCustomerAuthenticated } from "../../utils/auth";
+import {
+  performLogout,
+  isCustomerAuthenticated,
+  subscribeAuthState,
+  hasCustomerToken,
+  type CustomerAuthState,
+} from "../../utils/auth";
 import {
   ACF_FEP_FILM_SLUG,
   ARGENZ_HT_MULTILAYER_SLUG,
@@ -120,6 +126,8 @@ type HeaderAnnouncementOverride = {
   ctaText?: string;
   href?: string;
 };
+
+
 
 function productListPropValue(source: unknown): IkasProductList["productListPropValue"] | null {
   if (!source || typeof source !== "object") return null;
@@ -1010,7 +1018,10 @@ function headerRouteHref(value: string | undefined, fallback: string) {
   const slug = routeTextKey(internal || trimmed);
 
   if (normalized === "/" && fallback === "/cart") return localizedHref("/cart");
-  if (slug === "account-login" || slug === "login" || slug === tLocalized("hesabim", "hesabim") || slug === "account") return localizedHref("/account/login");
+  if (slug === "account-login" || slug === "login") return localizedHref("/account/login");
+  if (slug === "account" || slug === tLocalized("hesabim", "hesabim")) {
+    return localizedHref(fallback.includes("/account/login") ? "/account/login" : (internal || fallback));
+  }
   if (slug === "cart" || slug === tLocalized("sepet", "cart")) return localizedHref("/cart");
   if (slug === "search" || slug === tLocalized("arama", "search")) return localizedHref("/search");
   if (productCategoryRoutes[slug]) return localizedHref(productCategoryRoutes[slug]);
@@ -1895,10 +1906,10 @@ export function ThreeMashHeader(props: Props) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isLangOpen]);
 
-const [cart, setCart] = useState<IkasCart | null>(
-  () => getCurrentCart()
-);
-const [cartStatus, setCartStatus] = useState(() => getCartStatus());
+  const [cart, setCart] = useState<IkasCart | null>(
+    () => getCurrentCart()
+  );
+  const [cartStatus, setCartStatus] = useState(() => getCartStatus());
   const [removingCartItemId, setRemovingCartItemId] = useState("");
   const [productsMenuLeft, setProductsMenuLeft] = useState<number | null>(null);
   const [whyMenuLeft, setWhyMenuLeft] = useState<number | null>(null);
@@ -1913,8 +1924,40 @@ const [cartStatus, setCartStatus] = useState(() => getCartStatus());
   // ── Compute announcement fresh on every render (no stale content) ──
   const productAnnouncement = currentProductAnnouncement();
 
-  const authState = isCustomerAuthenticated();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  const [authState, setAuthState] = useState<CustomerAuthState>(() => {
+    return isCustomerAuthenticated();
+  });
   const isAuthenticated = authState === "authenticated";
+
+  useEffect(() => {
+    setIsHydrated(true);
+
+    if (!customerStore._initialized && hasCustomerToken()) {
+      initCustomerStore(customerStore)
+        .then(() => {
+          setAuthState(isCustomerAuthenticated());
+        })
+        .catch(() => {});
+    }
+
+    const unsubscribe = subscribeAuthState((nextState) => {
+      setAuthState(nextState);
+    });
+
+    // Safety poll: catches late store init from other components or
+    // race conditions where MobX reaction misses the change.
+    const pollId = setInterval(() => {
+      const next = isCustomerAuthenticated();
+      setAuthState((prev) => (prev !== next ? next : prev));
+    }, 800);
+
+    return () => {
+      unsubscribe();
+      clearInterval(pollId);
+    };
+  }, []);
 
   const showActionIcons = props.showActionIcons !== false;
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
@@ -1924,14 +1967,14 @@ const [cartStatus, setCartStatus] = useState(() => getCartStatus());
   const searchProductList = resolvedSearchProductList || normalizeSearchProductList(props.searchProductList);
   const searchSuggestionItems = searchSuggestions(searchProductList?.data || [], searchQuery);
   const hasSearchSuggestions = isSearchOpen && searchQuery.trim().length > 0 && searchSuggestionItems.length > 0;
-const cartItems =
-  cart?.orderLineItems?.filter(
-    (item) =>
-      !item.deleted &&
-      Number(item.quantity || 0) > 0
-  ) || []; const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
-  const visibleCartItems = cartItems;
-  
+  const cartItems =
+    cart?.orderLineItems?.filter(
+      (item) =>
+        !item.deleted &&
+        Number(item.quantity || 0) > 0
+    ) || []; const cartItemCount = cartItems.reduce((total, item) => total + Number(item.quantity || 0), 0);
+  const visibleCartItems = cartItems.slice(0, 4);
+
   // Compute all dynamic text at render time so they reflect language changes
   const defaultAnn = getDefaultAnnouncement();
   const productsMenuText = props.productsMenuText || getDefaultProductsMenuText();
@@ -2005,12 +2048,20 @@ const cartItems =
 
   async function handleHeaderLogout(event: Event) {
     event.preventDefault();
-    // performLogout clears storage, clears cart, and redirects protected routes.
-    await performLogout();
+    setActiveAction(null);
+    await performLogout({ forceRedirect: true, redirectTarget: "/" });
   }
 
   // ── Profile links in dropdown ─────────────────────────────────────
   const loginTarget = headerRouteHref(props.accountHref, "/account/login");
+  // Ensure user is only treated as authed when a valid token exists in storage
+  const isCurrentlyAuthed = isHydrated && hasCustomerToken() && (isAuthenticated || !!customerStore.customer);
+  const ordersTarget = headerRouteHref(props.profileLink1Href, "/account/orders");
+  const addressesTarget = headerRouteHref(props.profileLink2Href, "/account/addresses");
+
+  const customerDisplayName = customerStore.customer
+    ? `${customerStore.customer.firstName ?? ""} ${customerStore.customer.lastName ?? ""}`.trim() || customerStore.customer.email
+    : null;
 
   const profileLinks = [
     {
@@ -2020,9 +2071,8 @@ const cartItems =
         "Siparişlerim",
         "My Orders",
       ),
-      link: isAuthenticated
-        ? headerRouteHref(props.profileLink1Href, "/account/orders")
-        : loginTarget,
+      link: isCurrentlyAuthed ? ordersTarget : loginTarget,
+      authHref: ordersTarget,
       isProtected: true,
       isLogout: false,
     },
@@ -2033,9 +2083,8 @@ const cartItems =
         "Adreslerim",
         "My Addresses",
       ),
-      link: isAuthenticated
-        ? headerRouteHref(props.profileLink2Href, "/account/addresses")
-        : loginTarget,
+      link: isCurrentlyAuthed ? addressesTarget : loginTarget,
+      authHref: addressesTarget,
       isProtected: true,
       isLogout: false,
     },
@@ -2055,28 +2104,33 @@ const cartItems =
     },
     {
       icon: defaultLogoutSvg,
-      label: isAuthenticated
+      label: isCurrentlyAuthed
         ? tProp(
-            props.profileLink6Text,
-            "Çıkış yap",
-            "Sign Out",
-          )
+          props.profileLink6Text,
+          "Çıkış yap",
+          "Sign Out",
+        )
         : tLocalized("Giriş Yap", "Log In"),
-      link: isAuthenticated ? "#" : loginTarget,
+      link: isCurrentlyAuthed ? "#" : loginTarget,
+      authHref: loginTarget,
       isProtected: false,
-      isLogout: isAuthenticated,
+      isLogout: isCurrentlyAuthed,
     },
   ];
 
   function handleDropdownLinkClick(event: MouseEvent, item: (typeof profileLinks)[0]) {
+    setActiveAction(null);
     if (item.isLogout) {
       handleHeaderLogout(event);
       return;
     }
-    if (item.isProtected) {
-      event.preventDefault();
-      window.location.href = safeRedirect(item.link);
-    }
+    event.preventDefault();
+    const authed = isAuthenticated || isCustomerAuthenticated() === "authenticated" || hasCustomerToken();
+    const destination = item.isProtected
+      ? (authed ? (item.authHref || item.link) : loginTarget)
+      : item.link;
+
+    window.location.href = safeRedirect(destination);
   }
   const accountMenuTitle = tLocalized("Hesabım", "My Account");
   const accountMenuDescription = tProp(
@@ -2137,7 +2191,7 @@ const cartItems =
     }
   }, [isSearchOpen]);
 
-  
+
 
   useEffect(() => {
     const productList = normalizeSearchProductList(props.searchProductList);
@@ -2200,7 +2254,7 @@ const cartItems =
       document.documentElement.style.scrollBehavior = "auto";
       safeHistoryReplace(`${window.location.pathname}${window.location.search}`);
       window.scrollTo(0, 0);
-     
+
     }
 
     const scrollToPendingSection = () => {
@@ -2219,8 +2273,8 @@ const cartItems =
     };
 
     const timeout = window.setTimeout(() => {
-  frame = window.requestAnimationFrame(scrollToPendingSection);
-}, pendingSectionId ? 300 : 120);
+      frame = window.requestAnimationFrame(scrollToPendingSection);
+    }, pendingSectionId ? 300 : 120);
 
     return () => {
       window.clearTimeout(timeout);
@@ -2232,7 +2286,7 @@ const cartItems =
     };
   }, []);
 
-  
+
 
   useEffect(() => {
     const productList = searchProductList;
@@ -2278,30 +2332,30 @@ const cartItems =
   }, []);
 
 
- useEffect(() => {
-  let mounted = true;
-  const unsubscribe = subscribeCart(
+  useEffect(() => {
+    let mounted = true;
+    const unsubscribe = subscribeCart(
       (nextCart, nextStatus) => {
-      if (!mounted) return;
-      setCart(nextCart);
+        if (!mounted) return;
+        setCart(nextCart);
         setCartStatus(nextStatus);
-    }
-  );
+      }
+    );
 
     void initGlobalCart();
 
-  const syncCart = () => {
-    setCart(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
+    const syncCart = () => {
+      setCart(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
       setCartStatus(getCartStatus());
-  };
-  window.addEventListener("3mash-cart-updated", syncCart);
+    };
+    window.addEventListener("3mash-cart-updated", syncCart);
 
-  return () => {
-    mounted = false;
-    unsubscribe();
-    window.removeEventListener("3mash-cart-updated", syncCart);
-  };
-}, []);
+    return () => {
+      mounted = false;
+      unsubscribe();
+      window.removeEventListener("3mash-cart-updated", syncCart);
+    };
+  }, []);
   useEffect(() => {
     function smoothSamePageAnchor(event: MouseEvent) {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -2470,29 +2524,29 @@ const cartItems =
     goToSearchMatch();
   }
 
-async function removeCartItem(
-  event: Event,
-  item: IkasOrderLineItem
-) {
-  event.preventDefault();
-  event.stopPropagation();
+  async function removeCartItem(
+    event: Event,
+    item: IkasOrderLineItem
+  ) {
+    event.preventDefault();
+    event.stopPropagation();
 
-  if (removingCartItemId) return;
+    if (removingCartItemId) return;
 
-  setRemovingCartItemId(item.id);
+    setRemovingCartItemId(item.id);
 
-  try {
-    await removeItem(item);
+    try {
+      await removeItem(item);
 
-    // IKAS store değiştiyse anında tüm siteye yayınla.
-    publishCartFromIkasStore();
+      // IKAS store değiştiyse anında tüm siteye yayınla.
+      publishCartFromIkasStore();
 
-    // Server doğrulaması arkada.
-    void refreshGlobalCart();
-  } finally {
-    setRemovingCartItemId("");
+      // Server doğrulaması arkada.
+      void refreshGlobalCart();
+    } finally {
+      setRemovingCartItemId("");
+    }
   }
-}
 
 
 
@@ -2528,27 +2582,27 @@ async function removeCartItem(
                   {isEnglishLocale() ? (
                     <>
                       <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <rect width="60" height="40" fill="#012169" rx="2"/>
-                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6"/>
-                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5"/>
-                        <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10"/>
-                        <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6"/>
+                        <rect width="60" height="40" fill="#012169" rx="2" />
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6" />
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5" />
+                        <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10" />
+                        <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6" />
                       </svg>
                       <span>EN</span>
                     </>
                   ) : (
                     <>
                       <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <rect width="1200" height="800" fill="#E30A17" rx="30"/>
-                        <circle cx="425" cy="400" r="200" fill="#ffffff"/>
-                        <circle cx="475" cy="400" r="160" fill="#E30A17"/>
-                        <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81"/>
+                        <rect width="1200" height="800" fill="#E30A17" rx="30" />
+                        <circle cx="425" cy="400" r="200" fill="#ffffff" />
+                        <circle cx="475" cy="400" r="160" fill="#E30A17" />
+                        <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81" />
                       </svg>
                       <span>TR</span>
                     </>
                   )}
                   <svg className={`tmh-lang-caret ${isLangOpen ? "is-open" : ""}`} width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
 
@@ -2572,10 +2626,10 @@ async function removeCartItem(
                       }}
                     >
                       <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <rect width="1200" height="800" fill="#E30A17" rx="30"/>
-                        <circle cx="425" cy="400" r="200" fill="#ffffff"/>
-                        <circle cx="475" cy="400" r="160" fill="#E30A17"/>
-                        <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81"/>
+                        <rect width="1200" height="800" fill="#E30A17" rx="30" />
+                        <circle cx="425" cy="400" r="200" fill="#ffffff" />
+                        <circle cx="475" cy="400" r="160" fill="#E30A17" />
+                        <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81" />
                       </svg>
                       <span>Türkçe (TR)</span>
                       {!isEnglishLocale() && <span className="tmh-lang-check">✓</span>}
@@ -2598,11 +2652,11 @@ async function removeCartItem(
                       }}
                     >
                       <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <rect width="60" height="40" fill="#012169" rx="2"/>
-                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6"/>
-                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5"/>
-                        <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10"/>
-                        <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6"/>
+                        <rect width="60" height="40" fill="#012169" rx="2" />
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6" />
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5" />
+                        <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10" />
+                        <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6" />
                       </svg>
                       <span>English (EN)</span>
                       {isEnglishLocale() && <span className="tmh-lang-check">✓</span>}
@@ -2623,12 +2677,12 @@ async function removeCartItem(
           <nav className="tmh-desktop-nav" aria-label={mobileMenuLabel}>
             <ul className="tmh-menu">
               <li
-  ref={productsMenuRef}
-  className={activeMenu === "products" ? "is-open" : ""}
-  onMouseEnter={() => openMenu("products")}
-  onMouseLeave={() => setActiveMenu(null)}
-  onFocusIn={() => openMenu("products")}
->
+                ref={productsMenuRef}
+                className={activeMenu === "products" ? "is-open" : ""}
+                onMouseEnter={() => openMenu("products")}
+                onMouseLeave={() => setActiveMenu(null)}
+                onFocusIn={() => openMenu("products")}
+              >
                 <button className="tmh-menu-trigger" type="button">
                   <RichInline value={productsMenuText} wordStyle={props} />
                   <CaretIcon />
@@ -2660,13 +2714,13 @@ async function removeCartItem(
                 </div>
               </li>
 
-            <li
-  ref={whyMenuRef}
-  className={activeMenu === "why" ? "is-open" : ""}
-  onMouseEnter={() => openMenu("why")}
-  onMouseLeave={() => setActiveMenu(null)}
-  onFocusIn={() => openMenu("why")}
->
+              <li
+                ref={whyMenuRef}
+                className={activeMenu === "why" ? "is-open" : ""}
+                onMouseEnter={() => openMenu("why")}
+                onMouseLeave={() => setActiveMenu(null)}
+                onFocusIn={() => openMenu("why")}
+              >
                 <button className="tmh-menu-trigger" type="button">
                   <RichInline value={whyMenuText} wordStyle={props} />
                   <CaretIcon />
@@ -2710,13 +2764,11 @@ async function removeCartItem(
           </nav>
 
           <div className={`tmh-actions${isSearchOpen ? " is-search-open" : ""}`}>
-            <form className="tmh-inline-search" role="search" onSubmit={submitSearch}>
+            <form className="tmh-inline-search" onSubmit={submitSearch}>
               {isSearchOpen && (
                 <input
                   ref={searchInputRef}
                   className="tmh-inline-search-input"
-                  type="search"
-                  name="q"
                   value={searchQuery}
                   placeholder={props.searchPlaceholder || ""}
                   aria-label={props.searchPlaceholder || ""}
@@ -2747,7 +2799,7 @@ async function removeCartItem(
               ) : null}
             </form>
             {props.showProfileMenu === false ? (
-              <a href={headerRouteHref(props.accountHref, "/account/login")} aria-label={props.accountAriaLabel || ""}>
+              <a href={headerRouteHref(props.accountHref, isCurrentlyAuthed ? "/account" : "/account/login")} aria-label={props.accountAriaLabel || ""}>
                 <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
@@ -2766,11 +2818,15 @@ async function removeCartItem(
                   hidden={activeAction !== "profile"}
                 >
                   <span className="tmh-action-panel-kicker">3Mash</span>
-                  <b dangerouslySetInnerHTML={richText(accountMenuTitle, props)} />
+                  <b dangerouslySetInnerHTML={richText(isCurrentlyAuthed && customerDisplayName ? customerDisplayName : accountMenuTitle, props)} />
                   <p dangerouslySetInnerHTML={richText(accountMenuDescription, props)} />
-                  <div className="tmh-panel-links">
-                    {profileLinks.map((item) => (
+                  <div
+                    className="tmh-panel-links"
+                    key={isCurrentlyAuthed ? "tmh-links-authed" : "tmh-links-guest"}
+                  >
+                    {profileLinks.map((item, index) => (
                       <a
+                        key={`${isCurrentlyAuthed ? "authed" : "guest"}-${index}-${item.link}`}
                         href={item.isLogout ? "#" : href(item.link)}
                         onClick={(e) => handleDropdownLinkClick(e, item)}
                       >
@@ -2796,11 +2852,11 @@ async function removeCartItem(
                   onClick={() => toggleAction("store")}
                 >
                   <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
- {cartItemCount > 0 ? (
-  <span className="tmh-cart-badge">
-    {cartItemCount}
-  </span>
-) : null}         </button>
+                  {cartItemCount > 0 ? (
+                    <span className="tmh-cart-badge">
+                      {cartItemCount}
+                    </span>
+                  ) : null}         </button>
                 <div
                   className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}
                   hidden={activeAction !== "store"}
@@ -2827,14 +2883,14 @@ async function removeCartItem(
                       <div className="tmh-cart-count">{cartItemCount} {tLocalized("ürün sepetinizde", "items in your cart")}</div>
                       <div className="tmh-cart-live-list">
                         {visibleCartItems.map((item) => {
-                    const imageCandidates = Array.from(
-  new Set([
-    cartImageUrl(item),
-    ...orderLineImageUrlCandidates(item, 180),
-  ].filter(Boolean))
-) as string[];
+                          const imageCandidates = Array.from(
+                            new Set([
+                              cartImageUrl(item),
+                              ...orderLineImageUrlCandidates(item, 180),
+                            ].filter(Boolean))
+                          ) as string[];
 
-const image = imageCandidates[0];
+                          const image = imageCandidates[0];
                           const variant = cartItemVariantText(item);
                           return (
                             <div className="tmh-cart-live-item" key={item.id}>
@@ -2907,7 +2963,7 @@ const image = imageCandidates[0];
             <a className="tmh-mobile-accent-link" href={href(productPrimary[2]?.href)} dangerouslySetInnerHTML={richText(productPrimary[2]?.title, props)} />
             <a href={href(productPrimary[0]?.href)} dangerouslySetInnerHTML={richText(productPrimary[0]?.title, props)} />
             <a href={academyPageTarget(props.academyHref)} dangerouslySetInnerHTML={richText(academyText, props)} />
-            <a href={headerRouteHref(props.accountHref, "/account/login")} dangerouslySetInnerHTML={richText(accountMenuTitle, props)} />
+            <a href={headerRouteHref(props.accountHref, isCurrentlyAuthed ? "/account" : "/account/login")} dangerouslySetInnerHTML={richText(accountMenuTitle, props)} />
             <div className="tmh-mobile-lang-wrap">
               <button
                 type="button"

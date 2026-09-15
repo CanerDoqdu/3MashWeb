@@ -1,7 +1,7 @@
 .three-mash-hero {
   width: 100%;
   margin: 0;
-  padding: 96px 0 0;
+
   background:
     radial-gradient(900px 400px at 85% -10%, rgba(199, 241, 54, 0.16), transparent 60%),
     var(--tmhero-bg);
@@ -540,6 +540,16 @@
     align-items: center;
   }
 }
+
+@media (max-width: 1920px) {
+  .three-mash-hero {  
+    padding-top: 96px;
+  }
+
+@media (max-width: 1280px) {
+  .three-mash-hero {  
+    padding-top: 10px;
+  }
 
 @media (max-width: 960px) {
   .three-mash-hero {

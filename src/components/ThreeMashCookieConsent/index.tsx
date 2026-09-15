@@ -297,7 +297,7 @@ export function ThreeMashCookieConsent() {
           <div className="tm-cookie-visual-wrap">
             <img
               src={cookiePrinterImage}
-              alt="3MASH Dental 3D Printer"
+              alt={t("cookies.printerAlt", "3MASH Dental 3D Printer")}
               className="tm-cookie-printer-img"
               loading="lazy"
             />
@@ -399,7 +399,7 @@ export function ThreeMashCookieConsent() {
                   </p>
                 </div>
                 <div className="tm-cookie-switch-wrap">
-                  <input type="checkbox" checked disabled className="tm-cookie-input-switch" aria-label="Zorunlu Çerezler" />
+                  <input type="checkbox" checked disabled className="tm-cookie-input-switch" aria-label={t("cookies.necessaryTitle", "Strictly Necessary")} />
                   <span className="tm-cookie-switch-ui is-disabled-checked" />
                 </div>
               </div>
@@ -426,7 +426,7 @@ export function ThreeMashCookieConsent() {
                     className="tm-cookie-input-switch"
                     checked={preferences.analytics}
                     onChange={(e) => setPreferences((current) => ({ ...current, analytics: (e.target as HTMLInputElement).checked }))}
-                    aria-label="Analitik Çerezleri"
+                    aria-label={t("cookies.analyticsTitle", "Performance & Analytics")}
                   />
                   <span className="tm-cookie-switch-ui" />
                 </label>
@@ -454,7 +454,7 @@ export function ThreeMashCookieConsent() {
                     className="tm-cookie-input-switch"
                     checked={preferences.marketing}
                     onChange={(e) => setPreferences((current) => ({ ...current, marketing: (e.target as HTMLInputElement).checked }))}
-                    aria-label="Pazarlama Çerezleri"
+                    aria-label={t("cookies.marketingTitle", "Marketing & Targeting")}
                   />
                   <span className="tm-cookie-switch-ui" />
                 </label>

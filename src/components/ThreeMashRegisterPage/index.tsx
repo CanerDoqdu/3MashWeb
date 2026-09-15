@@ -6,6 +6,7 @@ import {
   type IkasImage,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import authCriticalStyles from "../authCriticalStyles";
 import { localizedHref, t, tLocalized, tProp } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -94,11 +95,31 @@ function imageSource(
   return fallback;
 }
 
+function EyeIcon({ visible }: { visible: boolean }) {
+  if (visible) {
+    return (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    );
+  }
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+      <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+      <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+      <line x1="2" y1="2" x2="22" y2="22" />
+    </svg>
+  );
+}
+
 export function ThreeMashRegisterPage(props: Props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [marketingAccepted, setMarketingAccepted] = useState(false);
   const [status, setStatus] = useState<
@@ -173,9 +194,9 @@ export function ThreeMashRegisterPage(props: Props) {
     ),
     "--tmrpg-auth-accent": themeColor(
       props.accentColor,
-      "#C7F136",
+      "#DBFA37",
       "--tm-theme-accent",
-      ["#dbfa37"],
+      ["#c7f136"],
     ),
     "--tmrpg-auth-button-text": themeColor(
       props.buttonTextColor,
@@ -189,6 +210,9 @@ export function ThreeMashRegisterPage(props: Props) {
 
   return (
     <section className="three-mash-register-page" style={style}>
+      <link rel="preload" as="font" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2" type="font/woff2" crossOrigin="anonymous" />
+      <link rel="preload" as="font" href="https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj4PVnsqPMBTTA.woff2" type="font/woff2" crossOrigin="anonymous" />
+      <style dangerouslySetInnerHTML={{ __html: authCriticalStyles }} />
       <div className="tmrpg-auth-panel">
         <form className="tmrpg-auth-form" onSubmit={submit}>
           <div className="tmrpg-auth-copy">
@@ -254,16 +278,27 @@ export function ThreeMashRegisterPage(props: Props) {
 
           <label className="tmrpg-auth-field">
             <span>* {text(props.passwordLabel, tLocalized("Şifre", "Password"), "Password")}</span>
-            <input
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              value={password}
-              required
-              onInput={(event) =>
-                setPassword((event.currentTarget as HTMLInputElement).value)
-              }
-            />
+            <div className="tmrpg-password-wrap">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                value={password}
+                required
+                onInput={(event) =>
+                  setPassword((event.currentTarget as HTMLInputElement).value)
+                }
+              />
+              <button
+                type="button"
+                className="tmrpg-password-toggle"
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? tLocalized("Şifreyi gizle", "Hide password") : tLocalized("Şifreyi göster", "Show password")}
+                tabIndex={-1}
+              >
+                <EyeIcon visible={showPassword} />
+              </button>
+            </div>
           </label>
 
           {/* 1. Üyelik Sözleşmesi & KVKK Aydınlatma Metni — Zorunlu, tiksiz gelir */}
@@ -286,7 +321,7 @@ export function ThreeMashRegisterPage(props: Props) {
               <a href={href(props.kvkkHref, tLocalized("/pages/gizlilik-politikasi-ve-kvkk", "/pages/gizlilik-politikasi-ve-kvkk"))}>
                 {t("auth.termsKvkkLink", tLocalized("KVKK Aydınlatma Metni", "KVKK Clarification Text"))}
               </a>
-              {t("auth.termsSuffix", tLocalized("'ni okudum, kabul ediyorum. *", " have been read and agreed to. *"))}
+              {t("auth.termsSuffix", tLocalized("'ni okudum, kabul ediyorum. ", " have been read and agreed to. *"))}
             </span>
           </label>
 
@@ -311,7 +346,7 @@ export function ThreeMashRegisterPage(props: Props) {
               >
                 {t("auth.marketingConsentLink", tLocalized("Ticari Elektronik İleti Onayı", "Commercial Electronic Message Consent"))}
               </a>{" "}
-              {t("auth.marketingConsentSuffix", tLocalized("metnini okudum, onaylıyorum. Tarafıma ticari elektronik ileti gönderilmesini kabul ediyorum. *", " text, I have read and agree to receive commercial electronic messages. *"))}
+              {t("auth.marketingConsentSuffix", tLocalized("metnini okudum, onaylıyorum. Tarafıma ticari elektronik ileti gönderilmesini kabul ediyorum. ", " text, I have read and agree to receive commercial electronic messages. *"))}
             </span>
           </label>
 

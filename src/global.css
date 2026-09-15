@@ -76,16 +76,18 @@
   }
 }
 
-:root {
+:root,
+:host,
+[data-cc-scope] {
   --bg: #FAFAF7;
   --ink: #0E0E0C;
   --sub: #55554E;
   --mut: #6B6B63;
   --line: #E6E6E0;
   --line2: #D5D5CD;
-  --lime: #C7F136;
-  --lime-ink: #3D4D0E;
-  --lime-soft: #F2F8DC;
+  --lime: #DBFA37;
+  --lime-ink: #0E0E0C;
+  --lime-soft: rgba(219, 250, 55, 0.16);
   --red: #E2492F;
   --panel: #F1F1EC;
   --dark: #0E0E0C;

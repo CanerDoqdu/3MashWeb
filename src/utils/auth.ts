@@ -1,4 +1,4 @@
-import { customerStore, logout } from "@ikas/bp-storefront";
+import { customerStore, initCustomerStore, logout, reaction } from "@ikas/bp-storefront";
 import { localizedHref } from "./i18n";
 import { safeRedirect } from "./safeRedirect";
 import { clearGlobalCart } from "../components/cartState";
@@ -13,6 +13,11 @@ export type CustomerAuthState =
  * Public account routes (/account/login, /account/register, /account/forgot-password, /account/recover-password) return false.
  * Protected account routes (/account, /account/orders, /account/addresses, /account/favorites, etc.) return true.
  */
+/**
+ * Checks if the given or current pathname represents a protected account route.
+ * Public account routes (/account/login, /account/register, /account/forgot-password, /account/recover-password) return false.
+ * Protected account routes (/account, /account/orders, /account/addresses, /account/favorites, etc.) return true.
+ */
 export function isProtectedPath(rawPath?: string | null): boolean {
   let path = rawPath;
   if (!path && typeof window !== "undefined") {
@@ -21,7 +26,8 @@ export function isProtectedPath(rawPath?: string | null): boolean {
   if (!path) return false;
 
   const clean = path.split("?")[0].split("#")[0].toLowerCase().trim();
-  const withoutLang = clean.replace(/^\/en(?:\/|$)/, "/");
+  // Strip any 2-letter language prefix (e.g. /tr, /en, /tr/, /en/)
+  const withoutLang = clean.replace(/^\/[a-z]{2}(?:\/|$)/, "/");
   const normalized = withoutLang.startsWith("/") ? withoutLang : `/${withoutLang}`;
   const trimmed = normalized.replace(/\/+$/, "") || "/";
 
@@ -60,9 +66,11 @@ export function isProtectedPath(rawPath?: string | null): boolean {
 
 import { isStudioEnvironment } from "./isStudioEnvironment";
 
+const AUTH_BROADCAST_CHANNEL = "3mash_auth_sync";
+const LOGOUT_TIMESTAMP_KEY = "tm_logout_timestamp";
+
 /**
- * Checks whether the environment should currently be treated as an active
- * studio/preview session (ignoring if explicitly logged out in this session).
+ * Checks whether the environment is currently running inside the ikas studio customizer iframe.
  */
 export function isStudioPreviewActive(): boolean {
   if (typeof window === "undefined") return false;
@@ -73,15 +81,10 @@ export function isStudioPreviewActive(): boolean {
 }
 
 /**
- * Synchronously checks if a valid customer token exists in client storage
- * or in the active customerStore session.
+ * Synchronously checks if a valid customer token exists in client storage.
  */
 export function hasCustomerToken(): boolean {
   if (typeof window === "undefined") return false;
-  if (isStudioPreviewActive()) return true;
-  if (typeof customerStore !== "undefined") {
-    if (customerStore.customer || (customerStore as any)._token) return true;
-  }
   try {
     const token = localStorage.getItem("customerToken");
     return Boolean(token && token.trim());
@@ -91,23 +94,31 @@ export function hasCustomerToken(): boolean {
 }
 
 /**
- * Synchronously resolves the customer authentication state from the observable
- * customer store. A token without a resolved customer is never authenticated.
+ * Synchronously resolves the customer authentication state.
+ * A session without a stored customerToken is NEVER authenticated.
  */
 export function isCustomerAuthenticated(): CustomerAuthState {
   if (typeof window === "undefined") return "unauthenticated";
-  if (isStudioPreviewActive()) return "authenticated";
 
-  const token = customerStore._token || (() => {
-    try {
-      return localStorage.getItem("customerToken");
-    } catch {
-      return null;
+  // If there is no token in storage, the user is unauthenticated
+  const hasToken = hasCustomerToken();
+  if (!hasToken) {
+    // Clean up any residual in-memory state
+    if (customerStore.customer) {
+      try {
+        customerStore.customer = null;
+        (customerStore as any)._token = null;
+      } catch {}
     }
-  })();
+    return "unauthenticated";
+  }
 
-  if (!token || !token.trim()) return "unauthenticated";
+  // Token exists: check if customer model is already resolved
+  if (customerStore.customer) return "authenticated";
+
+  // Token exists, but store hasn't initialized customer model yet
   if (!customerStore._initialized) return "loading";
+
   return customerStore.customer ? "authenticated" : "unauthenticated";
 }
 
@@ -130,41 +141,175 @@ export function clearClientAuthStorage(): void {
 }
 
 /**
- * Performs a complete, secure logout:
- * 1. Purges client auth storage & caches
- * 2. Invokes ikas logout(customerStore)
- * 3. Clears in-memory customer and global cart
- * 4. Dispatches the global cart update event
- * 5. If on a protected route, immediately redirects to homepage via location.replace
+ * Handler for multi-tab logout events.
+ * Wipes in-memory session, clears cart, dispatches events, and redirects if on a protected route.
  */
-export async function performLogout(options?: {
-  forceRedirect?: boolean;
-  redirectTarget?: string;
-}): Promise<void> {
+function handleCrossTabLogout(): void {
   clearClientAuthStorage();
-
-  try {
-    sessionStorage.setItem("tm_studio_logged_out", "1");
-  } catch {}
-
-  try {
-    await logout(customerStore);
-  } catch {}
 
   try {
     customerStore.customer = null;
     (customerStore as any)._token = null;
+    customerStore._favoriteProducts = [];
+    customerStore._isFavoriteProductsLoaded = false;
   } catch {}
 
   clearGlobalCart();
 
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent("3mash-cart-updated"));
+    window.dispatchEvent(new CustomEvent("3mash-auth-updated"));
 
-    const onProtected = isProtectedPath(window.location.pathname);
-    if (onProtected || options?.forceRedirect) {
-      const target = localizedHref(options?.redirectTarget || "/");
+    if (isProtectedPath(window.location.pathname)) {
+      const target = localizedHref("/account/login");
       window.location.replace(safeRedirect(target));
     }
   }
 }
+
+// ── Setup multi-tab communication ──────────────────────────────────
+if (typeof window !== "undefined") {
+  if (typeof BroadcastChannel !== "undefined") {
+    try {
+      const authChannel = new BroadcastChannel(AUTH_BROADCAST_CHANNEL);
+      authChannel.onmessage = (event) => {
+        if (event.data?.type === "LOGOUT") {
+          handleCrossTabLogout();
+        }
+      };
+    } catch {}
+  }
+
+  window.addEventListener("storage", (e: StorageEvent) => {
+    if (e.key === "customerToken" && (!e.newValue || !e.newValue.trim())) {
+      handleCrossTabLogout();
+    } else if (e.key === LOGOUT_TIMESTAMP_KEY && e.newValue) {
+      handleCrossTabLogout();
+    }
+  });
+}
+
+/**
+ * Performs a complete, secure logout across all storage, memory, and open tabs:
+ * 1. Purges client auth storage & caches
+ * 2. Broadcasts logout to all other open tabs
+ * 3. Invokes ikas logout(customerStore)
+ * 4. Clears in-memory customer and global cart
+ * 5. Dispatches global events
+ * 6. Immediately redirects to redirectTarget (default /account/login) if on protected route or forceRedirect
+ */
+export async function performLogout(options?: {
+  forceRedirect?: boolean;
+  redirectTarget?: string;
+}): Promise<void> {
+  // 1. Purge client storage immediately
+  clearClientAuthStorage();
+
+  // 2. Set multi-tab logout timestamp for StorageEvent fallback
+  try {
+    localStorage.setItem(LOGOUT_TIMESTAMP_KEY, Date.now().toString());
+  } catch {}
+
+  try {
+    sessionStorage.setItem("tm_studio_logged_out", "1");
+  } catch {}
+
+  // 3. Broadcast to other tabs immediately
+  try {
+    if (typeof window !== "undefined" && typeof BroadcastChannel !== "undefined") {
+      const channel = new BroadcastChannel(AUTH_BROADCAST_CHANNEL);
+      channel.postMessage({ type: "LOGOUT", timestamp: Date.now() });
+      channel.close();
+    }
+  } catch {}
+
+  // 4. Invalidate ikas store
+  try {
+    await logout(customerStore);
+  } catch {}
+
+  // 5. Invalidate in-memory store references
+  try {
+    customerStore.customer = null;
+    (customerStore as any)._token = null;
+    customerStore._favoriteProducts = [];
+    customerStore._isFavoriteProductsLoaded = false;
+  } catch {}
+
+  clearGlobalCart();
+
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("3mash-cart-updated"));
+    window.dispatchEvent(new CustomEvent("3mash-auth-updated"));
+
+    const onProtected = isProtectedPath(window.location.pathname);
+    if (onProtected || options?.forceRedirect) {
+      const target = localizedHref(options?.redirectTarget || "/account/login");
+      window.location.replace(safeRedirect(target));
+    }
+  }
+}
+
+/**
+ * Subscribe to auth state changes via MobX reaction and window events.
+ * Automatically triggers initCustomerStore when a token exists but the store
+ * hasn't been initialized yet. Returns an unsubscribe function.
+ */
+let _sharedAuthInitPromise: Promise<void> | null = null;
+
+export function subscribeAuthState(
+  callback: (state: CustomerAuthState) => void,
+): () => void {
+  const handleUpdate = () => {
+    callback(isCustomerAuthenticated());
+  };
+
+  // Kick off store init if token exists but store isn't ready yet.
+  if (
+    typeof window !== "undefined" &&
+    !customerStore._initialized &&
+    hasCustomerToken()
+  ) {
+    if (!_sharedAuthInitPromise) {
+      _sharedAuthInitPromise = initCustomerStore(customerStore)
+        .catch(() => {})
+        .finally(() => {
+          _sharedAuthInitPromise = null;
+        });
+    }
+    _sharedAuthInitPromise.then(handleUpdate);
+  }
+
+  const dispose = reaction(
+    () => [
+      customerStore._token,
+      customerStore._initialized,
+      customerStore.customer,
+    ],
+    handleUpdate,
+  );
+
+  const handleStorage = (e: StorageEvent) => {
+    if (e.key === "customerToken" || e.key === LOGOUT_TIMESTAMP_KEY || e.key === null) {
+      handleUpdate();
+    }
+  };
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("pageshow", handleUpdate);
+    window.addEventListener("popstate", handleUpdate);
+    window.addEventListener("storage", handleStorage);
+    window.addEventListener("3mash-auth-updated", handleUpdate);
+  }
+
+  return () => {
+    dispose();
+    if (typeof window !== "undefined") {
+      window.removeEventListener("pageshow", handleUpdate);
+      window.removeEventListener("popstate", handleUpdate);
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("3mash-auth-updated", handleUpdate);
+    }
+  };
+}
+

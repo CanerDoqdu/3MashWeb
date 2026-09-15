@@ -146,48 +146,48 @@ function CartLine({
   const image = imageCandidates[0] || imageUrl(item);
   const detail = variantText(item);
 
-async function updateQuantity(quantity: number) {
-  if (isUpdating) return;
+  async function updateQuantity(quantity: number) {
+    if (isUpdating) return;
 
-  setIsUpdating(true);
-  setUpdateError("");
+    setIsUpdating(true);
+    setUpdateError("");
 
-  try {
-    await changeItemQuantity(
-      item,
-      quantity
-    );
+    try {
+      await changeItemQuantity(
+        item,
+        quantity
+      );
 
-    publishCartFromIkasStore();
+      publishCartFromIkasStore();
 
-    void refreshGlobalCart();
-  } catch {
-    setUpdateError(tLocalized("Sepet güncellenemedi. Lütfen tekrar deneyin.", "The cart could not be updated. Please try again."));
-  } finally {
-    setIsUpdating(false);
+      void refreshGlobalCart();
+    } catch {
+      setUpdateError(tLocalized("Sepet güncellenemedi. Lütfen tekrar deneyin.", "The cart could not be updated. Please try again."));
+    } finally {
+      setIsUpdating(false);
+    }
   }
-}
 
- async function remove(event: Event) {
-  event.preventDefault();
+  async function remove(event: Event) {
+    event.preventDefault();
 
-  if (isUpdating) return;
+    if (isUpdating) return;
 
-  setIsUpdating(true);
-  setUpdateError("");
+    setIsUpdating(true);
+    setUpdateError("");
 
-try {
-  await removeItem(item);
+    try {
+      await removeItem(item);
 
-  publishCartFromIkasStore();
+      publishCartFromIkasStore();
 
-  void refreshGlobalCart();
-} catch {
-  setUpdateError(tLocalized("Ürün sepetten kaldırılamadı. Lütfen tekrar deneyin.", "The item could not be removed. Please try again."));
-} finally {
-  setIsUpdating(false);
-}
-}
+      void refreshGlobalCart();
+    } catch {
+      setUpdateError(tLocalized("Ürün sepetten kaldırılamadı. Lütfen tekrar deneyin.", "The item could not be removed. Please try again."));
+    } finally {
+      setIsUpdating(false);
+    }
+  }
 
   return (
     <article className="tmcart-item">
@@ -251,19 +251,19 @@ export function ThreeMashCartPage(props: Props) {
   const [customer, setCustomer] = useState<IkasCustomer | null>(
     customerStore.customer,
   );
-const [cart, setCartState] =
-  useState<IkasCart | null>(
-    () => getCurrentCart()
-  );
-const [cartStatus, setCartStatus] = useState(() => getCartStatus());
+  const [cart, setCartState] =
+    useState<IkasCart | null>(
+      () => getCurrentCart()
+    );
+  const [cartStatus, setCartStatus] = useState(() => getCartStatus());
 
-const [isCheckingOut, setIsCheckingOut] = useState(false);
-const [checkoutError, setCheckoutError] = useState("");
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
 
-const [couponCode, setCouponCode] = useState("");
-const [couponLoading, setCouponLoading] = useState(false);
-const [couponMessage, setCouponMessage] = useState("");
-const [couponOpen, setCouponOpen] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [couponMessage, setCouponMessage] = useState("");
+  const [couponOpen, setCouponOpen] = useState(false);
   const couponForm = getCouponCodeForm(customerStore);
 
   useEffect(() => {
@@ -282,65 +282,65 @@ const [couponOpen, setCouponOpen] = useState(false);
   }
 
   useEffect(() => {
-  let mounted = true;
+    let mounted = true;
 
-  const unsubscribe = subscribeCart(
-    (nextCart, nextStatus) => {
+    const unsubscribe = subscribeCart(
+      (nextCart, nextStatus) => {
+        if (!mounted) return;
+
+        setCartState(nextCart);
+        setCartStatus(nextStatus);
+      }
+    );
+
+    // Customer ayrı initialize olsun.
+    void initCustomerStore(
+      customerStore
+    ).then(() => {
       if (!mounted) return;
 
-      setCartState(nextCart);
-      setCartStatus(nextStatus);
-    }
-  );
+      setCustomer(
+        customerStore.customer
+      );
+    });
 
-  // Customer ayrı initialize olsun.
-  void initCustomerStore(
-    customerStore
-  ).then(() => {
-    if (!mounted) return;
+    // Server cart arkada doğrulansın.
+    void initGlobalCart();
 
-    setCustomer(
-      customerStore.customer
-    );
-  });
-
-  // Server cart arkada doğrulansın.
-  void initGlobalCart();
-
-  return () => {
-    mounted = false;
-    unsubscribe();
-  };
-}, []);
+    return () => {
+      mounted = false;
+      unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
-  const syncCart = () => {
-    setCartState(
-      cartStore.cart
-        ? ({ ...cartStore.cart } as IkasCart)
-        : null
-    );
-    setCartStatus(getCartStatus());
-  };
+    const syncCart = () => {
+      setCartState(
+        cartStore.cart
+          ? ({ ...cartStore.cart } as IkasCart)
+          : null
+      );
+      setCartStatus(getCartStatus());
+    };
 
-  window.addEventListener(
-    "3mash-cart-updated",
-    syncCart
-  );
-
-  return () => {
-    window.removeEventListener(
+    window.addEventListener(
       "3mash-cart-updated",
       syncCart
     );
-  };
-}, []);
-const items =
-  cart?.orderLineItems?.filter(
-    (item) =>
-      !item.deleted &&
-      Number(item.quantity || 0) > 0
-  ) || [];
+
+    return () => {
+      window.removeEventListener(
+        "3mash-cart-updated",
+        syncCart
+      );
+    };
+  }, []);
+  const items =
+    cart?.orderLineItems?.filter(
+      (item) =>
+        !item.deleted &&
+        Number(item.quantity || 0) > 0
+    ) || [];
   const itemCount = cartItemCount(items);
 
   const style = {
@@ -360,55 +360,55 @@ const items =
       "var(--tm-theme-text, #0e0e0c)",
     ),
   } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
-async function applyCoupon() {
-  const code = couponCode.trim();
+  async function applyCoupon() {
+    const code = couponCode.trim();
 
-  if (!code || !cartStore.cart || couponLoading) return;
+    if (!code || !cartStore.cart || couponLoading) return;
 
-  setCouponLoading(true);
-  setCouponMessage("");
-  setCouponCodeFormCouponCode(couponForm, code);
+    setCouponLoading(true);
+    setCouponMessage("");
+    setCouponCodeFormCouponCode(couponForm, code);
 
-  try {
-    const success = await submitCouponCodeForm(couponForm);
-    await getCart();
-    refreshState();
+    try {
+      const success = await submitCouponCodeForm(couponForm);
+      await getCart();
+      refreshState();
 
-    if (success && cartStore.cart?.couponCode) {
-      setCouponMessage(tLocalized("İndirim kodu uygulandı.", "Discount code applied."));
-      setCouponOpen(false);
-    } else {
+      if (success && cartStore.cart?.couponCode) {
+        setCouponMessage(tLocalized("İndirim kodu uygulandı.", "Discount code applied."));
+        setCouponOpen(false);
+      } else {
+        setCouponMessage(tLocalized("Geçersiz indirim kodu.", "Invalid discount code."));
+      }
+    } catch {
       setCouponMessage(tLocalized("Geçersiz indirim kodu.", "Invalid discount code."));
+    } finally {
+      setCouponLoading(false);
     }
-  } catch {
-    setCouponMessage(tLocalized("Geçersiz indirim kodu.", "Invalid discount code."));
-  } finally {
-    setCouponLoading(false);
   }
-}
 
-async function deleteCoupon() {
-  if (!cartStore.cart || couponLoading) return;
+  async function deleteCoupon() {
+    if (!cartStore.cart || couponLoading) return;
 
-  setCouponLoading(true);
-  setCouponMessage("");
+    setCouponLoading(true);
+    setCouponMessage("");
 
-  try {
-    const success = await removeCouponCodeForm(couponForm);
-    await getCart();
-    refreshState();
+    try {
+      const success = await removeCouponCodeForm(couponForm);
+      await getCart();
+      refreshState();
 
-    if (success) {
-      setCouponCode("");
-      setCouponOpen(false);
-      setCouponMessage("");
+      if (success) {
+        setCouponCode("");
+        setCouponOpen(false);
+        setCouponMessage("");
+      }
+    } catch {
+      setCouponMessage(tLocalized("Promosyon kodu kaldırılamadı.", "Promo code could not be removed."));
+    } finally {
+      setCouponLoading(false);
     }
-  } catch {
-    setCouponMessage(tLocalized("Promosyon kodu kaldırılamadı.", "Promo code could not be removed."));
-  } finally {
-    setCouponLoading(false);
   }
-}
   async function checkout() {
     if (isCheckingOut || !hasItems) return;
     setIsCheckingOut(true);
@@ -441,9 +441,8 @@ async function deleteCoupon() {
 
   return (
     <section
-      className={`three-mash-cart-page ${
-        isLoading ? "tmcart-is-loading" : isEmpty ? "tmcart-is-empty" : ""
-      }`.trim()}
+      className={`three-mash-cart-page ${isLoading ? "tmcart-is-loading" : isEmpty ? "tmcart-is-empty" : ""
+        }`.trim()}
       style={style}
     >
       <div className="tmcart-wrap">
@@ -453,9 +452,9 @@ async function deleteCoupon() {
             {isLoading
               ? tLocalized("Sepetiniz yükleniyor...", "Loading your cart...")
               : tLocalized(
-                  `${itemCount} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve adetleri kontrol edin.`,
-                  `${itemCount} items in your cart. Check your items and quantities before checking out.`
-                )}
+                `${itemCount} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve adetleri kontrol edin.`,
+                `${itemCount} items in your cart. Check your items and quantities before checking out.`
+              )}
           </p>
         </header>
 

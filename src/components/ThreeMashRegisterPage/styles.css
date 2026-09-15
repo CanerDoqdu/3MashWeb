@@ -197,7 +197,15 @@
 }
 
 .tmrpg-auth-tabs > a {
+  min-height: 0;
+  padding: 0;
+  color: var(--tmrpg-auth-text, var(--tm-theme-text, #0e0e0c));
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   background: transparent !important;
+  border: 0;
   box-shadow: none !important;
 }
 
@@ -259,6 +267,39 @@
 
 .tmrpg-auth-field input:focus {
   border-color: var(--tmrpg-auth-text, var(--tm-theme-text, #0e0e0c));
+}
+
+.tmrpg-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.tmrpg-password-wrap input {
+  padding-right: 48px !important;
+}
+
+.tmrpg-password-toggle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--tmrpg-auth-muted, var(--tm-theme-sub, #777771));
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: color 0.15s ease;
+}
+
+.tmrpg-password-toggle:hover {
+  color: var(--tmrpg-auth-text, var(--tm-theme-text, #0e0e0c));
 }
 
 .tmrpg-auth-check {

@@ -1144,7 +1144,7 @@
 .tmr-curing .tmr-why-grid div,
 .tmr-curing .tmr-go span,
 .tmr-curing .tmr-readmore a {
-  color: #c7f136;
+  color: var(--tmr-accent, #dbfa37);
 }
 
 .tmr-curing .tmr-side,
@@ -1199,8 +1199,8 @@
 }
 
 .tmr-curing .tmr-lime-tag {
-  border-color: #c7f136;
-  background: #c7f136;
+  border-color: var(--tmr-accent, #dbfa37);
+  background: var(--tmr-accent, #dbfa37);
   color: #0e0e0c;
 }
 

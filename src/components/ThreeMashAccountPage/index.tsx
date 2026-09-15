@@ -1,17 +1,23 @@
+
+
+
 import { localizedHref, tLocalized } from "../../utils/i18n";
+import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import { useEffect, useLayoutEffect, useState } from "preact/hooks";
-import { safeNavigationHref } from "../../utils/safeRedirect";
+  
 import {
   customerLogin,
   customerStore,
   forgotPassword,
   register,
   recoverPassword,
+  initCustomerStore,
   Router,
   type IkasImage,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import authCriticalStyles from "../authCriticalStyles";
+import forgotPasswordBgImage from "../../assets/forgot-password-bg-data";
 
 const defaultAuthImage =
   "https://cdn.myikas.com/images/theme-images/a6f9541f-702d-431d-9744-9d4f494c94af/image_1080.webp";
@@ -46,6 +52,25 @@ function themeColor(
   }
 
   return trimmed;
+}
+console.log("LOGIN PAGE BUILD CHECK — v2 with initCustomerStore fix");
+function EyeIcon({ visible }: { visible: boolean }) {
+  if (visible) {
+    return (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    );
+  }
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+      <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+      <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+      <line x1="2" y1="2" x2="22" y2="22" />
+    </svg>
+  );
 }
 
 function imageIdToUrl(value: string) {
@@ -121,9 +146,11 @@ export function ThreeMashAccountPage(props: Props) {
   const activeTab = authMode === "register" ? "register" : "login";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
+  const [showPasswordAgain, setShowPasswordAgain] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [marketingAccepted, setMarketingAccepted] = useState(false);
   const [recoveryToken, setRecoveryToken] = useState("");
@@ -196,19 +223,16 @@ export function ThreeMashAccountPage(props: Props) {
     setStatus("idle");
   }
 
-  function switchTab(tab: "login" | "register") {
-    if (tab === activeTab) return;
-    navigateToMode(
-      tab,
-      localizedHref(
-        tab === "register" ? href(props.registerTabHref, "/account/register") : "/account/login",
-      ),
-    );
-  }
+ function switchTab(tab: "login" | "register") {
+  navigateToMode(
+    tab,
+    tab === "register" ? (props.registerTabHref || "/account/register") : "/account/login",
+  );
+}
 
-  function navigateToLogin() {
-    navigateToMode("login", localizedHref("/account/login"));
-  }
+function navigateToLogin() {
+  navigateToMode("login", "/account/login"); // localizedHref'i navigateToMode zaten uyguluyor
+}
 
   async function submit(event: Event) {
     event.preventDefault();
@@ -241,7 +265,7 @@ export function ThreeMashAccountPage(props: Props) {
       const result = activeTab === "login"
         ? await customerLogin(customerStore, email, password)
         : await register(customerStore, firstName, lastName, email, password, marketingAccepted, [], null);
-      if (result.isSuccess) {
+          if (result.isSuccess) {
         setStatus("success");
         if (typeof window !== "undefined") {
           try {
@@ -249,11 +273,20 @@ export function ThreeMashAccountPage(props: Props) {
             localStorage.removeItem("tm_customer_name");
             localStorage.removeItem("tm_customer_cache");
             sessionStorage.removeItem("tm_customer_cache");
-          } catch {}
+          } catch { }
         }
-        setTimeout(() => Router.navigate(localizedHref("/account")), 350);
+        try {
+          await initCustomerStore(customerStore);
+        } catch { }
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("3mash-auth-updated"));
+        }
+        setTimeout(() => {
+          Router.navigate(localizedHref("/account"));
+        }, 350);
         return;
       }
+  
       setStatus("error");
     } catch {
       setStatus("error");
@@ -262,7 +295,10 @@ export function ThreeMashAccountPage(props: Props) {
     }
   }
 
-  const image = imageSource(props.backgroundImageUrl, defaultAuthImage);
+  const image = imageSource(
+    props.backgroundImageUrl,
+    authMode === "forgot-password" ? forgotPasswordBgImage : defaultAuthImage,
+  );
   const style = {
     "--tma-auth-bg": themeColor(
       props.backgroundColor,
@@ -296,9 +332,9 @@ export function ThreeMashAccountPage(props: Props) {
     ),
     "--tma-auth-accent": themeColor(
       props.accentColor,
-      "#C7F136",
+      "#DBFA37",
       "--tm-theme-accent",
-      ["#dbfa37"],
+      ["#c7f136"],
     ),
     "--tma-auth-button-text": themeColor(
       props.buttonTextColor,
@@ -312,6 +348,8 @@ export function ThreeMashAccountPage(props: Props) {
 
   return (
     <section className="three-mash-auth-page tma-login-page" style={style}>
+      <link rel="preload" as="font" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2" type="font/woff2" crossOrigin="anonymous" />
+      <link rel="preload" as="font" href="https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj4PVnsqPMBTTA.woff2" type="font/woff2" crossOrigin="anonymous" />
       <style dangerouslySetInnerHTML={{ __html: authCriticalStyles }} />
       <div className="tma-auth-panel">
         <form
@@ -331,9 +369,9 @@ export function ThreeMashAccountPage(props: Props) {
                 : authMode === "recover-password"
                   ? tLocalized("Yeni şifrenizi belirleyin ve hesabınıza güvenli şekilde tekrar erişin.", "Set a new password and securely access your account again.")
                   : text(
-                      props.subtitleText,
-                      tLocalized("Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.", "Manage your orders, favorites, and account information from one place."),
-                    )}
+                    props.subtitleText,
+                    tLocalized("Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.", "Manage your orders, favorites, and account information from one place."),
+                  )}
             </p>
           </div>
 
@@ -384,29 +422,51 @@ export function ThreeMashAccountPage(props: Props) {
             <>
               <label className="tma-auth-field">
                 <span>* {tLocalized("Şifre", "Password")}</span>
-                <input
-                  name="password"
-                  type="password"
-                  autoComplete="new-password"
-                  value={password}
-                  required
-                  onInput={(event) =>
-                    setPassword((event.currentTarget as HTMLInputElement).value)
-                  }
-                />
+                <div className="tma-password-wrap">
+                  <input
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    value={password}
+                    required
+                    onInput={(event) =>
+                      setPassword((event.currentTarget as HTMLInputElement).value)
+                    }
+                  />
+                  <button
+                    type="button"
+                    className="tma-password-toggle"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-label={showPassword ? tLocalized("Şifreyi gizle", "Hide password") : tLocalized("Şifreyi göster", "Show password")}
+                    tabIndex={-1}
+                  >
+                    <EyeIcon visible={showPassword} />
+                  </button>
+                </div>
               </label>
               <label className="tma-auth-field">
                 <span>* {tLocalized("Şifre Tekrar", "Confirm Password")}</span>
-                <input
-                  name="passwordAgain"
-                  type="password"
-                  autoComplete="new-password"
-                  value={passwordAgain}
-                  required
-                  onInput={(event) =>
-                    setPasswordAgain((event.currentTarget as HTMLInputElement).value)
-                  }
-                />
+                <div className="tma-password-wrap">
+                  <input
+                    name="passwordAgain"
+                    type={showPasswordAgain ? "text" : "password"}
+                    autoComplete="new-password"
+                    value={passwordAgain}
+                    required
+                    onInput={(event) =>
+                      setPasswordAgain((event.currentTarget as HTMLInputElement).value)
+                    }
+                  />
+                  <button
+                    type="button"
+                    className="tma-password-toggle"
+                    onClick={() => setShowPasswordAgain((prev) => !prev)}
+                    aria-label={showPasswordAgain ? tLocalized("Şifreyi gizle", "Hide password") : tLocalized("Şifreyi göster", "Show password")}
+                    tabIndex={-1}
+                  >
+                    <EyeIcon visible={showPasswordAgain} />
+                  </button>
+                </div>
               </label>
             </>
           ) : activeTab === "login" ? (
@@ -427,16 +487,27 @@ export function ThreeMashAccountPage(props: Props) {
 
               <label className="tma-auth-field">
                 <span>* {text(props.passwordLabel, tLocalized("Şifre", "Password"))}</span>
-                <input
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  value={password}
-                  required
-                  onInput={(event) =>
-                    setPassword((event.currentTarget as HTMLInputElement).value)
-                  }
-                />
+                <div className="tma-password-wrap">
+                  <input
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
+                    value={password}
+                    required
+                    onInput={(event) =>
+                      setPassword((event.currentTarget as HTMLInputElement).value)
+                    }
+                  />
+                  <button
+                    type="button"
+                    className="tma-password-toggle"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-label={showPassword ? tLocalized("Şifreyi gizle", "Hide password") : tLocalized("Şifreyi göster", "Show password")}
+                    tabIndex={-1}
+                  >
+                    <EyeIcon visible={showPassword} />
+                  </button>
+                </div>
               </label>
             </>
           ) : (
@@ -483,16 +554,27 @@ export function ThreeMashAccountPage(props: Props) {
 
               <label className="tma-auth-field">
                 <span>* {text(props.passwordLabel, tLocalized("Şifre", "Password"))}</span>
-                <input
-                  name="password"
-                  type="password"
-                  autoComplete="new-password"
-                  value={password}
-                  required
-                  onInput={(event) =>
-                    setPassword((event.currentTarget as HTMLInputElement).value)
-                  }
-                />
+                <div className="tma-password-wrap">
+                  <input
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    value={password}
+                    required
+                    onInput={(event) =>
+                      setPassword((event.currentTarget as HTMLInputElement).value)
+                    }
+                  />
+                  <button
+                    type="button"
+                    className="tma-password-toggle"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-label={showPassword ? tLocalized("Şifreyi gizle", "Hide password") : tLocalized("Şifreyi göster", "Show password")}
+                    tabIndex={-1}
+                  >
+                    <EyeIcon visible={showPassword} />
+                  </button>
+                </div>
               </label>
 
               <label className="tma-auth-check">
@@ -508,7 +590,7 @@ export function ThreeMashAccountPage(props: Props) {
                   <a href="/pages/uyelik-sozlesmesi">{tLocalized("Üyelik Sözleşmesi", "Membership Agreement")}</a>{" "}
                   {tLocalized("ve", "and")}{" "}
                   <a href="/pages/gizlilik-politikasi-ve-kvkk">{tLocalized("KVKK Aydınlatma Metni", "KVKK Clarification Text")}</a>{" "}
-                  {tLocalized("'ni okudum, kabul ediyorum. *", "have been read and agreed to. *")}
+                  {tLocalized("'ni okudum, kabul ediyorum. ", "have been read and agreed to. *")}
                 </span>
               </label>
 
@@ -523,7 +605,7 @@ export function ThreeMashAccountPage(props: Props) {
                 <span>
                   {tLocalized("Kampanya, indirim ve duyurulardan haberdar olmak için", "To be informed about campaigns and updates,")}{" "}
                   <a href="/pages/ticari-elektronik-ileti-onayi">{tLocalized("Ticari Elektronik İleti Onayı", "Commercial Electronic Message Consent")}</a>{" "}
-                  {tLocalized("metnini okudum, onaylıyorum. Tarafıma ticari elektronik ileti gönderilmesini kabul ediyorum. *", "text, I have read and agree to receive commercial electronic messages. *")}
+                  {tLocalized("metnini okudum, onaylıyorum. Tarafıma ticari elektronik ileti gönderilmesini kabul ediyorum. ", "text, I have read and agree to receive commercial electronic messages. *")}
                 </span>
               </label>
             </>
@@ -539,11 +621,11 @@ export function ThreeMashAccountPage(props: Props) {
           >
             {status === "loading"
               ? text(
-                  props.loadingText,
-                  activeTab === "login"
-                    ? tLocalized("Giriş yapılıyor...", "Logging in...")
-                    : tLocalized("Kaydınız oluşturuluyor...", "Creating account..."),
-                )
+                props.loadingText,
+                activeTab === "login"
+                  ? tLocalized("Giriş yapılıyor...", "Logging in...")
+                  : tLocalized("Kaydınız oluşturuluyor...", "Creating account..."),
+              )
               : authMode === "forgot-password"
                 ? tLocalized("Gönder", "Send")
                 : authMode === "recover-password"
@@ -591,16 +673,21 @@ export function ThreeMashAccountPage(props: Props) {
           )}
 
           {(authMode === "forgot-password" || authMode === "recover-password") && (
-            <a
-              className="tma-auth-underlink tma-auth-secondary-link"
-              href="/account/login"
-              onClick={(event) => {
-                event.preventDefault();
-                navigateToLogin();
-              }}
-            >
-              {tLocalized("Üye Girişi", "Member Login")}
-            </a>
+            <div className="tma-auth-register-callout">
+              <span>
+                {tLocalized("Hesabınıza giriş yapın", "Log in to your account")}
+              </span>
+              <a
+                className="tma-auth-secondary-link"
+                href={localizedHref("/account/login")}
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateToLogin();
+                }}
+              >
+                {tLocalized("Üye Girişi", "Member Login")}
+              </a>
+            </div>
           )}
 
           {status !== "idle" && (
@@ -611,18 +698,18 @@ export function ThreeMashAccountPage(props: Props) {
                   : authMode === "recover-password"
                     ? tLocalized("Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz.", "Your password was updated. Redirecting to login.")
                     : text(
-                        props.successMessage,
-                        tLocalized("Giriş başarılı. Hesabınıza yönlendiriliyorsunuz.", "Login successful. You are being redirected to your account."),
-                      )
+                      props.successMessage,
+                      tLocalized("Giriş başarılı. Hesabınıza yönlendiriliyorsunuz.", "Login successful. You are being redirected to your account."),
+                    )
                 : status === "error"
                   ? authMode === "forgot-password"
                     ? tLocalized("İşlem tamamlanamadı. Email adresinizi kontrol edin.", "The request could not be completed. Check your email address.")
                     : authMode === "recover-password"
                       ? tLocalized("Şifreler eşleşmiyor veya bağlantı geçersiz.", "The passwords do not match or the link is invalid.")
                       : text(
-                          props.errorMessage,
-                          tLocalized("Email veya şifre hatalı. Lütfen bilgilerinizi kontrol edin.", "Email or password is incorrect. Please check your details."),
-                        )
+                        props.errorMessage,
+                        tLocalized("Email veya şifre hatalı. Lütfen bilgilerinizi kontrol edin.", "Email or password is incorrect. Please check your details."),
+                      )
                   : text(props.loadingText, tLocalized("Giriş yapılıyor...", "Logging in..."))}
             </p>
           )}

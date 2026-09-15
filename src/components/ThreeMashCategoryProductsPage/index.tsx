@@ -354,6 +354,7 @@ export function ThreeMashCategoryProductsPage(props: Props) {
         titleText: "",
         descriptionText: tLocalized("Bu kategoriye ait güncel ürünleri tek yerden inceleyin.", "Browse the current products in this category in one place."),
         showSort: false,
+        showNavigation: true,
       })}
     />
   );

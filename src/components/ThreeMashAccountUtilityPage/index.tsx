@@ -734,7 +734,7 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
 
       <form className="tmau-auth-inner-form" onSubmit={submit}>
         <label className="tmau-auth-field tmai-field">
-          <span>* {t("auth.password", tLocalized("Şifre", "Password"))}</span>
+          <span>* {tLocalized("Şifre", "Password")}</span>
           <input
             type="password"
             value={password}
@@ -747,7 +747,7 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
         </label>
 
         <label className="tmau-auth-field tmai-field">
-          <span>* {t("auth.passwordAgain", "Confirm Password")}</span>
+          <span>* {tLocalized("Şifre Tekrar", "Confirm Password")}</span>
           <input
             type="password"
             value={passwordAgain}
@@ -781,6 +781,7 @@ export function RecoverPasswordView({ props }: { props: DashboardProps }) {
           </p>
         )}
       </form>
+
     </div>
   );
 }
@@ -800,7 +801,8 @@ export function ThreeMashAccountUtilityPage(props: DashboardProps) {
 
   // Route to the unified account layout with the mode passed from ikas config.
   // Each registered page (addresses, orders, favorites) sets a different mode prop.
-  return <ThreeMashAccountLayout {...props} />;
+  const AccountLayout = ThreeMashAccountLayout;
+  return <AccountLayout {...props} />;
 }
 
 export default ThreeMashAccountUtilityPage;

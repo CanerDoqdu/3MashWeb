@@ -1,3 +1,9 @@
+html,
+body,
+#app {
+  background: var(--tmrpg-auth-bg, var(--tm-theme-bg, #fafaf7));
+}
+
 .three-mash-auth-page {
   display: grid;
   width: 100%;
@@ -67,7 +73,8 @@
   text-align: center;
 }
 
-.tma-auth-form.is-register {
+.tma-auth-form.is-register,
+.tma-auth-form.is-secondary {
   min-height: 0;
   height: fit-content;
   align-content: start;
@@ -133,8 +140,8 @@
   min-height: 26px;
   margin-bottom: 20px;
   padding: 0 11px;
-  background: var(--tma-auth-accent, var(--tm-theme-accent, #c7f136));
-  color: var(--tm-theme-accent-text, #3d4d0e);
+  background: var(--tma-auth-accent, var(--tm-theme-accent, #dbfa37));
+  color: var(--tm-theme-accent-text, #0e0e0c);
   font-family: var(
     --tm-theme-font-heading,
     "Space Grotesk",
@@ -149,7 +156,7 @@
 .tma-auth-copy h1 {
   max-width: 100%;
   margin: 0;
-  color: var(--tma-auth-accent, var(--tm-theme-accent, #c7f136));
+  color: var(--tma-auth-accent, var(--tm-theme-accent, #dbfa37));
   font-family: var(
     --tm-theme-font-heading,
     "Space Grotesk",
@@ -294,6 +301,39 @@
   border-color: var(--tma-auth-text, var(--tm-theme-text, #0e0e0c));
 }
 
+.tma-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.tma-password-wrap input {
+  padding-right: 48px !important;
+}
+
+.tma-password-toggle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--tma-auth-muted, var(--tm-theme-sub, #777771));
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: color 0.15s ease;
+}
+
+.tma-password-toggle:hover {
+  color: var(--tma-auth-text, var(--tm-theme-text, #0e0e0c));
+}
+
 .tma-auth-check {
   display: grid;
   grid-template-columns: 20px minmax(0, 1fr);
@@ -396,6 +436,11 @@
   border-radius: 0;
   background: transparent;
   cursor: pointer;
+}
+
+.tma-auth-register-callout .tma-auth-secondary-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .tma-auth-status {

@@ -3,7 +3,11 @@
    ============================================================ */
 
 /* ── Page wrapper ──────────────────────────────────────────── */
-
+html,
+body,
+#app {
+  background: var(--tmrpg-auth-bg, var(--tm-theme-bg, #fafaf7));
+}
 .three-mash-account-info-page,
 .tmau-page {
   display: flex;
@@ -38,8 +42,7 @@
   margin: 0 auto;
   flex: 1;
   min-height: 560px;
-  padding: var(--tmai-pad-top, clamp(40px, 5vw, 64px)) 24px var(--tmai-pad-bottom, clamp(64px, 8vw, 110px));
-}
+padding: 0 24px;}
 
 /* ── Sidebar (static — never re-renders) ───────────────────── */
 

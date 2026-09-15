@@ -72,9 +72,14 @@ function computeInitialAuthStatus(
   }
   if (customerStore._initialized) {
     const authState = isCustomerAuthenticated();
-    return authState === "authenticated"
-      ? "authenticated"
-      : syncRedirectAndReturn(redirectHref);
+    if (authState === "authenticated") {
+      return "authenticated";
+    }
+    // If a valid customer token exists, give initCustomerStore a chance in useEffect
+    if (hasCustomerToken()) {
+      return "loading";
+    }
+    return syncRedirectAndReturn(redirectHref);
   }
   // Token exists, store still initializing → show spinner, resolve in useEffect.
   return "loading";
@@ -106,7 +111,7 @@ export default function ProtectedRoute({
           "3mash-auth-redirect",
         );
       } catch {}
-      const target = localizedHref(redirectHref || "/");
+      const target = localizedHref(redirectHref || "/account/login");
       window.location.replace(safeRedirect(target));
     }
 
@@ -118,20 +123,11 @@ export default function ProtectedRoute({
 
     // ── Async init — only needed when initial state is "loading" ─────
     // (token exists but store not yet initialized at render time).
-    // If the initial state was already "authenticated" or "unauthenticated"
-    // (resolved synchronously by computeInitialAuthStatus), skip this block
-    // entirely to avoid redundant work or a double-redirect.
     if (authStatus === "loading") {
       if (isStudio) {
         setAuthStatus("authenticated");
-      } else if (customerStore._initialized) {
-        // Store finished between our useState init and this effect running.
-        if (isCustomerAuthenticated() === "authenticated") {
-          setAuthStatus("authenticated");
-        } else {
-          setAuthStatus("unauthenticated");
-          redirectToTarget();
-        }
+      } else if (customerStore._initialized && isCustomerAuthenticated() === "authenticated") {
+        setAuthStatus("authenticated");
       } else {
         (customerStoreInitPromise || initCustomerStore(customerStore))
           .then(() => {
@@ -152,7 +148,7 @@ export default function ProtectedRoute({
       }
     }
 
-    // ── BFCache & Navigation Listeners ─────────────────────────────
+    // ── BFCache, Storage & Navigation Listeners ────────────────────
     function applyAuthState() {
       const authState = checkAuthSync();
       setAuthStatus(authState);
@@ -168,7 +164,15 @@ export default function ProtectedRoute({
       }
     }
 
-    function handlePageShow() {
+    function handlePageShow(event?: PageTransitionEvent) {
+      // Immediate BFCache check: if back button restored page but token is absent, redirect immediately
+      if (!isStudio && (!hasCustomerToken() || isCustomerAuthenticated() === "unauthenticated")) {
+        if (containerRef.current) {
+          containerRef.current.style.display = "none";
+        }
+        redirectToTarget();
+        return;
+      }
       applyAuthState();
     }
 
@@ -187,9 +191,18 @@ export default function ProtectedRoute({
       applyAuthState();
     }
 
+    function handleStorage(e: StorageEvent) {
+      if (e.key === "customerToken" || e.key === "tm_logout_timestamp" || e.key === null) {
+        applyAuthState();
+      }
+    }
+
     window.addEventListener("pageshow", handlePageShow);
     window.addEventListener("pagehide", handlePageHide);
     window.addEventListener("popstate", handlePopState);
+    window.addEventListener("storage", handleStorage);
+    window.addEventListener("3mash-auth-updated", handleAuthChanged);
+
     const disposeAuthReaction = reaction(
       () => [
         customerStore._token,
@@ -204,6 +217,8 @@ export default function ProtectedRoute({
       window.removeEventListener("pageshow", handlePageShow);
       window.removeEventListener("pagehide", handlePageHide);
       window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("3mash-auth-updated", handleAuthChanged);
       disposeAuthReaction();
     };
   }, [isStudio, redirectHref]);

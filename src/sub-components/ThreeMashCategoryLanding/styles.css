@@ -2103,8 +2103,13 @@
   .tmcl-spares .tmcl-product-body h3,
   .tmcl-systems .tmcl-product-body h3,
   .tmcl-titanium .tmcl-product-body h3 {
+    display: -webkit-box;
+    min-height: 4.6em;
     font-size: 16px;
     line-height: 1.15;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
   }
 
   .tmcl-product-body p,
@@ -2116,6 +2121,8 @@
   .tmcl-spares .tmcl-product-body p,
   .tmcl-systems .tmcl-product-body p,
   .tmcl-titanium .tmcl-product-body p {
+    min-height: 2.9em;
+    max-height: 2.9em;
     margin-top: 8px;
     font-size: 12.5px;
     line-height: 1.45;

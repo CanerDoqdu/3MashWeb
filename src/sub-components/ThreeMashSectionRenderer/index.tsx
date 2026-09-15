@@ -977,12 +977,12 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-line-strong": "var(--line2, #D5D5CD)",
     "--tmr-panel": "#FFFFFF",
     "--tmr-dark": "var(--dark, #0E0E0C)",
-    "--tmr-accent": "var(--lime, #C7F136)",
+    "--tmr-accent": "var(--lime, #DBFA37)",
     "--tmr-background-glow-factor": 0,
-    "--tmr-accent-text": "var(--lime-ink, #3D4D0E)",
-    "--tmr-accent-soft": "var(--lime-soft, #F2F8DC)",
+    "--tmr-accent-text": "var(--lime-ink, #0E0E0C)",
+    "--tmr-accent-soft": "var(--lime-soft, rgba(219, 250, 55, 0.16))",
     "--tmr-danger": "var(--red, #E2492F)",
-    "--tmr-word-color": "var(--lime, #C7F136)",
+    "--tmr-word-color": "var(--lime, #DBFA37)",
     "--tmr-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmr-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmr-solution-carousel-duration": `${numberInRange(raw(props, "carouselDurationSeconds"), 24, 4, 90)}s`,
@@ -1035,15 +1035,15 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-curing-product-radius": `${numberInRange(raw(props, "productCardRadius"), 20, 0, 36)}px`,
     ...(curingImageWidth
       ? {
-          "--tmr-curing-image-width": curingImageWidth,
-          "--tmr-curing-image-max-width": "100%",
-        }
+        "--tmr-curing-image-width": curingImageWidth,
+        "--tmr-curing-image-max-width": "100%",
+      }
       : {}),
     ...(curingImageHeight
       ? {
-          "--tmr-curing-image-height": curingImageHeight,
-          "--tmr-curing-image-max-height": "100%",
-        }
+        "--tmr-curing-image-height": curingImageHeight,
+        "--tmr-curing-image-max-height": "100%",
+      }
       : {}),
     "--tmr-curing-image-x": `${numberInRange(raw(props, "productImageXOffset"), 0, -90, 90)}px`,
     "--tmr-curing-image-y": `${numberInRange(raw(props, "productImageYOffset"), 0, -90, 90)}px`,
@@ -1079,7 +1079,7 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
       0,
       100,
     ),
-    "--tmr-roi-bg": "var(--lime, #C7F136)",
+    "--tmr-roi-bg": "var(--lime, #DBFA37)",
     "--tmr-roi-text": "var(--ink, #0E0E0C)",
     "--tmr-roi-sub": "#2C3A09",
     "--tmr-roi-eyebrow": "var(--lime-ink, #3D4D0E)",
@@ -1213,7 +1213,7 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-final-bg": "var(--dark, #0E0E0C)",
     "--tmr-final-text": "#FFFFFF",
     "--tmr-final-sub": "#A5A59A",
-    "--tmr-final-primary-bg": "var(--lime, #C7F136)",
+    "--tmr-final-primary-bg": "var(--lime, #DBFA37)",
     "--tmr-final-primary-text": "var(--ink, #0E0E0C)",
     "--tmr-final-secondary-text": "#FFFFFF",
     "--tmr-final-button-radius": `${numberInRange(raw(props, "buttonRadius"), 10, 0, 32)}px`,
@@ -1320,6 +1320,10 @@ function indexedSection(
 
 const solutionContentHtml = solutionSetupHtml;
 
+/* Legacy static HTML blocks below are intentionally removed from execution.
+ * The active locale-aware render functions are defined after this block.
+ */
+/*
 const curingContentHtml = `<div class="tmr-why-grid"><article>
 
 
@@ -1332,6 +1336,8 @@ const ecosystemContentHtml = `<div class="tmr-eco"><a href="/3d-yazicilar"><span
 const trustContentHtml = `<div class="tmr-testimonials"><article class="tmr-testimonial tmr-featured"><div class="tmr-quote">“</div><p>Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileMehmet}" alt="Mehmet İşlek"><div><b>Mehmet İşlek</b><small>ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik</small></div></div></article><article class="tmr-testimonial"><div class="tmr-quote">“</div><p>Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileBerkan}" alt="Berkan Öztaş"><div><b>Berkan Öztaş</b><small>DENTEK · Genel Müd. Yard.</small></div></div></article><article class="tmr-testimonial"><div class="tmr-quote">“</div><p>Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileGoksel}" alt="Göksel Pişkin"><div><b>Göksel Pişkin</b><small>MIKRO LAB · Kurucu Ortak</small></div></div></article></div><div class="tmr-trusted">${trustedLabelMarkup}${bundledTrustedLogos}</div>`;
 
 const faqContentHtml = `<div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="#">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div>`;
+
+*/
 
 function solutionContent(props: ThreeMashSectionRenderProps) {
   return `<div class="tmr-products" aria-label="${escapeAttr(field(props, "carouselAriaLabel", tLocalized("Çözüm ürünleri", "Solution products")))}">${solutionP1dCard(props)}${solutionSecondCard(props)}${solutionResinCategoryCard(props)}</div>`;
@@ -2057,40 +2063,40 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
   const en = isEnglishLocale();
   const logoVisual = `<img src="${escapeAttr(threeMashFullLogoImage)}" alt="${escapeAttr(field(props, "logoImageAlt", "3mash"))}">`;
 
- function isCookieSettingsHref(href: string, label: unknown) {
-  if (href !== "#") return false;
-  const normalized = plainText(label).toLocaleLowerCase("tr-TR");
-  return /(çerez|cerez|cookie)/.test(normalized);
-}
+  function isCookieSettingsHref(href: string, label: unknown) {
+    if (href !== "#") return false;
+    const normalized = plainText(label).toLocaleLowerCase("tr-TR");
+    return /(çerez|cerez|cookie)/.test(normalized);
+  }
 
-function navLinkList(
-  list: IkasNavigationLinkList | undefined,
-  title: string,
-) {
-  const seen = new Set<string>();
-  const links = (list?.links || [])
-    .map((link) => {
-      const label = link?.label || "";
-      const href = internalSiteHref(linkHref(link, ""));
-      return { ...link, href: footerHrefForLabel(label, href) };
-    })
-    .filter((link) => {
-      if (!link?.label || !link.href) return false;
-      const key = footerLinkKey(link.href);
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-  if (!links.length) return "";
-  return `<p class="tmr-footer-col-title">${title}</p>${links
-    .map((link) => {
-      const cookieClass = isCookieSettingsHref(link.href, link.label)
-        ? ' class="tm-open-cookie-settings"'
-        : "";
-      return `<a href="${escapeAttr(link.href)}"${cookieClass}${link.openInNewTab ? ' target="_blank" rel="noopener noreferrer"' : externalLinkAttrs(link.href)}>${escapeHtml(link.label)}</a>`;
-    })
-    .join("")}`;
-}
+  function navLinkList(
+    list: IkasNavigationLinkList | undefined,
+    title: string,
+  ) {
+    const seen = new Set<string>();
+    const links = (list?.links || [])
+      .map((link) => {
+        const label = link?.label || "";
+        const href = internalSiteHref(linkHref(link, ""));
+        return { ...link, href: footerHrefForLabel(label, href) };
+      })
+      .filter((link) => {
+        if (!link?.label || !link.href) return false;
+        const key = footerLinkKey(link.href);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    if (!links.length) return "";
+    return `<p class="tmr-footer-col-title">${title}</p>${links
+      .map((link) => {
+        const cookieClass = isCookieSettingsHref(link.href, link.label)
+          ? ' class="tm-open-cookie-settings"'
+          : "";
+        return `<a href="${escapeAttr(link.href)}"${cookieClass}${link.openInNewTab ? ' target="_blank" rel="noopener noreferrer"' : externalLinkAttrs(link.href)}>${escapeHtml(link.label)}</a>`;
+      })
+      .join("")}`;
+  }
 
   function categoryLinkList(
     categories: IkasCategoryList | undefined,

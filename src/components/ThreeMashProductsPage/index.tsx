@@ -1,9 +1,14 @@
-import { isEnglishLocale, tLocalized } from "../../utils/i18n";
+import { localizedHref, isEnglishLocale, tLocalized } from "../../utils/i18n";
+import { hasCustomerToken } from "../../utils/auth";
+import { safeRedirect } from "../../utils/safeRedirect";
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
+  addProductToFavorites,
   apiSearchProducts,
   createMediaSrcset,
+  customerStore,
   getDefaultSrc,
+  getFavoriteProductsIds,
   getProductHref,
   getProductListFilterCategories,
   getProductListInitialData,
@@ -16,7 +21,10 @@ import {
   hasProductListNextPage,
   hasProductListPrevPage,
   hasProductVariantDiscount,
+  initCustomerStore,
   initProductList,
+  reaction,
+  removeProductFromFavorites,
   searchProductList,
   setSortType,
   type IkasProduct,
@@ -388,6 +396,48 @@ export function ThreeMashProductsPage(props: Props) {
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [gridLayout, setGridLayout] = useState<"grid-4" | "grid-3">("grid-4");
   const [favoriteIds, setFavoriteIds] = useState<Record<string, boolean>>({});
+  const [favoritePendingIds, setFavoritePendingIds] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadFavorites() {
+      if (!customerStore._initialized && hasCustomerToken()) {
+        try {
+          await initCustomerStore(customerStore);
+        } catch {}
+      }
+      if (!customerStore.customer) {
+        if (mounted) setFavoriteIds({});
+        return;
+      }
+      try {
+        const favorites = await getFavoriteProductsIds(customerStore);
+        if (mounted && favorites) {
+          setFavoriteIds(
+            favorites.reduce<Record<string, boolean>>((result, favorite) => {
+              if (favorite.productId) result[favorite.productId] = true;
+              return result;
+            }, {}),
+          );
+        }
+      } catch {}
+    }
+
+    loadFavorites();
+
+    const disposeReaction = reaction(
+      () => customerStore.customer,
+      () => {
+        loadFavorites();
+      },
+    );
+
+    return () => {
+      mounted = false;
+      disposeReaction();
+    };
+  }, []);
 
   const committedSearchRef = useRef(productList?.searchKeyword || "");
   const appliedUrlSearchRef = useRef(false);
@@ -431,19 +481,19 @@ export function ThreeMashProductsPage(props: Props) {
 
   const categoryLinks: ListingLink[] = fetchedCategories.length > 0
     ? [
-        {
-          id: ALL_PRODUCTS_FILTER_ID,
-          label: tLocalized("Tüm Ürünler", "All Products"),
-          group: "Kategori",
-        },
-        ...fetchedCategories,
-      ]
+      {
+        id: ALL_PRODUCTS_FILTER_ID,
+        label: tLocalized("Tüm Ürünler", "All Products"),
+        group: "Kategori",
+      },
+      ...fetchedCategories,
+    ]
     : fallbackCategories;
 
   const showSearchControl = props.showSearch !== false;
   // Keep sorting visible on the product listing toolbar.
   const showSortControl = true;
-  const showNavigationControls = props.showNavigation !== false;
+  const showNavigationControls = props.showNavigation === true;
 
   const trimmedSearch = searchValue.trim();
   const fallbackProducts =
@@ -482,7 +532,7 @@ export function ThreeMashProductsPage(props: Props) {
     ),
     "--tm-products-accent": themeToken(
       props.accentColor,
-      "#c7f136",
+      "#DBFA37",
       "--tm-theme-accent",
     ),
   } as any;
@@ -703,11 +753,37 @@ export function ThreeMashProductsPage(props: Props) {
     });
   }
 
-  function handleToggleFavorite(productId: string) {
-    setFavoriteIds((prev) => ({
-      ...prev,
-      [productId]: !prev[productId],
-    }));
+  async function handleToggleFavorite(productId: string) {
+    if (!customerStore._initialized && hasCustomerToken()) {
+      try {
+        await initCustomerStore(customerStore);
+      } catch {}
+    }
+
+    if (!customerStore.customer && !hasCustomerToken()) {
+      window.location.href = safeRedirect(localizedHref("/account/login"));
+      return;
+    }
+
+    if (favoritePendingIds[productId]) return;
+    const isFavorite = Boolean(favoriteIds[productId]);
+    setFavoritePendingIds((prev) => ({ ...prev, [productId]: true }));
+
+    try {
+      const success = isFavorite
+        ? await removeProductFromFavorites(customerStore, productId)
+        : await addProductToFavorites(customerStore, productId);
+
+      if (success) {
+        setFavoriteIds((prev) => ({ ...prev, [productId]: !isFavorite }));
+      }
+    } finally {
+      setFavoritePendingIds((prev) => {
+        const next = { ...prev };
+        delete next[productId];
+        return next;
+      });
+    }
   }
 
   return (
@@ -914,37 +990,37 @@ export function ThreeMashProductsPage(props: Props) {
           </div>
 
           {/* Grid Layout Switcher */}
-            <div className="tm-products-layout-switcher" role="group" aria-label={tLocalized("Grid görünümü", "Grid layout")}>
-              <button
-                type="button"
-                className={`tm-products-layout-btn${gridLayout === "grid-4" ? " is-active" : ""}`}
-                aria-label={tLocalized("4'lü Görünüm", "4 Columns View")}
-                onClick={() => setGridLayout("grid-4")}
-              >
-                {/* 4 squares in 2x2 = represents 4-column grid */}
-                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
-                  <rect x="1" y="1" width="6" height="6" rx="1" />
-                  <rect x="9" y="1" width="6" height="6" rx="1" />
-                  <rect x="1" y="9" width="6" height="6" rx="1" />
-                  <rect x="9" y="9" width="6" height="6" rx="1" />
-                </svg>
-              </button>
+          <div className="tm-products-layout-switcher" role="group" aria-label={tLocalized("Grid görünümü", "Grid layout")}>
+            <button
+              type="button"
+              className={`tm-products-layout-btn${gridLayout === "grid-4" ? " is-active" : ""}`}
+              aria-label={tLocalized("4'lü Görünüm", "4 Columns View")}
+              onClick={() => setGridLayout("grid-4")}
+            >
+              {/* 4 squares in 2x2 = represents 4-column grid */}
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                <rect x="1" y="1" width="6" height="6" rx="1" />
+                <rect x="9" y="1" width="6" height="6" rx="1" />
+                <rect x="1" y="9" width="6" height="6" rx="1" />
+                <rect x="9" y="9" width="6" height="6" rx="1" />
+              </svg>
+            </button>
 
-              <button
-                type="button"
-                className={`tm-products-layout-btn${gridLayout === "grid-3" ? " is-active" : ""}`}
-                aria-label={tLocalized("3'lü Görünüm", "3 Columns View")}
-                onClick={() => setGridLayout("grid-3")}
-              >
-                {/* 3 vertical bars = represents 3-column grid */}
-                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
-                  <rect x="1" y="1" width="4" height="14" rx="1" />
-                  <rect x="6" y="1" width="4" height="14" rx="1" />
-                  <rect x="11" y="1" width="4" height="14" rx="1" />
-                </svg>
-              </button>
-            </div>
+            <button
+              type="button"
+              className={`tm-products-layout-btn${gridLayout === "grid-3" ? " is-active" : ""}`}
+              aria-label={tLocalized("3'lü Görünüm", "3 Columns View")}
+              onClick={() => setGridLayout("grid-3")}
+            >
+              {/* 3 vertical bars = represents 3-column grid */}
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                <rect x="1" y="1" width="4" height="14" rx="1" />
+                <rect x="6" y="1" width="4" height="14" rx="1" />
+                <rect x="11" y="1" width="4" height="14" rx="1" />
+              </svg>
+            </button>
           </div>
+        </div>
 
         {/* Product Cards Grid Area */}
         {!productList ? (
@@ -988,13 +1064,13 @@ export function ThreeMashProductsPage(props: Props) {
               {props.emptyMessage ||
                 (trimmedSearch
                   ? tLocalized(
-                      "Aramanızla eşleşen aktif ürün bulunamadı. Lütfen farklı kelimelerle tekrar deneyin.",
-                      "No active products matching your search were found. Please try with different keywords."
-                    )
+                    "Aramanızla eşleşen aktif ürün bulunamadı. Lütfen farklı kelimelerle tekrar deneyin.",
+                    "No active products matching your search were found. Please try with different keywords."
+                  )
                   : tLocalized(
-                      "Bu kategoride listelenecek ürün bulunamadı.",
-                      "No products found in this category."
-                    ))}
+                    "Bu kategoride listelenecek ürün bulunamadı.",
+                    "No products found in this category."
+                  ))}
             </p>
           </div>
         )}

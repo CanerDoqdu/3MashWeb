@@ -1,3 +1,9 @@
+html,
+body,
+#app {
+  background: var(--tmrpg-auth-bg, var(--tm-theme-bg, #fafaf7));
+}
+
 .tmau-page,
 .tmau-auth {
   display: flex;
@@ -390,6 +396,7 @@
   ) !important;
   font-size: 15px;
   font-weight: 800;
+  line-height: 1;
   cursor: pointer;
 }
 

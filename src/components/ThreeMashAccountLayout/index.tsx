@@ -188,7 +188,10 @@ type AccountMode =
   | "recover-password";
 
 function modeFromPathname(pathname: string, fallback: AccountMode): AccountMode {
-  const p = pathname.replace(/\/+$/, "");
+  const clean = pathname.split("?")[0].split("#")[0].toLowerCase().trim();
+  const withoutLang = clean.replace(/^\/en(?:\/|$)/, "/");
+  const normalized = withoutLang.startsWith("/") ? withoutLang : `/${withoutLang}`;
+  const p = normalized.replace(/\/+$/, "") || "/";
   if (p === "/account" || p === "/hesabim") return "account";
   if (p === "/account/addresses" || p === "/adreslerim") return "addresses";
   if (
@@ -366,7 +369,7 @@ function AccountLayoutContent(props: DashboardProps) {
     }
   }, [customer]);
 
-  // ── Listen to browser popstate (back/forward) & pageshow (bfcache) ─
+  // ── Listen to browser popstate (back/forward), pageshow (bfcache) & storage (multi-tab) ─
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -376,15 +379,19 @@ function AccountLayoutContent(props: DashboardProps) {
       if (isPublicAuthPath(currentPath) || mode === "forgot-password" || mode === "recover-password") {
         return true;
       }
-      if (isCustomerAuthenticated() === "unauthenticated") {
+      if (!hasCustomerToken() || isCustomerAuthenticated() === "unauthenticated") {
         setCustomer(null);
         setOrders([]);
         setFavorites([]);
         setSidebarName("");
-        window.location.replace(safeRedirect(localizedHref("/")));
+        window.location.replace(safeRedirect(localizedHref("/account/login")));
         return false;
       }
       return true;
+    }
+
+    function handlePageShow() {
+      handleAuthVerification();
     }
 
     function handlePopState() {
@@ -397,7 +404,21 @@ function AccountLayoutContent(props: DashboardProps) {
       );
     }
 
+    function handleStorage(e: StorageEvent) {
+      if (e.key === "customerToken" || e.key === "tm_logout_timestamp" || e.key === null) {
+        handleAuthVerification();
+      }
+    }
+
+    function handleAuthUpdated() {
+      handleAuthVerification();
+    }
+
+    window.addEventListener("pageshow", handlePageShow);
     window.addEventListener("popstate", handlePopState);
+    window.addEventListener("storage", handleStorage);
+    window.addEventListener("3mash-auth-updated", handleAuthUpdated);
+
     const disposeAuthReaction = reaction(
       () => [
         customerStore._token,
@@ -406,8 +427,12 @@ function AccountLayoutContent(props: DashboardProps) {
       ],
       handleAuthVerification,
     );
+
     return () => {
+      window.removeEventListener("pageshow", handlePageShow);
       window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("3mash-auth-updated", handleAuthUpdated);
       disposeAuthReaction();
     };
   }, [props.mode, isStudio]);
@@ -469,6 +494,11 @@ function AccountLayoutContent(props: DashboardProps) {
   // Uses buttons instead of <a href> so ikas router never intercepts.
   // URL is updated via pushState, right panel swaps via setMode.
   function handleNavigate(nextHref: string) {
+    if (!isStudio && (!hasCustomerToken() || isCustomerAuthenticated() === "unauthenticated")) {
+      window.location.replace(safeRedirect(localizedHref("/account/login")));
+      return;
+    }
+
     const nextMode = modeFromHref(
       nextHref,
       (props.mode as AccountMode) || "account",
@@ -505,8 +535,8 @@ function AccountLayoutContent(props: DashboardProps) {
     setOrders([]);
     setFavorites([]);
     setSidebarName("");
-    // performLogout clears storage, clears cart, and redirects protected routes.
-    await performLogout();
+    // performLogout clears storage, clears cart, broadcasts across tabs, and redirects to login.
+    await performLogout({ forceRedirect: true, redirectTarget: "/account/login" });
   }
 
   // ── Href helpers ──────────────────────────────────────────────────
@@ -666,7 +696,7 @@ export default function ThreeMashAccountLayout(props: DashboardProps) {
 
   return (
     <ProtectedRoute
-      redirectHref="/"
+      redirectHref="/account/login"
       isStudio={isStudioPreviewActive()}
     >
       <AccountLayoutContent {...props} />

@@ -84,260 +84,260 @@ const CRS_GALLERY: ProductGalleryItem[] = [
 
 function CRS_COMPOSITE_TEMPLATE(): ProductDetailTemplateData {
   return {
-  key: CRS_COMPOSITE_SLUG,
-  announcement: {
-    enabled: true,
-    strongText: tLocalized("Fırsatı kaçırmayın.", "Don't miss the opportunity."),
-    longText: tLocalized("CE Class IIa CRS Composite'i cihazınızın parametreleriyle birlikte kalibre ederek, ücretsiz kurulum desteğiyle teslim ediyoruz.", "We deliver the CE Class IIa CRS Composite calibrated together with your device's parameters, with free setup support."),
-    ctaText: tLocalized("Ücretsiz parametre uyumlaması →", "Free parameter matching →"),
-    ctaHref: "#satinal",
-  },
-  breadcrumb: {
-    homeText: tLocalized("Ana sayfa", "Home"),
-    homeHref: "/",
-    categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
-    categoryHref: "/dental-3d-yazici-recineleri",
-    productText: tLocalized("CRS Composite", "CRS Composite"),
-  },
-  hero: {
-    kicker: tLocalized("CRS Composite · Biyouyumlu Kron-Köprü Reçinesi", "CRS Composite · Biocompatible Crown-and-Bridge Resin"),
-    titleHtml: tLocalized("Daimi kron artık <span class=\"em\">baskıdan</span> çıkıyor.", "The permanent crown now comes out of a <span class=\"em\">print.</span>"),
-    leadHtml:
-      tLocalized("Geçici ve daimi kuron-köprülerin katmanlı üretimi için biyouyumlu reçine. Sektörde önde gelen rakiplerine kıyasla <b>daha yüksek bükülme mukavemeti</b> ve hassas marjinal uyum sağlar; yarı saydamlık-opaklık arasında dengeli translüsentliğe sahiptir. Ağız koşullarına dayanıklıdır, tat ve koku yapmaz.", "A biocompatible resin for layered production of temporary and permanent crowns and bridges. It provides <b>higher flexural strength</b> and precise marginal fit compared to leading competitors in the industry; it has balanced translucency between semi-transparency and opacity. It is resistant to oral conditions and produces no taste or odor."),
-    pills: [
-      { value: "144 MPa", label: tLocalized("eğilme mukavemeti", "flexural strength") },
-      { value: "5000 MPa", label: tLocalized("eğilme modülü", "flexural modulus") },
-      { value: "CE", label: tLocalized("Class IIa", "Class IIa") },
-      { label: tLocalized("Sararma yapmaz", "Does not turn yellow") },
-    ],
-    galleryBadge: tLocalized("CE CLASS IIa", "CE CLASS IIa"),
-    gallery: CRS_GALLERY,
-    selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
-    summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
-    buyHrefBase: "/crs-composite-mukemmel-dayanimli-gecici-recinesi",
-    whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum"),
-    whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
-    addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
-    addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
-    outOfStockText: tLocalized("Stok yok", "Out of stock"),
-    trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
-  },
-  ratings: {
-    index: "01",
-    label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
-    titleHtml: tLocalized("Biyouyumlu <span class=\"hl\">geçici ve daimi</span> reçinesi.", "Biocompatible <span class=\"hl\">temporary and permanent</span> resin."),
-    sideHtml: tLocalized("CRS Composite, <b>CE Class IIa</b> sertifikalı toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılabilir.", "Thanks to its <b>CE Class IIa</b> certified, non-toxic formulation, CRS Composite can be used safely intraorally."),
-    panelTitleHtml: tLocalized("CRS Composite'i satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>", "Buyers of CRS Composite — <span class=\"em\">how did they rate it?</span>"),
-    note: tLocalized("Ürünü satın alan kullanıcıların geri bildirimlerine göre.", "Based on feedback from customers who purchased the product."),
-    items: [
-      { descriptionHtml: tLocalized("Baskı sonrası kürleme işleminde <b>sararma yapmadığını</b> söyledi", "It was noted that it <b>doesn't yellow</b> during post-print curing"), percent: 99 },
-      { descriptionHtml: tLocalized("<b>Yüksek mekanik dayanımı</b> sayesinde kırılmadan uzun süre kullanılabildiğini söyledi", "Said it can be used for a long time without breaking, thanks to its <b>high mechanical strength</b>"), percent: 97 },
-      { descriptionHtml: tLocalized("<b>Şırınga dolgu malzemesiyle yüksek uyum</b> sayesinde hasta ağzında geçici diş üzerinde değişiklik yapabildiğini söyledi", "Said that thanks to <b>high compatibility with syringe filling material</b>, adjustments can be made to the temporary tooth in the patient's mouth"), percent: 95 },
-    ],
-  },
-  metrics: {
-    index: "02",
-    label: tLocalized("Teknik Özellikler", "Technical Specifications"),
-    titleHtml: tLocalized("Baskı sonrası <span class=\"em\">sararma yapmaz</span>, kalıcıda kullanılır.", "<span class=\"em\">Doesn't yellow</span> after printing, used in permanent restorations."),
-    sideHtml:
-      tLocalized("CRS Composite, kalıcı uygulamada kullanıldığını iddia eden rakip markalara göre daha yüksek dayanım sunar ve kürleme sonrası sararmaz. Değerler ISO 10477 standardına göredir.", "CRS Composite offers higher strength than competitor brands that claim to be usable for permanent applications, and it does not yellow after curing. Values are according to the ISO 10477 standard."),
-    items: [
-      {
-        name: tLocalized("Eğilme Mukavemeti", "Flexural Strength"),
-        value: "144",
-        unit: tLocalized("MPa", "MPa"),
-        tag: tLocalized("ISO 10477", "ISO 10477"),
-        caption: tLocalized("Kalıcı restorasyon iddiası taşıyan birçok geçici reçinenin üzerinde; kırılmadan uzun süre kullanım.", "Outperforms many temporary resins that claim to be permanent-restoration-grade; long-term use without breaking."),
-      },
-      {
-        name: tLocalized("Eğilme Modülü", "Flexural Modulus"),
-        value: "5000",
-        unit: tLocalized("MPa", "MPa"),
-        tag: tLocalized("ISO 10477", "ISO 10477"),
-        caption: tLocalized("Yüksek rijitlik: fonksiyon altında bükülmeye direnç, stabil oklüzyon.", "High rigidity: resistance to bending under function, stable occlusion."),
-      },
-      {
-        name: tLocalized("Biyouyumluluk", "Biocompatibility"),
-        value: "CE",
-        unit: tLocalized("Class IIa", "Class IIa"),
-        tag: "MDR",
-        caption: tLocalized("Ağız içinde belirli süre temas eden tıbbi cihaz sınıfı; toksik olmayan formülasyon.", "A class of medical device that has contact inside the mouth for a certain period; non-toxic formulation."),
-      },
-    ],
-  },
-  specHighlight: {
-    tag: tLocalized("CRS COMPOSITE · CE CLASS IIa · MDR", "CRS COMPOSITE · CE CLASS IIa · MDR"),
-    titleHtml: tLocalized("Porselen estetiği, <span class=\"em\">marka bağımsız glaze.</span>", "Porcelain aesthetics, <span class=\"em\">brand-independent glaze.</span>"),
-    descriptionHtml:
-      tLocalized("CE Class IIa sertifikalı, toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılır. Yarı saydamlık ve opaklık arasında mükemmel bir translüsent dengeye sahiptir; marka ve renk ayırt etmeksizin <b>optik glaze</b> yapılabilir. Ağız koşullarına dayanıklıdır, <b>tat ve koku yapmaz.</b>", "Thanks to its CE Class IIa certified, non-toxic formulation, it can be used safely intraorally. It has an excellent translucency balance between semi-transparency and opacity; <b>optical glazing</b> can be applied regardless of brand or color. It withstands oral conditions and <b>produces no taste or odor.</b>"),
-    ctaText: tLocalized("Renk ve boyut seç →", "Select color and size →"),
-    ctaHref: "#satinal",
-    rows: [
-      { label: tLocalized("Eğilme mukavemeti", "Flexural strength"), value: "144 MPa" },
-      { label: tLocalized("Eğilme modülü", "Flexural modulus"), value: "5000 MPa" },
-      { label: tLocalized("Sertifikasyon", "Certification"), value: "CE Class IIa (MDR)" },
-      { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Geçici + daimi", "Temporary + permanent") },
-      { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("Tüm DLP / LCD", "All DLP / LCD") },
-    ],
-  },
-  useCases: {
-    index: "03",
-    label: tLocalized("Uygulama & Uyumluluk", "Application & Compatibility"),
-    titleHtml: tLocalized("Nerede kullanılır, <span class=\"em\">neyle çalışır?</span>", "Where is it used, <span class=\"em\">what does it work with?</span>"),
-    sideHtml: tLocalized("Uygulama alanları ve uyumlu cihazlar hakkında bilgi alın.", "Learn about applications and compatible devices."),
-    photos: [
-      { src: CRS_GALLERY[1].src, alt: tLocalized("CRS Composite ile üretilmiş kron restorasyonu", "Crown restoration produced with CRS Composite"), title: tLocalized("Aynı gün kron", "Same-day crown"), text: tLocalized("Porselen benzeri güç ve estetik, tek seansta.", "Porcelain-like strength and aesthetics, in a single session.") },
-      { src: CRS_GALLERY[2].src, alt: tLocalized("CRS Composite ile üretilmiş köprü restorasyonu", "Bridge restoration produced with CRS Composite"), title: tLocalized("Köprü restorasyonları", "Bridge restorations"), text: tLocalized("144 MPa dayanım; kırılmadan uzun süre kullanım.", "144 MPa strength; long-lasting use without breaking.") },
-      { src: CRS_GALLERY[4].src, alt: tLocalized("Model üzerinde CRS Composite geçici restorasyon", "CRS Composite temporary restoration on a model"), title: tLocalized("Model üzerinde uyum", "Fit on the model"), text: tLocalized("Hassas marjinal uyum, net kole hatları.", "Precise marginal fit, clear cervical lines.") },
-    ],
-    cards: [
-      {
-        eyebrow: tLocalized("Uygulama Alanları", "Application Areas"),
-        title: tLocalized("Hangi restorasyonlar?", "Which restorations?"),
-        items: [
-          tLocalized("Porselen benzeri güç ve güzelliğe sahip <b>aynı gün kron ve köprüler</b>", "<b>Same-day crowns and bridges</b> with porcelain-like strength and beauty"),
-          tLocalized("Çok çeşitli <b>kalıcı ve geçici</b> diş restorasyonları", "A wide variety of <b>permanent and temporary</b> dental restorations"),
-          tLocalized("Çıkarılabilir total protezler için <b>vakaya özel</b> tasarlanmış kuron ve köprüler", "Crowns and bridges designed <b>case-specifically</b> for removable full dentures"),
-        ],
-        note: tLocalized("Vakanıza uygun tasarım parametrelerini ücretsiz paylaşıyoruz.", "We share design parameters suited to your case free of charge."),
-      },
-      {
-        eyebrow: tLocalized("Öne Çıkan Özellikler", "Featured Features"),
-        title: tLocalized("Neden CRS Composite?", "Why CRS Composite?"),
-        items: [
-          tLocalized("Yarı saydamlık-opaklık arasında dengeli <b>translüsentlik</b>", "Balanced <b>translucency</b> between translucent and opaque"),
-          tLocalized("Marka ve renk ayırt etmeksizin <b>optik glaze</b>", "<b>Optical glaze</b> regardless of brand or shade"),
-          tLocalized("Ağız koşullarına dayanıklı; <b>tat ve koku yapmaz</b>", "Resistant to oral conditions; <b>no taste or odor</b>"),
-          tLocalized("<b>CE Class IIa</b> biyouyumlu, toksik olmayan formülasyon", "<b>CE Class IIa</b> biocompatible, non-toxic formulation"),
-        ],
-      },
-    ],
-    devices: {
-      eyebrow: tLocalized("Uyumlu Cihazlar", "Compatible Devices"),
-      title: tLocalized("Tüm DLP & LCD yazıcılarla çalışır", "Works with all DLP & LCD printers"),
-      textHtml:
-        tLocalized("Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> gerçekleştiriyoruz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.", "As the <b>official distributor</b> of Custom Resin Solutions, we carry out parameter calibration <b>free of charge</b> regardless of the 3D printer brand you use. We are with you with post-sale user training and <b>24/7 technical support.</b>"),
-      chips: [
-        { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
-        { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
-        { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
-        { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
-        { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
-        { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
-        { label: tLocalized("Nova Bene 4", "Nova Bene 4") },
-        { label: tLocalized("Ackuretta Dentiq", "Ackuretta Dentiq") },
-        { label: tLocalized("Elegoo Mars 3", "Elegoo Mars 3") },
-        { label: tLocalized("+ tüm DLP / LCD markaları", "+ all DLP / LCD brands"), highlighted: true },
+    key: CRS_COMPOSITE_SLUG,
+    announcement: {
+      enabled: true,
+      strongText: tLocalized("Fırsatı kaçırmayın.", "Don't miss the opportunity."),
+      longText: tLocalized("CE Class IIa CRS Composite'i cihazınızın parametreleriyle birlikte kalibre ederek, ücretsiz kurulum desteğiyle teslim ediyoruz.", "We deliver the CE Class IIa CRS Composite calibrated together with your device's parameters, with free setup support."),
+      ctaText: tLocalized("Ücretsiz parametre uyumlaması →", "Free parameter matching →"),
+      ctaHref: "#satinal",
+    },
+    breadcrumb: {
+      homeText: tLocalized("Ana sayfa", "Home"),
+      homeHref: "/",
+      categoryText: tLocalized("Dental Reçineler", "Dental Resins"),
+      categoryHref: "/dental-3d-yazici-recineleri",
+      productText: tLocalized("CRS Composite", "CRS Composite"),
+    },
+    hero: {
+      kicker: tLocalized("CRS Composite · Biyouyumlu Kron-Köprü Reçinesi", "CRS Composite · Biocompatible Crown-and-Bridge Resin"),
+      titleHtml: tLocalized("Daimi kron artık <span class=\"em\">baskıdan</span> çıkıyor.", "The permanent crown now comes out of a <span class=\"em\">print.</span>"),
+      leadHtml:
+        tLocalized("Geçici ve daimi kuron-köprülerin katmanlı üretimi için biyouyumlu reçine. Sektörde önde gelen rakiplerine kıyasla <b>daha yüksek bükülme mukavemeti</b> ve hassas marjinal uyum sağlar; yarı saydamlık-opaklık arasında dengeli translüsentliğe sahiptir. Ağız koşullarına dayanıklıdır, tat ve koku yapmaz.", "A biocompatible resin for layered production of temporary and permanent crowns and bridges. It provides <b>higher flexural strength</b> and precise marginal fit compared to leading competitors in the industry; it has balanced translucency between semi-transparency and opacity. It is resistant to oral conditions and produces no taste or odor."),
+      pills: [
+        { value: "144 MPa", label: tLocalized("eğilme mukavemeti", "flexural strength") },
+        { value: "5000 MPa", label: tLocalized("eğilme modülü", "flexural modulus") },
+        { value: "CE", label: tLocalized("Class IIa", "Class IIa") },
+        { label: tLocalized("Sararma yapmaz", "Does not turn yellow") },
+      ],
+      galleryBadge: tLocalized("CE CLASS IIa", "CE CLASS IIa"),
+      gallery: CRS_GALLERY,
+      selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
+      summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
+      buyHrefBase: "/crs-composite-mukemmel-dayanimli-gecici-recinesi",
+      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
+      addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
+      addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
+      outOfStockText: tLocalized("Stok yok", "Out of stock"),
+      trustBadges: [tLocalized("Ücretsiz kargo", "Free shipping"), tLocalized("Koşulsuz iade", "Hassle-free Returns"), tLocalized("Güvenli ödeme", "Secure Payment")],
+    },
+    ratings: {
+      index: "01",
+      label: tLocalized("Kullanıcı Deneyimi", "User Experience"),
+      titleHtml: tLocalized("Biyouyumlu <span class=\"hl\">geçici ve daimi</span> reçinesi.", "Biocompatible <span class=\"hl\">temporary and permanent</span> resin."),
+      sideHtml: tLocalized("CRS Composite, <b>CE Class IIa</b> sertifikalı toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılabilir.", "Thanks to its <b>CE Class IIa</b> certified, non-toxic formulation, CRS Composite can be used safely intraorally."),
+      panelTitleHtml: tLocalized("CRS Composite'i satın alanlar <span class=\"em\">nasıl değerlendirdi?</span>", "Buyers of CRS Composite — <span class=\"em\">how did they rate it?</span>"),
+      note: tLocalized("Ürünü satın alan kullanıcıların geri bildirimlerine göre.", "Based on feedback from customers who purchased the product."),
+      items: [
+        { descriptionHtml: tLocalized("Baskı sonrası kürleme işleminde <b>sararma yapmadığını</b> söyledi", "It was noted that it <b>doesn't yellow</b> during post-print curing"), percent: 99 },
+        { descriptionHtml: tLocalized("<b>Yüksek mekanik dayanımı</b> sayesinde kırılmadan uzun süre kullanılabildiğini söyledi", "Said it can be used for a long time without breaking, thanks to its <b>high mechanical strength</b>"), percent: 97 },
+        { descriptionHtml: tLocalized("<b>Şırınga dolgu malzemesiyle yüksek uyum</b> sayesinde hasta ağzında geçici diş üzerinde değişiklik yapabildiğini söyledi", "Said that thanks to <b>high compatibility with syringe filling material</b>, adjustments can be made to the temporary tooth in the patient's mouth"), percent: 95 },
       ],
     },
-  },
-  ecosystem: {
-    index: "04",
-    label: tLocalized("Ekosistem", "Ecosystem"),
-    titleHtml: tLocalized("Reçine tek başına yeterli değil: <span class=\"em\">kürleme sonucu tamamlar.</span>", "Resin alone is not enough: <span class=\"em\">curing completes the result.</span>"),
-    textHtml:
-      tLocalized("CRS Composite'in 144 MPa dayanımını ve sararmasız rengini ortaya çıkaran şey, doğru <b>post-curing</b> protokolüdür. Reçineyi cihazınızın parametreleriyle birlikte kalibre ederek teslim ediyoruz; akıllı kürleme cihazımız bu protokolü otomatik uygular.", "What brings out CRS Composite's 144 MPa strength and non-yellowing color is the correct <b>post-curing</b> protocol. We deliver the resin calibrated together with your device's parameters; our smart curing device applies this protocol automatically."),
-    chips: [tLocalized("385 nm optimize baskı", "385 nm optimized printing"), tLocalized("Doğru post-curing protokolü", "The right post-curing protocol"), tLocalized("Marka bağımsız kalibrasyon", "Brand-independent calibration"), tLocalized("7/24 teknik destek", "24/7 technical support")],
-    buttons: [
-      { text: tLocalized("3D yazıcıları gör →", "See 3D printers →"), href: "/3d-yazicilar" },
-      { text: tLocalized("Kürlemenin önemini gör →", "See the importance of curing →"), href: tLocalized("/yikama-kurleme-cihazlari#neden-gerekli", "/yikama-kurleme-cihazlari#neden-gerekli"), variant: "line" },
-    ],
-  },
-  faq: {
-    index: "05",
-    label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
-    titleHtml: tLocalized("CRS Composite hakkında <span class=\"em\">merak edilenler.</span>", "<span class=\"em\">Frequently asked questions</span> about CRS Composite."),
-    sideHtml: tLocalized("Klinik ve laboratuvarların CRS Composite için en çok sorduğu sorular, net cevaplarla.", "The most frequently asked questions from clinics and laboratories about CRS Composite, with clear answers."),
-    openFirst: true,
-    items: [
-      {
-        question: tLocalized("1 kg CRS Composite reçinesinden kaç üye iş alabiliriz?", "How many units of work can we get from 1 kg of CRS Composite resin?"),
-        answerHtml:
-          tLocalized("Bu, restorasyonun boyutuna, duvar kalınlığına ve destek yapılarına göre değişir. Tek bir kron ünitesi ortalama olarak birkaç mililitre reçine tüketir; 1 kg reçineden genellikle <b>yüzlerce üye</b> üretilebilir.", "This varies depending on the size of the restoration, wall thickness, and support structures. A single crown unit consumes an average of a few milliliters of resin; <b>hundreds of units</b> can typically be produced from 1 kg of resin."),
+    metrics: {
+      index: "02",
+      label: tLocalized("Teknik Özellikler", "Technical Specifications"),
+      titleHtml: tLocalized("Baskı sonrası <span class=\"em\">sararma yapmaz</span>, kalıcıda kullanılır.", "<span class=\"em\">Doesn't yellow</span> after printing, used in permanent restorations."),
+      sideHtml:
+        tLocalized("CRS Composite, kalıcı uygulamada kullanıldığını iddia eden rakip markalara göre daha yüksek dayanım sunar ve kürleme sonrası sararmaz. Değerler ISO 10477 standardına göredir.", "CRS Composite offers higher strength than competitor brands that claim to be usable for permanent applications, and it does not yellow after curing. Values are according to the ISO 10477 standard."),
+      items: [
+        {
+          name: tLocalized("Eğilme Mukavemeti", "Flexural Strength"),
+          value: "144",
+          unit: tLocalized("MPa", "MPa"),
+          tag: tLocalized("ISO 10477", "ISO 10477"),
+          caption: tLocalized("Kalıcı restorasyon iddiası taşıyan birçok geçici reçinenin üzerinde; kırılmadan uzun süre kullanım.", "Outperforms many temporary resins that claim to be permanent-restoration-grade; long-term use without breaking."),
+        },
+        {
+          name: tLocalized("Eğilme Modülü", "Flexural Modulus"),
+          value: "5000",
+          unit: tLocalized("MPa", "MPa"),
+          tag: tLocalized("ISO 10477", "ISO 10477"),
+          caption: tLocalized("Yüksek rijitlik: fonksiyon altında bükülmeye direnç, stabil oklüzyon.", "High rigidity: resistance to bending under function, stable occlusion."),
+        },
+        {
+          name: tLocalized("Biyouyumluluk", "Biocompatibility"),
+          value: "CE",
+          unit: tLocalized("Class IIa", "Class IIa"),
+          tag: "MDR",
+          caption: tLocalized("Ağız içinde belirli süre temas eden tıbbi cihaz sınıfı; toksik olmayan formülasyon.", "A class of medical device that has contact inside the mouth for a certain period; non-toxic formulation."),
+        },
+      ],
+    },
+    specHighlight: {
+      tag: tLocalized("CRS COMPOSITE · CE CLASS IIa · MDR", "CRS COMPOSITE · CE CLASS IIa · MDR"),
+      titleHtml: tLocalized("Porselen estetiği, <span class=\"em\">marka bağımsız glaze.</span>", "Porcelain aesthetics, <span class=\"em\">brand-independent glaze.</span>"),
+      descriptionHtml:
+        tLocalized("CE Class IIa sertifikalı, toksik olmayan formülasyonu sayesinde ağız içinde güvenle kullanılır. Yarı saydamlık ve opaklık arasında mükemmel bir translüsent dengeye sahiptir; marka ve renk ayırt etmeksizin <b>optik glaze</b> yapılabilir. Ağız koşullarına dayanıklıdır, <b>tat ve koku yapmaz.</b>", "Thanks to its CE Class IIa certified, non-toxic formulation, it can be used safely intraorally. It has an excellent translucency balance between semi-transparency and opacity; <b>optical glazing</b> can be applied regardless of brand or color. It withstands oral conditions and <b>produces no taste or odor.</b>"),
+      ctaText: tLocalized("Renk ve boyut seç →", "Select color and size →"),
+      ctaHref: "#satinal",
+      rows: [
+        { label: tLocalized("Eğilme mukavemeti", "Flexural strength"), value: "144 MPa" },
+        { label: tLocalized("Eğilme modülü", "Flexural modulus"), value: "5000 MPa" },
+        { label: tLocalized("Sertifikasyon", "Certification"), value: "CE Class IIa (MDR)" },
+        { label: tLocalized("Uygulama", "APPLICATION"), value: tLocalized("Geçici + daimi", "Temporary + permanent") },
+        { label: tLocalized("Uyum", "Compatibility"), value: tLocalized("Tüm DLP / LCD", "All DLP / LCD") },
+      ],
+    },
+    useCases: {
+      index: "03",
+      label: tLocalized("Uygulama & Uyumluluk", "Application & Compatibility"),
+      titleHtml: tLocalized("Nerede kullanılır, <span class=\"em\">neyle çalışır?</span>", "Where is it used, <span class=\"em\">what does it work with?</span>"),
+      sideHtml: tLocalized("Uygulama alanları ve uyumlu cihazlar hakkında bilgi alın.", "Learn about applications and compatible devices."),
+      photos: [
+        { src: CRS_GALLERY[1].src, alt: tLocalized("CRS Composite ile üretilmiş kron restorasyonu", "Crown restoration produced with CRS Composite"), title: tLocalized("Aynı gün kron", "Same-day crown"), text: tLocalized("Porselen benzeri güç ve estetik, tek seansta.", "Porcelain-like strength and aesthetics, in a single session.") },
+        { src: CRS_GALLERY[2].src, alt: tLocalized("CRS Composite ile üretilmiş köprü restorasyonu", "Bridge restoration produced with CRS Composite"), title: tLocalized("Köprü restorasyonları", "Bridge restorations"), text: tLocalized("144 MPa dayanım; kırılmadan uzun süre kullanım.", "144 MPa strength; long-lasting use without breaking.") },
+        { src: CRS_GALLERY[4].src, alt: tLocalized("Model üzerinde CRS Composite geçici restorasyon", "CRS Composite temporary restoration on a model"), title: tLocalized("Model üzerinde uyum", "Fit on the model"), text: tLocalized("Hassas marjinal uyum, net kole hatları.", "Precise marginal fit, clear cervical lines.") },
+      ],
+      cards: [
+        {
+          eyebrow: tLocalized("Uygulama Alanları", "Application Areas"),
+          title: tLocalized("Hangi restorasyonlar?", "Which restorations?"),
+          items: [
+            tLocalized("Porselen benzeri güç ve güzelliğe sahip <b>aynı gün kron ve köprüler</b>", "<b>Same-day crowns and bridges</b> with porcelain-like strength and beauty"),
+            tLocalized("Çok çeşitli <b>kalıcı ve geçici</b> diş restorasyonları", "A wide variety of <b>permanent and temporary</b> dental restorations"),
+            tLocalized("Çıkarılabilir total protezler için <b>vakaya özel</b> tasarlanmış kuron ve köprüler", "Crowns and bridges designed <b>case-specifically</b> for removable full dentures"),
+          ],
+          note: tLocalized("Vakanıza uygun tasarım parametrelerini ücretsiz paylaşıyoruz.", "We share design parameters suited to your case free of charge."),
+        },
+        {
+          eyebrow: tLocalized("Öne Çıkan Özellikler", "Featured Features"),
+          title: tLocalized("Neden CRS Composite?", "Why CRS Composite?"),
+          items: [
+            tLocalized("Yarı saydamlık-opaklık arasında dengeli <b>translüsentlik</b>", "Balanced <b>translucency</b> between translucent and opaque"),
+            tLocalized("Marka ve renk ayırt etmeksizin <b>optik glaze</b>", "<b>Optical glaze</b> regardless of brand or shade"),
+            tLocalized("Ağız koşullarına dayanıklı; <b>tat ve koku yapmaz</b>", "Resistant to oral conditions; <b>no taste or odor</b>"),
+            tLocalized("<b>CE Class IIa</b> biyouyumlu, toksik olmayan formülasyon", "<b>CE Class IIa</b> biocompatible, non-toxic formulation"),
+          ],
+        },
+      ],
+      devices: {
+        eyebrow: tLocalized("Uyumlu Cihazlar", "Compatible Devices"),
+        title: tLocalized("Tüm DLP & LCD yazıcılarla çalışır", "Works with all DLP & LCD printers"),
+        textHtml:
+          tLocalized("Custom Resin Solutions <b>resmi distribütörü</b> olarak; kullandığınız 3D yazıcı markası fark etmeksizin, parametre uyumlama işlemini <b>ücretsiz</b> gerçekleştiriyoruz. Satış sonrası kullanıcı eğitimleri ve <b>7/24 teknik destek</b> ile yanınızdayız.", "As the <b>official distributor</b> of Custom Resin Solutions, we carry out parameter calibration <b>free of charge</b> regardless of the 3D printer brand you use. We are with you with post-sale user training and <b>24/7 technical support.</b>"),
+        chips: [
+          { label: tLocalized("Creality Halot-Sky", "Creality Halot-Sky") },
+          { label: tLocalized("Phrozen Mini 8K", "Phrozen Mini 8K") },
+          { label: tLocalized("Asiga Max UV", "Minimum Max UV") },
+          { label: tLocalized("Anycubic Photon Mono", "Anycubic Photon Mono") },
+          { label: tLocalized("SprintRay Pro S", "SprintRay Pro S") },
+          { label: tLocalized("Shining AccuFab-D1", "Shining AccuFab-D1") },
+          { label: tLocalized("Nova Bene 4", "Nova Bene 4") },
+          { label: tLocalized("Ackuretta Dentiq", "Ackuretta Dentiq") },
+          { label: tLocalized("Elegoo Mars 3", "Elegoo Mars 3") },
+          { label: tLocalized("+ tüm DLP / LCD markaları", "+ all DLP / LCD brands"), highlighted: true },
+        ],
       },
-      {
-        question: tLocalized("CRS Composite reçinesinin kırılma direnci nedir?", "What is the fracture strength of CRS Composite resin?"),
-        answerHtml:
-          tLocalized("CRS Composite, ISO 10477 standardına göre <b>144 MPa eğilme mukavemeti</b> ve <b>5000 MPa eğilme modülü</b> sunar.", "CRS Composite offers a <b>144 MPa flexural strength</b> and a <b>5000 MPa flexural modulus</b> according to the ISO 10477 standard."),
-      },
-      {
-        question: tLocalized("CRS Composite hasta ağzında tat veya koku bırakır mı?", "Does CRS Composite leave a taste or odor in the patient's mouth?"),
-        answerHtml: tLocalized("Hayır. CRS Composite <b>ağız koşullarına dayanıklıdır, tat ve koku yapmaz.</b>", "No. CRS Composite <b>is resistant to oral conditions and does not produce any taste or odor.</b>"),
-      },
-      {
-        question: tLocalized("Dirençli olması için tavsiye edilen tasarım parametreleri nelerdir?", "What are the recommended design parameters for resistance?"),
-        answerHtml:
-          tLocalized("Dayanım için <b>yeterli minimum duvar kalınlığı</b>, köprülerde uygun konnektör kesiti, doğru baskı yönü ve reçineye özel doğru post-curing süresi kritik önemdedir.", "For strength, <b>sufficient minimum wall thickness</b>, an appropriate connector cross-section in bridges, correct print orientation, and the right resin-specific post-curing time are critically important."),
-      },
-      {
-        question: tLocalized("Klinik uygulamalar için şırınga kompozitler ile uyumlu mudur?", "Is it compatible with syringe composites for clinical applications?"),
-        answerHtml:
-          tLocalized("Evet. CRS Composite, <b>şırınga dolgu malzemesiyle yüksek uyum</b> gösterir; hasta ağzında geçici diş üzerinde ekleme ve düzeltme yapılabilir.", "Yes. CRS Composite shows <b>high compatibility with syringe filling material</b>; additions and corrections can be made on the temporary tooth in the patient's mouth."),
-      },
-    ],
-  },
-  video: {
-    index: "06",
-    label: tLocalized("Videoda Gör", "Watch Video"),
-    titleHtml: tLocalized("Baskıdan ağza: <span class=\"em\">süreci izleyin.</span>", "From print to mouth: <span class=\"em\">follow the process.</span>"),
-    sideHtml: tLocalized("Tasarımdan baskıya, kürlemeden glaze'e; CRS Composite ile tek seans kron-köprü akışının tamamı.", "From design to printing, from curing to glaze; the entire single-session crown-and-bridge workflow with CRS Composite."),
-    href: "https://www.youtube.com/@3mashsocial",
-    image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/3840/composite-apps-12.webp",
-    imageAlt: tLocalized("CRS Composite uygulama videosu", "CRS Composite application video"),
-    title: tLocalized("CRS Composite ile tek seans kron-köprü", "Single-session crown-and-bridge with CRS Composite"),
-    text: tLocalized("Baskı parametreleri, post-curing protokolü ve optik glaze adımları; uygulamalı anlatım.", "Print parameters, post-curing protocol, and optical glaze steps; a hands-on walkthrough."),
-    meta: "Mash Academy · YouTube'da izle",
-  },
-  related: {
-    index: "07",
-    label: tLocalized("İlgili Reçineler", "Related Resins"),
-    titleHtml: tLocalized("Aynı vakada <span class=\"em\">birlikte çalışanlar.</span>", "Those who <span class=\"em\">work together</span> on the same case."),
-    items: [
-      {
-        tag: tLocalized("HASSASİYET", "PRECISION"),
-        title: tLocalized("CRS Model", "CRS Model"),
-        descriptionHtml: tLocalized("Kron-köprü öncesi master model. Belirgin <b>kole hatları</b>, net marjinal uyum.", "Master model prior to crown-bridge work. Distinct <b>cervical lines</b>, clear marginal fit."),
-        href: "/crs-model-yuksek-hassasiyetli-model-recinesi",
-        linkText: tLocalized("İncele", "Explore"),
-        background: "linear-gradient(160deg,#EFE7D3,#fff)",
-      },
-      {
-        tag: tLocalized("CE CLASS IIa", "CE CLASS IIa"),
-        tagVariant: "ce",
-        title: tLocalized("CRS Denture", "CRS Denture"),
-        descriptionHtml: tLocalized("Çıkarılabilir protez tabanı; PMMA'ya kıyasla <b>düşük çekme</b>, cila + glaze uyumlu.", "Removable denture base; <b>low shrinkage</b> compared to PMMA, compatible with polishing + glazing."),
-        href: "/crs-denture-biouyumlu-protez-recinesi",
-        linkText: tLocalized("İncele", "Explore"),
-        background: "linear-gradient(160deg,#F6E3E4,#fff)",
-      },
-      {
-        tag: "YIRTILMAZ",
-        title: tLocalized("CRS Gingiva", "CRS Gingiva"),
-        descriptionHtml: tLocalized("İmplant modeli ve diş eti maskesi. Yüksek yırtılma direnci, doğal diş eti rengi.", "Implant model and gingiva mask. High tear resistance, natural gingiva color."),
-        href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi",
-        linkText: tLocalized("İncele", "Explore"),
-        background: "linear-gradient(160deg,#F5DEE0,#fff)",
-      },
-      {
-        tag: tLocalized("TÜM HAT", "FULL RANGE"),
-        title: tLocalized("Tüm reçineler", "All resins"),
-        descriptionHtml: tLocalized("16 CRS & Mash reçinesini uygulamaya göre karşılaştırın; doğru reçineyi seçin.", "Compare 16 CRS & Mash resins by application; choose the right resin."),
-        href: "/dental-3d-yazici-recineleri",
-        linkText: tLocalized("Reçine seçici", "Resin selector"),
-        background: "linear-gradient(160deg,#EEEEE9,#fff)",
-      },
-    ],
-  },
-  finalCta: {
-    titleHtml: tLocalized("CRS Composite'i cihazınıza <span class=\"em\">birlikte kalibre edelim.</span>", "Let's calibrate CRS Composite to your device, <span class=\"em\">together.</span>"),
-    textHtml:
-      tLocalized("Hangi yazıcı, hangi vaka, hangi renk? Kısa bir görüşmeyle CRS Composite'i cihazınızın parametreleriyle eşleştirip doğru kürleme protokolüyle birlikte <b>ücretsiz</b> teslim edelim.", "Which printer, which case, which shade? With a short conversation, let's match CRS Composite to your device's parameters and deliver it with the correct curing protocol, <b>free of charge</b>."),
-    primaryText: tLocalized("Renk ve boyut seç ↑", "Select color and size ↑"),
-    primaryHref: "#satinal",
-    secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
-    secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
-  },
-};
+    },
+    ecosystem: {
+      index: "04",
+      label: tLocalized("Ekosistem", "Ecosystem"),
+      titleHtml: tLocalized("Reçine tek başına yeterli değil: <span class=\"em\">kürleme sonucu tamamlar.</span>", "Resin alone is not enough: <span class=\"em\">curing completes the result.</span>"),
+      textHtml:
+        tLocalized("CRS Composite'in 144 MPa dayanımını ve sararmasız rengini ortaya çıkaran şey, doğru <b>post-curing</b> protokolüdür. Reçineyi cihazınızın parametreleriyle birlikte kalibre ederek teslim ediyoruz; akıllı kürleme cihazımız bu protokolü otomatik uygular.", "What brings out CRS Composite's 144 MPa strength and non-yellowing color is the correct <b>post-curing</b> protocol. We deliver the resin calibrated together with your device's parameters; our smart curing device applies this protocol automatically."),
+      chips: [tLocalized("385 nm optimize baskı", "385 nm optimized printing"), tLocalized("Doğru post-curing protokolü", "The right post-curing protocol"), tLocalized("Marka bağımsız kalibrasyon", "Brand-independent calibration"), tLocalized("7/24 teknik destek", "24/7 technical support")],
+      buttons: [
+        { text: tLocalized("3D yazıcıları gör →", "See 3D printers →"), href: "/3d-yazicilar" },
+        { text: tLocalized("Kürlemenin önemini gör →", "See the importance of curing →"), href: tLocalized("/yikama-kurleme-cihazlari#neden-gerekli", "/yikama-kurleme-cihazlari#neden-gerekli"), variant: "line" },
+      ],
+    },
+    faq: {
+      index: "05",
+      label: tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
+      titleHtml: tLocalized("CRS Composite hakkında <span class=\"em\">merak edilenler.</span>", "<span class=\"em\">Frequently asked questions</span> about CRS Composite."),
+      sideHtml: tLocalized("Klinik ve laboratuvarların CRS Composite için en çok sorduğu sorular, net cevaplarla.", "The most frequently asked questions from clinics and laboratories about CRS Composite, with clear answers."),
+      openFirst: true,
+      items: [
+        {
+          question: tLocalized("1 kg CRS Composite reçinesinden kaç üye iş alabiliriz?", "How many units of work can we get from 1 kg of CRS Composite resin?"),
+          answerHtml:
+            tLocalized("Bu, restorasyonun boyutuna, duvar kalınlığına ve destek yapılarına göre değişir. Tek bir kron ünitesi ortalama olarak birkaç mililitre reçine tüketir; 1 kg reçineden genellikle <b>yüzlerce üye</b> üretilebilir.", "This varies depending on the size of the restoration, wall thickness, and support structures. A single crown unit consumes an average of a few milliliters of resin; <b>hundreds of units</b> can typically be produced from 1 kg of resin."),
+        },
+        {
+          question: tLocalized("CRS Composite reçinesinin kırılma direnci nedir?", "What is the fracture strength of CRS Composite resin?"),
+          answerHtml:
+            tLocalized("CRS Composite, ISO 10477 standardına göre <b>144 MPa eğilme mukavemeti</b> ve <b>5000 MPa eğilme modülü</b> sunar.", "CRS Composite offers a <b>144 MPa flexural strength</b> and a <b>5000 MPa flexural modulus</b> according to the ISO 10477 standard."),
+        },
+        {
+          question: tLocalized("CRS Composite hasta ağzında tat veya koku bırakır mı?", "Does CRS Composite leave a taste or odor in the patient's mouth?"),
+          answerHtml: tLocalized("Hayır. CRS Composite <b>ağız koşullarına dayanıklıdır, tat ve koku yapmaz.</b>", "No. CRS Composite <b>is resistant to oral conditions and does not produce any taste or odor.</b>"),
+        },
+        {
+          question: tLocalized("Dirençli olması için tavsiye edilen tasarım parametreleri nelerdir?", "What are the recommended design parameters for resistance?"),
+          answerHtml:
+            tLocalized("Dayanım için <b>yeterli minimum duvar kalınlığı</b>, köprülerde uygun konnektör kesiti, doğru baskı yönü ve reçineye özel doğru post-curing süresi kritik önemdedir.", "For strength, <b>sufficient minimum wall thickness</b>, an appropriate connector cross-section in bridges, correct print orientation, and the right resin-specific post-curing time are critically important."),
+        },
+        {
+          question: tLocalized("Klinik uygulamalar için şırınga kompozitler ile uyumlu mudur?", "Is it compatible with syringe composites for clinical applications?"),
+          answerHtml:
+            tLocalized("Evet. CRS Composite, <b>şırınga dolgu malzemesiyle yüksek uyum</b> gösterir; hasta ağzında geçici diş üzerinde ekleme ve düzeltme yapılabilir.", "Yes. CRS Composite shows <b>high compatibility with syringe filling material</b>; additions and corrections can be made on the temporary tooth in the patient's mouth."),
+        },
+      ],
+    },
+    video: {
+      index: "06",
+      label: tLocalized("Videoda Gör", "Watch Video"),
+      titleHtml: tLocalized("Baskıdan ağza: <span class=\"em\">süreci izleyin.</span>", "From print to mouth: <span class=\"em\">follow the process.</span>"),
+      sideHtml: tLocalized("Tasarımdan baskıya, kürlemeden glaze'e; CRS Composite ile tek seans kron-köprü akışının tamamı.", "From design to printing, from curing to glaze; the entire single-session crown-and-bridge workflow with CRS Composite."),
+      href: "https://www.youtube.com/@3mashsocial",
+      image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/3840/composite-apps-12.webp",
+      imageAlt: tLocalized("CRS Composite uygulama videosu", "CRS Composite application video"),
+      title: tLocalized("CRS Composite ile tek seans kron-köprü", "Single-session crown-and-bridge with CRS Composite"),
+      text: tLocalized("Baskı parametreleri, post-curing protokolü ve optik glaze adımları; uygulamalı anlatım.", "Print parameters, post-curing protocol, and optical glaze steps; a hands-on walkthrough."),
+      meta: "Mash Academy · YouTube'da izle",
+    },
+    related: {
+      index: "07",
+      label: tLocalized("İlgili Reçineler", "Related Resins"),
+      titleHtml: tLocalized("Aynı vakada <span class=\"em\">birlikte çalışanlar.</span>", "Those who <span class=\"em\">work together</span> on the same case."),
+      items: [
+        {
+          tag: tLocalized("HASSASİYET", "PRECISION"),
+          title: tLocalized("CRS Model", "CRS Model"),
+          descriptionHtml: tLocalized("Kron-köprü öncesi master model. Belirgin <b>kole hatları</b>, net marjinal uyum.", "Master model prior to crown-bridge work. Distinct <b>cervical lines</b>, clear marginal fit."),
+          href: "/crs-model-yuksek-hassasiyetli-model-recinesi",
+          linkText: tLocalized("İncele", "Explore"),
+          background: "linear-gradient(160deg,#EFE7D3,#fff)",
+        },
+        {
+          tag: tLocalized("CE CLASS IIa", "CE CLASS IIa"),
+          tagVariant: "ce",
+          title: tLocalized("CRS Denture", "CRS Denture"),
+          descriptionHtml: tLocalized("Çıkarılabilir protez tabanı; PMMA'ya kıyasla <b>düşük çekme</b>, cila + glaze uyumlu.", "Removable denture base; <b>low shrinkage</b> compared to PMMA, compatible with polishing + glazing."),
+          href: "/crs-denture-biouyumlu-protez-recinesi",
+          linkText: tLocalized("İncele", "Explore"),
+          background: "linear-gradient(160deg,#F6E3E4,#fff)",
+        },
+        {
+          tag: "YIRTILMAZ",
+          title: tLocalized("CRS Gingiva", "CRS Gingiva"),
+          descriptionHtml: tLocalized("İmplant modeli ve diş eti maskesi. Yüksek yırtılma direnci, doğal diş eti rengi.", "Implant model and gingiva mask. High tear resistance, natural gingiva color."),
+          href: "/crs-gingiva-yirtilmaz-dis-eti-recinesi",
+          linkText: tLocalized("İncele", "Explore"),
+          background: "linear-gradient(160deg,#F5DEE0,#fff)",
+        },
+        {
+          tag: tLocalized("TÜM HAT", "FULL RANGE"),
+          title: tLocalized("Tüm reçineler", "All resins"),
+          descriptionHtml: tLocalized("16 CRS & Mash reçinesini uygulamaya göre karşılaştırın; doğru reçineyi seçin.", "Compare 16 CRS & Mash resins by application; choose the right resin."),
+          href: "/dental-3d-yazici-recineleri",
+          linkText: tLocalized("Reçine seçici", "Resin selector"),
+          background: "linear-gradient(160deg,#EEEEE9,#fff)",
+        },
+      ],
+    },
+    finalCta: {
+      titleHtml: tLocalized("CRS Composite'i cihazınıza <span class=\"em\">birlikte kalibre edelim.</span>", "Let's calibrate CRS Composite to your device, <span class=\"em\">together.</span>"),
+      textHtml:
+        tLocalized("Hangi yazıcı, hangi vaka, hangi renk? Kısa bir görüşmeyle CRS Composite'i cihazınızın parametreleriyle eşleştirip doğru kürleme protokolüyle birlikte <b>ücretsiz</b> teslim edelim.", "Which printer, which case, which shade? With a short conversation, let's match CRS Composite to your device's parameters and deliver it with the correct curing protocol, <b>free of charge</b>."),
+      primaryText: tLocalized("Renk ve boyut seç ↑", "Select color and size ↑"),
+      primaryHref: "#satinal",
+      secondaryText: tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"),
+      secondaryHref: tLocalized("/pages/iletisim", "/pages/iletisim"),
+    },
+  };
 }
 
 function isPlainObject(value: unknown): value is PlainObject {
@@ -1272,12 +1272,12 @@ export function ThreeMashProductDetailLive(props: Props) {
         const listedProducts = listProducts(productList);
         const response = currentCategoryId
           ? await apiSearchProducts({
-              input: {
-                categoryIdList: [currentCategoryId],
-                page: 1,
-                perPage: 20,
-              },
-            } as Parameters<typeof apiSearchProducts>[0])
+            input: {
+              categoryIdList: [currentCategoryId],
+              page: 1,
+              perPage: 20,
+            },
+          } as Parameters<typeof apiSearchProducts>[0])
           : null;
         const apiProducts = response?.data?.data || [];
         const liveRelatedProducts = (apiProducts.length ? apiProducts : listedProducts)
@@ -1336,76 +1336,76 @@ export function ThreeMashProductDetailLive(props: Props) {
     "--tmpdt-lime": themeToken(props.accentColor, "#C7F136", "--tm-theme-accent"),
   } as any;
 
-async function handleAddToCart() {
-  if (!product || !variant || !isInStock || isAdding) return;
+  async function handleAddToCart() {
+    if (!product || !variant || !isInStock || isAdding) return;
 
-  if (isCustomerAuthenticated() !== "authenticated") {
-    setMessage(tLocalized("Lütfen giriş yapın.", "Please sign in."));
-    window.setTimeout(() => {
-      window.location.href = safeRedirect(localizedHref("/account/login"));
-    }, 250);
-    return;
-  }
+    if (isCustomerAuthenticated() !== "authenticated") {
+      setMessage(tLocalized("Lütfen giriş yapın.", "Please sign in."));
+      window.setTimeout(() => {
+        window.location.href = safeRedirect(localizedHref("/account/login"));
+      }, 250);
+      return;
+    }
 
-  if (!hasProductValidOptionValues(product)) {
-    setMessage(
-      props.optionRequiredMessage ||
+    if (!hasProductValidOptionValues(product)) {
+      setMessage(
+        props.optionRequiredMessage ||
         tLocalized("Lütfen gerekli ürün seçeneklerini tamamlayın.", "Please complete the required product options.")
-    );
-    return;
-  }
-
-  if (!isAddToCartEnabled(product)) {
-    setMessage(
-      props.addToCartErrorMessage ||
-        tLocalized("Ürün sepete eklenemiyor.", "The product cannot be added to the cart.")
-    );
-    return;
-  }
-
-  setIsAdding(true);
-  setMessage("");
-
-  try {
-    rememberOrderLineImageFallback(
-      product,
-      variant,
-      image ? [getDefaultSrc(image)] : []
-    );
-
-    const result = await addItemToCart(
-      variant,
-      product,
-      1
-    );
-
-    if (result.success) {
-      // IKAS store'u anında global state'e yayınla.
-      publishCartFromIkasStore();
-
-      // Header cart panelini aç.
-      window.dispatchEvent(
-        new CustomEvent("ikas:open-cart-sidebar")
       );
+      return;
+    }
 
-      // Server'dan arkada doğrula.
-      void refreshGlobalCart();
-    } else {
+    if (!isAddToCartEnabled(product)) {
       setMessage(
         props.addToCartErrorMessage ||
-          tLocalized("Ürün sepete eklenemedi.", "The product could not be added to the cart.")
+        tLocalized("Ürün sepete eklenemiyor.", "The product cannot be added to the cart.")
       );
+      return;
     }
-  } catch (error) {
-    debugError("ThreeMashProductDetailLive add to cart failed", error);
-    setMessage(
-      props.addToCartErrorMessage ||
+
+    setIsAdding(true);
+    setMessage("");
+
+    try {
+      rememberOrderLineImageFallback(
+        product,
+        variant,
+        image ? [getDefaultSrc(image)] : []
+      );
+
+      const result = await addItemToCart(
+        variant,
+        product,
+        1
+      );
+
+      if (result.success) {
+        // IKAS store'u anında global state'e yayınla.
+        publishCartFromIkasStore();
+
+        // Header cart panelini aç.
+        window.dispatchEvent(
+          new CustomEvent("ikas:open-cart-sidebar")
+        );
+
+        // Server'dan arkada doğrula.
+        void refreshGlobalCart();
+      } else {
+        setMessage(
+          props.addToCartErrorMessage ||
+          tLocalized("Ürün sepete eklenemedi.", "The product could not be added to the cart.")
+        );
+      }
+    } catch (error) {
+      debugError("ThreeMashProductDetailLive add to cart failed", error);
+      setMessage(
+        props.addToCartErrorMessage ||
         tLocalized("Ürün sepete eklenemedi. Lütfen daha sonra tekrar deneyin.", "The product could not be added to the cart. Please try again.")
-    );
-  } finally {
-    setIsAdding(false);
+      );
+    } finally {
+      setIsAdding(false);
+    }
   }
-}
 
   if (!data) {
     return (
