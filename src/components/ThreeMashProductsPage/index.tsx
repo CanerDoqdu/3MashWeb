@@ -1,4 +1,4 @@
-import { localizedHref, isEnglishLocale, tLocalized } from "../../utils/i18n";
+import { localizedHref, isEnglishLocale, tLocalized, hasEnglishProductPage } from "../../utils/i18n";
 import { hasCustomerToken } from "../../utils/auth";
 import { safeRedirect } from "../../utils/safeRedirect";
 import { useEffect, useRef, useState } from "preact/hooks";
@@ -223,12 +223,14 @@ function ProductCard({
   index = 0,
   isFavorite = false,
   onToggleFavorite,
+  onProductClick,
 }: {
   product: IkasProduct;
   props: Props;
   index?: number;
   isFavorite?: boolean;
   onToggleFavorite?: (productId: string) => void;
+  onProductClick?: (product: IkasProduct, href: string) => void;
 }) {
   const variant = safeVariant(product);
   const media = variant ? getProductVariantMainImage(variant) : undefined;
@@ -240,15 +242,22 @@ function ProductCard({
   const price = variant ? getProductVariantFormattedFinalPrice(variant) : "";
   const comparePrice =
     variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : "";
+  const productHref = localizedHref(getProductHref(product));
 
+  const handleLinkClick = (e: MouseEvent) => {
+    if (!e.metaKey && !e.ctrlKey && !e.shiftKey) {
+      onProductClick?.(product, productHref);
+    }
+  };
 
   return (
-    <div className="tm-products-card">
+    <div className="tm-products-card" id={`tm-product-${product.id}`} data-product-id={product.id}>
       <div className="tm-products-card-media-wrap">
         <a
-          href={getProductHref(product)}
+          href={productHref}
           className="tm-products-card-media-link"
           aria-label={product.name}
+          onClick={handleLinkClick}
         >
           <div className="tm-products-card-media">
             {imageSrc && !isMediaLoaded ? (
@@ -326,7 +335,7 @@ function ProductCard({
             <span className="tm-products-card-brand">{props.fallbackCategoryText || "3MASH"}</span>
           )}
 
-          <a href={getProductHref(product)} className="tm-products-card-title-link">
+          <a href={productHref} className="tm-products-card-title-link" onClick={handleLinkClick}>
             <h3 className="tm-products-card-title">{product.name}</h3>
           </a>
 
@@ -350,8 +359,9 @@ function ProductCard({
           </div>
 
           <a
-            href={getProductHref(product)}
+            href={productHref}
             className="tm-products-card-cta-btn"
+            onClick={handleLinkClick}
           >
             <span>{props.viewProductText || tLocalized("Ürünü İncele", "View Product")}</span>
             <svg
@@ -381,6 +391,326 @@ function ProductCardSkeleton({ index }: { index: number }) {
   );
 }
 
+const SORT_TYPE_TO_CODE: Record<string, number> = {
+  INCREASING_PRICE: 1,
+  DECREASING_PRICE: 2,
+  LAST_ADDED: 3,
+  FIRST_ADDED: 4,
+  INCREASING_DISCOUNT: 5,
+  DECRASING_DISCOUNT: 6,
+  FEATURED: 7,
+  DEFAULT: 8,
+  AVERAGE_RATING: 9,
+  REVIEW_COUNT: 10,
+  SALE_COUNT: 11,
+  A_Z: 12,
+  Z_A: 13,
+};
+
+const SORT_CODE_TO_TYPE: Record<number, IkasProductListSortType> = {
+  1: "INCREASING_PRICE",
+  2: "DECREASING_PRICE",
+  3: "LAST_ADDED",
+  4: "FIRST_ADDED",
+  5: "INCREASING_DISCOUNT",
+  6: "DECRASING_DISCOUNT",
+  7: "FEATURED",
+  8: "DEFAULT",
+  9: "AVERAGE_RATING",
+  10: "REVIEW_COUNT",
+  11: "SALE_COUNT",
+  12: "A_Z",
+  13: "Z_A",
+};
+
+function parseListingUrlState(searchQueryParamKey?: string) {
+  if (typeof window === "undefined") {
+    return { page: 1, sort: null as IkasProductListSortType | null, search: "", categoryId: "" };
+  }
+  try {
+    const params = new URLSearchParams(window.location.search);
+
+    const pageRaw = params.get("page");
+    const parsedPage = pageRaw ? parseInt(pageRaw, 10) : 1;
+    const page = !isNaN(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+
+    const oRaw = params.get("o") || params.get("sort");
+    let sort: IkasProductListSortType | null = null;
+    if (oRaw) {
+      const numericCode = parseInt(oRaw, 10);
+      if (!isNaN(numericCode) && SORT_CODE_TO_TYPE[numericCode]) {
+        sort = SORT_CODE_TO_TYPE[numericCode];
+      } else if (oRaw in SORT_TYPE_TO_CODE) {
+        sort = oRaw as IkasProductListSortType;
+      }
+    }
+
+    const searchKey = searchQueryParamKey || "q";
+    const search = (params.get(searchKey) || params.get("q") || params.get("s") || "").trim();
+
+    const categoryId = (params.get("cat") || params.get("category") || params.get("c") || "").trim();
+
+    return { page, sort, search, categoryId };
+  } catch {
+    return { page: 1, sort: null as IkasProductListSortType | null, search: "", categoryId: "" };
+  }
+}
+
+/**
+ * Strips query params that carry only default values so that
+ * `/search` and `/search?o=8&page=1` are treated as identical.
+ * This prevents ikas's client-side URL normalization from triggering
+ * a redundant applyUrlStateToListing call on initial mount.
+ */
+function normalizeListingSearch(
+  rawSearch: string,
+  searchQueryParamKey = "q",
+): string {
+  try {
+    const params = new URLSearchParams(rawSearch);
+    // o=8 is the code for DEFAULT sort — same as no sort
+    if (params.get("o") === String(SORT_TYPE_TO_CODE["DEFAULT"])) params.delete("o");
+    if (params.get("sort") === "DEFAULT") params.delete("sort");
+    // page=1 is the default page — same as no page param
+    if (params.get("page") === "1") params.delete("page");
+    // Empty search is the same as no search param
+    const qVal = params.get(searchQueryParamKey) || params.get("q") || params.get("s");
+    if (!qVal) {
+      params.delete(searchQueryParamKey);
+      params.delete("q");
+      params.delete("s");
+    }
+    const str = params.toString();
+    return str ? `?${str}` : "";
+  } catch {
+    return rawSearch;
+  }
+}
+
+const MARKET_STACK_STORAGE_KEY = "tm_market_nav_stack";
+
+export interface MarketNavStackState {
+  listingPath: string;
+  listingSearch: string;
+  page: number;
+  scrollY: number;
+  targetProductId: string;
+  targetProductHref: string;
+  timestamp: number;
+}
+
+function normalizePath(p?: string) {
+  if (!p) return "";
+  try {
+    return p.split(/[?#]/)[0].replace(/\/+$/, "").toLowerCase() || "/";
+  } catch {
+    return p;
+  }
+}
+
+function saveMarketStackOnProductClick(
+  product: IkasProduct,
+  productHref: string,
+  page: number,
+) {
+  if (typeof window === "undefined" || typeof sessionStorage === "undefined") return;
+  try {
+    const y = window.scrollY || window.pageYOffset || 0;
+    const cleanHref = normalizePath(productHref);
+
+    // Calculate effective page: if the current URL has no page query or page=1, it is definitely page 1
+    let effectivePage = page || 1;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const urlPage = params.get("page");
+      if (urlPage) {
+        const parsed = parseInt(urlPage, 10);
+        if (!isNaN(parsed) && parsed > 0) {
+          effectivePage = parsed;
+        }
+      } else {
+        effectivePage = 1;
+      }
+    } catch {}
+
+    const stackState: MarketNavStackState = {
+      listingPath: normalizePath(window.location.pathname),
+      listingSearch: window.location.search,
+      page: effectivePage,
+      scrollY: y,
+      targetProductId: product.id,
+      targetProductHref: cleanHref,
+      timestamp: Date.now(),
+    };
+    sessionStorage.setItem(MARKET_STACK_STORAGE_KEY, JSON.stringify(stackState));
+
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(
+        {
+          ...window.history.state,
+          tmMarketReturnState: stackState,
+        },
+        "",
+      );
+    }
+  } catch {}
+}
+
+function getMarketReturnState(): MarketNavStackState | null {
+  if (typeof window === "undefined" || typeof sessionStorage === "undefined") return null;
+  try {
+    const raw = sessionStorage.getItem(MARKET_STACK_STORAGE_KEY);
+    if (!raw) return null;
+    const saved = JSON.parse(raw) as MarketNavStackState;
+    if (!saved || !saved.targetProductId) return null;
+
+    // Check expiry (30 mins)
+    if (Date.now() - saved.timestamp > 30 * 60 * 1000) {
+      consumeMarketStackState();
+      return null;
+    }
+
+    const currentPath = normalizePath(window.location.pathname);
+    const isSearchRoute =
+      currentPath === "/search" ||
+      currentPath === "/tum-urunler" ||
+      currentPath === "/en/search" ||
+      currentPath.includes("search") ||
+      currentPath === normalizePath(saved.listingPath);
+
+    if (!isSearchRoute) {
+      return null;
+    }
+
+    let isBackForward = false;
+    try {
+      const navEntries = performance.getEntriesByType("navigation");
+      if (navEntries.length > 0) {
+        isBackForward = (navEntries[0] as PerformanceNavigationTiming).type === "back_forward";
+      } else if ((window.performance?.navigation as any)?.type === 2) {
+        isBackForward = true;
+      }
+    } catch {}
+
+    const hasHistoryState = Boolean((window.history?.state as any)?.tmMarketReturnState);
+
+    let isReferrerDetail = false;
+    try {
+      if (document.referrer) {
+        const refPath = normalizePath(new URL(document.referrer, window.location.origin).pathname);
+        if (
+          saved.targetProductHref &&
+          (refPath === saved.targetProductHref ||
+            refPath.includes(saved.targetProductHref) ||
+            saved.targetProductHref.includes(refPath))
+        ) {
+          isReferrerDetail = true;
+        }
+      }
+    } catch {}
+
+    if (isBackForward || hasHistoryState || isReferrerDetail) {
+      return saved;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function consumeMarketStackState() {
+  if (typeof window === "undefined") return;
+  try {
+    if (typeof sessionStorage !== "undefined") {
+      sessionStorage.removeItem(MARKET_STACK_STORAGE_KEY);
+      sessionStorage.removeItem(`tm_scroll_${window.location.pathname}`);
+      sessionStorage.removeItem(
+        `tm_scroll_${window.location.pathname}${window.location.search}`,
+      );
+    }
+    if (window.history && window.history.replaceState) {
+      const state = { ...window.history.state };
+      delete state.tmMarketReturnState;
+      delete state.tmMarketForwardToDetail;
+      delete state.tmMarketStack;
+      window.history.replaceState(state, "");
+    }
+  } catch {}
+}
+
+function restoreMarketScroll(saved: MarketNavStackState) {
+  if (typeof window === "undefined") return;
+  const targetId = saved.targetProductId;
+  const targetY = saved.scrollY;
+  let attempts = 0;
+  const maxAttempts = 24;
+
+  const tryScroll = () => {
+    attempts++;
+    if (targetId) {
+      const el = document.getElementById(`tm-product-${targetId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "center" });
+        el.classList.add("tm-product-card-returned");
+        setTimeout(() => {
+          el.classList.remove("tm-product-card-returned");
+        }, 1800);
+        consumeMarketStackState();
+        return;
+      }
+    }
+
+    if (targetY > 0 && attempts > 3) {
+      window.scrollTo({ top: targetY, behavior: "instant" as ScrollBehavior });
+    }
+
+    if (attempts < maxAttempts) {
+      requestAnimationFrame(() => {
+        setTimeout(tryScroll, 50);
+      });
+    } else {
+      consumeMarketStackState();
+    }
+  };
+
+  requestAnimationFrame(tryScroll);
+}
+
+function cleanPageOneFromUrl() {
+  if (typeof window === "undefined") return;
+  try {
+    const url = new URL(window.location.href);
+    let changed = false;
+    if (url.searchParams.get("page") === "1") {
+      url.searchParams.delete("page");
+      changed = true;
+    }
+    if (url.searchParams.get("o") === "8" || url.searchParams.get("sort") === "DEFAULT") {
+      url.searchParams.delete("o");
+      url.searchParams.delete("sort");
+      changed = true;
+    }
+    if (changed) {
+      const cleanUrl = `${url.pathname}${url.search}${url.hash}`;
+      window.history.replaceState(window.history.state, "", cleanUrl);
+    }
+  } catch {}
+}
+
+function scrollToListingTop() {
+  if (typeof window === "undefined") return;
+  try {
+    const gridElem =
+      document.querySelector(".tm-products-toolbar-row") ||
+      document.querySelector(".tm-products-grid") ||
+      document.querySelector(".tm-products-wrap");
+    if (gridElem) {
+      gridElem.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  } catch {}
+}
+
 export function ThreeMashProductsPage(props: Props) {
   const sourceProductList = props.productList;
   const [activeProductList, setActiveProductList] =
@@ -397,6 +727,42 @@ export function ThreeMashProductsPage(props: Props) {
   const [gridLayout, setGridLayout] = useState<"grid-4" | "grid-3">("grid-4");
   const [favoriteIds, setFavoriteIds] = useState<Record<string, boolean>>({});
   const [favoritePendingIds, setFavoritePendingIds] = useState<Record<string, boolean>>({});
+  const [, setRenderTick] = useState(0);
+  const forceUpdate = () => setRenderTick((c) => c + 1);
+
+  const [isRestoringPage, setIsRestoringPage] = useState(false);
+  // Track the navigation instance so the entry-check fires once per navigation
+  // (not just once per component lifetime). We use a stable ref seeded from the
+  // history state key so navigating away and back resets it correctly.
+  const initialEntryCheckedRef = useRef(false);
+  const entryNavKeyRef = useRef<string | null>(null);
+  const isApplyingUrlRef = useRef(false);
+  const lastProcessedSearchRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!productList) return;
+    try {
+      const disposeReaction = reaction(
+        () => [
+          productList.page,
+          productList.sort,
+          productList.data?.length,
+          productList.isLoading,
+          productList.searchKeyword,
+        ],
+        () => {
+          forceUpdate();
+        },
+      );
+      return () => {
+        try {
+          disposeReaction?.();
+        } catch {}
+      };
+    } catch {
+      return;
+    }
+  }, [productList]);
 
   useEffect(() => {
     let mounted = true;
@@ -447,6 +813,16 @@ export function ThreeMashProductsPage(props: Props) {
   const categoryRequestRef = useRef(0);
 
   const sortOptions = productList ? getProductListSortOptions(productList) : [];
+  // Always put the currently-selected (Recommended/DEFAULT) option first in the dropdown.
+  const orderedSortOptions = sortOptions.slice().sort((a, b) => {
+    if (a.isSelected && !b.isSelected) return -1;
+    if (b.isSelected && !a.isSelected) return 1;
+    const aIsDefault = a.value === "DEFAULT" || a.value === "FEATURED";
+    const bIsDefault = b.value === "DEFAULT" || b.value === "FEATURED";
+    if (aIsDefault && !bIsDefault) return -1;
+    if (bIsDefault && !aIsDefault) return 1;
+    return 0;
+  });
   const selectedSort =
     sortOptions.find((option) => option.isSelected)?.value || "";
   const selectedSortLabel =
@@ -501,12 +877,28 @@ export function ThreeMashProductsPage(props: Props) {
       ? unfilteredProductsRef.current
       : products;
   const productSource = products.length > 0 ? products : fallbackProducts;
-  const displayedProducts = trimmedSearch
-    ? filterProducts(productSource, trimmedSearch)
+
+  // In English locale, hide products that have no English page in the route map.
+  function hasEnglishPage(product: IkasProduct): boolean {
+    if (!isEnglishLocale()) return true;
+    try {
+      const href = getProductHref(product);
+      return hasEnglishProductPage(href || product);
+    } catch {
+      return hasEnglishProductPage(product);
+    }
+  }
+
+  const enFilteredSource = isEnglishLocale()
+    ? productSource.filter(hasEnglishPage)
     : productSource;
-  const showProductSkeletons = Boolean(
-    productList?.isLoading,
-  ) && displayedProducts.length === 0;
+
+  const displayedProducts = trimmedSearch
+    ? filterProducts(enFilteredSource, trimmedSearch)
+    : enFilteredSource;
+  const showProductSkeletons = isRestoringPage || (
+    Boolean(productList?.isLoading) && displayedProducts.length === 0
+  );
 
   const style = {
     "--tm-products-bg": themeToken(
@@ -537,10 +929,147 @@ export function ThreeMashProductsPage(props: Props) {
     ),
   } as any;
 
+  function syncListingToUrl(
+    updates: {
+      page?: number;
+      sort?: IkasProductListSortType | null;
+      search?: string;
+      categoryId?: string;
+    },
+    options: { push?: boolean } = {},
+  ) {
+    if (typeof window === "undefined") return;
+    try {
+      const url = new URL(window.location.href);
+      const searchParamKey = props.searchQueryParam || "q";
+
+      // 1. Page
+      const targetPage = updates.page !== undefined ? updates.page : (productList?.page ?? 1);
+      if (targetPage > 1) {
+        url.searchParams.set("page", String(targetPage));
+      } else {
+        url.searchParams.delete("page");
+      }
+
+      // 2. Sort
+      const targetSort = updates.sort !== undefined ? updates.sort : productList?.sort;
+      if (targetSort && targetSort !== "DEFAULT") {
+        const code = SORT_TYPE_TO_CODE[targetSort];
+        url.searchParams.set("o", String(code || targetSort));
+        url.searchParams.delete("sort");
+      } else {
+        url.searchParams.delete("o");
+        url.searchParams.delete("sort");
+      }
+
+      // 3. Search
+      const targetSearch = updates.search !== undefined ? updates.search.trim() : searchValue.trim();
+      if (targetSearch) {
+        url.searchParams.set(searchParamKey, targetSearch);
+        if (searchParamKey !== "q") url.searchParams.delete("q");
+        url.searchParams.delete("s");
+      } else {
+        url.searchParams.delete(searchParamKey);
+        url.searchParams.delete("q");
+        url.searchParams.delete("s");
+      }
+
+      // 4. Category
+      const targetCat = updates.categoryId !== undefined ? updates.categoryId.trim() : (activeFilterId !== ALL_PRODUCTS_FILTER_ID ? activeFilterId : "");
+      if (targetCat && targetCat !== ALL_PRODUCTS_FILTER_ID) {
+        url.searchParams.set("cat", targetCat);
+      } else {
+        url.searchParams.delete("cat");
+        url.searchParams.delete("category");
+        url.searchParams.delete("c");
+      }
+
+      const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+      const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      if (nextUrl !== currentUrl) {
+        if (options.push) {
+          window.history.pushState(null, "", nextUrl);
+        } else {
+          window.history.replaceState(null, "", nextUrl);
+        }
+      }
+    } catch {}
+  }
+
+  async function applyUrlStateToListing(force = false) {
+    if (!productList || typeof window === "undefined") return;
+    const currentSearchString = window.location.search;
+    // Normalize before comparing: strip params that equal their defaults
+    // (o=8 = DEFAULT sort, page=1) so ikas's URL normalization doesn't
+    // trigger a redundant second apply cycle on initial mount.
+    const normalizedSearch = normalizeListingSearch(currentSearchString, props.searchQueryParam);
+    if (!force && lastProcessedSearchRef.current === normalizedSearch) {
+      return;
+    }
+    lastProcessedSearchRef.current = normalizedSearch;
+
+    if (isApplyingUrlRef.current) return;
+    isApplyingUrlRef.current = true;
+
+    try {
+      const { page, sort, search, categoryId } = parseListingUrlState(props.searchQueryParam);
+
+      // Category
+      if (categoryId && categoryId !== ALL_PRODUCTS_FILTER_ID && categoryId !== activeFilterId) {
+        const matched = categoryLinks.find((l) => l.id === categoryId);
+        if (matched) {
+          handleListingFilter(matched);
+          return;
+        }
+      }
+
+      // Search
+      if (search !== committedSearchRef.current) {
+        setSearchValue(search);
+        committedSearchRef.current = search;
+        searchProductList(productList, search);
+      }
+
+      // Sort: only change if explicitly specified in URL (not default/null)
+      if (sort && productList.sort !== sort) {
+        await setSortType(productList, sort);
+        forceUpdate();
+      }
+
+      // Page: fetch if current in-memory page does not match desiredPage
+      const desiredPage = page || 1;
+      if ((productList.page || 1) !== desiredPage) {
+        if (desiredPage === 1 && sourceProductList && (sourceProductList.page || 1) === 1 && activeFilterId === ALL_PRODUCTS_FILTER_ID && !searchValue) {
+          setActiveProductList(sourceProductList);
+          cleanPageOneFromUrl();
+          forceUpdate();
+        } else {
+          await getProductListPage(productList, desiredPage);
+          if (desiredPage === 1) {
+            cleanPageOneFromUrl();
+          }
+          forceUpdate();
+        }
+      } else if (desiredPage === 1) {
+        cleanPageOneFromUrl();
+      }
+    } finally {
+      isApplyingUrlRef.current = false;
+    }
+  }
+
+  const initialSourceRef = useRef(sourceProductList);
   useEffect(() => {
+    if (initialSourceRef.current === sourceProductList) return;
+    initialSourceRef.current = sourceProductList;
     setActiveProductList(sourceProductList);
     setCategoryCatalog(sourceProductList);
-    setActiveFilterId(ALL_PRODUCTS_FILTER_ID);
+    const { categoryId } = parseListingUrlState(props.searchQueryParam);
+    if (categoryId && categoryId !== ALL_PRODUCTS_FILTER_ID) {
+      setActiveFilterId(categoryId);
+    } else {
+      setActiveFilterId(ALL_PRODUCTS_FILTER_ID);
+    }
     setSearchValue(sourceProductList?.searchKeyword || "");
     committedSearchRef.current = sourceProductList?.searchKeyword || "";
   }, [sourceProductList]);
@@ -574,25 +1103,122 @@ export function ThreeMashProductsPage(props: Props) {
     }
   }, [products, trimmedSearch]);
 
+
+
+  // Synchronize on mount: restore from detail view (stack pop) OR reset clean (fresh entry)
   useEffect(() => {
-    if (
-      !productList ||
-      typeof window === "undefined" ||
-      appliedUrlSearchRef.current
-    )
+    if (typeof window === "undefined" || !productList) return;
+
+    // Build a navigation key from the browser history position so we can detect
+    // genuine navigations (not just productList reference changes).
+    const currentNavKey = (
+      (window.history?.state as Record<string, unknown> | null)?.key ||
+      (window.history?.state as Record<string, unknown> | null)?.idx ||
+      (window.location.pathname.toLowerCase().replace(/\/+$/, "") || "/")
+    ) as string;
+
+    const isNewNavigation = entryNavKeyRef.current !== currentNavKey;
+    if (isNewNavigation) {
+      entryNavKeyRef.current = currentNavKey;
+      initialEntryCheckedRef.current = false;
+    }
+
+    if (!initialEntryCheckedRef.current) {
+      initialEntryCheckedRef.current = true;
+
+      const returnState = getMarketReturnState();
+      if (returnState) {
+        // Returning from product detail: restore exact page & scroll to product
+        if (returnState.page > 1 && (productList.page || 1) !== returnState.page) {
+          setIsRestoringPage(true);
+          syncListingToUrl({ page: returnState.page }, { push: false });
+          void getProductListPage(productList, returnState.page)
+            .then(() => {
+              setIsRestoringPage(false);
+              forceUpdate();
+              restoreMarketScroll(returnState);
+            })
+            .catch(() => {
+              setIsRestoringPage(false);
+              restoreMarketScroll(returnState);
+            });
+        } else {
+          cleanPageOneFromUrl();
+          restoreMarketScroll(returnState);
+        }
+        return;
+      }
+
+      // Fresh entry into the market page: always reset clean to page 1, scroll 0
+      consumeMarketStackState();
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+      cleanPageOneFromUrl();
+
+      // Only fetch page 1 if current page is not 1 and we have no products
+      if ((productList.page || 1) > 1 && (!sourceProductList || (sourceProductList.page || 1) !== 1)) {
+        void getProductListPage(productList, 1).then(() => {
+          cleanPageOneFromUrl();
+          forceUpdate();
+        });
+      }
+
+      // Only apply URL state if there are specific non-default query params
+      const { search: qSearch, categoryId: qCat, sort: qSort, page: qPage } = parseListingUrlState(props.searchQueryParam);
+      if (qSearch || (qCat && qCat !== ALL_PRODUCTS_FILTER_ID) || qSort || qPage > 1) {
+        void applyUrlStateToListing();
+      }
       return;
-    const param = props.searchQueryParam || "q";
-    const query =
-      new URLSearchParams(window.location.search).get(param)?.trim() || "";
-    appliedUrlSearchRef.current = true;
-    if (query) {
-      setSearchValue(query);
-      committedSearchRef.current = query;
     }
-    if (query && productList.searchKeyword !== query) {
-      searchProductList(productList, query);
+
+    // productList reference changed (e.g. after category filter) but this is NOT
+    // a new navigation — just sync URL state without resetting scroll.
+    void applyUrlStateToListing();
+  }, [productList]);
+
+  // Handle browser Back / Forward buttons (popstate) and page reload / BFCache (pageshow)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    function handlePopState() {
+      if (!productList) return;
+      const returnState = getMarketReturnState();
+      if (returnState) {
+        if (returnState.page > 1 && (productList.page || 1) !== returnState.page) {
+          setIsRestoringPage(true);
+          syncListingToUrl({ page: returnState.page }, { push: false });
+          void getProductListPage(productList, returnState.page)
+            .then(() => {
+              setIsRestoringPage(false);
+              forceUpdate();
+              restoreMarketScroll(returnState);
+            })
+            .catch(() => {
+              setIsRestoringPage(false);
+              restoreMarketScroll(returnState);
+            });
+        } else {
+          cleanPageOneFromUrl();
+          restoreMarketScroll(returnState);
+        }
+      } else {
+        void applyUrlStateToListing(true);
+      }
     }
-  }, [productList, props.searchQueryParam]);
+
+    function handlePageShow(event: PageTransitionEvent) {
+      if (event.persisted) {
+        handlePopState();
+      }
+    }
+
+    window.addEventListener("popstate", handlePopState);
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("pageshow", handlePageShow);
+    };
+  }, [productList, activeFilterId, sourceProductList]);
 
   useEffect(() => {
     if (!productList) return;
@@ -613,6 +1239,7 @@ export function ThreeMashProductsPage(props: Props) {
 
     const timeout = window.setTimeout(() => {
       committedSearchRef.current = nextSearch;
+      syncListingToUrl({ search: nextSearch, page: 1 }, { push: false });
       searchProductList(productList, nextSearch);
     }, 240);
 
@@ -644,6 +1271,7 @@ export function ThreeMashProductsPage(props: Props) {
     if (!sourceProductList) return;
 
     setActiveFilterId(link.id);
+    syncListingToUrl({ categoryId: link.id, page: 1 }, { push: true });
     if (link.id === ALL_PRODUCTS_FILTER_ID) {
       categoryRequestRef.current += 1;
       setActiveProductList(sourceProductList);
@@ -730,18 +1358,36 @@ export function ThreeMashProductsPage(props: Props) {
     const nextSearch = searchValue.trim();
     if (nextSearch === committedSearchRef.current) return;
     committedSearchRef.current = nextSearch;
+    syncListingToUrl({ search: nextSearch, page: 1 }, { push: true });
     searchProductList(productList, nextSearch);
   }
 
   function handleSortValue(value: IkasProductListSortType) {
     if (!productList) return;
-    setSortType(productList, value);
     setSortMenuOpen(false);
+    syncListingToUrl({ sort: value, page: 1 }, { push: true });
+    void setSortType(productList, value).then(() => {
+      forceUpdate();
+    });
   }
 
   function goToPage(page: number) {
-    if (!productList) return;
-    getProductListPage(productList, page);
+    if (!productList || page < 1) return;
+    syncListingToUrl({ page }, { push: true });
+    if (page === 1 && sourceProductList && (sourceProductList.page || 1) === 1 && activeFilterId === ALL_PRODUCTS_FILTER_ID && !searchValue) {
+      setActiveProductList(sourceProductList);
+      cleanPageOneFromUrl();
+      forceUpdate();
+      scrollToListingTop();
+    } else {
+      void getProductListPage(productList, page).then(() => {
+        if (page <= 1) {
+          cleanPageOneFromUrl();
+        }
+        forceUpdate();
+        scrollToListingTop();
+      });
+    }
   }
 
   function scrollCategories(direction: "left" | "right") {
@@ -929,7 +1575,14 @@ export function ThreeMashProductsPage(props: Props) {
                 <button
                   type="button"
                   aria-label={tLocalized("Aramayı temizle", "Clear search")}
-                  onClick={() => setSearchValue("")}
+                  onClick={() => {
+                    setSearchValue("");
+                    committedSearchRef.current = "";
+                    syncListingToUrl({ search: "", page: 1 }, { push: true });
+                    if (productList) {
+                      searchProductList(productList, "");
+                    }
+                  }}
                 >
                   ✕
                 </button>
@@ -940,7 +1593,7 @@ export function ThreeMashProductsPage(props: Props) {
             {showSortControl ? (
               <div className="tm-products-sort-wrapper" ref={sortControlRef}>
                 <span className="tm-products-sort-label">
-                  {props.sortLabel || tLocalized("Sırala:", "Sort:")}
+                  {localizeSortLabel(props.sortLabel) || tLocalized("Sırala:", "Sort:")}
                 </span>
 
                 <button
@@ -969,7 +1622,7 @@ export function ThreeMashProductsPage(props: Props) {
 
                 {sortMenuOpen ? (
                   <div className="tm-products-sort-dropdown" role="listbox">
-                    {sortOptions.map((option) => (
+                    {orderedSortOptions.map((option) => (
                       <button
                         type="button"
                         role="option"
@@ -1046,6 +1699,9 @@ export function ThreeMashProductsPage(props: Props) {
                 index={index}
                 isFavorite={Boolean(favoriteIds[product.id])}
                 onToggleFavorite={handleToggleFavorite}
+                onProductClick={(p, href) =>
+                  saveMarketStackOnProductClick(p, href, productList?.page || 1)
+                }
                 key={product.id}
               />
             ))}

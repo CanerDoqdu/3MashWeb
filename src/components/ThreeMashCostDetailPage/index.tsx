@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Props } from "./types";
 import { isEnglishLocale, localizedHref, tLocalized, tProp } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
@@ -21,14 +21,134 @@ type FieldDef = {
 
 const fmt = (n: number) => "$" + Math.round(n).toLocaleString("tr-TR");
 
+const segActiveStyle = {
+  background: "var(--ink)",
+  borderColor: "var(--ink)",
+  color: "#fff",
+} as any;
+const segInactiveStyle = {
+  background: "#fff",
+  borderColor: "var(--line)",
+  color: "var(--sub)",
+} as any;
+
+// FIX: returns null when the URL carries no mode at all, instead of silently
+// defaulting to "klinik". The old version defaulted, which meant the
+// visibilitychange listener below would drag the user back to Klinik every
+// time they switched tabs after manually choosing Laboratuvar.
+function readModeFromUrl(): CostMode | null {
+  if (typeof window === "undefined") return null;
+
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const urlMode = params.get("mode");
+    if (urlMode === "lab" || urlMode === "laboratuvar") return "lab";
+    if (urlMode === "clinic" || urlMode === "klinik") return "klinik";
+
+    const hash = window.location.hash;
+    const qIndex = hash.indexOf("?");
+    if (qIndex !== -1) {
+      const hashParams = new URLSearchParams(hash.slice(qIndex));
+      const hashMode = hashParams.get("mode");
+      if (hashMode === "lab" || hashMode === "laboratuvar") return "lab";
+      if (hashMode === "clinic" || hashMode === "klinik") return "klinik";
+    }
+  } catch (_) {}
+
+  return null;
+}
+
 function rangeProgress(val: number, min: number, max: number) {
   if (max <= min) return "0%";
   return `${Math.min(100, Math.max(0, ((val - min) / (max - min)) * 100))}%`;
 }
 
 export function ThreeMashCostDetailPage(props: Props) {
+  // ===========================================================================
+  // ROOT-CAUSE FIX — see the long note in ThreeMashHero; the same bug lived
+  // here.
+  //
+  // `useState(getInitialMode)` read window.location during the very first
+  // render. On the server there is no window, so the HTML always shipped as
+  // "klinik"; on the client the first render was already "lab". Preact's
+  // hydration adopts the server DOM without re-applying props (only
+  // value/checked are special-cased), so:
+  //
+  //   • the Klinik button kept class="on" and the active inline style;
+  //   • all six <input type="range"> kept the KLİNİK min/max/step and the
+  //     klinik gradient while their `value` was overwritten with the lab
+  //     number — the browser then clamps that value into the wrong range.
+  //     Any later re-render (i.e. touching ANY slider) re-clamps all six at
+  //     once, which is exactly the "bütün pointerlar yerinden oynuyor"
+  //     symptom.
+  //
+  // Because `mode` never actually changed ("lab" === "lab"), no diff ever ran
+  // to repair it. So: render the server's state first, then apply the URL in
+  // a layout effect — a real transition that makes Preact fix everything
+  // before the first paint.
+  // ===========================================================================
   const [mode, setMode] = useState<CostMode>("klinik");
   const [saved, setSaved] = useState(false);
+
+  const klinikBtnRef = useRef<HTMLButtonElement | null>(null);
+  const labBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  // Belt-and-braces: force the segment buttons' class + style onto the DOM
+  // after every render, so they can never be inherited from server markup.
+  useLayoutEffect(() => {
+    const klinikActive = mode === "klinik";
+    if (klinikBtnRef.current) {
+      klinikBtnRef.current.className = klinikActive ? "on" : "";
+      Object.assign(
+        klinikBtnRef.current.style,
+        klinikActive ? segActiveStyle : segInactiveStyle,
+      );
+    }
+    if (labBtnRef.current) {
+      const labActive = !klinikActive;
+      labBtnRef.current.className = labActive ? "on" : "";
+      Object.assign(
+        labBtnRef.current.style,
+        labActive ? segActiveStyle : segInactiveStyle,
+      );
+    }
+  }, [mode]);
+
+  // Remembers which search+hash we last imported from, so a tab switch or an
+  // unrelated history event can't re-apply a stale ?mode= and undo a choice
+  // the user made by hand on this page.
+  const lastSyncedUrlRef = useRef<string | null>(null);
+
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const urlKey = () => `${window.location.search}${window.location.hash}`;
+
+    function syncModeFromUrl(force?: boolean) {
+      const key = urlKey();
+      if (!force && key === lastSyncedUrlRef.current) return;
+      lastSyncedUrlRef.current = key;
+
+      const next = readModeFromUrl();
+      if (!next) return; // no mode in the URL — leave the user's choice alone
+      setMode((prev) => (prev !== next ? next : prev));
+    }
+
+    syncModeFromUrl(true);
+
+    const onPopState = () => syncModeFromUrl();
+    const onVisibilityChange = () => {
+      if (!document.hidden) syncModeFromUrl();
+    };
+
+    window.addEventListener("popstate", onPopState);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, []);
 
   // Klinik input states (initialized from props or defaults)
   const [chairRate, setChairRate] = useState(props.defaultChairRate ?? 375);
@@ -131,23 +251,55 @@ export function ThreeMashCostDetailPage(props: Props) {
     }
   }, [total]);
 
-  const handleUseBtn = () => {
-    const rounded = Math.round(total);
+  const handleUseBtn = (event: Event) => {
+    setSaved(true);
+    // FIX: force a real, full-page navigation instead of letting the
+    // storefront's SPA router (Router.navigate / anchor click intercept)
+    // soft-navigate. A soft navigation can leave ThreeMashHero mounted
+    // from before, so its own mount-once URL read never re-runs and the
+    // imported mode/cost never show up on the homepage.
+    event.preventDefault();
     if (typeof window !== "undefined") {
-      // NOTE: _remakeTotal is typed in src/types/globals.d.ts (inter-component communication).
-      window._remakeTotal = rounded;
-      setSaved(true);
+      window.location.href = homeHref;
     }
   };
 
-  const baseHomeUrl = localizedHref(safeNavigationHref(props.useButtonHref, "/"));
-  const calculatorUrl = localizedHref(`${baseHomeUrl}#hesap`);
   const homeMode = mode === "lab" ? "lab" : "clinic";
-  const homeHref = baseHomeUrl.includes("?")
-    ? `${baseHomeUrl}&rc=${Math.round(total)}&mode=${homeMode}#hesap`
-    : `${baseHomeUrl}?rc=${Math.round(total)}&mode=${homeMode}#hesap`;
+  const homeHref = localizedHref(`/?rc=${Math.round(total)}&mode=${homeMode}`);
+  const baseHomeUrl = localizedHref(safeNavigationHref(props.useButtonHref?.trim() || "/", "/"));
+  const calculatorUrl = localizedHref(`${baseHomeUrl.split("#")[0] || "/"}#hesap`);
 
   const d = modelData[mode];
+
+  // FIX: the six sliders here never got the imperative DOM sync that Hero's
+  // three sliders have — and Hero's version was itself incomplete, since it
+  // only wrote `value` and the gradient. min/max/step matter most: after a
+  // hydration mismatch the DOM node still carries the OTHER mode's range, so
+  // the browser clamps every value it's handed and all thumbs jump. Write the
+  // range first, then the value, then the gradient — every render.
+  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  useLayoutEffect(() => {
+    d.fields.forEach((f) => {
+      const el = inputRefs.current[f.id];
+      if (!el) return;
+
+      const val = values[f.id];
+      const nextMin = String(f.min);
+      const nextMax = String(f.max);
+      const nextStep = String(f.step);
+      if (el.min !== nextMin) el.min = nextMin;
+      if (el.max !== nextMax) el.max = nextMax;
+      if (el.step !== nextStep) el.step = nextStep;
+
+      const nextValue = String(val);
+      if (el.value !== nextValue) el.value = nextValue;
+
+      const p = rangeProgress(val, f.min, f.max);
+      el.style.setProperty("--p", p);
+      el.style.background = `linear-gradient(90deg, var(--lime, #C7F136) ${p}, #e8e8e1 ${p})`;
+    });
+  });
 
   const customStyle = {
     "--bg": props.backgroundColor || "#FAFAF7",
@@ -202,14 +354,18 @@ export function ThreeMashCostDetailPage(props: Props) {
           </div>
           <div className="seg" id="seg">
             <button
+              ref={klinikBtnRef}
               className={mode === "klinik" ? "on" : ""}
+              style={mode === "klinik" ? segActiveStyle : segInactiveStyle}
               type="button"
               onClick={() => setMode("klinik")}
             >
               {tLocalized("Klinik", "Clinic")}
             </button>
             <button
+              ref={labBtnRef}
               className={mode === "lab" ? "on" : ""}
+              style={mode === "lab" ? segActiveStyle : segInactiveStyle}
               type="button"
               onClick={() => setMode("lab")}
             >
@@ -223,10 +379,10 @@ export function ThreeMashCostDetailPage(props: Props) {
               let valText = fmt(val);
               if (f.kind === "rate") valText = fmt(val) + (isEnglishLocale() ? "/hr" : "/sa");
               else if (f.kind === "min") valText = val + (isEnglishLocale() ? " min" : " dk");
-              else if (f.kind === "mult") valText = val + (isEnglishLocale() ? " unit" : tLocalized("ünite", "unit"));
+              else if (f.kind === "mult") valText = val + (isEnglishLocale() ? " unit" : tLocalized("-ünite", "unit"));
 
               return (
-                <div className="li" key={f.id}>
+                <div className="li" key={`${mode}-${f.id}`}>
                   <div className="lab">
                     <span>
                       {f.label} <span className="hint">· {f.hint}</span>
@@ -235,13 +391,21 @@ export function ThreeMashCostDetailPage(props: Props) {
                   </div>
                   {/* NOTE: style with custom CSS property --p for range progress visualization */}
                   <input
+                    ref={(el) => {
+                      inputRefs.current[f.id] = (el as HTMLInputElement) || null;
+                    }}
                     type="range"
                     id={f.id}
                     min={f.min}
                     max={f.max}
                     step={f.step}
                     value={val}
-                    style={{ "--p": rangeProgress(val, f.min, f.max) } as any}
+                    style={
+                      {
+                        "--p": rangeProgress(val, f.min, f.max),
+                        background: `linear-gradient(90deg, var(--lime, #C7F136) ${rangeProgress(val, f.min, f.max)}, #e8e8e1 ${rangeProgress(val, f.min, f.max)})`,
+                      } as any
+                    }
                     onInput={(e) => {
                       const setter = setters[f.id];
                       if (setter) setter(Number((e.currentTarget as HTMLInputElement).value));

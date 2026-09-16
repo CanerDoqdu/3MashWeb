@@ -3,8 +3,9 @@
 
 import { localizedHref, tLocalized } from "../../utils/i18n";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { useEffect, useLayoutEffect, useState } from "preact/hooks";
-  
+
 import {
   customerLogin,
   customerStore,
@@ -27,8 +28,36 @@ const logoImageIds = [
   "de819199-332c-407c-82de-917418b2c2e1",
 ];
 
+function inlineHtml(value?: string) {
+  return (value || "")
+    .trim()
+    .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+    .replace(/^<p[^>]*>/i, "")
+    .replace(/<\/p>$/i, "");
+}
+
+function stripHtml(value?: string) {
+  return (value || "")
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .trim();
+}
+
 function text(value: string | undefined, fallback: string) {
-  return value?.trim() || fallback;
+  const stripped = stripHtml(value);
+  return stripped || fallback;
+}
+
+function richText(value: string | undefined, fallback: string) {
+  const trimmed = value?.trim();
+  const raw = trimmed && stripHtml(trimmed) ? trimmed : fallback;
+  return sanitizeHtml(inlineHtml(raw));
 }
 
 function href(value: string | undefined, fallback: string) {
@@ -53,7 +82,7 @@ function themeColor(
 
   return trimmed;
 }
-console.log("LOGIN PAGE BUILD CHECK — v2 with initCustomerStore fix");
+
 function EyeIcon({ visible }: { visible: boolean }) {
   if (visible) {
     return (
@@ -223,16 +252,16 @@ export function ThreeMashAccountPage(props: Props) {
     setStatus("idle");
   }
 
- function switchTab(tab: "login" | "register") {
-  navigateToMode(
-    tab,
-    tab === "register" ? (props.registerTabHref || "/account/register") : "/account/login",
-  );
-}
+  function switchTab(tab: "login" | "register") {
+    navigateToMode(
+      tab,
+      tab === "register" ? (props.registerTabHref || "/account/register") : "/account/login",
+    );
+  }
 
-function navigateToLogin() {
-  navigateToMode("login", "/account/login"); // localizedHref'i navigateToMode zaten uyguluyor
-}
+  function navigateToLogin() {
+    navigateToMode("login", "/account/login"); // localizedHref'i navigateToMode zaten uyguluyor
+  }
 
   async function submit(event: Event) {
     event.preventDefault();
@@ -265,7 +294,7 @@ function navigateToLogin() {
       const result = activeTab === "login"
         ? await customerLogin(customerStore, email, password)
         : await register(customerStore, firstName, lastName, email, password, marketingAccepted, [], null);
-          if (result.isSuccess) {
+      if (result.isSuccess) {
         setStatus("success");
         if (typeof window !== "undefined") {
           try {
@@ -286,7 +315,7 @@ function navigateToLogin() {
         }, 350);
         return;
       }
-  
+
       setStatus("error");
     } catch {
       setStatus("error");
@@ -358,21 +387,32 @@ function navigateToLogin() {
         >
           <div className="tma-auth-copy">
             <span>{text(props.eyebrowText, "HESAP")}</span>
-            <h1>{authMode === "forgot-password"
-              ? tLocalized("Şifremi Unuttum", "Forgot Password")
-              : authMode === "recover-password"
-                ? tLocalized("Şifremi Kurtar", "Recover Password")
-                : text(props.titleText, tLocalized("3mash hesabınıza giriş yapın.", "Log in to your 3mash account."))}</h1>
-            <p>
-              {authMode === "forgot-password"
-                ? tLocalized("Email adresinizi girin; şifre yenileme bağlantısını size gönderelim.", "Enter your email and we will send you a password reset link.")
-                : authMode === "recover-password"
-                  ? tLocalized("Yeni şifrenizi belirleyin ve hesabınıza güvenli şekilde tekrar erişin.", "Set a new password and securely access your account again.")
-                  : text(
-                    props.subtitleText,
-                    tLocalized("Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.", "Manage your orders, favorites, and account information from one place."),
-                  )}
-            </p>
+            <h1
+              dangerouslySetInnerHTML={{
+                __html:
+                  authMode === "forgot-password"
+                    ? tLocalized("Şifremi Unuttum", "Forgot Password")
+                    : authMode === "recover-password"
+                      ? tLocalized("Şifremi Kurtar", "Recover Password")
+                      : richText(
+                        props.titleText,
+                        tLocalized("3mash hesabınıza giriş yapın.", "Log in to your 3mash account."),
+                      ),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html:
+                  authMode === "forgot-password"
+                    ? tLocalized("Email adresinizi girin; şifre yenileme bağlantısını size gönderelim.", "Enter your email and we will send you a password reset link.")
+                    : authMode === "recover-password"
+                      ? tLocalized("Yeni şifrenizi belirleyin ve hesabınıza güvenli şekilde tekrar erişin.", "Set a new password and securely access your account again.")
+                      : richText(
+                        props.subtitleText,
+                        tLocalized("Siparişlerinizi, favorilerinizi ve hesap bilgilerinizi tek yerden yönetin.", "Manage your orders, favorites, and account information from one place."),
+                      ),
+              }}
+            />
           </div>
 
           <div className="tma-auth-initial-loader" aria-hidden="true">

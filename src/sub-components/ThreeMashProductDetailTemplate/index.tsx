@@ -3,7 +3,7 @@ import type { ComponentChildren } from "preact";
 import { resolveProductDetailData } from "../ThreeMashProductDetailData";
 import { tLocalized, isEnglishLocale, translateText, localizedHref } from "../../utils/i18n";
 import { safeJsonLdScript, sanitizeHtml } from "../../utils/sanitizeHtml";
-import { safeWhatsAppHref } from "../../utils/safeRedirect";
+import { safeNavigationHref, safeWhatsAppHref } from "../../utils/safeRedirect";
 
 export type ProductGalleryItem = {
   src: string;
@@ -260,20 +260,26 @@ function t(value?: string | null): string {
 }
 
 function SectionIndex({ index, label }: { index: string; label: string }) {
+  const hasIndex = (index ?? "").trim() !== "";
+  const hasLabel = (label ?? "").trim() !== "";
+  if (!hasIndex && !hasLabel) return null;
   return (
     <div className="tmpdt-idx">
-      <span className="tmpdt-idx-n">{index}</span>
-      <span className="tmpdt-idx-t">{t(label)}</span>
+      {hasIndex && <span className="tmpdt-idx-n">{index}</span>}
+      {hasLabel && <span className="tmpdt-idx-t">{t(label)}</span>}
       <span className="tmpdt-idx-ln" />
     </div>
   );
 }
 
 function SectionHead({ titleHtml, sideHtml, wide = false }: { titleHtml: string; sideHtml?: string; wide?: boolean }) {
+  const hasTitle = (titleHtml ?? "").trim() !== "";
+  const hasSide = (sideHtml ?? "").trim() !== "";
+  if (!hasTitle && !hasSide) return null;
   return (
-    <div className={`tmpdt-shead${sideHtml ? "" : " tmpdt-solo"}`}>
-      <h2 className={wide ? "tmpdt-wide" : ""} dangerouslySetInnerHTML={html(titleHtml)} />
-      {sideHtml ? <div className="tmpdt-side" dangerouslySetInnerHTML={html(sideHtml)} /> : null}
+    <div className={`tmpdt-shead${hasSide ? "" : " tmpdt-solo"}`}>
+      {hasTitle && <h2 className={wide ? "tmpdt-wide" : ""} dangerouslySetInnerHTML={html(titleHtml)} />}
+      {hasSide && sideHtml ? <div className="tmpdt-side" dangerouslySetInnerHTML={html(sideHtml)} /> : null}
     </div>
   );
 }
@@ -523,20 +529,7 @@ function Configurator(props: Props) {
         {isEnglishLocale() && (props.data.hero.selectedPrefix === tLocalized("Seçiminiz:", "Your selection:") || !props.data.hero.selectedPrefix) ? "Selected:" : props.data.hero.selectedPrefix} <b>{props.selectedSummary}</b> {localizeSummarySuffix(props.data.hero.summarySuffix)}
       </div>
       <div className="tmpdt-act">
-       <button
-  type="button"
-  className={`tmpdt-btn tmpdt-lime${props.isAddToCartDisabled ? " is-disabled" : ""}`}
-  disabled={props.isAddToCartDisabled}
-  onClick={() => {
-    if (!props.isAddToCartDisabled) {
-      props.onAddToCart();
-    }
-  }}
->
-  {props.isAdding
-    ? localizeAddingToCartText(props.data.hero.addingToCartText)
-    : localizeAddToCartText(props.data.hero.addToCartText)}
-</button>
+      
         <a className="tmpdt-btn tmpdt-line" href={safeWhatsAppHref(props.data.hero.whatsappHref)} target="_blank" rel="noopener noreferrer">
           {localizeWhatsAppText(props.data.hero.whatsappText)}
         </a>
@@ -750,7 +743,7 @@ export function ProductDetailSpecHighlight({ data }: { data: NonNullable<Product
         <div className="tmpdt-flag-tag">{t(data.tag)}</div>
         <h3 dangerouslySetInnerHTML={html(data.titleHtml)} />
         <p dangerouslySetInnerHTML={html(data.descriptionHtml)} />
-        <a className="tmpdt-go" href={data.ctaHref}>
+        <a className="tmpdt-go" href={safeNavigationHref(localizedHref(data.ctaHref))}>
           {t(data.ctaText)}
         </a>
       </div>
@@ -889,7 +882,7 @@ export function ProductDetailEcosystemSection({ data }: { data: ProductDetailTem
           </div>
           <div className="tmpdt-dev-actions">
             {ecosystem.buttons.map((button) => (
-              <a className={`tmpdt-btn${button.variant === "line" ? " tmpdt-line" : ""}`} href={button.href} key={button.text}>
+              <a className={`tmpdt-btn${button.variant === "line" ? " tmpdt-line" : ""}`} href={safeNavigationHref(localizedHref(button.href))} key={button.text}>
                 {button.text}
               </a>
             ))}
@@ -947,26 +940,221 @@ export function ProductDetailFaqSection({ data }: { data: ProductDetailTemplateD
   );
 }
 
+function extractYouTubeId(url: string | undefined): string | null {
+  if (!url) return null;
+  const trimmed = url.trim();
+  const match = trimmed.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/i
+  );
+  return match ? match[1] : null;
+}
+
+function isDirectVideoFile(url: string | undefined): boolean {
+  if (!url) return false;
+  return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url.trim());
+}
+
 export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplateData }) {
   const video = data.video;
   if (!video) return null;
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const videoElemRef = useRef<HTMLVideoElement>(null);
+  const hasAutoplayedRef = useRef(false);
+
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isIframeLoaded, setIsIframeLoaded] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const videoHref = video.href?.trim() || "https://www.youtube.com/watch?v=dNPHy_sd9aQ";
+  const youtubeId = extractYouTubeId(videoHref);
+  const isDirect = isDirectVideoFile(videoHref);
+
+  const posterSrc =
+    video.image ||
+    (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : "");
+
+  function postYouTubeMessage(func: string, args: any[] = []) {
+    const iframe = iframeRef.current;
+    if (!iframe?.contentWindow) return;
+    try {
+      iframe.contentWindow.postMessage(
+        JSON.stringify({ event: "command", func, args }),
+        "*"
+      );
+    } catch {}
+  }
+
+  function handlePlayManual() {
+    setIsPlaying(true);
+    setShouldLoad(true);
+    hasAutoplayedRef.current = true;
+    if (youtubeId) {
+      postYouTubeMessage("playVideo");
+    } else if (videoElemRef.current) {
+      void videoElemRef.current.play();
+    }
+  }
+
+  function toggleSound(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    const nextMuted = !isMuted;
+    setIsMuted(nextMuted);
+    if (youtubeId) {
+      if (nextMuted) {
+        postYouTubeMessage("mute");
+      } else {
+        postYouTubeMessage("unMute");
+        postYouTubeMessage("setVolume", [100]);
+      }
+    } else if (videoElemRef.current) {
+      videoElemRef.current.muted = nextMuted;
+    }
+  }
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setShouldLoad(true);
+      setIsPlaying(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Autoplay once when entering viewport
+          if (!hasAutoplayedRef.current) {
+            hasAutoplayedRef.current = true;
+            setShouldLoad(true);
+            setIsPlaying(true);
+          } else {
+            // Re-entered viewport: resume playback without restarting
+            if (youtubeId) {
+              postYouTubeMessage("playVideo");
+            } else if (videoElemRef.current) {
+              void videoElemRef.current.play();
+            }
+          }
+        } else {
+          // Left viewport: pause video to save audio & resources
+          if (hasAutoplayedRef.current) {
+            if (youtubeId) {
+              postYouTubeMessage("pauseVideo");
+            } else if (videoElemRef.current) {
+              videoElemRef.current.pause();
+            }
+          }
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [youtubeId, isDirect]);
+
   return (
-    <section className="tmpdt-section tmpdt-section-tight" id="video">
+    <section className="tmpdt-section tmpdt-section-tight" id="video" ref={sectionRef}>
       <div className="tmpdt-wrap">
         <SectionIndex index={video.index} label={video.label} />
         <SectionHead titleHtml={video.titleHtml} sideHtml={video.sideHtml} wide />
-        <a className="tmpdt-vid" href={video.href} target="_blank" rel="noopener noreferrer">
-          <img src={video.image} alt={video.imageAlt} loading="lazy" decoding="async" />
-          <span className="tmpdt-vid-ov">
-            <span className="tmpdt-play">
-              <span className="tmpdt-play-icon" aria-hidden="true"></span>
-            </span>
-            <span className="tmpdt-vt">{t(video.title)}</span>
-            <span className="tmpdt-vs">{t(video.text)}</span>
-            <span className="tmpdt-vmeta">{t(video.meta)}</span>
-          </span>
-        </a>
+
+        <div className={`tmpdt-vid${isPlaying ? " is-playing" : ""}`}>
+          {/* Active Player (YouTube iframe or HTML5 video) */}
+          {shouldLoad ? (
+            youtubeId ? (
+              <iframe
+                ref={iframeRef}
+                className="tmpdt-vid-frame"
+                src={`https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1`}
+                title={video.title || "YouTube video"}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                onLoad={() => setIsIframeLoaded(true)}
+              />
+            ) : isDirect ? (
+              <video
+                ref={videoElemRef}
+                className="tmpdt-vid-frame"
+                src={videoHref}
+                playsInline
+                autoPlay
+                muted
+                loop
+                controls
+                onLoadedData={() => setIsIframeLoaded(true)}
+              />
+            ) : (
+              <iframe
+                ref={iframeRef}
+                className="tmpdt-vid-frame"
+                src={videoHref}
+                title={video.title || "Video"}
+                allow="autoplay; fullscreen"
+                allowFullScreen
+                onLoad={() => setIsIframeLoaded(true)}
+              />
+            )
+          ) : null}
+
+          {/* Poster Image (Visible before play or while live player is loading) */}
+          {posterSrc && (!isPlaying || !isIframeLoaded) ? (
+            <img
+              src={posterSrc}
+              alt={video.imageAlt || video.title || "Video"}
+              className={`tmpdt-vid-poster${isIframeLoaded && isPlaying ? " is-hidden" : ""}`}
+              loading="lazy"
+              decoding="async"
+              onClick={handlePlayManual}
+            />
+          ) : null}
+
+          {/* Overlay Content (Title, Text, Meta, Play Button) */}
+          <div
+            className={`tmpdt-vid-ov${isPlaying ? " is-playing" : ""}`}
+            onClick={!isPlaying ? handlePlayManual : undefined}
+          >
+            {!isPlaying ? (
+              <button
+                type="button"
+                className="tmpdt-play"
+                aria-label={tLocalized("Videoyu Oynat", "Play Video")}
+                onClick={handlePlayManual}
+              >
+                <span className="tmpdt-play-icon" aria-hidden="true"></span>
+              </button>
+            ) : null}
+          </div>
+
+          {/* Audio Toggle / Unmute Control */}
+          {isPlaying ? (
+            <button
+              type="button"
+              className="tmpdt-sound-btn"
+              onClick={toggleSound}
+              aria-label={isMuted ? tLocalized("Sesi Aç", "Unmute") : tLocalized("Sesi Kapat", "Mute")}
+            >
+              {isMuted ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+              )}
+              <span>{isMuted ? tLocalized("Sesi Aç", "Unmute") : tLocalized("Sesi Kapat", "Mute")}</span>
+            </button>
+          ) : null}
+        </div>
       </div>
     </section>
   );
@@ -997,11 +1185,17 @@ export function ProductDetailRelatedSection({
     rail.scrollBy({ left: direction * distance, behavior: "smooth" });
   }
 
+  const defaultLabel = isEnglishLocale() ? "Related Products" : tLocalized("İlgili Ürünler", "Related Products");
+  const relatedLabel = related?.label !== undefined && related?.label !== null ? related.label : defaultLabel;
+  const relatedIndex = related?.index !== undefined && related?.index !== null ? related.index : "07";
+  const defaultTitle = isEnglishLocale() ? 'Working <span class="em">together in the same case.</span>' : tLocalized("Aynı vakada <span class=\"em\">birlikte çalışanlar.</span>", "Those who <span class=\"em\">work together</span> on the same case.");
+  const resolvedTitle = titleHtml !== undefined && titleHtml !== null ? titleHtml : (related?.titleHtml !== undefined && related?.titleHtml !== null ? related.titleHtml : defaultTitle);
+
   return (
     <section className="tmpdt-section tmpdt-section-tight">
       <div className="tmpdt-wrap">
-        <SectionIndex index={related?.index || "07"} label={related?.label ? (isEnglishLocale() && related.label === tLocalized("İlgili Ürünler", "Related Products") ? "Related Products" : related.label) : tLocalized("İlgili Ürünler", "Related Products")} />
-        <SectionHead titleHtml={titleHtml || related?.titleHtml || (isEnglishLocale() ? 'Working <span class="em">together in the same case.</span>' : tLocalized("Aynı vakada <span class=\"em\">birlikte çalışanlar.</span>", "Those who <span class=\"em\">work together</span> on the same case."))} wide />
+        <SectionIndex index={relatedIndex} label={relatedLabel} />
+        <SectionHead titleHtml={resolvedTitle} wide />
         {shouldUseLiveProducts ? (
           <div className="tmpdt-rshell">
             {liveProducts.length > 4 ? (
@@ -1014,7 +1208,7 @@ export function ProductDetailRelatedSection({
             <div ref={relatedRailRef} className="tmpdt-rgrid tmpdt-rgrid-live" aria-label={tLocalized("İlgili ürünler", "Related products")}>
               {liveProducts.map((item) => (
                 <article className="tmpdt-rc tmpdt-rc-live" key={item.id}>
-                  <a className="tmpdt-rc-live-link" href={item.href}>
+                  <a className="tmpdt-rc-live-link" href={localizedHref(item.href)}>
                     <div className="tmpdt-rc-ph tmpdt-rc-live-ph">
                       
                       {item.image ? (
@@ -1058,7 +1252,7 @@ export function ProductDetailRelatedSection({
               const image = relatedProductImage(item);
               return (
                 <article className="tmpdt-rc" key={item.title}>
-                  <a className="tmpdt-rc-live-link" href={item.href}>
+                  <a className="tmpdt-rc-live-link" href={localizedHref(item.href)}>
                     <div className="tmpdt-rc-ph" style={{ background: item.background }}>
                       <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{t(item.tag)}</span>
                       {isAllResins ? (
@@ -1117,19 +1311,34 @@ export function ProductDetailFinalCtaSection({ data }: { data: ProductDetailTemp
   const finalCta = data.finalCta;
   if (!finalCta) return null;
 
+  const titleHtml = (finalCta.titleHtml ?? "").trim();
+  const textHtml = (finalCta.textHtml ?? "").trim();
+  const primaryText = (finalCta.primaryText ?? "").trim();
+  const secondaryText = (finalCta.secondaryText ?? "").trim();
+
+  if (!titleHtml && !textHtml && !primaryText && !secondaryText) {
+    return null;
+  }
+
   return (
     <section className="tmpdt-final">
       <div className="tmpdt-wrap">
-        <h2 dangerouslySetInnerHTML={html(finalCta.titleHtml)} />
-        <p dangerouslySetInnerHTML={html(finalCta.textHtml)} />
-        <div className="tmpdt-final-actions">
-          <a className="tmpdt-btn tmpdt-lime" href={finalCta.primaryHref}>
-            {t(finalCta.primaryText)}
-          </a>
-          <a className="tmpdt-btn tmpdt-inv" href={finalCta.secondaryHref}>
-            {t(finalCta.secondaryText)}
-          </a>
-        </div>
+        {titleHtml !== "" && <h2 dangerouslySetInnerHTML={html(finalCta.titleHtml)} />}
+        {textHtml !== "" && <p dangerouslySetInnerHTML={html(finalCta.textHtml)} />}
+        {(primaryText !== "" || secondaryText !== "") && (
+          <div className="tmpdt-final-actions">
+            {primaryText !== "" && (
+              <a className="tmpdt-btn tmpdt-lime" href={safeNavigationHref(localizedHref(finalCta.primaryHref || "#"), "#")}>
+                {t(finalCta.primaryText)}
+              </a>
+            )}
+            {secondaryText !== "" && (
+              <a className="tmpdt-btn tmpdt-inv" href={safeNavigationHref(localizedHref(finalCta.secondaryHref || "#"), "#")}>
+                {t(finalCta.secondaryText)}
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

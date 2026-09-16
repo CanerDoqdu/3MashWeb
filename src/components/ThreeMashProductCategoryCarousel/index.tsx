@@ -19,7 +19,7 @@ import {
   ProductDetailSectionScope,
   type ProductDetailRelatedProduct,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
-import { tLocalized } from "../../utils/i18n";
+import { tLocalized, localizedHref, translateText, isEnglishLocale, hasEnglishProductPage } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
 
@@ -28,11 +28,15 @@ function propString(value: unknown) {
   if (typeof value === "number" || typeof value === "boolean") return String(value);
   if (!value || typeof value !== "object") return "";
   const data = value as Record<string, unknown>;
-  const candidates = [data.id, data.value, data.slug, data.name, data.title, data.text, data.html];
+  const candidates = [data.value, data.html, data.text, data.title, data.name, data.id, data.slug];
   for (const candidate of candidates) {
-    if (typeof candidate === "string" && candidate.trim()) return candidate;
+    if (typeof candidate === "string") return candidate;
   }
   return "";
+}
+
+function resolvePropText(prop: unknown, fallbackDefault = ""): string {
+  return prop !== undefined && prop !== null ? propString(prop) : fallbackDefault;
 }
 
 function text(value: unknown, fallback = "") {
@@ -265,12 +269,12 @@ function ProductCard({ product, showCategoryName, showPrice, target }: { product
   const price = variant ? getProductVariantFormattedFinalPrice(variant) : "";
 
   return (
-    <a className="tmpcc-card" href={getProductHref(product)} target={target} rel={target ? "noopener noreferrer" : undefined}>
+    <a className="tmpcc-card" href={localizedHref(getProductHref(product))} target={target} rel={target ? "noopener noreferrer" : undefined}>
       <span className="tmpcc-media">
         {image ? <img src={image} alt={media?.image?.altText || product.name} loading="lazy" decoding="async" /> : <span>{product.name.slice(0, 1)}</span>}
       </span>
       {showCategoryName && category ? <small>{category}</small> : null}
-      <strong>{product.name}</strong>
+      <strong>{isEnglishLocale() ? translateText(product.name) : product.name}</strong>
       {showPrice && price ? <em>{price}</em> : null}
     </a>
   );
@@ -283,14 +287,16 @@ function sourceRelatedProduct(product: IkasProduct): ProductDetailRelatedProduct
   const imageSource = media?.image || fallbackImage;
   const image = imageSource ? getDefaultSrc(imageSource) : "";
   const description = truncateText(plainText((product as { shortDescription?: unknown; description?: unknown }).shortDescription || (product as { description?: unknown }).description), 118);
+  const title = isEnglishLocale() ? translateText(product.name) : product.name;
+  const desc = description ? (isEnglishLocale() ? translateText(description) : description) : "";
   return {
     id: product.id,
-    title: product.name,
-    href: getProductHref(product),
+    title,
+    href: localizedHref(getProductHref(product)),
     image,
-    imageAlt: imageSource?.altText || product.name,
+    imageAlt: imageSource?.altText || title,
     category: product.categories?.[0]?.name || product.brand?.name || "",
-    descriptionHtml: description ? escapeHtml(description) : "",
+    descriptionHtml: desc ? escapeHtml(desc) : "",
   };
 }
 
@@ -301,24 +307,27 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
   const p = props as any;
   const rawSourceData = resolveSharedProductDetailData(props.product, p.productTemplateJson);
 
+  const rawRelated = rawSourceData?.related;
+  const rawFinalCta = rawSourceData?.finalCta;
+
   // Override related and finalCta fields from Studio props
   const sourceData = rawSourceData ? {
     ...rawSourceData,
-    related: rawSourceData.related ? {
-      ...rawSourceData.related,
-      index: text(p.relatedIndex) || rawSourceData.related.index || "07",
-      label: text(p.relatedLabel) || rawSourceData.related.label || tLocalized("İLGİLİ ÜRÜNLER", "RELATED PRODUCTS"),
-      titleHtml: text(p.relatedTitleHtml) || rawSourceData.related.titleHtml || "",
-    } : rawSourceData.related,
-    finalCta: rawSourceData.finalCta ? {
-      ...rawSourceData.finalCta,
-      titleHtml: text(p.finalCtaTitleHtml) || rawSourceData.finalCta.titleHtml || "",
-      textHtml: text(p.finalCtaTextHtml) || rawSourceData.finalCta.textHtml || "",
-      primaryText: text(p.primaryButtonText) || rawSourceData.finalCta.primaryText || "",
-      primaryHref: text(p.primaryButtonHref) || rawSourceData.finalCta.primaryHref || "",
-      secondaryText: text(p.secondaryButtonText) || rawSourceData.finalCta.secondaryText || "",
-      secondaryHref: text(p.secondaryButtonHref) || rawSourceData.finalCta.secondaryHref || "",
-    } : rawSourceData.finalCta,
+    related: rawRelated ? {
+      ...rawRelated,
+      index: resolvePropText(p.relatedIndex, rawRelated.index ?? "07"),
+      label: resolvePropText(p.relatedLabel, rawRelated.label ?? tLocalized("İLGİLİ ÜRÜNLER", "RELATED PRODUCTS")),
+      titleHtml: resolvePropText(p.relatedTitleHtml, rawRelated.titleHtml ?? ""),
+    } : rawRelated,
+    finalCta: rawFinalCta ? {
+      ...rawFinalCta,
+      titleHtml: resolvePropText(p.finalCtaTitleHtml, rawFinalCta.titleHtml ?? ""),
+      textHtml: resolvePropText(p.finalCtaTextHtml, rawFinalCta.textHtml ?? ""),
+      primaryText: resolvePropText(p.primaryButtonText, rawFinalCta.primaryText ?? ""),
+      primaryHref: resolvePropText(p.primaryButtonHref, rawFinalCta.primaryHref ?? ""),
+      secondaryText: resolvePropText(p.secondaryButtonText, rawFinalCta.secondaryText ?? ""),
+      secondaryHref: resolvePropText(p.secondaryButtonHref, rawFinalCta.secondaryHref ?? ""),
+    } : rawFinalCta,
   } : rawSourceData;
 
   const [resolvedProducts, setResolvedProducts] = useState<IkasProduct[] | null>(null);
@@ -368,9 +377,19 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     };
   }, [productList, mode, p.product?.id, limit]);
 
-  const products = (resolvedProducts || listProducts(productList)).filter((item) => (p as any).showCurrentProduct !== false || item.id !== p.product?.id);
+  const products = (resolvedProducts || listProducts(productList))
+    .filter((item) => (p as any).showCurrentProduct !== false || item.id !== p.product?.id)
+    .filter((item) => hasEnglishProductPage(getProductHref(item) || item));
   const scrollCards = numberValue((p as any).scrollByCards, 1, 1, 6);
-  const hasHeader = (p as any).showHeader !== false && (text((p as any).titleText) || text((p as any).descriptionHtml));
+  const sectionAnchorId = resolvePropText((p as any).sectionAnchorId, "");
+  const defaultCategoryTitle = categoryName(category)
+    ? `Diğer ${categoryName(category)} Ürünleri`
+    : tLocalized("Diğer Ürünler", "Other Products");
+  const fallbackTitle = resolvePropText((p as any).titleText, defaultCategoryTitle);
+  const fallbackDescription = resolvePropText((p as any).descriptionHtml, "");
+  const hasHeader =
+    (p as any).showHeader !== false &&
+    (fallbackTitle.trim() !== "" || fallbackDescription.trim() !== "");
 
   function scroll(direction: -1 | 1) {
     const scroller = scrollerRef.current;
@@ -457,13 +476,15 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     );
   }
   return (
-    <section id={text((p as any).sectionAnchorId) || undefined} className="three-mash-product-category-carousel" style={style}>
+    <section id={sectionAnchorId.trim() || undefined} className="three-mash-product-category-carousel" style={style}>
       <div className="tmpcc-wrap">
         {hasHeader ? (
           <div className="tmpcc-head">
             <div>
-              <h2>{text((p as any).titleText, categoryName(category) ? `Diğer ${categoryName(category)} Ürünleri` : tLocalized("Diğer Ürünler", "Other Products"))}</h2>
-              {text((p as any).descriptionHtml) ? <div className="tmpcc-description" dangerouslySetInnerHTML={html((p as any).descriptionHtml)} /> : null}
+              {fallbackTitle.trim() !== "" && <h2>{fallbackTitle}</h2>}
+              {fallbackDescription.trim() !== "" && (
+                <div className="tmpcc-description" dangerouslySetInnerHTML={html(fallbackDescription)} />
+              )}
             </div>
             {(p as any).showArrows !== false && products.length > 1 ? (
               <div className="tmpcc-arrows">
@@ -506,7 +527,10 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
           <div className="tmpcc-setup">
             {isLoading
               ? tLocalized("Ürünler yükleniyor...", "Loading products...")
-              : (p as any).setupMessage || tLocalized("İlgili ürünler kısa süre içinde burada listelenecek.", "Related products will be listed here shortly.")}
+              : resolvePropText(
+                  (p as any).setupMessage,
+                  tLocalized("İlgili ürünler kısa süre içinde burada listelenecek.", "Related products will be listed here shortly.")
+                )}
           </div>
         )}
       </div>

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=optional");
 
 .three-mash-header {
   --tmh-announcement-fixed-height: 37px;
@@ -708,8 +708,8 @@
 
 .tmh-cart-badge {
   position: absolute;
-  right: 3px;
-  top: 3px;
+  right: -5px;
+  top: -5px;
   min-width: 16px;
   height: 16px;
   border-radius: 999px;
@@ -722,6 +722,8 @@
   font-size: 10px;
   font-weight: 800;
   line-height: 1;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .tmh-action-wrap {

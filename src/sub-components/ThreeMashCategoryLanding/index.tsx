@@ -400,7 +400,7 @@ const englishProductRoutes: Record<string, string> = {
   "mash-curie-m1-dental-3d-yazici": "/en/mash-curie-m1-dental-3d-printer",
   "creality-halot-sky-6k": "/en/creality-halot-sky-6k-1",
   "mash-w1e-ultrasonik-yikama-cihazi": "/en/mash-w1e-ultrasonic-washing-device",
-  "mash-c1e-uv-kurleme-cihazi": "/en/mash-c1e-smart-uv-curing-device",
+  "mash-c1e-uv-kurleme-cihazi": "/en/mash-c1e-uv-curing-device",
   "creality-washcure-uw-02": "/en/creality-wash-and-cure-uw-03",
   "argenz-ht-plus-zirkon-blok": "/en/argenz-ht-plus-zirconia-disc",
   "argenz-st-multilayer-zirkon-blok": "/en/argenz-st-multilayer-zirconia-disc",

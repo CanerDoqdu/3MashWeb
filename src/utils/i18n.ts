@@ -111,21 +111,85 @@ export function getCurrentLocale(): Locale {
       }
     } catch { }
 
-    try {
+       try {
       const documentLocale = (
         document.documentElement.getAttribute("data-3mash-locale") ||
         document.documentElement.lang
       )?.toLowerCase?.();
+
+      // EN ONLY: respect Ikas/Studio's active English locale.
       if (documentLocale?.startsWith("en")) {
         _clientCachedLocale = "en";
         return "en";
       }
+
+      // Preserve existing Turkish behavior exactly.
       if (documentLocale?.startsWith("tr")) {
         _clientCachedLocale = "tr";
         return "tr";
       }
     } catch { }
 
+    // -------------------------------------------------------------
+    // 3. Ikas runtime locale (important for Ikas Studio preview)
+    // -------------------------------------------------------------
+    // Studio can be set to English while the preview URL itself does
+    // not contain /en. Read the locale from the Ikas runtime as an
+    // additional EN signal.
+    try {
+      if (typeof IkasStorefrontConfig !== "undefined") {
+        const configLocale = IkasStorefrontConfig
+          .getCurrentLocale?.()
+          ?.toLowerCase?.();
+
+        if (configLocale?.startsWith("en")) {
+          _clientCachedLocale = "en";
+          return "en";
+        }
+
+        if (configLocale?.startsWith("tr")) {
+          _clientCachedLocale = "tr";
+          return "tr";
+        }
+
+        const routing = IkasStorefrontConfig.getCurrentRouting?.();
+        const routingLocale = routing?.locale?.toLowerCase?.();
+
+        if (routingLocale?.startsWith("en")) {
+          _clientCachedLocale = "en";
+          return "en";
+        }
+
+        if (routingLocale?.startsWith("tr")) {
+          _clientCachedLocale = "tr";
+          return "tr";
+        }
+      }
+    } catch { }
+
+    // -------------------------------------------------------------
+    // 4. Ikas I18n runtime locale
+    // -------------------------------------------------------------
+    try {
+      if (
+        typeof I18n !== "undefined" &&
+        typeof I18n.getLocale === "function"
+      ) {
+        const ikasLocale = I18n.getLocale()?.toLowerCase?.();
+
+        if (ikasLocale?.startsWith("en")) {
+          _clientCachedLocale = "en";
+          return "en";
+        }
+
+        if (ikasLocale?.startsWith("tr")) {
+          _clientCachedLocale = "tr";
+          return "tr";
+        }
+      }
+    } catch { }
+
+    // Existing default remains Turkish.
     _clientCachedLocale = "tr";
     return "tr";
   } catch (_e) { }
@@ -135,6 +199,10 @@ export function getCurrentLocale(): Locale {
 
 if (typeof window !== "undefined") {
   try {
+    const activeLocale = getCurrentLocale();
+    document.documentElement.lang = activeLocale;
+    document.documentElement.setAttribute("data-3mash-locale", activeLocale);
+    document.documentElement.classList.add(activeLocale === "en" ? "tm-locale-en" : "tm-locale-tr");
     document.documentElement.classList.add("tm-ready");
   } catch { }
 }
@@ -721,23 +789,66 @@ export function translateText(text?: string | null): string {
   return text;
 }
 
-const englishRouteAliases: Record<string, string> = {
+/**
+ * Comprehensive bidirectional route mapping between Turkish (TR) and English (EN) routes.
+ */
+export const TR_TO_EN_ROUTE_MAP: Record<string, string> = {
+  // Homepage
+  "/": "/",
+
+  // Category Landing Pages
   "/dental-3d-yazici-recineleri": "/dental-resins",
-  "/3d-yazicilar": "/3d-printers",
+  "/dental-3d-printer-resins": "/dental-resins",
+  "/urunler/dental-recineler": "/dental-resins",
   "/yikama-kurleme-cihazlari": "/wash-and-cure-devices",
+  "/washing-curing-devices": "/wash-and-cure-devices",
+  "/urunler/yikama-kurleme": "/wash-and-cure-devices",
+  "/yikama-cihazlari": "/wash-and-cure-devices",
+  "/urunler/yikama-cihazlari": "/wash-and-cure-devices",
+  "/urunler/yikama": "/wash-and-cure-devices",
+  "/kurleme-cihazlari": "/wash-and-cure-devices",
+  "/urunler/kurleme-cihazlari": "/wash-and-cure-devices",
+  "/urunler/kurleme": "/wash-and-cure-devices",
+  "/3d-yazicilar": "/3d-printers",
+  "/urunler/3d-yazicilar": "/3d-printers",
   "/masasustu-tarayicilar": "/lab-scanners",
+  "/masaustu-tarayicilar": "/lab-scanners",
+  "/urunler/masasustu-tarayicilar": "/lab-scanners",
   "/desktop-scanners": "/lab-scanners",
   "/dental-firinlar": "/dental-furnaces",
+  "/urunler/dental-firinlar": "/dental-furnaces",
   "/zirkon-bloklar": "/zircon-blocks",
+  "/urunler/zirkon-bloklar": "/zircon-blocks",
+  "/3d-yazici-yedek-parcalari": "/3d-printer-spare-parts",
+  "/yazici-yedek-parcalari": "/3d-printer-spare-parts",
+  "/sistemler": "/systems",
+  "/titanyum-diskler": "/titanium-discs",
+
+  // Listing / Search
+  "/tum-urunler": "/search",
+  "/urunler": "/search",
+  "/search": "/search",
+
+  // Products - 3D Printers
   "/mash-p16l-385nm-16k-dental-3d-yazici": "/mash-p16l-385nm-16k-dental-3d-printer",
   "/mash-curie-m1-dental-3d-yazici": "/mash-curie-m1-dental-3d-printer",
   "/creality-halot-sky-6k": "/creality-halot-sky-6k-1",
-  "/mash-c1e-uv-kurleme-cihazi": "/mash-c1e-smart-uv-curing-device",
+
+  // Products - Wash & Cure
+  "/mash-c1e-uv-kurleme-cihazi": "/mash-c1e-uv-curing-device",
+  "/mash-c1e-uv-curing-device": "/mash-c1e-uv-curing-device",
   "/mash-w1e-ultrasonik-yikama-cihazi": "/mash-w1e-ultrasonic-washing-device",
+  "/mash-w1e-ultrasonic-washing-device": "/mash-w1e-ultrasonic-washing-device",
+  "/mash-w1e-ultrasonic-washing-machine": "/mash-w1e-ultrasonic-washing-device",
+  "/mash-w1e-ultrasonic-washing-unit": "/mash-w1e-ultrasonic-washing-device",
   "/creality-washcure-uw-02": "/creality-wash-and-cure-uw-03",
+
+  // Products - Zirconia
   "/argenz-ht-plus-zirkon-blok": "/argenz-ht-plus-zirconia-disc",
   "/argenz-st-multilayer-zirkon-blok": "/argenz-st-multilayer-zirconia-disc",
   "/argenz-ht-multilayer-zirkon-blok": "/argenz-ht-plus-multilayer-zirconia-disc",
+
+  // Products - Resins
   "/crs-composite-mukemmel-dayanimli-gecici-recinesi": "/crs-composite-excellent-durable-permanent-resin",
   "/crs-aligner-memory-shape-ozellikli-aligner-recinesi": "/crs-aligner-shape-memory-aligner-resin",
   "/crs-cast-cekmeyen-dokum-recinesi": "/crs-denture-biocompatible-denture-resin",
@@ -754,7 +865,460 @@ const englishRouteAliases: Record<string, string> = {
   "/mash-study-resin-dental-model-3d-yazici-recinesi": "/mash-study-resin-dental-model-3d-printer-resin",
   "/mash-trial-pink-resin-dental-try-in-gecici-recinesi": "/mash-trial-pink-resin-dental-temporary-try-in-resin",
   "/mash-trial-white-resin-gecici-dental-recinesi": "/mash-trial-white-resin-temporary-dental-resin",
+
+  // Products - Spare Parts & Devices
+  "/mash-p16l-ana-kart": "/mash-p16l-ana-kart",
+  "/mash-p16l-16k-monokrom-lcd-ekran-yedek-parca": "/mash-p16l-16k-monochrome-lcd-screen-spare-part",
+  "/mash-p16l-kucuk-hizli-baski-tablasi": "/mash-p16l-small-fast-build-platform",
+  "/mash-p16l-kucuk-baski-tablasi": "/mash-p16l-small-build-platform",
+  "/mash-p16l-buyuk-baski-tablasi-211x118mm": "/mash-p16l-large-build-platform-211x118mm",
+  "/mash-p16l-recine-tanki-800ml": "/mash-p16l-resin-tank-800ml",
+  "/seffaf-fep-film-3d-yazici": "/transparent-fep-film-3d-printer",
+  "/seffaf-acf-film": "/transparent-acf-film",
+  "/acf-film": "/transparent-acf-film",
+  "/piocreat-c01-lcd-ekran-kiti": "/piocreat-c01-lcd-screen-kit",
+  "/creality-halot-sky-lcd-ekran-kiti-6k-mono": "/creality-halot-sky-lcd-screen-kit-6k-mono",
+  "/trasformer-comp-flow-siringa-kompozit": "/trasformer-comp-flow-syringe-composite",
+  "/trasformer-light-glass-mufla-sistemi": "/trasformer-light-glass-muffle-system",
+  "/mesa-grade-5-eli-titanyum-disk": "/mesa-grade-5-eli-titanium-disc",
+  "/naberthem-lht-02-17-lb-speed": "/nabertherm-lht-02-17-lb-speed",
+  "/naberthem-lht-01-16-turbo-fire": "/nabertherm-lht-01-16-turbo-fire",
+  "/naberthem-vl-01-12-lb-press-furnace": "/nabertherm-vl-01-12-lb-press-furnace",
+  "/naberthem-vl-01-12-lb-porcelain-furnace": "/nabertherm-vl-01-12-lb-porcelain-furnace",
+  "/3shape-e2": "/3shape-e2",
+  "/3shape-e3": "/3shape-e3",
+  "/3shape-e4": "/3shape-e4",
+
+  // Static / Legal / Information Pages
+  "/pages/about-us": "/pages/about-us",
+  "/pages/hakkimizda": "/pages/about-us",
+  "/about-us": "/pages/about-us",
+  "/hakkimizda": "/pages/about-us",
+  "/pages/iletisim": "/pages/contact",
+  "/iletisim": "/pages/contact",
+  "/contact": "/pages/contact",
+  "/pages/contact": "/pages/contact",
+  "/pages/sss": "/pages/faq",
+  "/pages/faq": "/pages/faq",
+  "/sss": "/pages/faq",
+  "/faq": "/pages/faq",
+  "/pages/gizlilik-politikasi-ve-kvkk": "/pages/privacy-policy",
+  "/pages/kvkk": "/pages/privacy-policy",
+  "/pages/kvkk-aydinlatma-metni": "/pages/privacy-policy",
+  "/kvkk": "/pages/privacy-policy",
+  "/pages/iade-ve-garanti": "/pages/return-and-warranty-policy",
+  "/pages/iade-ve-garanti-kosullari": "/pages/return-and-warranty-policy",
+  "/pages/iade-ve-garanti-politikasi": "/pages/return-and-warranty-policy",
+  "/pages/mesafeli-satis-sozlesmesi": "/pages/distance-selling-contract",
+  "/pages/uyelik-sozlesmesi": "/pages/membership-agreement",
+  "/pages/ticari-elektronik-ileti-onayi": "/pages/commercial-electronic-communication",
+  "/pages/ticari-elektronik-ileti": "/pages/commercial-electronic-communication",
+  "/pages/cerez-politikasi": "/pages/cookie-policy",
+  "/pages/cerez": "/pages/cookie-policy",
+  "/cerez-politikasi": "/pages/cookie-policy",
+  "/pages/cookie-policy": "/pages/cookie-policy",
+  "/pages/mash-academy": "/pages/mash-academy",
+  "/pages/academy": "/pages/mash-academy",
+  "/academy": "/pages/mash-academy",
+  "/pages/hesaplama": "/pages/cost-calculator",
+
+  // Account / Cart / Blog
+  "/account": "/account",
+  "/hesabim": "/account",
+  "/account/orders": "/account/orders",
+  "/account/addresses": "/account/addresses",
+  "/account/favorites": "/account/favorites",
+  "/account/login": "/account/login",
+  "/account/register": "/account/register",
+  "/cart": "/cart",
+  "/sepet": "/cart",
+  "/blog": "/blog",
 };
+
+export const EN_TO_TR_ROUTE_MAP: Record<string, string> = {
+  // Homepage
+  "/": "/",
+
+  // Category Landing Pages
+  "/dental-resins": "/dental-3d-yazici-recineleri",
+  "/dental-3d-printer-resins": "/dental-3d-yazici-recineleri",
+  "/wash-and-cure-devices": "/yikama-kurleme-cihazlari",
+  "/washing-curing-devices": "/yikama-kurleme-cihazlari",
+  "/washing-devices": "/yikama-kurleme-cihazlari",
+  "/curing-devices": "/yikama-kurleme-cihazlari",
+  "/3d-printers": "/3d-yazicilar",
+  "/lab-scanners": "/masasustu-tarayicilar",
+  "/desktop-scanners": "/masasustu-tarayicilar",
+  "/dental-furnaces": "/dental-firinlar",
+  "/zircon-blocks": "/zirkon-bloklar",
+  "/3d-printer-spare-parts": "/3d-yazici-yedek-parcalari",
+  "/systems": "/sistemler",
+  "/titanium-discs": "/titanyum-diskler",
+
+  // Listing / Search
+  "/search": "/search",
+  "/tum-urunler": "/search",
+  "/urunler": "/search",
+
+  // Products - 3D Printers
+  "/mash-p16l-385nm-16k-dental-3d-printer": "/mash-p16l-385nm-16k-dental-3d-yazici",
+  "/mash-curie-m1-dental-3d-printer": "/mash-curie-m1-dental-3d-yazici",
+  "/mash-curie-m1-dental-dlp-3d-printer": "/mash-curie-m1-dental-3d-yazici",
+  "/creality-halot-sky-6k-1": "/creality-halot-sky-6k",
+  "/creality-halot-sky-6k-dental-3d-printer": "/creality-halot-sky-6k",
+
+  // Products - Wash & Cure
+  "/mash-c1e-uv-curing-device": "/mash-c1e-uv-kurleme-cihazi",
+  "/mash-c1e-smart-uv-curing-unit": "/mash-c1e-uv-kurleme-cihazi",
+  "/mash-w1e-ultrasonic-washing-device": "/mash-w1e-ultrasonik-yikama-cihazi",
+  "/mash-w1e-ultrasonic-washing-unit": "/mash-w1e-ultrasonik-yikama-cihazi",
+  "/mash-w1e-ultrasonic-washing-machine": "/mash-w1e-ultrasonik-yikama-cihazi",
+  "/creality-wash-and-cure-uw-03": "/creality-washcure-uw-02",
+
+  // Products - Zirconia
+  "/argenz-ht-plus-zirconia-disc": "/argenz-ht-plus-zirkon-blok",
+  "/argenz-st-multilayer-zirconia-disc": "/argenz-st-multilayer-zirkon-blok",
+  "/argenz-ht-plus-multilayer-zirconia-disc": "/argenz-ht-multilayer-zirkon-blok",
+
+  // Products - Resins
+  "/crs-composite-excellent-durable-permanent-resin": "/crs-composite-mukemmel-dayanimli-gecici-recinesi",
+  "/crs-aligner-shape-memory-aligner-resin": "/crs-aligner-memory-shape-ozellikli-aligner-recinesi",
+  "/crs-denture-biocompatible-denture-resin": "/crs-denture-biouyumlu-protez-recinesi",
+  "/crs-flexit-resin-flexible-denture-resin": "/crs-flexit-recin-protez-recinesi",
+  "/crs-gingiva-tear-proof-gum-resin": "/crs-gingiva-yirtilmaz-dis-eti-recinesi",
+  "/crs-ibt-resin-orthodontic-indirect-bonding-tray-resin": "/crs-ibt-resin-ortodontik-ibt-recinesi",
+  "/crs-model-high-precision-model-resin": "/crs-model-yuksek-hassasiyetli-model-recinesi",
+  "/crs-splint-hard-resin-hard-night-guard-resin": "/crs-splint-hard-resin-sert-gece-plagi-recinesi",
+  "/crs-splint-soft-resin-flexible-night-guard-resin": "/crs-splint-soft-resin-dental-splint-gece-plak-recinesi",
+  "/crs-tray-resin-custom-impression-tray-resin": "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi",
+  "/crs-guide-resin-biocompatible-surgical-guide-resin": "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber",
+  "/mash-clear-resin-dental-surgical-guide-resin": "/mash-clear-resin-dental-cerrahi-kilavuz-recinesi",
+  "/mash-study-resin-dental-model-3d-printer-resin": "/mash-study-resin-dental-model-3d-yazici-recinesi",
+  "/mash-trial-pink-resin-dental-temporary-try-in-resin": "/mash-trial-pink-resin-dental-try-in-gecici-recinesi",
+  "/mash-trial-white-resin-temporary-dental-resin": "/mash-trial-white-resin-gecici-dental-recinesi",
+
+  // Products - Spare Parts & Devices
+  "/mash-p16l-ana-kart": "/mash-p16l-ana-kart",
+  "/mash-p16l-motherboard": "/mash-p16l-ana-kart",
+  "/mash-p16l-16k-monochrome-lcd-screen-spare-part": "/mash-p16l-16k-monokrom-lcd-ekran-yedek-parca",
+  "/mash-p16l-small-fast-build-platform": "/mash-p16l-kucuk-hizli-baski-tablasi",
+  "/mash-p16l-small-build-platform": "/mash-p16l-kucuk-baski-tablasi",
+  "/mash-p16l-large-build-platform-211x118mm": "/mash-p16l-buyuk-baski-tablasi-211x118mm",
+  "/mash-p16l-resin-tank-800ml": "/mash-p16l-recine-tanki-800ml",
+  "/transparent-fep-film-3d-printer": "/seffaf-fep-film-3d-yazici",
+  "/transparent-acf-film": "/seffaf-acf-film",
+  "/piocreat-c01-lcd-screen-kit": "/piocreat-c01-lcd-ekran-kiti",
+  "/creality-halot-sky-lcd-screen-kit-6k-mono": "/creality-halot-sky-lcd-ekran-kiti-6k-mono",
+  "/trasformer-comp-flow-syringe-composite": "/trasformer-comp-flow-siringa-kompozit",
+  "/trasformer-light-glass-muffle-system": "/trasformer-light-glass-mufla-sistemi",
+  "/mesa-grade-5-eli-titanium-disc": "/mesa-grade-5-eli-titanyum-disk",
+  "/nabertherm-lht-02-17-lb-speed": "/naberthem-lht-02-17-lb-speed",
+  "/nabertherm-lht-01-16-turbo-fire": "/naberthem-lht-01-16-turbo-fire",
+  "/nabertherm-vl-01-12-lb-press-furnace": "/naberthem-vl-01-12-lb-press-furnace",
+  "/nabertherm-vl-01-12-lb-porcelain-furnace": "/naberthem-vl-01-12-lb-porcelain-furnace",
+  "/3shape-e2": "/3shape-e2",
+  "/3shape-e3": "/3shape-e3",
+  "/3shape-e4": "/3shape-e4",
+
+  // Static / Legal / Information Pages
+  "/pages/about-us": "/pages/about-us",
+  "/pages/contact": "/pages/iletisim",
+  "/pages/faq": "/pages/sss",
+  "/pages/privacy-policy": "/pages/gizlilik-politikasi-ve-kvkk",
+  "/pages/return-and-warranty-policy": "/pages/iade-ve-garanti",
+  "/pages/distance-selling-contract": "/pages/mesafeli-satis-sozlesmesi",
+  "/pages/membership-agreement": "/pages/uyelik-sozlesmesi",
+  "/pages/commercial-electronic-communication": "/pages/ticari-elektronik-ileti-onayi",
+  "/pages/cookie-policy": "/pages/cerez-politikasi",
+  "/pages/mash-academy": "/pages/mash-academy",
+  "/pages/cost-calculator": "/pages/hesaplama",
+
+  // Account / Cart / Blog
+  "/account": "/account",
+  "/account/orders": "/account/orders",
+  "/account/addresses": "/account/addresses",
+  "/account/favorites": "/account/favorites",
+  "/account/login": "/account/login",
+  "/account/register": "/account/register",
+  "/cart": "/cart",
+  "/blog": "/blog",
+};
+
+export const englishRouteAliases: Record<string, string> = TR_TO_EN_ROUTE_MAP;
+
+/**
+ * Determines whether a product or path has a dedicated English page in the store.
+ * In Turkish locale, always returns true (show all products).
+ * In English locale, returns true only if the item has an explicit counterpart in TR_TO_EN_ROUTE_MAP or EN_TO_TR_ROUTE_MAP.
+ */
+export function hasEnglishProductPage(hrefOrSlug: unknown): boolean {
+  if (!isEnglishLocale()) return true;
+  if (!hrefOrSlug) return false;
+
+  let raw = "";
+  if (typeof hrefOrSlug === "string") {
+    raw = hrefOrSlug;
+  } else if (typeof hrefOrSlug === "object" && hrefOrSlug !== null) {
+    const obj = hrefOrSlug as Record<string, unknown>;
+    raw = (typeof obj.href === "string" ? obj.href : "") ||
+      (typeof obj.slug === "string" ? obj.slug : "") ||
+      (typeof obj.handle === "string" ? obj.handle : "") ||
+      (typeof obj.url === "string" ? obj.url : "") ||
+      (typeof obj.path === "string" ? obj.path : "");
+  }
+
+  if (!raw) return false;
+
+  // Strip query strings, hashes, and protocol/domain
+  const clean = raw
+    .split(/[?#]/)[0]
+    .replace(/^https?:\/\/[^/]+/i, "")
+    .replace(/^\/(en\/)?/, "")
+    .replace(/\/+$/, "")
+    .trim()
+    .toLowerCase();
+
+  if (!clean) return false;
+
+  const normalized = `/${clean}`;
+
+  // 1. Direct TR slug mapping in TR_TO_EN_ROUTE_MAP
+  const enTarget = TR_TO_EN_ROUTE_MAP[normalized];
+  if (enTarget && enTarget !== "/" && enTarget !== "/search" && enTarget !== "/tum-urunler") {
+    return true;
+  }
+
+  // 2. Direct EN slug mapping in EN_TO_TR_ROUTE_MAP (if product was already localized by ikas)
+  const trTarget = EN_TO_TR_ROUTE_MAP[normalized];
+  if (trTarget && trTarget !== "/" && trTarget !== "/search" && trTarget !== "/tum-urunler") {
+    return true;
+  }
+
+  // 3. Fallback checks without leading slash
+  if (TR_TO_EN_ROUTE_MAP[clean] || EN_TO_TR_ROUTE_MAP[clean]) {
+    return true;
+  }
+
+  return false;
+}
+
+
+/**
+ * Resolves the counterpart localized URL pathname when switching languages between Turkish and English.
+ * 
+ * Order of Resolution:
+ * 1. Inspects DOM `<link rel="alternate" hreflang="...">` tags generated by the server/platform.
+ * 2. Inspects live runtime Next.js / Ikas page data (`window.__NEXT_DATA__?.props?.pageProps`).
+ * 3. Looks up the canonical bidirectional route dictionary (covering categories, products, legal pages, search).
+ * 4. Fallback heuristics ensure no broken 404s (safely maps untranslated entities to their localized category, parent, or listing).
+ */
+export function getLocalizedCounterpartPath(currentPathname?: string, targetLocale: Locale = "en"): string {
+  const rawPath = currentPathname || (typeof window !== "undefined" ? window.location.pathname : "/");
+  const cleanRaw = rawPath.trim() || "/";
+
+  // Normalize: strip origin if present
+  let bare = cleanRaw
+    .replace(/^https?:\/\/(?:www\.)?3mash\.com(?::\d+)?/i, "")
+    .replace(/^https?:\/\/[a-z0-9-]+\.myikas\.com(?::\d+)?/i, "");
+
+  // Strip existing /en/ or /en prefix to obtain bare route
+  if (bare === "/en" || bare === "/en/") {
+    bare = "/";
+  } else if (bare.startsWith("/en/")) {
+    bare = bare.replace(/^\/en\//, "/");
+  }
+
+  // Ensure leading slash and remove trailing slash (unless root)
+  if (!bare.startsWith("/")) bare = `/${bare}`;
+  if (bare.length > 1 && bare.endsWith("/")) bare = bare.slice(0, -1);
+
+  // If on homepage
+  if (bare === "/" || bare === "") {
+    return targetLocale === "en" ? "/en" : "/";
+  }
+
+  // Search / listing page: Turkish -> /search, English -> /en/search
+  if (bare === "/search" || bare === "/tum-urunler" || bare === "/urunler") {
+    return targetLocale === "en" ? "/en/search" : "/search";
+  }
+
+  // -------------------------------------------------------------
+  // 1. Check DOM <link rel="alternate" hreflang="..."> tags
+  // -------------------------------------------------------------
+  if (typeof document !== "undefined") {
+    try {
+      const selectors =
+        targetLocale === "en"
+          ? 'link[rel="alternate"][hreflang="en"], link[rel="alternate"][hreflang="en-GB"], link[rel="alternate"][hreflang="en-US"]'
+          : 'link[rel="alternate"][hreflang="tr"], link[rel="alternate"][hreflang="tr-TR"], link[rel="alternate"][hreflang="x-default"]';
+
+      const altNode = document.querySelector<HTMLLinkElement>(selectors);
+      if (altNode && altNode.href) {
+        const url = new URL(altNode.href, window.location.origin);
+        let altPath = url.pathname;
+        if (targetLocale === "en") {
+          if (altPath.startsWith("/en")) return altPath;
+          return `/en${altPath.startsWith("/") ? altPath : `/${altPath}`}`;
+        } else {
+          altPath = altPath.replace(/^\/en(\/|$)/, "/");
+          return altPath.startsWith("/") ? altPath : `/${altPath}`;
+        }
+      }
+    } catch {}
+  }
+
+  // -------------------------------------------------------------
+  // 2. Check live runtime Ikas / Next.js pageProps translations
+  // -------------------------------------------------------------
+  if (typeof window !== "undefined") {
+    try {
+      const pageProps = window.__NEXT_DATA__?.props?.pageProps;
+      const entity = pageProps?.product || pageProps?.category || pageProps?.page || pageProps?.blog || pageProps?.data;
+      const translations = entity?.metaData?.translations;
+      if (Array.isArray(translations)) {
+        const match = translations.find(
+          (t: any) => typeof t?.locale === "string" && t.locale.toLowerCase().startsWith(targetLocale)
+        );
+        if (match?.slug) {
+          const cleanSlug = match.slug.replace(/^\/+|\/+$/g, "");
+          if (bare.startsWith("/pages/")) {
+            return targetLocale === "en" ? `/en/pages/${cleanSlug}` : `/pages/${cleanSlug}`;
+          }
+          if (bare.startsWith("/blog/")) {
+            return targetLocale === "en" ? `/en/blog/${cleanSlug}` : `/blog/${cleanSlug}`;
+          }
+          return targetLocale === "en" ? `/en/${cleanSlug}` : `/${cleanSlug}`;
+        }
+      }
+    } catch {}
+  }
+
+  // -------------------------------------------------------------
+  // 3. Static Bidirectional Route Dictionary
+  // -------------------------------------------------------------
+  if (targetLocale === "en") {
+    const directMatch = TR_TO_EN_ROUTE_MAP[bare] || TR_TO_EN_ROUTE_MAP[bare.toLowerCase()];
+    if (directMatch) {
+      if (directMatch === "/" || directMatch === "") return "/en";
+      return `/en${directMatch.startsWith("/") ? directMatch : `/${directMatch}`}`;
+    }
+
+    // Check if path is under /pages/
+    if (bare.startsWith("/pages/")) {
+      const pageSlug = bare.slice("/pages/".length);
+      const mappedPage = TR_TO_EN_ROUTE_MAP[`/pages/${pageSlug}`] || TR_TO_EN_ROUTE_MAP[`/${pageSlug}`];
+      if (mappedPage) {
+        return `/en${mappedPage.startsWith("/") ? mappedPage : `/${mappedPage}`}`;
+      }
+      // Safe fallback for unmapped legal/info page
+      return "/en/pages/about-us";
+    }
+
+    // Check if path is under /blog/
+    if (bare.startsWith("/blog/")) {
+      return `/en${bare}`;
+    }
+  } else {
+    // targetLocale === 'tr'
+    const directMatch = EN_TO_TR_ROUTE_MAP[bare] || EN_TO_TR_ROUTE_MAP[bare.toLowerCase()];
+    if (directMatch) {
+      return directMatch.startsWith("/") ? directMatch : `/${directMatch}`;
+    }
+
+    // Check if path is under /pages/
+    if (bare.startsWith("/pages/")) {
+      const pageSlug = bare.slice("/pages/".length);
+      const mappedPage = EN_TO_TR_ROUTE_MAP[`/pages/${pageSlug}`] || EN_TO_TR_ROUTE_MAP[`/${pageSlug}`];
+      if (mappedPage) {
+        return mappedPage.startsWith("/") ? mappedPage : `/${mappedPage}`;
+      }
+      return "/pages/about-us";
+    }
+
+    if (bare.startsWith("/blog/")) {
+      return bare;
+    }
+  }
+
+  // -------------------------------------------------------------
+  // 4. Fallback Heuristics (Guarantee no 404s)
+  // -------------------------------------------------------------
+  const lowerBare = bare.toLowerCase();
+
+  // Resins fallback
+  if (lowerBare.includes("recine") || lowerBare.includes("resin") || lowerBare.includes("crs")) {
+    return targetLocale === "en" ? "/en/dental-resins" : "/dental-3d-yazici-recineleri";
+  }
+
+  // 3D Printers fallback
+  if (lowerBare.includes("yazici") || lowerBare.includes("printer") || lowerBare.includes("curie") || lowerBare.includes("halot")) {
+    return targetLocale === "en" ? "/en/3d-printers" : "/3d-yazicilar";
+  }
+
+  // Wash & Cure fallback
+  if (lowerBare.includes("yikama") || lowerBare.includes("kurleme") || lowerBare.includes("wash") || lowerBare.includes("cure")) {
+    return targetLocale === "en" ? "/en/wash-and-cure-devices" : "/yikama-kurleme-cihazlari";
+  }
+
+  // Scanners fallback
+  if (lowerBare.includes("tarayici") || lowerBare.includes("scanner") || lowerBare.includes("3shape")) {
+    return targetLocale === "en" ? "/en/lab-scanners" : "/masasustu-tarayicilar";
+  }
+
+  // Furnaces fallback
+  if (lowerBare.includes("firin") || lowerBare.includes("furnace") || lowerBare.includes("naber")) {
+    return targetLocale === "en" ? "/en/dental-furnaces" : "/dental-firinlar";
+  }
+
+  // Zirconia fallback
+  if (lowerBare.includes("zirkon") || lowerBare.includes("zircon") || lowerBare.includes("argenz")) {
+    return targetLocale === "en" ? "/en/zircon-blocks" : "/zirkon-bloklar";
+  }
+
+  // Spare parts fallback
+  if (lowerBare.includes("yedek") || lowerBare.includes("spare") || lowerBare.includes("film") || lowerBare.includes("tank")) {
+    return targetLocale === "en" ? "/en/3d-printer-spare-parts" : "/3d-yazici-yedek-parcalari";
+  }
+
+  // General product/search fallback
+  if (lowerBare.includes("urun") || lowerBare.includes("product") || lowerBare.includes("search")) {
+    return targetLocale === "en" ? "/en/search" : "/search";
+  }
+
+  // Best-effort fallback: translate the path prefix instead of jumping to homepage.
+  // This handles Ikas-generated slugs (e.g. /my-category) that aren't in the static map.
+  if (targetLocale === "en") {
+    // Path is already a non-/en path — just prepend /en and serve it.
+    // If the server 404s, that's better than silently dropping to homepage.
+    return `/en${bare}`;
+  } else {
+    // Switching from EN to TR: strip /en prefix if present (already stripped above),
+    // then serve the bare Turkish path.
+    return bare;
+  }
+}
+
+/**
+ * Resolves the full URL to redirect to when changing language, preserving search params & hash.
+ * Automatically cleans up stale `lang` and `locale` query parameters.
+ */
+export function resolveLocalizedUrl(
+  targetLocale: Locale,
+  currentUrl?: { pathname?: string; search?: string; hash?: string }
+): string {
+  const pathname = currentUrl?.pathname ?? (typeof window !== "undefined" ? window.location.pathname : "/");
+  const rawSearch = currentUrl?.search ?? (typeof window !== "undefined" ? window.location.search : "");
+  const hash = currentUrl?.hash ?? (typeof window !== "undefined" ? window.location.hash : "");
+
+  const searchParams = new URLSearchParams(rawSearch);
+  searchParams.delete("lang");
+  searchParams.delete("locale");
+  const searchStr = searchParams.toString();
+  const search = searchStr ? `?${searchStr}` : "";
+
+  const targetPath = getLocalizedCounterpartPath(pathname, targetLocale);
+  return `${targetPath}${search}${hash}`;
+}
 
 /**
  * Normalizes internal site links and prepends /en/ when English locale is active.
@@ -763,11 +1327,20 @@ const englishRouteAliases: Record<string, string> = {
  */
 export function localizedHref(path?: string | null): string {
   if (!path || typeof path !== "string") return "";
-  const trimmed = path.trim();
+  let trimmed = path.trim();
   if (!trimmed) return "";
 
   if (/^(?:javascript:|data:|vbscript:|file:)/i.test(trimmed)) {
     return "#";
+  }
+
+  // Strip 3mash.com or myikas.com origin so it can be normalized and localized
+  trimmed = trimmed
+    .replace(/^https?:\/\/(?:www\.)?3mash\.com(?::\d+)?/i, "")
+    .replace(/^https?:\/\/[a-z0-9-]+\.myikas\.com(?::\d+)?/i, "");
+
+  if (typeof window !== "undefined" && window.location?.origin && trimmed.startsWith(window.location.origin)) {
+    trimmed = trimmed.slice(window.location.origin.length);
   }
 
   // External links, protocol handlers, or pure hash anchors remain unchanged
@@ -793,7 +1366,7 @@ export function localizedHref(path?: string | null): string {
     const hashIndex = bare.search(/[?#]/);
     const route = hashIndex >= 0 ? bare.slice(0, hashIndex) : bare;
     const suffix = hashIndex >= 0 ? bare.slice(hashIndex) : "";
-    const englishRoute = englishRouteAliases[route.replace(/\/$/, "")];
+    const englishRoute = TR_TO_EN_ROUTE_MAP[route.replace(/\/$/, "")];
     if (englishRoute) bare = `${englishRoute}${suffix}`;
   }
 
@@ -805,4 +1378,5 @@ export function localizedHref(path?: string | null): string {
 
   return bare;
 }
+
 

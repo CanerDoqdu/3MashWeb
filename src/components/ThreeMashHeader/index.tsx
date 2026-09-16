@@ -25,7 +25,7 @@ import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImag
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
-import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale } from "../../utils/i18n";
+import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale, resolveLocalizedUrl } from "../../utils/i18n";
 import { sanitizeHtml, sanitizeSvgMarkup } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
@@ -676,6 +676,36 @@ const criticalHeaderCss = `
   text-decoration: none;
 }
 
+.three-mash-header .tmh-action-wrap {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.three-mash-header .tmh-cart-badge {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tmh-badge, #e2492f);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
 .three-mash-header .tmh-action-svg {
   width: 22px;
   height: 22px;
@@ -845,16 +875,8 @@ const englishProductRouteAliases: Record<string, string> = {
   "argenz-ht-plus-multilayer-zirconia-disc": "argenz-ht-multilayer-zirkon-blok",
 };
 
-const englishLocaleQueryFallbacks: Record<string, string> = {
-  "mash-p16l-ana-kart": "/mash-p16l-ana-kart?lang=en",
-};
-
 function englishLocalePath(pathname: string, search: string, hash: string): string {
-  const bare = pathname.replace(/^\/en(\/|$)/, "/") || "/";
-  const routeKey = bare.replace(/^\/+|\/+$/g, "").toLocaleLowerCase("tr").split("/").pop() || "";
-  const fallback = englishLocaleQueryFallbacks[routeKey];
-  if (fallback) return `${fallback}${search ? `&${search.slice(1)}` : ""}${hash}`;
-  return `${bare === "/" ? "/en" : `/en${bare.startsWith("/") ? bare : `/${bare}`}`}${search}${hash}`;
+  return resolveLocalizedUrl("en", { pathname, search, hash });
 }
 
 function routeAnnouncementOverride(): HeaderAnnouncementOverride | null {
@@ -2020,11 +2042,22 @@ export function ThreeMashHeader(props: Props) {
     },
   ];
 
-  const productSecondary: MenuItem[] = [
-    { title: sourceRichText(props.product4Title, defaultProductSecondary[0].title), description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]), href: productRouteHref(props.product4Href, defaultProductSecondary[0].href), icon: ecoCuringIcon },
-    { title: sourceRichText(props.product5Title, defaultProductSecondary[1].title), description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]), href: productRouteHref(props.product5Href, defaultProductSecondary[1].href), icon: ecoBlocksIcon },
-    { title: sourceRichText(props.product6Title, defaultProductSecondary[2].title), description: sourceRichText(props.product6Description, defaultProductSecondary[2].description, ["sinterleme cozumleri"]), href: productRouteHref(props.product6Href, defaultProductSecondary[2].href), icon: ecoOvenIcon },
-  ];
+  // English storefront intentionally exposes only the allowed secondary product group.
+  // Zirconia Blocks & Titanium and Dental Furnaces must not appear in /en.
+  const productSecondary: MenuItem[] = isEnglishLocale()
+    ? [
+        {
+          title: sourceRichText(props.product4Title, defaultProductSecondary[0].title),
+          description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]),
+          href: productRouteHref(props.product4Href, defaultProductSecondary[0].href),
+          icon: ecoCuringIcon,
+        },
+      ]
+    : [
+        { title: sourceRichText(props.product4Title, defaultProductSecondary[0].title), description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]), href: productRouteHref(props.product4Href, defaultProductSecondary[0].href), icon: ecoCuringIcon },
+        { title: sourceRichText(props.product5Title, defaultProductSecondary[1].title), description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]), href: productRouteHref(props.product5Href, defaultProductSecondary[1].href), icon: ecoBlocksIcon },
+        { title: sourceRichText(props.product6Title, defaultProductSecondary[2].title), description: sourceRichText(props.product6Description, defaultProductSecondary[2].description, ["sinterleme cozumleri"]), href: productRouteHref(props.product6Href, defaultProductSecondary[2].href), icon: ecoOvenIcon },
+      ];
 
   const whyItems: FlowItem[] = [
     { number: text(props.why1Number, "01"), title: text(props.why1Title, tLocalized("Yılda $126K'ya varan görünmez kayıp", "Invisible loss up to $126K per year")), description: text(props.why1Description, tLocalized("Tekrarlanan işlerin kliniğinize gerçek maliyeti", "The true cost of remakes to your clinic")), href: "/" },
@@ -2552,9 +2585,11 @@ export function ThreeMashHeader(props: Props) {
 
   return (
     <section className="three-mash-header" style={themeStyle}>
-      {/* Preconnect to Google Fonts to reduce render-blocking font load time */}
+      {/* Preconnect and preload critical web fonts to eliminate layout shift (CLS) */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2" crossOrigin="anonymous" />
+      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossOrigin="anonymous" />
       <style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
       {props.showAnnouncement !== false && (
         <>
@@ -2617,12 +2652,8 @@ export function ThreeMashHeader(props: Props) {
                         setIsLangOpen(false);
                         setPreferredLocale("tr");
                         if (typeof window === "undefined") return;
-                        const bare = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
-                        const searchParams = new URLSearchParams(window.location.search);
-                        searchParams.delete("lang");
-                        searchParams.delete("locale");
-                        const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
-                        window.location.href = safeRedirect(bare + search + window.location.hash);
+                        const targetUrl = resolveLocalizedUrl("tr");
+                        window.location.href = safeRedirect(targetUrl);
                       }}
                     >
                       <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2644,11 +2675,8 @@ export function ThreeMashHeader(props: Props) {
                         setIsLangOpen(false);
                         setPreferredLocale("en");
                         if (typeof window === "undefined") return;
-                        const searchParams = new URLSearchParams(window.location.search);
-                        searchParams.delete("lang");
-                        searchParams.delete("locale");
-                        const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
-                        window.location.href = safeRedirect(englishLocalePath(window.location.pathname, search, window.location.hash));
+                        const targetUrl = resolveLocalizedUrl("en");
+                        window.location.href = safeRedirect(targetUrl);
                       }}
                     >
                       <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2852,11 +2880,12 @@ export function ThreeMashHeader(props: Props) {
                   onClick={() => toggleAction("store")}
                 >
                   <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
-                  {cartItemCount > 0 ? (
-                    <span className="tmh-cart-badge">
-                      {cartItemCount}
-                    </span>
-                  ) : null}         </button>
+                </button>
+                {cartItemCount > 0 ? (
+                  <span className="tmh-cart-badge" aria-hidden="true">
+                    {cartItemCount}
+                  </span>
+                ) : null}
                 <div
                   className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}
                   hidden={activeAction !== "store"}
@@ -2926,6 +2955,11 @@ export function ThreeMashHeader(props: Props) {
                       <a
                         className="tmh-cart-market-button"
                         href={localizedHref("/search")}
+                        onClick={() => {
+                          try {
+                            sessionStorage.removeItem("tm_market_nav_stack");
+                          } catch {}
+                        }}
                         dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git", "Go to Store"), props)}
                       />
                     </div>
@@ -2970,8 +3004,9 @@ export function ThreeMashHeader(props: Props) {
                 className={`tmh-mobile-lang-btn ${!isEnglishLocale() ? "is-active" : ""}`}
                 onClick={() => {
                   setPreferredLocale("tr");
-                  const path = window.location.pathname.replace(/^\/en(\/|$)/, "/") || "/";
-                  window.location.href = safeRedirect(path + window.location.search + window.location.hash);
+                  if (typeof window === "undefined") return;
+                  const targetUrl = resolveLocalizedUrl("tr");
+                  window.location.href = safeRedirect(targetUrl);
                 }}
               >
                 <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2987,11 +3022,9 @@ export function ThreeMashHeader(props: Props) {
                 className={`tmh-mobile-lang-btn ${isEnglishLocale() ? "is-active" : ""}`}
                 onClick={() => {
                   setPreferredLocale("en");
-                  const searchParams = new URLSearchParams(window.location.search);
-                  searchParams.delete("lang");
-                  searchParams.delete("locale");
-                  const search = searchParams.toString() ? `?${searchParams.toString()}` : "";
-                  window.location.href = safeRedirect(englishLocalePath(window.location.pathname, search, window.location.hash));
+                  if (typeof window === "undefined") return;
+                  const targetUrl = resolveLocalizedUrl("en");
+                  window.location.href = safeRedirect(targetUrl);
                 }}
               >
                 <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

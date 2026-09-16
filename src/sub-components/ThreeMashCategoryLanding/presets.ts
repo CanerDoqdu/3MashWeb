@@ -1,4 +1,4 @@
-import { getCurrentLocale, tLocalized } from "../../utils/i18n";
+import { getCurrentLocale, isEnglishLocale, tLocalized } from "../../utils/i18n";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import type { CategoryLandingData } from "./index";
 
@@ -2264,13 +2264,90 @@ export function titaniumDiscsCategoryData(): CategoryLandingData {
 
 export function categoryLandingDataFromKey(value: string | undefined): CategoryLandingData | null {
   const key = normalizeCategoryKey(value);
+
   if (!key) return null;
-  const dentalKeys = ["dental 3d yazici recineleri", "3d yazici recineleri", "dental recineler", "dental recine", "dental resins"];
-  const printerKeys = ["3d yazicilar", "dental 3d yazicilar", "3d printers", tLocalized("mash p16l", "MASH P16L"), "curie m1", "halot sky", "creality halot"];
-  const washingKeys = [tLocalized("yikama cihazlari", "yikama cihazlari"), tLocalized("dental yikama", "dental washing"), tLocalized("yikama", "yikama"), "washing", tLocalized("mash w1e", "Mash W1E")];
-  const curingKeys = [tLocalized("kurleme cihazlari", "kurleme cihazlari"), tLocalized("dental kurleme", "dental curing"), tLocalized("kurleme", "kurleme"), "curing", tLocalized("mash c1e", "Mash C1E")];
-  const washCureKeys = [tLocalized("yikama kurleme cihazlari", "yikama kurleme cihazlari"), tLocalized("yikama kurleme", "yikama kurleme"), "wash cure", "wash and cure devices", "washcure", "uw 03", "uw 02"];
-  const zirconKeys = ["zirkon bloklar", tLocalized("zirkon blok", "Zirconia Block"), "zircon blocks", "argenz ht plus", tLocalized("argenz st multilayer", "ArgenZ ST Multilayer"), "argenz ht multilayer"];
+
+  // English-only blocked categories.
+  // Turkish category routing remains completely unchanged.
+  if (isEnglishLocale()) {
+    const blockedEnglishCategoryKeys = [
+      "dental furnaces",
+      "dental furnace",
+      "furnaces",
+
+      "zirconia blocks",
+      "zirconia block",
+      "zircon blocks",
+      "zircon block",
+
+      "titanium plates",
+      "titanium plate",
+      "titanium discs",
+      "titanium disc",
+    ];
+
+    if (
+      blockedEnglishCategoryKeys.some((blockedKey) =>
+        categoryKeyMatches(key, blockedKey)
+      )
+    ) {
+      return null;
+    }
+  }
+
+  const dentalKeys = [
+    "dental 3d yazici recineleri",
+    "3d yazici recineleri",
+    "dental recineler",
+    "dental recine",
+    "dental resins",
+  ];
+
+  const printerKeys = [
+    "3d yazicilar",
+    "dental 3d yazicilar",
+    "3d printers",
+    tLocalized("mash p16l", "MASH P16L"),
+    "curie m1",
+    "halot sky",
+    "creality halot",
+  ];
+
+  const washingKeys = [
+    tLocalized("yikama cihazlari", "yikama cihazlari"),
+    tLocalized("dental yikama", "dental washing"),
+    tLocalized("yikama", "yikama"),
+    "washing",
+    tLocalized("mash w1e", "Mash W1E"),
+  ];
+
+  const curingKeys = [
+    tLocalized("kurleme cihazlari", "kurleme cihazlari"),
+    tLocalized("dental kurleme", "dental curing"),
+    tLocalized("kurleme", "kurleme"),
+    "curing",
+    tLocalized("mash c1e", "Mash C1E"),
+  ];
+
+  const washCureKeys = [
+    tLocalized("yikama kurleme cihazlari", "yikama kurleme cihazlari"),
+    tLocalized("yikama kurleme", "yikama kurleme"),
+    "wash cure",
+    "wash and cure devices",
+    "washcure",
+    "uw 03",
+    "uw 02",
+  ];
+
+  const zirconKeys = [
+    "zirkon bloklar",
+    tLocalized("zirkon blok", "Zirconia Block"),
+    "zircon blocks",
+    "argenz ht plus",
+    tLocalized("argenz st multilayer", "ArgenZ ST Multilayer"),
+    "argenz ht multilayer",
+  ];
+
   const furnaceKeys = [
     "dental firinlar",
     "dental firin",
@@ -2281,6 +2358,7 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
     "naberthem vl 01 12 lb press firini",
     "naberthem vl 01 12 lb porselen firini",
   ];
+
   const scannerKeys = [
     "masasustu tarayicilar",
     "masaustu tarayicilar",
@@ -2290,6 +2368,7 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
     tLocalized("3shape e3", "3Shape E3"),
     tLocalized("3shape e4", "3Shape E4"),
   ];
+
   const spareKeys = [
     "3d yazici yedek parcalari",
     "yazici yedek parcalari",
@@ -2304,6 +2383,7 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
     tLocalized("piocreat c01 lcd ekran kiti", "Piocreat C01 LCD Ekran Kiti"),
     tLocalized("creality halot sky lcd ekran kiti", "Creality Halot Sky LCD ekran kiti"),
   ];
+
   const systemKeys = [
     "sistemler",
     tLocalized("trasformer comp flow", "Trasformer Comp Flow"),
@@ -2312,6 +2392,7 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
     tLocalized("trasformer light glass mufla sistemi", "Trasformer Light Glass Mufla Sistemi"),
     "light glass mufla",
   ];
+
   const titaniumKeys = [
     "titanyum diskler",
     tLocalized("titanyum disk", "Titanium Disc"),
@@ -2324,36 +2405,46 @@ export function categoryLandingDataFromKey(value: string | undefined): CategoryL
   if (dentalKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return dentalResinsCategoryData();
   }
+
   if (washCureKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return washCureCategoryData();
   }
+
   if (washingKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return washingCategoryData();
   }
+
   if (curingKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return curingCategoryData();
   }
+
   if (zirconKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return zirconBlocksCategoryData();
   }
+
   if (furnaceKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return dentalFurnacesCategoryData();
   }
+
   if (scannerKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return desktopScannersCategoryData();
   }
+
   if (spareKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return printerSparePartsCategoryData();
   }
+
   if (systemKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return systemsCategoryData();
   }
+
   if (titaniumKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return titaniumDiscsCategoryData();
   }
+
   if (printerKeys.some((categoryKey) => categoryKeyMatches(key, categoryKey))) {
     return printersCategoryData();
   }
+
   return null;
 }
-

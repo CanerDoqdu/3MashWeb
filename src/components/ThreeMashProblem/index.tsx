@@ -263,7 +263,7 @@ export function ThreeMashProblem(props: Props) {
       <div className="tmproblem-wrap">
         <div className="tmproblem-index">
           <span className="tmproblem-index-number" dangerouslySetInnerHTML={html(props.indexNumber, props)} />
-          <span className="tmproblem-index-text" dangerouslySetInnerHTML={html(props.indexText, props)} />
+          <span className="tmproblem-index-text" lang={isEnglishLocale() ? "en" : "tr"} dangerouslySetInnerHTML={html(props.indexText, props)} />
           <span className="tmproblem-index-line" />
         </div>
 

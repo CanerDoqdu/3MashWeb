@@ -9,6 +9,7 @@ import { Props } from "./types";
 import authCriticalStyles from "../authCriticalStyles";
 import { localizedHref, t, tLocalized, tProp } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
 const defaultAuthImage =
   "https://cdn.myikas.com/images/theme-images/a6f9541f-702d-431d-9744-9d4f494c94af/image_1080.webp";
@@ -18,8 +19,36 @@ const logoImageIds = [
   "de819199-332c-407c-82de-917418b2c2e1",
 ];
 
+function inlineHtml(value?: string) {
+  return (value || "")
+    .trim()
+    .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+    .replace(/^<p[^>]*>/i, "")
+    .replace(/<\/p>$/i, "");
+}
+
+function stripHtml(value?: string) {
+  return (value || "")
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .trim();
+}
+
 function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
-  return tProp(value, fallbackTr, fallbackEn || fallbackTr);
+  const resolved = tProp(value, fallbackTr, fallbackEn || fallbackTr);
+  return stripHtml(resolved) || fallbackTr;
+}
+
+function richText(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
+  const resolved = tProp(value, fallbackTr, fallbackEn || fallbackTr);
+  const raw = resolved && stripHtml(resolved) ? resolved : (fallbackTr || "");
+  return sanitizeHtml(inlineHtml(raw));
 }
 
 function href(value: string | undefined, fallback: string) {
@@ -217,14 +246,24 @@ export function ThreeMashRegisterPage(props: Props) {
         <form className="tmrpg-auth-form" onSubmit={submit}>
           <div className="tmrpg-auth-copy">
             <span>{text(props.eyebrowText, "HESAP", "ACCOUNT")}</span>
-            <h1>{text(props.titleText, tLocalized("3mash hesabınızı oluşturun.", "Create your 3mash account."), "Create your 3mash account.")}</h1>
-            <p>
-              {text(
-                props.subtitleText,
-                tLocalized("Sipariş, favori ürün ve destek süreçlerinizi hesabınızdan takip edin.", "Track your orders, wishlist items and support requests in your account."),
-                "Track your orders, wishlist items and support requests in your account."
-              )}
-            </p>
+            <h1
+              dangerouslySetInnerHTML={{
+                __html: richText(
+                  props.titleText,
+                  tLocalized("3mash hesabınızı oluşturun.", "Create your 3mash account."),
+                  "Create your 3mash account.",
+                ),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: richText(
+                  props.subtitleText,
+                  tLocalized("Sipariş, favori ürün ve destek süreçlerinizi hesabınızdan takip edin.", "Track your orders, wishlist items and support requests in your account."),
+                  "Track your orders, wishlist items and support requests in your account.",
+                ),
+              }}
+            />
           </div>
 
           <div className="tmrpg-auth-tabs">

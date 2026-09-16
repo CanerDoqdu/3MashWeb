@@ -23,7 +23,17 @@
  * Component-scoped styles naturally override these globals.
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=optional");
+
+/* Metric-matched fallback font to eliminate CLS layout shift on headings */
+@font-face {
+  font-family: "Space Grotesk Fallback";
+  src: local("Arial");
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+  size-adjust: 100%;
+}
 /* src/global.css */
 
 @import "./components/ThreeMashAccountUtilityPage/styles.css";
@@ -32,6 +42,16 @@
 /* existing global CSS below */
 :root {
   scroll-behavior: smooth;
+}
+
+/* Ensure Turkish lowercase letters ('i') transform to Turkish uppercase ('İ') instead of English ('I') */
+html:not([lang="en"]),
+html:not([lang="en"]) *,
+[data-3mash-locale="tr"],
+[data-3mash-locale="tr"] *,
+.tm-locale-tr,
+.tm-locale-tr * {
+  font-feature-settings: "locl" 1;
 }
 
 :where(

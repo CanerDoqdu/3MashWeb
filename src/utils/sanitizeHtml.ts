@@ -99,8 +99,13 @@ function sanitizeAttributes(element: Element) {
       return;
     }
 
-    if (name === "target" && !["_blank", "_self"].includes(value.trim().toLowerCase())) {
-      element.removeAttribute(attribute.name);
+    if (name === "target") {
+      const normalizedTarget = value.trim().toLowerCase();
+      if (!["_blank", "_self"].includes(normalizedTarget)) {
+        element.removeAttribute(attribute.name);
+      } else if (normalizedTarget === "_blank") {
+        element.setAttribute("rel", "noopener noreferrer");
+      }
     }
   });
 }
@@ -143,13 +148,24 @@ function stripUnsafeAttributes(input: string) {
     });
 }
 
+function enforceNoopener(input: string): string {
+  return input.replace(/<a\b([^>]*?target=(?:"_blank"|'_blank')[^>]*?)>/gi, (match) => {
+    if (!/\brel=(?:"[^"]*noopener[^"]*"|'[^']*noopener[^']*')/i.test(match)) {
+      return match.replace(/>$/, ' rel="noopener noreferrer">');
+    }
+    return match;
+  });
+}
+
 export function sanitizeHtml(input?: string | null): string {
   if (!input) return "";
 
   if (typeof DOMParser === "undefined") {
-    return stripUnsafeUrlAttributes(
-      stripUnsafeAttributes(
-        stripForbiddenTags(String(input)),
+    return enforceNoopener(
+      stripUnsafeUrlAttributes(
+        stripUnsafeAttributes(
+          stripForbiddenTags(String(input)),
+        ),
       ),
     );
   }

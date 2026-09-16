@@ -23,10 +23,10 @@ function imageSource(value: unknown): string {
   try { return getDefaultSrc(value as any) || ""; } catch { return ""; }
 }
 
-function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Props): ProductDetailTemplateData | null {
-  if (!baseData) return null;
+export const DEFAULT_PRODUCT_VIDEO_HREF = "https://www.youtube.com/watch?v=dNPHy_sd9aQ";
 
-  const currentVideo = baseData.video;
+function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Props): ProductDetailTemplateData {
+  const currentVideo = baseData?.video;
   // NOTE: Props ARE fully typed in types.ts, but TypeScript's type narrowing
   // after optional chaining sometimes requires explicit any casts for clarity in override chains.
   const p = props as any;
@@ -37,22 +37,24 @@ function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Pr
   const titleHtml = trimmedText(p.titleHtml) || currentVideo?.titleHtml || "";
   const sideHtml = trimmedText(p.sideHtml) || currentVideo?.sideHtml || "";
 
-  // 02. Video Bağlantısı ve Kapak
-  const href = safeNavigationHref(
-    trimmedText(p.videoHref) || currentVideo?.href,
-    "#"
-  );
-  const image = imageSource(p.posterImage) || currentVideo?.image || "";
-  const imageAlt = trimmedText(p.posterImageAlt) || currentVideo?.imageAlt || "";
+  // 02. Video Bağlantısı ve Kapak (Resolution: Studio prop override > hardcoded default)
+  const videoUrl = props.videoHref?.trim()
+    ? props.videoHref
+    : (currentVideo?.href?.trim() || DEFAULT_PRODUCT_VIDEO_HREF);
 
-  // 03. Overlay İçerikleri
-  const title = trimmedText(p.videoOverlayTitle) || currentVideo?.title || "";
-  const text = trimmedText(p.videoOverlayText) || currentVideo?.text || "";
-  const meta = trimmedText(p.videoOverlayMeta) || currentVideo?.meta || "";
+  const href = safeNavigationHref(videoUrl, DEFAULT_PRODUCT_VIDEO_HREF);
+  const image = imageSource(p.posterImage) || currentVideo?.image || "https://img.youtube.com/vi/dNPHy_sd9aQ/maxresdefault.jpg";
+  const imageAlt = trimmedText(p.posterImageAlt) || currentVideo?.imageAlt || "Video";
+
+  const base = baseData || ({
+    key: "product-video",
+    breadcrumb: { homeText: "", homeHref: "", categoryText: "", categoryHref: "", productText: "" },
+    hero: { kicker: "", titleHtml: "", leadHtml: "", pills: [], gallery: [], summarySuffix: "", buyHrefBase: "", whatsappHref: "", whatsappText: "", addToCartText: "", addingToCartText: "", outOfStockText: "", selectedPrefix: "", trustBadges: [] },
+  } as ProductDetailTemplateData);
 
   return {
-    ...baseData,
-    video: { index, label, titleHtml, sideHtml, href, image, imageAlt, title, text, meta },
+    ...base,
+    video: { index, label, titleHtml, sideHtml, href, image, imageAlt, title: "", text: "", meta: "" },
   };
 }
 
@@ -62,10 +64,6 @@ export function ThreeMashProductVideo(props: Props) {
   const rawData = sharedData || fallbackData;
 
   const data = overrideVideoData(rawData, props);
-
-  if (!data?.video) {
-    return null;
-  }
 
   return (
     <ProductDetailSectionScope data={data}>

@@ -1131,21 +1131,59 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
   };
 }
 
-function templateData(product: IkasProduct, variant: IkasProductVariant | null, props: Props) {
+function templateData(
+  product: IkasProduct,
+  variant: IkasProductVariant | null,
+  props: Props
+) {
   const resolved = resolveProductDetailData(product);
-  const base = resolved || (isCrsComposite(product) ? CRS_COMPOSITE_TEMPLATE() : genericProductData(product, variant, props));
-  const fromProps = deepMerge(base, parseTemplateJson(props.productTemplateJson));
-  const custom = customJson(product);
-  const merged = deepMerge(custom ? deepMerge(fromProps, custom) : fromProps, productDetailPropOverrides(props));
+
+  if (!resolved) {
+    return null;
+  }
+
+  const labProduct =
+    typeof resolved.key === "string" &&
+    (
+      resolved.key.includes("mash-c1e-uv-curing-device") ||
+      resolved.key.includes("mash-w1e-ultrasonic-washing-machine") ||
+      resolved.key.includes("creality-washcure-uw-02") ||
+      resolved.key.includes("mash-p16l-385nm-16k-dental-3d-yazici") ||
+      resolved.key.includes("mash-curie-m1-dental") ||
+      resolved.key.includes("mash-curie-m1-jewelry") ||
+      resolved.key.includes("creality-halot-sky-6k") ||
+      resolved.key.includes("3shape-e2") ||
+      resolved.key.includes("3shape-e3") ||
+      resolved.key.includes("3shape-e4")
+    );
+
+  const merged = labProduct
+    ? resolved
+    : deepMerge(
+        deepMerge(
+          resolved,
+          parseTemplateJson(props.productTemplateJson)
+        ),
+        customJson(product)
+      );
+
   return {
     ...merged,
     key: `${merged.key}-${product.id || productSlug(product)}`,
     hero: {
       ...merged.hero,
-      addToCartText: props.addToCartText || merged.hero.addToCartText,
-      addingToCartText: props.addingToCartText || merged.hero.addingToCartText,
-      outOfStockText: props.outOfStockText || merged.hero.outOfStockText,
-      gallery: merged.hero.gallery.length ? merged.hero.gallery : productMediaGallery(product, variant),
+      addToCartText: labProduct
+        ? merged.hero.addToCartText
+        : props.addToCartText || merged.hero.addToCartText,
+      addingToCartText: labProduct
+        ? merged.hero.addingToCartText
+        : props.addingToCartText || merged.hero.addingToCartText,
+      outOfStockText: labProduct
+        ? merged.hero.outOfStockText
+        : props.outOfStockText || merged.hero.outOfStockText,
+      gallery: merged.hero.gallery.length
+        ? merged.hero.gallery
+        : productMediaGallery(product, variant),
     },
   };
 }

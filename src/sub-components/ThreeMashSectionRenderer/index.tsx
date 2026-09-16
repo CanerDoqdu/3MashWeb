@@ -79,7 +79,7 @@ export const defaultSolutionHtml = `
 export const defaultCuringHtml = `
 <section class="tmr-section tmr-dark tmr-curing" id="kurleme">
   <div class="tmr-wrap">
-    <div class="tmr-index"><span class="tmr-index-number">04</span><span class="tmr-index-text">Kritik Son Adım</span><span class="tmr-index-line"></span></div>
+    <div class="tmr-index"><span class="tmr-index-number">04</span><span class="tmr-index-text">KRİTİK SON ADIM</span><span class="tmr-index-line"></span></div>
     <div class="tmr-head"><h2>Sadece yazıcı değil. Sonucu <span class="tmr-title-em">kürleme</span> tamamlar.</h2><div class="tmr-side">Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:</div></div>
     <div class="tmr-why-grid"><article><div>SEBEP 01</div><h3>Mekanik dayanım</h3><p>Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.</p></article><article id="piyasada-yaygin-kurulum-250-500" style="scroll-margin-top: 112px;"><div>SEBEP 02</div><h3>Ölçüsel doğruluk</h3><p>Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.</p></article><article><div>SEBEP 03</div><h3>Biyouyumluluk &amp; renk</h3><p>Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.</p></article></div>
     <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashW1eImage}" alt="Mash W1E Ultrasonik Yıkama Cihazı"></div><div class="tmr-product-body"><h3>Mash W1E Ultrasonik Yıkama Cihazı</h3><p>Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.</p><div class="tmr-spec"><div><span>İşlem</span><b>Ultrasonik temizleme</b></div><div><span>Akış</span><b>Yıkama → kürleme hazırlığı</b></div></div><a class="tmr-go" href="/mash-w1e-ultrasonik-yikama-cihazi">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${mashC1eImage}" alt="Mash C1E UV Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Mash C1E UV Kürleme Cihazı</h3><p>24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle <b>homojen UV post-curing</b> sağlar; mekanik dayanım, boyutsal doğruluk ve yüzey kalitesi hedefini tamamlar.</p><div class="tmr-spec"><div><span>Işık</span><b>24 LED / 360°</b></div><div><span>Spektrum</span><b>360-530 nm</b></div></div><a class="tmr-go" href="/mash-c1e-uv-kurleme-cihazi">İncele <span>→</span></a></div></article></div>
@@ -1309,9 +1309,12 @@ function indexedSection(
     contentHtml: string;
   },
 ) {
+  const isEn = isEnglishLocale();
+  const rawIndexText = value(props.indexText, defaults.indexText);
+  const displayIndexText = isEn ? rawIndexText.toUpperCase() : rawIndexText.toLocaleUpperCase("tr-TR");
   return `<section id="${escapeAttr(value(props.sectionAnchorId, defaults.anchor))}" class="tmr-section${defaults.className ? ` ${defaults.className}` : ""}">
   <div class="tmr-wrap">
-    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, defaults.indexNumber)}</span><span class="tmr-index-text">${value(props.indexText, defaults.indexText)}</span><span class="tmr-index-line"></span></div>
+    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, defaults.indexNumber)}</span><span class="tmr-index-text" lang="${isEn ? "en" : "tr"}">${displayIndexText}</span><span class="tmr-index-line"></span></div>
     <div class="tmr-head"><h2>${heading(value(props.titleText, defaults.titleText), value(props.titleEmphasis, defaults.titleEmphasis || ""))}</h2><div class="tmr-side">${value(props.sideHtml, defaults.sideHtml)}</div></div>
     ${value(props.contentHtml, defaults.contentHtml)}
   </div>
@@ -1734,9 +1737,12 @@ export function renderSolutionHtml(props: ThreeMashSectionRenderProps) {
 
 export function renderCuringHtml(props: ThreeMashSectionRenderProps) {
   const en = isEnglishLocale();
+  const isEn = isEnglishLocale();
+  const rawCuringIndexText = tProp(props.indexText as string | undefined, "Kritik Son Adım", "Critical Final Step");
+  const displayCuringIndexText = isEn ? rawCuringIndexText.toUpperCase() : rawCuringIndexText.toLocaleUpperCase("tr-TR");
   return `<section id="${escapeAttr(value(props.sectionAnchorId, "kurleme"))}" class="tmr-section tmr-dark tmr-curing">
   <div class="tmr-wrap">
-    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, "04")}</span><span class="tmr-index-text">${tProp(props.indexText as string | undefined, "Kritik Son Adım", "Critical Final Step")}</span><span class="tmr-index-line"></span></div>
+    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, "04")}</span><span class="tmr-index-text" lang="${isEn ? "en" : "tr"}">${displayCuringIndexText}</span><span class="tmr-index-line"></span></div>
     <div class="tmr-head"><h2>${curingTitleHtml(props)}</h2><div class="tmr-side">${tProp(props.sideHtml as string | undefined, "Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:", "The print is not finished when it leaves the device. A poorly cured job, <b>even if correctly printed</b>, will fail. Here are three reasons:")}</div></div>
     ${curingContent(props)}
   </div>

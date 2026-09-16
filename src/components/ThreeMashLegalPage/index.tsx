@@ -9,7 +9,11 @@ function text(value: string | undefined, fallback: string) {
 }
 
 function numberValue(value: number | undefined, fallback: number) {
-  return typeof value === 'number' ? value : fallback;
+  return typeof value === 'number' && !isNaN(value) && value >= 0 ? value : fallback;
+}
+
+function maxWidthValue(value: number | undefined, fallback: number) {
+  return typeof value === 'number' && !isNaN(value) && value > 50 ? value : fallback;
 }
 
 function pageKey(mode: string | undefined): LegalPageKey {
@@ -135,13 +139,14 @@ export function ThreeMashLegalPage(props: Props) {
   );
   const showStandaloneTitle = !hasEmbeddedHeading(contentHtml);
   const isKvkk = key === 'kvkk';
+  const defaultMax = 1120;
   const style = {
     '--tmlp-bg': text(props.backgroundColor, '#ffffff'),
     '--tmlp-text': text(props.textColor, '#000000'),
     '--tmlp-muted': text(props.mutedTextColor, '#6d6d6d'),
-    '--tmlp-max': String(numberValue(props.maxWidth, key === 'mesafeli' || isKvkk ? 1505 : 1120)) + 'px',
-    '--tmlp-pt': String(numberValue(props.paddingTop, key === 'mesafeli' ? 0 : isKvkk ? 16 : 56)) + 'px',
-    '--tmlp-pb': String(numberValue(props.paddingBottom, key === 'mesafeli' ? 0 : isKvkk ? 16 : 80)) + 'px',
+    '--tmlp-max': String(maxWidthValue(props.maxWidth, defaultMax)) + 'px',
+    '--tmlp-pt': String(numberValue(props.paddingTop, key === 'mesafeli' ? 16 : isKvkk ? 16 : 24)) + 'px',
+    '--tmlp-pb': String(numberValue(props.paddingBottom, key === 'mesafeli' ? 32 : isKvkk ? 16 : 64)) + 'px',
   } as any;
 
   return (

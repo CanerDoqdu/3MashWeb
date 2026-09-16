@@ -303,26 +303,53 @@ function percentage(
   return `${numberInRange(value, fallback, min, max)}%`;
 }
 
-function importedCalculatorState() {
+// FIX: `mode` is now `Mode | null`. Returning null when the URL carries no
+// mode parameter at all is the whole point: the old version defaulted to
+// "clinic", so every popstate / visibilitychange fired AFTER the cleanup
+// effect had stripped ?rc/&mode from the URL would "import" a phantom
+// clinic state and silently yank the user back out of Laboratuvar — one of
+// the two ways sliders appeared to jump on their own.
+function importedCalculatorState(): { mode: Mode | null; cost: number } {
   if (typeof window === "undefined") {
-    return { mode: "clinic" as Mode, cost: 0 };
+    return { mode: null, cost: 0 };
   }
 
   try {
-    const params = new URLSearchParams(window.location.search);
-    const urlMode = params.get("mode");
-    const mode =
-      urlMode === "lab" || urlMode === "clinic"
-        ? (urlMode as Mode)
-        : "clinic";
-    const urlCost = Number(params.get("rc"));
+    let urlMode: string | null = null;
+    let urlCost = 0;
 
-    return {
-      mode,
-      cost: urlCost > 0 ? urlCost : 0,
-    };
+    // 1. Check window.location.search (?rc=340&mode=lab)
+    if (window.location.search) {
+      const params = new URLSearchParams(window.location.search);
+      urlMode = params.get("mode");
+      const rc = Number(params.get("rc"));
+      if (Number.isFinite(rc) && rc > 0) urlCost = rc;
+    }
+
+    // 2. Check hash-based query params (#hesap?rc=340&mode=lab)
+    if ((!urlMode || !urlCost) && window.location.hash) {
+      const hashStr = window.location.hash;
+      const qIndex = hashStr.indexOf("?");
+      if (qIndex !== -1) {
+        const hashParams = new URLSearchParams(hashStr.slice(qIndex));
+        if (!urlMode) urlMode = hashParams.get("mode");
+        if (!urlCost) {
+          const rc = Number(hashParams.get("rc"));
+          if (Number.isFinite(rc) && rc > 0) urlCost = rc;
+        }
+      }
+    }
+
+    const mode: Mode | null =
+      urlMode === "lab" || urlMode === "laboratuvar"
+        ? "lab"
+        : urlMode === "clinic" || urlMode === "klinik"
+          ? "clinic"
+          : null;
+
+    return { mode, cost: urlCost };
   } catch {
-    return { mode: "clinic" as Mode, cost: 0 };
+    return { mode: null, cost: 0 };
   }
 }
 
@@ -493,28 +520,163 @@ export function ThreeMashHero(props: Props) {
     ],
   );
 
-  const importedState = importedCalculatorState();
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.location.search) return;
+  // ===========================================================================
+  // ROOT-CAUSE FIX (replaces every previous ref/remount workaround)
+  //
+  // The old code read the URL inside useState initializers:
+  //     useState<Mode>(importedCalculatorState().mode)
+  //
+  // On the SERVER `window` is undefined, so the HTML was ALWAYS rendered as
+  // "clinic". On the CLIENT the very first render was already "lab". Preact's
+  // hydration deliberately does NOT write props onto existing server DOM (the
+  // only exception is `value`/`checked`) — it adopts the markup as-is. So:
+  //
+  //   • the Klinik button kept class="is-active" straight from the server,
+  //     even though `mode` was correctly "lab"  → Issue 1 (homepage shows
+  //     Klinik while the numbers are Lab's);
+  //   • every <input type="range"> kept the CLINIC min/max/step and the
+  //     clinic gradient, while its `value` WAS overwritten with the lab
+  //     number → the browser clamps that value into the wrong range and the
+  //     painted gradient no longer matches the thumb. Any later re-render
+  //     re-clamps all six/three inputs at once → Issue 2 (every pointer
+  //     jumps).
+  //
+  // And because `mode` never actually CHANGED ("lab" === "lab"), no follow-up
+  // diff ever ran to repair any of it. That is why className-only, then
+  // inline-style, then ref-based patches each fixed one visible symptom and
+  // left the next one behind.
+  //
+  // The fix is to stop diverging from the server on the first render: start
+  // in the same state the server rendered ("clinic"), then apply the URL in a
+  // useLayoutEffect after mount. That is a REAL state transition, so Preact
+  // re-diffs the whole subtree and repairs className, min/max/step, style,
+  // innerHTML and the detail-link href on its own — before the browser paints,
+  // so there is no visible flash.
+  // ===========================================================================
+  const [mode, setMode] = useState<Mode>("clinic");
+  const active = presets[mode];
 
-    const url = new URL(window.location.href);
-    if (!url.searchParams.has("rc") && !url.searchParams.has("mode")) return;
+  const [work, setWork] = useState(presets.clinic.workDefault);
+  const [rpt, setRpt] = useState(presets.clinic.rptDefault);
+  const [cost, setCost] = useState(presets.clinic.costDefault);
 
-    url.search = "";
-    window.history.replaceState(null, "", `${url.pathname}${url.hash}`);
+  // Mirrors for the URL-sync effect, which is registered once and must not
+  // close over stale render values.
+  const modeRef = useRef<Mode>(mode);
+  const presetsRef = useRef(presets);
+  modeRef.current = mode;
+  presetsRef.current = presets;
+
+  // Remembers the exact search+hash we last imported from, so a plain tab
+  // switch (visibilitychange) or an unrelated history event can never re-run
+  // the import and stomp on values the user has since adjusted by hand.
+  const lastSyncedUrlRef = useRef<string | null>(null);
+
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const urlKey = () => `${window.location.search}${window.location.hash}`;
+
+    function syncFromUrl(force?: boolean) {
+      const key = urlKey();
+      if (!force && key === lastSyncedUrlRef.current) return;
+      lastSyncedUrlRef.current = key;
+
+      const imported = importedCalculatorState();
+
+      // Nothing to import (e.g. the cleanup effect below already stripped the
+      // params). Leave whatever the user is currently looking at alone.
+      if (!imported.mode && imported.cost <= 0) return;
+
+      const prevMode = modeRef.current;
+      const nextMode = imported.mode ?? prevMode;
+
+      if (nextMode !== prevMode) {
+        const nextPreset = presetsRef.current[nextMode];
+        modeRef.current = nextMode;
+        setMode(nextMode);
+        setWork(nextPreset.workDefault);
+        setRpt(nextPreset.rptDefault);
+        setCost(imported.cost > 0 ? imported.cost : nextPreset.costDefault);
+        return;
+      }
+
+      // Same mode, fresh ?rc=... — apply it. (The old code returned early
+      // here without ever calling setCost, which is why an imported cost for
+      // the mode you were already in was silently dropped and the slider sat
+      // on 500 / 28.57%.)
+      if (imported.cost > 0) setCost(imported.cost);
+    }
+
+    syncFromUrl(true);
+
+    const onPopState = () => syncFromUrl();
+    const onVisibilityChange = () => {
+      if (!document.hidden) syncFromUrl();
+    };
+
+    window.addEventListener("popstate", onPopState);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [mode, setMode] = useState<Mode>(importedState.mode);
-  const active = presets[mode];
-  const [work, setWork] = useState(active.workDefault);
-  const [rpt, setRpt] = useState(active.rptDefault);
-  const [cost, setCost] = useState(
-    importedState.cost > 0 ? importedState.cost : active.costDefault,
-  );
-  const initialCost =
-    importedState.cost > 0 ? importedState.cost : active.costDefault;
+  // Clean up URL params after reading them (one-time). Runs as a passive
+  // effect, i.e. after the layout effect above has already imported them.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const url = new URL(window.location.href);
+    let needsCleanup = false;
+
+    // Clean search params
+    if (url.searchParams.has("rc") || url.searchParams.has("mode")) {
+      url.searchParams.delete("rc");
+      url.searchParams.delete("mode");
+      needsCleanup = true;
+    }
+
+    // Clean hash-based query params (#hesap?rc=340&mode=lab -> #hesap)
+    if (url.hash) {
+      const qIndex = url.hash.indexOf("?");
+      if (qIndex !== -1) {
+        url.hash = url.hash.slice(0, qIndex);
+        needsCleanup = true;
+      }
+    }
+
+    if (needsCleanup) {
+      const cleanUrl = url.search
+        ? `${url.pathname}${url.search}${url.hash}`
+        : `${url.pathname}${url.hash}`;
+      window.history.replaceState(null, "", cleanUrl);
+      lastSyncedUrlRef.current = `${url.search}${url.hash}`;
+    }
+  }, []);
+
+  // Belt-and-braces DOM sync for the three range inputs. Note this now writes
+  // min/max/step too — writing only `value` (as before) was actively harmful
+  // after a hydration mismatch, because the browser clamps the new value into
+  // the OLD range and the thumb lands somewhere the gradient doesn't agree
+  // with. Order matters: range first, then value.
+  const workInputRef = useRef<HTMLInputElement | null>(null);
+  const rptInputRef = useRef<HTMLInputElement | null>(null);
+  const costInputRef = useRef<HTMLInputElement | null>(null);
+
+  // Same treatment for the two segment buttons, so their active state can
+  // never be inherited from mismatched server markup.
+  const clinicBtnRef = useRef<HTMLButtonElement | null>(null);
+  const labBtnRef = useRef<HTMLButtonElement | null>(null);
+
   const initialLoss =
-    active.workDefault * 12 * (active.rptDefault / 100) * initialCost;
+    presets.clinic.workDefault *
+    12 *
+    (presets.clinic.rptDefault / 100) *
+    presets.clinic.costDefault;
   const initialAnimatedLoss = initialLoss > 100000 ? 100000 : 10000;
   const [animatedLoss, setAnimatedLoss] = useState(initialAnimatedLoss);
   const animatedLossRef = useRef(initialAnimatedLoss);
@@ -522,6 +684,7 @@ export function ThreeMashHero(props: Props) {
 
   function applyMode(nextMode: Mode) {
     const next = presets[nextMode];
+    modeRef.current = nextMode;
     setMode(nextMode);
     setWork(next.workDefault);
     setRpt(next.rptDefault);
@@ -539,7 +702,7 @@ export function ThreeMashHero(props: Props) {
   const negative = props.negativePrefix || "";
   const positive = props.positivePrefix || "";
   const titleLoss = animatedLoss;
-  
+
   const formattedLoss = `${currency}${formatPlain(titleLoss, props.locale)}`;
   const titleUnderlineImage = imageSource(props.titleUnderlineImageUrl);
   const showDesktopTitleUnderline = props.showTitleUnderline !== false;
@@ -683,6 +846,81 @@ export function ThreeMashHero(props: Props) {
     ),
   } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
 
+  const sliderAccent =
+    mode === "lab"
+      ? "var(--tmhero-lab-accent, #C7F136)"
+      : "var(--tmhero-accent, #C7F136)";
+  const costMax = Math.max(active.costMax, cost);
+  const workProgress = rangeProgress(work, active.workMin, active.workMax);
+  const rptProgress = rangeProgress(rpt, active.rptMin, active.rptMax);
+  const costProgress = rangeProgress(cost, active.costMin, costMax);
+
+  function syncRange(
+    el: HTMLInputElement | null,
+    min: number,
+    max: number,
+    step: number,
+    value: number,
+    progress: number,
+  ) {
+    if (!el) return;
+    // Range BEFORE value — otherwise the browser clamps the new value into
+    // the old range and the thumb desyncs from the gradient.
+    const nextMin = String(min);
+    const nextMax = String(max);
+    const nextStep = String(step);
+    if (el.min !== nextMin) el.min = nextMin;
+    if (el.max !== nextMax) el.max = nextMax;
+    if (el.step !== nextStep) el.step = nextStep;
+    const nextValue = String(value);
+    if (el.value !== nextValue) el.value = nextValue;
+    el.style.setProperty("--p", `${progress}%`);
+    el.style.background = `linear-gradient(90deg, ${sliderAccent} ${progress}%, #e8e8e1 ${progress}%)`;
+  }
+
+  useLayoutEffect(() => {
+    syncRange(
+      workInputRef.current,
+      active.workMin,
+      active.workMax,
+      active.workStep,
+      work,
+      workProgress,
+    );
+  });
+
+  useLayoutEffect(() => {
+    syncRange(
+      rptInputRef.current,
+      active.rptMin,
+      active.rptMax,
+      active.rptStep,
+      rpt,
+      rptProgress,
+    );
+  });
+
+  useLayoutEffect(() => {
+    syncRange(
+      costInputRef.current,
+      active.costMin,
+      costMax,
+      active.costStep,
+      cost,
+      costProgress,
+    );
+  });
+
+  useLayoutEffect(() => {
+    const clinicActive = mode === "clinic";
+    if (clinicBtnRef.current) {
+      clinicBtnRef.current.className = clinicActive ? "is-active" : "";
+    }
+    if (labBtnRef.current) {
+      labBtnRef.current.className = clinicActive ? "" : "is-active";
+    }
+  }, [mode]);
+
   return (
   <section className={`three-mash-hero${heroReady ? " is-ready" : ""}`} style={themeStyle}>
       <div className="tmhero-wrap">
@@ -819,6 +1057,7 @@ export function ThreeMashHero(props: Props) {
 
               <div className="tmhero-segment">
                 <button
+                  ref={clinicBtnRef}
                   className={mode === "clinic" ? "is-active" : ""}
                   type="button"
                   onClick={() => applyMode("clinic")}
@@ -826,6 +1065,7 @@ export function ThreeMashHero(props: Props) {
                   <RichInline value={props.clinicModeText} wordStyle={props} />
                 </button>
                 <button
+                  ref={labBtnRef}
                   className={mode === "lab" ? "is-active" : ""}
                   type="button"
                   onClick={() => applyMode("lab")}
@@ -834,7 +1074,11 @@ export function ThreeMashHero(props: Props) {
                 </button>
               </div>
 
-              <div className="tmhero-slider">
+              {/* key={mode} forces Preact to fully unmount/remount each slider
+                  block when mode changes, so a fresh DOM node is built with
+                  the new preset's min/max/step and gradient rather than being
+                  patched in place. */}
+              <div className="tmhero-slider" key={`${mode}-work`}>
                 <div className="tmhero-slider-label">
                   <span
                     dangerouslySetInnerHTML={richText(active.workLabel, props)}
@@ -842,15 +1086,16 @@ export function ThreeMashHero(props: Props) {
                   <b>{formatPlain(work, props.locale)}</b>
                 </div>
                 <input
+                  ref={workInputRef}
                   type="range"
                   min={active.workMin}
                   max={active.workMax}
                   step={active.workStep}
                   value={work}
-                  // NOTE: CSS-in-JS with custom property for range progress visualization
                   style={
                     {
-                      "--p": `${rangeProgress(work, active.workMin, active.workMax)}%`,
+                      "--p": `${workProgress}%`,
+                      background: `linear-gradient(90deg, ${sliderAccent} ${workProgress}%, #e8e8e1 ${workProgress}%)`,
                     } as any
                   }
                   onInput={(event) => {
@@ -862,7 +1107,7 @@ export function ThreeMashHero(props: Props) {
                 />
               </div>
 
-              <div className="tmhero-slider">
+              <div className="tmhero-slider" key={`${mode}-rpt`}>
                 <div className="tmhero-slider-label">
                   <span
                     dangerouslySetInnerHTML={richText(active.rptLabel, props)}
@@ -873,15 +1118,16 @@ export function ThreeMashHero(props: Props) {
                   </b>
                 </div>
                 <input
+                  ref={rptInputRef}
                   type="range"
                   min={active.rptMin}
                   max={active.rptMax}
                   step={active.rptStep}
                   value={rpt}
-                  // NOTE: CSS-in-JS with custom property for range progress visualization
                   style={
                     {
-                      "--p": `${rangeProgress(rpt, active.rptMin, active.rptMax)}%`,
+                      "--p": `${rptProgress}%`,
+                      background: `linear-gradient(90deg, ${sliderAccent} ${rptProgress}%, #e8e8e1 ${rptProgress}%)`,
                     } as any
                   }
                   onInput={(event) => {
@@ -893,7 +1139,7 @@ export function ThreeMashHero(props: Props) {
                 />
               </div>
 
-              <div className="tmhero-slider">
+              <div className="tmhero-slider" key={`${mode}-cost`}>
                 <div className="tmhero-slider-label">
                   <span
                     dangerouslySetInnerHTML={richText(active.costLabel, props)}
@@ -904,15 +1150,16 @@ export function ThreeMashHero(props: Props) {
                   </b>
                 </div>
                 <input
+                  ref={costInputRef}
                   type="range"
                   min={active.costMin}
-                  max={Math.max(active.costMax, cost)}
+                  max={costMax}
                   step={active.costStep}
                   value={cost}
-                  // NOTE: CSS-in-JS with custom property for range progress visualization
                   style={
                     {
-                      "--p": `${rangeProgress(cost, active.costMin, Math.max(active.costMax, cost))}%`,
+                      "--p": `${costProgress}%`,
+                      background: `linear-gradient(90deg, ${sliderAccent} ${costProgress}%, #e8e8e1 ${costProgress}%)`,
                     } as any
                   }
                   onInput={(event) => {
@@ -924,7 +1171,7 @@ export function ThreeMashHero(props: Props) {
                 />
                 <a
                   className="tmhero-calc-link"
-                  href={localizedHref(costDetailPageHref)}
+                  href={`${localizedHref(active.costDetailHref || costDetailPageHref)}${(active.costDetailHref || costDetailPageHref).includes("?") ? "&" : "?"}mode=${mode === "lab" ? "lab" : "clinic"}`}
                 >
                   <RichInline value={active.costDetailText} wordStyle={props} />
                 </a>

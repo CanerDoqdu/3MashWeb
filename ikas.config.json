@@ -11617,7 +11617,7 @@
           "type": "TEXT",
           "required": false,
           "groupId": "related",
-          "defaultValue": "07",
+          "defaultValue": "",
           "description": "Sarı kutudaki numara (Örn: 07)"
         },
         {
@@ -11626,7 +11626,7 @@
           "type": "TEXT",
           "required": false,
           "groupId": "related",
-          "defaultValue": "İLGİLİ ÜRÜNLER",
+          "defaultValue": "",
           "description": "Numaranın yanındaki büyük harf etiket"
         },
         {
@@ -11635,7 +11635,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "groupId": "related",
-          "defaultValue": "Aynı kategorideki diğer ürünler.",
+          "defaultValue": "",
           "description": "Karuselın üstündeki geniş h2 başlığı"
         },
         {
@@ -11644,7 +11644,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "groupId": "finalcta",
-          "defaultValue": "Cihazınıza birlikte kalibre edelim.",
+          "defaultValue": "",
           "description": "Sayfanın en altındaki siyah bandın h2 başlığı"
         },
         {
@@ -11653,7 +11653,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "groupId": "finalcta",
-          "defaultValue": "Satış sonrası kullanıcı eğitimleri ve 7/24 teknik destek ile yanınızdayız.",
+          "defaultValue": "",
           "description": "Başlığın altındaki açıklama paragrafı"
         },
         {
@@ -11662,7 +11662,7 @@
           "type": "TEXT",
           "required": false,
           "groupId": "buttons",
-          "defaultValue": "WhatsApp'tan Sor",
+          "defaultValue": "",
           "description": "Sol büyük lime buton (a.tmpdt-lime)"
         },
         {
@@ -11679,7 +11679,7 @@
           "type": "TEXT",
           "required": false,
           "groupId": "buttons",
-          "defaultValue": "Bize Ulaşın",
+          "defaultValue": "",
           "description": "Sağ çerçeveli buton (a.tmpdt-inv)"
         },
         {
@@ -26141,7 +26141,7 @@
           "displayName": "Maksimum Genişlik",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 1505,
+          "defaultValue": 1120,
           "groupId": "appearance"
         },
         {
@@ -26235,7 +26235,7 @@
           "displayName": "Maksimum Genişlik",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 1505,
+          "defaultValue": 1120,
           "groupId": "appearance"
         },
         {
@@ -26329,7 +26329,7 @@
           "displayName": "Maksimum Genişlik",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 1500,
+          "defaultValue": 1120,
           "groupId": "appearance"
         },
         {
@@ -26517,7 +26517,7 @@
           "displayName": "Maksimum Genişlik",
           "type": "NUMBER",
           "required": false,
-          "defaultValue": 1505,
+          "defaultValue": 1120,
           "groupId": "appearance"
         },
         {
