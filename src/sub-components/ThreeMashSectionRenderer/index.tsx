@@ -798,6 +798,11 @@ function solutionProducts(productList: IkasProductList | undefined) {
   ).slice(0, 6);
 }
 
+/**
+ * DÜZELTME (#2b): Artık ctaHref burada localizedHref() ile SARMALANMIYOR.
+ * localizedHref, productCard() içinde tek seferde uygulanıyor; burada da
+ * uygulanırsa çift-localize (ör. /en/en/...) oluşabiliyordu.
+ */
 function productCardDefaultsFromProduct(
   product: IkasProduct,
   defaults: ProductCardDefaults,
@@ -835,7 +840,8 @@ function productCardDefaultsFromProduct(
     descriptionHtml: escapeHtml(description),
     specs: specs.length ? specs : defaults.specs,
     ctaText: tLocalized("İncele", "Explore"),
-    ctaHref: localizedHref(getProductHref(product)),
+    // Ham (localize edilmemiş) ürün yolu — localize işlemi productCard() içinde yapılır.
+    ctaHref: getProductHref(product),
   };
 }
 
@@ -1323,25 +1329,6 @@ function indexedSection(
 
 const solutionContentHtml = solutionSetupHtml;
 
-/* Legacy static HTML blocks below are intentionally removed from execution.
- * The active locale-aware render functions are defined after this block.
- */
-/*
-const curingContentHtml = `<div class="tmr-why-grid"><article>
-
-
-<div>SEBEP 01</div><h4>Mekanik dayanım</h4><p>Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.</p></article><article><div>SEBEP 02</div><h4>Ölçüsel doğruluk</h4><p>Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.</p></article><article><div>SEBEP 03</div><h4>Biyouyumluluk &amp; renk</h4><p>Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.</p></article></div>
-    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashW1eImage}" alt="Mash W1E Ultrasonik Yıkama Cihazı"></div><div class="tmr-product-body"><h3>Mash W1E Ultrasonik Yıkama Cihazı</h3><p>Baskı sonrası parçaların yüzeyindeki reçine kalıntılarını <b>ultrasonik yıkama</b> ile temizler; kürleme öncesi yüzeyi hazırlar.</p><div class="tmr-spec"><div><span>İşlem</span><b>Ultrasonik yıkama</b></div><div><span>Akış</span><b>Baskı sonrası temizlik</b></div></div><a class="tmr-go" href="/mash-w1e-ultrasonik-yikama-cihazi">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${mashC1eImage}" alt="Mash C1E UV Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Mash C1E UV Kürleme Cihazı</h3><p>24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılarda <b>UV post-curing</b> adımını tamamlar.</p><div class="tmr-spec"><div><span>Işık sistemi</span><b>360° / 24 LED</b></div><div><span>Spektrum</span><b>360-530 nm</b></div></div><a class="tmr-go" href="/mash-c1e-uv-kurleme-cihazi">İncele <span>→</span></a></div></article></div>
-    <p class="tmr-readmore">Derine inmek isteyenlere, Mash Academy'den: <a href="/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber">Overcure ve Undercure Nedir?</a> · <a href="/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi">385nm mi 405nm mi?</a></p>`;
-
-const ecosystemContentHtml = `<div class="tmr-eco"><a href="/3d-yazicilar"><span class="tmr-eco-icon"><img src="${ecoPrinterIcon}" alt="" aria-hidden="true"></span><span>3D Yazıcılar</span></a><a href="/dental-3d-yazici-recineleri"><span class="tmr-eco-icon"><img src="${ecoResinIcon}" alt="" aria-hidden="true"></span><span>Dental Reçineler</span></a><a href="/yikama-kurleme-cihazlari"><span class="tmr-eco-icon"><img src="${ecoScannerIcon}" alt="" aria-hidden="true"></span><span>Yıkama &amp; Kürleme</span></a><a href="/masasustu-tarayicilar"><span class="tmr-eco-icon"><img src="${ecoCuringIcon}" alt="" aria-hidden="true"></span><span>Masaüstü Tarayıcılar</span></a><a href="/zirkon-bloklar"><span class="tmr-eco-icon"><img src="${ecoBlocksIcon}" alt="" aria-hidden="true"></span><span>Zirkon Bloklar</span></a><a href="/dental-firinlar"><span class="tmr-eco-icon"><img src="${ecoOvenIcon}" alt="" aria-hidden="true"></span><span>Dental Fırınlar</span></a></div>`;
-
-const trustContentHtml = `<div class="tmr-testimonials"><article class="tmr-testimonial tmr-featured"><div class="tmr-quote">“</div><p>Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileMehmet}" alt="Mehmet İşlek"><div><b>Mehmet İşlek</b><small>ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik</small></div></div></article><article class="tmr-testimonial"><div class="tmr-quote">“</div><p>Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileBerkan}" alt="Berkan Öztaş"><div><b>Berkan Öztaş</b><small>DENTEK · Genel Müd. Yard.</small></div></div></article><article class="tmr-testimonial"><div class="tmr-quote">“</div><p>Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileGoksel}" alt="Göksel Pişkin"><div><b>Göksel Pişkin</b><small>MIKRO LAB · Kurucu Ortak</small></div></div></article></div><div class="tmr-trusted">${trustedLabelMarkup}${bundledTrustedLogos}</div>`;
-
-const faqContentHtml = `<div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="#">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div>`;
-
-*/
-
 function solutionContent(props: ThreeMashSectionRenderProps) {
   return `<div class="tmr-products" aria-label="${escapeAttr(field(props, "carouselAriaLabel", tLocalized("Çözüm ürünleri", "Solution products")))}">${solutionP1dCard(props)}${solutionSecondCard(props)}${solutionResinCategoryCard(props)}</div>`;
 }
@@ -1517,6 +1504,11 @@ function curingContent(props: ThreeMashSectionRenderProps) {
   return `${curingReasons(props)}${curingProducts(props)}<p class="tmr-readmore">${field(props, "readMoreText", readMoreTr, readMoreEn)} <a href="${escapeAttr(localizedHref(field(props, "readMoreLink1Href", "/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber")))}">${field(props, "readMoreLink1Text", link1Tr, link1En)}</a> · <a href="${escapeAttr(localizedHref(field(props, "readMoreLink2Href", "/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi")))}">${field(props, "readMoreLink2Text", link2Tr, link2En)}</a></p>`;
 }
 
+/**
+ * DÜZELTME (#1): Kullanıcı editörden özel bir titleText/titleEmphasis girdiyse
+ * artık bu değerler gerçekten kullanılır. Girilmediyse eski sabit-markup
+ * (span sarmalayıcıları ile) fallback korunur.
+ */
 function curingTitleHtml(props: ThreeMashSectionRenderProps) {
   const en = isEnglishLocale();
   const defaultTitleTr = tLocalized("Sadece yazıcı değil. Sonucu", "Not just the printer. The result");
@@ -1527,10 +1519,22 @@ function curingTitleHtml(props: ThreeMashSectionRenderProps) {
   const titleText = field(props, "titleText", defaultTitleTr, defaultTitleEn);
   const titleEmphasis = field(props, "titleEmphasis", defaultEmphasisTr, defaultEmphasisEn);
 
+  const hasCustomTitle =
+    typeof props.titleText === "string" && props.titleText.trim() !== "";
+  const hasCustomEmphasis =
+    typeof props.titleEmphasis === "string" && props.titleEmphasis.trim() !== "";
+
+  if (hasCustomTitle || hasCustomEmphasis) {
+    return `${titleText} <span class="tmr-curing-keep"><span class="tmr-title-em">${titleEmphasis}</span></span>`;
+  }
+
   if (en) {
     return `Not just the printer. <span class="tmr-curing-keep"><span class="tmr-title-em">Curing</span></span><br>completes the result.`;
   }
-  return tLocalized("Sadece yazıcı değil. <span class=\"tmr-curing-keep\">Sonucu <span class=\"tmr-title-em\">kürleme</span></span><br>tamamlar.", "Not just the printer. <span class=\"tmr-curing-keep\">It is <span class=\"tmr-title-em\">curing</span></span><br>that completes the result.");
+  return tLocalized(
+    "Sadece yazıcı değil. <span class=\"tmr-curing-keep\">Sonucu <span class=\"tmr-title-em\">kürleme</span></span><br>tamamlar.",
+    "Not just the printer. <span class=\"tmr-curing-keep\">It is <span class=\"tmr-title-em\">curing</span></span><br>that completes the result.",
+  );
 }
 
 function ecosystemContent(props: ThreeMashSectionRenderProps) {
@@ -1670,7 +1674,7 @@ function faqContent(props: ThreeMashSectionRenderProps) {
     ],
     [
       tLocalized("Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?", "How much does a crown remake actually cost?"),
-      tLocalized("Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"/pages/hesaplama\">maliyet detay sayfamıza</a> bakabilirsiniz.", "Roughly <b>~$500</b> — and most of that amount is not the lab fee, but <b>chair time</b> (re-prep, impression, and cementation appointment). Clinical overhead is modeled at ~$375 per hour; a single remake consumes most of that. You can check our <a href=\"/pages/hesaplama\">cost detail page</a> to calculate it with your own figures."),
+      tLocalized("Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"/pages/hesaplama\">maliyet detay sayfamıza</a> bakabilirsiniz.", "Roughly <b>~$500</b> — and most of that amount is not the lab fee, but <b>chair time</b> (re-prep, impression, and cementation appointment). Clinical overhead is modeled at ~$375 per hour; a single remake consumes most of it. You can check our <a href=\"/pages/hesaplama\">cost detail page</a> to calculate it with your own figures."),
     ],
     [
       tLocalized("3D baskıda kürleme (post-curing) neden kritik?", "Why is curing (post-curing) critical in 3D printing?"),
@@ -1736,7 +1740,6 @@ export function renderSolutionHtml(props: ThreeMashSectionRenderProps) {
 }
 
 export function renderCuringHtml(props: ThreeMashSectionRenderProps) {
-  const en = isEnglishLocale();
   const isEn = isEnglishLocale();
   const rawCuringIndexText = tProp(props.indexText as string | undefined, "Kritik Son Adım", "Critical Final Step");
   const displayCuringIndexText = isEn ? rawCuringIndexText.toUpperCase() : rawCuringIndexText.toLocaleUpperCase("tr-TR");
@@ -1750,7 +1753,6 @@ export function renderCuringHtml(props: ThreeMashSectionRenderProps) {
 }
 
 export function renderEcosystemHtml(props: ThreeMashSectionRenderProps) {
-  const en = isEnglishLocale();
   return indexedSection(props, {
     anchor: "ekosistem",
     className: "tmr-ecosystem",
@@ -1766,7 +1768,6 @@ export function renderEcosystemHtml(props: ThreeMashSectionRenderProps) {
 }
 
 export function renderTrustHtml(props: ThreeMashSectionRenderProps) {
-  const en = isEnglishLocale();
   return indexedSection(props, {
     anchor: "guven",
     className: "tmr-section-tight tmr-trust-section",
@@ -1782,7 +1783,6 @@ export function renderTrustHtml(props: ThreeMashSectionRenderProps) {
 }
 
 export function renderFaqHtml(props: ThreeMashSectionRenderProps) {
-  const en = isEnglishLocale();
   return indexedSection(props, {
     anchor: "sss",
     className: "tmr-section-tight tmr-faq-section",
@@ -1797,7 +1797,6 @@ export function renderFaqHtml(props: ThreeMashSectionRenderProps) {
 }
 
 export function renderRoiHtml(props: ThreeMashSectionRenderProps) {
-  const en = isEnglishLocale();
   const eyebrow = tProp(props.eyebrowText as string | undefined, "YATIRIMIN GERİ DÖNÜŞÜ", "RETURN ON INVESTMENT");
   const desc = tProp(props.descriptionHtml as string | undefined,
     "3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b>",
@@ -1806,7 +1805,11 @@ export function renderRoiHtml(props: ThreeMashSectionRenderProps) {
   return `<div id="${escapeAttr(field(props, "sectionAnchorId", "yatirim"))}" class="tmr-roi"><div class="tmr-wrap"><div class="tmr-roi-num"><span>${eyebrow}</span><b>${value(props.valueText, "&lt; 6 ay")}</b></div><p>${desc}</p><a class="tmr-btn" href="${escapeAttr(localizedHref(value(props.ctaHref, "/")))}">${ctaText}</a></div></div>`;
 }
 
-
+/**
+ * DÜZELTME (#2a): normalizedInternalRouteHref zaten localizedHref() çağırıyor.
+ * Kullanım noktasında localizedHref() tekrar çağrılmıyor (çift-localize riski
+ * ortadan kalktı).
+ */
 export function renderFinalHtml(props: ThreeMashSectionRenderProps) {
   const academyHref = normalizedInternalRouteHref(
     value(props.secondaryButtonHref, academyPageHref),
@@ -1823,7 +1826,7 @@ export function renderFinalHtml(props: ThreeMashSectionRenderProps) {
   const primaryText = field(props, "primaryButtonText", tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), "Talk to an expert — free");
   const secondaryText = field(props, "secondaryButtonText", tLocalized("Mash Academy'yi keşfet", "explore mash academy"), "Explore Mash Academy");
 
-  return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(titleText, titleEmphasis)}</h2><p>${descriptionHtml}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(localizedHref(value(props.primaryButtonHref, consultationWhatsappHref)))}">${primaryText}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(localizedHref(academyHref))}">${secondaryText}</a></div></div></section>`;
+  return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(titleText, titleEmphasis)}</h2><p>${descriptionHtml}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(localizedHref(value(props.primaryButtonHref, consultationWhatsappHref)))}">${primaryText}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(academyHref)}">${secondaryText}</a></div></div></section>`;
 }
 
 function socialIcon(name: string) {
@@ -2203,7 +2206,9 @@ export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
     socialLinks +
     paymentBadges,
   );
-  const copyrightText = tLocalized("© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.", "© 2026 3MASH Technology Inc. All rights reserved.");
+  // DÜZELTME (#3): sabit metin yerine kullanıcı girdisini normalize eden
+  // footerCopyrightText(props) çağrılıyor.
+  const copyrightText = footerCopyrightText(props);
   const fallbackDescTr =
     "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada.";
   const fallbackDescEn =

@@ -3,13 +3,8 @@
    ============================================================ */
 
 /* ── Page wrapper ──────────────────────────────────────────── */
-html,
-body,
-#app {
-  background: var(--tmrpg-auth-bg, var(--tm-theme-bg, #fafaf7));
-}
-
 .three-mash-account-info-page,
+.three-mash-account-layout,
 .tmau-page {
   display: flex;
   flex-direction: column;

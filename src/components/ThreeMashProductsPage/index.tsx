@@ -1,6 +1,7 @@
 import { localizedHref, isEnglishLocale, tLocalized, hasEnglishProductPage } from "../../utils/i18n";
 import { hasCustomerToken } from "../../utils/auth";
 import { safeRedirect } from "../../utils/safeRedirect";
+import { debugError } from "../../utils/debugError";
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
   addProductToFavorites,
@@ -222,21 +223,22 @@ function ProductCard({
   props,
   index = 0,
   isFavorite = false,
+  isHighlighted = false,
   onToggleFavorite,
-  onProductClick,
 }: {
   product: IkasProduct;
   props: Props;
   index?: number;
   isFavorite?: boolean;
+  isHighlighted?: boolean;
   onToggleFavorite?: (productId: string) => void;
-  onProductClick?: (product: IkasProduct, href: string) => void;
 }) {
   const variant = safeVariant(product);
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image;
   const imageSrc = image ? getDefaultSrc(image) : "";
-  const [isMediaLoaded, setIsMediaLoaded] = useState(!imageSrc);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const [isMediaLoaded, setIsMediaLoaded] = useState(false);
   const hasDiscount = variant ? hasProductVariantDiscount(variant) : false;
   const firstCategory = product.categories?.[0]?.name;
   const price = variant ? getProductVariantFormattedFinalPrice(variant) : "";
@@ -244,20 +246,44 @@ function ProductCard({
     variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : "";
   const productHref = localizedHref(getProductHref(product));
 
-  const handleLinkClick = (e: MouseEvent) => {
-    if (!e.metaKey && !e.ctrlKey && !e.shiftKey) {
-      onProductClick?.(product, productHref);
+  useEffect(() => {
+    if (!imageSrc) {
+      setIsMediaLoaded(true);
+      return;
     }
-  };
+    const node = imgRef.current;
+    if (node && (node.complete || (node.naturalWidth && node.naturalWidth > 0))) {
+      setIsMediaLoaded(true);
+    }
+  }, [imageSrc]);
+  useEffect(() => {
+    if (!imageSrc) {
+      setIsMediaLoaded(true);
+      return;
+    }
+    const node = imgRef.current;
+    if (node && (node.complete || (node.naturalWidth && node.naturalWidth > 0))) {
+      setIsMediaLoaded(true);
+    }
+  }, [imageSrc]);
 
+  // Güvenlik ağı: onLoad hiç tetiklenmezse spinner en fazla 4 sn görünsün
+  useEffect(() => {
+    if (isMediaLoaded || !imageSrc) return;
+    const timer = window.setTimeout(() => setIsMediaLoaded(true), 4000);
+    return () => window.clearTimeout(timer);
+  }, [imageSrc, isMediaLoaded]);
   return (
-    <div className="tm-products-card" id={`tm-product-${product.id}`} data-product-id={product.id}>
+    <div
+      className={`tm-products-card${isHighlighted ? " tm-product-card-returned" : ""}`}
+      id={`tm-product-${product.id}`}
+      data-product-id={product.id}
+    >
       <div className="tm-products-card-media-wrap">
         <a
           href={productHref}
           className="tm-products-card-media-link"
           aria-label={product.name}
-          onClick={handleLinkClick}
         >
           <div className="tm-products-card-media">
             {imageSrc && !isMediaLoaded ? (
@@ -277,14 +303,15 @@ function ProductCard({
                 />
               ) : (
                 <img
+                   ref={(node: HTMLImageElement | null) => {
+    imgRef.current = node;
+    if (node && node.complete && node.naturalWidth > 0) setIsMediaLoaded(true);
+  }}
                   src={imageSrc}
                   srcSet={createMediaSrcset(image)}
                   alt={image.altText || product.name}
                   loading="lazy"
                   decoding="async"
-                  ref={(node) => {
-                    if (node?.complete) setIsMediaLoaded(true);
-                  }}
                   onLoad={() => setIsMediaLoaded(true)}
                   onError={() => setIsMediaLoaded(true)}
                 />
@@ -335,7 +362,7 @@ function ProductCard({
             <span className="tm-products-card-brand">{props.fallbackCategoryText || "3MASH"}</span>
           )}
 
-          <a href={productHref} className="tm-products-card-title-link" onClick={handleLinkClick}>
+          <a href={productHref} className="tm-products-card-title-link">
             <h3 className="tm-products-card-title">{product.name}</h3>
           </a>
 
@@ -361,7 +388,6 @@ function ProductCard({
           <a
             href={productHref}
             className="tm-products-card-cta-btn"
-            onClick={handleLinkClick}
           >
             <span>{props.viewProductText || tLocalized("Ürünü İncele", "View Product")}</span>
             <svg
@@ -487,18 +513,6 @@ function normalizeListingSearch(
   }
 }
 
-const MARKET_STACK_STORAGE_KEY = "tm_market_nav_stack";
-
-export interface MarketNavStackState {
-  listingPath: string;
-  listingSearch: string;
-  page: number;
-  scrollY: number;
-  targetProductId: string;
-  targetProductHref: string;
-  timestamp: number;
-}
-
 function normalizePath(p?: string) {
   if (!p) return "";
   try {
@@ -506,175 +520,6 @@ function normalizePath(p?: string) {
   } catch {
     return p;
   }
-}
-
-function saveMarketStackOnProductClick(
-  product: IkasProduct,
-  productHref: string,
-  page: number,
-) {
-  if (typeof window === "undefined" || typeof sessionStorage === "undefined") return;
-  try {
-    const y = window.scrollY || window.pageYOffset || 0;
-    const cleanHref = normalizePath(productHref);
-
-    // Calculate effective page: if the current URL has no page query or page=1, it is definitely page 1
-    let effectivePage = page || 1;
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const urlPage = params.get("page");
-      if (urlPage) {
-        const parsed = parseInt(urlPage, 10);
-        if (!isNaN(parsed) && parsed > 0) {
-          effectivePage = parsed;
-        }
-      } else {
-        effectivePage = 1;
-      }
-    } catch {}
-
-    const stackState: MarketNavStackState = {
-      listingPath: normalizePath(window.location.pathname),
-      listingSearch: window.location.search,
-      page: effectivePage,
-      scrollY: y,
-      targetProductId: product.id,
-      targetProductHref: cleanHref,
-      timestamp: Date.now(),
-    };
-    sessionStorage.setItem(MARKET_STACK_STORAGE_KEY, JSON.stringify(stackState));
-
-    if (window.history && window.history.replaceState) {
-      window.history.replaceState(
-        {
-          ...window.history.state,
-          tmMarketReturnState: stackState,
-        },
-        "",
-      );
-    }
-  } catch {}
-}
-
-function getMarketReturnState(): MarketNavStackState | null {
-  if (typeof window === "undefined" || typeof sessionStorage === "undefined") return null;
-  try {
-    const raw = sessionStorage.getItem(MARKET_STACK_STORAGE_KEY);
-    if (!raw) return null;
-    const saved = JSON.parse(raw) as MarketNavStackState;
-    if (!saved || !saved.targetProductId) return null;
-
-    // Check expiry (30 mins)
-    if (Date.now() - saved.timestamp > 30 * 60 * 1000) {
-      consumeMarketStackState();
-      return null;
-    }
-
-    const currentPath = normalizePath(window.location.pathname);
-    const isSearchRoute =
-      currentPath === "/search" ||
-      currentPath === "/tum-urunler" ||
-      currentPath === "/en/search" ||
-      currentPath.includes("search") ||
-      currentPath === normalizePath(saved.listingPath);
-
-    if (!isSearchRoute) {
-      return null;
-    }
-
-    let isBackForward = false;
-    try {
-      const navEntries = performance.getEntriesByType("navigation");
-      if (navEntries.length > 0) {
-        isBackForward = (navEntries[0] as PerformanceNavigationTiming).type === "back_forward";
-      } else if ((window.performance?.navigation as any)?.type === 2) {
-        isBackForward = true;
-      }
-    } catch {}
-
-    const hasHistoryState = Boolean((window.history?.state as any)?.tmMarketReturnState);
-
-    let isReferrerDetail = false;
-    try {
-      if (document.referrer) {
-        const refPath = normalizePath(new URL(document.referrer, window.location.origin).pathname);
-        if (
-          saved.targetProductHref &&
-          (refPath === saved.targetProductHref ||
-            refPath.includes(saved.targetProductHref) ||
-            saved.targetProductHref.includes(refPath))
-        ) {
-          isReferrerDetail = true;
-        }
-      }
-    } catch {}
-
-    if (isBackForward || hasHistoryState || isReferrerDetail) {
-      return saved;
-    }
-
-    return null;
-  } catch {
-    return null;
-  }
-}
-
-function consumeMarketStackState() {
-  if (typeof window === "undefined") return;
-  try {
-    if (typeof sessionStorage !== "undefined") {
-      sessionStorage.removeItem(MARKET_STACK_STORAGE_KEY);
-      sessionStorage.removeItem(`tm_scroll_${window.location.pathname}`);
-      sessionStorage.removeItem(
-        `tm_scroll_${window.location.pathname}${window.location.search}`,
-      );
-    }
-    if (window.history && window.history.replaceState) {
-      const state = { ...window.history.state };
-      delete state.tmMarketReturnState;
-      delete state.tmMarketForwardToDetail;
-      delete state.tmMarketStack;
-      window.history.replaceState(state, "");
-    }
-  } catch {}
-}
-
-function restoreMarketScroll(saved: MarketNavStackState) {
-  if (typeof window === "undefined") return;
-  const targetId = saved.targetProductId;
-  const targetY = saved.scrollY;
-  let attempts = 0;
-  const maxAttempts = 24;
-
-  const tryScroll = () => {
-    attempts++;
-    if (targetId) {
-      const el = document.getElementById(`tm-product-${targetId}`);
-      if (el) {
-        el.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "center" });
-        el.classList.add("tm-product-card-returned");
-        setTimeout(() => {
-          el.classList.remove("tm-product-card-returned");
-        }, 1800);
-        consumeMarketStackState();
-        return;
-      }
-    }
-
-    if (targetY > 0 && attempts > 3) {
-      window.scrollTo({ top: targetY, behavior: "instant" as ScrollBehavior });
-    }
-
-    if (attempts < maxAttempts) {
-      requestAnimationFrame(() => {
-        setTimeout(tryScroll, 50);
-      });
-    } else {
-      consumeMarketStackState();
-    }
-  };
-
-  requestAnimationFrame(tryScroll);
 }
 
 function cleanPageOneFromUrl() {
@@ -714,7 +559,9 @@ function scrollToListingTop() {
 export function ThreeMashProductsPage(props: Props) {
   const sourceProductList = props.productList;
   const [activeProductList, setActiveProductList] =
-    useState<IkasProductList | undefined>(sourceProductList);
+    useState<IkasProductList | undefined>(
+      sourceProductList ? { ...sourceProductList } : sourceProductList,
+    );
   const [categoryCatalog, setCategoryCatalog] =
     useState<IkasProductList | undefined>(sourceProductList);
   const productList = activeProductList || sourceProductList;
@@ -729,13 +576,8 @@ export function ThreeMashProductsPage(props: Props) {
   const [favoritePendingIds, setFavoritePendingIds] = useState<Record<string, boolean>>({});
   const [, setRenderTick] = useState(0);
   const forceUpdate = () => setRenderTick((c) => c + 1);
-
+  const [highlightedProductId, setHighlightedProductId] = useState<string | null>(null);
   const [isRestoringPage, setIsRestoringPage] = useState(false);
-  // Track the navigation instance so the entry-check fires once per navigation
-  // (not just once per component lifetime). We use a stable ref seeded from the
-  // history state key so navigating away and back resets it correctly.
-  const initialEntryCheckedRef = useRef(false);
-  const entryNavKeyRef = useRef<string | null>(null);
   const isApplyingUrlRef = useRef(false);
   const lastProcessedSearchRef = useRef<string | null>(null);
 
@@ -787,7 +629,9 @@ export function ThreeMashProductsPage(props: Props) {
             }, {}),
           );
         }
-      } catch {}
+      } catch (err) {
+        debugError("loadFavorites error", err);
+      }
     }
 
     loadFavorites();
@@ -811,6 +655,11 @@ export function ThreeMashProductsPage(props: Props) {
   const sortControlRef = useRef<HTMLDivElement>(null);
   const categoriesScrollRef = useRef<HTMLDivElement>(null);
   const categoryRequestRef = useRef(0);
+  // Guards page-navigation requests (goToPage + the pagination branch of
+  // applyUrlStateToListing) so that a slow/late response from a stale
+  // request (e.g. one kicked off by browser back/forward) can never
+  // overwrite a newer page the user has since navigated to.
+  const pageRequestRef = useRef(0);
 
   const sortOptions = productList ? getProductListSortOptions(productList) : [];
   // Always put the currently-selected (Recommended/DEFAULT) option first in the dropdown.
@@ -900,34 +749,13 @@ export function ThreeMashProductsPage(props: Props) {
     Boolean(productList?.isLoading) && displayedProducts.length === 0
   );
 
-  const style = {
-    "--tm-products-bg": themeToken(
-      props.backgroundColor,
-      "#f7f8f4",
-      "--tm-theme-bg",
-    ),
-    "--tm-products-text": themeToken(
-      props.textColor,
-      "#10120f",
-      "--tm-theme-text",
-    ),
-    "--tm-products-muted": themeToken(
-      props.mutedTextColor,
-      "#64695f",
-      "--tm-theme-muted",
-    ),
-    "--tm-products-card": props.cardColor?.trim() || "#ffffff",
-    "--tm-products-line": themeToken(
-      props.lineColor,
-      "#e5e8e0",
-      "--tm-theme-line",
-    ),
-    "--tm-products-accent": themeToken(
-      props.accentColor,
-      "#DBFA37",
-      "--tm-theme-accent",
-    ),
-  } as any;
+  const style: Record<string, string> = {};
+  if (props.backgroundColor?.trim()) style["--tm-products-bg"] = props.backgroundColor.trim();
+  if (props.textColor?.trim()) style["--tm-products-text"] = props.textColor.trim();
+  if (props.mutedTextColor?.trim()) style["--tm-products-muted"] = props.mutedTextColor.trim();
+  if (props.cardColor?.trim()) style["--tm-products-card"] = props.cardColor.trim();
+  if (props.lineColor?.trim()) style["--tm-products-line"] = props.lineColor.trim();
+  if (props.accentColor?.trim()) style["--tm-products-accent"] = props.accentColor.trim();
 
   function syncListingToUrl(
     updates: {
@@ -936,12 +764,19 @@ export function ThreeMashProductsPage(props: Props) {
       search?: string;
       categoryId?: string;
     },
-    options: { push?: boolean } = {},
+    options: { push?: boolean; forceSearchRoute?: boolean } = {},
   ) {
     if (typeof window === "undefined") return;
     try {
       const url = new URL(window.location.href);
       const searchParamKey = props.searchQueryParam || "q";
+
+      // All Products has one canonical route. Never keep the category route
+      // when the user explicitly selects All Products.
+      if (options.forceSearchRoute) {
+        url.pathname = isEnglishLocale() ? "/en/search" : "/search";
+        url.hash = "";
+      }
 
       // 1. Page
       const targetPage = updates.page !== undefined ? updates.page : (productList?.page ?? 1);
@@ -987,10 +822,27 @@ export function ThreeMashProductsPage(props: Props) {
       const nextUrl = `${url.pathname}${url.search}${url.hash}`;
       const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
       if (nextUrl !== currentUrl) {
+        lastProcessedSearchRef.current = normalizeListingSearch(url.search, props.searchQueryParam);
+        // IMPORTANT: preserve the existing ikas/router history state.
+        // Passing null here destroys router metadata (key/idx/etc.), which
+        // makes Back/Forward restoration unreliable.
+        const currentState = (window.history.state && typeof window.history.state === "object")
+          ? window.history.state
+          : {};
+        const nextState = {
+          ...currentState,
+          tmListingState: {
+            page: targetPage,
+            search: targetSearch,
+            categoryId: targetCat,
+            sort: targetSort || null,
+          },
+        };
+
         if (options.push) {
-          window.history.pushState(null, "", nextUrl);
+          window.history.pushState(nextState, "", nextUrl);
         } else {
-          window.history.replaceState(null, "", nextUrl);
+          window.history.replaceState(nextState, "", nextUrl);
         }
       }
     } catch {}
@@ -1014,12 +866,26 @@ export function ThreeMashProductsPage(props: Props) {
     try {
       const { page, sort, search, categoryId } = parseListingUrlState(props.searchQueryParam);
 
-      // Category
+      // Category / All Products
+      const currentPath = normalizePath(window.location.pathname);
+      const searchRoutePath = normalizePath(isEnglishLocale() ? "/en/search" : "/search");
+      const isAllProductsRoute = currentPath === searchRoutePath;
+
       if (categoryId && categoryId !== ALL_PRODUCTS_FILTER_ID && categoryId !== activeFilterId) {
         const matched = categoryLinks.find((l) => l.id === categoryId);
         if (matched) {
-          handleListingFilter(matched);
+          handleListingFilter(matched, false);
           return;
+        }
+      }
+
+      if ((!categoryId || categoryId === ALL_PRODUCTS_FILTER_ID) && isAllProductsRoute) {
+        if (activeFilterId !== ALL_PRODUCTS_FILTER_ID) {
+          categoryRequestRef.current += 1;
+          setActiveFilterId(ALL_PRODUCTS_FILTER_ID);
+          setSearchValue("");
+          committedSearchRef.current = "";
+          if (sourceProductList) setActiveProductList(sourceProductList);
         }
       }
 
@@ -1039,12 +905,28 @@ export function ThreeMashProductsPage(props: Props) {
       // Page: fetch if current in-memory page does not match desiredPage
       const desiredPage = page || 1;
       if ((productList.page || 1) !== desiredPage) {
+        // Claim this as the latest page request. If a newer page request
+        // (goToPage, or another applyUrlStateToListing call) starts before
+        // this one resolves, this one's result will be discarded below —
+        // this is what prevents a stale/late response (e.g. triggered by
+        // browser back navigation) from overwriting a page the user has
+        // since navigated away from.
+        const requestId = ++pageRequestRef.current;
+
         if (desiredPage === 1 && sourceProductList && (sourceProductList.page || 1) === 1 && activeFilterId === ALL_PRODUCTS_FILTER_ID && !searchValue) {
+          if (requestId !== pageRequestRef.current) return;
           setActiveProductList(sourceProductList);
           cleanPageOneFromUrl();
           forceUpdate();
         } else {
           await getProductListPage(productList, desiredPage);
+
+          // Something newer (a user click via goToPage, or another
+          // popstate/applyUrlStateToListing call) took over while this
+          // fetch was in flight — drop this stale result instead of
+          // letting it silently overwrite newer state.
+          if (requestId !== pageRequestRef.current) return;
+
           if (desiredPage === 1) {
             cleanPageOneFromUrl();
           }
@@ -1062,7 +944,7 @@ export function ThreeMashProductsPage(props: Props) {
   useEffect(() => {
     if (initialSourceRef.current === sourceProductList) return;
     initialSourceRef.current = sourceProductList;
-    setActiveProductList(sourceProductList);
+    setActiveProductList(sourceProductList ? { ...sourceProductList } : sourceProductList);
     setCategoryCatalog(sourceProductList);
     const { categoryId } = parseListingUrlState(props.searchQueryParam);
     if (categoryId && categoryId !== ALL_PRODUCTS_FILTER_ID) {
@@ -1105,110 +987,38 @@ export function ThreeMashProductsPage(props: Props) {
 
 
 
-  // Synchronize on mount: restore from detail view (stack pop) OR reset clean (fresh entry)
+  // Synchronize the listing with the current browser URL.
+  // The URL is the single source of truth for page/filter/search/sort.
   useEffect(() => {
     if (typeof window === "undefined" || !productList) return;
-
-    // Build a navigation key from the browser history position so we can detect
-    // genuine navigations (not just productList reference changes).
-    const currentNavKey = (
-      (window.history?.state as Record<string, unknown> | null)?.key ||
-      (window.history?.state as Record<string, unknown> | null)?.idx ||
-      (window.location.pathname.toLowerCase().replace(/\/+$/, "") || "/")
-    ) as string;
-
-    const isNewNavigation = entryNavKeyRef.current !== currentNavKey;
-    if (isNewNavigation) {
-      entryNavKeyRef.current = currentNavKey;
-      initialEntryCheckedRef.current = false;
-    }
-
-    if (!initialEntryCheckedRef.current) {
-      initialEntryCheckedRef.current = true;
-
-      const returnState = getMarketReturnState();
-      if (returnState) {
-        // Returning from product detail: restore exact page & scroll to product
-        if (returnState.page > 1 && (productList.page || 1) !== returnState.page) {
-          setIsRestoringPage(true);
-          syncListingToUrl({ page: returnState.page }, { push: false });
-          void getProductListPage(productList, returnState.page)
-            .then(() => {
-              setIsRestoringPage(false);
-              forceUpdate();
-              restoreMarketScroll(returnState);
-            })
-            .catch(() => {
-              setIsRestoringPage(false);
-              restoreMarketScroll(returnState);
-            });
-        } else {
-          cleanPageOneFromUrl();
-          restoreMarketScroll(returnState);
-        }
-        return;
-      }
-
-      // Fresh entry into the market page: always reset clean to page 1, scroll 0
-      consumeMarketStackState();
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
-      cleanPageOneFromUrl();
-
-      // Only fetch page 1 if current page is not 1 and we have no products
-      if ((productList.page || 1) > 1 && (!sourceProductList || (sourceProductList.page || 1) !== 1)) {
-        void getProductListPage(productList, 1).then(() => {
-          cleanPageOneFromUrl();
-          forceUpdate();
-        });
-      }
-
-      // Only apply URL state if there are specific non-default query params
-      const { search: qSearch, categoryId: qCat, sort: qSort, page: qPage } = parseListingUrlState(props.searchQueryParam);
-      if (qSearch || (qCat && qCat !== ALL_PRODUCTS_FILTER_ID) || qSort || qPage > 1) {
-        void applyUrlStateToListing();
-      }
-      return;
-    }
-
-    // productList reference changed (e.g. after category filter) but this is NOT
-    // a new navigation — just sync URL state without resetting scroll.
+    if (isRestoringPage) return;
     void applyUrlStateToListing();
-  }, [productList]);
+  }, [productList, isRestoringPage]);
 
-  // Handle browser Back / Forward buttons (popstate) and page reload / BFCache (pageshow)
+  // Browser Back/Forward. The browser URL is the source of truth.
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    function handlePopState() {
+    async function handlePopState() {
       if (!productList) return;
-      const returnState = getMarketReturnState();
-      if (returnState) {
-        if (returnState.page > 1 && (productList.page || 1) !== returnState.page) {
-          setIsRestoringPage(true);
-          syncListingToUrl({ page: returnState.page }, { push: false });
-          void getProductListPage(productList, returnState.page)
-            .then(() => {
-              setIsRestoringPage(false);
-              forceUpdate();
-              restoreMarketScroll(returnState);
-            })
-            .catch(() => {
-              setIsRestoringPage(false);
-              restoreMarketScroll(returnState);
-            });
-        } else {
-          cleanPageOneFromUrl();
-          restoreMarketScroll(returnState);
-        }
-      } else {
-        void applyUrlStateToListing(true);
+
+      setIsRestoringPage(true);
+      try {
+        await applyUrlStateToListing(true);
+        forceUpdate();
+
+        window.requestAnimationFrame(() => {
+          window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+        });
+      } catch (err) {
+        debugError("listing popstate restoration failed", err);
+      } finally {
+        setIsRestoringPage(false);
       }
     }
 
     function handlePageShow(event: PageTransitionEvent) {
-      if (event.persisted) {
-        handlePopState();
-      }
+      if (event.persisted) void handlePopState();
     }
 
     window.addEventListener("popstate", handlePopState);
@@ -1218,7 +1028,7 @@ export function ThreeMashProductsPage(props: Props) {
       window.removeEventListener("popstate", handlePopState);
       window.removeEventListener("pageshow", handlePageShow);
     };
-  }, [productList, activeFilterId, sourceProductList]);
+  }, [productList]);
 
   useEffect(() => {
     if (!productList) return;
@@ -1231,7 +1041,15 @@ export function ThreeMashProductsPage(props: Props) {
       committedSearchRef.current = nextSearch;
     }
   }, [productList?.searchKeyword, searchValue]);
-
+// Safety net: never let a restoring state hang forever if something
+// upstream throws or resolves outside the expected try/catch paths.
+useEffect(() => {
+  if (!isRestoringPage) return;
+  const timeoutId = window.setTimeout(() => {
+    setIsRestoringPage(false);
+  }, 5000);
+  return () => window.clearTimeout(timeoutId);
+}, [isRestoringPage]);
   useEffect(() => {
     if (!productList) return;
     const nextSearch = searchValue.trim();
@@ -1267,16 +1085,24 @@ export function ThreeMashProductsPage(props: Props) {
     commitSearch();
   }
 
-  function handleListingFilter(link: ListingLink) {
+  function handleListingFilter(link: ListingLink, pushHistory = true) {
     if (!sourceProductList) return;
 
     setActiveFilterId(link.id);
-    syncListingToUrl({ categoryId: link.id, page: 1 }, { push: true });
+
     if (link.id === ALL_PRODUCTS_FILTER_ID) {
       categoryRequestRef.current += 1;
+      setSearchValue("");
+      committedSearchRef.current = "";
       setActiveProductList(sourceProductList);
+      syncListingToUrl(
+        { categoryId: ALL_PRODUCTS_FILTER_ID, page: 1, search: "" },
+        { push: pushHistory, forceSearchRoute: true },
+      );
       return;
     }
+
+    syncListingToUrl({ categoryId: link.id, page: 1 }, { push: pushHistory });
 
     const requestId = ++categoryRequestRef.current;
     const categoryProductList = initProductList({
@@ -1326,7 +1152,8 @@ export function ThreeMashProductsPage(props: Props) {
                 input: { query, page: 1, perPage: 10 },
               } as Parameters<typeof apiSearchProducts>[0]);
               return response?.data?.data || [];
-            } catch {
+            } catch (err) {
+              debugError("resin fallback apiSearchProducts error", err);
               return [];
             }
           }),
@@ -1342,7 +1169,8 @@ export function ThreeMashProductsPage(props: Props) {
       });
       setSearchValue("");
       committedSearchRef.current = "";
-    }).catch(() => {
+    }).catch((err) => {
+      debugError("categoryProductList load error", err);
       if (requestId !== categoryRequestRef.current) return;
       setActiveProductList({
         ...categoryProductList,
@@ -1371,22 +1199,52 @@ export function ThreeMashProductsPage(props: Props) {
     });
   }
 
-  function goToPage(page: number) {
+  async function goToPage(page: number) {
     if (!productList || page < 1) return;
-    syncListingToUrl({ page }, { push: true });
-    if (page === 1 && sourceProductList && (sourceProductList.page || 1) === 1 && activeFilterId === ALL_PRODUCTS_FILTER_ID && !searchValue) {
-      setActiveProductList(sourceProductList);
-      cleanPageOneFromUrl();
-      forceUpdate();
-      scrollToListingTop();
-    } else {
-      void getProductListPage(productList, page).then(() => {
-        if (page <= 1) {
-          cleanPageOneFromUrl();
-        }
+
+    // Invalidate any in-flight page request (including one already kicked
+    // off by popstate/applyUrlStateToListing) so its response can never
+    // land after this one and silently overwrite the page the user just
+    // navigated to. This is the fix for "listing gets stuck on an old
+    // page number after visiting a product and going back."
+    const requestId = ++pageRequestRef.current;
+
+    try {
+      // Keep the browser URL/history in sync with the page the user
+      // explicitly selected.
+      syncListingToUrl({ page }, { push: true });
+
+      if (
+        page === 1 &&
+        sourceProductList &&
+        (sourceProductList.page || 1) === 1 &&
+        activeFilterId === ALL_PRODUCTS_FILTER_ID &&
+        !searchValue
+      ) {
+        if (requestId !== pageRequestRef.current) return;
+        setActiveProductList(sourceProductList);
+        cleanPageOneFromUrl();
         forceUpdate();
         scrollToListingTop();
-      });
+        return;
+      }
+
+      await getProductListPage(productList, page);
+
+      // A newer page request (another click, or a popstate-triggered
+      // applyUrlStateToListing call) started while this one was in
+      // flight — drop this stale result instead of letting it overwrite
+      // the state the user actually navigated to.
+      if (requestId !== pageRequestRef.current) return;
+
+      if (page <= 1) {
+        cleanPageOneFromUrl();
+      }
+
+      forceUpdate();
+      scrollToListingTop();
+    } catch (err) {
+      debugError("goToPage error", err);
     }
   }
 
@@ -1423,6 +1281,8 @@ export function ThreeMashProductsPage(props: Props) {
       if (success) {
         setFavoriteIds((prev) => ({ ...prev, [productId]: !isFavorite }));
       }
+    } catch (err) {
+      debugError("handleToggleFavorite error", err);
     } finally {
       setFavoritePendingIds((prev) => {
         const next = { ...prev };
@@ -1698,10 +1558,8 @@ export function ThreeMashProductsPage(props: Props) {
                 props={props}
                 index={index}
                 isFavorite={Boolean(favoriteIds[product.id])}
+                isHighlighted={product.id === highlightedProductId}
                 onToggleFavorite={handleToggleFavorite}
-                onProductClick={(p, href) =>
-                  saveMarketStackOnProductClick(p, href, productList?.page || 1)
-                }
                 key={product.id}
               />
             ))}

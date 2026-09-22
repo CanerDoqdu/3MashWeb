@@ -386,6 +386,18 @@
   color: #9a1d12;
 }
 
+.tma-auth-inline-link {
+  display: inline-block;
+  color: var(--tmrpg-auth-accent, var(--tm-theme-accent, #c7f136));
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tma-auth-inline-link:hover {
+  opacity: 0.78;
+}
+
 .tmrpg-auth-image {
   display: none;
 }

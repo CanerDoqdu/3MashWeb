@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "preact/hooks";
 import { t, tLocalized, localizedHref } from "../../utils/i18n";
 import { stringValue, safeFunctionCall } from "../../types/typeGuards";
+import { debugError } from "../../utils/debugError";
 import cookiePrinterImage from "../../assets/cookie-printer-image-data";
 
 export interface CookieConsentState {
@@ -92,7 +93,9 @@ function applyConsentEffects(consent: CookieConsentState) {
           document.cookie = `${name}=; Path=/; Domain=${domain}; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax`;
         }
       }
-    } catch {}
+    } catch (err) {
+      debugError("purgeCookies error", err);
+    }
   };
 
   if (typeof window.requestIdleCallback === "function") {
@@ -107,7 +110,9 @@ function applyConsentEffects(consent: CookieConsentState) {
     window.dispatchEvent(
       new CustomEvent("tm_cookie_consent_updated", { detail: consent })
     );
-  } catch {}
+  } catch (err) {
+    debugError("cookie consent event dispatch error", err);
+  }
 }
 
 export function ThreeMashCookieConsent() {

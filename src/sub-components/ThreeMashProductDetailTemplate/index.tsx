@@ -463,8 +463,21 @@ function localizeSummarySuffix(suffix?: string): string {
 
 function Configurator(props: Props) {
   const buyHref = productBuyHref(props.data.hero.buyHrefBase, props.variantGroups);
-  const hasManySwatches = props.variantGroups.some((group) => group.values.some((value) => value.color) && group.values.length > 12);
 
+  const hidePriceProducts = [
+    "mash w1e ultrasonik yıkama cihazı",
+    "creality wash&cure uw-03",
+    "mash c1e uv kürleme cihazı",
+    "creality halot-sky 6k - hassasiyeti arttırılmış versiyon",
+  ];
+
+  const hidePrice = hidePriceProducts.includes(
+    props.data.breadcrumb.productText.toLocaleLowerCase("tr-TR").trim()
+  );
+
+  const hasManySwatches = props.variantGroups.some(
+    (group) => group.values.some((value) => value.color) && group.values.length > 12
+  );
   const rawMessage = props.message || "";
   const displayedMessage = isEnglishLocale() && (rawMessage.toLowerCase().includes(tLocalized("stok", "stok")) || rawMessage.toLowerCase().includes(tLocalized("tükendi", "Out of Stock")))
     ? "Out of stock"
@@ -472,7 +485,7 @@ function Configurator(props: Props) {
 
   return (
     <div className="tmpdt-cfg">
-      {props.price ? (
+  {props.price && !hidePrice ? (
         <div className="tmpdt-price">
           <strong>{props.price}</strong>
           {props.compareAtPrice ? <span>{props.compareAtPrice}</span> : null}
@@ -529,7 +542,20 @@ function Configurator(props: Props) {
         {isEnglishLocale() && (props.data.hero.selectedPrefix === tLocalized("Seçiminiz:", "Your selection:") || !props.data.hero.selectedPrefix) ? "Selected:" : props.data.hero.selectedPrefix} <b>{props.selectedSummary}</b> {localizeSummarySuffix(props.data.hero.summarySuffix)}
       </div>
       <div className="tmpdt-act">
-      
+        {!props.data.hero.disableAddToCart && (
+          <button
+            type="button"
+            className="tmpdt-btn tmpdt-lime"
+            onClick={props.onAddToCart}
+            disabled={props.isAddToCartDisabled}
+          >
+            {props.isAdding
+              ? localizeAddingToCartText(props.data.hero.addingToCartText)
+              : props.isAddToCartDisabled
+              ? localizeOutOfStockText(props.data.hero.outOfStockText)
+              : localizeAddToCartText(props.data.hero.addToCartText)}
+          </button>
+        )}
         <a className="tmpdt-btn tmpdt-line" href={safeWhatsAppHref(props.data.hero.whatsappHref)} target="_blank" rel="noopener noreferrer">
           {localizeWhatsAppText(props.data.hero.whatsappText)}
         </a>
@@ -1086,6 +1112,7 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
                 muted
                 loop
                 controls
+                preload="metadata"
                 onLoadedData={() => setIsIframeLoaded(true)}
               />
             ) : (

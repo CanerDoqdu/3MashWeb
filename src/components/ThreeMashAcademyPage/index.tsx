@@ -105,6 +105,52 @@ function htmlParts(input: string | undefined, props: Props, fallback = "") {
     .filter(Boolean);
 }
 
+const criticalAcademyCss = `
+.three-mash-academy-page {
+  width: 100%;
+  overflow-x: hidden;
+  background: var(--tm-theme-bg, #fafaf7);
+  color: var(--tma-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
+}
+.three-mash-academy-page, .three-mash-academy-page * { box-sizing: border-box; }
+.tma-shell {
+  width: 100%;
+  max-width: min(var(--tma-max, 1280px), 1180px);
+  margin: 0 auto;
+  padding: 42px 24px 62px;
+}
+.tma-quote-section {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  margin-bottom: 44px;
+  padding: 34px 22px;
+  background: var(--tm-theme-dark, #0e0e0c);
+  color: var(--tm-theme-bg, #fafaf7);
+  text-align: center;
+}
+.tma-quote-section h1 {
+  margin: 0;
+  color: var(--tm-theme-accent, #c7f136);
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", "Inter", sans-serif);
+  font-size: 42px;
+  line-height: 0.96;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+.tma-quote-section blockquote { width: min(100%, 880px); margin: 0; padding: 0; }
+.tma-quote-section blockquote p {
+  margin: 0;
+  font-family: var(--tm-theme-font-serif, "Newsreader", Georgia, serif);
+  font-size: 22px;
+  line-height: 1.34;
+  font-style: italic;
+  font-weight: 500;
+}
+`;
+
 export function ThreeMashAcademyPage(props: Props) {
   const sourceDescription = tLocalized(
     "Çalıştığımız sektörlerde özellikle dental alanda öncü isimlerle genç ve değişime açık profesyonelleri buluşturarak bilgi paylaşımını teşvik etmeyi amaçlamaktadır. Amacımız, sektördeki son gelişmeleri yakından takip ederek bu bilgileri paydaşlarımıza aktarmak ve birlikte öğrenerek büyüdüğümüz bir ekosistem oluşturmaktır.<br><br>Mash Academy, sektörün önde gelen isimleriyle işbirliği yaparak eğitimler, seminerler ve etkinlikler düzenlemekte ve katılımcılarını sektördeki en güncel bilgilerle buluşturmaktadır. Ayrıca, genç yeteneklere yönelik mentorluk programları ve uzmanlık eğitimleri ile sektöre yeni katılanları desteklemekteyiz.<br><br>Biz, bilgiyi paylaşmanın ve birlikte öğrenmenin gücüne inanıyoruz. Mash Academy olarak, sektördeki değişimi takip etmek ve bu değişime ayak uydurmak isteyen herkesi bir araya getirerek sektörün gelişimine katkıda bulunmaya davet ediyoruz.<br><br>Siz de bizimle birlikte, bilgiyi paylaşarak ve birlikte öğrenerek sektördeki gelişmelere yön vermek isterseniz, etkinliklerimize katılarak bu heyecanlı yolculuğa ortak olabilirsiniz. Haydi, geleceği birlikte şekillendirelim!",
@@ -178,6 +224,7 @@ export function ThreeMashAcademyPage(props: Props) {
   const descriptionParts = htmlParts(undefined, props, sourceDescription);
   return (
     <section className="three-mash-academy-page" style={style}>
+      <style dangerouslySetInnerHTML={{ __html: criticalAcademyCss }} />
       <div className="tma-shell">
         <section className="tma-quote-section">
           <h1 dangerouslySetInnerHTML={richText(undefined, props, sourceTitle)} />

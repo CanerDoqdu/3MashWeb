@@ -425,44 +425,6 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
   } as any;
 
   const effectiveProducts = products.map(sourceRelatedProduct);
-  /*
-    {
-      id: "p-rel-1",
-      title: "1. Örnek İlgili Ürün",
-      href: "#",
-      image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/deb67f5e-a02a-4fa6-9cb8-595a277d69fd/1080/composite-apps-10.webp",
-      imageAlt: "1. Örnek İlgili Ürün",
-      category: "1. KATEGORİ",
-      descriptionHtml: "1. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
-    },
-    {
-      id: "p-rel-2",
-      title: "2. Örnek İlgili Ürün",
-      href: "#",
-      image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/9d7bb34c-1f0d-4b36-8f0e-ce9a41863d55/1080/composite-apps-11.webp",
-      imageAlt: "2. Örnek İlgili Ürün",
-      category: "2. KATEGORİ",
-      descriptionHtml: "2. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
-    },
-    {
-      id: "p-rel-3",
-      title: "3. Örnek İlgili Ürün",
-      href: "#",
-      image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/1cd726f4-d0ec-4f4b-9407-ca7a84da9961/1080/composite-apps-12.webp",
-      imageAlt: "3. Örnek İlgili Ürün",
-      category: "3. KATEGORİ",
-      descriptionHtml: "3. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
-    },
-    {
-      id: "p-rel-4",
-      title: "4. Örnek İlgili Ürün",
-      href: "#",
-      image: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d875a523-2228-44a7-818d-022312b0a44d/1080/composite-resin-ce.webp",
-      imageAlt: "4. Örnek İlgili Ürün",
-      category: "4. KATEGORİ",
-      descriptionHtml: "4. İlgili ürünün kısa tanıtım açıklaması metni buraya gelecek.",
-    },
-  ]; */
 
   if (sourceData) {
     return (

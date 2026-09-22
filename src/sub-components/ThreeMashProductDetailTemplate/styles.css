@@ -2285,17 +2285,19 @@
   width: 100%;
 }
 
-.tmcart-coupon-toggle {
-  width: fit-content !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
-  color: #cfcfc6 !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
+button.tmcart-coupon-toggle {
+  width: fit-content;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #cfcfc6;
+  font-size: 13px;
+  font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 4px;
+  cursor: pointer;
 }
 
 .tmcart-coupon-form {
@@ -2345,27 +2347,30 @@
   color: #96968f;
 }
 
-.tmcart-coupon-apply {
-  width: auto !important;
-  min-height: 40px !important;
-  margin: 0 !important;
-  padding: 0 14px !important;
-  border: 0 !important;
-  background: #0e0e0c !important;
-  color: #fff !important;
-  font-size: 12px !important;
-  font-weight: 800 !important;
+button.tmcart-coupon-apply {
+  width: auto;
+  min-height: 40px;
+  margin: 0;
+  padding: 0 14px;
+  border: 0;
+  background: #0e0e0c;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.tmcart-coupon-close {
-  width: 32px !important;
-  min-height: 40px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
-  color: #fff !important;
-  font-size: 22px !important;
-  font-weight: 400 !important;
+button.tmcart-coupon-close {
+  width: 32px;
+  min-height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 400;
+  cursor: pointer;
 }
 
 .tmcart-coupon-active {

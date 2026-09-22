@@ -395,17 +395,69 @@ const categoryRouteAliases: Record<string, string> = {
   "titanyum-diskler": "/titanyum-diskler",
 };
 
+// Individual product pages: TR slug (as it appears after categoryHref) -> confirmed EN path.
 const englishProductRoutes: Record<string, string> = {
   "mash-p16l-385nm-16k-dental-3d-yazici": "/en/mash-p16l-385nm-16k-dental-3d-printer",
   "mash-curie-m1-dental-3d-yazici": "/en/mash-curie-m1-dental-3d-printer",
   "creality-halot-sky-6k": "/en/creality-halot-sky-6k-1",
-  "mash-w1e-ultrasonik-yikama-cihazi": "/en/mash-w1e-ultrasonic-washing-device",
+  "mash-w1e-ultrasonik-yikama-cihazi": "/en/mash-w1e-ultrasonik-yikama-cihazi",
   "mash-c1e-uv-kurleme-cihazi": "/en/mash-c1e-uv-curing-device",
   "creality-washcure-uw-02": "/en/creality-wash-and-cure-uw-03",
   "argenz-ht-plus-zirkon-blok": "/en/argenz-ht-plus-zirconia-disc",
   "argenz-st-multilayer-zirkon-blok": "/en/argenz-st-multilayer-zirconia-disc",
   "argenz-ht-multilayer-zirkon-blok": "/en/argenz-ht-plus-multilayer-zirconia-disc",
 };
+
+// Category / listing pages: TR slug -> confirmed EN path. Confirmed against the live
+// storefront nav + footer on 2026-09-20. Entries left out (spares "/sistemler",
+// "/3d-yazici-yedek-parcalari", "/titanyum-diskler") have no confirmed EN slug yet —
+// they fall back to localizedHref() below until confirmed, rather than guessing.
+const englishCategoryRoutes: Record<string, string> = {
+  "dental-3d-yazici-recineleri": "/en/dental-resins",
+  "3d-yazicilar": "/en/3d-printers",
+  "yikama-kurleme-cihazlari": "/en/wash-and-cure-devices",
+  "masasustu-tarayicilar": "/en/lab-scanners",
+  // NOTE: user said zircon/furnaces are disabled on EN, but the live footer nav links
+  // to both of these — confirm before trusting the two rows below.
+  "zirkon-bloklar": "/en/zircon-blocks",
+  "dental-firinlar": "/en/dental-furnaces",
+ 
+  "pages-iletisim": "/en/pages/iletisim",
+  "iletisim": "/en/pages/iletisim",
+};
+
+/**
+ * Single source of truth for turning any raw href (button, breadcrumb, product
+ * card, or a link embedded inside rich HTML) into the href that should actually
+ * be rendered, for both locales.
+ *
+ * Replaces the old categoryProductHref, which only applied EN routing to
+ * product cards and, for unmapped routes, appended "?lang=en" to the Turkish
+ * slug without ever adding the "/en/" prefix the storefront actually uses.
+ */
+function resolveHref(value: string): string {
+  const canonical = categoryHref(value);
+
+  const isHashOnly = canonical.startsWith("#");
+  const isProtocolLink = /^[a-z][a-z0-9+.-]*:/i.test(canonical);
+  if (isHashOnly || isProtocolLink) {
+    return canonical;
+  }
+
+  const hashIndex = canonical.indexOf("#");
+  const hash = hashIndex >= 0 ? canonical.slice(hashIndex) : "";
+  const pathAndQuery = hashIndex >= 0 ? canonical.slice(0, hashIndex) : canonical;
+
+  if (!isEnglishLocale()) {
+    return `${localizedHref(pathAndQuery)}${hash}`;
+  }
+
+  const key = routeKey(pathAndQuery);
+  const englishRoute = englishProductRoutes[key] || englishCategoryRoutes[key];
+  if (englishRoute) return `${englishRoute}${hash}`;
+
+  return `${localizedHref(pathAndQuery)}${hash}`;
+}
 
 function categoryHref(value: string) {
   const trimmed = value.trim();
@@ -431,21 +483,6 @@ function categoryHref(value: string) {
     const mapped = categoryRouteAliases[routeKey(trimmed)];
     return mapped || trimmed;
   }
-}
-
-function categoryProductHref(value: string) {
-  const normalized = categoryHref(value);
-  if (!isEnglishLocale() || normalized.startsWith("#") || /^[a-z][a-z0-9+.-]*:/i.test(normalized)) {
-    return localizedHref(normalized);
-  }
-
-  const hashIndex = normalized.indexOf("#");
-  const hash = hashIndex >= 0 ? normalized.slice(hashIndex) : "";
-  const pathAndQuery = hashIndex >= 0 ? normalized.slice(0, hashIndex) : normalized;
-  const englishRoute = englishProductRoutes[routeKey(pathAndQuery)];
-  if (englishRoute) return `${englishRoute}${hash}`;
-  const separator = pathAndQuery.includes("?") ? "&" : "?";
-  return `${pathAndQuery}${separator}lang=en${hash}`;
 }
 
 function parentCategoryHref(data: CategoryLandingData) {
@@ -532,7 +569,7 @@ function normalizeHtmlLinks(value: string): string {
     const links = doc.querySelectorAll("a[href]");
     links.forEach((link) => {
       const href = link.getAttribute("href") || "";
-      link.setAttribute("href", categoryHref(href));
+      link.setAttribute("href", resolveHref(href));
     });
     return doc.body.innerHTML;
   } catch {
@@ -810,7 +847,7 @@ function categoryStyle(props: CategoryLandingOverrides) {
 }
 
 function ButtonLink({ button }: { button: CategoryButton }) {
-  const normalizedHref = localizedHref(categoryHref(button.href));
+  const normalizedHref = resolveHref(button.href);
 
   return (
     <a className={`tmcl-btn tmcl-btn-${button.variant || "dark"}`} href={normalizedHref} onClick={(event) => smoothCategoryClick(event, normalizedHref)}>
@@ -855,7 +892,7 @@ function ProductCard({
   const variant = product ? safeVariant(product) : null;
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image;
-  const href = categoryProductHref(product ? getProductHref(product) : card.href);
+  const href = resolveHref(product ? getProductHref(product) : card.href);
   const liveImageSrc = image ? getDefaultSrc(image) : "";
   const imageSrc = card.sourceIcon ? "" : card.imageSrc || liveImageSrc;
   const imageAlt = card.imageAlt || image?.altText || card.title;
@@ -1206,10 +1243,10 @@ export default function ThreeMashCategoryLanding(props: Props) {
       <div className="tmcl-hero">
         <div className="tmcl-wrap">
           <div className="tmcl-crumb">
-            <a href={categoryHref(data.breadcrumb.homeHref)}>{data.breadcrumb.homeLabel}</a>
-            {"  /  "}
-            <a href={parentCategoryHref(data)}>{data.breadcrumb.parentLabel}</a>
-            {"  /  "}
+            <a href={resolveHref(data.breadcrumb.homeHref)}>{data.breadcrumb.homeLabel}</a>
+            {"  /  "}
+            <a href={resolveHref(parentCategoryHref(data))}>{data.breadcrumb.parentLabel}</a>
+            {"  /  "}
             <span aria-current="page">{data.breadcrumb.currentLabel}</span>
           </div>
           <h1>
@@ -1358,7 +1395,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
                 )}
               </h3>
               <p dangerouslySetInnerHTML={rich(richValue(props.featureDescriptionHtml, data.feature.content.descriptionHtml))} />
-              <a href={localizedHref(categoryHref(textValue(props.featureHref, data.feature.content.href)))}>
+              <a href={resolveHref(textValue(props.featureHref, data.feature.content.href))}>
                 {textValue(props.featureCtaText, data.feature.content.ctaText)}
               </a>
             </div>

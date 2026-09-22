@@ -186,6 +186,7 @@ export function ThreeMashAccountPage(props: Props) {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [errorCode, setErrorCode] = useState<string | undefined>();
   const [isFormReady, setIsFormReady] = useState(false);
 
   useEffect(() => {
@@ -204,6 +205,7 @@ export function ThreeMashAccountPage(props: Props) {
             : "login";
       setAuthMode(nextMode);
       setStatus("idle");
+      setErrorCode(undefined);
     }
 
     window.addEventListener("popstate", handlePopState);
@@ -250,6 +252,7 @@ export function ThreeMashAccountPage(props: Props) {
     }
     setAuthMode(mode);
     setStatus("idle");
+    setErrorCode(undefined);
   }
 
   function switchTab(tab: "login" | "register") {
@@ -268,6 +271,7 @@ export function ThreeMashAccountPage(props: Props) {
     if (status === "loading") return;
 
     setStatus("loading");
+    setErrorCode(undefined);
     try {
       if (authMode === "forgot-password") {
         const success = await forgotPassword(customerStore, email);
@@ -316,6 +320,7 @@ export function ThreeMashAccountPage(props: Props) {
         return;
       }
 
+      setErrorCode(result.errorCodes?.[0]);
       setStatus("error");
     } catch {
       setStatus("error");
@@ -386,7 +391,12 @@ export function ThreeMashAccountPage(props: Props) {
           onSubmit={submit}
         >
           <div className="tma-auth-copy">
-            <span>{text(props.eyebrowText, "HESAP")}</span>
+              <span>
+    {tLocalized(
+      text(props.eyebrowText, "HESAP"),
+      "ACCOUNT",
+    )}
+  </span>
             <h1
               dangerouslySetInnerHTML={{
                 __html:
@@ -746,6 +756,23 @@ export function ThreeMashAccountPage(props: Props) {
                     ? tLocalized("İşlem tamamlanamadı. Email adresinizi kontrol edin.", "The request could not be completed. Check your email address.")
                     : authMode === "recover-password"
                       ? tLocalized("Şifreler eşleşmiyor veya bağlantı geçersiz.", "The passwords do not match or the link is invalid.")
+                      : authMode === "register"
+                        ? errorCode === "CUSTOMER_EMAIL_ALREADY_EXISTS"
+                          ? <>{tLocalized("Bu email adresiyle zaten bir hesabınız var. ", "An account with this email already exists. Please sign in.")} {" "}<button className="tma-auth-inline-link" type="button" onClick={() => switchTab("login")}>{tLocalized("Giriş yap", "Sign in")}</button></>
+                          : errorCode === "EMAIL_IS_NOT_VERIFIED"
+                            ? tLocalized("Email adresiniz doğrulanmamış. Lütfen doğrulama emailini kontrol edin.", "Your email address is not verified. Please check your verification email.")
+                            : errorCode === "PHONE_IS_NOT_VERIFIED"
+                              ? tLocalized("Telefon numaranız doğrulanmamış.", "Your phone number is not verified.")
+                              : errorCode === "B2B_CUSTOMER_ACCOUNT_DISABLED" || errorCode === "CUSTOMER_ACCOUNT_DISABLED"
+                                ? tLocalized("Hesabınız pasif durumda. Lütfen destek ile iletişime geçin.", "Your account is disabled. Please contact support.")
+                                : text(
+                                  props.errorMessage,
+                                  tLocalized("Kayıt tamamlanamadı. Lütfen bilgilerinizi kontrol edin.", "Registration failed. Please check your information."),
+                                )
+                        : authMode === "login" && (errorCode === "CUSTOMER_ACCOUNT_DISABLED" || errorCode === "B2B_CUSTOMER_ACCOUNT_DISABLED")
+                          ? tLocalized("Hesabınız pasif durumda. Lütfen destek ile iletişime geçin.", "Your account is disabled. Please contact support.")
+                          : authMode === "login" && errorCode === "EMAIL_IS_NOT_VERIFIED"
+                            ? tLocalized("Email adresiniz doğrulanmamış. Lütfen doğrulama emailini kontrol edin.", "Your email address is not verified. Please check your verification email.")
                       : text(
                         props.errorMessage,
                         tLocalized("Email veya şifre hatalı. Lütfen bilgilerinizi kontrol edin.", "Email or password is incorrect. Please check your details."),

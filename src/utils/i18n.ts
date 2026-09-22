@@ -837,10 +837,9 @@ export const TR_TO_EN_ROUTE_MAP: Record<string, string> = {
   // Products - Wash & Cure
   "/mash-c1e-uv-kurleme-cihazi": "/mash-c1e-uv-curing-device",
   "/mash-c1e-uv-curing-device": "/mash-c1e-uv-curing-device",
-  "/mash-w1e-ultrasonik-yikama-cihazi": "/mash-w1e-ultrasonic-washing-device",
-  "/mash-w1e-ultrasonic-washing-device": "/mash-w1e-ultrasonic-washing-device",
-  "/mash-w1e-ultrasonic-washing-machine": "/mash-w1e-ultrasonic-washing-device",
-  "/mash-w1e-ultrasonic-washing-unit": "/mash-w1e-ultrasonic-washing-device",
+  "/mash-w1e-ultrasonik-yikama-cihazi": "/mash-w1e-ultrasonik-yikama-cihazi",
+  
+
   "/creality-washcure-uw-02": "/creality-wash-and-cure-uw-03",
 
   // Products - Zirconia
@@ -894,22 +893,22 @@ export const TR_TO_EN_ROUTE_MAP: Record<string, string> = {
   "/pages/hakkimizda": "/pages/about-us",
   "/about-us": "/pages/about-us",
   "/hakkimizda": "/pages/about-us",
-  "/pages/iletisim": "/pages/contact",
-  "/iletisim": "/pages/contact",
-  "/contact": "/pages/contact",
-  "/pages/contact": "/pages/contact",
+  "/pages/iletisim": "/pages/iletisim",
+  "/iletisim": "/pages/iletisim",
+  "/contact": "/pages/iletisim",
+ 
   "/pages/sss": "/pages/faq",
   "/pages/faq": "/pages/faq",
   "/sss": "/pages/faq",
   "/faq": "/pages/faq",
-  "/pages/gizlilik-politikasi-ve-kvkk": "/pages/privacy-policy",
-  "/pages/kvkk": "/pages/privacy-policy",
-  "/pages/kvkk-aydinlatma-metni": "/pages/privacy-policy",
-  "/kvkk": "/pages/privacy-policy",
-  "/pages/iade-ve-garanti": "/pages/return-and-warranty-policy",
-  "/pages/iade-ve-garanti-kosullari": "/pages/return-and-warranty-policy",
-  "/pages/iade-ve-garanti-politikasi": "/pages/return-and-warranty-policy",
-  "/pages/mesafeli-satis-sozlesmesi": "/pages/distance-selling-contract",
+  "/pages/gizlilik-politikasi-ve-kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
+  "/pages/kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
+  "/pages/kvkk-aydinlatma-metni": "/pages/gizlilik-politikasi-ve-kvkk",
+  "/kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
+  "/pages/iade-ve-garanti": "/pages/iade-ve-garanti",
+  "/pages/iade-ve-garanti-kosullari": "/pages/iade-ve-garanti",
+  "/pages/iade-ve-garanti-politikasi": "/pages/iade-ve-garanti",
+  "/pages/mesafeli-satis-sozlesmesi": "/pages/mesafeli-satis-sozlesmesi",
   "/pages/uyelik-sozlesmesi": "/pages/membership-agreement",
   "/pages/ticari-elektronik-ileti-onayi": "/pages/commercial-electronic-communication",
   "/pages/ticari-elektronik-ileti": "/pages/commercial-electronic-communication",
@@ -920,7 +919,7 @@ export const TR_TO_EN_ROUTE_MAP: Record<string, string> = {
   "/pages/mash-academy": "/pages/mash-academy",
   "/pages/academy": "/pages/mash-academy",
   "/academy": "/pages/mash-academy",
-  "/pages/hesaplama": "/pages/cost-calculator",
+  "/pages/hesaplama": "/pages/hesaplama",
 
   // Account / Cart / Blog
   "/account": "/account",
@@ -970,7 +969,7 @@ export const EN_TO_TR_ROUTE_MAP: Record<string, string> = {
   // Products - Wash & Cure
   "/mash-c1e-uv-curing-device": "/mash-c1e-uv-kurleme-cihazi",
   "/mash-c1e-smart-uv-curing-unit": "/mash-c1e-uv-kurleme-cihazi",
-  "/mash-w1e-ultrasonic-washing-device": "/mash-w1e-ultrasonik-yikama-cihazi",
+  "/mash-w1e-ultrasonik-yikama-cihazi": "/mash-w1e-ultrasonik-yikama-cihazi",
   "/mash-w1e-ultrasonic-washing-unit": "/mash-w1e-ultrasonik-yikama-cihazi",
   "/mash-w1e-ultrasonic-washing-machine": "/mash-w1e-ultrasonik-yikama-cihazi",
   "/creality-wash-and-cure-uw-03": "/creality-washcure-uw-02",
@@ -1022,16 +1021,16 @@ export const EN_TO_TR_ROUTE_MAP: Record<string, string> = {
 
   // Static / Legal / Information Pages
   "/pages/about-us": "/pages/about-us",
-  "/pages/contact": "/pages/iletisim",
+  "/pages/iletisim": "/pages/iletisim",
   "/pages/faq": "/pages/sss",
-  "/pages/privacy-policy": "/pages/gizlilik-politikasi-ve-kvkk",
-  "/pages/return-and-warranty-policy": "/pages/iade-ve-garanti",
-  "/pages/distance-selling-contract": "/pages/mesafeli-satis-sozlesmesi",
+  "/pages/gizlilik-politikasi-ve-kvkk": "/pages/gizlilik-politikasi-ve-kvkk",
+  "/pages/iade-ve-garanti": "/pages/iade-ve-garanti",
+  "/pages/mesafeli-satis-sozlesmesi": "/pages/mesafeli-satis-sozlesmesi",
   "/pages/membership-agreement": "/pages/uyelik-sozlesmesi",
   "/pages/commercial-electronic-communication": "/pages/ticari-elektronik-ileti-onayi",
   "/pages/cookie-policy": "/pages/cerez-politikasi",
   "/pages/mash-academy": "/pages/mash-academy",
-  "/pages/cost-calculator": "/pages/hesaplama",
+  "/pages/hesaplama": "/pages/hesaplama",
 
   // Account / Cart / Blog
   "/account": "/account",

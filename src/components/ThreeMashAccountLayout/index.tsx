@@ -516,17 +516,17 @@ function AccountLayoutContent(props: DashboardProps) {
       }
     }
 
-    // Show loading overlay
+    // Show loading overlay briefly during view swap
     setIsLoadingContent(true);
     if (loadingTimerRef.current) clearTimeout(loadingTimerRef.current);
 
-    // Swap content after one frame so loading overlay paints first
-    loadingTimerRef.current = setTimeout(() => {
+    // Swap mode in next frame and transition out loading overlay
+    requestAnimationFrame(() => {
       setMode(nextMode);
       loadingTimerRef.current = setTimeout(() => {
         setIsLoadingContent(false);
-      }, 200);
-    }, 40);
+      }, 150);
+    });
   }
 
   async function handleLogout(event: Event) {

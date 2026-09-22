@@ -15,6 +15,56 @@ function propText(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
 }
 
+const criticalFaqCss = `
+.three-mash-faq-page {
+  width: 100%;
+  overflow-x: hidden;
+  background: var(--tmfaq-bg, var(--tm-theme-bg, #fafaf7));
+  color: var(--tmfaq-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
+}
+.three-mash-faq-page, .three-mash-faq-page * { box-sizing: border-box; }
+.tmfaq-shell {
+  width: 100%;
+  max-width: min(var(--tmfaq-max, 1180px), 1180px);
+  margin: 0 auto;
+  padding: 42px 24px 62px;
+}
+.tmfaq-hero h1, .tmfaq-section h2 {
+  margin: 0;
+  color: var(--tmfaq-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", "Inter", sans-serif);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+.tmfaq-section h2 { font-size: 32px; line-height: 1; }
+.tmfaq-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.tmfaq-item {
+  overflow: hidden;
+  border: 1px solid var(--tmfaq-line, var(--tm-theme-line, #e6e6e0));
+  background: #fff;
+}
+.tmfaq-item summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px;
+  gap: 16px;
+  align-items: center;
+  min-height: 68px;
+  padding: 18px 20px;
+  color: var(--tmfaq-text, var(--tm-theme-text, #0e0e0c));
+  cursor: pointer;
+  list-style: none;
+}
+.tmfaq-item summary span {
+  min-width: 0;
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", "Inter", sans-serif);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.22;
+  overflow-wrap: anywhere;
+}
+`;
+
 function themeColor(
   input: string | undefined,
   fallback: string,
@@ -107,6 +157,7 @@ export function ThreeMashFaqPage(props: Props) {
 
   return (
     <section className="three-mash-faq-page" style={style}>
+      <style dangerouslySetInnerHTML={{ __html: criticalFaqCss }} />
       <div className="tmfaq-shell">
         {props.showPageTitle !== false ? (
           <section className="tmfaq-hero">

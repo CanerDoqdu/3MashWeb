@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import {
+  apiSearchProducts,
   cartStore,
   createMediaSrcset,
   customerStore,
@@ -13,7 +14,6 @@ import {
   IkasStorefrontConfig,
   initProductList,
   removeItem,
-  searchProductList as updateProductSearchList,
 
   type IkasCart,
   type IkasOrderLineItem,
@@ -28,6 +28,7 @@ import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCatego
 import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale, resolveLocalizedUrl } from "../../utils/i18n";
 import { sanitizeHtml, sanitizeSvgMarkup } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
+import { loadWebFonts } from "../../utils/loadWebFonts";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import {
@@ -78,7 +79,7 @@ import {
   NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG,
   NABERTHEM_VL_01_12_LB_PRESS_SLUG,
   PIOCREAT_C01_LCD_KIT_SLUG,
-  PRINTER_SPARE_PART_DETAIL_DATA_BY_SLUG,
+  printerSparePartDetailDataBySlug,
   resolveProductDetailData,
   THREESHAPE_E2_SLUG,
   THREESHAPE_E3_SLUG,
@@ -255,13 +256,9 @@ function getDefaultMobileMenuLabel() {
 // stylesheet is applied. Keep this intentionally small and structural only.
 const criticalHeaderCss = `
 /*
- * First-paint header CSS.
- * This is intentionally emitted before the header markup so the server-rendered
- * navbar has the same geometry and appearance before the full component CSS arrives.
+ * First-paint header structure (CLS safeguard).
+ * Full component aesthetics, dropdowns, and animations reside in styles.css.
  */
-.three-mash-header,
-.three-mash-header * { box-sizing: border-box; }
-
 .three-mash-header {
   --tmh-announcement-fixed-height: 37px;
   --tmh-nav-fixed-height: 70px;
@@ -272,27 +269,20 @@ const criticalHeaderCss = `
   color: var(--tmh-text);
   font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
-
+.three-mash-header, .three-mash-header * { box-sizing: border-box; }
 .three-mash-header [hidden] { display: none !important; }
-
-.three-mash-header .tmh-wrap {
-  width: min(100%, 1240px);
-  margin: 0 auto;
-  padding: 0 32px;
-}
-
 .three-mash-header .tmh-announcement {
   width: 100%;
   min-height: var(--tmh-announcement-fixed-height);
   overflow: visible;
+  position: relative;
   background: var(--tmh-ann-bg);
   color: var(--tmh-ann-text);
   font-size: 13px;
   line-height: 1.45;
-  position: relative;
-  z-index: 100000;
+  z-index: 101;
 }
-
+ 
 .three-mash-header .tmh-announcement-inner {
   position: relative;
   width: min(100%, 1240px);
@@ -302,476 +292,125 @@ const criticalHeaderCss = `
   display: flex;
   justify-content: center;
   align-items: center;
-  align-content: center;
   gap: 8px;
-  row-gap: 3px;
   text-align: center;
   flex-wrap: wrap;
 }
-
-.three-mash-header .tmh-announcement-lang {
-  position: absolute;
-  right: 32px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 100001;
-}
-
-.three-mash-header .tmh-lang-trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 6px;
-  padding: 3px 7px;
-  cursor: pointer;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  transition: all 0.15s ease;
-  backdrop-filter: blur(6px);
-  user-select: none;
-  white-space: nowrap;
-}
-
-.three-mash-header .tmh-lang-trigger:hover,
-.three-mash-header .tmh-lang-trigger:focus-visible {
-  background: rgba(255, 255, 255, 0.22);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.three-mash-header .tmh-lang-caret {
-  width: 8px;
-  height: 5px;
-  opacity: 0.8;
-  transition: transform 0.18s ease;
-}
-
-.three-mash-header .tmh-lang-caret.is-open {
-  transform: rotate(180deg);
-}
-
-.three-mash-header .tmh-lang-dropdown {
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
-  min-width: 140px;
-  background: #141412;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
-  padding: 4px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  z-index: 100002;
-}
-
-.three-mash-header .tmh-lang-option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 8px 10px;
-  min-height: 34px;
-  background: transparent;
-  border: none;
-  border-radius: 6px;
-  color: rgba(255, 255, 255, 0.82);
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 500;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.12s ease;
-  white-space: nowrap;
-}
-
-.three-mash-header .tmh-lang-option:hover {
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
-}
-
-.three-mash-header .tmh-lang-option.is-active {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.09);
-  font-weight: 600;
-}
-
-.three-mash-header .tmh-lang-check {
-  margin-left: auto;
-  color: var(--tmh-accent, #C7F136);
-  font-size: 11px;
-}
-
-.three-mash-header .tmh-flag-svg {
-  display: block;
-  flex-shrink: 0;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-.three-mash-header .tmh-mobile-lang-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 16px 0 6px;
-  margin-top: 14px;
-  border-top: 1px solid var(--tmh-line);
-}
-
-.three-mash-header .tmh-mobile-lang-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  flex: 1 1 0;
-  justify-content: center;
-  padding: 9px 12px;
-  border-radius: 8px;
-  background: var(--tmh-panel, #ffffff);
-  border: 1px solid var(--tmh-line, #E6E6E0);
-  color: var(--tmh-text, #0E0E0C);
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.three-mash-header .tmh-mobile-lang-btn.is-active {
-  border-color: var(--tmh-text, #0E0E0C);
-  background: var(--tmh-text, #0E0E0C);
-  color: #ffffff;
-}
-
-@media (max-width: 900px) {
-  .three-mash-header {
-    --tmh-announcement-fixed-height: auto;
-  }
-  .three-mash-header .tmh-announcement-inner {
-    padding: 7px 14px;
-  }
-  .three-mash-header .tmh-announcement-lang {
-    display: none;
-  }
-}
-
-
-
-.three-mash-header .tmh-announcement-inner > * { margin: 0; }
-.three-mash-header .tmh-announcement b {
-  color: var(--tmh-accent);
-  font-weight: 600;
-}
-.three-mash-header .tmh-announcement a {
-  color: #fff;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  font-weight: 600;
-}
- 
+.three-mash-header .tmh-announcement b { color: var(--tmh-accent); font-weight: 600; }
+.three-mash-header .tmh-announcement a { color: #fff; text-decoration: underline; font-weight: 600; }
 .three-mash-header .tmh-header {
   position: sticky !important;
   top: 0;
   width: 100%;
-  z-index: 99999;
-  background: color-mix(in srgb, var(--tmh-bg) 92%, transparent);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--tmh-line);
+  z-index: 100;
 }
-
+.three-mash-header .tmh-nav {
+  height: var(--tmh-nav-fixed-height);
+  min-height: var(--tmh-nav-fixed-height);
+}
 @media (max-width: 900px) {
   .three-mash-header {
     --tmh-announcement-fixed-height: 76px;
   }
-
-  .three-mash-header .tmh-announcement {
-    font-size: 12.5px;
-    line-height: 1.25;
-  }
-
-  .three-mash-header .tmh-announcement-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    align-content: center;
-    gap: 3px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-  }
-
-  .three-mash-header .tmh-announcement-inner > * {
-    min-width: 0;
-    max-width: 100%;
-    margin: 0;
-  }
-
-  .three-mash-header .tmh-announcement [data-tmh-ann-text] {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
 }
-
-@media (max-width: 620px) {
-  .three-mash-header {
-    --tmh-announcement-fixed-height: 76px;
-    --tmh-nav-fixed-height: 66px;
-  }
-}
-
-.three-mash-header .tmh-nav {
-  height: var(--tmh-nav-fixed-height);
-  min-height: var(--tmh-nav-fixed-height);
+  .three-mash-header .tmh-wrap {
+  width: min(100%, 1240px);
+  margin: 0 auto;
+  padding: 0 32px;
   display: flex;
   align-items: center;
+}
+.three-mash-header .tmh-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 38px;
   overflow: visible;
 }
-
 .three-mash-header .tmh-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0;
-  flex: 0 0 116px;
-  width: 116px;
-  min-width: 0;
-  max-width: 116px;
-  margin-right: 6px;
-  color: var(--tmh-text);
-  text-decoration: none;
-  overflow: visible;
+  flex-shrink: 0;
 }
-
 .three-mash-header .tmh-logo-image-wrap {
-  position: relative;
-  display: block;
-  width: min(var(--tmh-logo-image-width), 118px);
-  height: min(var(--tmh-logo-image-height), 25px);
-  flex: 0 0 auto;
-  transform: translate(var(--tmh-logo-image-x), var(--tmh-logo-image-y));
-  opacity: var(--tmh-logo-image-opacity);
+  display: flex;
+  align-items: center;
 }
-
-.three-mash-header .tmh-logo-image-wrap img,
-.three-mash-header .tmh-logo > img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  flex: 0 0 auto;
-  object-fit: var(--tmh-logo-image-fit);
-  filter:
-    brightness(var(--tmh-logo-image-brightness))
-    contrast(var(--tmh-logo-image-contrast))
-    saturate(var(--tmh-logo-image-saturation))
-    hue-rotate(var(--tmh-logo-image-hue))
-    invert(var(--tmh-logo-image-invert));
-}
-
 .three-mash-header .tmh-desktop-nav {
-  display: block;
-  flex: 1 1 auto;
-  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex: 1;
 }
-
 .three-mash-header .tmh-menu {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
-
-.three-mash-header .tmh-menu > li {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .three-mash-header .tmh-menu-trigger,
 .three-mash-header .tmh-plain-link {
-  min-height: 70px;
-  max-width: 180px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 0 13px;
-  margin: 0;
-  border: 0;
-  background: transparent;
-  color: var(--tmh-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
   font-family: var(--tm-theme-font-body, "Inter", sans-serif);
   font-size: 14.5px;
   font-weight: 500;
-  line-height: 1.2;
   text-decoration: none;
-  cursor: pointer;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  text-align: left;
 }
-
-.three-mash-header .tmh-caret {
-  display: block;
-  width: 10px;
-  height: 8px;
-  flex: 0 0 auto;
-  color: var(--tmh-muted);
-  transform: translateY(1px);
-}
-
 .three-mash-header .tmh-actions {
   display: flex;
   align-items: center;
-  gap: 22px;
-  flex: 0 0 auto;
-  min-width: 0;
-  position: relative;
+  gap: 16px;
+  flex-shrink: 0;
 }
-
 .three-mash-header .tmh-inline-search {
-  position: relative;
-  min-width: 0;
-  margin: 0;
   display: flex;
   align-items: center;
-  gap: 0;
-  flex: 0 0 auto;
-  border: 1px solid transparent;
-  border-radius: 999px;
 }
-
 .three-mash-header .tmh-action-wrap {
   position: relative;
-  width: 24px;
-  height: 24px;
-  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
 }
-
-.three-mash-header .tmh-actions > a,
 .three-mash-header .tmh-icon-button,
 .three-mash-header .tmh-action-button {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  min-height: 24px;
-  padding: 0;
-  margin: 0;
-  border: 0;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--tmh-text);
-  position: relative;
-  text-decoration: none;
-}
-
-.three-mash-header .tmh-action-wrap {
-  position: relative;
-  width: 24px;
-  height: 24px;
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.three-mash-header .tmh-cart-badge {
-  position: absolute;
-  right: -5px;
-  top: -5px;
-  min-width: 16px;
-  height: 16px;
-  border-radius: 999px;
-  padding: 0 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--tmh-badge, #e2492f);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 800;
-  line-height: 1;
-  pointer-events: none;
-  z-index: 2;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
 }
-
-.three-mash-header .tmh-action-svg {
-  width: 22px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.three-mash-header .tmh-action-svg > svg,
-.three-mash-header .tmh-action-svg > img {
-  display: block;
-  width: 22px;
-  height: 22px;
-  max-width: 22px;
-  max-height: 22px;
-}
-
 .three-mash-header .tmh-mobile-menu {
   display: none;
-  position: relative;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 0;
-  color: var(--tmh-text);
+  background: none;
+  border: none;
   cursor: pointer;
-  margin: 0;
-  padding: 6px;
+  padding: 0;
+  color: inherit;
 }
-
-.three-mash-header .tmh-header-spacer { height: 0; }
-
+.three-mash-header .tmh-header-spacer {
+  width: 100%;
+}
 @media (max-width: 1000px) {
-  .three-mash-header .tmh-desktop-nav,
-  .three-mash-header .tmh-actions { display: none; }
+  .three-mash-header .tmh-desktop-nav { display: none; }
   .three-mash-header .tmh-mobile-menu { display: block; margin-left: auto; }
-  .three-mash-header .tmh-nav { gap: 18px; }
+  .three-mash-header .tmh-actions { display: none; }
 }
-
 @media (max-width: 620px) {
   .three-mash-header {
     --tmh-announcement-fixed-height: 76px;
     --tmh-nav-fixed-height: 66px;
   }
-  .three-mash-header .tmh-wrap,
-  .three-mash-header .tmh-announcement-inner {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .three-mash-header .tmh-nav {
-    gap: 12px;
-    flex-wrap: nowrap;
-  }
-  .three-mash-header .tmh-logo {
-    flex-basis: 112px;
-    width: 112px;
-    max-width: 112px;
-  }
-  .three-mash-header .tmh-logo-image-wrap,
-  .three-mash-header .tmh-logo > img {
-    width: min(var(--tmh-logo-image-width), 112px);
-    height: min(var(--tmh-logo-image-height), 24px);
-  }
-  .three-mash-header .tmh-header-spacer { height: 0; }
 }
 `;
 
@@ -940,7 +579,7 @@ const firstPaintProductRouteKeys = [
   MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG,
   TRASFORMER_COMP_FLOW_SLUG,
   TRASFORMER_LIGHT_GLASS_SLUG,
-  ...Object.keys(PRINTER_SPARE_PART_DETAIL_DATA_BY_SLUG),
+  ...Object.keys(printerSparePartDetailDataBySlug()),
   ...Object.keys(zirconBlockDetailDataBySlug()),
   ...Object.keys(labProductDetailDataBySlug()),
   ...Object.keys(englishProductRouteAliases),
@@ -1806,15 +1445,15 @@ function FlowLink({
         event.stopPropagation();
         if (onCloseMenu) onCloseMenu();
 
-        if (isFirstItem) {
+             if (isFirstItem) {
           scrollToSectionWithOffset("__top__", () => {
-            if (onToast) onToast(tLocalized("Zaten ilgili bölümdesiniz", "You are already in this section"));
+            if (onToast) onToast(tLocalized("Şu an bu bölümdesiniz", "You're viewing this section"));
           });
           return;
         }
 
         scrollToSectionWithOffset(sectionId, () => {
-          if (onToast) onToast(tLocalized("Zaten ilgili bölümdesiniz", "You are already in this section"));
+          if (onToast) onToast(tLocalized("Şu an bu bölümdesiniz", "You're viewing this section"));
         });
       }}
     >
@@ -1954,6 +1593,9 @@ export function ThreeMashHeader(props: Props) {
   const isAuthenticated = authState === "authenticated";
 
   useEffect(() => {
+    // Load Google Fonts non-blockingly (replaces the render-blocking @import
+    // that was previously in global.css / styles.css).
+    loadWebFonts();
     setIsHydrated(true);
 
     if (!customerStore._initialized && hasCustomerToken()) {
@@ -1961,7 +1603,7 @@ export function ThreeMashHeader(props: Props) {
         .then(() => {
           setAuthState(isCustomerAuthenticated());
         })
-        .catch(() => {});
+        .catch(() => { });
     }
 
     const unsubscribe = subscribeAuthState((nextState) => {
@@ -2046,18 +1688,18 @@ export function ThreeMashHeader(props: Props) {
   // Zirconia Blocks & Titanium and Dental Furnaces must not appear in /en.
   const productSecondary: MenuItem[] = isEnglishLocale()
     ? [
-        {
-          title: sourceRichText(props.product4Title, defaultProductSecondary[0].title),
-          description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]),
-          href: productRouteHref(props.product4Href, defaultProductSecondary[0].href),
-          icon: ecoCuringIcon,
-        },
-      ]
+      {
+        title: sourceRichText(props.product4Title, defaultProductSecondary[0].title),
+        description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]),
+        href: productRouteHref(props.product4Href, defaultProductSecondary[0].href),
+        icon: ecoCuringIcon,
+      },
+    ]
     : [
-        { title: sourceRichText(props.product4Title, defaultProductSecondary[0].title), description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]), href: productRouteHref(props.product4Href, defaultProductSecondary[0].href), icon: ecoCuringIcon },
-        { title: sourceRichText(props.product5Title, defaultProductSecondary[1].title), description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]), href: productRouteHref(props.product5Href, defaultProductSecondary[1].href), icon: ecoBlocksIcon },
-        { title: sourceRichText(props.product6Title, defaultProductSecondary[2].title), description: sourceRichText(props.product6Description, defaultProductSecondary[2].description, ["sinterleme cozumleri"]), href: productRouteHref(props.product6Href, defaultProductSecondary[2].href), icon: ecoOvenIcon },
-      ];
+      { title: sourceRichText(props.product4Title, defaultProductSecondary[0].title), description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]), href: productRouteHref(props.product4Href, defaultProductSecondary[0].href), icon: ecoCuringIcon },
+      { title: sourceRichText(props.product5Title, defaultProductSecondary[1].title), description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]), href: productRouteHref(props.product5Href, defaultProductSecondary[1].href), icon: ecoBlocksIcon },
+      { title: sourceRichText(props.product6Title, defaultProductSecondary[2].title), description: sourceRichText(props.product6Description, defaultProductSecondary[2].description, ["sinterleme cozumleri"]), href: productRouteHref(props.product6Href, defaultProductSecondary[2].href), icon: ecoOvenIcon },
+    ];
 
   const whyItems: FlowItem[] = [
     { number: text(props.why1Number, "01"), title: text(props.why1Title, tLocalized("Yılda $126K'ya varan görünmez kayıp", "Invisible loss up to $126K per year")), description: text(props.why1Description, tLocalized("Tekrarlanan işlerin kliniğinize gerçek maliyeti", "The true cost of remakes to your clinic")), href: "/" },
@@ -2331,9 +1973,24 @@ export function ThreeMashHeader(props: Props) {
 
     const timeout = window.setTimeout(() => {
       committedSuggestionSearchRef.current = query;
-      Promise.resolve(updateProductSearchList(productList, query)).finally(() => {
-        setResolvedSearchProductList({ ...productList, data: productList.data || [] } as IkasProductList);
-      });
+      if (!query) {
+        setResolvedSearchProductList({ ...productList, data: [] } as IkasProductList);
+        return;
+      }
+
+      void (async () => {
+        try {
+          const response = await apiSearchProducts({
+            input: { query, page: 1, perPage: 8 },
+          } as Parameters<typeof apiSearchProducts>[0]);
+          setResolvedSearchProductList({
+            ...productList,
+            data: response.data?.data || [],
+          } as IkasProductList);
+        } catch {
+          setResolvedSearchProductList({ ...productList, data: [] } as IkasProductList);
+        }
+      })();
     }, 180);
 
     return () => window.clearTimeout(timeout);
@@ -2958,7 +2615,7 @@ export function ThreeMashHeader(props: Props) {
                         onClick={() => {
                           try {
                             sessionStorage.removeItem("tm_market_nav_stack");
-                          } catch {}
+                          } catch { }
                         }}
                         dangerouslySetInnerHTML={richText(richTextValue(props.storePanelButtonText, "Markete git", "Go to Store"), props)}
                       />

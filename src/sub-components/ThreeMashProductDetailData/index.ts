@@ -3870,10 +3870,12 @@ type PrinterSparePartConfig = {
   videoText: string;
 };
 
-const PRINTER_SPARE_CATEGORY = {
-  text: tLocalized("3D Yazıcı Yedek Parçaları", "3D Printer Spare Parts"),
-  href: "/3d-yazici-yedek-parcalari",
-};
+function getPrinterSpareCategory() {
+  return {
+    text: tLocalized("3D Yazıcı Yedek Parçaları", "3D Printer Spare Parts"),
+    href: "/3d-yazici-yedek-parcalari",
+  };
+}
 
 function thumbUrl(src: string) {
   return src.replace("/1080/", "/360/");
@@ -3943,6 +3945,7 @@ function spareRelatedItems(currentSlug: string): NonNullable<ProductDetailTempla
 }
 
 function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTemplateData {
+  const printerSpareCategory = getPrinterSpareCategory();
   const gallery = normalizedGallery(config.images, config.productText);
   const mainImage = config.images[0] || gallery[0]?.src || "";
   return {
@@ -3957,8 +3960,8 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
     breadcrumb: {
       homeText: tLocalized("Ana sayfa", "Home"),
       homeHref: "/",
-      categoryText: PRINTER_SPARE_CATEGORY.text,
-      categoryHref: PRINTER_SPARE_CATEGORY.href,
+      categoryText: printerSpareCategory.text,
+      categoryHref: printerSpareCategory.href,
       productText: config.productText,
     },
     hero: {
@@ -4033,7 +4036,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
       chips: config.ecosystemChips,
       buttons: [
         { text: tLocalized("Teknik destek al", "Get technical support"), href: tLocalized("/pages/iletisim", "/pages/iletisim") },
-        { text: tLocalized("Yedek parçaları gör", "See spare parts"), href: PRINTER_SPARE_CATEGORY.href, variant: "line" },
+        { text: tLocalized("Yedek parçaları gör", "See spare parts"), href: printerSpareCategory.href, variant: "line" },
       ],
     },
     faq: {
@@ -4051,7 +4054,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
         titleHtml: config.videoTitleHtml,
         sideHtml: config.videoSideHtml,
         href: config.videoHref,
-        image: youtubePreview(config.videoHref, mainImage),
+        image: youtubePreview(config.videoHref, ""),
         imageAlt: `${config.productText} video`,
         title: config.videoTitle,
         text: config.videoText,
@@ -4076,7 +4079,8 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
   };
 }
 
-const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
+function printerSparePartConfigs(): PrinterSparePartConfig[] {
+  return [
   {
     slug: CREALITY_HALOT_SKY_LCD_KIT_SLUG,
     productText: tLocalized("Creality Halot Sky LCD Ekran Kiti", "Creality Halot Sky LCD ekran kiti"),
@@ -4536,22 +4540,34 @@ const PRINTER_SPARE_PART_CONFIGS: PrinterSparePartConfig[] = [
     videoTitle: tLocalized("MASH P16L reçine tankı", "MASH P16L Reçine Tankı"),
     videoText: tLocalized("Tank, film, hızlı kilit ve test baskısı kontrollerine odaklanan bakım akışı.", "A maintenance workflow focused on tank, film, quick-lock, and test print checks."),
   },
-];
+  ];
+}
 
-export const PRINTER_SPARE_PART_DETAIL_DATA_BY_SLUG: Record<string, ProductDetailTemplateData> = Object.fromEntries(
-  PRINTER_SPARE_PART_CONFIGS.map((config) => [config.slug, printerSparePartDetail(config)]),
-);
+let cachedPrinterSpareLocale: "tr" | "en" | null = null;
+let cachedPrinterSpareData: Record<string, ProductDetailTemplateData> | null = null;
 
-const PRINTER_SPARE_PART_ALIASES: Record<string, string[]> = {
-  [CREALITY_HALOT_SKY_LCD_KIT_SLUG]: ["creality-halot-sky-lcd-ekran-kiti", "halot-sky-lcd-ekran-kiti", "6k-mono-lcd-ekran-kiti"],
-  [PIOCREAT_C01_LCD_KIT_SLUG]: ["piocreat-c01-lcd-ekran-kiti", "c01-lcd-ekran-kiti"],
-  [ACF_FEP_FILM_SLUG]: ["seffaf-acf-film", "acf-film", "fep-film", tLocalized("lcd-dlp-recine-3d-yazicilar-icin", "lcd-dlp-recine-3d-yazicilar-icin"), "seffaf-fep-film"],
-  [MASH_P16L_MAINBOARD_SLUG]: ["mash-p16l-ana-kart", "p16l-ana-kart", "kontrol-karti"],
-  [MASH_P16L_LARGE_BUILD_PLATE_SLUG]: [tLocalized("mash-p16l-buyuk-baski-tablasi", "mash-p16l-buyuk-baski-tablasi"), "211x118mm", "211x118-mm", tLocalized("p16l-buyuk-baski-tablasi", "p16l-buyuk-baski-tablasi")],
-  [MASH_P16L_SMALL_BUILD_PLATE_SLUG]: [tLocalized("mash-p16l-kucuk-baski-tablasi", "mash-p16l-kucuk-baski-tablasi"), tLocalized("mash-p16l-kucuk-hizli-baski-tablasi", "mash-p16l-kucuk-hizli-baski-tablasi"), tLocalized("hizli-baski", "hizli-baski"), "tekli-vaka"],
-  [MASH_P16L_LCD_SCREEN_SLUG]: ["mash-p16l-16k-monokrom-lcd-ekran", "p16l-16k-lcd", "p16l-lcd-ekran"],
-  [MASH_P16L_RESIN_TANK_SLUG]: ["mash-p16l-recine-tanki", "p16l-recine-tanki", "800ml", "800-ml"],
-};
+export function printerSparePartDetailDataBySlug(): Record<string, ProductDetailTemplateData> {
+  const locale = isEnglishLocale() ? "en" : "tr";
+  if (cachedPrinterSpareLocale === locale && cachedPrinterSpareData) return cachedPrinterSpareData;
+  cachedPrinterSpareLocale = locale;
+  cachedPrinterSpareData = Object.fromEntries(
+    printerSparePartConfigs().map((config) => [config.slug, printerSparePartDetail(config)]),
+  );
+  return cachedPrinterSpareData;
+}
+
+function printerSparePartAliases(): Record<string, string[]> {
+  return {
+    [CREALITY_HALOT_SKY_LCD_KIT_SLUG]: ["creality-halot-sky-lcd-ekran-kiti", "halot-sky-lcd-ekran-kiti", "6k-mono-lcd-ekran-kiti"],
+    [PIOCREAT_C01_LCD_KIT_SLUG]: ["piocreat-c01-lcd-ekran-kiti", "c01-lcd-ekran-kiti"],
+    [ACF_FEP_FILM_SLUG]: ["seffaf-acf-film", "acf-film", "fep-film", tLocalized("lcd-dlp-recine-3d-yazicilar-icin", "lcd-dlp-recine-3d-yazicilar-icin"), "seffaf-fep-film"],
+    [MASH_P16L_MAINBOARD_SLUG]: ["mash-p16l-ana-kart", "p16l-ana-kart", "kontrol-karti"],
+    [MASH_P16L_LARGE_BUILD_PLATE_SLUG]: [tLocalized("mash-p16l-buyuk-baski-tablasi", "mash-p16l-buyuk-baski-tablasi"), "211x118mm", "211x118-mm", tLocalized("p16l-buyuk-baski-tablasi", "p16l-buyuk-baski-tablasi")],
+    [MASH_P16L_SMALL_BUILD_PLATE_SLUG]: [tLocalized("mash-p16l-kucuk-baski-tablasi", "mash-p16l-kucuk-baski-tablasi"), tLocalized("mash-p16l-kucuk-hizli-baski-tablasi", "mash-p16l-kucuk-hizli-baski-tablasi"), tLocalized("hizli-baski", "hizli-baski"), "tekli-vaka"],
+    [MASH_P16L_LCD_SCREEN_SLUG]: ["mash-p16l-16k-monokrom-lcd-ekran", "p16l-16k-lcd", "p16l-lcd-ekran"],
+    [MASH_P16L_RESIN_TANK_SLUG]: ["mash-p16l-recine-tanki", "p16l-recine-tanki", "800ml", "800-ml"],
+  };
+}
 
 type ZirconBlockConfig = {
   slug: string;
@@ -4987,95 +5003,112 @@ type LabProductConfig = {
   videoText: string;
 };
 
-const WASH_CURE_CATEGORY: LabProductCategory = {
-  text: tLocalized("Yıkama & Kürleme Cihazları", "Washing & Curing Devices"),
-  href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
-  label: tLocalized("Yıkama & Kürleme", "Wash & Cure"),
-  relatedLabel: tLocalized("İlgili Cihazlar", "Related Devices"),
-  relatedTitleHtml: tLocalized("Aynı baskı akışında <span class=\"em\">birlikte çalışanlar.</span>", "Those who <span class=\"em\">work together</span> in the same print workflow."),
-  announcementStrong: tLocalized("Post-process kontrolü.", "Post-process check."),
-  announcementText: tLocalized("Yıkama ve kürleme adımlarını kullandığınız reçineyle birlikte netleştiriyoruz.", "We clarify the washing and curing steps together with the resin you use."),
-  ecosystemLabel: tLocalized("Post-Process Ekosistemi", "Post-Process Ecosystem"),
-  ecosystemTitleHtml: tLocalized("Baskı sonucu, <span class=\"em\">yıkama ve kürlemeyle</span> tamamlanır.", "The print result is completed with <span class=\"em\">washing and curing.</span>"),
-  ecosystemTextHtml: tLocalized("Reçine baskıda nihai mekanik değerler; doğru yıkama, kurutma ve UV kürleme süreciyle korunur. Cihazı reçine ve iş akışınıza göre birlikte konumlandırabiliriz.", "The final mechanical values in resin printing are preserved through the correct washing, drying, and UV curing process. We can position the device together according to your resin and workflow."),
-  ecosystemChips: [tLocalized("Yıkama", "Washing"), tLocalized("Kürleme", "Curing"), tLocalized("365 / 405 nm", "365/405nm"), tLocalized("Reçine sonrası işlem", "Post-resin processing")],
+type LabCategories = {
+  washCure: LabProductCategory;
+  printer: LabProductCategory;
+  scanner: LabProductCategory;
+  furnace: LabProductCategory;
+  titanium: LabProductCategory;
+  system: LabProductCategory;
 };
+
+let cachedLabCategoriesLocale: "tr" | "en" | null = null;
+let cachedLabCategories: LabCategories | null = null;
+
+function getLabCategories(): LabCategories {
+  const locale = isEnglishLocale() ? "en" : "tr";
+  if (cachedLabCategoriesLocale === locale && cachedLabCategories) return cachedLabCategories;
+
+  cachedLabCategoriesLocale = locale;
+  cachedLabCategories = {
+    washCure: {
+      text: tLocalized("Yıkama & Kürleme Cihazları", "Washing & Curing Devices"),
+      href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
+      label: tLocalized("Yıkama & Kürleme", "Wash & Cure"),
+      relatedLabel: tLocalized("İlgili Cihazlar", "Related Devices"),
+      relatedTitleHtml: tLocalized("Aynı baskı akışında <span class=\"em\">birlikte çalışanlar.</span>", "Those who <span class=\"em\">work together</span> in the same print workflow."),
+      announcementStrong: tLocalized("Post-process kontrolü.", "Post-process check."),
+      announcementText: tLocalized("Yıkama ve kürleme adımlarını kullandığınız reçineyle birlikte netleştiriyoruz.", "We clarify the washing and curing steps together with the resin you use."),
+      ecosystemLabel: tLocalized("Post-Process Ekosistemi", "Post-Process Ecosystem"),
+      ecosystemTitleHtml: tLocalized("Baskı sonucu, <span class=\"em\">yıkama ve kürlemeyle</span> tamamlanır.", "The print result is completed with <span class=\"em\">washing and curing.</span>"),
+      ecosystemTextHtml: tLocalized("Reçine baskıda nihai mekanik değerler; doğru yıkama, kurutma ve UV kürleme süreciyle korunur. Cihazı reçine ve iş akışınıza göre birlikte konumlandırabiliriz.", "The final mechanical values in resin printing are preserved through the correct washing, drying, and UV curing process. We can position the device together according to your resin and workflow."),
+      ecosystemChips: [tLocalized("Yıkama", "Washing"), tLocalized("Kürleme", "Curing"), tLocalized("365 / 405 nm", "365/405nm"), tLocalized("Reçine sonrası işlem", "Post-resin processing")],
+    },
+    printer: {
+      text: tLocalized("3D Yazıcılar", "3D Printers"),
+      href: "/3d-yazicilar",
+      label: tLocalized("3D Yazıcı", "3D Printer"),
+      relatedLabel: tLocalized("İlgili Yazıcılar", "Related Printers"),
+      relatedTitleHtml: tLocalized("Aynı üretim ekosisteminde <span class=\"em\">birlikte değerlendirilenler.</span>", "Those <span class=\"em\">evaluated together</span> in the same production ecosystem."),
+      announcementStrong: tLocalized("Yazıcı seçimi.", "Printer selection."),
+      announcementText: tLocalized("Uygulama, materyal ve üretim hacminize göre doğru 3D yazıcıyı birlikte seçiyoruz.", "We help you choose the right 3D printer together, based on your application, material, and production volume."),
+      ecosystemLabel: tLocalized("Baskı Ekosistemi", "Print Ecosystem"),
+      ecosystemTitleHtml: tLocalized("Yazıcı seçimi, <span class=\"em\">materyal ve post-process</span> ile tamamlanır.", "Printer selection is completed with <span class=\"em\">material and post-process.</span>"),
+      ecosystemTextHtml: tLocalized("Dental ve mücevher üretiminde yazıcı, reçine, yıkama-kürleme ve teknik parametreler birlikte çalışır. Cihaz seçimini üretim hedefinize göre birlikte netleştirebiliriz.", "In dental and jewelry production, the printer, resin, wash-cure process, and technical parameters work together. We can clarify your device choice together based on your production goals."),
+      ecosystemChips: [tLocalized("3D yazıcı", "3D printer"), tLocalized("Reçine", "Resin"), tLocalized("Yıkama & kürleme", "Washing & curing"), tLocalized("Parametre desteği", "Parameter support")],
+    },
+    scanner: {
+      text: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"),
+      href: "/masasustu-tarayicilar",
+      label: tLocalized("Masaüstü Tarayıcı", "Desktop Scanner"),
+      relatedLabel: tLocalized("İlgili Tarayıcılar", "Related Scanners"),
+      relatedTitleHtml: tLocalized("Aynı laboratuvarda <span class=\"em\">birlikte değerlendirilenler.</span>", "Those <span class=\"em\">evaluated together</span> in the same lab."),
+      announcementStrong: tLocalized("Tarama doğruluğu.", "Scanning accuracy."),
+      announcementText: tLocalized("Laboratuvar üretim hacminize göre doğru masaüstü tarayıcıyı birlikte seçiyoruz.", "We select the right desktop scanner together, based on your laboratory production volume."),
+      ecosystemLabel: "Tarama Ekosistemi",
+      ecosystemTitleHtml: tLocalized("Dijital iş akışı, <span class=\"em\">doğru taramayla</span> başlar.", "The digital workflow starts <span class=\"em\">with the right scan.</span>"),
+      ecosystemTextHtml: tLocalized("Tarama doğruluğu; model, implant bar ve tam çene iş akışlarında CAD/CAM üretimin temelini oluşturur. Tarayıcı seçimini üretim hacmi ve vaka tiplerinize göre birlikte planlayabiliriz.", "Scanning accuracy forms the foundation of CAD/CAM production in model, implant bar, and full-arch workflows. We can plan scanner selection together based on your production volume and case types."),
+      ecosystemChips: [tLocalized("Model tarama", "Model scanning"), tLocalized("Doku tarama", "tissue scanning"), tLocalized("CAD/CAM", "CAD/CAM"), tLocalized("Laboratuvar üretimi", "Laboratory production")],
+    },
+    furnace: {
+      text: tLocalized("Dental Fırınlar", "Dental Furnaces"),
+      href: "/dental-firinlar",
+      label: tLocalized("Dental Fırın", "Dental Furnace"),
+      relatedLabel: tLocalized("İlgili Fırınlar", "Related Furnaces"),
+      relatedTitleHtml: tLocalized("Aynı laboratuvarda <span class=\"em\">ısı akışını tamamlayanlar.</span>", "Those who <span class=\"em\">complete the heat workflow</span> in the same lab."),
+      announcementStrong: tLocalized("Fırın seçimi.", "Furnace selection."),
+      announcementText: tLocalized("Zirkon, press veya porselen iş akışınıza göre doğru fırını birlikte seçiyoruz.", "We choose the right furnace together based on your zirconia, press, or porcelain workflow."),
+      ecosystemLabel: tLocalized("Fırın Ekosistemi", "Furnace Ecosystem"),
+      ecosystemTitleHtml: tLocalized("Restorasyon kalitesi, <span class=\"em\">kontrollü ısıyla</span> tamamlanır.", "Restoration quality is completed <span class=\"em\">with controlled heat.</span>"),
+      ecosystemTextHtml: tLocalized("Sinterleme, press ve porselen pişiriminde doğru sıcaklık aralığı ve fırın tipi kritik rol oynar. Laboratuvar iş akışınıza göre fırın seçimini birlikte netleştirebiliriz.", "The correct temperature range and furnace type play a critical role in sintering, press, and porcelain firing. We can clarify furnace selection together according to your laboratory workflow."),
+      ecosystemChips: [tLocalized("Sinterleme", "sintering"), tLocalized("Press", "press"), tLocalized("Porselen", "Porcelain"), tLocalized("Vakum / sıcaklık kontrolü", "Vacuum / temperature control")],
+    },
+    titanium: {
+      text: tLocalized("Titanyum Diskler", "Titanium Discs"),
+      href: "/titanyum-diskler",
+      label: tLocalized("Titanyum Disk", "Titanium Disc"),
+      relatedLabel: tLocalized("İlgili Malzemeler", "Related Materials"),
+      relatedTitleHtml: tLocalized("CAD/CAM iş akışında <span class=\"em\">birlikte kullanılanlar.</span>", "<span class=\"em\">Used together</span> in the CAD/CAM workflow."),
+      announcementStrong: tLocalized("CAD/CAM materyal seçimi.", "CAD/CAM material selection."),
+      announcementText: tLocalized("Disk ölçüsü ve endikasyon uyumunu frezeleme akışınızla birlikte kontrol ediyoruz.", "We check disk size and indication compatibility together with your milling workflow."),
+      ecosystemLabel: "CAD/CAM Ekosistemi",
+      ecosystemTitleHtml: tLocalized("Titanyum disk, <span class=\"em\">implant üstü işlerde</span> güven verir.", "Titanium disc provides confidence <span class=\"em\">in implant-supported work.</span>"),
+      ecosystemTextHtml: tLocalized("İmplant üstü restorasyonlarda materyal seçimi, disk ölçüsü ve frezeleme stratejisi birlikte değerlendirilmelidir. Uyumlu CAD/CAM akışını satın alma öncesi netleştirebiliriz.", "Material selection, disc size, and milling strategy should be evaluated together for implant-supported restorations. We can clarify the compatible CAD/CAM workflow before purchase."),
+      ecosystemChips: [tLocalized("Grade 5 ELI", "Grade 5 ELI"), tLocalized("CAD/CAM", "CAD/CAM"), tLocalized("Ø98.5 mm", "Ø98.5mm"), tLocalized("İmplant üstü restorasyon", "Implant-supported restoration")],
+    },
+    system: {
+      text: tLocalized("Sistemler", "Systems"),
+      href: "/sistemler",
+      label: tLocalized("Sistem", "System"),
+      relatedLabel: tLocalized("İlgili Sistemler", "Related Systems"),
+      relatedTitleHtml: tLocalized("Kompozit restorasyonda <span class=\"em\">birlikte çalışanlar.</span>", "<span class=\"em\">Products that work together</span> in composite restoration."),
+      announcementStrong: tLocalized("Kompozit sistem akışı.", "Composite system workflow."),
+      announcementText: tLocalized("Mufla, kompozit ve baskı akışını tam çene restorasyon hedefinize göre birlikte değerlendiriyoruz.", "We evaluate the muffle, composite, and printing workflow together according to your full-arch restoration goal."),
+      ecosystemLabel: "Restorasyon Ekosistemi",
+      ecosystemTitleHtml: tLocalized("Tam çene kompozit işlerde <span class=\"em\">sistem birlikte çalışır.</span>", "In full-arch composite work, <span class=\"em\">the system works together.</span>"),
+      ecosystemTextHtml: tLocalized("Trasformer sistemi; ışık geçirgenliği, stabilite ve kompozit uygulamasını aynı restorasyon akışında birleştirir. Ürün seçimini vaka ve laboratuvar sürecinize göre birlikte netleştirebiliriz.", "The Trasformer system combines light transmission, stability, and composite application in the same restoration workflow. We can clarify product selection together according to your case and laboratory process."),
+      ecosystemChips: ["Light Glass mufla", tLocalized("Comp Flow", "Comp Flow"), tLocalized("Tam çene kompozit", "Full-arch composite"), tLocalized("Işık geçirgenliği", "Light transmittance")],
+    },
+  };
+
+  return cachedLabCategories;
+}
 
 const MASH_C1E_MAIN_IMAGE =
   "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/e7c22c86-93e4-4c53-92f8-969d358e0c0f/1080/mash-c1e-dental-post-cure-cihazi.webp";
 
 const MASH_W1E_MAIN_IMAGE =
   "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp";
-
-const PRINTER_CATEGORY: LabProductCategory = {
-  text: tLocalized("3D Yazıcılar", "3D Printers"),
-  href: "/3d-yazicilar",
-  label: tLocalized("3D Yazıcı", "3D Printer"),
-  relatedLabel: tLocalized("İlgili Yazıcılar", "Related Printers"),
-  relatedTitleHtml: tLocalized("Aynı üretim ekosisteminde <span class=\"em\">birlikte değerlendirilenler.</span>", "Those <span class=\"em\">evaluated together</span> in the same production ecosystem."),
-  announcementStrong: tLocalized("Yazıcı seçimi.", "Printer selection."),
-  announcementText: tLocalized("Uygulama, materyal ve üretim hacminize göre doğru 3D yazıcıyı birlikte seçiyoruz.", "We help you choose the right 3D printer together, based on your application, material, and production volume."),
-  ecosystemLabel: tLocalized("Baskı Ekosistemi", "Print Ecosystem"),
-  ecosystemTitleHtml: tLocalized("Yazıcı seçimi, <span class=\"em\">materyal ve post-process</span> ile tamamlanır.", "Printer selection is completed with <span class=\"em\">material and post-process.</span>"),
-  ecosystemTextHtml: tLocalized("Dental ve mücevher üretiminde yazıcı, reçine, yıkama-kürleme ve teknik parametreler birlikte çalışır. Cihaz seçimini üretim hedefinize göre birlikte netleştirebiliriz.", "In dental and jewelry production, the printer, resin, wash-cure process, and technical parameters work together. We can clarify your device choice together based on your production goals."),
-  ecosystemChips: [tLocalized("3D yazıcı", "3D printer"), tLocalized("Reçine", "Resin"), tLocalized("Yıkama & kürleme", "Washing & curing"), tLocalized("Parametre desteği", "Parameter support")],
-};
-
-const SCANNER_CATEGORY: LabProductCategory = {
-  text: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"),
-  href: "/masasustu-tarayicilar",
-  label: tLocalized("Masaüstü Tarayıcı", "Desktop Scanner"),
-  relatedLabel: tLocalized("İlgili Tarayıcılar", "Related Scanners"),
-  relatedTitleHtml: tLocalized("Aynı laboratuvarda <span class=\"em\">birlikte değerlendirilenler.</span>", "Those <span class=\"em\">evaluated together</span> in the same lab."),
-  announcementStrong: tLocalized("Tarama doğruluğu.", "Scanning accuracy."),
-  announcementText: tLocalized("Laboratuvar üretim hacminize göre doğru masaüstü tarayıcıyı birlikte seçiyoruz.", "We select the right desktop scanner together, based on your laboratory production volume."),
-  ecosystemLabel: "Tarama Ekosistemi",
-  ecosystemTitleHtml: tLocalized("Dijital iş akışı, <span class=\"em\">doğru taramayla</span> başlar.", "The digital workflow starts <span class=\"em\">with the right scan.</span>"),
-  ecosystemTextHtml: tLocalized("Tarama doğruluğu; model, implant bar ve tam çene iş akışlarında CAD/CAM üretimin temelini oluşturur. Tarayıcı seçimini üretim hacmi ve vaka tiplerinize göre birlikte planlayabiliriz.", "Scanning accuracy forms the foundation of CAD/CAM production in model, implant bar, and full-arch workflows. We can plan scanner selection together based on your production volume and case types."),
-  ecosystemChips: [tLocalized("Model tarama", "Model scanning"), tLocalized("Doku tarama", "tissue scanning"), tLocalized("CAD/CAM", "CAD/CAM"), tLocalized("Laboratuvar üretimi", "Laboratory production")],
-};
-
-const FURNACE_CATEGORY: LabProductCategory = {
-  text: tLocalized("Dental Fırınlar", "Dental Furnaces"),
-  href: "/dental-firinlar",
-  label: tLocalized("Dental Fırın", "Dental Furnace"),
-  relatedLabel: tLocalized("İlgili Fırınlar", "Related Furnaces"),
-  relatedTitleHtml: tLocalized("Aynı laboratuvarda <span class=\"em\">ısı akışını tamamlayanlar.</span>", "Those who <span class=\"em\">complete the heat workflow</span> in the same lab."),
-  announcementStrong: tLocalized("Fırın seçimi.", "Furnace selection."),
-  announcementText: tLocalized("Zirkon, press veya porselen iş akışınıza göre doğru fırını birlikte seçiyoruz.", "We choose the right furnace together based on your zirconia, press, or porcelain workflow."),
-  ecosystemLabel: tLocalized("Fırın Ekosistemi", "Furnace Ecosystem"),
-  ecosystemTitleHtml: tLocalized("Restorasyon kalitesi, <span class=\"em\">kontrollü ısıyla</span> tamamlanır.", "Restoration quality is completed <span class=\"em\">with controlled heat.</span>"),
-  ecosystemTextHtml: tLocalized("Sinterleme, press ve porselen pişiriminde doğru sıcaklık aralığı ve fırın tipi kritik rol oynar. Laboratuvar iş akışınıza göre fırın seçimini birlikte netleştirebiliriz.", "The correct temperature range and furnace type play a critical role in sintering, press, and porcelain firing. We can clarify furnace selection together according to your laboratory workflow."),
-  ecosystemChips: [tLocalized("Sinterleme", "sintering"), tLocalized("Press", "press"), tLocalized("Porselen", "Porcelain"), tLocalized("Vakum / sıcaklık kontrolü", "Vacuum / temperature control")],
-};
-
-const TITANIUM_CATEGORY: LabProductCategory = {
-  text: tLocalized("Titanyum Diskler", "Titanium Discs"),
-  href: "/titanyum-diskler",
-  label: tLocalized("Titanyum Disk", "Titanium Disc"),
-  relatedLabel: tLocalized("İlgili Malzemeler", "Related Materials"),
-  relatedTitleHtml: tLocalized("CAD/CAM iş akışında <span class=\"em\">birlikte kullanılanlar.</span>", "<span class=\"em\">Used together</span> in the CAD/CAM workflow."),
-  announcementStrong: tLocalized("CAD/CAM materyal seçimi.", "CAD/CAM material selection."),
-  announcementText: tLocalized("Disk ölçüsü ve endikasyon uyumunu frezeleme akışınızla birlikte kontrol ediyoruz.", "We check disk size and indication compatibility together with your milling workflow."),
-  ecosystemLabel: "CAD/CAM Ekosistemi",
-  ecosystemTitleHtml: tLocalized("Titanyum disk, <span class=\"em\">implant üstü işlerde</span> güven verir.", "Titanium disc provides confidence <span class=\"em\">in implant-supported work.</span>"),
-  ecosystemTextHtml: tLocalized("İmplant üstü restorasyonlarda materyal seçimi, disk ölçüsü ve frezeleme stratejisi birlikte değerlendirilmelidir. Uyumlu CAD/CAM akışını satın alma öncesi netleştirebiliriz.", "Material selection, disc size, and milling strategy should be evaluated together for implant-supported restorations. We can clarify the compatible CAD/CAM workflow before purchase."),
-  ecosystemChips: [tLocalized("Grade 5 ELI", "Grade 5 ELI"), tLocalized("CAD/CAM", "CAD/CAM"), tLocalized("Ø98.5 mm", "Ø98.5mm"), tLocalized("İmplant üstü restorasyon", "Implant-supported restoration")],
-};
-
-const SYSTEM_CATEGORY: LabProductCategory = {
-  text: tLocalized("Sistemler", "Systems"),
-  href: "/sistemler",
-  label: tLocalized("Sistem", "System"),
-  relatedLabel: tLocalized("İlgili Sistemler", "Related Systems"),
-  relatedTitleHtml: tLocalized("Kompozit restorasyonda <span class=\"em\">birlikte çalışanlar.</span>", "<span class=\"em\">Products that work together</span> in composite restoration."),
-  announcementStrong: tLocalized("Kompozit sistem akışı.", "Composite system workflow."),
-  announcementText: tLocalized("Mufla, kompozit ve baskı akışını tam çene restorasyon hedefinize göre birlikte değerlendiriyoruz.", "We evaluate the muffle, composite, and printing workflow together according to your full-arch restoration goal."),
-  ecosystemLabel: "Restorasyon Ekosistemi",
-  ecosystemTitleHtml: tLocalized("Tam çene kompozit işlerde <span class=\"em\">sistem birlikte çalışır.</span>", "In full-arch composite work, <span class=\"em\">the system works together.</span>"),
-  ecosystemTextHtml: tLocalized("Trasformer sistemi; ışık geçirgenliği, stabilite ve kompozit uygulamasını aynı restorasyon akışında birleştirir. Ürün seçimini vaka ve laboratuvar sürecinize göre birlikte netleştirebiliriz.", "The Trasformer system combines light transmission, stability, and composite application in the same restoration workflow. We can clarify product selection together according to your case and laboratory process."),
-  ecosystemChips: ["Light Glass mufla", tLocalized("Comp Flow", "Comp Flow"), tLocalized("Tam çene kompozit", "Full-arch composite"), tLocalized("Işık geçirgenliği", "Light transmittance")],
-};
 
 function labPhotoSrc(config: LabProductConfig, index: number | undefined) {
   const usable = config.images.length > 1 ? config.images.slice(1) : config.images;
@@ -5099,6 +5132,13 @@ function labRelatedItems(config: LabProductConfig): NonNullable<ProductDetailTem
 }
 
 function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
+  const {
+    washCure: WASH_CURE_CATEGORY,
+    printer: PRINTER_CATEGORY,
+    scanner: SCANNER_CATEGORY,
+    furnace: FURNACE_CATEGORY,
+    system: SYSTEM_CATEGORY,
+  } = getLabCategories();
   const gallery = normalizedGallery(config.images, config.productText);
   const mainImage = config.images[0] || gallery[0]?.src || "";
   const quoteOnly = config.category === PRINTER_CATEGORY || config.category === WASH_CURE_CATEGORY;
@@ -5285,6 +5325,14 @@ function labProductConfigs(): LabProductConfig[] {
   if (cachedLabLocale === locale && cachedLabConfigs) return cachedLabConfigs;
 
   cachedLabLocale = locale;
+  const {
+    washCure: WASH_CURE_CATEGORY,
+    printer: PRINTER_CATEGORY,
+    scanner: SCANNER_CATEGORY,
+    furnace: FURNACE_CATEGORY,
+    titanium: TITANIUM_CATEGORY,
+    system: SYSTEM_CATEGORY,
+  } = getLabCategories();
   cachedLabConfigs = [
     {
       slug: MASH_P16L_PRINTER_SLUG,
@@ -6438,14 +6486,17 @@ function printerSparePartData(product: unknown) {
   const slug = productSlug(product);
   const name = slugifyProduct(stringValue((product as { name?: unknown } | null)?.name));
   const haystack = `${slug} ${name}`;
-  const direct = PRINTER_SPARE_PART_DETAIL_DATA_BY_SLUG[slug];
+  const detailData = printerSparePartDetailDataBySlug();
+  const configs = printerSparePartConfigs();
+  const aliasesBySlug = printerSparePartAliases();
+  const direct = detailData[slug];
   if (direct) return direct;
 
-  for (const config of PRINTER_SPARE_PART_CONFIGS) {
+  for (const config of configs) {
     const productText = slugifyProduct(config.productText);
-    const aliases = [config.slug, productText, ...(PRINTER_SPARE_PART_ALIASES[config.slug] || [])];
+    const aliases = [config.slug, productText, ...(aliasesBySlug[config.slug] || [])];
     if (aliases.some((alias) => alias && haystack.includes(alias))) {
-      return PRINTER_SPARE_PART_DETAIL_DATA_BY_SLUG[config.slug];
+      return detailData[config.slug];
     }
   }
 

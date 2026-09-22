@@ -154,12 +154,14 @@ export function ThreeMashRegisterPage(props: Props) {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [errorCode, setErrorCode] = useState<string | undefined>();
 
   async function submit(event: Event) {
     event.preventDefault();
     if (status === "loading" || !termsAccepted) return;
 
     setStatus("loading");
+    setErrorCode(undefined);
     try {
       const result = await register(
         customerStore,
@@ -181,6 +183,7 @@ export function ThreeMashRegisterPage(props: Props) {
         setTimeout(() => Router.navigate(localizedHref("/account")), 350);
         return;
       }
+      setErrorCode(result.errorCodes?.[0]);
       setStatus("error");
     } catch {
       setStatus("error");
@@ -408,11 +411,19 @@ export function ThreeMashRegisterPage(props: Props) {
                     "Account created successfully. Redirecting to your account."
                   )
                 : status === "error"
-                  ? text(
-                      props.errorMessage,
-                      tLocalized("Kayıt tamamlanamadı. Lütfen bilgilerinizi kontrol edin.", "Registration failed. Please check your information."),
-                      "Registration failed. Please check your information."
-                    )
+                  ? errorCode === "CUSTOMER_EMAIL_ALREADY_EXISTS"
+                    ? <>{tLocalized("Bu email adresiyle zaten bir hesabınız var. ", "An account with this email already exists. Please sign in.")} {" "}<a className="tma-auth-inline-link" href={href(props.loginButtonHref, "/account/login")}>{text(props.loginButtonText, tLocalized("Giriş yap", "Sign in"), "Sign in")}</a></>
+                    : errorCode === "EMAIL_IS_NOT_VERIFIED"
+                      ? tLocalized("Email adresiniz doğrulanmamış. Lütfen doğrulama emailini kontrol edin.", "Your email address is not verified. Please check your verification email.")
+                      : errorCode === "PHONE_IS_NOT_VERIFIED"
+                        ? tLocalized("Telefon numaranız doğrulanmamış.", "Your phone number is not verified.")
+                        : errorCode === "B2B_CUSTOMER_ACCOUNT_DISABLED" || errorCode === "CUSTOMER_ACCOUNT_DISABLED"
+                          ? tLocalized("Hesabınız pasif durumda. Lütfen destek ile iletişime geçin.", "Your account is disabled. Please contact support.")
+                          : text(
+                            props.errorMessage,
+                            tLocalized("Kayıt tamamlanamadı. Lütfen bilgilerinizi kontrol edin.", "Registration failed. Please check your information."),
+                            "Registration failed. Please check your information."
+                          )
                   : text(props.loadingText, tLocalized("Kaydınız oluşturuluyor...", "Creating account..."), "Creating account...")}
             </p>
           )}

@@ -3,17 +3,20 @@
 
 /* Main Search & All Products Page Container */
 .three-mash-products-page {
+  --tm-products-bg: var(--tm-theme-bg, #f7f8f4);
+  --tm-products-text: var(--tm-theme-text, #10120f);
+  --tm-products-muted: var(--tm-theme-muted, #64695f);
+  --tm-products-card: var(--tm-theme-surface, #ffffff);
+  --tm-products-line: var(--tm-theme-line, #e5e8e0);
+  --tm-products-accent: var(--tm-theme-accent, #DBFA37);
+
   min-height: 100vh;
   padding: 32px 0 80px;
-  background: var(--tm-products-bg, #f7f8f4);
-  color: var(--tm-products-text, #10120f);
+  background: var(--tm-products-bg);
+  color: var(--tm-products-text);
   font-family: var(--tm-theme-font-body, "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   position: relative;
   overflow-x: hidden;
-}
-
-.three-mash-products-page,
-.three-mash-products-page * {
   box-sizing: border-box;
 }
 
@@ -152,7 +155,7 @@
   width: 44px;
   height: 44px;
   border-radius: 7px;
-  background: color-mix(in srgb, var(--tm-products-accent, #c7f136) 22%, var(--tm-products-card, #ffffff));
+  background: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 22%, var(--tm-products-card, #ffffff));
   border: none;
   display: flex;
   align-items: center;
@@ -164,7 +167,7 @@
 }
 
 .tm-products-search-pill-btn:hover {
-  background: color-mix(in srgb, var(--tm-products-accent, #c7f136) 36%, var(--tm-products-card, #ffffff));
+  background: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 36%, var(--tm-products-card, #ffffff));
 }
 
 .tm-products-search-pill-btn svg {
@@ -233,13 +236,13 @@
 }
 
 .tm-products-category-pill:hover {
-  border-color: color-mix(in srgb, var(--tm-products-accent, #c7f136) 36%, var(--tm-products-line, #e2e5dc));
-  background: color-mix(in srgb, var(--tm-products-accent, #c7f136) 12%, var(--tm-products-card, #fff));
+  border-color: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 36%, var(--tm-products-line, #e2e5dc));
+  background: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 12%, var(--tm-products-card, #fff));
   color: var(--tm-products-text, #10120f);
 }
 
 .tm-products-category-pill.is-active {
-  border-color: color-mix(in srgb, var(--tm-products-accent, #c7f136) 52%, var(--tm-products-line, #e2e5dc));
+  border-color: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 52%, var(--tm-products-line, #e2e5dc));
   background: #ffffff;
   color: var(--tm-products-text, #10120f);
   font-weight: 700;
@@ -489,13 +492,13 @@
 .tm-products-layout-btn:focus-visible,
 .tm-products-sort-btn:focus-visible,
 .tm-products-sort-option:focus-visible {
-  outline: 2px solid var(--tm-products-accent, #c7f136);
+  outline: 2px solid var(--tm-products-accent, #DBFA37);
   outline-offset: 2px;
 }
 
 .tm-products-layout-btn.is-active {
   background: #ffffff;
-  border-color: color-mix(in srgb, var(--tm-products-accent, #c7f136) 52%, var(--tm-products-line, #e2e5dc));
+  border-color: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 52%, var(--tm-products-line, #e2e5dc));
   color: var(--tm-products-text, #10120f);
 }
 
@@ -568,9 +571,20 @@
   justify-content: center;
   position: relative;
 }
+.tm-products-card-media-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+}
 
 .tm-products-card-media img,
 .tm-products-card-media video {
+  position: relative;
+  z-index: 1;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
@@ -595,13 +609,7 @@
   color: color-mix(in srgb, var(--tm-products-text, #10120f) 18%, transparent);
 }
 
-.tm-products-card-media-loader {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 .tm-products-card-media-loader::before,
 .tm-products-card-spinner::before {
@@ -609,8 +617,8 @@
   width: 32px;
   height: 32px;
   border: 3px solid transparent;
-  border-top-color: var(--tm-products-accent, #c7f136);
-  border-right-color: color-mix(in srgb, var(--tm-products-accent, #c7f136) 38%, transparent);
+  border-top-color: var(--tm-products-accent, #DBFA37);
+  border-right-color: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 38%, transparent);
   border-radius: 50%;
   animation: tm-products-spin 780ms linear infinite;
 }
@@ -632,10 +640,10 @@
   z-index: 3;
 }
 
-/* "Popüler" rozeti — eski tema renkleri */
+/* "Popüler" rozeti — tema renkleri */
 .tm-products-badge-popular {
   background: #ffffff;
-  border: 1px solid color-mix(in srgb, var(--tm-products-accent, #c7f136) 52%, var(--tm-products-line, #e2e5dc));
+  border: 1px solid color-mix(in srgb, var(--tm-products-accent, #DBFA37) 52%, var(--tm-products-line, #e2e5dc));
   color: var(--tm-products-text, #10120f);
   font-size: 10px;
   font-weight: 700;
@@ -770,7 +778,7 @@
   min-height: 40px;
   border-radius: 8px;
   background: #ffffff;
-  border: 1px solid color-mix(in srgb, var(--tm-products-accent, #c7f136) 52%, var(--tm-products-line, #e2e5dc));
+  border: 1px solid color-mix(in srgb, var(--tm-products-accent, #DBFA37) 52%, var(--tm-products-line, #e2e5dc));
   color: var(--tm-products-text, #10120f);
   font-size: 13px;
   font-weight: 700;
@@ -786,8 +794,8 @@
 }
 
 .tm-products-card-cta-btn:hover {
-  background: color-mix(in srgb, var(--tm-products-accent, #c7f136) 36%, var(--tm-products-card, #fff));
-  border-color: color-mix(in srgb, var(--tm-products-accent, #c7f136) 64%, var(--tm-products-line, #e2e5dc));
+  background: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 36%, var(--tm-products-card, #fff));
+  border-color: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 64%, var(--tm-products-line, #e2e5dc));
 }
 
 .tm-products-card-cta-btn svg {
@@ -1037,27 +1045,37 @@
   }
 
   .tm-products-toolbar-row {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
     margin-top: 18px;
     margin-bottom: 18px;
+    width: 100%;
   }
 
-  .tm-products-toolbar-left,
-  .tm-products-sort-wrapper {
+  .tm-products-toolbar-left {
+    min-width: 0;
+    flex: 1 1 auto;
     width: 100%;
   }
 
   .tm-products-sort-wrapper {
+    min-width: 0;
+    max-width: 100%;
     justify-content: space-between;
     gap: 10px;
   }
 
+  .tm-products-sort-label {
+    font-size: 10px;
+  }
+
   .tm-products-sort-btn {
-    min-width: 0;
+    min-width: 108px;
     flex: 1;
-    height: 44px;
+    height: 40px;
+    font-size: 12px;
   }
 
   .tm-products-sort-dropdown {
@@ -1100,31 +1118,6 @@
     flex: 0 0 auto;
   }
 
-  .tm-products-toolbar-row {
-    align-items: center;
-    gap: 12px;
-  }
-
-  .tm-products-toolbar-left {
-    min-width: 0;
-    flex: 1 1 auto;
-  }
-
-  .tm-products-sort-wrapper {
-    min-width: 0;
-    max-width: 100%;
-  }
-
-  .tm-products-sort-label {
-    font-size: 10px;
-  }
-
-  .tm-products-sort-btn {
-    min-width: 108px;
-    height: 40px;
-    font-size: 12px;
-  }
-
   .tm-products-layout-switcher {
     display: none;
   }
@@ -1158,22 +1151,32 @@
   }
 }
 
-/* Gentle return pulse to highlight the last-viewed product */
+/* Highlight glow for the last-viewed product on return */
 .tm-products-card.tm-product-card-returned {
-  animation: tmProductCardPulse 1.8s ease-out;
+  animation: tmProductCardPulse 2.4s ease-out forwards;
+  z-index: 2;
 }
 
 @keyframes tmProductCardPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(219, 250, 55, 0.7), 0 8px 24px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
+    box-shadow: 0 0 0 0 rgba(219, 250, 55, 0.9), 0 0 20px rgba(219, 250, 55, 0.6), 0 12px 32px rgba(0, 0, 0, 0.16);
+    border-color: var(--tm-products-accent, #DBFA37);
+    transform: translateY(-4px);
   }
-  40% {
-    box-shadow: 0 0 0 4px rgba(219, 250, 55, 0.5), 0 12px 28px rgba(0, 0, 0, 0.14);
+  30% {
+    box-shadow: 0 0 0 6px rgba(219, 250, 55, 0.7), 0 0 28px rgba(219, 250, 55, 0.5), 0 16px 36px rgba(0, 0, 0, 0.18);
+    border-color: var(--tm-products-accent, #DBFA37);
+    transform: translateY(-4px);
+  }
+  60% {
+    box-shadow: 0 0 0 3px rgba(219, 250, 55, 0.4), 0 0 16px rgba(219, 250, 55, 0.25), 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: color-mix(in srgb, var(--tm-products-accent, #DBFA37) 60%, var(--tm-products-line, #e2e5dc));
     transform: translateY(-2px);
   }
   100% {
     box-shadow: 0 0 0 0 rgba(219, 250, 55, 0), 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-color: var(--tm-products-line, #e2e5dc);
     transform: translateY(0);
   }
 }
+
