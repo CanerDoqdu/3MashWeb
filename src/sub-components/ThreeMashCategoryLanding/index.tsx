@@ -402,7 +402,7 @@ const englishProductRoutes: Record<string, string> = {
   "creality-halot-sky-6k": "/en/creality-halot-sky-6k-1",
   "mash-w1e-ultrasonik-yikama-cihazi": "/en/mash-w1e-ultrasonik-yikama-cihazi",
   "mash-c1e-uv-kurleme-cihazi": "/en/mash-c1e-uv-curing-device",
-  "creality-washcure-uw-02": "/en/creality-wash-and-cure-uw-03",
+  "creality-washcure-uw-02": "/en/creality-wash-and-cure-uw-02",
   "argenz-ht-plus-zirkon-blok": "/en/argenz-ht-plus-zirconia-disc",
   "argenz-st-multilayer-zirkon-blok": "/en/argenz-st-multilayer-zirconia-disc",
   "argenz-ht-multilayer-zirkon-blok": "/en/argenz-ht-plus-multilayer-zirconia-disc",

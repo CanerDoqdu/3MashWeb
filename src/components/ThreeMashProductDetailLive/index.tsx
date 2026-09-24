@@ -42,7 +42,7 @@ import ThreeMashProductDetailTemplate, {
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { publishSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
-import { isEnglishLocale, isTurkishText, localizedHref, tLocalized } from "../../utils/i18n";
+import { isEnglishLocale, isTurkishText, localizedHref, tLocalized, EN_TO_TR_ROUTE_MAP } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
 import { Props } from "./types";
@@ -543,12 +543,21 @@ function safeLocationPathname() {
 }
 
 function productSlug(product: IkasProduct | null) {
-  const data = product as unknown as { slug?: unknown; handle?: unknown; url?: unknown; path?: unknown } | null;
-  const raw = stringValue(data?.slug) || stringValue(data?.handle) || stringValue(data?.url) || stringValue(data?.path) || (product ? slugify(product.name) : "");
-  const productDataSlug = raw.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop();
-  if (productDataSlug) return productDataSlug;
-  const pathname = safeLocationPathname();
-  return pathname.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop() || "";
+  const data = product as unknown as { slug?: unknown; handle?: unknown; url?: unknown; path?: unknown; href?: unknown } | null;
+  const raw = stringValue(data?.slug) || stringValue(data?.handle) || stringValue(data?.url) || stringValue(data?.path) || stringValue(data?.href) || (product ? slugify(product.name) : "");
+  let slug = raw.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop();
+  if (!slug) {
+    const pathname = safeLocationPathname();
+    slug = pathname.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop() || "";
+  }
+  if (slug) {
+    const trMapped = EN_TO_TR_ROUTE_MAP[`/${slug}`] || EN_TO_TR_ROUTE_MAP[slug];
+    if (trMapped) {
+      return trMapped.replace(/^\/+/, "");
+    }
+    return slug;
+  }
+  return "";
 }
 
 function isCrsComposite(product: IkasProduct | null) {
@@ -951,8 +960,8 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
       homeText: tLocalized("Ana sayfa", "Home"),
       homeHref: "/",
       categoryText,
-      categoryHref: categoryLink,
-      productText: product.name,
+      categoryHref: categoryLink || "/",
+      productText: stringValue(product.name) || stringValue((product as any)?.title) || tLocalized("Ürün", "Product"),
     },
     hero: {
       kicker: categoryText,
@@ -1136,40 +1145,45 @@ function templateData(
   variant: IkasProductVariant | null,
   props: Props
 ) {
-  const resolved = resolveProductDetailData(product);
+  const resolved = resolveProductDetailData(product) || genericProductData(product, variant, props);
 
-  if (!resolved) {
-    return null;
-  }
+  const LAB_PRODUCT_SLUGS = new Set([
+    "mash-c1e-uv-kurleme-cihazi",
+    "mash-w1e-ultrasonik-yikama-cihazi",
+    "creality-washcure-uw-02",
+    "mash-p16l-385nm-16k-dental-3d-yazici",
+    "mash-curie-m1-dental-3d-yazici",
+    "creality-halot-sky-6k",
+    "3shape-e2",
+    "3shape-e3",
+    "3shape-e4",
+    "trasformer-light-glass-mufla-sistemi",
+  ]);
 
   const labProduct =
     typeof resolved.key === "string" &&
-    (
-      resolved.key.includes("mash-c1e-uv-curing-device") ||
-      resolved.key.includes("mash-w1e-ultrasonic-washing-machine") ||
-      resolved.key.includes("creality-washcure-uw-02") ||
-      resolved.key.includes("mash-p16l-385nm-16k-dental-3d-yazici") ||
-      resolved.key.includes("mash-curie-m1-dental") ||
-      resolved.key.includes("mash-curie-m1-jewelry") ||
-      resolved.key.includes("creality-halot-sky-6k") ||
-      resolved.key.includes("3shape-e2") ||
-      resolved.key.includes("3shape-e3") ||
-      resolved.key.includes("3shape-e4")
-    );
+    (LAB_PRODUCT_SLUGS.has(resolved.key) || Array.from(LAB_PRODUCT_SLUGS).some((slug) => resolved.key.startsWith(slug)));
 
   const merged = labProduct
     ? resolved
     : deepMerge(
-        deepMerge(
-          resolved,
-          parseTemplateJson(props.productTemplateJson)
-        ),
-        customJson(product)
-      );
+      deepMerge(
+        resolved,
+        parseTemplateJson(props.productTemplateJson)
+      ),
+      customJson(product)
+    );
 
   return {
     ...merged,
     key: `${merged.key}-${product.id || productSlug(product)}`,
+    breadcrumb: {
+      homeText: merged.breadcrumb?.homeText || tLocalized("Ana sayfa", "Home"),
+      homeHref: merged.breadcrumb?.homeHref || "/",
+      categoryText: merged.breadcrumb?.categoryText || tLocalized("Ürünler", "Products"),
+      categoryHref: merged.breadcrumb?.categoryHref || "/",
+      productText: merged.breadcrumb?.productText || stringValue(product?.name) || stringValue((product as any)?.title) || "Product",
+    },
     hero: {
       ...merged.hero,
       addToCartText: labProduct
@@ -1221,27 +1235,38 @@ function previewVariantGroups(selection: PreviewSelection): ProductVariantGroup[
 }
 
 function variantGroups(product: IkasProduct): ProductVariantGroup[] {
-  return getDisplayedProductVariantTypes(product).map((variantType) => {
-    const typeName = variantType.variantType.name || "";
-    const values = uniqueDisplayedVariantValues(variantType.displayedVariantValues).map((item) => {
-      const color = colorForVariantValue(product, variantType, item.variantValue);
-      const type = normalizedVariantText(typeName);
-      const isColor = type.includes("renk") || type.includes("color") || Boolean(color);
+  if (!product || !Array.isArray(product.variantTypes) || !product.variantTypes.length) {
+    return [];
+  }
+  try {
+    return (getDisplayedProductVariantTypes(product) || []).map((variantType) => {
+      if (!variantType?.variantType) return null;
+      const typeName = variantType.variantType.name || "";
+      const rawValues = Array.isArray(variantType.displayedVariantValues) ? variantType.displayedVariantValues : [];
+      const values = uniqueDisplayedVariantValues(rawValues).map((item) => {
+        if (!item?.variantValue) return null;
+        const color = colorForVariantValue(product, variantType, item.variantValue);
+        const type = normalizedVariantText(typeName);
+        const isColor = type.includes("renk") || type.includes("color") || Boolean(color);
+        return {
+          id: item.variantValue.id || "",
+          name: item.variantValue.name || "",
+          selected: !!item.isSelected,
+          hasStock: !!item.hasStock,
+          color: isColor ? color || "#ede9d0" : undefined,
+          rawValue: item.variantValue,
+        };
+      }).filter(Boolean) as ProductVariantGroup["values"];
       return {
-        id: item.variantValue.id,
-        name: item.variantValue.name || "",
-        selected: !!item.isSelected,
-        hasStock: !!item.hasStock,
-        color: isColor ? color || "#ede9d0" : undefined,
-        rawValue: item.variantValue,
+        id: variantType.variantType.id || "",
+        name: typeName,
+        values,
       };
-    });
-    return {
-      id: variantType.variantType.id,
-      name: typeName,
-      values,
-    };
-  });
+    }).filter(Boolean) as ProductVariantGroup[];
+  } catch (error) {
+    debugError("ThreeMashProductDetailLive: variantGroups resolution failed", error);
+    return [];
+  }
 }
 
 function selectedSummary(data: ProductDetailTemplateData, groups: ProductVariantGroup[]) {
@@ -1256,13 +1281,81 @@ function themeToken(value: string | undefined, defaultValue: string, tokenName: 
 }
 
 export function ThreeMashProductDetailLive(props: Props) {
-  const product = props.product || null;
+  const [fetchedProduct, setFetchedProduct] = useState<IkasProduct | null>(null);
+  const product = props.product || fetchedProduct;
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
   const [message, setMessage] = useState("");
   const [version, setVersion] = useState(0);
   const [previewSelection, setPreviewSelection] = useState<PreviewSelection>({});
   const [relatedProducts, setRelatedProducts] = useState<ProductDetailRelatedProduct[] | undefined>(undefined);
+
+  // If props.product is missing (e.g. on /en routes where ikas doesn't pass the product object),
+  // recover by resolving the slug from the URL and fetching via apiSearchProducts.
+  useEffect(() => {
+    if (props.product || typeof window === "undefined") return;
+
+    let isMounted = true;
+    const path = window.location.pathname.replace(/^\/en(\/|$)/, "/").replace(/\/+$/, "") || "/";
+    const rawSlug = path.replace(/^\//, "");
+    if (!rawSlug || rawSlug === "search" || rawSlug.startsWith("pages/")) return;
+
+    const trTarget = EN_TO_TR_ROUTE_MAP[`/${rawSlug}`] || EN_TO_TR_ROUTE_MAP[path];
+    const trSlug = trTarget ? trTarget.replace(/^\//, "") : rawSlug;
+
+    // If we already have static template data for this slug (lab products, systems, etc.),
+    // there is no need to search Ikas — doing so risks getting an unrelated product back
+    // (e.g. CRS Aligner as the top hit) and overriding the correct template display.
+    if (resolveProductDetailData({ slug: trSlug })) return;
+
+    const searchQuery = trSlug.replace(/-/g, " ");
+
+    apiSearchProducts({
+      input: {
+        query: searchQuery,
+        perPage: 5,
+      },
+    } as Parameters<typeof apiSearchProducts>[0])
+      .then((res) => {
+        if (!isMounted) return;
+        const products = res?.data?.data || [];
+        if (!products.length) return;
+
+        // Try exact match on slug or name
+        const match =
+          products.find((p) => {
+            const s = productSlug(p);
+            const pName = slugify(p.name || "");
+            const pHref = stringValue((p as unknown as { href?: unknown })?.href).toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop() || "";
+            return (
+              s === trSlug ||
+              s === rawSlug ||
+              pHref === trSlug ||
+              pHref === rawSlug ||
+              pName === trSlug ||
+              pName === rawSlug ||
+              (trSlug.includes("curie-m1") && (s.includes("curie-m1") || pName.includes("curie-m1") || pHref.includes("curie-m1"))) ||
+              (trSlug.includes("p16l") && (s.includes("p16l") || pName.includes("p16l") || pHref.includes("p16l")))
+            );
+          }) || products.find((p) => {
+            const s = productSlug(p);
+            const pName = slugify(p.name || "");
+            const tokens = trSlug.split("-").filter((t) => t.length > 2 && t !== "dental" && t !== "resin" && t !== "yazici" && t !== "printer");
+            return tokens.length > 0 && tokens.every((token) => s.includes(token) || pName.includes(token));
+          });
+
+        if (match) {
+          setFetchedProduct(match);
+        }
+      })
+      .catch((err) => {
+        debugError("ThreeMashProductDetailLive: failed to recover product from slug", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [props.product]);
 
   useEffect(() => {
     if (!product) return;
@@ -1283,16 +1376,86 @@ export function ThreeMashProductDetailLive(props: Props) {
   const image = allVariantMedia(variant)[selectedImageIndex]?.image || (variant ? getProductVariantMainImage(variant)?.image : undefined);
   const detailPropKey = productDetailPropKey(props);
   const data = useMemo(
-    () => (product ? templateData(product, variant, props) : props.showTemplatePreview === false ? null : propsTemplateData(props)),
+    () => {
+      if (product) return templateData(product, variant, props);
+      if (props.showTemplatePreview === false) return null;
+      const initialPath = typeof window !== "undefined" ? window.location.pathname : "";
+      const pathSlug = initialPath.replace(/^\/en(\/|$)/, "/").replace(/\/+$/, "").replace(/^\//, "");
+      const resolvedDirect = resolveProductDetailData({ slug: pathSlug }, props.productTemplateJson);
+      if (resolvedDirect) {
+        return deepMerge(resolvedDirect, productDetailPropOverrides(props));
+      }
+      return propsTemplateData(props);
+    },
     [product?.id, version, props.addToCartText, props.addingToCartText, props.outOfStockText, props.productTemplateJson, props.showTemplatePreview, detailPropKey],
   );
   if (typeof window !== "undefined") {
     (window as unknown as { __THREE_MASH_PRODUCT_DETAIL_DATA__?: unknown }).__THREE_MASH_PRODUCT_DETAIL_DATA__ = data;
   }
   const groups = useMemo(() => (product ? variantGroups(product) : previewVariantGroups(previewSelection)), [product?.id, version, previewSelection]);
-  const isInStock = !!product && !!variant && hasProductStock(product) && hasProductVariantStock(variant);
-  const requiresVariantSelection = !!product && !hasProductValidOptionValues(product);
-  const hasDiscount = !!variant && hasProductVariantDiscount(variant);
+
+  const safeHasProductStock = (p: IkasProduct | null): boolean => {
+    if (!p) return false;
+    if (!Array.isArray(p.variants) || !p.variants.length) return true;
+    try {
+      return !!hasProductStock(p);
+    } catch {
+      return true;
+    }
+  };
+  const safeHasVariantStock = (v: IkasProductVariant | null): boolean => {
+    if (!v) return false;
+    try {
+      return !!hasProductVariantStock(v);
+    } catch {
+      return true;
+    }
+  };
+  const safeHasValidOptionValues = (p: IkasProduct | null): boolean => {
+    if (!p) return true;
+    try {
+      return !!hasProductValidOptionValues(p);
+    } catch {
+      return true;
+    }
+  };
+
+  const isInStock = !!product && !!variant && safeHasProductStock(product) && safeHasVariantStock(variant);
+  const requiresVariantSelection = !!product && !safeHasValidOptionValues(product);
+  // IKAS can return an incomplete variant in the Studio "Tekli Ürün" preview.
+  // The native price helpers assume price data exists and can throw on undefined.discountPrice.
+  // Keep this component render-safe when Studio gives us an incomplete variant.
+  const safeHasDiscount = (currentVariant: IkasProductVariant | null): boolean => {
+    if (!currentVariant) return false;
+    try {
+      return !!hasProductVariantDiscount(currentVariant);
+    } catch (error) {
+      debugError("ThreeMashProductDetailLive: discount detection failed", error);
+      return false;
+    }
+  };
+
+  const safeFinalPrice = (currentVariant: IkasProductVariant | null): string => {
+    if (!currentVariant) return "";
+    try {
+      return getProductVariantFormattedFinalPrice(currentVariant) || "";
+    } catch (error) {
+      debugError("ThreeMashProductDetailLive: final price formatting failed", error);
+      return "";
+    }
+  };
+
+  const safeSellPrice = (currentVariant: IkasProductVariant | null): string => {
+    if (!currentVariant) return "";
+    try {
+      return getProductVariantFormattedSellPrice(currentVariant) || "";
+    } catch (error) {
+      debugError("ThreeMashProductDetailLive: sell price formatting failed", error);
+      return "";
+    }
+  };
+
+  const hasDiscount = safeHasDiscount(variant);
   const addDisabled = !isInStock || requiresVariantSelection;
 
   useEffect(() => {
@@ -1482,8 +1645,8 @@ export function ThreeMashProductDetailLive(props: Props) {
             isAddToCartDisabled={addDisabled}
             isAdding={isAdding}
             message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || tLocalized("Stok yok", "Out of stock"))) : "")}
-            price={variant ? getProductVariantFormattedFinalPrice(variant) : ""}
-            compareAtPrice={variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : ""}
+            price={safeFinalPrice(variant)}
+            compareAtPrice={hasDiscount ? safeSellPrice(variant) : ""}
             selectedSummary={selectedSummary(data, groups)}
           />
         </ProductDetailSectionScope>
@@ -1516,8 +1679,8 @@ export function ThreeMashProductDetailLive(props: Props) {
         isAddToCartDisabled={addDisabled}
         isAdding={isAdding}
         message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || tLocalized("Stok yok", "Out of stock"))) : "")}
-        price={variant ? getProductVariantFormattedFinalPrice(variant) : ""}
-        compareAtPrice={variant && hasDiscount ? getProductVariantFormattedSellPrice(variant) : ""}
+        price={safeFinalPrice(variant)}
+        compareAtPrice={hasDiscount ? safeSellPrice(variant) : ""}
         selectedSummary={selectedSummary(data, groups)}
         relatedProducts={relatedProducts}
       />

@@ -1414,7 +1414,7 @@ export function dentalFurnacesCategoryData(): CategoryLandingData {
         title: "Naberthem VL 01/12 LB Press Furnace",
         descriptionHtml:
           tLocalized("Press seramik işleri için kaldırma tablalı dental fırın. Kontrollü fırın çevrimi, presleme akışını laboratuvar standardına bağlar.", "A dental furnace with a lift table for press ceramic work. The controlled furnace cycle ties the pressing workflow to laboratory standards."),
-        href: "/naberthem-vl-01-12-lb-press-furnace",
+        href: "/naberthem-vl-01-12-lb-press-firini",
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/c72ba72c-c628-46f6-ac9d-863e3ccb6d8a/1080/firinlar2.webp",
         imageAlt: "Naberthem VL 01/12 LB Press Furnace",
         tag: "PRESS",
@@ -1430,7 +1430,7 @@ export function dentalFurnacesCategoryData(): CategoryLandingData {
         title: "Naberthem VL 01/12 LB Porcelain Furnace",
         descriptionHtml:
           tLocalized("Vakumlu ve normal atmosfer porselen pişirimleri için dental fırın. Çepeçevre ısıtma yapısı homojen sıcaklık dağılımını destekler.", "Dental furnace for porcelain firing under vacuum and normal atmosphere. The all-round heating structure supports homogeneous temperature distribution."),
-        href: "/naberthem-vl-01-12-lb-porcelain-furnace",
+        href: "/naberthem-vl-01-12-lb-porselen-firini",
         imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/3bfdd659-7c98-4939-8573-8fecb1408edc/1080/washcure-website-kopyasi.webp",
         imageAlt: "Naberthem VL 01/12 LB Porcelain Furnace",
         tag: tLocalized("PORSELEN", "PORCELAIN"),

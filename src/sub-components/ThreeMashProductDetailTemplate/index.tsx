@@ -285,7 +285,7 @@ function SectionHead({ titleHtml, sideHtml, wide = false }: { titleHtml: string;
 }
 
 function isResinProductDetail(data: ProductDetailTemplateData) {
-  const categoryHref = data.breadcrumb.categoryHref.toLocaleLowerCase("tr-TR");
+  const categoryHref = (data?.breadcrumb?.categoryHref || "").toLocaleLowerCase("tr-TR");
   return categoryHref.includes("dental-3d-yazici-recineleri") || categoryHref.includes("dental-recineler");
 }
 
@@ -400,11 +400,11 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
               aria-label={`${data.breadcrumb.productText} görsel ${index + 1}`}
               key={`${item.src}-${index}`}
             >
-<img
-  src={item.thumbSrc || item.src}
-  alt=""
-  decoding="async"
-/>            </button>
+              <img
+                src={item.thumbSrc || item.src}
+                alt=""
+                decoding="async"
+              />            </button>
           ))}
         </div>
       ) : null}
@@ -472,7 +472,7 @@ function Configurator(props: Props) {
   ];
 
   const hidePrice = hidePriceProducts.includes(
-    props.data.breadcrumb.productText.toLocaleLowerCase("tr-TR").trim()
+    (props.data?.breadcrumb?.productText || "").toLocaleLowerCase("tr-TR").trim()
   );
 
   const hasManySwatches = props.variantGroups.some(
@@ -485,7 +485,7 @@ function Configurator(props: Props) {
 
   return (
     <div className="tmpdt-cfg">
-  {props.price && !hidePrice ? (
+      {props.price && !hidePrice ? (
         <div className="tmpdt-price">
           <strong>{props.price}</strong>
           {props.compareAtPrice ? <span>{props.compareAtPrice}</span> : null}
@@ -552,8 +552,8 @@ function Configurator(props: Props) {
             {props.isAdding
               ? localizeAddingToCartText(props.data.hero.addingToCartText)
               : props.isAddToCartDisabled
-              ? localizeOutOfStockText(props.data.hero.outOfStockText)
-              : localizeAddToCartText(props.data.hero.addToCartText)}
+                ? localizeOutOfStockText(props.data.hero.outOfStockText)
+                : localizeAddToCartText(props.data.hero.addToCartText)}
           </button>
         )}
         <a className="tmpdt-btn tmpdt-line" href={safeWhatsAppHref(props.data.hero.whatsappHref)} target="_blank" rel="noopener noreferrer">
@@ -637,11 +637,11 @@ export function ProductDetailHeroSection(props: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <div className="tmpdt-wrap">
         <div className="tmpdt-crumb">
-          <a href={localizedHref(props.data.breadcrumb.homeHref)}>{isEnglishLocale() && (props.data.breadcrumb.homeText === tLocalized("Ana sayfa", "Home") || props.data.breadcrumb.homeText === tLocalized("Anasayfa", "Home")) ? "Home" : props.data.breadcrumb.homeText}</a>
+          <a href={localizedHref(props.data?.breadcrumb?.homeHref || "/")}>{isEnglishLocale() && (props.data?.breadcrumb?.homeText === tLocalized("Ana sayfa", "Home") || props.data?.breadcrumb?.homeText === tLocalized("Anasayfa", "Home")) ? "Home" : props.data?.breadcrumb?.homeText || "Home"}</a>
           <span>/</span>
-          <a href={localizedHref(props.data.breadcrumb.categoryHref)}>{props.data.breadcrumb.categoryText}</a>
+          <a href={localizedHref(props.data?.breadcrumb?.categoryHref || "/")}>{props.data?.breadcrumb?.categoryText || "Products"}</a>
           <span>/</span>
-          <span>{props.data.breadcrumb.productText}</span>
+          <span>{props.data?.breadcrumb?.productText || ""}</span>
         </div>
         <div className="tmpdt-phero" id="satinal" ref={heroRef}>
           <Gallery data={props.data} selectedGalleryIndex={props.selectedGalleryIndex} onGallerySelect={props.onGallerySelect} />
@@ -701,17 +701,17 @@ export function ProductDetailRatingsSection({ data }: { data: ProductDetailTempl
                 : fallbackPercent);
 
               return <div className={`tmpdt-rrow${isResinProductDetail(data) ? "" : " is-plain"}`} key={`${item.descriptionHtml}-${index}`}>
-              <div className="tmpdt-rdesc" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
-              {isResinProductDetail(data) ? (
-                <div className="tmpdt-rmeter">
-                  <div className="tmpdt-rtrack">
-                    <i style={{ width: visible ? `${percent}%` : "0%" }} />
+                <div className="tmpdt-rdesc" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
+                {isResinProductDetail(data) ? (
+                  <div className="tmpdt-rmeter">
+                    <div className="tmpdt-rtrack">
+                      <i style={{ width: visible ? `${percent}%` : "0%" }} />
+                    </div>
+                    <div className="tmpdt-rpct">
+                      %<CountText value={String(percent)} active={visible} />
+                    </div>
                   </div>
-                  <div className="tmpdt-rpct">
-                    %<CountText value={String(percent)} active={visible} />
-                  </div>
-                </div>
-              ) : null}
+                ) : null}
               </div>;
             })()
           ))}
@@ -1010,7 +1010,7 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
         JSON.stringify({ event: "command", func, args }),
         "*"
       );
-    } catch {}
+    } catch { }
   }
 
   function handlePlayManual() {
@@ -1237,7 +1237,7 @@ export function ProductDetailRelatedSection({
                 <article className="tmpdt-rc tmpdt-rc-live" key={item.id}>
                   <a className="tmpdt-rc-live-link" href={localizedHref(item.href)}>
                     <div className="tmpdt-rc-ph tmpdt-rc-live-ph">
-                      
+
                       {item.image ? (
                         <img className="tmpdt-rc-live-img" src={item.image} alt={item.imageAlt || item.title} loading="lazy" decoding="async" />
                       ) : (

@@ -25,10 +25,10 @@ import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImag
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
-import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale, resolveLocalizedUrl } from "../../utils/i18n";
+import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale, resolveLocalizedUrl, EN_TO_TR_ROUTE_MAP } from "../../utils/i18n";
 import { sanitizeHtml, sanitizeSvgMarkup } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
-import { loadWebFonts } from "../../utils/loadWebFonts";
+ 
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import {
@@ -483,7 +483,9 @@ function productAnnouncementFromData(data: ReturnType<typeof resolveProductDetai
 
 function announcementForRouteKey(routeKey: string): HeaderAnnouncementOverride | null {
   if (!routeKey) return null;
-  const resolvedRouteKey = englishProductRouteAliases[routeKey] || routeKey;
+  const enMapped = EN_TO_TR_ROUTE_MAP[`/${routeKey}`] || EN_TO_TR_ROUTE_MAP[routeKey];
+  const trRouteKey = enMapped ? enMapped.replace(/^\/+/, "") : routeKey;
+  const resolvedRouteKey = englishProductRouteAliases[routeKey] || trRouteKey;
 
   const productAnnouncement = productAnnouncementFromData(resolveProductDetailData({ slug: resolvedRouteKey }));
   if (productAnnouncement) return productAnnouncement;
@@ -504,11 +506,12 @@ function announcementForRouteKey(routeKey: string): HeaderAnnouncementOverride |
 
 const englishProductRouteAliases: Record<string, string> = {
   "mash-p16l-385nm-16k-dental-3d-printer": "mash-p16l-385nm-16k-dental-3d-yazici",
+  "mash-curie-m1-dental-3d-printer": "mash-curie-m1-dental-3d-yazici",
   "mash-curie-m1-dental-dlp-3d-printer": "mash-curie-m1-dental-3d-yazici",
   "creality-halot-sky-6k-dental-3d-printer": "creality-halot-sky-6k",
   "mash-w1e-ultrasonic-washing-unit": "mash-w1e-ultrasonik-yikama-cihazi",
   "mash-c1e-smart-uv-curing-unit": "mash-c1e-uv-kurleme-cihazi",
-  "creality-wash-and-cure-uw-03": "creality-washcure-uw-02",
+  "creality-wash-and-cure-uw-02": "creality-washcure-uw-02",
   "argenz-ht-plus-zirconia-disc": "argenz-ht-plus-zirkon-blok",
   "argenz-st-multilayer-zirconia-disc": "argenz-st-multilayer-zirkon-blok",
   "argenz-ht-plus-multilayer-zirconia-disc": "argenz-ht-multilayer-zirkon-blok",
@@ -1592,10 +1595,7 @@ export function ThreeMashHeader(props: Props) {
   });
   const isAuthenticated = authState === "authenticated";
 
-  useEffect(() => {
-    // Load Google Fonts non-blockingly (replaces the render-blocking @import
-    // that was previously in global.css / styles.css).
-    loadWebFonts();
+ useEffect(() => {
     setIsHydrated(true);
 
     if (!customerStore._initialized && hasCustomerToken()) {
@@ -2243,11 +2243,11 @@ export function ThreeMashHeader(props: Props) {
   return (
     <section className="three-mash-header" style={themeStyle}>
       {/* Preconnect and preload critical web fonts to eliminate layout shift (CLS) */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2" crossOrigin="anonymous" />
-      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossOrigin="anonymous" />
-      <style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+<link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2" crossOrigin="anonymous" />
+<link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossOrigin="anonymous" />
+<link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/newsreader/v26/cY9kfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsMwaT9ZJFjSAgA.woff2" crossOrigin="anonymous" /><style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
       {props.showAnnouncement !== false && (
         <>
           <div className="tmh-announcement">
@@ -2281,7 +2281,7 @@ export function ThreeMashHeader(props: Props) {
                         <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6" />
                       </svg>
                       <span>EN</span>
-                    </>
+                    </> 
                   ) : (
                     <>
                       <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
