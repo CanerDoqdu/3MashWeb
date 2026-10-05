@@ -1,4 +1,6 @@
 
+@import "../../sub-components/ThreeMashProductDetailTemplate/styles.css";
+
 .three-mash-product-metrics {
   width: 100%;
   padding: var(--tmpm-pt) 0 var(--tmpm-pb);

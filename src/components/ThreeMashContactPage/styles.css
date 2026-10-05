@@ -65,6 +65,10 @@
   margin-top: clamp(24px, 3vw, 36px);
 }
 
+.tm-contact-hero-grid--single {
+  grid-template-columns: 1fr;
+}
+
 .tm-contact-hero h1,
 .tm-contact-info-panel h2 {
   margin: 0;
@@ -122,6 +126,10 @@
   grid-template-columns: minmax(280px, 0.58fr) minmax(0, 1fr);
   gap: 24px;
   align-items: stretch;
+}
+
+.tm-contact-layout--single {
+  grid-template-columns: 1fr;
 }
 
 .tm-contact-info-panel,

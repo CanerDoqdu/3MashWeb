@@ -143,7 +143,7 @@ const authCriticalStyles = `
 }
 .tma-auth-copy::after,
 .tmrpg-auth-copy::after {
-  content: "3MASH";
+  content: var(--tma-auth-brand-label, "3MASH");
   position: absolute;
   top: clamp(24px, 3vw, 40px);
   left: clamp(24px, 3vw, 40px);

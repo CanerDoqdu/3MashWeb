@@ -35,13 +35,13 @@ function propString(value: unknown) {
   return "";
 }
 
-function resolvePropText(prop: unknown, fallbackDefault = ""): string {
-  return prop !== undefined && prop !== null ? propString(prop) : fallbackDefault;
-}
-
 function text(value: unknown, fallback = "") {
   const trimmed = propString(value).trim();
   return trimmed || fallback;
+}
+
+function localizedPropText(value: unknown, englishValue: unknown, fallback = "") {
+  return isEnglishLocale() ? text(englishValue, fallback) : text(value, fallback);
 }
 
 function searchKey(value: unknown) {
@@ -266,6 +266,7 @@ function ProductCard({ product, showCategoryName, showPrice, target }: { product
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image ? getDefaultSrc(media.image) : "";
   const category = product.categories?.[0]?.name || product.brand?.name || "";
+  const categoryLabel = isEnglishLocale() ? translateText(category) : category;
   const price = variant ? getProductVariantFormattedFinalPrice(variant) : "";
 
   return (
@@ -273,7 +274,7 @@ function ProductCard({ product, showCategoryName, showPrice, target }: { product
       <span className="tmpcc-media">
         {image ? <img src={image} alt={media?.image?.altText || product.name} loading="lazy" decoding="async" /> : <span>{product.name.slice(0, 1)}</span>}
       </span>
-      {showCategoryName && category ? <small>{category}</small> : null}
+      {showCategoryName && categoryLabel ? <small>{categoryLabel}</small> : null}
       <strong>{isEnglishLocale() ? translateText(product.name) : product.name}</strong>
       {showPrice && price ? <em>{price}</em> : null}
     </a>
@@ -301,11 +302,7 @@ function sourceRelatedProduct(product: IkasProduct): ProductDetailRelatedProduct
 }
 
 export function ThreeMashProductCategoryCarousel(props: Props) {
-  // NOTE: Props interface auto-generated and may be incomplete for runtime-injected properties.
-  // Using "as any" allows access to properties that exist at runtime but not in types.ts.
-  // This is a known limitation of the ikas CLI auto-generation process.
-  const p = props as any;
-  const rawSourceData = resolveSharedProductDetailData(props.product, p.productTemplateJson);
+  const rawSourceData = resolveSharedProductDetailData(props.product, props.productTemplateJson);
 
   const rawRelated = rawSourceData?.related;
   const rawFinalCta = rawSourceData?.finalCta;
@@ -315,18 +312,18 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     ...rawSourceData,
     related: rawRelated ? {
       ...rawRelated,
-      index: resolvePropText(p.relatedIndex, rawRelated.index ?? "07"),
-      label: resolvePropText(p.relatedLabel, rawRelated.label ?? tLocalized("İLGİLİ ÜRÜNLER", "RELATED PRODUCTS")),
-      titleHtml: resolvePropText(p.relatedTitleHtml, rawRelated.titleHtml ?? ""),
+      index: text(props.relatedIndex, rawRelated.index ?? "07"),
+      label: localizedPropText(props.relatedLabel, props.relatedLabelEn, rawRelated.label ?? tLocalized("İLGİLİ ÜRÜNLER", "RELATED PRODUCTS")),
+      titleHtml: localizedPropText(props.relatedTitleHtml, props.relatedTitleHtmlEn, rawRelated.titleHtml ?? ""),
     } : rawRelated,
     finalCta: rawFinalCta ? {
       ...rawFinalCta,
-      titleHtml: resolvePropText(p.finalCtaTitleHtml, rawFinalCta.titleHtml ?? ""),
-      textHtml: resolvePropText(p.finalCtaTextHtml, rawFinalCta.textHtml ?? ""),
-      primaryText: resolvePropText(p.primaryButtonText, rawFinalCta.primaryText ?? ""),
-      primaryHref: resolvePropText(p.primaryButtonHref, rawFinalCta.primaryHref ?? ""),
-      secondaryText: resolvePropText(p.secondaryButtonText, rawFinalCta.secondaryText ?? ""),
-      secondaryHref: resolvePropText(p.secondaryButtonHref, rawFinalCta.secondaryHref ?? ""),
+      titleHtml: localizedPropText(props.finalCtaTitleHtml, props.finalCtaTitleHtmlEn, rawFinalCta.titleHtml ?? ""),
+      textHtml: localizedPropText(props.finalCtaTextHtml, props.finalCtaTextHtmlEn, rawFinalCta.textHtml ?? ""),
+      primaryText: localizedPropText(props.primaryButtonText, props.primaryButtonTextEn, rawFinalCta.primaryText ?? ""),
+      primaryHref: text(props.primaryButtonHref, rawFinalCta.primaryHref ?? ""),
+      secondaryText: localizedPropText(props.secondaryButtonText, props.secondaryButtonTextEn, rawFinalCta.secondaryText ?? ""),
+      secondaryHref: text(props.secondaryButtonHref, rawFinalCta.secondaryHref ?? ""),
     } : rawFinalCta,
   } : rawSourceData;
 
@@ -334,19 +331,19 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const requestKeyRef = useRef("");
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const limit = numberValue((p as any).productLimit, 12, 1, 40);
-  const mode = text((p as any).sourceMode, "auto").toLowerCase() === "manual" ? "manual" : "auto";
-  const category = autoCategory(p.product);
+  const limit = numberValue(props.productLimit, 12, 1, 40);
+  const mode = text(props.sourceMode, "auto").toLowerCase() === "manual" ? "manual" : "auto";
+  const category = autoCategory(props.product);
   const productList = useMemo(
-    () => (mode === "auto" ? makeCategoryProductList(p.product, limit) : normalizeProductList((p as any).productList, limit)),
-    [mode, p.product?.id, (p as any).productList, limit]
+    () => (mode === "auto" ? makeCategoryProductList(props.product, limit) : normalizeProductList(props.productList, limit)),
+    [mode, props.product?.id, props.productList, limit]
   );
 
   useEffect(() => {
     if (!productList) return;
     const requestKey = [
       mode,
-      p.product?.id || "",
+      props.product?.id || "",
       productList.productListPropValue?.category || productList.filterCategoryId || "",
       productList.productListPropValue?.brand || productList.filterBrandId || "",
       productList.productListPropValue?.productIds?.length || "",
@@ -360,8 +357,8 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
       .then(() => {
         if (!isMounted) return;
         const fetchedProducts = listProducts(productList);
-        const relatedProducts = mode === "auto" && p.product
-          ? fetchedProducts.filter((item) => item.id !== p.product.id)
+        const relatedProducts = mode === "auto" && props.product
+          ? fetchedProducts.filter((item) => item.id !== props.product?.id)
           : fetchedProducts;
         setResolvedProducts(relatedProducts.slice(0, limit));
       })
@@ -375,70 +372,94 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
     return () => {
       isMounted = false;
     };
-  }, [productList, mode, p.product?.id, limit]);
+  }, [productList, mode, props.product?.id, limit]);
 
   const products = (resolvedProducts || listProducts(productList))
-    .filter((item) => (p as any).showCurrentProduct !== false || item.id !== p.product?.id)
+    .filter((item) => props.showCurrentProduct !== false || item.id !== props.product?.id)
     .filter((item) => hasEnglishProductPage(getProductHref(item) || item));
-  const scrollCards = numberValue((p as any).scrollByCards, 1, 1, 6);
-  const sectionAnchorId = resolvePropText((p as any).sectionAnchorId, "");
+  const scrollCards = numberValue(props.scrollByCards, 1, 1, 6);
+  const sectionAnchorId = propString(props.sectionAnchorId);
   const defaultCategoryTitle = categoryName(category)
-    ? `Diğer ${categoryName(category)} Ürünleri`
+    ? tLocalized(`Diğer ${categoryName(category)} Ürünleri`, `Other ${categoryName(category)} Products`)
     : tLocalized("Diğer Ürünler", "Other Products");
-  const fallbackTitle = resolvePropText((p as any).titleText, defaultCategoryTitle);
-  const fallbackDescription = resolvePropText((p as any).descriptionHtml, "");
+  const fallbackTitle = localizedPropText(props.titleText, props.titleTextEn, defaultCategoryTitle);
+  const fallbackDescription = localizedPropText(props.descriptionHtml, props.descriptionHtmlEn);
   const hasHeader =
-    (p as any).showHeader !== false &&
+    props.showHeader !== false &&
     (fallbackTitle.trim() !== "" || fallbackDescription.trim() !== "");
 
   function scroll(direction: -1 | 1) {
     const scroller = scrollerRef.current;
     if (!scroller) return;
     const card = scroller.querySelector<HTMLElement>(".tmpcc-card");
-    const gap = numberValue((p as any).cardGap, 56, 0, 120);
+    const gap = numberValue(props.cardGap, 56, 0, 120);
     const distance = ((card?.offsetWidth || scroller.clientWidth / 4) + gap) * scrollCards;
     scroller.scrollBy({ left: direction * distance, behavior: "smooth" });
   }
 
   const style = {
-    "--tmpcc-bg": text((p as any).backgroundColor, "#ffffff"),
-    "--tmpcc-ink": text((p as any).textColor, "#0E0E0C"),
-    "--tmpcc-sub": text((p as any).mutedTextColor, "#55554e"),
-    "--tmpcc-card-bg": text((p as any).cardBackgroundColor, "#ffffff"),
-    "--tmpcc-arrow-bg": text((p as any).arrowBackgroundColor, "#ffffff"),
-    "--tmpcc-arrow-ink": text((p as any).arrowColor, "#0E0E0C"),
-    "--tmpcc-mw": cssLength((p as any).maxWidth, 1280, 480, 2560),
-    "--tmpcc-pt": cssLength((p as any).paddingTop, 64, 0, 320),
-    "--tmpcc-pb": cssLength((p as any).paddingBottom, 0, 0, 320),
-    "--tmpcc-gap": cssLength((p as any).cardGap, 56, 0, 120),
-    "--tmpcc-desktop": numberValue((p as any).visibleCardsDesktop, 4, 1, 6),
-    "--tmpcc-tablet": numberValue((p as any).visibleCardsTablet, 3, 1, 4),
-    "--tmpcc-mobile": numberValue((p as any).visibleCardsMobile, 1, 1, 2),
-    "--tmpcc-image-h": cssLength((p as any).imageHeight, 250, 120, 520),
-    "--tmpcc-image-fit": imageFit((p as any).imageFit),
-    "--tmpcc-image-scale": numberValue((p as any).imageScale, 1, 0.2, 2),
-    "--tmpcc-image-y": cssLength((p as any).imageYOffset, 0, -120, 120),
-    "--tmpcc-title-lines": numberValue((p as any).titleMaxLines, 1, 1, 4),
-    "--tmpcc-title-size": cssLength((p as any).titleFontSize, 26, 12, 72),
-    "--tmpcc-card-title-size": cssLength((p as any).cardTitleFontSize, 13, 10, 24),
-    "--tmpcc-price-size": cssLength((p as any).priceFontSize, 13, 10, 24),
-  } as any;
+    "--tmpcc-bg": text(props.backgroundColor, "#ffffff"),
+    "--tmpcc-text": text(props.textColor, "#0E0E0C"),
+    "--tmpcc-muted": text(props.mutedTextColor, "#55554e"),
+    "--tmpcc-card-bg": text(props.cardBackgroundColor, "#ffffff"),
+    "--tmpcc-arrow-bg": text(props.arrowBackgroundColor, "#ffffff"),
+    "--tmpcc-arrow": text(props.arrowColor, "#0E0E0C"),
+    "--tmpcc-max": cssLength(props.maxWidth, 1280, 480, 2560),
+    "--tmpcc-pt": cssLength(props.paddingTop, 64, 0, 320),
+    "--tmpcc-pb": cssLength(props.paddingBottom, 0, 0, 320),
+    "--tmpcc-gap": cssLength(props.cardGap, 56, 0, 120),
+    "--tmpcc-desktop": numberValue(props.visibleCardsDesktop, 4, 1, 6),
+    "--tmpcc-tablet": numberValue(props.visibleCardsTablet, 3, 1, 4),
+    "--tmpcc-mobile": numberValue(props.visibleCardsMobile, 1, 1, 2),
+    "--tmpcc-image-h": cssLength(props.imageHeight, 250, 120, 520),
+    "--tmpcc-image-fit": imageFit(props.imageFit),
+    "--tmpcc-image-scale": numberValue(props.imageScale, 1, 0.2, 2),
+    "--tmpcc-image-y": cssLength(props.imageYOffset, 0, -120, 120),
+    "--tmpcc-title-lines": numberValue(props.titleMaxLines, 1, 1, 4),
+    "--tmpcc-title-size": cssLength(props.titleFontSize, 26, 12, 72),
+    "--tmpcc-card-title-size": cssLength(props.cardTitleFontSize, 13, 10, 24),
+    "--tmpcc-price-size": cssLength(props.priceFontSize, 13, 10, 24),
+  };
 
   const effectiveProducts = products.map(sourceRelatedProduct);
 
   if (sourceData) {
     return (
-      <ProductDetailSectionScope data={sourceData}>
-        <ProductDetailRelatedSection
-          data={sourceData}
-          products={effectiveProducts}
-        />
-        <ProductDetailFinalCtaSection data={sourceData} />
+      <ProductDetailSectionScope
+        data={sourceData}
+        id={sectionAnchorId.trim() || undefined}
+        colorOverrides={{
+          backgroundColor: props.backgroundColor,
+          textColor: props.textColor,
+          accentColor: props.accentColor,
+        }}
+      >
+        {props.showRelatedProducts !== false ? (
+          <ProductDetailRelatedSection
+            data={sourceData}
+            products={effectiveProducts}
+            showHeader={props.showHeader}
+            showArrows={props.showArrows}
+            scrollByCards={props.scrollByCards}
+            openLinksInNewTab={props.openLinksInNewTab}
+            previousProductsLabel={localizedPropText(props.previousProductsLabel, props.previousProductsLabelEn, tLocalized("Önceki ilgili ürünler", "Previous related products"))}
+            nextProductsLabel={localizedPropText(props.nextProductsLabel, props.nextProductsLabelEn, tLocalized("Sonraki ilgili ürünler", "Next related products"))}
+            categoryProductsAriaLabel={localizedPropText(props.categoryProductsAriaLabel, props.categoryProductsAriaLabelEn, tLocalized("İlgili ürünler", "Related products"))}
+            productLinkText={localizedPropText(props.relatedProductLinkText, props.relatedProductLinkTextEn, tLocalized("İncele", "View"))}
+          />
+        ) : null}
+        {props.showFinalCta !== false ? (
+          <ProductDetailFinalCtaSection
+            data={sourceData}
+            backgroundColor={props.finalCtaBackground}
+            textColor={props.finalCtaTextColor}
+          />
+        ) : null}
       </ProductDetailSectionScope>
     );
   }
   return (
-    <section id={sectionAnchorId.trim() || undefined} className="three-mash-product-category-carousel" style={style}>
+    <section id={sectionAnchorId.trim() || undefined} className="three-mash-product-category-carousel" style={style as any}>
       <div className="tmpcc-wrap">
         {hasHeader ? (
           <div className="tmpcc-head">
@@ -448,12 +469,12 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
                 <div className="tmpcc-description" dangerouslySetInnerHTML={html(fallbackDescription)} />
               )}
             </div>
-            {(p as any).showArrows !== false && products.length > 1 ? (
+            {props.showArrows !== false && products.length > 1 ? (
               <div className="tmpcc-arrows">
-                <button type="button" aria-label={tLocalized("Önceki ürünler", "Previous products")} onClick={() => scroll(-1)}>
+                <button type="button" aria-label={localizedPropText(props.previousProductsLabel, props.previousProductsLabelEn, tLocalized("Önceki ürünler", "Previous products"))} onClick={() => scroll(-1)}>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
                 </button>
-                <button type="button" aria-label={tLocalized("Sonraki ürünler", "Next products")} onClick={() => scroll(1)}>
+                <button type="button" aria-label={localizedPropText(props.nextProductsLabel, props.nextProductsLabelEn, tLocalized("Sonraki ürünler", "Next products"))} onClick={() => scroll(1)}>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
                 </button>
               </div>
@@ -461,26 +482,26 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
           </div>
         ) : null}
 
-        {products.length ? (
+        {props.showRelatedProducts !== false ? (products.length ? (
           <div className="tmpcc-shell">
-            {!hasHeader && (p as any).showArrows !== false && products.length > 1 ? (
-              <button type="button" className="tmpcc-side tmpcc-side-left" aria-label={tLocalized("Önceki ürünler", "Previous products")} onClick={() => scroll(-1)}>
+            {!hasHeader && props.showArrows !== false && products.length > 1 ? (
+              <button type="button" className="tmpcc-side tmpcc-side-left" aria-label={localizedPropText(props.previousProductsLabel, props.previousProductsLabelEn, tLocalized("Önceki ürünler", "Previous products"))} onClick={() => scroll(-1)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
               </button>
             ) : null}
-            <div ref={scrollerRef} className="tmpcc-track" aria-label={tLocalized("Kategori ürünleri", "Category products")}>
+            <div ref={scrollerRef} className="tmpcc-track" aria-label={localizedPropText(props.categoryProductsAriaLabel, props.categoryProductsAriaLabelEn, tLocalized("Kategori ürünleri", "Category products"))}>
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
                   product={product}
-                  showCategoryName={(p as any).showCategoryName === true}
-                  showPrice={(p as any).showPrice === true}
-                  target={(p as any).openLinksInNewTab ? "_blank" : undefined}
+                  showCategoryName={props.showCategoryName === true}
+                  showPrice={props.showPrice === true}
+                  target={props.openLinksInNewTab ? "_blank" : undefined}
                 />
               ))}
             </div>
-            {!hasHeader && (p as any).showArrows !== false && products.length > 1 ? (
-              <button type="button" className="tmpcc-side tmpcc-side-right" aria-label={tLocalized("Sonraki ürünler", "Next products")} onClick={() => scroll(1)}>
+            {!hasHeader && props.showArrows !== false && products.length > 1 ? (
+              <button type="button" className="tmpcc-side tmpcc-side-right" aria-label={localizedPropText(props.nextProductsLabel, props.nextProductsLabelEn, tLocalized("Sonraki ürünler", "Next products"))} onClick={() => scroll(1)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
               </button>
             ) : null}
@@ -488,13 +509,14 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
         ) : (
           <div className="tmpcc-setup">
             {isLoading
-              ? tLocalized("Ürünler yükleniyor...", "Loading products...")
-              : resolvePropText(
-                  (p as any).setupMessage,
+              ? localizedPropText(props.loadingProductsText, props.loadingProductsTextEn, tLocalized("Ürünler yükleniyor...", "Loading products..."))
+              : localizedPropText(
+                  props.setupMessage,
+                  props.setupMessageEn,
                   tLocalized("İlgili ürünler kısa süre içinde burada listelenecek.", "Related products will be listed here shortly.")
                 )}
           </div>
-        )}
+        )) : null}
       </div>
     </section>
   );

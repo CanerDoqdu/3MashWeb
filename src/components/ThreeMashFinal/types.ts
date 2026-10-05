@@ -21,5 +21,13 @@ export interface Props {
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
-  showBackgroundGlow?: boolean;
+  titleTextEn: string;
+  titleEmphasisEn: string;
+  descriptionHtmlEn: string;
+  primaryButtonTextEn: string;
+  primaryButtonHrefEn: string;
+  secondaryButtonTextEn: string;
+  showDescription: boolean;
+  showPrimaryButton: boolean;
+  showSecondaryButton: boolean;
 }

@@ -20,10 +20,10 @@ import {
   mockStudioOrders,
   OrdersView,
   RecoverPasswordView,
-  text,
+  localizedText,
   type DashboardProps,
 } from "../ThreeMashAccountUtilityPage";
-import { t, tLocalized, localizedHref } from "../../utils/i18n";
+import { localizedHref } from "../../utils/i18n";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import ProtectedRoute from "../../sub-components/ProtectedRoute";
 import {
@@ -56,7 +56,7 @@ const criticalLayoutCss = `
   gap: 24px;
   align-items: stretch;
   width: 100%;
-  max-width: min(var(--tmai-max, 1180px), 1180px);
+  max-width: var(--tmai-max, 1180px);
   margin: 0 auto;
   flex: 1;
   min-height: 560px;
@@ -69,10 +69,71 @@ const criticalLayoutCss = `
   height: 100%;
   min-height: 100%;
   padding: clamp(34px,4vw,48px);
-  background: var(--tmai-dark, var(--tm-theme-dark, #0e0e0c));
-  color: var(--tm-theme-bg, #fafaf7);
+  background: var(--tmai-sidebar, var(--tm-theme-panel, #f1f1ec));
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
   min-width: 0;
   box-sizing: border-box;
+}
+.tmai-kicker {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 26px;
+  padding: 0 11px;
+  background: var(--tmai-accent, var(--tm-theme-accent, #c7f136));
+  color: var(--tm-theme-accent-text, #3d4d0e);
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", "Inter", sans-serif);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+}
+.tmai-user {
+  display: grid;
+  gap: 9px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
+}
+.tmai-user strong {
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", "Inter", sans-serif);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+.tmai-user-name-skeleton {
+  display: block;
+  width: 170px;
+  height: 34px;
+  background: color-mix(in srgb, var(--tmai-text, #0e0e0c) 12%, transparent);
+}
+.tmai-user button {
+  width: max-content;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #f2b0a8;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.tmai-menu {
+  display: grid;
+  gap: 10px;
+}
+.tmai-menu h2 {
+  margin: 26px 0 6px;
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
+  font-family: var(--tm-theme-font-heading, "Space Grotesk", "Inter", sans-serif);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+.tmai-menu h2:first-child {
+  margin-top: 0;
 }
 .tmai-main, .tmai-main-panel {
   position: relative;
@@ -141,7 +202,7 @@ const criticalLayoutCss = `
   border: 0;
   padding: 0;
   margin: 0;
-  color: #cfcfc6;
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
   font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
   font-size: 14px;
   line-height: 1.35;
@@ -229,8 +290,8 @@ function modeFromHref(nextHref: string, fallback: AccountMode): AccountMode {
   }
 }
 
-function normalizeHref(value: string | undefined, fallback: string) {
-  return safeNavigationHref(value, fallback);
+function normalizeHref(value: string | undefined, fallback = "/") {
+  return safeNavigationHref(localizedHref(value), fallback);
 }
 
 function customerName(customer: any) {
@@ -384,7 +445,7 @@ function AccountLayoutContent(props: DashboardProps) {
         setOrders([]);
         setFavorites([]);
         setSidebarName("");
-        window.location.replace(safeRedirect(localizedHref("/account/login")));
+        window.location.replace(safeRedirect(loginHref));
         return false;
       }
       return true;
@@ -495,7 +556,7 @@ function AccountLayoutContent(props: DashboardProps) {
   // URL is updated via pushState, right panel swaps via setMode.
   function handleNavigate(nextHref: string) {
     if (!isStudio && (!hasCustomerToken() || isCustomerAuthenticated() === "unauthenticated")) {
-      window.location.replace(safeRedirect(localizedHref("/account/login")));
+      window.location.replace(safeRedirect(loginHref));
       return;
     }
 
@@ -536,32 +597,66 @@ function AccountLayoutContent(props: DashboardProps) {
     setFavorites([]);
     setSidebarName("");
     // performLogout clears storage, clears cart, broadcasts across tabs, and redirects to login.
-    await performLogout({ forceRedirect: true, redirectTarget: "/account/login" });
+    await performLogout({ forceRedirect: true, redirectTarget: loginHref });
   }
 
   // ── Href helpers ──────────────────────────────────────────────────
-  const accountHref = normalizeHref(props?.accountHref, "/account");
-  const addressesHref = normalizeHref(props?.addressesHref, "/account/addresses");
-  const favoritesHref = normalizeHref(props?.favoritesHref, "/account/favorites");
-  const ordersHref = normalizeHref(props?.ordersHref, "/account/orders");
+  const loginHref = normalizeHref(props?.loginHref);
+  const accountHref = normalizeHref(props?.accountHref);
+  const addressesHref = normalizeHref(props?.addressesHref);
+  const favoritesHref = normalizeHref(props?.favoritesHref);
+  const ordersHref = normalizeHref(props?.ordersHref);
 
   const personalLinks = [
     {
       key: "account" as AccountMode,
-      label: text(props?.profileTitle, tLocalized("Kişisel Bilgilerim", "My Personal Information"), "Profile Info"),
+      label: localizedText(
+        props.profileTitle,
+        props.profileTitleEn,
+      ),
       href: accountHref,
+      visible: props.showProfileLink !== false,
     },
     {
       key: "addresses" as AccountMode,
-      label: text(props?.addressesTitle, tLocalized("Adreslerim", "My Addresses"), "My Addresses"),
+      label: localizedText(
+        props.addressesTitle,
+        props.addressesTitleEn,
+      ),
       href: addressesHref,
+      visible: props.showAddressesLink !== false,
     },
     {
       key: "favorites" as AccountMode,
-      label: text(props?.favoritesTitle, tLocalized("Beğendiğim Ürünler", "My Favorites"), "Favorite Products"),
+      label: localizedText(
+        props.favoritesTitle,
+        props.favoritesTitleEn,
+      ),
       href: favoritesHref,
+      visible: props.showFavoritesLink !== false,
     },
-  ];
+  ].filter((item) => item.visible);
+
+  const customLinks = [
+    {
+      key: "accountLinkSlot1",
+      label: localizedText(
+        props.accountLinkSlot1Text,
+        props.accountLinkSlot1TextEn,
+      ),
+      href: normalizeHref(props.accountLinkSlot1Href, ""),
+      visible: props.showAccountLinkSlot1 === true,
+    },
+    {
+      key: "accountLinkSlot2",
+      label: localizedText(
+        props.accountLinkSlot2Text,
+        props.accountLinkSlot2TextEn,
+      ),
+      href: normalizeHref(props.accountLinkSlot2Href, ""),
+      visible: props.showAccountLinkSlot2 === true,
+    },
+  ].filter((item) => item.visible && item.label.trim() && item.href);
 
   const effectiveCustomer = customer || (isStudio ? mockStudioCustomer : null);
   const addresses = effectiveCustomer?.addresses || [];
@@ -615,7 +710,10 @@ function AccountLayoutContent(props: DashboardProps) {
         <aside className="tmai-sidebar">
 
           <span className="tmai-kicker">
-            {text(props?.accountLabel, tLocalized("HESABIM", "MY ACCOUNT"), "MY ACCOUNT")}
+            {localizedText(
+              props.accountLabel,
+              props.accountLabelEn,
+            )}
           </span>
 
           <div className="tmai-user">
@@ -624,40 +722,69 @@ function AccountLayoutContent(props: DashboardProps) {
             ) : (
               <span className="tmai-user-name-skeleton" aria-hidden="true" />
             )}
-            <a
-              href="#"
-              className="tmai-logout tmau-logout"
-              onClick={handleLogout}
-            >
-              {text(props?.logoutText, tLocalized("Çıkış yap", "Sign out"), "Sign out")}
-            </a>
+            {props.showLogoutButton !== false && (
+              <button
+                type="button"
+                className="tmai-logout tmau-logout"
+                onClick={handleLogout}
+              >
+                {localizedText(
+                  props.logoutText,
+                  props.logoutTextEn,
+                )}
+              </button>
+            )}
           </div>
 
           <nav className="tmai-menu">
-            <h2>
-              {text(props?.accountGroupTitle, tLocalized("Hesap Yönetimi", "Account Management"), "Account Management")}
-            </h2>
+            {personalLinks.length > 0 && (
+              <>
+                <h2>
+                  {localizedText(
+                    props.accountGroupTitle,
+                    props.accountGroupTitleEn,
+                  )}
+                </h2>
 
-            {personalLinks.map((item) => (
-              <button
-                key={item.key}
-                type="button"
-                onClick={() => handleNavigate(item.href)}
-                className={`tmai-nav-btn${mode === item.key ? " is-active" : ""}`}
-              >
+                {personalLinks.map((item) => (
+                  <button
+                    key={item.key}
+                    type="button"
+                    onClick={() => handleNavigate(item.href)}
+                    className={`tmai-nav-btn${mode === item.key ? " is-active" : ""}`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </>
+            )}
+
+            {customLinks.map((item) => (
+              <a key={item.key} href={item.href}>
                 {item.label}
-              </button>
+              </a>
             ))}
 
-            <h2>{tLocalized("Sipariş Bilgilerim", "Order Information")}</h2>
-
-            <button
-              type="button"
-              onClick={() => handleNavigate(ordersHref)}
-              className={`tmai-nav-btn${mode === "orders" ? " is-active" : ""}`}
-            >
-              {text(props?.ordersTitle, tLocalized("Siparişlerim", "My Orders"), "My Orders")}
-            </button>
+            {props.showOrdersLink !== false && (
+              <>
+                <h2>
+                  {localizedText(
+                    props.orderGroupTitle,
+                    props.orderGroupTitleEn,
+                  )}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => handleNavigate(ordersHref)}
+                  className={`tmai-nav-btn${mode === "orders" ? " is-active" : ""}`}
+                >
+                  {localizedText(
+                    props.ordersTitle,
+                    props.ordersTitleEn,
+                  )}
+                </button>
+              </>
+            )}
           </nav>
 
         </aside>

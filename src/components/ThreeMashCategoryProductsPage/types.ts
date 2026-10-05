@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProductList } from "@ikas/bp-storefront";
+import type { IkasProductList, IkasImage } from "@ikas/bp-storefront";
 
 export interface Props {
   /** Canlı ürün listesi */
@@ -200,4 +200,21 @@ export interface Props {
   accentColor?: string;
   /** Bölüm ve kart kenarlık rengi */
   lineColor?: string;
+  showAnnouncement?: boolean;
+  showHero?: boolean;
+  showMetrics?: boolean;
+  showSelector?: boolean;
+  showFeature?: boolean;
+  showDetail?: boolean;
+  showFaq?: boolean;
+  showFinalCta?: boolean;
+  printerP16lImage?: IkasImage | null;
+  printerCurieImage?: IkasImage | null;
+  printerHalotImage?: IkasImage | null;
+  printerP16lImageAlt?: string;
+  printerP16lImageAltEn?: string;
+  printerCurieImageAlt?: string;
+  printerCurieImageAltEn?: string;
+  printerHalotImageAlt?: string;
+  printerHalotImageAltEn?: string;
 }

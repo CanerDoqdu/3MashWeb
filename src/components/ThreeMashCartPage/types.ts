@@ -1,10 +1,6 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
   titleText?: string;
-  emptyButtonText?: string;
-  emptyButtonHref?: string;
-  loginHref?: string;
-  loginRequiredText?: string;
   checkoutButtonText?: string;
   continueShoppingText?: string;
   continueShoppingHref?: string;
@@ -17,4 +13,69 @@ export interface Props {
   lineColor?: string;
   buttonBackgroundColor?: string;
   buttonTextColor?: string;
+  titleTextEn?: string;
+  loadingTextEn?: string;
+  subtotalTextEn?: string;
+  checkoutButtonTextEn?: string;
+  continueShoppingTextEn?: string;
+  removeTextEn?: string;
+  /** Sepet adedini göstermek için {count} yer tutucusunu koruyun. */
+  cartDescriptionText?: string;
+  /** Cart item count is inserted at {count}; keep this placeholder. */
+  cartDescriptionTextEn?: string;
+  productFallbackText?: string;
+  productFallbackTextEn?: string;
+  /** Ürün adının otomatik eklenmesi için {product} yer tutucusunu koruyun. */
+  removeItemAriaLabel?: string;
+  /** The product name is inserted at {product}; keep this placeholder. */
+  removeItemAriaLabelEn?: string;
+  quantityLabelText?: string;
+  quantityLabelTextEn?: string;
+  decreaseQuantityAriaLabel?: string;
+  decreaseQuantityAriaLabelEn?: string;
+  increaseQuantityAriaLabel?: string;
+  increaseQuantityAriaLabelEn?: string;
+  updateItemErrorText?: string;
+  updateItemErrorTextEn?: string;
+  removeItemErrorText?: string;
+  removeItemErrorTextEn?: string;
+  cartLoadErrorText?: string;
+  cartLoadErrorTextEn?: string;
+  retryButtonText?: string;
+  retryButtonTextEn?: string;
+  cartEmptyText?: string;
+  cartEmptyTextEn?: string;
+  summaryTitleText?: string;
+  summaryTitleTextEn?: string;
+  adjustmentLabelText?: string;
+  adjustmentLabelTextEn?: string;
+  taxLabelText?: string;
+  taxLabelTextEn?: string;
+  totalLabelText?: string;
+  totalLabelTextEn?: string;
+  couponAppliedText?: string;
+  couponAppliedTextEn?: string;
+  couponRemoveAriaLabel?: string;
+  couponRemoveAriaLabelEn?: string;
+  couponPlaceholderText?: string;
+  couponPlaceholderTextEn?: string;
+  couponApplyText?: string;
+  couponApplyTextEn?: string;
+  couponLoadingText?: string;
+  couponLoadingTextEn?: string;
+  couponStartText?: string;
+  couponStartTextEn?: string;
+  couponSuccessText?: string;
+  couponSuccessTextEn?: string;
+  couponInvalidText?: string;
+  couponInvalidTextEn?: string;
+  couponRemoveErrorText?: string;
+  couponRemoveErrorTextEn?: string;
+  checkoutErrorText?: string;
+  checkoutErrorTextEn?: string;
+  showCartTitle?: boolean;
+  showCouponCode?: boolean;
+  showContinueShoppingLink?: boolean;
+  emptyCheckoutButtonText?: string;
+  emptyCheckoutButtonTextEn?: string;
 }

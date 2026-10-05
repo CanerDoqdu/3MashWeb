@@ -24,12 +24,15 @@
   padding: 0 32px;
 }
 
-/* DÜZELTME: sabit height yerine min-height + height:auto, taşan içerik artık kesilmiyor */
+/* Banner: metin 2 satıra geçebilir, lang switcher her zaman absolute-right */
 .tmh-announcement {
   min-height: var(--tmh-announcement-fixed-height);
   height: auto;
   overflow: visible;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--tmh-ann-bg);
   color: var(--tmh-ann-text);
   font-size: 13px;
@@ -39,18 +42,35 @@
 
 .tmh-announcement-inner {
   position: relative;
+  /* lang switcher absolute right: 32px — metne 90px nefes boşluğu bırakıyoruz */
   width: min(100%, 1240px);
-  min-height: 100%;
+  min-height: var(--tmh-announcement-fixed-height);
   margin: 0 auto;
-  padding: 6px 90px 6px 32px;
+  /* simetrik 32px — lang absolute konumda, metin padding-right ile korunuyor */
+  padding: 8px 96px 8px 32px;
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
-  gap: 8px;
-  row-gap: 3px;
+  gap: 6px;
+  row-gap: 2px;
   text-align: center;
   flex-wrap: wrap;
+}
+
+/* Metin grubunu (b + span + a) ayrı bir satır-kırılabilir katmanda tut */
+.tmh-announcement-inner > b[data-tmh-ann-highlight],
+.tmh-announcement-inner > span[data-tmh-ann-text],
+.tmh-announcement-inner > a[data-tmh-ann-link] {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+/* Tüm metin öğelerini saran sanal "text block" — max-width lang'in üstüne geçmesin */
+.tmh-announcement-inner > b[data-tmh-ann-highlight] {
+  flex-shrink: 0;
 }
 
 .tmh-announcement b {
@@ -82,6 +102,8 @@
   right: 32px;
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  align-items: center;
   z-index: 102;
 }
 
@@ -179,6 +201,9 @@
 .tmh-flag-svg {
   display: block;
   flex-shrink: 0;
+  width: 16px;
+  height: 11px;
+  object-fit: cover;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
@@ -421,6 +446,38 @@
   transform: translateX(var(--tmh-products-translate-x, -50%)) translateY(8px);
 }
 
+.tmh-products-mega.has-no-feature {
+  width: min(640px, calc(100vw - 32px));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.tmh-products-mega-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 14px;
+  margin-top: 4px;
+  border-top: 1px solid var(--tmh-line);
+}
+
+.tmh-all-products-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--tmh-accent);
+  text-decoration: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.tmh-all-products-link:hover {
+  opacity: 0.85;
+  transform: translateX(3px);
+}
+
 .tmh-menu > li:hover .tmh-products-mega,
 .tmh-menu > li:focus-within .tmh-products-mega,
 .tmh-menu > li.is-open .tmh-products-mega {
@@ -429,10 +486,10 @@
 
 .tmh-feature {
   min-width: 0;
-  background: var(--tmh-text);
+  background: var(--tmh-feature-bg, var(--tmh-text));
   border-radius: 14px;
   padding: 22px;
-  color: #fff;
+  color: var(--tmh-feature-text, #fff);
   display: flex;
   flex-direction: column;
   text-decoration: none;
@@ -445,13 +502,14 @@
   line-height: 1.35;
   margin-top: 10px;
   overflow-wrap: anywhere;
+  color: var(--tmh-feature-text, #fff);
 }
 
 .tmh-feature > span:not(.tmh-micro) {
   flex: 1;
   font-family: var(--tm-theme-font-body, "Inter", sans-serif);
   font-size: 12.5px;
-  color: #b9b9af;
+  color: var(--tmh-feature-text-muted, #b9b9af);
   line-height: 1.55;
   margin-top: 8px;
   overflow-wrap: anywhere;
@@ -460,7 +518,7 @@
 .tmh-feature em {
   margin-top: 14px;
   font-family: var(--tm-theme-font-body, "Inter", sans-serif);
-  color: var(--tmh-accent);
+  color: var(--tmh-feature-accent, var(--tmh-accent));
   font-style: normal;
   font-size: 13px;
   font-weight: 600;
@@ -478,7 +536,7 @@
 }
 
 .tmh-feature .tmh-micro {
-  color: var(--tmh-accent);
+  color: var(--tmh-feature-accent, var(--tmh-accent));
 }
 
 .tmh-flow-intro {
@@ -604,6 +662,12 @@
   overflow-wrap: anywhere;
 }
 
+/* ── Why / Flow cards glow ─────────────────────────────── */
+@keyframes tmh-flow-shimmer {
+  0%   { transform: translateX(-120%) skewX(-18deg); }
+  100% { transform: translateX(220%)  skewX(-18deg); }
+}
+
 .tmh-flow-link {
   min-width: 0;
   display: flex;
@@ -615,8 +679,63 @@
   border-radius: 12px;
   background: transparent;
   text-decoration: none;
-  transition: background 0.13s ease;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    transform  0.22s cubic-bezier(.22,.68,0,1.2);
 }
+
+/* Shimmer sweep — glow açıkken hover'da tetiklenir */
+.tmh-flow-link::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255,255,255,0.13) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+  transform: translateX(-120%) skewX(-18deg);
+  transition: none;
+  opacity: var(--tmh-why-shimmer-opacity, 0);
+}
+
+/* Üst border micro highlight */
+.tmh-flow-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border-top: 1px solid rgba(255,255,255,0);
+  pointer-events: none;
+  transition: border-color 0.22s ease, background 0.22s ease;
+  background: transparent;
+}
+
+.tmh-flow-link:hover {
+  background: rgba(0,0,0,0.035);
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.07),
+    0 4px 14px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  transform: scale(1.012);
+}
+
+.tmh-flow-link:hover::after {
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* Glow prop açıkken hover'da shimmer tetiklenir */
+.tmh-flow-link:hover::before {
+  animation: var(--tmh-why-shimmer-anim, none);
+}
+
 
 .tmh-flow-number {
   min-width: 30px;
@@ -1452,6 +1571,7 @@
   color: var(--tmh-accent-text);
   font-weight: 600;
 }
+
 
 @media (max-width: 1000px) {
   .tmh-desktop-nav {

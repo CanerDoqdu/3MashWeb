@@ -1,18 +1,15 @@
 import { faqSections } from "../ThreeMashPageData/sourceData";
 import { Props } from "./types";
-import { t, tLocalized, tProp } from "../../utils/i18n";
+import { isEnglishLocale, tLocalized } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
-
-function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
-  return tProp(value, fallbackTr, fallbackEn || fallbackTr);
-}
 
 function numberValue(value: number | undefined, fallback: number) {
   return typeof value === "number" ? value : fallback;
 }
 
-function propText(value: string | undefined, fallback: string) {
-  return value?.trim() || fallback;
+function localizedText(value: string | undefined, valueEn: string | undefined, fallback: string) {
+  const localizedValue = isEnglishLocale() ? valueEn : value;
+  return localizedValue?.trim() || fallback;
 }
 
 const criticalFaqCss = `
@@ -87,37 +84,55 @@ function themeColor(
 function sectionsFromProps(props: Props) {
   const resin = faqSections[0];
   const printer = faqSections[1];
-
-  // NOTE: Dynamic property access via template literals (e.g., `resinQuestion${index + 1}`) requires
-  // type narrowing to 'any' because TypeScript cannot statically verify computed property names.
-  return [
+  const resinOverrides = [
+    { question: props.resinQuestion1, questionEn: props.resinQuestion1En, answer: props.resinAnswer1, answerEn: props.resinAnswer1En },
+    { question: props.resinQuestion2, questionEn: props.resinQuestion2En, answer: props.resinAnswer2, answerEn: props.resinAnswer2En },
+    { question: props.resinQuestion3, questionEn: props.resinQuestion3En, answer: props.resinAnswer3, answerEn: props.resinAnswer3En },
+    { question: props.resinQuestion4, questionEn: props.resinQuestion4En, answer: props.resinAnswer4, answerEn: props.resinAnswer4En },
+    { question: props.resinQuestion5, questionEn: props.resinQuestion5En, answer: props.resinAnswer5, answerEn: props.resinAnswer5En },
+    { question: props.resinQuestion6, questionEn: props.resinQuestion6En, answer: props.resinAnswer6, answerEn: props.resinAnswer6En },
+    { question: props.resinQuestion7, questionEn: props.resinQuestion7En, answer: props.resinAnswer7, answerEn: props.resinAnswer7En },
+    { question: props.resinQuestion8, questionEn: props.resinQuestion8En, answer: props.resinAnswer8, answerEn: props.resinAnswer8En },
+    { question: props.resinQuestion9, questionEn: props.resinQuestion9En, answer: props.resinAnswer9, answerEn: props.resinAnswer9En },
+    { question: props.resinQuestion10, questionEn: props.resinQuestion10En, answer: props.resinAnswer10, answerEn: props.resinAnswer10En },
+  ];
+  const printerOverrides = [
+    { question: props.printerQuestion1, questionEn: props.printerQuestion1En, answer: props.printerAnswer1, answerEn: props.printerAnswer1En },
+    { question: props.printerQuestion2, questionEn: props.printerQuestion2En, answer: props.printerAnswer2, answerEn: props.printerAnswer2En },
+    { question: props.printerQuestion3, questionEn: props.printerQuestion3En, answer: props.printerAnswer3, answerEn: props.printerAnswer3En },
+  ];
+  const sections = [
     {
-      title: propText(props.resinSectionTitle, resin.title),
+      title: localizedText(props.resinSectionTitle, props.resinSectionTitleEn, resin.title),
       questions: resin.questions.map((item, index) => ({
-        question: propText(
-          (props as any)[`resinQuestion${index + 1}`],
-          item.question,
-        ),
-        answerHtml: propText(
-          (props as any)[`resinAnswer${index + 1}`],
-          item.answerHtml,
-        ),
+        question: localizedText(resinOverrides[index].question, resinOverrides[index].questionEn, item.question),
+        answerHtml: localizedText(resinOverrides[index].answer, resinOverrides[index].answerEn, item.answerHtml),
       })),
     },
     {
-      title: propText(props.printerSectionTitle, printer.title),
+      title: localizedText(props.printerSectionTitle, props.printerSectionTitleEn, printer.title),
       questions: printer.questions.map((item, index) => ({
-        question: propText(
-          (props as any)[`printerQuestion${index + 1}`],
-          item.question,
-        ),
-        answerHtml: propText(
-          (props as any)[`printerAnswer${index + 1}`],
-          item.answerHtml,
-        ),
+        question: localizedText(printerOverrides[index].question, printerOverrides[index].questionEn, item.question),
+        answerHtml: localizedText(printerOverrides[index].answer, printerOverrides[index].answerEn, item.answerHtml),
       })),
     },
   ];
+
+  if (props.showExtraResinFaq === true) {
+    const question = localizedText(props.resinQuestion11, props.resinQuestion11En, tLocalized("Yeni reçine sorusu", "New resin question"));
+    const answerHtml = localizedText(props.resinAnswer11, props.resinAnswer11En, tLocalized("<p>Yanıtınızı buraya yazın.</p>", "<p>Enter the answer here.</p>"));
+    if (question.trim() && answerHtml.trim()) sections[0].questions.push({ question, answerHtml });
+  }
+
+  if (props.showExtraPrinterFaq === true) {
+    const question = localizedText(props.printerQuestion4, props.printerQuestion4En, tLocalized("Yeni yazıcı sorusu", "New printer question"));
+    const answerHtml = localizedText(props.printerAnswer4, props.printerAnswer4En, tLocalized("<p>Yanıtınızı buraya yazın.</p>", "<p>Enter the answer here.</p>"));
+    if (question.trim() && answerHtml.trim()) sections[1].questions.push({ question, answerHtml });
+  }
+
+  return sections.filter((section, index) => index === 0
+    ? props.showResinFaq !== false
+    : props.showPrinterFaq !== false);
 }
 
 export function ThreeMashFaqPage(props: Props) {
@@ -149,11 +164,36 @@ export function ThreeMashFaqPage(props: Props) {
     "--tmfaq-line": themeColor(props.lineColor, "#E6E6E0", "--tm-theme-line", [
       "#e5e5e5",
     ]),
-    "--tmfaq-accent": "var(--tm-theme-accent, #C7F136)",
-    "--tmfaq-dark": "var(--tm-theme-dark, #0E0E0C)",
+    "--tmfaq-accent": themeColor(
+      props.accentColor,
+      "#C7F136",
+      "--tm-theme-accent",
+    ),
+    "--tmfaq-dark": themeColor(
+      props.darkColor,
+      "#0E0E0C",
+      "--tm-theme-dark",
+    ),
     "--tmfaq-max": `${numberValue(props.maxWidth, 1180)}px`,
   } as any; // CSS-in-JS: dynamic properties use CSS custom variable names
-  const pageTitle = text(props.titleText, tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"), "Frequently Asked Questions");
+  const pageTitle = localizedText(
+    props.titleText,
+    props.titleTextEn,
+    tLocalized("Sık Sorulan Sorular", "Frequently Asked Questions"),
+  );
+  const kickerText = localizedText(
+    props.kickerText,
+    props.kickerTextEn,
+    tLocalized("SSS", "FAQ"),
+  );
+  const introText = localizedText(
+    props.introText,
+    props.introTextEn,
+    tLocalized(
+      "Dental üretim akışı, reçine kullanımı ve 3D yazıcı süreçlerinde en sık gelen soruları tek yerde topladık.",
+      "We gathered the most frequent questions on dental manufacturing workflows, resin usage, and 3D printing.",
+    ),
+  );
 
   return (
     <section className="three-mash-faq-page" style={style}>
@@ -161,15 +201,10 @@ export function ThreeMashFaqPage(props: Props) {
       <div className="tmfaq-shell">
         {props.showPageTitle !== false ? (
           <section className="tmfaq-hero">
-            <span className="tmfaq-kicker">{t("sections.faq.indexText", "SSS")}</span>
+            <span className="tmfaq-kicker">{kickerText}</span>
             <div className="tmfaq-hero-grid">
               <h1>{pageTitle}</h1>
-              <p>
-                {tLocalized(
-                  tLocalized("Dental üretim akışı, reçine kullanımı ve 3D yazıcı süreçlerinde en sık gelen soruları tek yerde topladık.", "We gathered the most frequent questions on dental manufacturing workflows, resin usage, and 3D printing in one place."),
-                  "We gathered the most frequent questions on dental manufacturing workflows, resin usage, and 3D printing in one place."
-                )}
-              </p>
+              <p>{introText}</p>
             </div>
           </section>
         ) : null}

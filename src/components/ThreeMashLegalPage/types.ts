@@ -1,8 +1,7 @@
 // This file is auto-generated — do not edit manually.
 export interface Props {
   mode: string;
-  titleText?: string;
-  /** Boş bırakıldığında üyelik sözleşmesi parçalı prop alanlarından oluşturulur. */
+  /** İsteğe bağlı tam sözleşme HTML içeriği. Boş bırakıldığında bölüm alanları kullanılır. */
   contentHtml?: string;
   backgroundColor?: string;
   textColor?: string;
@@ -24,4 +23,26 @@ export interface Props {
   disputeHtml?: string;
   enforcementTitleText?: string;
   enforcementHtml?: string;
+  /** İsteğe bağlı İngilizce tam sözleşme HTML içeriği. Boş bırakıldığında İngilizce bölüm alanları kullanılır. */
+  contentHtmlEn?: string;
+  agreementTitleTextEn?: string;
+  partiesTitleTextEn?: string;
+  partyCompanyHtmlEn?: string;
+  partyMemberHtmlEn?: string;
+  subjectTitleTextEn?: string;
+  subjectHtmlEn?: string;
+  rightsTitleTextEn?: string;
+  rightsHtmlEn?: string;
+  terminationTitleTextEn?: string;
+  terminationHtmlEn?: string;
+  disputeTitleTextEn?: string;
+  disputeHtmlEn?: string;
+  enforcementTitleTextEn?: string;
+  enforcementHtmlEn?: string;
+  showPartiesSection?: boolean;
+  showSubjectSection?: boolean;
+  showRightsSection?: boolean;
+  showTerminationSection?: boolean;
+  showDisputeSection?: boolean;
+  showEnforcementSection?: boolean;
 }

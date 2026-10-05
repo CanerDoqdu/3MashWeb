@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Props } from "./types";
-import { isEnglishLocale, localizedHref, tLocalized, tProp } from "../../utils/i18n";
+import { isEnglishLocale, localizedHref } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -9,7 +9,7 @@ type CostMode = "klinik" | "lab";
 type FieldDef = {
   id: string;
   label: string;
-  hint: string;
+  labelHtml: string;
   min: number;
   max: number;
   step: number;
@@ -19,7 +19,52 @@ type FieldDef = {
   pairsWith?: string;
 };
 
-const fmt = (n: number) => "$" + Math.round(n).toLocaleString("tr-TR");
+function localizedProp(
+  value: string | null | undefined,
+  valueEn: string | null | undefined,
+  fallbackTr: string,
+  fallbackEn: string,
+): string {
+  const isEnglish = isEnglishLocale();
+  const localizedValue = isEnglish ? valueEn : value;
+  return localizedValue?.trim() || (isEnglish ? fallbackEn : fallbackTr);
+}
+
+function plainText(value: string): string {
+  return value
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function localizedFieldLabel(
+  value: string | null | undefined,
+  valueEn: string | null | undefined,
+  fallbackTr: string,
+  fallbackEn: string,
+): Pick<FieldDef, "label" | "labelHtml"> {
+  const labelHtml = localizedProp(value, valueEn, fallbackTr, fallbackEn);
+  return { label: plainText(labelHtml), labelHtml };
+}
+
+const fmt = (n: number, currencySymbol: string) =>
+  currencySymbol + Math.round(n).toLocaleString("tr-TR");
+
+const DEFAULT_STUDY_ONE_TR = `<span class="tag">HAKEMLİ KLİNİK VERİ</span><h3>Tekrar oranı gerçekte ne kadar? Ulusal PBRN, 3.750 kron üzerinde ölçtü.</h3><div class="meta">McCracken M.S. ve ark. (National Dental PBRN Collaborative Group) · <i>Journal of Prosthodontics</i>, 2019;28(2):122–130</div><ul><li><b>205 diş hekimi</b>, gerçek klinik pratiğinde <b>3.750 tek-ünite kron</b> değerlendirdi.</li><li>Ortalama tekrar (remake) oranı <b>%3,8</b> — fakat hekimden hekime <b>%0 ile %42</b> arasında değişiyor.</li><li>Hekimlerin %58'i hiç kron reddetmezken, tüm reddetmeler %42'lik gruptan geldi — yani sorun <b>tekil, çözülebilir</b> bir uygulama farkı.</li><li>En sık ret sebepleri: <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlık</b> — üçü de doğrudan <b>ölçüsel hassasiyet</b> problemi.</li></ul><a class="link" href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener noreferrer">DOI: 10.1111/jopr.12995 · Kaynağı aç →</a>`;
+const DEFAULT_STUDY_ONE_EN = `<span class="tag">PEER-REVIEWED CLINICAL DATA</span><h3>What is the remake rate really? The National PBRN measured it across 3,750 crowns.</h3><div class="meta">McCracken M.S. et al. (National Dental PBRN Collaborative Group) · <i>Journal of Prosthodontics</i>, 2019;28(2):122–130</div><ul><li><b>205 dentists</b> evaluated <b>3,750 single-unit crowns</b> in real clinical practice.</li><li>Average remake rate is <b>3.8%</b> — but varies from <b>0% to 42%</b> across practitioners.</li><li>While 58% of clinicians never reject a crown, all rejections came from the remaining 42% — meaning the problem is <b>single and solvable</b>.</li><li>Most common rejection causes: <b>proximal misfit, marginal errors, and aesthetic failure</b> — all direct <b>dimensional accuracy</b> problems.</li></ul><a class="link" href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener noreferrer">DOI: 10.1111/jopr.12995 · Open source →</a>`;
+const DEFAULT_STUDY_TWO_TR = `<span class="tag">HAKEMLİ · ÖLÇÜSEL DOĞRULUK</span><h3>Peki sapma neden oluşuyor? Doğruluk, kullanılan sisteme göre uçtan uca değişiyor.</h3><div class="meta">Etemad-Shahidi Y. ve ark. · <i>J Clin Med</i> 2020 (sistematik derleme) · Németh A. ve ark. · <i>J Dentistry</i> 2023 (ağ meta-analizi)</div><ul><li>Sistematik derlemede full-arch model doğruluğu en iyi sistemde <b>3,3 µm</b>'ye inerken, bazı cihazlarda <b>130–190 µm</b>'ye çıkıyor — yani doğru sonucu cihaz ve parametre belirliyor.</li><li>Ağ meta-analizi <b>SLA, DLP ve PolyJet</b>'i en doğru teknolojiler olarak gösteriyor (SLA ~<b>86,7 µm</b>, DLP ~<b>97,9 µm</b> ortalama trueness).</li><li>Yani sapma tesadüf değil, yönetilebilir bir değişken. <b>3mash bu değişkenleri birlikte kalibre ederek ±20 µm'yi her baskıda</b> sabitler; tekrar oranı ve maliyet de bu sayede düşer.</li></ul><a class="link" href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener noreferrer">DOI: 10.3390/jcm9103357 →</a>&nbsp;&nbsp;<a class="link" href="https://doi.org/10.1016/j.jdent.2023.104532" target="_blank" rel="noopener noreferrer">DOI: 10.1016/j.jdent.2023.104532 →</a>`;
+const DEFAULT_STUDY_TWO_EN = `<span class="tag">PEER-REVIEWED · DIMENSIONAL ACCURACY</span><h3>So why does deviation occur? Accuracy varies end-to-end depending on the system used.</h3><div class="meta">Etemad-Shahidi Y. et al. · <i>J Clin Med</i> 2020 (systematic review) · Németh A. et al. · <i>J Dentistry</i> 2023 (network meta-analysis)</div><ul><li>In the systematic review, full-arch model accuracy with the best system goes down to <b>3.3 µm</b>, while on some devices it goes up to <b>130–190 µm</b> — meaning the device and parameters determine the correct result.</li><li>The network meta-analysis ranks <b>SLA, DLP, and PolyJet</b> as the most accurate technologies (SLA ~<b>86.7 µm</b>, DLP ~<b>97.9 µm</b> average trueness).</li><li>Deviation is not chance; it is a manageable variable. <b>3mash calibrates these variables together to deliver ±20 µm on every print</b>, lowering remake rate and cost.</li></ul><a class="link" href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener noreferrer">DOI: 10.3390/jcm9103357 →</a>&nbsp;&nbsp;<a class="link" href="https://doi.org/10.1016/j.jdent.2023.104532" target="_blank" rel="noopener noreferrer">DOI: 10.1016/j.jdent.2023.104532 →</a>`;
+const DEFAULT_CALLOUT_TR = `<p><b>3mash bağlantısı:</b> çalışmanın işaret ettiği üç sebep de (proksimal uyum, marjin, estetik) <b>±20 µm tekrar edilebilir hassasiyetle</b> doğrudan azalır. Tekrar oranınızı %42'lerden ya da %10'lardan <b>≤%3'e</b> çektiğinizde, yukarıdaki kalem-kalem maliyet aynı oranda düşer.</p>`;
+const DEFAULT_CALLOUT_EN = `<p><b>3mash connection:</b> the three reasons highlighted by the study (proximal fit, margin, aesthetics) are directly reduced with <b>±20 µm repeatable precision</b>. When you lower your remake rate from around 42% or 10% to <b>≤3%</b>, the itemized cost above drops by the same rate.</p>`;
+const DEFAULT_SOURCE_NOTES_TR = `Kaynaklar: Tekrar oranı ve ret sebepleri — McCracken ve ark., <a href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener noreferrer">J Prosthodont 2019 (10.1111/jopr.12995)</a>. Ölçüsel doğruluk — Etemad-Shahidi ve ark., <a href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener noreferrer">J Clin Med 2020 (10.3390/jcm9103357)</a> ve Németh ve ark., <a href="https://doi.org/10.1016/j.jdent.2023.104532" target="_blank" rel="noopener noreferrer">J Dentistry 2023 (10.1016/j.jdent.2023.104532)</a>. Maliyet modeli (koltuk süresi/işletme gideri) — Spear Education, “The Cost of Laboratory Remakes.” Rakamlar tahminî olup iş akışınıza göre değişir.`;
+const DEFAULT_SOURCE_NOTES_EN = `Sources: Remake rate and rejection causes — McCracken et al., <a href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener noreferrer">J Prosthodont 2019 (10.1111/jopr.12995)</a>. Dimensional accuracy — Etemad-Shahidi et al., <a href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener noreferrer">J Clin Med 2020 (10.3390/jcm9103357)</a> and Németh et al., <a href="https://doi.org/10.1016/j.jdent.2023.104532" target="_blank" rel="noopener noreferrer">J Dentistry 2023 (10.1016/j.jdent.2023.104532)</a>. Cost model (chair time/operating expense) — Spear Education, “The Cost of Laboratory Remakes.” Figures are estimates and vary by your workflow.`;
 
 const segActiveStyle = {
   background: "var(--ink)",
@@ -168,25 +213,73 @@ export function ThreeMashCostDetailPage(props: Props) {
 
   const modelData: Record<CostMode, { per: string; fields: FieldDef[] }> = {
     klinik: {
-      per: tLocalized("KLİNİK", "CLINIC"),
+      per: localizedProp(props.clinicModeSummary, props.clinicModeSummaryEn, "KLİNİK", "CLINIC"),
       fields: [
-        { id: "chairRate", label: tLocalized("Hekim + koltuk maliyeti", "Doctor + chair cost"), hint: tLocalized("işletme gideri, $/saat", "operating cost, $/hr"), min: 150, max: 700, step: 25, val: chairRate, color: "#E2492F", kind: "rate" },
-        { id: "chairMin", label: tLocalized("Bir tekrara harcanan süre", "Time spent per remake"), hint: tLocalized("prep + ölçü + yapıştırma, dk", "prep + scan + cementation, min"), min: 20, max: 120, step: 5, val: chairMin, color: "#E2492F", kind: "min", pairsWith: "chairRate" },
-        { id: "units", label: tLocalized("İşteki ünite sayısı", "Units per case"), hint: tLocalized("birim", "units"), min: 1, max: 6, step: 1, val: units, color: "#7C9C36", kind: "mult" },
-        { id: "labFee", label: tLocalized("Yeniden lab ücreti", "Remake lab fee"), hint: tLocalized("ünite başına, $", "per unit, $"), min: 0, max: 400, step: 10, val: labFee, color: "#7C9C36", kind: "perUnit" },
-        { id: "ship", label: tLocalized("Kargo / lojistik", "Shipping / logistics"), hint: tLocalized("gidiş-dönüş, $", "round-trip, $"), min: 0, max: 120, step: 5, val: ship, color: "#B7B7AE", kind: "flat" },
-        { id: "misc", label: tLocalized("İskonto / jest / israf", "Discount / goodwill / waste"), hint: "$", min: 0, max: 200, step: 5, val: misc, color: "#B7B7AE", kind: "flat" },
+        {
+          id: "chairRate",
+          ...localizedFieldLabel(props.chairRateLabel, props.chairRateLabelEn, 'Hekim + koltuk maliyeti <span class="hint">· işletme gideri, $/saat</span>', 'Doctor + chair cost <span class="hint">· operating cost, $/hr</span>'),
+          min: 150, max: 700, step: 25, val: chairRate, color: "#E2492F", kind: "rate",
+        },
+        {
+          id: "chairMin",
+          ...localizedFieldLabel(props.chairMinLabel, props.chairMinLabelEn, 'Bir tekrara harcanan süre <span class="hint">· prep + ölçü + yapıştırma, dk</span>', 'Time spent per remake <span class="hint">· prep + scan + cementation, min</span>'),
+          min: 20, max: 120, step: 5, val: chairMin, color: "#E2492F", kind: "min", pairsWith: "chairRate",
+        },
+        {
+          id: "units",
+          ...localizedFieldLabel(props.unitsLabel, props.unitsLabelEn, 'İşteki ünite sayısı <span class="hint">· birim</span>', 'Units per case <span class="hint">· units</span>'),
+          min: 1, max: 6, step: 1, val: units, color: "#7C9C36", kind: "mult",
+        },
+        {
+          id: "labFee",
+          ...localizedFieldLabel(props.labFeeLabel, props.labFeeLabelEn, 'Yeniden lab ücreti <span class="hint">· ünite başına, $</span>', 'Remake lab fee <span class="hint">· per unit, $</span>'),
+          min: 0, max: 400, step: 10, val: labFee, color: "#7C9C36", kind: "perUnit",
+        },
+        {
+          id: "ship",
+          ...localizedFieldLabel(props.shipLabel, props.shipLabelEn, 'Kargo / lojistik <span class="hint">· gidiş-dönüş, $</span>', 'Shipping / logistics <span class="hint">· round-trip, $</span>'),
+          min: 0, max: 120, step: 5, val: ship, color: "#B7B7AE", kind: "flat",
+        },
+        {
+          id: "misc",
+          ...localizedFieldLabel(props.miscLabel, props.miscLabelEn, 'İskonto / jest / israf <span class="hint">· $</span>', 'Discount / goodwill / waste <span class="hint">· $</span>'),
+          min: 0, max: 200, step: 5, val: misc, color: "#B7B7AE", kind: "flat",
+        },
       ],
     },
     lab: {
-      per: tLocalized("LAB", "LAB"),
+      per: localizedProp(props.labModeSummary, props.labModeSummaryEn, "LAB", "LAB"),
       fields: [
-        { id: "matUnit", label: tLocalized("Yeniden üretim malzemesi", "Remake material"), hint: tLocalized("reçine/disk, $/birim", "resin/disc, per unit $"), min: 0, max: 200, step: 5, val: matUnit, color: "#E2492F", kind: "perUnit" },
-        { id: "unitsL", label: tLocalized("İşteki ünite sayısı", "Units per case"), hint: tLocalized("birim", "units"), min: 1, max: 12, step: 1, val: unitsL, color: "#7C9C36", kind: "mult" },
-        { id: "labRate", label: tLocalized("Üretim iş gücü", "Production labor"), hint: tLocalized("baskı+kürleme+QC, $/saat", "print+curing+QC, $/hr"), min: 20, max: 200, step: 10, val: labRate, color: "#E2492F", kind: "rate" },
-        { id: "labMin", label: tLocalized("Yeniden üretim süresi", "Remake production time"), hint: tLocalized("dk", "min"), min: 10, max: 180, step: 10, val: labMin, color: "#E2492F", kind: "min", pairsWith: "labRate" },
-        { id: "shipL", label: tLocalized("Kargo (iki yön)", "Shipping (two-way)"), hint: "$", min: 0, max: 150, step: 5, val: shipL, color: "#B7B7AE", kind: "flat" },
-        { id: "goodwill", label: tLocalized("İskonto / müşteri jesti", "Discount / customer goodwill"), hint: "$", min: 0, max: 250, step: 10, val: goodwill, color: "#B7B7AE", kind: "flat" },
+        {
+          id: "matUnit",
+          ...localizedFieldLabel(props.matUnitLabel, props.matUnitLabelEn, 'Yeniden üretim malzemesi <span class="hint">· reçine/disk, $/birim</span>', 'Remake material <span class="hint">· resin/disc, per unit $</span>'),
+          min: 0, max: 200, step: 5, val: matUnit, color: "#E2492F", kind: "perUnit",
+        },
+        {
+          id: "unitsL",
+          ...localizedFieldLabel(props.unitsLLabel, props.unitsLLabelEn, 'İşteki ünite sayısı <span class="hint">· birim</span>', 'Units per case <span class="hint">· units</span>'),
+          min: 1, max: 12, step: 1, val: unitsL, color: "#7C9C36", kind: "mult",
+        },
+        {
+          id: "labRate",
+          ...localizedFieldLabel(props.labRateLabel, props.labRateLabelEn, 'Üretim iş gücü <span class="hint">· baskı+kürleme+QC, $/saat</span>', 'Production labor <span class="hint">· print+curing+QC, $/hr</span>'),
+          min: 20, max: 200, step: 10, val: labRate, color: "#E2492F", kind: "rate",
+        },
+        {
+          id: "labMin",
+          ...localizedFieldLabel(props.labMinLabel, props.labMinLabelEn, 'Yeniden üretim süresi <span class="hint">· dk</span>', 'Remake production time <span class="hint">· min</span>'),
+          min: 10, max: 180, step: 10, val: labMin, color: "#E2492F", kind: "min", pairsWith: "labRate",
+        },
+        {
+          id: "shipL",
+          ...localizedFieldLabel(props.shipLLabel, props.shipLLabelEn, 'Kargo (iki yön) <span class="hint">· $</span>', 'Shipping (two-way) <span class="hint">· $</span>'),
+          min: 0, max: 150, step: 5, val: shipL, color: "#B7B7AE", kind: "flat",
+        },
+        {
+          id: "goodwill",
+          ...localizedFieldLabel(props.goodwillLabel, props.goodwillLabelEn, 'İskonto / müşteri jesti <span class="hint">· $</span>', 'Discount / customer goodwill <span class="hint">· $</span>'),
+          min: 0, max: 250, step: 10, val: goodwill, color: "#B7B7AE", kind: "flat",
+        },
       ],
     },
   };
@@ -228,21 +321,65 @@ export function ThreeMashCostDetailPage(props: Props) {
       const production = labFee * units;
       const logi = ship + misc;
       pList = [
-        { n: tLocalized("Koltuk süresi", "Chair time"), v: chair, c: "#E2492F" },
-        { n: tLocalized("Yeniden üretim", "Remake production"), v: production, c: "#7C9C36" },
-        { n: tLocalized("Lojistik + diğer", "Logistics + other"), v: logi, c: "#B7B7AE" },
+        {
+          n: localizedProp(props.clinicChairTimePartLabel, props.clinicChairTimePartLabelEn, "Koltuk süresi", "Chair time"),
+          v: chair,
+          c: "#E2492F",
+        },
+        {
+          n: localizedProp(props.clinicProductionPartLabel, props.clinicProductionPartLabelEn, "Yeniden üretim", "Remake production"),
+          v: production,
+          c: "#7C9C36",
+        },
+        {
+          n: localizedProp(props.clinicLogisticsPartLabel, props.clinicLogisticsPartLabelEn, "Lojistik + diğer", "Logistics + other"),
+          v: logi,
+          c: "#B7B7AE",
+        },
       ];
     } else {
       const prod = matUnit * unitsL + (labRate * labMin) / 60;
       const logi = shipL + goodwill;
       pList = [
-        { n: tLocalized(tLocalized("Üretim (malzeme+işçilik)", "Production (material+labor)"), "Production (material+labor)"), v: prod, c: "#E2492F" },
-        { n: tLocalized("Kargo + jest", "Shipping + goodwill"), v: logi, c: "#B7B7AE" },
+        {
+          n: localizedProp(props.labProductionPartLabel, props.labProductionPartLabelEn, "Üretim (malzeme+işçilik)", "Production (material+labor)"),
+          v: prod,
+          c: "#E2492F",
+        },
+        {
+          n: localizedProp(props.labShippingPartLabel, props.labShippingPartLabelEn, "Kargo + jest", "Shipping + goodwill"),
+          v: logi,
+          c: "#B7B7AE",
+        },
       ];
     }
     const tot = pList.reduce((sum, item) => sum + item.v, 0);
     return { parts: pList, total: tot };
-  }, [mode, chairRate, chairMin, units, labFee, ship, misc, matUnit, unitsL, labRate, labMin, shipL, goodwill]);
+  }, [
+    mode,
+    chairRate,
+    chairMin,
+    units,
+    labFee,
+    ship,
+    misc,
+    matUnit,
+    unitsL,
+    labRate,
+    labMin,
+    shipL,
+    goodwill,
+    props.clinicChairTimePartLabel,
+    props.clinicChairTimePartLabelEn,
+    props.clinicProductionPartLabel,
+    props.clinicProductionPartLabelEn,
+    props.clinicLogisticsPartLabel,
+    props.clinicLogisticsPartLabelEn,
+    props.labProductionPartLabel,
+    props.labProductionPartLabelEn,
+    props.labShippingPartLabel,
+    props.labShippingPartLabelEn,
+  ]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -309,45 +446,72 @@ export function ThreeMashCostDetailPage(props: Props) {
     "--line": props.lineColor || "#E6E6E0",
   } as any; // CSS-in-JS: dynamic properties use CSS custom variable names
 
+  const showHero = props.showHero !== false;
+  const showCalculator = props.showCalculator !== false;
+  const showExplanation = props.showExplanation !== false;
+  const showFirstStudy = props.showFirstStudy !== false;
+  const showSecondStudy = props.showSecondStudy !== false;
+  const showCallout = props.showCallout !== false;
+  const showSourceNotes = props.showSourceNotes !== false;
+  const showSavedMessage = props.showSavedMessage !== false;
+  const showResearchColumn =
+    showExplanation || showFirstStudy || showSecondStudy || showCallout || showSourceNotes;
+  const singleColumn = showCalculator !== showResearchColumn;
+  const currencySymbol = props.currencySymbol?.trim() || "$";
+
   return (
     <div className="three-mash-cost-detail-page" style={customStyle}>
-      <div className="top">
-        <div className="wrap">
-          <div className="crumb">
-            <a href={baseHomeUrl}>
-              {props.breadcrumbHomeText || tLocalized("Ana sayfa", "Home")}
-            </a>{" "}
-            &nbsp;/&nbsp;{" "}
-            <a href={calculatorUrl}>
-              {props.breadcrumbParentText || tLocalized("Tasarruf hesaplayıcı", "Savings calculator")}
-            </a>{" "}
-            &nbsp;/&nbsp; {props.breadcrumbCurrentText || tLocalized("Bir tekrarın maliyeti", "Cost of a remake")}
+      {showHero && (
+        <div className="top">
+          <div className="wrap">
+            <div className="crumb">
+              <a href={baseHomeUrl}>
+                {localizedProp(props.breadcrumbHomeText, props.breadcrumbHomeTextEn, "Ana sayfa", "Home")}
+              </a>{" "}
+              &nbsp;/&nbsp;{" "}
+              <a href={calculatorUrl}>
+                {localizedProp(props.breadcrumbParentText, props.breadcrumbParentTextEn, "Tasarruf hesaplayıcı", "Savings calculator")}
+              </a>{" "}
+              &nbsp;/&nbsp;{" "}
+              {localizedProp(props.breadcrumbCurrentText, props.breadcrumbCurrentTextEn, "Bir tekrarın maliyeti", "Cost of a remake")}
+            </div>
+            <h1
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(
+                  localizedProp(
+                    props.heroTitle,
+                    props.heroTitleEn,
+                    'Bir tekrarın gerçek maliyeti neden<br><span class="em">~500 dolar?</span>',
+                    'Why does a remake really cost<br><span class="em">~$500?</span>',
+                  ),
+                ),
+              }}
+            />
+            <p
+              className="answer"
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(
+                  localizedProp(
+                    props.heroAnswer,
+                    props.heroAnswerEn,
+                    'Çünkü bir remake\'in maliyeti <b>lab ücretinden ibaret değildir.</b> Asıl yükü <span class="k">koltuk süresi</span> oluşturur — yeniden prep, yeniden ölçü/tarama ve yeniden yapıştırma randevusu. Ulusal ölçekli klinik veriler tekrar oranını ortalama <b>%3,8</b>, ama hekimden hekime <b>%0–42</b> aralığında gösteriyor. Aşağıda kendi kalemlerinizle gerçek rakamınızı çıkarabilirsiniz.',
+                    'Short answer: because the cost of a remake is not just the lab fee. The primary burden is <span class="k">chair time</span> — appointments for re-prep, re-impression/scan, and re-cementation. National clinical data shows an average remake rate of <b>3.8%</b>, ranging from <b>0%–42%</b> across practitioners. Calculate your own figure below item by item.',
+                  ),
+                ),
+              }}
+            />
           </div>
-          {props.heroTitle ? (
-            <h1 dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.heroTitle) }} />
-          ) : (
-            <h1>
-              {tLocalized("Bir tekrarın gerçek maliyeti neden", "Why does a remake really cost")}<br /><span className="em">{tLocalized("~500 dolar?", "~$500?")}</span>
-            </h1>
-          )}
-          {props.heroAnswer ? (
-            <p className="answer" dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.heroAnswer) }} />
-          ) : (
-            <p className="answer">
-              {tLocalized(
-                "Kısa cevap: çünkü bir remake'in maliyeti lab ücretinden ibaret değildir. Asıl yükü koltuk süresi oluşturur — yeniden prep, yeniden ölçü/tarama ve yeniden yapıştırma randevusu. Ulusal ölçekli klinik veriler tekrar oranını ortalama %3,8, ama hekimden hekime %0–42 aralığında gösteriyor. Aşağıda kendi kalemlerinizle gerçek rakamınızı çıkarabilirsiniz.",
-                "Short answer: because the cost of a remake is not just the lab fee. The primary burden is chair time — appointments for re-prep, re-impression/scan, and re-cementation. National clinical data shows an average remake rate of 3.8%, ranging from 0% to 42% across practitioners. Calculate your own figure below item by item."
-              )}
-            </p>
-          )}
         </div>
-      </div>
+      )}
 
-      <div className="wrap cols">
+      <div className={`wrap cols${singleColumn ? " single" : ""}`}>
         {/* SOL: hesaplayıcı (sticky) */}
+        {showCalculator && (
         <div className="calc">
           <div className="h">
-            <span className="micro">{tLocalized("TEKRAR MALİYETİ · KALEM KALEM", "REMAKE COST · ITEM BY ITEM")}</span>
+            <span className="micro">
+              {localizedProp(props.calculatorKicker, props.calculatorKickerEn, "TEKRAR MALİYETİ · KALEM KALEM", "REMAKE COST · ITEM BY ITEM")}
+            </span>
             <span className="micro" id="perLabel">
               {d.per}
             </span>
@@ -360,7 +524,7 @@ export function ThreeMashCostDetailPage(props: Props) {
               type="button"
               onClick={() => setMode("klinik")}
             >
-              {tLocalized("Klinik", "Clinic")}
+              {localizedProp(props.clinicModeButton, props.clinicModeButtonEn, "Klinik", "Clinic")}
             </button>
             <button
               ref={labBtnRef}
@@ -369,24 +533,34 @@ export function ThreeMashCostDetailPage(props: Props) {
               type="button"
               onClick={() => setMode("lab")}
             >
-              {tLocalized("Laboratuvar", "Lab")}
+              {localizedProp(props.labModeButton, props.labModeButtonEn, "Laboratuvar", "Lab")}
             </button>
           </div>
 
           <div id="fields">
             {d.fields.map((f) => {
               const val = values[f.id];
-              let valText = fmt(val);
-              if (f.kind === "rate") valText = fmt(val) + (isEnglishLocale() ? "/hr" : "/sa");
-              else if (f.kind === "min") valText = val + (isEnglishLocale() ? " min" : " dk");
-              else if (f.kind === "mult") valText = val + (isEnglishLocale() ? " unit" : tLocalized("-ünite", "unit"));
+              let valText = fmt(val, currencySymbol);
+              if (f.kind === "rate") {
+                valText =
+                  fmt(val, currencySymbol) +
+                  localizedProp(props.rateUnitSuffix, props.rateUnitSuffixEn, "/sa", "/hr");
+              } else if (f.kind === "min") {
+                valText =
+                  val +
+                  localizedProp(props.timeUnitSuffix, props.timeUnitSuffixEn, " dk", " min");
+              } else if (f.kind === "mult") {
+                valText =
+                  val +
+                  localizedProp(props.countUnitSuffix, props.countUnitSuffixEn, "-ünite", "unit");
+              }
 
               return (
                 <div className="li" key={`${mode}-${f.id}`}>
                   <div className="lab">
-                    <span>
-                      {f.label} <span className="hint">· {f.hint}</span>
-                    </span>
+                    <span
+                      dangerouslySetInnerHTML={{ __html: sanitizeHtml(f.labelHtml) }}
+                    />
                     <b id={`lb_${f.id}`}>{valText}</b>
                   </div>
                   {/* NOTE: style with custom CSS property --p for range progress visualization */}
@@ -433,130 +607,128 @@ export function ThreeMashCostDetailPage(props: Props) {
             {parts.map((p) => (
               <div key={p.n}>
                 <i style={{ background: p.c }} />
-                {p.n} · <b style={{ fontFamily: "'Space Grotesk'" }}>{fmt(p.v)}</b>
+                {p.n} · <b style={{ fontFamily: "'Space Grotesk'" }}>{fmt(p.v, currencySymbol)}</b>
               </div>
             ))}
           </div>
 
           <div className="tot">
-            <span className="micro">{tLocalized("BİR TEKRARIN TOPLAM MALİYETİ", "TOTAL COST PER REMAKE")}</span>
+            <span className="micro">
+              {localizedProp(props.totalCostLabel, props.totalCostLabelEn, "BİR TEKRARIN TOPLAM MALİYETİ", "TOTAL COST PER REMAKE")}
+            </span>
             <span className="v" id="total">
-              {fmt(total)}
+              {fmt(total, currencySymbol)}
             </span>
           </div>
 
           <div className="use">
             <a className="btn lime" id="useBtn" href={homeHref} onClick={handleUseBtn}>
-              {props.useButtonText || tLocalized("Bu değeri ana sayfada kullan →", "Use this value on homepage →")}
+              {localizedProp(props.useButtonText, props.useButtonTextEn, "Bu değeri ana sayfada kullan →", "Use this value on homepage →")}
             </a>
           </div>
 
-          {saved && (
+          {saved && showSavedMessage && (
             <div className="saved" id="saved">
-              {tLocalized("✓ Değer kaydedildi — ana sayfadaki hesaplayıcıya taşındı.", "✓ Value saved — transferred to homepage calculator.")}
+              {localizedProp(props.savedMessage, props.savedMessageEn, "✓ Değer kaydedildi — ana sayfadaki hesaplayıcıya taşındı.", "✓ Value saved — transferred to homepage calculator.")}
             </div>
           )}
         </div>
+        )}
 
         {/* SAĞ: açıklama + bilim */}
+        {showResearchColumn && (
         <div className="explain">
-          <h2>{tLocalized("Maliyet nereden geliyor?", "Where does the cost come from?")}</h2>
-          <p>
-            {tLocalized("Sektördeki yaygın yanılgı, bir tekrarın maliyetini yalnızca", "A common misconception in the industry is that the cost of a remake is measured only by")} <b>{tLocalized("yeniden lab ücreti", "re-lab fee")}</b> {tLocalized("olarak görmektir.\r\n            Oysa bir kron reddedildiğinde asıl kaybı yaratan üç kalem vardır ve en büyüğü ilk sırada:", "as.\r\n            Yet when a crown is rejected, there are three real cost items behind the loss — and the biggest one comes first:")}
-          </p>
-          <p>
-            <b>{tLocalized("1. Koltuk süresi (en büyük kalem).", "1. Chair time (the largest line item).")}</b> {tLocalized("Hastayı geri çağırmak, yeniden prep/ölçü almak ve yeni işi\r\n            yapıştırmak ortalama 45–75 dakika alır. Bir kliniğin ortalama işletme gideri saatte", "Recalling the patient, re-prepping/taking a new impression, and\r\n            cementing the new work takes 45–75 minutes on average. A clinic's average operating cost per hour")} <b>~$375</b> {tLocalized("olarak\r\n            modellenir; bu tek başına $280–470 demektir.", "as\r\n            modeled; this alone means $280–470.")}
-          </p>
-          <p>
-            <b>{tLocalized("2. Yeniden üretim + lojistik.", "2. Remanufacturing + logistics.")}</b> {tLocalized("Yeni birimin lab ücreti, iki yönlü kargo ve varsa acele (rush)\r\n            farkı.", "The new unit's lab fee, two-way shipping, and any rush (rush)\r\n            surcharge, if applicable.")}
-          </p>
-          <p>
-            <b>{tLocalized("3. Görünmeyenler.", "3. The invisibles.")}</b> {tLocalized("İskonto/jest, boşa giden randevu slotu, malzeme israfı ve hasta güveninde\r\n            aşınma.", "Discounts/favors, wasted appointment slots, material waste, and patient trust\r\n            erosion.")}
-          </p>
+          {showExplanation && (
+            <>
+              <h2>
+                {localizedProp(
+                  props.explanationTitle,
+                  props.explanationTitleEn,
+                  "Maliyet nereden geliyor?",
+                  "Where does the cost come from?",
+                )}
+              </h2>
+              <div
+                className="explanation-body"
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeHtml(
+                    localizedProp(
+                      props.explanationBody,
+                      props.explanationBodyEn,
+                      '<p>Sektördeki yaygın yanılgı, bir tekrarın maliyetini yalnızca <b>yeniden lab ücreti</b> olarak görmektir. Oysa bir kron reddedildiğinde asıl kaybı yaratan üç kalem vardır ve en büyüğü ilk sırada:</p><p><b>1. Koltuk süresi (en büyük kalem).</b> Hastayı geri çağırmak, yeniden prep/ölçü almak ve yeni işi yapıştırmak ortalama 45–75 dakika alır. Bir kliniğin ortalama işletme gideri saatte <b>~$375</b> olarak modellenir; bu tek başına $280–470 demektir.</p><p><b>2. Yeniden üretim + lojistik.</b> Yeni birimin lab ücreti, iki yönlü kargo ve varsa acele (rush) farkı.</p><p><b>3. Görünmeyenler.</b> İskonto/jest, boşa giden randevu slotu, malzeme israfı ve hasta güveninde aşınma.</p>',
+                      '<p>A common misconception in the industry is that the cost of a remake is measured only by the <b>re-lab fee</b>. Yet when a crown is rejected, there are three real cost items behind the loss — and the biggest one comes first:</p><p><b>1. Chair time (the largest line item).</b> Recalling the patient, re-prepping/taking a new impression, and cementing the new work takes 45–75 minutes on average. A clinic\'s average operating cost per hour is modeled at <b>~$375</b>; this alone means $280–470.</p><p><b>2. Remanufacturing + logistics.</b> The new unit\'s lab fee, two-way shipping, and any rush surcharge, if applicable.</p><p><b>3. The invisibles.</b> Discounts/favors, wasted appointment slots, material waste, and patient trust erosion.</p>',
+                    ),
+                  ),
+                }}
+              />
+            </>
+          )}
 
-          <div className="study">
-            <span className="tag">{tLocalized("HAKEMLİ KLİNİK VERİ", "PEER-REVIEWED CLINICAL DATA")}</span>
-            <h3>{tLocalized("Tekrar oranı gerçekte ne kadar? Ulusal PBRN, 3.750 kron üzerinde ölçtü.", "What is the remake rate really? The National PBRN measured it across 3,750 crowns.")}</h3>
-            <div className="meta">
-              {tLocalized("McCracken M.S. ve ark. (National Dental PBRN Collaborative Group) ·", "McCracken M.S. et al. (National Dental PBRN Collaborative Group) ·")} <i>{tLocalized("Journal of Prosthodontics", "Journal of Prosthodontics")}</i>,
-              2019;28(2):122–130
-            </div>
-            <ul>
-              <li>
-                <b>{tLocalized("205 diş hekimi", "205 dentists")}</b>{tLocalized(", gerçek klinik pratiğinde", ", in real clinical practice")} <b>{tLocalized("3.750 tek-ünite kron", "3,750 single-unit crowns")}</b> {tLocalized("değerlendirdi.", "evaluated.")}
-              </li>
-              <li>
-                {tLocalized("Ortalama tekrar (remake) oranı", "Average remake rate")} <b>%3,8</b> — fakat hekimden hekime <b>{tLocalized("%0 ile %42", "0% to 42%")}</b> {tLocalized("arasında\r\n                değişiyor.", "between\r\n                varies.")}
-              </li>
-              <li>
-                {tLocalized("Hekimlerin %58'i hiç kron reddetmezken, tüm reddetmeler %42'lik gruptan geldi — yani sorun", "While 58% of clinicians never reject a crown, all rejections came from the remaining 42% — meaning the problem")}{" "}
-                <b>{tLocalized("tekil, çözülebilir", "single, dissolvable")}</b> {tLocalized("bir uygulama farkı.", "one application difference.")}
-              </li>
-              <li>
-                {tLocalized("En sık ret sebepleri:", "Most common reasons for rejection:")} <b>{tLocalized("proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlık", "proximal misfit, marginal errors, and aesthetic failure")}</b> {tLocalized("— üçü de\r\n                doğrudan", "— all three\r\n                directly")} <b>{tLocalized("ölçüsel hassasiyet", "dimensional accuracy")}</b> problemi.
-              </li>
-            </ul>
-            <a className="link" href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener noreferrer">
-              {tLocalized("DOI: 10.1111/jopr.12995 · Kaynağı aç →", "DOI: 10.1111/jopr.12995 · Open source →")}
-            </a>
-          </div>
+          {showFirstStudy && (
+          <div
+            className="study"
+            dangerouslySetInnerHTML={{
+              __html: sanitizeHtml(
+                localizedProp(
+                  props.studyOneContent,
+                  props.studyOneContentEn,
+                  DEFAULT_STUDY_ONE_TR,
+                  DEFAULT_STUDY_ONE_EN,
+                ),
+              ),
+            }}
+          />
+          )}
 
-          <div className="study">
-            <span className="tag">{tLocalized("HAKEMLİ · ÖLÇÜSEL DOĞRULUK", "PEER-REVIEWED · DIMENSIONAL ACCURACY")}</span>
-            <h3>{tLocalized("Peki sapma neden oluşuyor? Doğruluk, kullanılan sisteme göre uçtan uca değişiyor.", "So why does deviation occur? Accuracy varies end-to-end depending on the system used.")}</h3>
-            <div className="meta">
-              {tLocalized("Etemad-Shahidi Y. ve ark. ·", "Etemad-Shahidi Y. et al. ·")} <i>{tLocalized("J Clin Med", "J Clin Med")}</i> {tLocalized("2020 (sistematik derleme) &nbsp;·&nbsp; Németh A. ve ark.\r\n              ·", "2020 (systematic review) &nbsp;·&nbsp; Németh A. et al.\r\n              ·")} <i>{tLocalized("J Dentistry", "J Dentistry")}</i> {tLocalized("2023 (ağ meta-analizi)", "2023 (network meta-analysis)")}
-            </div>
-            <ul>
-              <li>
-                {tLocalized("Sistematik derlemede full-arch model doğruluğu en iyi sistemde", "In the systematic review, full-arch model accuracy with the best system")} <b>3,3 µm</b>{tLocalized("'ye inerken, bazı\r\n                cihazlarda", "down to, on some devices")} <b>130–190 µm</b>{tLocalized("'ye çıkıyor — yani doğru sonucu cihaz ve parametre belirliyor.", "it goes up to — meaning the device and parameters determine the correct result.")}
-              </li>
-              <li>
-                {tLocalized("Ağ meta-analizi", "Network meta-analysis")} <b>{tLocalized("SLA, DLP ve PolyJet", "SLA, DLP, and PolyJet")}</b>{tLocalized("'i en doğru teknolojiler olarak gösteriyor (SLA ~", "as the most accurate technology (SLA ~")}
-                <b>86,7 µm</b>, DLP ~<b>97,9 µm</b> {tLocalized("ortalama trueness).", "average trueness).")}
-              </li>
-              <li>
-                {tLocalized("Yani sapma tesadüf değil, yönetilebilir bir değişken.", "So the deviation isn't chance — it's a manageable variable.")} <b>{tLocalized("3mash bu değişkenleri birlikte kalibre ederek ±20 µm'yi her baskıda", "3mash calibrates these variables together to deliver ±20 µm on every print")}</b>{" "}
-                {tLocalized("sabitler; tekrar oranı ve maliyet de bu sayede düşer.", "fixes it; this also lowers the remake rate and cost.")}
-              </li>
-            </ul>
-            <a className="link" href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener noreferrer">
-              {tLocalized("DOI: 10.3390/jcm9103357 →", "DOI: 10.3390/jcm9103357 →")}
-            </a>
-            &nbsp;&nbsp;
-            <a
-              className="link"
-              href="https://doi.org/10.1016/j.jdent.2023.104532"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {tLocalized("DOI: 10.1016/j.jdent.2023.104532 →", "DOI: 10.1016/j.jdent.2023.104532 →")}
-            </a>
-          </div>
+          {showSecondStudy && (
+          <div
+            className="study"
+            dangerouslySetInnerHTML={{
+              __html: sanitizeHtml(
+                localizedProp(
+                  props.studyTwoContent,
+                  props.studyTwoContentEn,
+                  DEFAULT_STUDY_TWO_TR,
+                  DEFAULT_STUDY_TWO_EN,
+                ),
+              ),
+            }}
+          />
+          )}
 
-          <div className="callout">
-            <p>
-              <b>{tLocalized("3mash bağlantısı:", "3mash connection:")}</b> {tLocalized("çalışmanın işaret ettiği üç sebep de (proksimal uyum, marjin, estetik)", "the three reasons the study points to (proximal fit, margin, aesthetics)")}{" "}
-              <b>{tLocalized("±20 µm tekrar edilebilir hassasiyetle", "with ±20 µm repeatable precision")}</b> {tLocalized("doğrudan azalır. Tekrar oranınızı %42'lerden ya da\r\n              %10'lardan", "decreases directly. Whether your remake rate is coming down from around 42% or\r\n              from around 10%,")} <b>≤%3'e</b> {tLocalized("çektiğinizde, yukarıdaki kalem-kalem maliyet aynı oranda düşer.", "when you cut this out, the itemized cost above drops by the same rate.")}
-            </p>
-          </div>
+          {showCallout && (
+            <div
+              className="callout"
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(
+                  localizedProp(
+                    props.calloutContent,
+                    props.calloutContentEn,
+                    DEFAULT_CALLOUT_TR,
+                    DEFAULT_CALLOUT_EN,
+                  ),
+                ),
+              }}
+            />
+          )}
 
-          <p className="mini-src">
-            {tLocalized("Kaynaklar: Tekrar oranı ve ret sebepleri — McCracken ve ark.,", "Sources: Remake rate and rejection causes — McCracken et al.,")}{" "}
-            <a href="https://doi.org/10.1111/jopr.12995" target="_blank" rel="noopener noreferrer">
-              {tLocalized("J Prosthodont 2019 (10.1111/jopr.12995)", "J Prosthodont 2019 (10.1111/jopr.12995)")}
-            </a>
-            {tLocalized(". Ölçüsel doğruluk — Etemad-Shahidi ve ark.,", ". Dimensional accuracy — Etemad-Shahidi et al.,")}{" "}
-            <a href="https://doi.org/10.3390/jcm9103357" target="_blank" rel="noopener noreferrer">
-              {tLocalized("J Clin Med 2020 (10.3390/jcm9103357)", "J Clin Med 2020 (10.3390/jcm9103357)")}
-            </a>{" "}
-            {tLocalized("ve Németh ve ark.,", "and Németh et al.,")}{" "}
-            <a href="https://doi.org/10.1016/j.jdent.2023.104532" target="_blank" rel="noopener noreferrer">
-              {tLocalized("J Dentistry 2023 (10.1016/j.jdent.2023.104532)", "J Dentistry 2023 (10.1016/j.jdent.2023.104532)")}
-            </a>
-            {tLocalized(". Maliyet modeli (koltuk süresi/işletme gideri) — Spear Education, “The Cost of Laboratory Remakes.”\r\n            Rakamlar tahminî olup iş akışınıza göre değişir.", ". Cost model (chair time/operating expense) — Spear Education, \"The Cost of Laboratory Remakes.\"\r\n            Figures are estimates and vary by your workflow.")}
-          </p>
+          {showSourceNotes && (
+            <p
+              className="mini-src"
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(
+                  localizedProp(
+                    props.sourceNotes,
+                    props.sourceNotesEn,
+                    DEFAULT_SOURCE_NOTES_TR,
+                    DEFAULT_SOURCE_NOTES_EN,
+                  ),
+                ),
+              }}
+            />
+          )}
         </div>
+        )}
       </div>
     </div>
   );

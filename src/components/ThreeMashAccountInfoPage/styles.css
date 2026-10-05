@@ -24,7 +24,7 @@
   gap: 24px;
   align-items: stretch;
   width: 100%;
-  max-width: min(var(--tmai-max, 1180px), 1180px);
+  max-width: var(--tmai-max, 1180px);
   margin: 0 auto;
   flex: 1;
   min-height: 560px;
@@ -39,8 +39,8 @@
   height: 100%;
   min-height: 100%;
   padding: clamp(34px, 4vw, 48px);
-  background: var(--tmai-dark, var(--tm-theme-dark, #0e0e0c));
-  color: var(--tm-theme-bg, #fafaf7);
+  background: var(--tmai-sidebar, var(--tm-theme-panel, #f1f1ec));
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
   min-width: 0;
   box-sizing: border-box;
 }
@@ -83,11 +83,11 @@
   display: grid;
   gap: 9px;
   padding-bottom: 26px;
-  border-bottom: 1px solid rgba(250, 250, 247, 0.18);
+  border-bottom: 1px solid var(--tmai-line, var(--tm-theme-line, #e6e6e0));
 }
 
 .tmai-user strong {
-  color: var(--tm-theme-bg, #fafaf7);
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
   font-family: var(
     --tm-theme-font-heading,
     "Space Grotesk",
@@ -100,12 +100,22 @@
   overflow-wrap: anywhere;
 }
 
-.tmai-user a {
+.tmai-user a,
+.tmai-user button {
   width: max-content;
   color: #f2b0a8;
   font-size: 14px;
   font-weight: 800;
   text-decoration: none;
+}
+
+.tmai-user button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
 .tmai-menu {
@@ -115,7 +125,7 @@
 
 .tmai-menu h2 {
   margin: 26px 0 6px;
-  color: var(--tm-theme-bg, #fafaf7);
+  color: var(--tmai-text, var(--tm-theme-text, #0e0e0c));
   font-family: var(
     --tm-theme-font-heading,
     "Space Grotesk",
@@ -140,7 +150,7 @@
   border: 0;
   padding: 0;
   margin: 0;
-  color: #cfcfc6;
+  color: var(--tmai-muted, var(--tm-theme-sub, #55554e));
   font-family: inherit;
   font-size: 14px;
   line-height: 1.35;

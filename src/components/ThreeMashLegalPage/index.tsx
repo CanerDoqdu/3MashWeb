@@ -1,8 +1,14 @@
-import { getLegalPages, legalPages, type LegalPageKey } from '../ThreeMashPageData/sourceData';
+import { getLegalPages, type LegalPageKey } from '../ThreeMashPageData/sourceData';
 import { translateText, tLocalized, isEnglishLocale, isTurkishText } from '../../utils/i18n';
 import { sanitizeHtml } from '../../utils/sanitizeHtml';
 import { useMemo } from 'preact/hooks';
 import { Props } from './types';
+
+type LegalPageProps = Props & {
+  titleText?: string;
+  titleTextEn?: string;
+  showPageTitle?: boolean;
+};
 
 function text(value: string | undefined, fallback: string) {
   return value?.trim() || fallback;
@@ -29,13 +35,23 @@ function normalizeContentHtml(key: LegalPageKey, contentHtml: string) {
     .trim();
 }
 
-function titleText(key: LegalPageKey, value: string | undefined, fallback: string) {
-  if (key === 'ticari') return tLocalized("TİCARİ ELEKTRONİK İLETİ ONAYI", "COMMERCIAL ELECTRONIC MESSAGE CONSENT");
-  if (key === 'cerez') return tLocalized("ÇEREZ POLİTİKASI", "COOKIE POLICY");
-  if (!value?.trim()) return fallback;
-  const isEn = isEnglishLocale();
-  if (isEn) return value.trim();
-  return isTurkishText(value) ? value.trim() : fallback;
+function titleText(key: LegalPageKey, value: string | undefined, valueEn: string | undefined, fallback: string) {
+  if (isEnglishLocale()) {
+    const englishTitle = valueEn?.trim();
+    if (englishTitle) return englishTitle;
+
+    const configuredTitle = value?.trim();
+    if (!configuredTitle) return fallback;
+    if (!isTurkishText(configuredTitle)) return configuredTitle;
+    if (key === 'ticari' || key === 'cerez') {
+      const translatedTitle = translateText(configuredTitle);
+      return translatedTitle === configuredTitle ? fallback : translatedTitle;
+    }
+    return fallback;
+  }
+
+  const turkishTitle = value?.trim();
+  return turkishTitle && isTurkishText(turkishTitle) ? turkishTitle : fallback;
 }
 
 function hasEmbeddedHeading(contentHtml: string) {
@@ -82,29 +98,35 @@ function escapeHtml(value: string) {
     .replace(/'/g, '&#39;');
 }
 
-function membershipSection(title: string | undefined, titleFallback: string, body: string | undefined, bodyFallback: string) {
+function membershipSection(show: boolean, title: string | undefined, titleFallback: string, body: string | undefined, bodyFallback: string) {
+  if (!show) return '';
   return `<p><b>${escapeHtml(text(title, titleFallback))}</b></p>${html(body, bodyFallback)}`;
 }
 
-function membershipAgreementHtml(props: Props) {
+function membershipAgreementHtml(props: LegalPageProps) {
   const defaults = getMembershipDefaults();
+  const value = (tr: string | undefined, en: string | undefined) => isEnglishLocale() ? en : tr;
   return [
-    `<h2>${escapeHtml(text(props.agreementTitleText, defaults.agreementTitleText))}</h2>`,
+    `<h2>${escapeHtml(text(value(props.agreementTitleText, props.agreementTitleTextEn), defaults.agreementTitleText))}</h2>`,
     membershipSection(
-      props.partiesTitleText,
+      props.showPartiesSection !== false,
+      value(props.partiesTitleText, props.partiesTitleTextEn),
       defaults.partiesTitleText,
-      [html(props.partyCompanyHtml, defaults.partyCompanyHtml), html(props.partyMemberHtml, defaults.partyMemberHtml)].join(''),
+      [
+        html(value(props.partyCompanyHtml, props.partyCompanyHtmlEn), defaults.partyCompanyHtml),
+        html(value(props.partyMemberHtml, props.partyMemberHtmlEn), defaults.partyMemberHtml),
+      ].join(''),
       ''
     ),
-    membershipSection(props.subjectTitleText, defaults.subjectTitleText, props.subjectHtml, defaults.subjectHtml),
-    membershipSection(props.rightsTitleText, defaults.rightsTitleText, props.rightsHtml, defaults.rightsHtml),
-    membershipSection(props.terminationTitleText, defaults.terminationTitleText, props.terminationHtml, defaults.terminationHtml),
-    membershipSection(props.disputeTitleText, defaults.disputeTitleText, props.disputeHtml, defaults.disputeHtml),
-    membershipSection(props.enforcementTitleText, defaults.enforcementTitleText, props.enforcementHtml, defaults.enforcementHtml),
+    membershipSection(props.showSubjectSection !== false, value(props.subjectTitleText, props.subjectTitleTextEn), defaults.subjectTitleText, value(props.subjectHtml, props.subjectHtmlEn), defaults.subjectHtml),
+    membershipSection(props.showRightsSection !== false, value(props.rightsTitleText, props.rightsTitleTextEn), defaults.rightsTitleText, value(props.rightsHtml, props.rightsHtmlEn), defaults.rightsHtml),
+    membershipSection(props.showTerminationSection !== false, value(props.terminationTitleText, props.terminationTitleTextEn), defaults.terminationTitleText, value(props.terminationHtml, props.terminationHtmlEn), defaults.terminationHtml),
+    membershipSection(props.showDisputeSection !== false, value(props.disputeTitleText, props.disputeTitleTextEn), defaults.disputeTitleText, value(props.disputeHtml, props.disputeHtmlEn), defaults.disputeHtml),
+    membershipSection(props.showEnforcementSection !== false, value(props.enforcementTitleText, props.enforcementTitleTextEn), defaults.enforcementTitleText, value(props.enforcementHtml, props.enforcementHtmlEn), defaults.enforcementHtml),
   ].join('');
 }
 
-export function ThreeMashLegalPage(props: Props) {
+export function ThreeMashLegalPage(props: LegalPageProps) {
   const key = pageKey(props.mode);
   const legalData = getLegalPages();
   const page = legalData[key];
@@ -114,17 +136,26 @@ export function ThreeMashLegalPage(props: Props) {
   // ensure we don't accidentally display English text on TR locale.
   let configuredContent = page.contentHtml;
   if (key === 'uyelik') {
-    configuredContent = membershipAgreementHtml(props);
-  } else if (key !== 'mesafeli' && props.contentHtml?.trim()) {
-    const customTrimmed = props.contentHtml.trim();
-    if (isEn) {
-      configuredContent = customTrimmed;
-    } else {
-      // In TR locale, if the custom prop is actually Turkish text, use it; otherwise prefer standard Turkish legal text
-      if (isTurkishText(customTrimmed)) {
+    const customContent = (isEn ? props.contentHtmlEn : props.contentHtml)?.trim();
+    configuredContent = customContent || membershipAgreementHtml(props);
+  } else {
+    const configuredOverride = isEn
+      ? props.contentHtmlEn?.trim() ||
+        (props.contentHtml?.trim() && !isTurkishText(props.contentHtml)
+          ? props.contentHtml.trim()
+          : '')
+      : props.contentHtml?.trim();
+    if (configuredOverride) {
+      const customTrimmed = configuredOverride;
+      if (isEn) {
         configuredContent = customTrimmed;
       } else {
-        configuredContent = page.contentHtml;
+        // In TR locale, if the custom prop is actually Turkish text, use it; otherwise prefer standard Turkish legal text
+        if (isTurkishText(customTrimmed)) {
+          configuredContent = customTrimmed;
+        } else {
+          configuredContent = page.contentHtml;
+        }
       }
     }
   }
@@ -152,7 +183,9 @@ export function ThreeMashLegalPage(props: Props) {
   return (
     <section className={`three-mash-legal-page is-${key}`} style={style}>
       <article className="tmlp-shell">
-        {showStandaloneTitle ? <h1>{translateText(titleText(key, props.titleText, page.title))}</h1> : null}
+        {showStandaloneTitle && props.showPageTitle !== false ? (
+          <h1>{translateText(titleText(key, props.titleText, props.titleTextEn, page.title))}</h1>
+        ) : null}
         <div className="tmlp-content" dangerouslySetInnerHTML={{ __html: renderedContentHtml }} />
       </article>
     </section>

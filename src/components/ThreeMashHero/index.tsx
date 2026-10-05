@@ -400,6 +400,8 @@ export function ThreeMashHero(props: Props) {
     eyebrowText: tProp(props.eyebrowText, "DENTAL ÜRETİMİN GÖRÜNMEZ FATURASI", "THE INVISIBLE INVOICE OF DENTAL PRODUCTION"),
     titleBeforeAmount: tProp(props.titleBeforeAmount, "Kliniğiniz her yıl", "Your clinic loses"),
     labTitleBeforeAmount: tProp(props.labTitleBeforeAmount, "Laboratuvarınız her yıl", "Your lab loses"),
+    titleLossConnectorText: tProp(props.titleLossConnectorText, "sessizce", "silently"),
+    titleLossPeriodText: tProp(props.titleLossPeriodText, "kaybediyor olabilir.", "every year."),
     titleAfterAmount: tProp(props.titleAfterAmount, "sessizce kaybediyor olabilir.", "silently every year."),
     titleEmphasis: tProp(props.titleEmphasis, "Farkında bile olmadan.", "Without even realizing it."),
     subtitleStart: tProp(props.subtitleStart, "Bu para reklama gitmiyor, yeni cihaza da gitmiyor. Hastanın ağzına", "This money doesn't go to ads or new equipment. Because of work that"),
@@ -441,7 +443,7 @@ export function ThreeMashHero(props: Props) {
     () => ({
       clinic: {
         workLabel: props.clinicWorkLabel,
-        workMin: safeNumber(props.clinicWorkMin, 20),
+        workMin: safeNumber(props.clinicWorkMin, 0),
         workMax: safeNumber(props.clinicWorkMax, 500),
         workStep: safeNumber(props.clinicWorkStep, 10),
         workDefault: safeNumber(props.clinicWorkDefault, 120),
@@ -461,7 +463,7 @@ export function ThreeMashHero(props: Props) {
       },
       lab: {
         workLabel: props.labWorkLabel,
-        workMin: safeNumber(props.labWorkMin, 100),
+        workMin: safeNumber(props.labWorkMin, 0),
         workMax: safeNumber(props.labWorkMax, 2000),
         workStep: safeNumber(props.labWorkStep, 25),
         workDefault: safeNumber(props.labWorkDefault, 300),
@@ -559,6 +561,50 @@ export function ThreeMashHero(props: Props) {
   const [work, setWork] = useState(presets.clinic.workDefault);
   const [rpt, setRpt] = useState(presets.clinic.rptDefault);
   const [cost, setCost] = useState(presets.clinic.costDefault);
+  const calculatorDefaultsRef = useRef({
+    clinic: {
+      work: presets.clinic.workDefault,
+      rpt: presets.clinic.rptDefault,
+      cost: presets.clinic.costDefault,
+    },
+    lab: {
+      work: presets.lab.workDefault,
+      rpt: presets.lab.rptDefault,
+      cost: presets.lab.costDefault,
+    },
+  });
+
+  useEffect(() => {
+    const previous = calculatorDefaultsRef.current;
+    const clinicChanged =
+      previous.clinic.work !== presets.clinic.workDefault ||
+      previous.clinic.rpt !== presets.clinic.rptDefault ||
+      previous.clinic.cost !== presets.clinic.costDefault;
+    const labChanged =
+      previous.lab.work !== presets.lab.workDefault ||
+      previous.lab.rpt !== presets.lab.rptDefault ||
+      previous.lab.cost !== presets.lab.costDefault;
+
+    calculatorDefaultsRef.current = {
+      clinic: {
+        work: presets.clinic.workDefault,
+        rpt: presets.clinic.rptDefault,
+        cost: presets.clinic.costDefault,
+      },
+      lab: {
+        work: presets.lab.workDefault,
+        rpt: presets.lab.rptDefault,
+        cost: presets.lab.costDefault,
+      },
+    };
+
+    if (!(mode === "clinic" ? clinicChanged : labChanged)) return;
+
+    const next = presets[mode];
+    setWork(next.workDefault);
+    setRpt(next.rptDefault);
+    setCost(next.costDefault);
+  }, [mode, presets]);
 
   // Mirrors for the URL-sync effect, which is registered once and must not
   // close over stale render values.
@@ -759,22 +805,22 @@ export function ThreeMashHero(props: Props) {
   }, [currentLoss]);
 
   const themeStyle = {
-    "--tmhero-bg": "var(--bg, #FAFAF7)",
-    "--tmhero-text": "var(--ink, #0E0E0C)",
-    "--tmhero-muted": props.mutedTextColor || "#55554E",
-    "--tmhero-sub": "var(--sub, #55554E)",
-    "--tmhero-line": "var(--line, #E6E6E0)",
-    "--tmhero-line-strong": "var(--line2, #D5D5CD)",
-    "--tmhero-panel": "#FFFFFF",
-    "--tmhero-accent": "var(--lime, #C7F136)",
-    "--tmhero-accent-soft": "var(--lime-soft, #F2F8DC)",
-    "--tmhero-accent-text": "var(--lime-ink, #3D4D0E)",
-    "--tmhero-primary-button-text": "var(--ink, #0E0E0C)",
-    "--tmhero-secondary-button-text": "var(--ink, #0E0E0C)",
-    "--tmhero-lab-accent": "var(--lime, #C7F136)",
-    "--tmhero-lab-accent-text": "var(--lime-ink, #3D4D0E)",
-    "--tmhero-danger": props.dangerColor || "#B52E1E",
-    "--tmhero-word-color": "var(--lime, #C7F136)",
+    "--tmhero-bg": "var(--tm-theme-bg, var(--bg, #FAFAF7))",
+    "--tmhero-text": "var(--tm-theme-text, var(--ink, #0E0E0C))",
+    "--tmhero-muted": "var(--tm-theme-muted, var(--mut, #6B6B63))",
+    "--tmhero-sub": "var(--tm-theme-sub, var(--sub, #55554E))",
+    "--tmhero-line": "var(--tm-theme-line, var(--line, #E6E6E0))",
+    "--tmhero-line-strong": "var(--tm-theme-line-strong, var(--line2, #D5D5CD))",
+    "--tmhero-panel": "var(--tm-theme-surface, var(--tm-theme-panel, #FFFFFF))",
+    "--tmhero-accent": "var(--tm-theme-accent, var(--lime, #DBFA37))",
+    "--tmhero-accent-soft": "var(--tm-theme-accent-soft, var(--lime-soft, rgba(219, 250, 55, 0.16)))",
+    "--tmhero-accent-text": "var(--tm-theme-accent-text, var(--lime-ink, #0E0E0C))",
+    "--tmhero-primary-button-text": "var(--tm-theme-text, var(--ink, #0E0E0C))",
+    "--tmhero-secondary-button-text": "var(--tm-theme-text, var(--ink, #0E0E0C))",
+    "--tmhero-lab-accent": "var(--tm-theme-accent, var(--lime, #DBFA37))",
+    "--tmhero-lab-accent-text": "var(--tm-theme-accent-text, var(--lime-ink, #0E0E0C))",
+    "--tmhero-danger": "var(--tm-theme-danger, var(--red, #E2492F))",
+    "--tmhero-word-color": "var(--tm-theme-accent, var(--lime, #DBFA37))",
     "--tmhero-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmhero-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmhero-title-underline-width": percentage(
@@ -921,8 +967,18 @@ export function ThreeMashHero(props: Props) {
     }
   }, [mode]);
 
+  const hasVisibleStats =
+    props.showStat1 !== false ||
+    props.showStat2 !== false ||
+    props.showStat3 !== false ||
+    props.showStat4 !== false ||
+    (props.showStat5 === true &&
+      Boolean(props.stat5Value?.trim() || props.stat5Suffix?.trim() || props.stat5Label?.trim())) ||
+    (props.showStat6 === true &&
+      Boolean(props.stat6Value?.trim() || props.stat6Suffix?.trim() || props.stat6Label?.trim()));
+
   return (
-  <section className={`three-mash-hero${heroReady ? " is-ready" : ""}`} style={themeStyle}>
+    <section className={`three-mash-hero${heroReady ? " is-ready" : ""}`} style={themeStyle}>
       <div className="tmhero-wrap">
         <div className="tmhero-top">
           <div className="tmhero-copy">
@@ -932,55 +988,36 @@ export function ThreeMashHero(props: Props) {
             </div>
 
             <h1>
-              {isEnglishLocale() ? (
-                <>
-                  <span className="tmhero-line-1" style={{ display: "block" }}>
-                    <RichInline value={titleBeforeAmount} wordStyle={props} />
-                  </span>
-                  <span className="tmhero-loss-line" style={{ display: "block" }}>
-                    <span className="tmhero-money">{formattedLoss}</span> silently
-                  </span>
-                  <span className="tmhero-line-after" style={{ display: "block" }}>
-                    {tLocalized("every year.", "every year")}
-                  </span>
-                  <span className="tmhero-em-wrap" style={{ display: "block" }}>
-                    <span
-                      className="tmhero-em"
-                      dangerouslySetInnerHTML={richText(props.titleEmphasis, props)}
-                    />
-                    {shouldRenderTitleUnderline && titleUnderlineImage ? (
-                      <img
-                        className="tmhero-title-underline-image"
-                        src={titleUnderlineImage}
-                        alt={props.titleUnderlineImageAlt || ""}
-                        aria-hidden={props.titleUnderlineImageAlt ? undefined : "true"}
-                      />
-                    ) : null}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <RichInline value={titleBeforeAmount} wordStyle={props} />{" "}
-                  <span className="tmhero-loss-line" style={{ display: "block" }}>
-                    <span className="tmhero-money">{formattedLoss}</span>{" "}
-                    <RichInline value={props.titleAfterAmount} wordStyle={props} />
-                  </span>{" "}
-                  <span className="tmhero-em-wrap">
-                    <span
-                      className="tmhero-em"
-                      dangerouslySetInnerHTML={richText(props.titleEmphasis, props)}
-                    />
-                    {shouldRenderTitleUnderline && titleUnderlineImage ? (
-                      <img
-                        className="tmhero-title-underline-image"
-                        src={titleUnderlineImage}
-                        alt={props.titleUnderlineImageAlt || ""}
-                        aria-hidden={props.titleUnderlineImageAlt ? undefined : "true"}
-                      />
-                    ) : null}
-                  </span>
-                </>
-              )}
+              <span className="tmhero-line-1" style={{ display: "block" }}>
+                <RichInline value={titleBeforeAmount} wordStyle={props} />
+              </span>
+              <span className="tmhero-loss-line" style={{ display: "block" }}>
+                <span className="tmhero-money">{formattedLoss}</span>{" "}
+                <RichInline
+                  value={props.titleLossConnectorText}
+                  wordStyle={props}
+                />
+              </span>
+              <span className="tmhero-line-after" style={{ display: "block" }}>
+                <RichInline
+                  value={props.titleLossPeriodText}
+                  wordStyle={props}
+                />
+              </span>
+              <span className="tmhero-em-wrap" style={{ display: "block" }}>
+                <span
+                  className="tmhero-em"
+                  dangerouslySetInnerHTML={richText(props.titleEmphasis, props)}
+                />
+                {shouldRenderTitleUnderline && titleUnderlineImage ? (
+                  <img
+                    className="tmhero-title-underline-image"
+                    src={titleUnderlineImage}
+                    alt={props.titleUnderlineImageAlt || ""}
+                    aria-hidden={props.titleUnderlineImageAlt ? undefined : "true"}
+                  />
+                ) : null}
+              </span>
             </h1>
 
             <p className="tmhero-subtitle">
@@ -1001,7 +1038,7 @@ export function ThreeMashHero(props: Props) {
               <RichInline value={props.subtitleEnd} wordStyle={props} />
             </p>
 
-            <div className="tmhero-cta">
+            {props.showCta !== false ? <div className="tmhero-cta">
               <a
                 className="tmhero-btn tmhero-btn-accent"
                 href={href(props.primaryButtonHref)}
@@ -1028,13 +1065,14 @@ export function ThreeMashHero(props: Props) {
                 />
               </a>
               <span dangerouslySetInnerHTML={richText(props.hintText, props)} />
-            </div>
+            </div> : null}
           </div>
 
-          <div
-            className="tmhero-calculator-side"
-            id={props.calculatorAnchorId || undefined}
-          >
+          {props.showCalculator !== false ? (
+            <div
+              className="tmhero-calculator-side"
+              id={props.calculatorAnchorId || undefined}
+            >
             <div
               className={`tmhero-calc${mode === "lab" ? " is-lab-mode" : ""}`}
             >
@@ -1252,35 +1290,60 @@ export function ThreeMashHero(props: Props) {
                 <RichInline value={props.fineTextAfterLink} wordStyle={props} />
               </div>
             </div>
-          </div>
+            </div>
+          ) : null}
         </div>
 
-        <div className="tmhero-stats">
-          <StatBlock
-            value={props.stat1Value}
-            suffix={props.stat1Suffix}
-            label={props.stat1Label}
-            wordStyle={props}
-          />
-          <StatBlock
-            value={props.stat2Value}
-            suffix={props.stat2Suffix}
-            label={props.stat2Label}
-            wordStyle={props}
-          />
-          <StatBlock
-            value={props.stat3Value}
-            suffix={props.stat3Suffix}
-            label={props.stat3Label}
-            wordStyle={props}
-          />
-          <StatBlock
-            value={props.stat4Value}
-            suffix={props.stat4Suffix}
-            label={props.stat4Label}
-            wordStyle={props}
-          />
-        </div>
+        {props.showStats !== false && hasVisibleStats ? <div className="tmhero-stats">
+          {props.showStat1 !== false ? (
+            <StatBlock
+              value={props.stat1Value}
+              suffix={props.stat1Suffix}
+              label={props.stat1Label}
+              wordStyle={props}
+            />
+          ) : null}
+          {props.showStat2 !== false ? (
+            <StatBlock
+              value={props.stat2Value}
+              suffix={props.stat2Suffix}
+              label={props.stat2Label}
+              wordStyle={props}
+            />
+          ) : null}
+          {props.showStat3 !== false ? (
+            <StatBlock
+              value={props.stat3Value}
+              suffix={props.stat3Suffix}
+              label={props.stat3Label}
+              wordStyle={props}
+            />
+          ) : null}
+          {props.showStat4 !== false ? (
+            <StatBlock
+              value={props.stat4Value}
+              suffix={props.stat4Suffix}
+              label={props.stat4Label}
+              wordStyle={props}
+            />
+          ) : null}
+          {props.showStat5 === true && Boolean(props.stat5Value?.trim() || props.stat5Suffix?.trim() || props.stat5Label?.trim()) ? (
+            <StatBlock
+              value={props.stat5Value}
+              suffix={props.stat5Suffix}
+              label={props.stat5Label}
+              wordStyle={props}
+            />
+          ) : null}
+          {props.showStat6 === true && Boolean(props.stat6Value?.trim() || props.stat6Suffix?.trim() || props.stat6Label?.trim()) ? (
+            <StatBlock
+              value={props.stat6Value}
+              suffix={props.stat6Suffix}
+              label={props.stat6Label}
+              wordStyle={props}
+            />
+          ) : null}
+        </div> : null}
       </div>
     </section>
   );

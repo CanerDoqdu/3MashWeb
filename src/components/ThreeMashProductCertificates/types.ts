@@ -1,8 +1,7 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProduct, IkasImage } from "@ikas/bp-storefront";
+import type { IkasImage } from "@ikas/bp-storefront";
 
 export interface Props {
-  product?: IkasProduct | null;
   sectionIndex?: string;
   sectionLabel?: string;
   titleHtml?: string;
@@ -45,5 +44,41 @@ export interface Props {
   cert4ActionText?: string;
   cert4ActionHref?: string;
   complianceNotice?: string;
-  backgroundColor?: string;
+  sectionLabelEn?: string;
+  titleHtmlEn?: string;
+  sideHtmlEn?: string;
+  showCert1?: boolean;
+  cert1BadgeEn?: string;
+  cert1TitleEn?: string;
+  cert1SubtitleEn?: string;
+  cert1IssuerEn?: string;
+  cert1ActionTextEn?: string;
+  showCert2?: boolean;
+  cert2BadgeEn?: string;
+  cert2TitleEn?: string;
+  cert2SubtitleEn?: string;
+  cert2IssuerEn?: string;
+  cert2ActionTextEn?: string;
+  showCert3?: boolean;
+  cert3BadgeEn?: string;
+  cert3TitleEn?: string;
+  cert3SubtitleEn?: string;
+  cert3IssuerEn?: string;
+  cert3ActionTextEn?: string;
+  showCert4?: boolean;
+  cert4BadgeEn?: string;
+  cert4TitleEn?: string;
+  cert4SubtitleEn?: string;
+  cert4IssuerEn?: string;
+  cert4ActionTextEn?: string;
+  reportNoLabel?: string;
+  reportNoLabelEn?: string;
+  issuerLabel?: string;
+  issuerLabelEn?: string;
+  complianceNoticeEn?: string;
+  showComplianceNotice?: boolean;
+  cert1ReportNoEn?: string;
+  cert2ReportNoEn?: string;
+  cert3ReportNoEn?: string;
+  cert4ReportNoEn?: string;
 }

@@ -52,4 +52,17 @@ export interface Props {
   showBackgroundGlow?: boolean;
   backgroundGlowColor?: string;
   backgroundGlowOpacity?: number;
+  indexTextEn?: string;
+  titleTextEn?: string;
+  titleEmphasisEn?: string;
+  sideHtmlEn?: string;
+  badLabelEn?: string;
+  badDescriptionHtmlEn?: string;
+  goodLabelEn?: string;
+  goodDescriptionHtmlEn?: string;
+  hairNoteHtmlEn?: string;
+  referenceHtmlEn?: string;
+  showSideDescription?: boolean;
+  showBadCard?: boolean;
+  showGoodCard?: boolean;
 }

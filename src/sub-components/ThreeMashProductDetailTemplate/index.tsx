@@ -68,6 +68,8 @@ export type ProductDetailTemplateData = {
     panelTitleHtml: string;
     note: string;
     items: Array<{ descriptionHtml: string; percent?: number }>;
+    showHeader?: boolean;
+    showChecklist?: boolean;
   };
   metrics?: {
     index: string;
@@ -101,7 +103,7 @@ export type ProductDetailTemplateData = {
       imageBackground?: "white";
       mediaType?: "image" | "video";
     }>;
-    cards: Array<{ eyebrow: string; title: string; items: string[]; note?: string }>;
+    cards: Array<{ eyebrow: string; title: string; items: string[]; note?: string; contentHtml?: string }>;
     devices: {
       eyebrow: string;
       title: string;
@@ -212,6 +214,19 @@ type ProductAnnouncementPayload = {
 type Props = {
   data: ProductDetailTemplateData;
   variantGroups: ProductVariantGroup[];
+  visibility?: ProductDetailSectionVisibility;
+  showBreadcrumb?: boolean;
+  showGallery?: boolean;
+  showGalleryBadge?: boolean;
+  galleryThumbAriaLabel?: string;
+  trustBadgeIconSrc?: string;
+  showHeroKicker?: boolean;
+  showHeroDescription?: boolean;
+  showHeroPills?: boolean;
+  showSelectionSummary?: boolean;
+  showAddToCartButton?: boolean;
+  showWhatsAppButton?: boolean;
+  showTrustBadges?: boolean;
   selectedGalleryIndex: number;
   onGallerySelect: (index: number) => void;
   onVariantSelect: (value: unknown) => void;
@@ -225,15 +240,23 @@ type Props = {
   relatedProducts?: ProductDetailRelatedProduct[];
 };
 
-function templateStyle() {
+type ProductDetailSectionVisibility = {
+  photos?: boolean;
+  card1?: boolean;
+  card2?: boolean;
+  devices?: boolean;
+  ecosystem?: boolean;
+};
+
+function templateStyle(colorOverrides?: { backgroundColor?: string; textColor?: string; accentColor?: string; lineColor?: string }) {
   return {
-    "--tmpdt-bg": "var(--tm-theme-bg, #FAFAF7)",
-    "--tmpdt-ink": "var(--tm-theme-text, #0E0E0C)",
+    "--tmpdt-bg": colorOverrides?.backgroundColor || "var(--tm-theme-bg, #FAFAF7)",
+    "--tmpdt-ink": colorOverrides?.textColor || "var(--tm-theme-text, #0E0E0C)",
     "--tmpdt-sub": "var(--tm-theme-sub, #55554e)",
     "--tmpdt-mut": "var(--tm-theme-muted, #8f8f86)",
-    "--tmpdt-line": "var(--tm-theme-line, #E6E6E0)",
+    "--tmpdt-line": colorOverrides?.lineColor || "var(--tm-theme-line, #E6E6E0)",
     "--tmpdt-line2": "var(--tm-theme-line-strong, #d5d5cd)",
-    "--tmpdt-lime": "var(--tm-theme-accent, #C7F136)",
+    "--tmpdt-lime": colorOverrides?.accentColor || "var(--tm-theme-accent, #C7F136)",
     "--tmpdt-lime-ink": "var(--tm-theme-accent-text, #3d4d0e)",
     "--tmpdt-lime-soft": "var(--tm-theme-accent-soft, #F2F8DC)",
     "--tmpdt-red": "var(--tm-theme-danger, #E2492F)",
@@ -242,10 +265,23 @@ function templateStyle() {
   } as any;
 }
 
-export function ProductDetailSectionScope({ data, children }: { data: ProductDetailTemplateData; children: ComponentChildren }) {
-  const style = useMemo(templateStyle, []);
+export function ProductDetailSectionScope({
+  data,
+  children,
+  colorOverrides,
+  id,
+}: {
+  data: ProductDetailTemplateData;
+  children: ComponentChildren;
+  colorOverrides?: { backgroundColor?: string; textColor?: string; accentColor?: string; lineColor?: string };
+  id?: string;
+}) {
+  const style = useMemo(
+    () => templateStyle(colorOverrides),
+    [colorOverrides?.backgroundColor, colorOverrides?.textColor, colorOverrides?.accentColor, colorOverrides?.lineColor],
+  );
   return (
-    <section lang={isEnglishLocale() ? "en" : "tr"} className="three-mash-product-detail-template" style={style} data-product-template-key={data.key}>
+    <section id={id} lang={isEnglishLocale() ? "en" : "tr"} className="three-mash-product-detail-template" style={style} data-product-template-key={data.key}>
       {children}
     </section>
   );
@@ -285,7 +321,7 @@ function SectionHead({ titleHtml, sideHtml, wide = false }: { titleHtml: string;
 }
 
 function isResinProductDetail(data: ProductDetailTemplateData) {
-  const categoryHref = (data?.breadcrumb?.categoryHref || "").toLocaleLowerCase("tr-TR");
+  const categoryHref = data.breadcrumb.categoryHref.toLocaleLowerCase("tr-TR");
   return categoryHref.includes("dental-3d-yazici-recineleri") || categoryHref.includes("dental-recineler");
 }
 
@@ -369,16 +405,23 @@ function productBuyHref(base: string, variantGroups: ProductVariantGroup[]) {
   return `${base}${base.includes("?") ? "&" : "?"}${query}`;
 }
 
-function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "data" | "selectedGalleryIndex" | "onGallerySelect">) {
+function Gallery({
+  data,
+  selectedGalleryIndex,
+  onGallerySelect,
+  showGalleryBadge,
+  galleryThumbAriaLabel,
+}: Pick<Props, "data" | "selectedGalleryIndex" | "onGallerySelect" | "showGalleryBadge" | "galleryThumbAriaLabel">) {
   const gallery = data.hero.gallery;
   const selected = gallery[selectedGalleryIndex] || gallery[0];
+  const thumbLabel = t(galleryThumbAriaLabel || tLocalized("Ürün görseli", "Product image"));
   const thumbColumns = Math.max(1, Math.min(gallery.length, 8));
   const imageRef = useRef<HTMLImageElement>(null);
 
   return (
     <div className="tmpdt-gal">
       <div className="tmpdt-gal-main">
-        {data.hero.galleryBadge ? <span className="tmpdt-cebadge">{data.hero.galleryBadge}</span> : null}
+        {showGalleryBadge !== false && data.hero.galleryBadge ? <span className="tmpdt-cebadge">{data.hero.galleryBadge}</span> : null}
         {selected ? (
           <img
             ref={imageRef}
@@ -397,7 +440,7 @@ function Gallery({ data, selectedGalleryIndex, onGallerySelect }: Pick<Props, "d
               type="button"
               className={index === selectedGalleryIndex ? "is-on" : ""}
               onClick={() => onGallerySelect(index)}
-              aria-label={`${data.breadcrumb.productText} görsel ${index + 1}`}
+              aria-label={`${thumbLabel} ${index + 1}: ${data.breadcrumb.productText}`}
               key={`${item.src}-${index}`}
             >
               <img
@@ -419,51 +462,7 @@ function photoTransformStyle(photo: { imageOffsetY?: string; imageScale?: string
   return Object.keys(style).length ? (style as any) : undefined;
 }
 
-function localizeAddToCartText(text?: string): string {
-  if (!isEnglishLocale()) return text || tLocalized("Sepete ekle →", "Add to cart →");
-  const normalized = (text || "").toLowerCase().trim();
-  if (!normalized || normalized.includes(tLocalized("sepet", "cart")) || normalized === tLocalized("ekle", "add")) {
-    return text && text === text.toUpperCase() ? "ADD TO CART" : "Add to Cart →";
-  }
-  return text || "Add to Cart →";
-}
-
-function localizeAddingToCartText(text?: string): string {
-  if (!isEnglishLocale()) return text || tLocalized("Ekleniyor...", "Adding...");
-  const normalized = (text || "").toLowerCase().trim();
-  if (!normalized || normalized.includes("ekleniyor")) {
-    return text && text === text.toUpperCase() ? "ADDING..." : "Adding...";
-  }
-  return text || "Adding...";
-}
-
-function localizeOutOfStockText(text?: string): string {
-  if (!isEnglishLocale()) return text || tLocalized("Stok yok", "Out of stock");
-  const normalized = (text || "").toLowerCase().trim();
-  if (!normalized || normalized.includes(tLocalized("stok", "stok")) || normalized.includes(tLocalized("tükendi", "Out of Stock"))) {
-    return text && text === text.toUpperCase() ? "OUT OF STOCK" : "Out of stock";
-  }
-  return text || "Out of stock";
-}
-
-function localizeWhatsAppText(text?: string): string {
-  if (!isEnglishLocale()) return text || tLocalized("WhatsApp'tan sor", "Ask via WhatsApp");
-  const fallbackText = tLocalized("WhatsApp'tan sor", "Ask via WhatsApp");
-  return !text || text === fallbackText || text === tLocalized("Teklif alın", "Get a quote") ? "Ask via WhatsApp" : text;
-}
-
-function localizeSummarySuffix(suffix?: string): string {
-  if (!isEnglishLocale()) return suffix || "";
-  const normalized = (suffix || "").toLowerCase().trim();
-  if (normalized.includes("uyumluluk") || normalized.includes("parametre") || normalized.includes(tLocalized("teknik destek", "technical support"))) {
-    return "— compatibility check & technical support included.";
-  }
-  return suffix || "";
-}
-
 function Configurator(props: Props) {
-  const buyHref = productBuyHref(props.data.hero.buyHrefBase, props.variantGroups);
-
   const hidePriceProducts = [
     "mash w1e ultrasonik yıkama cihazı",
     "creality wash&cure uw-03",
@@ -472,16 +471,15 @@ function Configurator(props: Props) {
   ];
 
   const hidePrice = hidePriceProducts.includes(
-    (props.data?.breadcrumb?.productText || "").toLocaleLowerCase("tr-TR").trim()
+    props.data.breadcrumb.productText.toLocaleLowerCase("tr-TR").trim()
   );
 
   const hasManySwatches = props.variantGroups.some(
     (group) => group.values.some((value) => value.color) && group.values.length > 12
   );
   const rawMessage = props.message || "";
-  const displayedMessage = isEnglishLocale() && (rawMessage.toLowerCase().includes(tLocalized("stok", "stok")) || rawMessage.toLowerCase().includes(tLocalized("tükendi", "Out of Stock")))
-    ? "Out of stock"
-    : rawMessage;
+  const displayedMessage = t(rawMessage);
+  const whatsappHref = safeWhatsAppHref(props.data.hero.whatsappHref, "");
 
   return (
     <div className="tmpdt-cfg">
@@ -538,39 +536,51 @@ function Configurator(props: Props) {
           })}
         </div>
       ) : null}
-      <div className="tmpdt-sum">
-        {isEnglishLocale() && (props.data.hero.selectedPrefix === tLocalized("Seçiminiz:", "Your selection:") || !props.data.hero.selectedPrefix) ? "Selected:" : props.data.hero.selectedPrefix} <b>{props.selectedSummary}</b> {localizeSummarySuffix(props.data.hero.summarySuffix)}
-      </div>
-      <div className="tmpdt-act">
-        {!props.data.hero.disableAddToCart && (
-          <button
-            type="button"
-            className="tmpdt-btn tmpdt-lime"
-            onClick={props.onAddToCart}
-            disabled={props.isAddToCartDisabled}
-          >
-            {props.isAdding
-              ? localizeAddingToCartText(props.data.hero.addingToCartText)
-              : props.isAddToCartDisabled
-                ? localizeOutOfStockText(props.data.hero.outOfStockText)
-                : localizeAddToCartText(props.data.hero.addToCartText)}
-          </button>
-        )}
-        <a className="tmpdt-btn tmpdt-line" href={safeWhatsAppHref(props.data.hero.whatsappHref)} target="_blank" rel="noopener noreferrer">
-          {localizeWhatsAppText(props.data.hero.whatsappText)}
-        </a>
-      </div>
+      {props.showSelectionSummary !== false ? (
+        <div className="tmpdt-sum">
+          {t(props.data.hero.selectedPrefix)} <b>{props.selectedSummary}</b> {t(props.data.hero.summarySuffix)}
+        </div>
+      ) : null}
+      {props.showAddToCartButton !== false || props.showWhatsAppButton !== false ? (
+        <div className="tmpdt-act">
+          {props.showAddToCartButton !== false && !props.data.hero.disableAddToCart && (
+            <button
+              type="button"
+              className="tmpdt-btn tmpdt-lime"
+              onClick={props.onAddToCart}
+              disabled={props.isAddToCartDisabled}
+            >
+              {props.isAdding
+                ? t(props.data.hero.addingToCartText)
+                : props.isAddToCartDisabled
+                  ? t(props.data.hero.outOfStockText)
+                  : t(props.data.hero.addToCartText)}
+            </button>
+          )}
+          {props.showWhatsAppButton !== false && whatsappHref ? (
+            <a className="tmpdt-btn tmpdt-line" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+              {t(props.data.hero.whatsappText)}
+            </a>
+          ) : null}
+        </div>
+      ) : null}
       {displayedMessage ? <p className="tmpdt-msg">{displayedMessage}</p> : null}
-      <div className="tmpdt-trust">
-        {props.data.hero.trustBadges.map((item) => (
-          <span key={item}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12l4 4L19 7" />
-            </svg>
-            {item === tLocalized("Ücretsiz kargo", "Free Shipping") ? tLocalized("Ücretsiz kargo", "Free Shipping") : item === tLocalized("Koşulsuz iade", "Hassle-free Returns") ? tLocalized("Koşulsuz iade", "Hassle-free Returns") : item === tLocalized("Güvenli ödeme", "Secure Payment") ? tLocalized("Güvenli ödeme", "Secure Payment") : item}
-          </span>
-        ))}
-      </div>
+      {props.showTrustBadges !== false && props.data.hero.trustBadges.length ? (
+        <div className="tmpdt-trust">
+          {props.data.hero.trustBadges.map((item) => (
+            <span key={item}>
+              {props.trustBadgeIconSrc ? (
+                <img src={props.trustBadgeIconSrc} alt="" aria-hidden="true" />
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12l4 4L19 7" />
+                </svg>
+              )}
+              {t(item)}
+            </span>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -636,28 +646,46 @@ export function ProductDetailHeroSection(props: Props) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <div className="tmpdt-wrap">
-        <div className="tmpdt-crumb">
-          <a href={localizedHref(props.data?.breadcrumb?.homeHref || "/")}>{isEnglishLocale() && (props.data?.breadcrumb?.homeText === tLocalized("Ana sayfa", "Home") || props.data?.breadcrumb?.homeText === tLocalized("Anasayfa", "Home")) ? "Home" : props.data?.breadcrumb?.homeText || "Home"}</a>
-          <span>/</span>
-          <a href={localizedHref(props.data?.breadcrumb?.categoryHref || "/")}>{props.data?.breadcrumb?.categoryText || "Products"}</a>
-          <span>/</span>
-          <span>{props.data?.breadcrumb?.productText || ""}</span>
-        </div>
+        {props.showBreadcrumb !== false ? (
+          <div className="tmpdt-crumb">
+            <a href={localizedHref(props.data.breadcrumb.homeHref)}>{t(props.data.breadcrumb.homeText)}</a>
+            {props.data.breadcrumb.categoryText ? (
+              <>
+                <span>/</span>
+                <a href={localizedHref(props.data.breadcrumb.categoryHref)}>{t(props.data.breadcrumb.categoryText)}</a>
+              </>
+            ) : null}
+            <span>/</span>
+            <span>{props.data.breadcrumb.productText}</span>
+          </div>
+        ) : null}
         <div className="tmpdt-phero" id="satinal" ref={heroRef}>
-          <Gallery data={props.data} selectedGalleryIndex={props.selectedGalleryIndex} onGallerySelect={props.onGallerySelect} />
+          {props.showGallery !== false && props.data.hero.gallery.length ? (
+            <Gallery
+              data={props.data}
+              selectedGalleryIndex={props.selectedGalleryIndex}
+              onGallerySelect={props.onGallerySelect}
+              showGalleryBadge={props.showGalleryBadge}
+              galleryThumbAriaLabel={props.galleryThumbAriaLabel}
+            />
+          ) : null}
           <div className="tmpdt-buy">
-            <div className="tmpdt-kicker">{props.data.hero.kicker}</div>
+            {props.showHeroKicker !== false && props.data.hero.kicker ? <div className="tmpdt-kicker">{t(props.data.hero.kicker)}</div> : null}
             <h1 dangerouslySetInnerHTML={html(props.data.hero.titleHtml)} />
-            <p className="tmpdt-lead" dangerouslySetInnerHTML={html(props.data.hero.leadHtml)} />
-            <div className="tmpdt-pills">
-              {props.data.hero.pills.map((pill) => (
-                <span key={`${pill.value || ""}-${pill.label}`}>
-                  {pill.value ? <b>{pill.value}</b> : null}
-                  {pill.value ? " " : ""}
-                  {pill.label}
-                </span>
-              ))}
-            </div>
+            {props.showHeroDescription !== false && props.data.hero.leadHtml ? (
+              <p className="tmpdt-lead" dangerouslySetInnerHTML={html(props.data.hero.leadHtml)} />
+            ) : null}
+            {props.showHeroPills !== false && props.data.hero.pills.length ? (
+              <div className="tmpdt-pills">
+                {props.data.hero.pills.map((pill) => (
+                  <span key={`${pill.value || ""}-${pill.label}`}>
+                    {pill.value ? <b>{t(pill.value)}</b> : null}
+                    {pill.value ? " " : ""}
+                    {t(pill.label)}
+                  </span>
+                ))}
+              </div>
+            ) : null}
             <Configurator {...props} />
           </div>
         </div>
@@ -681,41 +709,53 @@ export function productAnnouncementPayload(data: ProductDetailTemplateData): Pro
 export function ProductDetailRatingsSection({ data }: { data: ProductDetailTemplateData }) {
   const ratings = data.ratings;
   const [ref, visible] = useInView<HTMLDivElement>(`${data.key}-ratings`);
-  if (!ratings?.items.length) return null;
+  if (!ratings) return null;
+
+  const hasHeaderContent = [ratings.index, ratings.label, ratings.titleHtml, ratings.sideHtml]
+    .some((value) => value.trim() !== "");
+  const showHeader = ratings.showHeader !== false && hasHeaderContent;
+  const showChecklist = ratings.showChecklist !== false && ratings.items.length > 0;
+  if (!showHeader && !showChecklist) return null;
 
   return (
     <section className="tmpdt-section" id="deneyim">
       <div className="tmpdt-wrap">
-        <SectionIndex index={ratings.index} label={ratings.label} />
-        <SectionHead titleHtml={ratings.titleHtml} sideHtml={ratings.sideHtml} />
-        <div className="tmpdt-rate" ref={ref}>
-          <div className="tmpdt-rate-hd">
-            <h3 dangerouslySetInnerHTML={html(ratings.panelTitleHtml)} />
-            <div className="tmpdt-note">{t(ratings.note)}</div>
-          </div>
-          {ratings.items.map((item, index) => (
-            (() => {
-              const fallbackPercent = [99, 97, 96][index];
-              const percent = isResinProductDetail(data) && (typeof item.percent === "number" && item.percent > 0
-                ? item.percent
-                : fallbackPercent);
+        {showHeader ? (
+          <>
+            <SectionIndex index={ratings.index} label={ratings.label} />
+            <SectionHead titleHtml={ratings.titleHtml} sideHtml={ratings.sideHtml} />
+          </>
+        ) : null}
+        {showChecklist ? (
+          <div className="tmpdt-rate" ref={ref}>
+            <div className="tmpdt-rate-hd">
+              <h3 dangerouslySetInnerHTML={html(ratings.panelTitleHtml)} />
+              <div className="tmpdt-note">{t(ratings.note)}</div>
+            </div>
+            {ratings.items.map((item, index) => (
+              (() => {
+                const fallbackPercent = [99, 97, 96][index];
+                const percent = isResinProductDetail(data) && (typeof item.percent === "number" && item.percent > 0
+                  ? item.percent
+                  : fallbackPercent);
 
-              return <div className={`tmpdt-rrow${isResinProductDetail(data) ? "" : " is-plain"}`} key={`${item.descriptionHtml}-${index}`}>
-                <div className="tmpdt-rdesc" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
-                {isResinProductDetail(data) ? (
-                  <div className="tmpdt-rmeter">
-                    <div className="tmpdt-rtrack">
-                      <i style={{ width: visible ? `${percent}%` : "0%" }} />
+                return <div className={`tmpdt-rrow${isResinProductDetail(data) ? "" : " is-plain"}`} key={`${item.descriptionHtml}-${index}`}>
+                  <div className="tmpdt-rdesc" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
+                  {isResinProductDetail(data) ? (
+                    <div className="tmpdt-rmeter">
+                      <div className="tmpdt-rtrack">
+                        <i style={{ width: visible ? `${percent}%` : "0%" }} />
+                      </div>
+                      <div className="tmpdt-rpct">
+                        %<CountText value={String(percent)} active={visible} />
+                      </div>
                     </div>
-                    <div className="tmpdt-rpct">
-                      %<CountText value={String(percent)} active={visible} />
-                    </div>
-                  </div>
-                ) : null}
-              </div>;
-            })()
-          ))}
-        </div>
+                  ) : null}
+                </div>;
+              })()
+            ))}
+          </div>
+        ) : null}
       </div>
     </section>
   );
@@ -724,26 +764,32 @@ export function ProductDetailRatingsSection({ data }: { data: ProductDetailTempl
 export function ProductDetailMetricsSection({ data }: { data: ProductDetailTemplateData }) {
   const metrics = data.metrics;
   const [ref, visible] = useInView<HTMLDivElement>(`${data.key}-metrics`);
-  if (!metrics?.items.length) return null;
+  if (!metrics) return null;
+
+  const hasHeaderContent = [metrics.index, metrics.label, metrics.titleHtml, metrics.sideHtml]
+    .some((value) => value.trim() !== "");
+  if (!metrics.items.length && !hasHeaderContent && !data.specHighlight) return null;
 
   return (
     <section className="tmpdt-section tmpdt-section-tight" id="teknik">
       <div className="tmpdt-wrap" ref={ref}>
         <SectionIndex index={metrics.index} label={metrics.label} />
         <SectionHead titleHtml={metrics.titleHtml} sideHtml={metrics.sideHtml} wide />
-        <div className="tmpdt-meters">
-          {metrics.items.map((item) => (
-            <article className="tmpdt-meter" key={`${item.name}-${item.value}`}>
-              <div className="tmpdt-meter-nm">{t(item.name)}</div>
-              <div className="tmpdt-meter-val">
-                <CountText value={item.value} active={visible} />
-                {item.unit ? <em>{t(item.unit)}</em> : null}
-              </div>
-              {item.tag ? <span className="tmpdt-iso">{t(item.tag)}</span> : null}
-              <div className="tmpdt-meter-cap">{t(item.caption)}</div>
-            </article>
-          ))}
-        </div>
+        {metrics.items.length ? (
+          <div className="tmpdt-meters">
+            {metrics.items.map((item) => (
+              <article className="tmpdt-meter" key={`${item.name}-${item.value}`}>
+                <div className="tmpdt-meter-nm">{t(item.name)}</div>
+                <div className="tmpdt-meter-val">
+                  <CountText value={item.value} active={visible} />
+                  {item.unit ? <em>{t(item.unit)}</em> : null}
+                </div>
+                {item.tag ? <span className="tmpdt-iso">{t(item.tag)}</span> : null}
+                <div className="tmpdt-meter-cap">{t(item.caption)}</div>
+              </article>
+            ))}
+          </div>
+        ) : null}
         {data.specHighlight ? <ProductDetailSpecHighlight data={data.specHighlight} /> : null}
       </div>
     </section>
@@ -764,7 +810,7 @@ export function ProductDetailSpecHighlightSection({ data }: { data: ProductDetai
 
 export function ProductDetailSpecHighlight({ data }: { data: NonNullable<ProductDetailTemplateData["specHighlight"]> }) {
   return (
-    <div className="tmpdt-flag">
+    <div className={`tmpdt-flag${data.rows.length ? "" : " tmpdt-flag-no-table"}`}>
       <div>
         <div className="tmpdt-flag-tag">{t(data.tag)}</div>
         <h3 dangerouslySetInnerHTML={html(data.titleHtml)} />
@@ -773,28 +819,43 @@ export function ProductDetailSpecHighlight({ data }: { data: NonNullable<Product
           {t(data.ctaText)}
         </a>
       </div>
-      <div className="tmpdt-spectbl">
-        {data.rows.map((row) => (
-          <div key={row.label}>
-            <span>{t(row.label)}</span>
-            <b>{t(row.value)}</b>
-          </div>
-        ))}
-      </div>
+      {data.rows.length ? (
+        <div className="tmpdt-spectbl">
+          {data.rows.map((row) => (
+            <div key={row.label}>
+              <span>{t(row.label)}</span>
+              <b>{t(row.value)}</b>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
 
-export function ProductDetailUseCasesSection({ data }: { data: ProductDetailTemplateData }) {
+export function ProductDetailUseCasesSection({
+  data,
+  visibility,
+}: {
+  data: ProductDetailTemplateData;
+  visibility?: ProductDetailSectionVisibility;
+}) {
   const useCases = data.useCases;
   if (!useCases) return null;
+  const cards = useCases.cards.filter((_, index) => (
+    index === 0
+      ? visibility?.card1 !== false
+      : index === 1
+        ? visibility?.card2 !== false
+        : true
+  ));
 
   return (
     <section className={`tmpdt-section tmpdt-section-tight${useCases.layout ? ` tmpdt-usecases-${useCases.layout}` : ""}`} id="uygulama">
       <div className="tmpdt-wrap">
         <SectionIndex index={useCases.index} label={useCases.label} />
         <SectionHead titleHtml={useCases.titleHtml} sideHtml={useCases.sideHtml} wide />
-        {useCases.photos.length ? (
+        {visibility?.photos !== false && useCases.photos.length ? (
           <div className="tmpdt-pstrip">
             {useCases.photos.map((photo, index) => (
               <article
@@ -833,34 +894,42 @@ export function ProductDetailUseCasesSection({ data }: { data: ProductDetailTemp
             ))}
           </div>
         ) : null}
-        {useCases.cards.length ? (
+        {cards.length ? (
           <div className="tmpdt-open2">
-            {useCases.cards.map((card) => (
+            {cards.map((card) => (
               <article className="tmpdt-ocard" key={card.title}>
-                <div className="tmpdt-oh">{t(card.eyebrow)}</div>
-                <h3>{t(card.title)}</h3>
-                <ul>
-                  {card.items.map((item) => (
-                    <li key={item} dangerouslySetInnerHTML={html(item)} />
-                  ))}
-                </ul>
-                {card.note ? <div className="tmpdt-onote">{t(card.note)}</div> : null}
+                {card.contentHtml ? (
+                  <div dangerouslySetInnerHTML={html(card.contentHtml)} />
+                ) : (
+                  <>
+                    <div className="tmpdt-oh">{t(card.eyebrow)}</div>
+                    <h3>{t(card.title)}</h3>
+                    <ul>
+                      {card.items.map((item) => (
+                        <li key={item} dangerouslySetInnerHTML={html(item)} />
+                      ))}
+                    </ul>
+                    {card.note ? <div className="tmpdt-onote">{t(card.note)}</div> : null}
+                  </>
+                )}
               </article>
             ))}
           </div>
         ) : null}
-        <div className="tmpdt-devfull">
-          <div className="tmpdt-oh">{t(useCases.devices.eyebrow)}</div>
-          <h3>{t(useCases.devices.title)}</h3>
-          <p dangerouslySetInnerHTML={html(useCases.devices.textHtml)} />
-          <div className="tmpdt-chips2">
-            {useCases.devices.chips.map((chip) => (
-              <span className={chip.highlighted ? "is-more" : ""} key={chip.label}>
-                {t(chip.label)}
-              </span>
-            ))}
+        {visibility?.devices !== false ? (
+          <div className="tmpdt-devfull">
+            <div className="tmpdt-oh">{t(useCases.devices.eyebrow)}</div>
+            <h3>{t(useCases.devices.title)}</h3>
+            <p dangerouslySetInnerHTML={html(useCases.devices.textHtml)} />
+            <div className="tmpdt-chips2">
+              {useCases.devices.chips.map((chip) => (
+                <span className={chip.highlighted ? "is-more" : ""} key={chip.label}>
+                  {t(chip.label)}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </section>
   );
@@ -890,9 +959,15 @@ export function ProductDetailDevicesSection({ data }: { data: ProductDetailTempl
   );
 }
 
-export function ProductDetailEcosystemSection({ data }: { data: ProductDetailTemplateData }) {
+export function ProductDetailEcosystemSection({
+  data,
+  visible = true,
+}: {
+  data: ProductDetailTemplateData;
+  visible?: boolean;
+}) {
   const ecosystem = data.ecosystem;
-  if (!ecosystem) return null;
+  if (!visible || !ecosystem) return null;
 
   return (
     <section className="tmpdt-section tmpdt-section-tight">
@@ -903,13 +978,13 @@ export function ProductDetailEcosystemSection({ data }: { data: ProductDetailTem
           <p dangerouslySetInnerHTML={html(ecosystem.textHtml)} />
           <div className="tmpdt-chipwrap">
             {ecosystem.chips.map((chip) => (
-              <span key={chip}>{chip}</span>
+              <span key={chip}>{t(chip)}</span>
             ))}
           </div>
           <div className="tmpdt-dev-actions">
             {ecosystem.buttons.map((button) => (
               <a className={`tmpdt-btn${button.variant === "line" ? " tmpdt-line" : ""}`} href={safeNavigationHref(localizedHref(button.href))} key={button.text}>
-                {button.text}
+                {t(button.text)}
               </a>
             ))}
           </div>
@@ -989,18 +1064,14 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
   const videoElemRef = useRef<HTMLVideoElement>(null);
   const hasAutoplayedRef = useRef(false);
 
-  const [shouldLoad, setShouldLoad] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isIframeLoaded, setIsIframeLoaded] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
 
-  const videoHref = video.href?.trim() || "https://www.youtube.com/watch?v=dNPHy_sd9aQ";
+  const videoHref = video.href?.trim();
+  if (!videoHref) return null;
   const youtubeId = extractYouTubeId(videoHref);
   const isDirect = isDirectVideoFile(videoHref);
-
-  const posterSrc =
-    video.image ||
-    (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : "");
 
   function postYouTubeMessage(func: string, args: any[] = []) {
     const iframe = iframeRef.current;
@@ -1011,17 +1082,6 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
         "*"
       );
     } catch { }
-  }
-
-  function handlePlayManual() {
-    setIsPlaying(true);
-    setShouldLoad(true);
-    hasAutoplayedRef.current = true;
-    if (youtubeId) {
-      postYouTubeMessage("playVideo");
-    } else if (videoElemRef.current) {
-      void videoElemRef.current.play();
-    }
   }
 
   function toggleSound(e: MouseEvent) {
@@ -1100,7 +1160,6 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
                 title={video.title || "YouTube video"}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
-                onLoad={() => setIsIframeLoaded(true)}
               />
             ) : isDirect ? (
               <video
@@ -1113,7 +1172,6 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
                 loop
                 controls
                 preload="metadata"
-                onLoadedData={() => setIsIframeLoaded(true)}
               />
             ) : (
               <iframe
@@ -1123,39 +1181,9 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
                 title={video.title || "Video"}
                 allow="autoplay; fullscreen"
                 allowFullScreen
-                onLoad={() => setIsIframeLoaded(true)}
               />
             )
           ) : null}
-
-          {/* Poster Image (Visible before play or while live player is loading) */}
-          {posterSrc && (!isPlaying || !isIframeLoaded) ? (
-            <img
-              src={posterSrc}
-              alt={video.imageAlt || video.title || "Video"}
-              className={`tmpdt-vid-poster${isIframeLoaded && isPlaying ? " is-hidden" : ""}`}
-              loading="lazy"
-              decoding="async"
-              onClick={handlePlayManual}
-            />
-          ) : null}
-
-          {/* Overlay Content (Title, Text, Meta, Play Button) */}
-          <div
-            className={`tmpdt-vid-ov${isPlaying ? " is-playing" : ""}`}
-            onClick={!isPlaying ? handlePlayManual : undefined}
-          >
-            {!isPlaying ? (
-              <button
-                type="button"
-                className="tmpdt-play"
-                aria-label={tLocalized("Videoyu Oynat", "Play Video")}
-                onClick={handlePlayManual}
-              >
-                <span className="tmpdt-play-icon" aria-hidden="true"></span>
-              </button>
-            ) : null}
-          </div>
 
           {/* Audio Toggle / Unmute Control */}
           {isPlaying ? (
@@ -1191,10 +1219,26 @@ export function ProductDetailRelatedSection({
   data,
   products,
   titleHtml,
+  showHeader = true,
+  showArrows = true,
+  scrollByCards = 2,
+  openLinksInNewTab = false,
+  previousProductsLabel,
+  nextProductsLabel,
+  categoryProductsAriaLabel,
+  productLinkText,
 }: {
   data: ProductDetailTemplateData;
   products?: ProductDetailRelatedProduct[];
   titleHtml?: string;
+  showHeader?: boolean;
+  showArrows?: boolean;
+  scrollByCards?: number;
+  openLinksInNewTab?: boolean;
+  previousProductsLabel?: string;
+  nextProductsLabel?: string;
+  categoryProductsAriaLabel?: string;
+  productLinkText?: string;
 }) {
   const related = data.related;
   const hasLiveProductSource = Array.isArray(products);
@@ -1208,7 +1252,8 @@ export function ProductDetailRelatedSection({
     if (!rail) return;
     const card = rail.querySelector<HTMLElement>(".tmpdt-rc");
     const gap = 18;
-    const distance = card ? (card.offsetWidth + gap) * 2 : rail.clientWidth * 0.9;
+    const cardsToScroll = Number.isFinite(scrollByCards) ? Math.min(6, Math.max(1, scrollByCards)) : 2;
+    const distance = card ? (card.offsetWidth + gap) * cardsToScroll : rail.clientWidth * 0.9;
     rail.scrollBy({ left: direction * distance, behavior: "smooth" });
   }
 
@@ -1221,21 +1266,21 @@ export function ProductDetailRelatedSection({
   return (
     <section className="tmpdt-section tmpdt-section-tight">
       <div className="tmpdt-wrap">
-        <SectionIndex index={relatedIndex} label={relatedLabel} />
-        <SectionHead titleHtml={resolvedTitle} wide />
+        {showHeader ? <SectionIndex index={relatedIndex} label={relatedLabel} /> : null}
+        {showHeader ? <SectionHead titleHtml={resolvedTitle} wide /> : null}
         {shouldUseLiveProducts ? (
           <div className="tmpdt-rshell">
-            {liveProducts.length > 4 ? (
-              <button type="button" className="tmpdt-rnav tmpdt-rnav-prev" aria-label={tLocalized("Önceki ilgili ürünler", "Previous related products")} onClick={() => scrollRelated(-1)}>
+            {showArrows && liveProducts.length > 4 ? (
+              <button type="button" className="tmpdt-rnav tmpdt-rnav-prev" aria-label={previousProductsLabel || tLocalized("Önceki ilgili ürünler", "Previous related products")} onClick={() => scrollRelated(-1)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="m15 18-6-6 6-6" />
                 </svg>
               </button>
             ) : null}
-            <div ref={relatedRailRef} className="tmpdt-rgrid tmpdt-rgrid-live" aria-label={tLocalized("İlgili ürünler", "Related products")}>
+            <div ref={relatedRailRef} className="tmpdt-rgrid tmpdt-rgrid-live" aria-label={categoryProductsAriaLabel || tLocalized("İlgili ürünler", "Related products")}>
               {liveProducts.map((item) => (
                 <article className="tmpdt-rc tmpdt-rc-live" key={item.id}>
-                  <a className="tmpdt-rc-live-link" href={localizedHref(item.href)}>
+                  <a className="tmpdt-rc-live-link" href={localizedHref(item.href)} target={openLinksInNewTab ? "_blank" : undefined} rel={openLinksInNewTab ? "noopener noreferrer" : undefined}>
                     <div className="tmpdt-rc-ph tmpdt-rc-live-ph">
 
                       {item.image ? (
@@ -1252,15 +1297,15 @@ export function ProductDetailRelatedSection({
                       <h3>{t(item.title)}</h3>
                       {item.descriptionHtml ? <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} /> : null}
                       <span className="tmpdt-rc-go">
-                        {tLocalized("İncele", "View")} <span>→</span>
+                        {productLinkText || tLocalized("İncele", "View")} <span>→</span>
                       </span>
                     </div>
                   </a>
                 </article>
               ))}
             </div>
-            {liveProducts.length > 4 ? (
-              <button type="button" className="tmpdt-rnav tmpdt-rnav-next" aria-label={tLocalized("Sonraki ilgili ürünler", "Next related products")} onClick={() => scrollRelated(1)}>
+            {showArrows && liveProducts.length > 4 ? (
+              <button type="button" className="tmpdt-rnav tmpdt-rnav-next" aria-label={nextProductsLabel || tLocalized("Sonraki ilgili ürünler", "Next related products")} onClick={() => scrollRelated(1)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="m9 6 6 6-6 6" />
                 </svg>
@@ -1279,7 +1324,7 @@ export function ProductDetailRelatedSection({
               const image = relatedProductImage(item);
               return (
                 <article className="tmpdt-rc" key={item.title}>
-                  <a className="tmpdt-rc-live-link" href={localizedHref(item.href)}>
+                  <a className="tmpdt-rc-live-link" href={localizedHref(item.href)} target={openLinksInNewTab ? "_blank" : undefined} rel={openLinksInNewTab ? "noopener noreferrer" : undefined}>
                     <div className="tmpdt-rc-ph" style={{ background: item.background }}>
                       <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{t(item.tag)}</span>
                       {isAllResins ? (
@@ -1320,7 +1365,7 @@ export function ProductDetailRelatedSection({
                       <h3>{t(item.title)}</h3>
                       <div className="tmpdt-rc-ds" dangerouslySetInnerHTML={html(item.descriptionHtml)} />
                       <span className="tmpdt-rc-go">
-                        {t(item.linkText)} <span>→</span>
+                        {productLinkText || t(item.linkText)} <span>→</span>
                       </span>
                     </div>
                   </a>
@@ -1334,7 +1379,15 @@ export function ProductDetailRelatedSection({
   );
 }
 
-export function ProductDetailFinalCtaSection({ data }: { data: ProductDetailTemplateData }) {
+export function ProductDetailFinalCtaSection({
+  data,
+  backgroundColor,
+  textColor,
+}: {
+  data: ProductDetailTemplateData;
+  backgroundColor?: string;
+  textColor?: string;
+}) {
   const finalCta = data.finalCta;
   if (!finalCta) return null;
 
@@ -1348,9 +1401,9 @@ export function ProductDetailFinalCtaSection({ data }: { data: ProductDetailTemp
   }
 
   return (
-    <section className="tmpdt-final">
+    <section className="tmpdt-final" style={{ backgroundColor }}>
       <div className="tmpdt-wrap">
-        {titleHtml !== "" && <h2 dangerouslySetInnerHTML={html(finalCta.titleHtml)} />}
+        {titleHtml !== "" && <h2 style={{ color: textColor }} dangerouslySetInnerHTML={html(finalCta.titleHtml)} />}
         {textHtml !== "" && <p dangerouslySetInnerHTML={html(finalCta.textHtml)} />}
         {(primaryText !== "" || secondaryText !== "") && (
           <div className="tmpdt-final-actions">
@@ -1390,8 +1443,8 @@ export function ThreeMashProductDetailTemplate(props: Props) {
       <ProductDetailHeroSection {...props} />
       <ProductDetailRatingsSection data={props.data} />
       <ProductDetailMetricsSection data={props.data} />
-      <ProductDetailUseCasesSection data={props.data} />
-      <ProductDetailEcosystemSection data={props.data} />
+      <ProductDetailUseCasesSection data={props.data} visibility={props.visibility} />
+      <ProductDetailEcosystemSection data={props.data} visible={props.visibility?.ecosystem !== false} />
       <ProductDetailFaqSection data={props.data} />
       <ProductDetailVideoSection data={props.data} />
       <ProductDetailRelatedSection data={props.data} products={props.relatedProducts} />

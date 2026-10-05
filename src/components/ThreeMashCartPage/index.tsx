@@ -44,8 +44,18 @@ const legacyContinueShoppingHrefs = new Set([
   "/cart",
 ]);
 
-function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
+function text(
+  value: string | undefined,
+  fallbackTr: string,
+  fallbackEn?: string,
+  valueEn?: string,
+) {
+  if (isEnglishLocale() && valueEn?.trim()) return valueEn;
   return tProp(value, fallbackTr, fallbackEn || fallbackTr);
+}
+
+function isSectionVisible(value: unknown): boolean {
+  return value !== false && value !== "false";
 }
 
 function href(value: string | undefined, fallback: string) {
@@ -116,8 +126,13 @@ function productHref(item: IkasOrderLineItem) {
   return slug ? localizedHref(`/${slug.replace(/^\/+/, "")}`) : "#";
 }
 
-function itemTitle(item: IkasOrderLineItem) {
-  return item.variant?.name || tLocalized("Ürün", "Product");
+function itemTitle(item: IkasOrderLineItem, props: Props) {
+  return item.variant?.name || text(
+    props.productFallbackText,
+    "Ürün",
+    "Product",
+    props.productFallbackTextEn,
+  );
 }
 
 function variantText(item: IkasOrderLineItem) {
@@ -162,7 +177,12 @@ function CartLine({
 
       void refreshGlobalCart();
     } catch {
-      setUpdateError(tLocalized("Sepet güncellenemedi. Lütfen tekrar deneyin.", "The cart could not be updated. Please try again."));
+      setUpdateError(text(
+        props.updateItemErrorText,
+        "Sepet güncellenemedi. Lütfen tekrar deneyin.",
+        "The cart could not be updated. Please try again.",
+        props.updateItemErrorTextEn,
+      ));
     } finally {
       setIsUpdating(false);
     }
@@ -183,7 +203,12 @@ function CartLine({
 
       void refreshGlobalCart();
     } catch {
-      setUpdateError(tLocalized("Ürün sepetten kaldırılamadı. Lütfen tekrar deneyin.", "The item could not be removed. Please try again."));
+      setUpdateError(text(
+        props.removeItemErrorText,
+        "Ürün sepetten kaldırılamadı. Lütfen tekrar deneyin.",
+        "The item could not be removed. Please try again.",
+        props.removeItemErrorTextEn,
+      ));
     } finally {
       setIsUpdating(false);
     }
@@ -192,11 +217,11 @@ function CartLine({
   return (
     <article className="tmcart-item">
       <a className="tmcart-item-media" href={productHref(item)}>
-        <span>{itemTitle(item).slice(0, 1)}</span>
+        <span>{itemTitle(item, props).slice(0, 1)}</span>
         {image ? (
           <img
             src={image}
-            alt={itemTitle(item)}
+            alt={itemTitle(item, props)}
             loading="lazy"
             decoding="async"
             data-image-index="0"
@@ -207,22 +232,48 @@ function CartLine({
         ) : null}
       </a>
       <div className="tmcart-item-copy">
-        <a href={productHref(item)}>{itemTitle(item)}</a>
+        <a href={productHref(item)}>{itemTitle(item, props)}</a>
         {detail ? <small>{detail}</small> : null}
         <button
           type="button"
           onClick={remove}
           disabled={isUpdating}
-          aria-label={tLocalized(`${itemTitle(item)} sepetten kaldır`, `Remove ${itemTitle(item)} from cart`)}
+          aria-label={text(
+            props.removeItemAriaLabel,
+            "{product} sepetten kaldır",
+            "Remove {product} from cart",
+            props.removeItemAriaLabelEn,
+          ).replace(/\{product\}/g, itemTitle(item, props))}
         >
-          {text(props.removeText, tLocalized("Kaldır", "Remove"), "Remove")}
+          {text(props.removeText, "Kaldır", "Remove", props.removeTextEn)}
         </button>
         {updateError ? <p className="tmcart-error" role="alert" aria-live="assertive">{updateError}</p> : null}
       </div>
-      <div className="tmcart-qty" aria-label={tLocalized("Adet", "Quantity")}>
-        <span className="tmcart-qty-label">{tLocalized("Adet", "Quantity")}</span>
+      <div
+        className="tmcart-qty"
+        aria-label={text(
+          props.quantityLabelText,
+          "Adet",
+          "Quantity",
+          props.quantityLabelTextEn,
+        )}
+      >
+        <span className="tmcart-qty-label">
+          {text(
+            props.quantityLabelText,
+            "Adet",
+            "Quantity",
+            props.quantityLabelTextEn,
+          )}
+        </span>
         <button
           type="button"
+          aria-label={text(
+            props.decreaseQuantityAriaLabel,
+            "Adedi azalt",
+            "Decrease quantity",
+            props.decreaseQuantityAriaLabelEn,
+          )}
           disabled={isUpdating || item.quantity <= 1}
           onClick={() => updateQuantity(item.quantity - 1)}
         >
@@ -231,6 +282,12 @@ function CartLine({
         <span className="tmcart-qty-value">{item.quantity}</span>
         <button
           type="button"
+          aria-label={text(
+            props.increaseQuantityAriaLabel,
+            "Adedi artır",
+            "Increase quantity",
+            props.increaseQuantityAriaLabelEn,
+          )}
           disabled={isUpdating}
           onClick={() => updateQuantity(item.quantity + 1)}
         >
@@ -375,13 +432,28 @@ export function ThreeMashCartPage(props: Props) {
       refreshState();
 
       if (success && cartStore.cart?.couponCode) {
-        setCouponMessage(tLocalized("İndirim kodu uygulandı.", "Discount code applied."));
+        setCouponMessage(text(
+          props.couponSuccessText,
+          "İndirim kodu uygulandı.",
+          "Discount code applied.",
+          props.couponSuccessTextEn,
+        ));
         setCouponOpen(false);
       } else {
-        setCouponMessage(tLocalized("Geçersiz indirim kodu.", "Invalid discount code."));
+        setCouponMessage(text(
+          props.couponInvalidText,
+          "Geçersiz indirim kodu.",
+          "Invalid discount code.",
+          props.couponInvalidTextEn,
+        ));
       }
     } catch {
-      setCouponMessage(tLocalized("Geçersiz indirim kodu.", "Invalid discount code."));
+      setCouponMessage(text(
+        props.couponInvalidText,
+        "Geçersiz indirim kodu.",
+        "Invalid discount code.",
+        props.couponInvalidTextEn,
+      ));
     } finally {
       setCouponLoading(false);
     }
@@ -404,7 +476,12 @@ export function ThreeMashCartPage(props: Props) {
         setCouponMessage("");
       }
     } catch {
-      setCouponMessage(tLocalized("Promosyon kodu kaldırılamadı.", "Promo code could not be removed."));
+      setCouponMessage(text(
+        props.couponRemoveErrorText,
+        "Promosyon kodu kaldırılamadı.",
+        "Promo code could not be removed.",
+        props.couponRemoveErrorTextEn,
+      ));
     } finally {
       setCouponLoading(false);
     }
@@ -424,9 +501,11 @@ export function ThreeMashCartPage(props: Props) {
       window.location.href = checkoutUrl;
     } catch {
       setCheckoutError(
-        tLocalized(
+        text(
+          props.checkoutErrorText,
           "Ödeme sayfasına yönlendirilemedi, lütfen tekrar deneyin.",
           "Could not open the checkout page. Please try again.",
+          props.checkoutErrorTextEn,
         ),
       );
     } finally {
@@ -447,14 +526,23 @@ export function ThreeMashCartPage(props: Props) {
     >
       <div className="tmcart-wrap">
         <header className="tmcart-head">
-          <h1>{text(props.titleText, tLocalized("Sepetim", "My Cart"), "My Cart")}</h1>
+          {isSectionVisible(props.showCartTitle) ? (
+            <h1>{text(props.titleText, "Sepetim", "My Cart", props.titleTextEn)}</h1>
+          ) : null}
           <p>
             {isLoading
-              ? tLocalized("Sepetiniz yükleniyor...", "Loading your cart...")
-              : tLocalized(
-                `${itemCount} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve adetleri kontrol edin.`,
-                `${itemCount} items in your cart. Check your items and quantities before checking out.`
-              )}
+              ? text(
+                props.loadingText,
+                "Sepetiniz yükleniyor...",
+                "Loading your cart...",
+                props.loadingTextEn,
+              )
+              : text(
+                props.cartDescriptionText,
+                "{count} ürün sepetinizde. Siparişi tamamlamadan önce ürünleri ve adetleri kontrol edin.",
+                "{count} items in your cart. Check your items and quantities before checking out.",
+                props.cartDescriptionTextEn,
+              ).replace(/\{count\}/g, String(itemCount))}
           </p>
         </header>
 
@@ -466,18 +554,33 @@ export function ThreeMashCartPage(props: Props) {
               </div>
             ) : isError ? (
               <div className="tmcart-empty-message tmcart-error-message">
-                <span>{tLocalized("Sepet yüklenemedi.", "The cart could not be loaded.")}</span>
+                <span>{text(
+                  props.cartLoadErrorText,
+                  "Sepet yüklenemedi.",
+                  "The cart could not be loaded.",
+                  props.cartLoadErrorTextEn,
+                )}</span>
                 <button
                   type="button"
                   className="tmcart-empty-button"
                   onClick={() => void refreshGlobalCart()}
                 >
-                  {tLocalized("Tekrar dene", "Try again")}
+                  {text(
+                    props.retryButtonText,
+                    "Tekrar dene",
+                    "Try again",
+                    props.retryButtonTextEn,
+                  )}
                 </button>
               </div>
             ) : isEmpty ? (
               <div className="tmcart-empty-message">
-                {tLocalized("Sepetiniz boş.", "Your cart is empty.")}
+                {text(
+                  props.cartEmptyText,
+                  "Sepetiniz boş.",
+                  "Your cart is empty.",
+                  props.cartEmptyTextEn,
+                )}
               </div>
             ) : (
               items.map((item) => (
@@ -492,42 +595,78 @@ export function ThreeMashCartPage(props: Props) {
           </div>
 
           <aside className="tmcart-summary">
-            <h2>{tLocalized("Sipariş Özeti", "Order Summary")}</h2>
+            <h2>{text(
+              props.summaryTitleText,
+              "Sipariş Özeti",
+              "Order Summary",
+              props.summaryTitleTextEn,
+            )}</h2>
 
             <div className="tmcart-summary-row">
-              <span>{text(props.subtotalText, tLocalized("Ara Toplam", "Subtotal"), "Subtotal")}</span>
+              <span>{text(
+                props.subtotalText,
+                "Ara Toplam",
+                "Subtotal",
+                props.subtotalTextEn,
+              )}</span>
               <strong>{money(hasItems ? cartSubtotal(items) : 0, cart)}</strong>
             </div>
 
             {hasItems && cart?.orderAdjustments?.filter((adjustment) => Number(adjustment.amount || 0) !== 0).map((adjustment) => (
               <div className="tmcart-summary-row" key={`${adjustment.name}-${adjustment.order}`}>
-                <span>{adjustment.name || tLocalized("Düzeltme", "Adjustment")}</span>
+                <span>{adjustment.name || text(
+                  props.adjustmentLabelText,
+                  "Düzeltme",
+                  "Adjustment",
+                  props.adjustmentLabelTextEn,
+                )}</span>
                 <strong>{adjustmentValue(adjustment, cart)}</strong>
               </div>
             ))}
 
             {hasItems && cart?.taxLines?.filter((taxLine) => Number(taxLine.price || 0) !== 0).map((taxLine) => (
               <div className="tmcart-summary-row" key={`${taxLine.rate}-${taxLine.price}`}>
-                <span>{`${tLocalized("Vergi", "Tax")} (${taxLine.rate}%)`}</span>
+                <span>{`${text(
+                  props.taxLabelText,
+                  "Vergi",
+                  "Tax",
+                  props.taxLabelTextEn,
+                )} (${taxLine.rate}%)`}</span>
                 <strong>{money(taxLine.price, cart)}</strong>
               </div>
             ))}
 
             <div className="tmcart-summary-row tmcart-summary-total">
-              <span>{tLocalized("Toplam", "Total")}</span>
+              <span>{text(
+                props.totalLabelText,
+                "Toplam",
+                "Total",
+                props.totalLabelTextEn,
+              )}</span>
               <strong>{money(hasItems ? cart?.totalFinalPrice : 0, cart)}</strong>
             </div>
 
+            {isSectionVisible(props.showCouponCode) ? (
             <div className="tmcart-coupon-slot">
               {hasItems && cart?.couponCode ? (
                 <div className="tmcart-coupon-applied">
                   <span>
-                    <b>{cart.couponCode}</b> {tLocalized("uygulandı", "applied")}
+                    <b>{cart.couponCode}</b> {text(
+                      props.couponAppliedText,
+                      "uygulandı",
+                      "applied",
+                      props.couponAppliedTextEn,
+                    )}
                   </span>
 
                   <button
                     type="button"
-                    aria-label={tLocalized("Promosyon kodunu kaldır", "Remove promo code")}
+                    aria-label={text(
+                      props.couponRemoveAriaLabel,
+                      "Promosyon kodunu kaldır",
+                      "Remove promo code",
+                      props.couponRemoveAriaLabelEn,
+                    )}
                     onClick={() => void deleteCoupon()}
                     disabled={couponLoading}
                   >
@@ -540,7 +679,18 @@ export function ThreeMashCartPage(props: Props) {
                     autoFocus
                     type="text"
                     value={couponCode}
-                    placeholder={tLocalized("Promosyon kodu giriniz", "Enter promo code")}
+                    aria-label={text(
+                      props.couponPlaceholderText,
+                      "Promosyon kodu giriniz",
+                      "Enter promo code",
+                      props.couponPlaceholderTextEn,
+                    )}
+                    placeholder={text(
+                      props.couponPlaceholderText,
+                      "Promosyon kodu giriniz",
+                      "Enter promo code",
+                      props.couponPlaceholderTextEn,
+                    )}
                     onInput={(event) =>
                       setCouponCode(
                         (event.currentTarget as HTMLInputElement).value
@@ -565,7 +715,19 @@ export function ThreeMashCartPage(props: Props) {
                     onClick={() => void applyCoupon()}
                     disabled={couponLoading || !couponCode.trim()}
                   >
-                    {couponLoading ? "..." : tLocalized("KULLAN", "APPLY")}
+                    {couponLoading
+                      ? text(
+                        props.couponLoadingText,
+                        "...",
+                        "...",
+                        props.couponLoadingTextEn,
+                      )
+                      : text(
+                        props.couponApplyText,
+                        "KULLAN",
+                        "APPLY",
+                        props.couponApplyTextEn,
+                      )}
                   </button>
                   {couponMessage ? <p className="tmcart-error" role="alert" aria-live="assertive">{couponMessage}</p> : null}
                 </div>
@@ -576,10 +738,16 @@ export function ThreeMashCartPage(props: Props) {
                   onClick={() => hasItems && setCouponOpen(true)}
                   disabled={!hasItems}
                 >
-                  {tLocalized("Promosyon kodu ekle", "Add promo code")}
+                  {text(
+                    props.couponStartText,
+                    "Promosyon kodu ekle",
+                    "Add promo code",
+                    props.couponStartTextEn,
+                  )}
                 </button>
               )}
             </div>
+            ) : null}
 
             <button
               type="button"
@@ -588,8 +756,18 @@ export function ThreeMashCartPage(props: Props) {
             >
               <span>
                 {hasItems
-                  ? text(props.checkoutButtonText, tLocalized("ALIŞVERİŞİ TAMAMLA", "PROCEED TO CHECKOUT"), "PROCEED TO CHECKOUT")
-                  : text(props.checkoutButtonText, tLocalized("SATIN AL", "CHECKOUT"), "CHECKOUT")}
+                  ? text(
+                    props.checkoutButtonText,
+                    "ALIŞVERİŞİ TAMAMLA",
+                    "PROCEED TO CHECKOUT",
+                    props.checkoutButtonTextEn,
+                  )
+                  : text(
+                    props.emptyCheckoutButtonText,
+                    "ALIŞVERİŞİ TAMAMLA",
+                    "CHECKOUT",
+                    props.emptyCheckoutButtonTextEn,
+                  )}
               </span>
 
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -601,9 +779,16 @@ export function ThreeMashCartPage(props: Props) {
               <p className="tmcart-error" role="alert" aria-live="assertive">{checkoutError}</p>
             ) : null}
 
-            <a href={continueShoppingTarget(props.continueShoppingHref)}>
-              {text(props.continueShoppingText, tLocalized("Alışverişe devam et", "Continue shopping"), "Continue shopping")}
-            </a>
+            {isSectionVisible(props.showContinueShoppingLink) ? (
+              <a href={continueShoppingTarget(props.continueShoppingHref)}>
+                {text(
+                  props.continueShoppingText,
+                  "Alışverişe devam et",
+                  "Continue shopping",
+                  props.continueShoppingTextEn,
+                )}
+              </a>
+            ) : null}
           </aside>
         </div>
       </div>

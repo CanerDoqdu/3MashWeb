@@ -1,8 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProduct } from "@ikas/bp-storefront";
-
 export interface Props {
-  product?: IkasProduct | null;
   sectionIndex?: string;
   sectionLabel?: string;
   titleHtml?: string;
@@ -46,5 +43,47 @@ export interface Props {
   bottomNote?: string;
   ctaText?: string;
   ctaHref?: string;
-  backgroundColor?: string;
+  sectionLabelEn?: string;
+  titleHtmlEn?: string;
+  sideHtmlEn?: string;
+  comparisonCriteriaLabel?: string;
+  comparisonCriteriaLabelEn?: string;
+  positiveStatusLabel?: string;
+  positiveStatusLabelEn?: string;
+  negativeStatusLabel?: string;
+  negativeStatusLabelEn?: string;
+  column1TitleEn?: string;
+  column1SubtitleEn?: string;
+  column1BadgeEn?: string;
+  column2TitleEn?: string;
+  column2SubtitleEn?: string;
+  column2BadgeEn?: string;
+  row1FeatureEn?: string;
+  row1Col1ValueEn?: string;
+  row1Col2ValueEn?: string;
+  showRow1?: boolean;
+  row2FeatureEn?: string;
+  row2Col1ValueEn?: string;
+  row2Col2ValueEn?: string;
+  showRow2?: boolean;
+  row3FeatureEn?: string;
+  row3Col1ValueEn?: string;
+  row3Col2ValueEn?: string;
+  showRow3?: boolean;
+  row4FeatureEn?: string;
+  row4Col1ValueEn?: string;
+  row4Col2ValueEn?: string;
+  showRow4?: boolean;
+  row5FeatureEn?: string;
+  row5Col1ValueEn?: string;
+  row5Col2ValueEn?: string;
+  showRow5?: boolean;
+  row6FeatureEn?: string;
+  row6Col1ValueEn?: string;
+  row6Col2ValueEn?: string;
+  showRow6?: boolean;
+  bottomNoteEn?: string;
+  ctaTextEn?: string;
+  showBottomNote?: boolean;
+  showCta?: boolean;
 }

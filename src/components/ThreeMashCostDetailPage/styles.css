@@ -158,6 +158,10 @@
   align-items: start;
 }
 
+.three-mash-cost-detail-page .cols.single {
+  grid-template-columns: 1fr;
+}
+
 /* calculator */
 .three-mash-cost-detail-page .calc {
   border: 1px solid var(--line);
@@ -359,6 +363,18 @@
 }
 
 .three-mash-cost-detail-page .explain > p b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.three-mash-cost-detail-page .explanation-body > p {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--sub);
+  margin-top: 12px;
+}
+
+.three-mash-cost-detail-page .explanation-body > p b {
   color: var(--ink);
   font-weight: 600;
 }

@@ -1,8 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProduct } from "@ikas/bp-storefront";
-
 export interface Props {
-  product?: IkasProduct | null;
   sectionIndex?: string;
   sectionLabel?: string;
   titleHtml?: string;
@@ -27,5 +24,27 @@ export interface Props {
   ctaDescription?: string;
   ctaButtonText?: string;
   ctaButtonHref?: string;
-  backgroundColor?: string;
+  showStep1?: boolean;
+  showStep2?: boolean;
+  showStep3?: boolean;
+  showStep4?: boolean;
+  showWorkflowCta?: boolean;
+  sectionLabelEn?: string;
+  titleHtmlEn?: string;
+  sideHtmlEn?: string;
+  step1TitleEn?: string;
+  step1DescriptionEn?: string;
+  step1TagEn?: string;
+  step2TitleEn?: string;
+  step2DescriptionEn?: string;
+  step2TagEn?: string;
+  step3TitleEn?: string;
+  step3DescriptionEn?: string;
+  step3TagEn?: string;
+  step4TitleEn?: string;
+  step4DescriptionEn?: string;
+  step4TagEn?: string;
+  ctaTitleEn?: string;
+  ctaDescriptionEn?: string;
+  ctaButtonTextEn?: string;
 }

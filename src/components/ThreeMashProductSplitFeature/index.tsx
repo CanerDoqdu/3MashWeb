@@ -15,54 +15,80 @@ function trimmedText(value: unknown): string {
   return trimmed;
 }
 
+function localizedText(trValue: unknown, enValue: unknown, fallback?: string): string {
+  return (isEnglishLocale() ? trimmedText(enValue) : trimmedText(trValue)) || fallback || "";
+}
+
 function numberValue(value: unknown): number | undefined {
-  if (typeof value === "number" && !Number.isNaN(value)) return value;
+  if (typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= 100) return value;
   if (typeof value === "string" && value.trim()) {
     const num = Number(value.trim());
-    if (!Number.isNaN(num)) return num;
+    if (Number.isFinite(num) && num >= 0 && num <= 100) return num;
   }
   return undefined;
 }
 
 function overrideRatingsData(baseData: ProductDetailTemplateData, props: Props): ProductDetailTemplateData {
   const currentRatings = baseData.ratings;
-  // NOTE: Props ARE fully typed in the Props interface, but TypeScript's type narrowing
-  // after optional chaining sometimes requires explicit any casts for clarity in override chains.
-  const index = trimmedText((props as any).sectionIndex) || currentRatings?.index || "01";
-  const label = trimmedText((props as any).sectionLabel) || currentRatings?.label || tLocalized("KULLANICI DENEYİMİ", "USER EXPERIENCE");
-  const titleHtml = trimmedText((props as any).titleHtml) || currentRatings?.titleHtml || "";
-  const sideHtml = trimmedText((props as any).sideHtml) || currentRatings?.sideHtml || "";
-  const panelTitleHtml = trimmedText((props as any).panelTitleHtml) || currentRatings?.panelTitleHtml || "";
-  const note = trimmedText((props as any).panelNote) || currentRatings?.note || "";
+  // Props are generated from the component schema and consumed directly; product data provides locale fallbacks.
+  const showHeader = props.showSectionHeading !== false;
+  const showChecklist = props.showChecklist !== false;
+  const index = showHeader ? trimmedText(props.sectionIndex) || currentRatings?.index || "01" : "";
+  const label = showHeader
+    ? localizedText(props.sectionLabel, props.sectionLabelEn, currentRatings?.label || tLocalized("KULLANICI DENEYİMİ", "USER EXPERIENCE"))
+    : "";
+  const titleHtml = showHeader
+    ? localizedText(props.titleHtml, props.titleHtmlEn, currentRatings?.titleHtml)
+    : "";
+  const sideHtml = showHeader
+    ? localizedText(props.sideHtml, props.sideHtmlEn, currentRatings?.sideHtml)
+    : "";
+  const panelTitleHtml = localizedText(props.panelTitleHtml, props.panelTitleHtmlEn, currentRatings?.panelTitleHtml);
+  const note = localizedText(props.panelNote, props.panelNoteEn, currentRatings?.note);
+  const baseItems = currentRatings?.items ?? [];
+  const itemInputs = [
+    {
+      visible: props.showItem1 !== false,
+      tr: props.item1DescriptionHtml,
+      en: props.item1DescriptionHtmlEn,
+      percent: props.item1Percent,
+    },
+    {
+      visible: props.showItem2 !== false,
+      tr: props.item2DescriptionHtml,
+      en: props.item2DescriptionHtmlEn,
+      percent: props.item2Percent,
+    },
+    {
+      visible: props.showItem3 !== false,
+      tr: props.item3DescriptionHtml,
+      en: props.item3DescriptionHtmlEn,
+      percent: props.item3Percent,
+    },
+    {
+      visible: props.showItem4 === true,
+      tr: props.item4DescriptionHtml,
+      en: props.item4DescriptionHtmlEn,
+      percent: props.item4Percent,
+    },
+    {
+      visible: props.showItem5 === true,
+      tr: props.item5DescriptionHtml,
+      en: props.item5DescriptionHtmlEn,
+      percent: props.item5Percent,
+    },
+  ];
 
-  const items = currentRatings?.items ? [...currentRatings.items] : [];
-
-  const item1Desc = trimmedText((props as any).item1DescriptionHtml);
-  const item1Pct = numberValue((props as any).item1Percent);
-  if (item1Desc || item1Pct !== undefined) {
-    items[0] = {
-      descriptionHtml: item1Desc || items[0]?.descriptionHtml || "",
-      percent: item1Pct !== undefined ? item1Pct : items[0]?.percent,
-    };
-  }
-
-  const item2Desc = trimmedText((props as any).item2DescriptionHtml);
-  const item2Pct = numberValue((props as any).item2Percent);
-  if (item2Desc || item2Pct !== undefined) {
-    items[1] = {
-      descriptionHtml: item2Desc || items[1]?.descriptionHtml || "",
-      percent: item2Pct !== undefined ? item2Pct : items[1]?.percent,
-    };
-  }
-
-  const item3Desc = trimmedText((props as any).item3DescriptionHtml);
-  const item3Pct = numberValue((props as any).item3Percent);
-  if (item3Desc || item3Pct !== undefined) {
-    items[2] = {
-      descriptionHtml: item3Desc || items[2]?.descriptionHtml || "",
-      percent: item3Pct !== undefined ? item3Pct : items[2]?.percent,
-    };
-  }
+  const items = showChecklist
+    ? itemInputs.flatMap((input, index) => {
+        if (!input.visible) return [];
+        const baseItem = baseItems[index];
+        const descriptionHtml = localizedText(input.tr, input.en, baseItem?.descriptionHtml);
+        if (!descriptionHtml) return [];
+        const percent = numberValue(input.percent) ?? baseItem?.percent;
+        return [{ descriptionHtml, ...(percent !== undefined ? { percent } : {}) }];
+      })
+    : [];
 
   return {
     ...baseData,
@@ -74,14 +100,16 @@ function overrideRatingsData(baseData: ProductDetailTemplateData, props: Props):
       panelTitleHtml,
       note,
       items,
+      showHeader,
+      showChecklist,
     },
   };
 }
 
 export function ThreeMashProductSplitFeature(props: Props) {
   const isStudio = isStudioEnvironment();
-  const sharedData = useSharedProductDetailData(props.product);
-  const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
+  const sharedData = useSharedProductDetailData(props.product, props.productTemplateJson);
+  const fallbackData = props.product ? resolveProductDetailData(props.product, props.productTemplateJson) : null;
   const rawData = sharedData || fallbackData || (isStudio ? makePlaceholderRatings() : null);
 
   if (!rawData) return null;
@@ -89,7 +117,14 @@ export function ThreeMashProductSplitFeature(props: Props) {
   const data = overrideRatingsData(rawData, props);
 
   return (
-    <ProductDetailSectionScope data={data}>
+    <ProductDetailSectionScope
+      data={data}
+      colorOverrides={{
+        backgroundColor: props.backgroundColor,
+        textColor: props.textColor,
+        accentColor: props.accentColor,
+      }}
+    >
       <ProductDetailRatingsSection data={data} />
     </ProductDetailSectionScope>
   );

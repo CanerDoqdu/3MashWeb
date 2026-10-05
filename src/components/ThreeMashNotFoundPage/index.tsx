@@ -1,12 +1,24 @@
 import { Props } from "./types";
-import { localizedHref, tLocalized, tProp } from "../../utils/i18n";
+import {
+  isEnglishLocale,
+  localizedHref,
+  tProp,
+} from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
-
-const defaultBackgroundImage =
-  "https://cdn.myikas.com/images/theme-images/ebbf8195-570a-4650-893b-b460bab2c034/image_1080.webp";
 
 function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
   return tProp(value, fallbackTr, fallbackEn || fallbackTr);
+}
+
+function localizedText(
+  valueTr: string | undefined,
+  valueEn: string | undefined,
+  fallbackTr: string,
+  fallbackEn: string,
+) {
+  return isEnglishLocale()
+    ? text(valueEn, fallbackEn, fallbackEn)
+    : text(valueTr, fallbackTr, fallbackEn);
 }
 
 function numberInRange(
@@ -40,21 +52,33 @@ function themeColor(
 }
 
 export function ThreeMashNotFoundPage(props: Props) {
-  const title = text(
+  const title = localizedText(
     props.titleText,
-    tLocalized("Aradığınız Sayfa Bulunamadı.", "Page Not Found."),
-    "Page Not Found."
+    props.titleTextEn,
+    "Aradığınız Sayfa Bulunamadı.",
+    "Page Not Found.",
   );
+  const description = localizedText(
+    props.descriptionText,
+    props.descriptionTextEn,
+    "Bu bağlantı taşınmış, kaldırılmış veya adres hatalı yazılmış olabilir. Ana sayfaya dönerek 3mash ürün ve içeriklerine yeniden ulaşabilirsiniz.",
+    "This link may have been moved, removed, or mistyped. You can return to the homepage to explore 3mash products and content.",
+  );
+  const buttonText = localizedText(
+    props.buttonText,
+    props.buttonTextEn,
+    "DEVAM",
+    "Continue",
+  );
+  const errorCode = text(props.errorCodeText, "404");
   const style = {
-    "--tm-404-bg-image": `url(${text(props.backgroundImageUrl, defaultBackgroundImage)})`,
+    "--tm-404-background": themeColor(
+      props.backgroundColor,
+      "#0E0E0C",
+      "--tm-theme-dark",
+    ),
+    "--tm-404-code": JSON.stringify(errorCode),
     "--tm-404-min-height": `${numberInRange(props.minHeight, 76, 40, 140)}vh`,
-    "--tm-404-overlay": props.overlayColor || "var(--tm-theme-dark, #0E0E0C)",
-    "--tm-404-overlay-opacity":
-      numberInRange(props.overlayOpacity, 18, 0, 100) / 100,
-    "--tm-404-text": themeColor(props.textColor, "#0E0E0C", "--tm-theme-text", [
-      "#ffffff",
-      "#fff",
-    ]),
     "--tm-404-button-text": themeColor(
       props.buttonTextColor,
       "#0E0E0C",
@@ -73,17 +97,20 @@ export function ThreeMashNotFoundPage(props: Props) {
     <section className="three-mash-not-found-page" style={style}>
       <div className="tm-404-shell">
         <div className="tm-404-panel">
-          <span className="tm-404-kicker">404</span>
+          <span className="tm-404-kicker">{errorCode}</span>
           <h1>{title}</h1>
-          <p>
-            {tLocalized(
-              tLocalized("Bu bağlantı taşınmış, kaldırılmış veya adres hatalı yazılmış olabilir. Ana sayfaya dönerek 3mash ürün ve içeriklerine yeniden ulaşabilirsiniz.", "This link may have been moved, removed, or mistyped. You can return to the homepage to explore 3mash products and content."),
-              "This link may have been moved, removed, or mistyped. You can return to the homepage to explore 3mash products and content."
-            )}
-          </p>
-          <a className="tm-404-link" href={safeNavigationHref(localizedHref(text(props.buttonHref, "/")), "/")}>
-            {text(props.buttonText, tLocalized("Ana sayfaya dön", "Back to home"), "Back to home")}
-          </a>
+          {props.showDescription !== false && <p>{description}</p>}
+          {props.showHomeButton !== false && (
+            <a
+              className="tm-404-link"
+              href={safeNavigationHref(
+                localizedHref(text(props.buttonHref, "/")),
+                "/",
+              )}
+            >
+              {buttonText}
+            </a>
+          )}
         </div>
       </div>
     </section>

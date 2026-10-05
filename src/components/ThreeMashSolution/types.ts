@@ -1,10 +1,8 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProductList } from "@ikas/bp-storefront";
+import type { IkasImage, IkasProduct } from "@ikas/bp-storefront";
 import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
-  /** Geriye dönük uyumluluk için kalır. Bölüm 3 kartları statiktir: MASH P1D, MASH P16L ve CRS Reçineler. */
-  productList: IkasProductList;
   sectionAnchorId?: string;
   indexNumber?: string;
   indexText?: string;
@@ -12,9 +10,6 @@ export interface Props {
   titleEmphasis?: string;
   sideHtml?: string;
   carouselAriaLabel?: string;
-  carouselDurationSeconds?: number;
-  pauseOnHover?: boolean;
-  edgeFadeWidth?: number;
   cardGap?: number;
   productImageWidth?: number;
   productImageHeight?: number;
@@ -40,11 +35,123 @@ export interface Props {
   cardMediaStartColor?: string;
   cardMediaEndColor?: string;
   cardRadius?: number;
-  hoverVideoAutoplayEnabled?: boolean;
   wordStyleEnabled?: boolean;
   styledPhrase?: string;
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
   showBackgroundGlow?: boolean;
+  indexTextEn?: string;
+  titleTextEn?: string;
+  titleEmphasisEn?: string;
+  sideHtmlEn?: string;
+  showSolutionCard1?: boolean;
+  solutionCard1Tag?: string;
+  solutionCard1ImageUrl?: IkasImage | null;
+  solutionCard1ImageAlt?: string;
+  solutionCard1Title?: string;
+  solutionCard1DescriptionHtml?: string;
+  solutionCard1SpecsHtml?: string;
+  solutionCard1CtaText?: string;
+  /** Dahili sayfa yolu veya çapa kullanın. Güvenli olmayan bağlantılar varsayılan bağlantıya döner. */
+  solutionCard1CtaHref?: string;
+  solutionCard1TagEn?: string;
+  solutionCard1ImageAltEn?: string;
+  solutionCard1TitleEn?: string;
+  solutionCard1DescriptionHtmlEn?: string;
+  solutionCard1SpecsHtmlEn?: string;
+  solutionCard1CtaTextEn?: string;
+  showSolutionCard2?: boolean;
+  solutionCard2Tag?: string;
+  solutionCard2ImageUrl?: IkasImage | null;
+  solutionCard2ImageAlt?: string;
+  solutionCard2Title?: string;
+  solutionCard2DescriptionHtml?: string;
+  solutionCard2SpecsHtml?: string;
+  solutionCard2CtaText?: string;
+  /** Dahili sayfa yolu veya çapa kullanın. Güvenli olmayan bağlantılar varsayılan bağlantıya döner. */
+  solutionCard2CtaHref?: string;
+  solutionCard2TagEn?: string;
+  solutionCard2ImageAltEn?: string;
+  solutionCard2TitleEn?: string;
+  solutionCard2DescriptionHtmlEn?: string;
+  solutionCard2SpecsHtmlEn?: string;
+  solutionCard2CtaTextEn?: string;
+  showSolutionCard3?: boolean;
+  solutionCard3Tag?: string;
+  solutionCard3ImageLeftUrl?: IkasImage | null;
+  solutionCard3ImageCenterUrl?: IkasImage | null;
+  solutionCard3ImageRightUrl?: IkasImage | null;
+  solutionCard3ImageLeftAlt?: string;
+  solutionCard3ImageCenterAlt?: string;
+  solutionCard3ImageRightAlt?: string;
+  solutionCard3Title?: string;
+  solutionCard3DescriptionHtml?: string;
+  solutionCard3SpecsHtml?: string;
+  solutionCard3CtaText?: string;
+  /** Dahili sayfa yolu veya çapa kullanın. Güvenli olmayan bağlantılar varsayılan bağlantıya döner. */
+  solutionCard3CtaHref?: string;
+  solutionCard3TagEn?: string;
+  solutionCard3ImageLeftAltEn?: string;
+  solutionCard3ImageCenterAltEn?: string;
+  solutionCard3ImageRightAltEn?: string;
+  solutionCard3TitleEn?: string;
+  solutionCard3DescriptionHtmlEn?: string;
+  solutionCard3SpecsHtmlEn?: string;
+  solutionCard3CtaTextEn?: string;
+  showSolutionCard4?: boolean;
+  solutionCard4Tag?: string;
+  solutionCard4ImageUrl?: IkasImage | null;
+  solutionCard4ImageAlt?: string;
+  solutionCard4Title?: string;
+  solutionCard4DescriptionHtml?: string;
+  solutionCard4SpecsHtml?: string;
+  solutionCard4CtaText?: string;
+  /** Dahili sayfa yolu veya çapa kullanın. Güvenli olmayan bağlantılarda buton gösterilmez. */
+  solutionCard4CtaHref?: string;
+  solutionCard4TagEn?: string;
+  solutionCard4ImageAltEn?: string;
+  solutionCard4TitleEn?: string;
+  solutionCard4DescriptionHtmlEn?: string;
+  solutionCard4SpecsHtmlEn?: string;
+  solutionCard4CtaTextEn?: string;
+  showSolutionCard5?: boolean;
+  solutionCard5Tag?: string;
+  solutionCard5ImageUrl?: IkasImage | null;
+  solutionCard5ImageAlt?: string;
+  solutionCard5Title?: string;
+  solutionCard5DescriptionHtml?: string;
+  solutionCard5SpecsHtml?: string;
+  solutionCard5CtaText?: string;
+  /** Dahili sayfa yolu veya çapa kullanın. Güvenli olmayan bağlantılarda buton gösterilmez. */
+  solutionCard5CtaHref?: string;
+  solutionCard5TagEn?: string;
+  solutionCard5ImageAltEn?: string;
+  solutionCard5TitleEn?: string;
+  solutionCard5DescriptionHtmlEn?: string;
+  solutionCard5SpecsHtmlEn?: string;
+  solutionCard5CtaTextEn?: string;
+  carouselAriaLabelEn?: string;
+  solutionCard1Product?: IkasProduct | null;
+  solutionCard2Product?: IkasProduct | null;
+  solutionCard3Product?: IkasProduct | null;
+  solutionCard4Product?: IkasProduct | null;
+  solutionCard5Product?: IkasProduct | null;
+  showSolutionCard6?: boolean;
+  solutionCard6Tag?: string;
+  solutionCard6ImageUrl?: IkasImage | null;
+  solutionCard6ImageAlt?: string;
+  solutionCard6Title?: string;
+  solutionCard6DescriptionHtml?: string;
+  solutionCard6SpecsHtml?: string;
+  solutionCard6CtaText?: string;
+  /** Dahili sayfa yolu veya çapa kullanın. Güvenli olmayan bağlantılarda buton gösterilmez. */
+  solutionCard6CtaHref?: string;
+  solutionCard6TagEn?: string;
+  solutionCard6ImageAltEn?: string;
+  solutionCard6TitleEn?: string;
+  solutionCard6DescriptionHtmlEn?: string;
+  solutionCard6CtaTextEn?: string;
+  solutionCard6Product?: IkasProduct | null;
+  solutionCard6SpecsHtmlEn?: string;
 }

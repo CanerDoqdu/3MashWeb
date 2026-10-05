@@ -71,4 +71,9 @@ export interface Props {
   showTemplatePreview?: boolean;
   /** CRS Composite kaynak yapısındaki reusable template datası. Boş bırakılırsa ürünün varsayılan şablon datası kullanılır. */
   productTemplateJson?: string;
+  showPhotos?: boolean;
+  showUseCard1?: boolean;
+  showUseCard2?: boolean;
+  showDevices?: boolean;
+  showEcosystem?: boolean;
 }

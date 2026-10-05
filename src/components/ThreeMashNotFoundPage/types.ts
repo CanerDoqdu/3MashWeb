@@ -3,12 +3,16 @@ export interface Props {
   titleText?: string;
   buttonText?: string;
   buttonHref?: string;
-  backgroundImageUrl?: string;
+  /** 40–140 vh aralığında uygulanır. */
   minHeight?: number;
-  overlayColor?: string;
-  overlayOpacity?: number;
-  textColor?: string;
   buttonTextColor?: string;
   buttonBackgroundColor?: string;
   backgroundColor?: string;
+  errorCodeText?: string;
+  descriptionText?: string;
+  titleTextEn?: string;
+  descriptionTextEn?: string;
+  buttonTextEn?: string;
+  showDescription?: boolean;
+  showHomeButton?: boolean;
 }

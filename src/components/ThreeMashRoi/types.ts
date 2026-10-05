@@ -19,4 +19,11 @@ export interface Props {
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
   showBackgroundGlow?: boolean;
+  eyebrowTextEn?: string;
+  valueTextEn?: string;
+  descriptionHtmlEn?: string;
+  ctaTextEn?: string;
+  showReturnMetric?: boolean;
+  showDescription?: boolean;
+  showCta?: boolean;
 }

@@ -24,6 +24,9 @@
  */
 
 
+/* Ensure the actual brand fonts load even if the JS loader was not imported. */
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
 /* Metric-matched fallback font to eliminate CLS layout shift on headings */
 @font-face {
   font-family: "Space Grotesk Fallback";

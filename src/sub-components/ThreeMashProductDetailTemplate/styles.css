@@ -600,10 +600,14 @@
   font-size: 12.1px;
 }
 
-.tmpdt-trust svg {
+.tmpdt-trust svg,
+.tmpdt-trust img {
   width: 16px;
   height: 16px;
   flex: 0 0 auto;
+}
+
+.tmpdt-trust svg {
   color: var(--tmpdt-lime-ink);
 }
 
@@ -855,6 +859,10 @@
   gap: 48px;
   margin-top: 18px;
   padding: 44px 48px;
+}
+
+.tmpdt-flag-no-table {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .tmpdt-flag-tag {

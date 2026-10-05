@@ -2,8 +2,9 @@
 .three-mash-problem {
   position: relative;
   width: 100%;
-  margin: 0;
-  padding: 104px 0;
+  min-height: auto;
+    margin: 0;
+    padding: 104px 0;
   background: var(--tmproblem-bg);
   color: var(--tmproblem-text);
   font-family: var(--tm-theme-font-body, "Inter", sans-serif);
@@ -18,7 +19,8 @@
 
 .three-mash-problem::before,
 .three-mash-problem::after {
-  display: none;
+  display: block;
+  opacity: var(--tmproblem-bg-glow-opacity);
 }
 
 .three-mash-problem::before {
@@ -274,7 +276,7 @@
 
 @media (max-width: 960px) {
   .three-mash-problem {
-    padding: 78px 0;
+     padding: 78px 0;
   }
 
   .three-mash-problem::before {
@@ -316,7 +318,10 @@
 
 @media (max-width: 620px) {
   .three-mash-problem {
-    padding: 62px 0;
+     width: 100%;
+     min-height: auto;
+     margin: 0;
+     padding: 62px 0;
   }
 
   .tmproblem-wrap {

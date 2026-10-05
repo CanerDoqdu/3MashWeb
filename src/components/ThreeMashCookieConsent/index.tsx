@@ -487,7 +487,7 @@ export function ThreeMashCookieConsent() {
                     className="tm-cookie-input-switch"
                     checked={preferences.functional}
                     onChange={(e) => setPreferences((current) => ({ ...current, functional: (e.target as HTMLInputElement).checked }))}
-                    aria-label="İşlevsel Çerezler"
+                    aria-label={tLocalized("İşlevsel Çerezler", "Functional Cookies")}
                   />
                   <span className="tm-cookie-switch-ui" />
                 </label>

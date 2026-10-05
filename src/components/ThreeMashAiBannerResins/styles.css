@@ -1,0 +1,106 @@
+/* ThreeMashAiBannerResins — ThreeMashAiBanner stillerini miras alır */
+
+section.three-mash-ai-banner {
+  width: 100% !important;
+  background-color: var(--tm-ai-background, #0E0E0C) !important;
+  background: var(--tm-ai-background, #0E0E0C) !important;
+  border-top: 1px solid var(--tm-ai-border-top, #26261F) !important;
+  border-bottom: 1px solid var(--tm-ai-border-bottom, #1A1A16) !important;
+  padding: 14px 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  display: block !important;
+}
+
+section.three-mash-ai-banner .three-mash-ai-banner__container {
+  width: min(100%, 1240px) !important;
+  margin: 0 auto !important;
+  padding: 0 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  box-sizing: border-box !important;
+}
+
+section.three-mash-ai-banner .three-mash-ai-banner__badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: "Space Grotesk", sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  color: var(--tm-ai-badge-text, #FFFFFF) !important;
+  background: var(--tm-ai-badge-background, #1C1C17) !important;
+  border: 1px solid var(--tm-ai-badge-border, #3A3A30) !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  white-space: nowrap !important;
+  user-select: none !important;
+  flex-shrink: 0 !important;
+  line-height: 1.2 !important;
+}
+
+section.three-mash-ai-banner .three-mash-ai-banner__text {
+  font-family: "Inter", sans-serif !important;
+  font-size: 13.5px !important;
+  color: var(--tm-ai-body-text, #A1A19A) !important;
+  margin: 0 !important;
+  line-height: 1.5 !important;
+  letter-spacing: -0.01em !important;
+}
+
+section.three-mash-ai-banner .three-mash-ai-banner__link {
+  color: var(--tm-ai-link-text, #FFFFFF) !important;
+  text-decoration: underline !important;
+  text-decoration-color: color-mix(in srgb, var(--tm-ai-link-text, #FFFFFF) 40%, transparent) !important;
+  text-underline-offset: 4px !important;
+  font-weight: 500 !important;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease !important;
+}
+
+section.three-mash-ai-banner .three-mash-ai-banner__link:hover {
+  color: var(--tm-ai-link-hover, #C2F040) !important;
+  text-decoration-color: var(--tm-ai-link-hover, #C2F040) !important;
+}
+
+@media (max-width: 960px) {
+  section.three-mash-ai-banner {
+    padding: 12px 0 !important;
+  }
+  section.three-mash-ai-banner .three-mash-ai-banner__container {
+    padding: 0 24px !important;
+    gap: 12px !important;
+  }
+  section.three-mash-ai-banner .three-mash-ai-banner__text {
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  section.three-mash-ai-banner {
+    padding: 12px 0 !important;
+  }
+  section.three-mash-ai-banner .three-mash-ai-banner__container {
+    padding: 0 20px !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+  }
+  section.three-mash-ai-banner .three-mash-ai-banner__badge {
+    font-size: 10.5px !important;
+    padding: 3px 8px !important;
+  }
+  section.three-mash-ai-banner .three-mash-ai-banner__text {
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+  }
+}
+
+@media (max-width: 400px) {
+  section.three-mash-ai-banner .three-mash-ai-banner__container {
+    padding: 0 16px !important;
+  }
+  section.three-mash-ai-banner .three-mash-ai-banner__text {
+    font-size: 12px !important;
+  }
+}

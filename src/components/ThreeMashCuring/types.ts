@@ -3,9 +3,9 @@ import type { IkasProduct, IkasImage } from "@ikas/bp-storefront";
 import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
-  /** İlk Bölüm 4 ürün kartı için belirli bir ikas ürünü seçin. Boşsa manuel/sabit kart görünür kalır. */
+  /** Ürün seçildiğinde kartın ana verileri canlı ikas ürününden alınır. Boş bırakılırsa bu kart grubundaki manuel metinler ve görsel kullanılır. */
   curingProduct1Product?: IkasProduct | null;
-  /** İkinci Bölüm 4 ürün kartı için belirli bir ikas ürünü seçin. Boşsa manuel/sabit kart görünür kalır. */
+  /** Ürün seçildiğinde kartın ana verileri canlı ikas ürününden alınır. Boş bırakılırsa bu kart grubundaki manuel metinler ve görsel kullanılır. */
   curingProduct2Product?: IkasProduct | null;
   sectionAnchorId?: string;
   indexNumber?: string;
@@ -25,7 +25,7 @@ export interface Props {
   curingProduct1Tag?: string;
   curingProduct1Title?: string;
   curingProduct1DescriptionHtml?: string;
-  /** Yedek ürün görseli yükleyin. Boşsa paketli ürün görseli kullanılır. */
+  /** Canlı ürün görseli yoksa bu görsel kullanılır; ürün seçilmemişse paketli görselin yerine geçer. */
   curingProduct1ImageUrl?: IkasImage | null;
   curingProduct1ImageAlt?: string;
   curingProduct1Spec1Label?: string;
@@ -37,7 +37,7 @@ export interface Props {
   curingProduct2Tag?: string;
   curingProduct2Title?: string;
   curingProduct2DescriptionHtml?: string;
-  /** Yedek ürün görseli yükleyin. Boşsa paketli ürün görseli kullanılır. */
+  /** Canlı ürün görseli yoksa bu görsel kullanılır; ürün seçilmemişse paketli görselin yerine geçer. */
   curingProduct2ImageUrl?: IkasImage | null;
   curingProduct2ImageAlt?: string;
   curingProduct2Spec1Label?: string;
@@ -68,11 +68,9 @@ export interface Props {
   mutedTextColor?: string;
   lineColor?: string;
   panelColor?: string;
-  darkColor?: string;
   accentColor?: string;
   accentTextColor?: string;
   accentSoftColor?: string;
-  dangerColor?: string;
   reasonCardBackgroundColor?: string;
   productMediaStartColor?: string;
   productMediaEndColor?: string;
@@ -83,5 +81,54 @@ export interface Props {
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
-  showBackgroundGlow?: boolean;
+  indexTextEn?: string;
+  titleTextEn?: string;
+  titleEmphasisEn?: string;
+  sideHtmlEn?: string;
+  reason1EyebrowEn?: string;
+  reason1TitleEn?: string;
+  reason1DescriptionHtmlEn?: string;
+  reason2EyebrowEn?: string;
+  reason2TitleEn?: string;
+  reason2DescriptionHtmlEn?: string;
+  reason3EyebrowEn?: string;
+  reason3TitleEn?: string;
+  reason3DescriptionHtmlEn?: string;
+  curingProduct1TagEn?: string;
+  curingProduct1TitleEn?: string;
+  curingProduct1DescriptionHtmlEn?: string;
+  curingProduct1ImageAltEn?: string;
+  curingProduct1Spec1LabelEn?: string;
+  curingProduct1Spec1ValueEn?: string;
+  curingProduct1Spec2LabelEn?: string;
+  curingProduct1Spec2ValueEn?: string;
+  curingProduct1CtaTextEn?: string;
+  curingProduct2TagEn?: string;
+  curingProduct2TitleEn?: string;
+  curingProduct2DescriptionHtmlEn?: string;
+  curingProduct2ImageAltEn?: string;
+  curingProduct2Spec1LabelEn?: string;
+  curingProduct2Spec1ValueEn?: string;
+  curingProduct2Spec2LabelEn?: string;
+  curingProduct2Spec2ValueEn?: string;
+  curingProduct2CtaTextEn?: string;
+  readMoreTextEn?: string;
+  readMoreLink1TextEn?: string;
+  readMoreLink2TextEn?: string;
+  dynamicPriceLabel?: string;
+  dynamicListPriceLabel?: string;
+  dynamicBrandLabel?: string;
+  dynamicCategoryLabel?: string;
+  dynamicPriceLabelEn?: string;
+  dynamicListPriceLabelEn?: string;
+  dynamicBrandLabelEn?: string;
+  dynamicCategoryLabelEn?: string;
+  showReason1?: boolean;
+  showReason2?: boolean;
+  showReason3?: boolean;
+  showProduct1?: boolean;
+  showProduct2?: boolean;
+  showReadMore?: boolean;
+  showReadMoreLink1?: boolean;
+  showReadMoreLink2?: boolean;
 }

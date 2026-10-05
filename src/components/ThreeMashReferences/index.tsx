@@ -1,4 +1,5 @@
 import { Props } from "./types";
+import { getDefaultSrc } from "@ikas/bp-storefront";
 import crsCompositeSararmaImage from "../../assets/crs-composite-sararma-data";
 import { crsModelBottleImage } from "../../assets/crs-model-data";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
@@ -17,7 +18,12 @@ import trustLogo2 from "../../assets/trust-logo-2-data";
 import trustLogo3 from "../../assets/trust-logo-3-data";
 import trustLogo4 from "../../assets/trust-logo-4-data";
 import trustLogo5 from "../../assets/trust-logo-5-data";
-import { tLocalized } from "../../utils/i18n";
+import { isEnglishLocale, tLocalized } from "../../utils/i18n";
+import ThreeMashReferencesLead from "../../sub-components/ThreeMashReferencesLead";
+import ThreeMashReferenceWall from "../../sub-components/ThreeMashReferenceWall";
+import ThreeMashReferencesCaseStudy from "../../sub-components/ThreeMashReferencesCaseStudy";
+import ThreeMashReferencesPartners from "../../sub-components/ThreeMashReferencesPartners";
+import ThreeMashReferencesWorkflow from "../../sub-components/ThreeMashReferencesWorkflow";
 
 function getReferenceData() {
   const defaultDescription = tLocalized(
@@ -211,6 +217,30 @@ function text(value: string | undefined, fallback: string) {
   return clean ? clean : fallback;
 }
 
+function localizedText(
+  value: string | undefined,
+  valueEn: string | undefined,
+  fallback: string,
+) {
+  return text(isEnglishLocale() ? valueEn : value, fallback);
+}
+
+function imageSource(
+  image: Props["trustLogo1ImageUrl"],
+  fallback?: string,
+) {
+  return (image ? getDefaultSrc(image) : "") || fallback || "";
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function numberValue(value: number | undefined, fallback: number) {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
 }
@@ -233,47 +263,282 @@ function safeHref(value: string | undefined, fallback: string) {
   return safeNavigationHref(value, fallback);
 }
 
-function isExternalHref(href: string) {
-  return /^https?:\/\//i.test(href);
-}
-
-function ActionLink({
-  href,
-  children,
-  variant,
-}: {
-  href: string;
-  children: string;
-  variant: "primary" | "secondary";
-}) {
-  return (
-    <a
-      className={`tmref-action tmref-action-${variant}`}
-      href={href}
-      target={isExternalHref(href) ? "_blank" : undefined}
-      rel={isExternalHref(href) ? "noopener noreferrer" : undefined}
-    >
-      {children}
-    </a>
-  );
-}
-
 export function ThreeMashReferences(props: Props) {
-  const {
-    defaultDescription,
-    testimonials,
-    referenceEntries,
-    proofStats,
-    proofCategories,
-    partnerCards,
-    workflowCards,
-    storyPoints,
-  } = getReferenceData();
+  const referenceData = getReferenceData();
+  const referenceProps = [
+    {
+      type: props.reference1TypeText, typeEn: props.reference1TypeTextEn,
+      quote: props.reference1QuoteHtml, quoteEn: props.reference1QuoteHtmlEn,
+      name: props.reference1NameText, nameEn: props.reference1NameTextEn,
+      details: props.reference1DetailsHtml, detailsEn: props.reference1DetailsHtmlEn,
+      image: props.reference1ImageUrl, show: props.showReference1,
+    },
+    {
+      type: props.reference2TypeText, typeEn: props.reference2TypeTextEn,
+      quote: props.reference2QuoteHtml, quoteEn: props.reference2QuoteHtmlEn,
+      name: props.reference2NameText, nameEn: props.reference2NameTextEn,
+      details: props.reference2DetailsHtml, detailsEn: props.reference2DetailsHtmlEn,
+      image: props.reference2ImageUrl, show: props.showReference2,
+    },
+    {
+      type: props.reference3TypeText, typeEn: props.reference3TypeTextEn,
+      quote: props.reference3QuoteHtml, quoteEn: props.reference3QuoteHtmlEn,
+      name: props.reference3NameText, nameEn: props.reference3NameTextEn,
+      details: props.reference3DetailsHtml, detailsEn: props.reference3DetailsHtmlEn,
+      image: props.reference3ImageUrl, show: props.showReference3,
+    },
+    {
+      type: props.reference4TypeText, typeEn: props.reference4TypeTextEn,
+      quote: props.reference4QuoteHtml, quoteEn: props.reference4QuoteHtmlEn,
+      name: props.reference4NameText, nameEn: props.reference4NameTextEn,
+      details: props.reference4DetailsHtml, detailsEn: props.reference4DetailsHtmlEn,
+      image: props.reference4ImageUrl, show: props.showReference4,
+    },
+    {
+      type: props.reference5TypeText, typeEn: props.reference5TypeTextEn,
+      quote: props.reference5QuoteHtml, quoteEn: props.reference5QuoteHtmlEn,
+      name: props.reference5NameText, nameEn: props.reference5NameTextEn,
+      details: props.reference5DetailsHtml, detailsEn: props.reference5DetailsHtmlEn,
+      image: props.reference5ImageUrl, show: props.showReference5,
+    },
+    {
+      type: props.reference6TypeText, typeEn: props.reference6TypeTextEn,
+      quote: props.reference6QuoteHtml, quoteEn: props.reference6QuoteHtmlEn,
+      name: props.reference6NameText, nameEn: props.reference6NameTextEn,
+      details: props.reference6DetailsHtml, detailsEn: props.reference6DetailsHtmlEn,
+      image: props.reference6ImageUrl, show: props.showReference6,
+    },
+    {
+      type: props.reference7TypeText, typeEn: props.reference7TypeTextEn,
+      quote: props.reference7QuoteHtml, quoteEn: props.reference7QuoteHtmlEn,
+      name: props.reference7NameText, nameEn: props.reference7NameTextEn,
+      details: props.reference7DetailsHtml, detailsEn: props.reference7DetailsHtmlEn,
+      image: props.reference7ImageUrl, show: props.showReference7,
+    },
+    {
+      type: props.reference8TypeText, typeEn: props.reference8TypeTextEn,
+      quote: props.reference8QuoteHtml, quoteEn: props.reference8QuoteHtmlEn,
+      name: props.reference8NameText, nameEn: props.reference8NameTextEn,
+      details: props.reference8DetailsHtml, detailsEn: props.reference8DetailsHtmlEn,
+      image: props.reference8ImageUrl, show: props.showReference8,
+    },
+    {
+      type: props.reference9TypeText, typeEn: props.reference9TypeTextEn,
+      quote: props.reference9QuoteHtml, quoteEn: props.reference9QuoteHtmlEn,
+      name: props.reference9NameText, nameEn: props.reference9NameTextEn,
+      details: props.reference9DetailsHtml, detailsEn: props.reference9DetailsHtmlEn,
+      image: props.reference9ImageUrl, show: props.showReference9,
+    },
+    {
+      type: props.reference10TypeText, typeEn: props.reference10TypeTextEn,
+      quote: props.reference10QuoteHtml, quoteEn: props.reference10QuoteHtmlEn,
+      name: props.reference10NameText, nameEn: props.reference10NameTextEn,
+      details: props.reference10DetailsHtml, detailsEn: props.reference10DetailsHtmlEn,
+      image: props.reference10ImageUrl, show: props.showReference10,
+    },
+    {
+      type: props.reference11TypeText, typeEn: props.reference11TypeTextEn,
+      quote: props.reference11QuoteHtml, quoteEn: props.reference11QuoteHtmlEn,
+      name: props.reference11NameText, nameEn: props.reference11NameTextEn,
+      details: props.reference11DetailsHtml, detailsEn: props.reference11DetailsHtmlEn,
+      image: props.reference11ImageUrl, show: props.showReference11,
+    },
+  ];
+  const referenceEntries = referenceProps.flatMap((item, index) => {
+    const fallback = referenceData.referenceEntries[index];
+    const isNewSlot = index >= referenceData.referenceEntries.length;
+    const isVisible = isNewSlot ? item.show === true : item.show !== false;
+    if (!isVisible) return [];
+
+    const name = localizedText(
+      item.name,
+      item.nameEn,
+      fallback?.name ?? tLocalized("Yeni Referans", "New Reference"),
+    );
+    const quote = localizedText(
+      item.quote,
+      item.quoteEn,
+      fallback?.quote ?? tLocalized("Yeni referans metnini buraya ekleyin.", "Add the new reference text here."),
+    );
+    if (isNewSlot && (!name.trim() || !quote.trim())) return [];
+
+    const detailsFallback = fallback
+      ? `<span>${escapeHtml(fallback.role)}</span><small>${escapeHtml(fallback.meta)}</small>`
+      : tLocalized(
+          "<span>Kuruluş / görev</span><small>Referans bilgisi</small>",
+          "<span>Organization / role</span><small>Reference details</small>",
+        );
+    const detailsHtml = localizedText(item.details, item.detailsEn, detailsFallback);
+
+    return [{
+      type: localizedText(item.type, item.typeEn, fallback?.type ?? "User Review"),
+      quote,
+      name,
+      detailsHtml: sanitizeHtml(detailsHtml),
+      image: imageSource(
+        item.image,
+        fallback && "image" in fallback ? fallback.image : undefined,
+      ),
+      featured: index === 0,
+    }];
+  });
+  const proofCategories = [
+    localizedText(props.proofCategory1, props.proofCategory1En, referenceData.proofCategories[0]),
+    localizedText(props.proofCategory2, props.proofCategory2En, referenceData.proofCategories[1]),
+    localizedText(props.proofCategory3, props.proofCategory3En, referenceData.proofCategories[2]),
+    localizedText(props.proofCategory4, props.proofCategory4En, referenceData.proofCategories[3]),
+  ];
+  const proofStats = [
+    {
+      value: text(props.proofMetric1Value, "580+"),
+      label: localizedText(props.proofMetric1Label, props.proofMetric1LabelEn, referenceData.proofStats[0].label),
+    },
+    {
+      value: text(props.proofMetric2Value, String(referenceData.referenceEntries.length)),
+      label: localizedText(props.proofMetric2Label, props.proofMetric2LabelEn, referenceData.proofStats[1].label),
+    },
+    {
+      value: text(props.proofMetric3Value, "A-Z"),
+      label: localizedText(props.proofMetric3Label, props.proofMetric3LabelEn, referenceData.proofStats[2].label),
+    },
+  ];
+  const partnerDefaults = referenceData.partnerCards;
+  const partnerCards = [
+    ...partnerDefaults.map((item, index) => {
+      const number = index + 1;
+      const isFirst = number === 1;
+      return {
+        name: localizedText(
+          isFirst ? props.partner1NameText : props.partner2NameText,
+          isFirst ? props.partner1NameTextEn : props.partner2NameTextEn,
+          item.name,
+        ),
+        title: localizedText(
+          isFirst ? props.partner1TitleText : props.partner2TitleText,
+          isFirst ? props.partner1TitleTextEn : props.partner2TitleTextEn,
+          item.title,
+        ),
+        text: localizedText(
+          isFirst ? props.partner1DescriptionHtml : props.partner2DescriptionHtml,
+          isFirst ? props.partner1DescriptionHtmlEn : props.partner2DescriptionHtmlEn,
+          item.text,
+        ),
+        image: imageSource(
+          isFirst ? props.partner1ImageUrl : props.partner2ImageUrl,
+          item.image,
+        ),
+        show: isFirst ? props.showPartner1 : props.showPartner2,
+      };
+    }),
+    ...(props.showPartner3 === true &&
+    props.partner3ImageUrl &&
+    imageSource(props.partner3ImageUrl)
+      ? [{
+          name: localizedText(
+            props.partner3NameText,
+            props.partner3NameTextEn,
+            tLocalized("Yeni Çözüm Ortağı", "New Solution Partner"),
+          ),
+          title: localizedText(
+            props.partner3TitleText,
+            props.partner3TitleTextEn,
+            tLocalized("Yeni iş ortağı başlığı", "New partner headline"),
+          ),
+          text: localizedText(
+            props.partner3DescriptionHtml,
+            props.partner3DescriptionHtmlEn,
+            tLocalized(
+              "İş ortağınızı ve sunduğu değeri buraya tanıtın.",
+              "Introduce the partner and the value they provide here.",
+            ),
+          ),
+          image: imageSource(props.partner3ImageUrl),
+          show: true,
+        }]
+      : []),
+  ].filter((item) => item.show !== false);
+  const workflowDefaults = referenceData.workflowCards;
+  const workflowCards = [
+    ...workflowDefaults.map((item, index) => {
+      const number = index + 1;
+      return {
+        title: localizedText(
+          number === 1 ? props.workflow1TitleText : number === 2 ? props.workflow2TitleText : props.workflow3TitleText,
+          number === 1 ? props.workflow1TitleTextEn : number === 2 ? props.workflow2TitleTextEn : props.workflow3TitleTextEn,
+          item.title,
+        ),
+        text: localizedText(
+          number === 1 ? props.workflow1DescriptionHtml : number === 2 ? props.workflow2DescriptionHtml : props.workflow3DescriptionHtml,
+          number === 1 ? props.workflow1DescriptionHtmlEn : number === 2 ? props.workflow2DescriptionHtmlEn : props.workflow3DescriptionHtmlEn,
+          item.text,
+        ),
+        image: imageSource(
+          number === 1 ? props.workflow1ImageUrl : number === 2 ? props.workflow2ImageUrl : props.workflow3ImageUrl,
+          item.image,
+        ),
+        show: number === 1 ? props.showWorkflowCard1 : number === 2 ? props.showWorkflowCard2 : props.showWorkflowCard3,
+      };
+    }),
+    ...(props.showWorkflowCard4 === true &&
+    props.workflow4ImageUrl &&
+    imageSource(props.workflow4ImageUrl)
+      ? [{
+          title: localizedText(
+            props.workflow4TitleText,
+            props.workflow4TitleTextEn,
+            tLocalized("Yeni İş Akışı Adımı", "New Workflow Step"),
+          ),
+          text: localizedText(
+            props.workflow4DescriptionHtml,
+            props.workflow4DescriptionHtmlEn,
+            tLocalized("Yeni üretim aşamasını açıklayın.", "Describe the new production step."),
+          ),
+          image: imageSource(props.workflow4ImageUrl),
+          show: true,
+        }]
+      : []),
+  ].filter((item) => item.show !== false);
+  const storyPointConfigs = [
+    { value: props.storyPoint1Text, valueEn: props.storyPoint1TextEn, show: props.showStoryPoint1 },
+    { value: props.storyPoint2Text, valueEn: props.storyPoint2TextEn, show: props.showStoryPoint2 },
+    { value: props.storyPoint3Text, valueEn: props.storyPoint3TextEn, show: props.showStoryPoint3 },
+    { value: props.storyPoint4Text, valueEn: props.storyPoint4TextEn, show: props.showStoryPoint4 },
+    { value: props.storyPoint5Text, valueEn: props.storyPoint5TextEn, show: props.showStoryPoint5 },
+  ];
+  const storyPoints = storyPointConfigs.flatMap((item, index) => {
+    const fallback = referenceData.storyPoints[index];
+    const isNewSlot = index >= referenceData.storyPoints.length;
+    if (isNewSlot ? item.show !== true : item.show === false) return [];
+    const value = localizedText(
+      item.value,
+      item.valueEn,
+      fallback ?? tLocalized("Yeni vaka bilgisini buraya ekleyin.", "Add a new case detail here."),
+    );
+    return value.trim() ? [value] : [];
+  });
+  const logos = [
+    imageSource(props.trustLogo1ImageUrl, trustLogo1),
+    imageSource(props.trustLogo2ImageUrl, trustLogo2),
+    imageSource(props.trustLogo3ImageUrl, trustLogo3),
+    imageSource(props.trustLogo4ImageUrl, trustLogo4),
+    imageSource(props.trustLogo5ImageUrl, trustLogo5),
+  ];
+  const defaultDescription = referenceData.defaultDescription;
   const maxWidth = numberValue(props.maxWidth, 1220);
   const paddingTop = numberValue(props.paddingTop, 84);
   const paddingBottom = numberValue(props.paddingBottom, 92);
   const primaryHref = safeHref(props.primaryButtonHref, "#referanslar-vaka");
   const secondaryHref = safeHref(props.secondaryButtonHref, "#referanslar-isleyis");
+  const primaryButtonText = localizedText(
+    props.primaryButtonText,
+    props.primaryButtonTextEn,
+    tLocalized("Başarı hikayesini gör", "View success story"),
+  );
+  const secondaryButtonText = localizedText(
+    props.secondaryButtonText,
+    props.secondaryButtonTextEn,
+    tLocalized("Ekosistemi incele", "Explore ecosystem"),
+  );
 
   const rootStyle = {
     "--tm-ref-bg": colorValue(
@@ -296,6 +561,180 @@ export function ThreeMashReferences(props: Props) {
     "--tm-ref-pt": `${paddingTop}px`,
     "--tm-ref-pb": `${paddingBottom}px`,
   } as Record<string, string>;
+  const leadContent = {
+    eyebrowHtml: richHtml(
+      localizedText(
+        props.eyebrowText,
+        props.eyebrowTextEn,
+        tLocalized("Referanslar ve başarı hikayeleri", "References and success stories"),
+      ),
+      "",
+    ).__html,
+    titleHtml: richHtml(
+      localizedText(
+        props.titleText,
+        props.titleTextEn,
+        tLocalized("Dijital üretimde güveni <em>gerçek işlerle</em> kuruyoruz.", "We build trust in digital production with <em>real results</em>."),
+      ),
+      "",
+    ).__html,
+    descriptionHtml: richHtml(
+      localizedText(props.descriptionHtml, props.descriptionHtmlEn, defaultDescription),
+      defaultDescription,
+    ).__html,
+    showActions: props.showActions !== false,
+    actionsAriaLabel: localizedText(
+      props.actionsAriaLabel,
+      props.actionsAriaLabelEn,
+      tLocalized("Referanslar aksiyonları", "References actions"),
+    ),
+    showPrimaryButton: props.showPrimaryButton !== false,
+    primaryHref,
+    primaryButtonText,
+    showSecondaryButton: props.showSecondaryButton !== false,
+    secondaryHref,
+    secondaryButtonText,
+    showProofSummary: props.showProofSummary !== false,
+    proofAriaLabel: localizedText(
+      props.proofAriaLabel,
+      props.proofAriaLabelEn,
+      tLocalized("3MASH referans özeti", "3MASH reference summary"),
+    ),
+    proofEyebrow: localizedText(
+      props.proofEyebrow,
+      props.proofEyebrowEn,
+      tLocalized("Referans havuzu", "Reference Pool"),
+    ),
+    proofTitle: localizedText(
+      props.proofTitle,
+      props.proofTitleEn,
+      tLocalized("Kliniklerden laboratuvarlara uzanan saha kaydı.", "Field records spanning clinics to laboratories."),
+    ),
+    proofDescription: localizedText(
+      props.proofDescription,
+      props.proofDescriptionEn,
+      tLocalized(
+        "Yorumlar, klinik vakalar, iş ortakları ve üretim paylaşımları aynı sayfada tek bir güven mimarisi olarak sunulur.",
+        "Reviews, clinical cases, partnerships, and production shares presented as a single architecture of trust.",
+      ),
+    ),
+    proofCategories,
+    proofStats,
+    showTrustLogos: props.showTrustLogos !== false,
+    logosAriaLabel: localizedText(
+      props.logosAriaLabel,
+      props.logosAriaLabelEn,
+      tLocalized("3MASH güven logoları", "3MASH trust logos"),
+    ),
+    logos,
+  };
+  const referenceWallContent = {
+    visible: props.showReferenceWall !== false,
+    ariaLabel: localizedText(
+      props.referencesAriaLabel,
+      props.referencesAriaLabelEn,
+      tLocalized("3MASH referans yorumları", "3MASH reference reviews"),
+    ),
+    entries: referenceEntries.map((item) => ({
+      type: item.type,
+      quoteHtml: richHtml(item.quote, "").__html,
+      name: item.name,
+      detailsHtml: sanitizeHtml(
+        `<strong>${escapeHtml(item.name)}</strong>${item.detailsHtml}`,
+      ),
+      image: item.image,
+      featured: item.featured,
+    })),
+  };
+  const caseStudyContent = {
+    visible: props.showCaseStudy !== false,
+    kicker: localizedText(
+      props.caseKicker,
+      props.caseKickerEn,
+      tLocalized("Klinik başarı hikayesi", "Clinical Success Story"),
+    ),
+    title: localizedText(
+      props.caseTitle,
+      props.caseTitleEn,
+      tLocalized("Dr. Barbaros Baran ile All-on-Six geçici restorasyon.", "All-on-Six temporary restoration with Dr. Barbaros Baran."),
+    ),
+    descriptionHtml: richHtml(
+      localizedText(
+        props.caseDescription,
+        props.caseDescriptionEn,
+        tLocalized(
+          "CRS Composite Resin ile tamamen dijital olarak üretilen geçici restorasyon; hafif yapı, kontrollü üretim süreci ve klinik adaptasyon odağıyla 3MASH ekosisteminin sahadaki karşılığını gösterir.",
+          "The provisional restoration produced entirely digitally with CRS Composite Resin demonstrates the field value of the 3MASH ecosystem through lightweight design, controlled manufacturing, and clinical precision.",
+        ),
+      ),
+      "",
+    ).__html,
+    storyPoints,
+    image: imageSource(props.caseImageUrl, crsCompositeSararmaImage),
+    imageAlt: localizedText(
+      props.caseImageAlt,
+      props.caseImageAltEn,
+      tLocalized("CRS Composite Resin ile dijital restorasyon çalışması", "Digital restoration study with CRS Composite Resin"),
+    ),
+    captionTitle: localizedText(
+      props.caseCaptionTitle,
+      props.caseCaptionTitleEn,
+      tLocalized("CRS Composite Resin", "CRS Composite Resin"),
+    ),
+    captionText: localizedText(
+      props.caseCaptionText,
+      props.caseCaptionTextEn,
+      tLocalized("Dijital geçici restorasyon ve klinik takip süreci", "Digital provisional restoration and clinical follow-up"),
+    ),
+  };
+  const partnersContent = {
+    visible: props.showPartners !== false,
+    kicker: localizedText(
+      props.partnersKicker,
+      props.partnersKickerEn,
+      tLocalized("Çözüm ortakları", "Solution Partners"),
+    ),
+    title: localizedText(
+      props.partnersTitle,
+      props.partnersTitleEn,
+      tLocalized("Cihaz, reçine ve teknik destek aynı iş akışında buluşur.", "Hardware, resin, and technical support unite in the same workflow."),
+    ),
+    cards: partnerCards.map((item) => ({
+      name: item.name,
+      title: item.title,
+      descriptionHtml: richHtml(item.text, "").__html,
+      image: item.image,
+    })),
+  };
+  const workflowContent = {
+    visible: props.showWorkflow !== false,
+    kicker: localizedText(
+      props.workflowKicker,
+      props.workflowKickerEn,
+      tLocalized("3MASH ile üretim akışı", "Production Workflow with 3MASH"),
+    ),
+    title: localizedText(
+      props.workflowTitle,
+      props.workflowTitleEn,
+      tLocalized("Referansların ortak noktası ürün değil, çalışan sistem.", "The common thread of references isn't just a product—it's a working system."),
+    ),
+    descriptionHtml: richHtml(
+      localizedText(
+        props.workflowDescription,
+        props.workflowDescriptionEn,
+        tLocalized(
+          "Başarılı sonuç yalnızca bir cihaz veya tek bir reçineyle oluşmaz. Laboratuvarda tekrarlanabilir kalite için donanım, malzeme, eğitim ve teknik destek birlikte ilerler.",
+          "Successful results don't come from a single printer or resin alone. Hardware, materials, training, and support work together for repeatable quality in the lab.",
+        ),
+      ),
+      "",
+    ).__html,
+    cards: workflowCards.map((item) => ({
+      title: item.title,
+      descriptionHtml: richHtml(item.text, "").__html,
+      image: item.image,
+    })),
+  };
 
   return (
     <section
@@ -304,198 +743,11 @@ export function ThreeMashReferences(props: Props) {
       style={rootStyle}
     >
       <div className="tmref-shell">
-        <div className="tmref-hero">
-          <div className="tmref-hero-copy">
-            <div
-              className="tmref-eyebrow"
-              dangerouslySetInnerHTML={richHtml(
-                props.eyebrowText,
-                tLocalized("Referanslar ve başarı hikayeleri", "References and success stories"),
-              )}
-            />
-            <h2
-              dangerouslySetInnerHTML={richHtml(
-                props.titleText,
-                tLocalized("Dijital üretimde güveni <em>gerçek işlerle</em> kuruyoruz.", "We build trust in digital production with <em>real results</em>."),
-              )}
-            />
-            <p
-              dangerouslySetInnerHTML={richHtml(
-                props.descriptionHtml,
-                defaultDescription,
-              )}
-            />
-            <div className="tmref-actions" aria-label={tLocalized("Referanslar aksiyonları", "References actions")}>
-              <ActionLink href={primaryHref} variant="primary">
-                {text(props.primaryButtonText, tLocalized("Başarı hikayesini gör", "View success story"))}
-              </ActionLink>
-              <ActionLink href={secondaryHref} variant="secondary">
-                {text(props.secondaryButtonText, tLocalized("Ekosistemi incele", "Explore ecosystem"))}
-              </ActionLink>
-            </div>
-          </div>
-
-          <div className="tmref-hero-proof" aria-label={tLocalized("3MASH referans özeti", "3MASH reference summary")}>
-            <div className="tmref-proof-panel">
-              <span>{tLocalized("Referans havuzu", "Reference Pool")}</span>
-              <strong>{tLocalized("Kliniklerden laboratuvarlara uzanan saha kaydı.", "Field records spanning clinics to laboratories.")}</strong>
-              <p>
-                {tLocalized(
-                  "Yorumlar, klinik vakalar, iş ortakları ve üretim paylaşımları aynı sayfada tek bir güven mimarisi olarak sunulur.",
-                  "Reviews, clinical cases, partnerships, and production shares presented as a single architecture of trust."
-                )}
-              </p>
-            </div>
-            <div className="tmref-proof-categories">
-              {proofCategories.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
-            <div className="tmref-stat-row">
-              {proofStats.map((item) => (
-                <div key={item.label}>
-                  <strong>{item.value}</strong>
-                  <span>{item.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="tmref-logo-strip" aria-label={tLocalized("3MASH güven logoları", "3MASH trust logos")}>
-          {logos.map((logo, index) => (
-            <div className="tmref-logo-cell" key={index}>
-              <img src={logo} alt="" loading="lazy" />
-            </div>
-          ))}
-        </div>
-
-        <section
-          className="tmref-reference-wall"
-          aria-label={tLocalized("3MASH referans yorumları", "3MASH reference reviews")}
-        >
-          {referenceEntries.map((item, index) => (
-            <article
-              className={`tmref-testimonial ${index === 0 ? "is-featured" : ""}`}
-              key={item.name}
-            >
-              <div className="tmref-card-topline">
-                <span>{item.type}</span>
-              </div>
-              <div className="tmref-quote-mark">“</div>
-              <p>{item.quote}</p>
-              <div
-                className={`tmref-person ${
-                  "image" in item && item.image ? "has-image" : "has-no-image"
-                }`}
-              >
-                {"image" in item && item.image ? (
-                  <img src={item.image} alt={item.name} loading="lazy" />
-                ) : (
-                  <span
-                    className="tmref-profile-placeholder"
-                    aria-hidden="true"
-                  />
-                )}
-                <div>
-                  <strong>{item.name}</strong>
-                  <span>{item.role}</span>
-                  <small>{item.meta}</small>
-                </div>
-              </div>
-            </article>
-          ))}
-        </section>
-
-        <section
-          className="tmref-case"
-          id="referanslar-vaka"
-          aria-labelledby="tmref-case-title"
-        >
-          <div className="tmref-case-copy">
-            <div className="tmref-section-kicker">{tLocalized("Klinik başarı hikayesi", "Clinical Success Story")}</div>
-            <h3 id="tmref-case-title">
-              {tLocalized("Dr. Barbaros Baran ile All-on-Six geçici restorasyon.", "All-on-Six temporary restoration with Dr. Barbaros Baran.")}
-            </h3>
-            <p>
-              {tLocalized(
-                "CRS Composite Resin ile tamamen dijital olarak üretilen geçici restorasyon; hafif yapı, kontrollü üretim süreci ve klinik adaptasyon odağıyla 3MASH ekosisteminin sahadaki karşılığını gösterir.",
-                "The provisional restoration produced entirely digitally with CRS Composite Resin demonstrates the field value of the 3MASH ecosystem through lightweight design, controlled manufacturing, and clinical precision."
-              )}
-            </p>
-            <ul className="tmref-story-list">
-              {storyPoints.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="tmref-case-media">
-            <img
-              src={crsCompositeSararmaImage}
-              alt={tLocalized("CRS Composite Resin ile dijital restorasyon çalışması", "Digital restoration study with CRS Composite Resin")}
-            />
-            <div className="tmref-media-caption">
-              <strong>{tLocalized("CRS Composite Resin", "CRS Composite Resin")}</strong>
-              <span>{tLocalized("Dijital geçici restorasyon ve klinik takip süreci", "Digital provisional restoration and clinical follow-up")}</span>
-            </div>
-          </div>
-        </section>
-
-        <section
-          className="tmref-partners"
-          aria-labelledby="tmref-partners-title"
-        >
-          <div className="tmref-section-heading">
-            <div className="tmref-section-kicker">{tLocalized("Çözüm ortakları", "Solution Partners")}</div>
-            <h3 id="tmref-partners-title">
-              {tLocalized("Cihaz, reçine ve teknik destek aynı iş akışında buluşur.", "Hardware, resin, and technical support unite in the same workflow.")}
-            </h3>
-          </div>
-          <div className="tmref-partner-grid">
-            {partnerCards.map((item) => (
-              <article className="tmref-partner-card" key={item.name}>
-                <div className="tmref-partner-image">
-                  <img src={item.image} alt={item.name} loading="lazy" />
-                </div>
-                <div>
-                  <span>{item.name}</span>
-                  <h4>{item.title}</h4>
-                  <p>{item.text}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section
-          className="tmref-workflow"
-          id="referanslar-isleyis"
-          aria-labelledby="tmref-workflow-title"
-        >
-          <div className="tmref-workflow-copy">
-            <div className="tmref-section-kicker">{tLocalized("3MASH ile üretim akışı", "Production Workflow with 3MASH")}</div>
-            <h3 id="tmref-workflow-title">
-              {tLocalized("Referansların ortak noktası ürün değil, çalışan sistem.", "The common thread of references isn't just a product—it's a working system.")}
-            </h3>
-            <p>
-              {tLocalized(
-                "Başarılı sonuç yalnızca bir cihaz veya tek bir reçineyle oluşmaz. Laboratuvarda tekrarlanabilir kalite için donanım, malzeme, eğitim ve teknik destek birlikte ilerler.",
-                "Successful results don't come from a single printer or resin alone. Hardware, materials, training, and support work together for repeatable quality in the lab."
-              )}
-            </p>
-          </div>
-          <div className="tmref-workflow-grid">
-            {workflowCards.map((item) => (
-              <article className="tmref-workflow-card" key={item.title}>
-                <div className="tmref-workflow-image">
-                  <img src={item.image} alt={item.title} loading="lazy" />
-                </div>
-                <h4>{item.title}</h4>
-                <p>{item.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+        <ThreeMashReferencesLead {...leadContent} />
+        <ThreeMashReferenceWall {...referenceWallContent} />
+        <ThreeMashReferencesCaseStudy {...caseStudyContent} />
+        <ThreeMashReferencesPartners {...partnersContent} />
+        <ThreeMashReferencesWorkflow {...workflowContent} />
       </div>
     </section>
   );

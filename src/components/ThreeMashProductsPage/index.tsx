@@ -1,6 +1,6 @@
 import { localizedHref, isEnglishLocale, tLocalized, hasEnglishProductPage } from "../../utils/i18n";
 import { hasCustomerToken } from "../../utils/auth";
-import { safeRedirect } from "../../utils/safeRedirect";
+import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import { debugError } from "../../utils/debugError";
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
@@ -49,6 +49,10 @@ const RESIN_FALLBACK_SEARCHES = [
   "Mash Clear",
   "Mash Trial White",
   "Mash Trial Pink",
+  "CRS Gingiva",
+  "CRS Cast",
+  "CRS Model",
+  "CRS Aligner",
 ] as const;
 
 function safeVariant(product: IkasProduct): IkasProductVariant | null {
@@ -65,6 +69,16 @@ function normalizedText(value: string | undefined) {
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
+}
+
+function studioText(
+  turkishValue: string | undefined,
+  englishValue: string | undefined,
+  turkishFallback: string,
+  englishFallback: string,
+) {
+  if (isEnglishLocale()) return englishValue?.trim() || englishFallback;
+  return turkishValue?.trim() || turkishFallback;
 }
 
 function themeToken(
@@ -163,15 +177,18 @@ function availableProductCategories(productList: IkasProductList): IkasFilterCat
   return Array.from(categoriesById.values());
 }
 
-function categoryLabel(category: IkasFilterCategory) {
+function categoryLabel(category: IkasFilterCategory, fallbackLabel?: string) {
   const data = category as unknown as Record<string, unknown>;
   const label = String(data.name || data.title || data.slug || data.handle || "").trim();
-  return label || tLocalized("Kategori", "Category");
+  return label || fallbackLabel || tLocalized("Kategori", "Category");
 }
 
-function localizedCategoryLabel(category: IkasFilterCategory) {
+function localizedCategoryLabel(
+  category: IkasFilterCategory,
+  fallbackLabel?: string,
+) {
   const data = category as unknown as Record<string, unknown>;
-  const rawLabel = categoryLabel(category);
+  const rawLabel = categoryLabel(category, fallbackLabel);
   const keys = [data.slug, data.handle, rawLabel]
     .map((value) => searchKey(String(value || "")))
     .filter(Boolean);
@@ -224,6 +241,7 @@ function ProductCard({
   index = 0,
   isFavorite = false,
   isHighlighted = false,
+  showFavorites = true,
   onToggleFavorite,
 }: {
   product: IkasProduct;
@@ -231,6 +249,7 @@ function ProductCard({
   index?: number;
   isFavorite?: boolean;
   isHighlighted?: boolean;
+  showFavorites?: boolean;
   onToggleFavorite?: (productId: string) => void;
 }) {
   const variant = safeVariant(product);
@@ -328,29 +347,45 @@ function ProductCard({
         <div className="tm-products-card-top-actions">
           {hasDiscount ? (
             <span className="tm-products-badge-popular">
-              {props.discountText || tLocalized("İndirim", "Discount")}
+              {studioText(props.discountText, props.discountTextEn, "İndirim", "Discount")}
             </span>
           ) : <span />}
 
-          <button
-            type="button"
-            className={`tm-products-card-fav-btn${isFavorite ? " is-active" : ""}`}
-            aria-label={isFavorite ? tLocalized("Favorilerden çıkar", "Remove from favorites") : tLocalized("Favorilere ekle", "Add to favorites")}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onToggleFavorite?.(product.id);
-            }}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path
-                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                fill={isFavorite ? "currentColor" : "none"}
-                stroke="currentColor"
-                strokeWidth="1.8"
-              />
-            </svg>
-          </button>
+          {showFavorites ? (
+            <button
+              type="button"
+              className={`tm-products-card-fav-btn${isFavorite ? " is-active" : ""}`}
+              aria-label={
+                isFavorite
+                  ? studioText(
+                    props.favoriteRemoveAriaLabel,
+                    props.favoriteRemoveAriaLabelEn,
+                    "Favorilerden çıkar",
+                    "Remove from favorites",
+                  )
+                  : studioText(
+                    props.favoriteAddAriaLabel,
+                    props.favoriteAddAriaLabelEn,
+                    "Favorilere ekle",
+                    "Add to favorites",
+                  )
+              }
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onToggleFavorite?.(product.id);
+              }}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                  fill={isFavorite ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                />
+              </svg>
+            </button>
+          ) : null}
         </div>
       </div>
 
@@ -359,7 +394,9 @@ function ProductCard({
           {product.brand?.name ? (
             <span className="tm-products-card-brand">{product.brand.name}</span>
           ) : (
-            <span className="tm-products-card-brand">{props.fallbackCategoryText || "3MASH"}</span>
+            <span className="tm-products-card-brand">
+              {props.fallbackCategoryText?.trim() || "3MASH"}
+            </span>
           )}
 
           <a href={productHref} className="tm-products-card-title-link">
@@ -377,7 +414,12 @@ function ProductCard({
               <strong className="tm-products-card-price">{price}</strong>
             ) : (
               <strong className="tm-products-card-price is-quote">
-                {props.priceRequestText || tLocalized("Teklif Alın", "Get a Quote")}
+                {studioText(
+                  props.priceRequestText,
+                  props.priceRequestTextEn,
+                  "Teklif Alın",
+                  "Get a Quote",
+                )}
               </strong>
             )}
             {comparePrice ? (
@@ -389,7 +431,14 @@ function ProductCard({
             href={productHref}
             className="tm-products-card-cta-btn"
           >
-            <span>{props.viewProductText || tLocalized("Ürünü İncele", "View Product")}</span>
+            <span>
+              {studioText(
+                props.viewProductText,
+                props.viewProductTextEn,
+                "Ürünü İncele",
+                "View Product",
+              )}
+            </span>
             <svg
               viewBox="0 0 20 20"
               fill="none"
@@ -676,31 +725,130 @@ export function ThreeMashProductsPage(props: Props) {
     sortOptions.find((option) => option.isSelected)?.value || "";
   const selectedSortLabel =
     localizeSortLabel(sortOptions.find((option) => option.value === selectedSort)?.label) ||
-    props.sortLabel ||
-    tLocalized("Önerilen", "Recommended");
+    studioText(props.sortLabel, props.sortLabelEn, "Önerilen", "Recommended");
 
-  const pageTitle =
-    normalizedText(props.eyebrowText) === tLocalized("ürün kategorisi", "product category")
-      ? props.titleText || productList?.category?.name || productList?.brand?.name || tLocalized("Ürünler", "Products")
-      : tLocalized("Tüm Ürünler", "All Products");
+  const allProductsTitle = studioText(
+    props.allProductsTitle,
+    props.allProductsTitleEn,
+    "Tüm Ürünler",
+    "All Products",
+  );
+  const isCategoryListing =
+    normalizedText(props.eyebrowText) ===
+    tLocalized("ürün kategorisi", "product category");
+  const pageTitle = isCategoryListing
+    ? isEnglishLocale()
+      ? props.titleTextEn?.trim() ||
+        productList?.category?.name ||
+        productList?.brand?.name ||
+        allProductsTitle
+      : props.titleText?.trim() ||
+        productList?.category?.name ||
+        productList?.brand?.name ||
+      allProductsTitle
+    : allProductsTitle;
+  const descriptionText = studioText(
+    props.descriptionText,
+    props.descriptionTextEn,
+    "Profesyonel 3D baskı ve dental çözümlerini keşfedin.",
+    "Explore professional 3D printing and dental solutions.",
+  );
+  const categoryFallbackLabel = studioText(
+    props.categoryFallbackLabel,
+    props.categoryFallbackLabelEn,
+    "Kategori",
+    "Category",
+  );
 
   const fallbackCategories = [
-    { id: ALL_PRODUCTS_FILTER_ID, label: tLocalized("Tüm Ürünler", "All Products"), group: "Kategori" as const },
-    { id: "3d-yazicilar", label: tLocalized("3D Yazıcılar", "3D Printers"), group: "Kategori" as const },
-    { id: "3d-yazici-yedek-parcalari", label: tLocalized("3D Yazıcı Yedek Parçaları", "3D Printer Spare Parts"), group: "Kategori" as const },
-    { id: "recineler", label: tLocalized("Reçineler", "Resins"), group: "Kategori" as const },
-    { id: "kurleme-cihazlari", label: tLocalized("Kürleme Cihazları", "Curing Devices"), group: "Kategori" as const },
-    { id: "tarayicilar", label: tLocalized("Tarayıcılar", "Scanners"), group: "Kategori" as const },
-    { id: "masaustu-tarayicilar", label: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), group: "Kategori" as const },
-    { id: "sistemler", label: tLocalized("Sistemler", "Systems"), group: "Kategori" as const },
-    { id: "yazilimlar", label: tLocalized("Yazılımlar", "Software"), group: "Kategori" as const },
+    { id: ALL_PRODUCTS_FILTER_ID, label: allProductsTitle, group: "Kategori" as const },
+    {
+      id: "3d-yazicilar",
+      label: studioText(
+        props.fallbackCategoryPrintersText,
+        props.fallbackCategoryPrintersTextEn,
+        "3D Yazıcılar",
+        "3D Printers",
+      ),
+      group: "Kategori" as const,
+    },
+    {
+      id: "3d-yazici-yedek-parcalari",
+      label: studioText(
+        props.fallbackCategorySparePartsText,
+        props.fallbackCategorySparePartsTextEn,
+        "3D Yazıcı Yedek Parçaları",
+        "3D Printer Spare Parts",
+      ),
+      group: "Kategori" as const,
+    },
+    {
+      id: "recineler",
+      label: studioText(
+        props.fallbackCategoryResinsText,
+        props.fallbackCategoryResinsTextEn,
+        "Reçineler",
+        "Resins",
+      ),
+      group: "Kategori" as const,
+    },
+    {
+      id: "kurleme-cihazlari",
+      label: studioText(
+        props.fallbackCategoryCuringText,
+        props.fallbackCategoryCuringTextEn,
+        "Kürleme Cihazları",
+        "Curing Devices",
+      ),
+      group: "Kategori" as const,
+    },
+    {
+      id: "tarayicilar",
+      label: studioText(
+        props.fallbackCategoryScannersText,
+        props.fallbackCategoryScannersTextEn,
+        "Tarayıcılar",
+        "Scanners",
+      ),
+      group: "Kategori" as const,
+    },
+    {
+      id: "masaustu-tarayicilar",
+      label: studioText(
+        props.fallbackCategoryDesktopScannersText,
+        props.fallbackCategoryDesktopScannersTextEn,
+        "Masaüstü Tarayıcılar",
+        "Desktop Scanners",
+      ),
+      group: "Kategori" as const,
+    },
+    {
+      id: "sistemler",
+      label: studioText(
+        props.fallbackCategorySystemsText,
+        props.fallbackCategorySystemsTextEn,
+        "Sistemler",
+        "Systems",
+      ),
+      group: "Kategori" as const,
+    },
+    {
+      id: "yazilimlar",
+      label: studioText(
+        props.fallbackCategorySoftwareText,
+        props.fallbackCategorySoftwareTextEn,
+        "Yazılımlar",
+        "Software",
+      ),
+      group: "Kategori" as const,
+    },
   ];
 
   const fetchedCategories = (categoryCatalog ? availableProductCategories(categoryCatalog) : [])
     .filter((category) => Boolean(category.id))
     .map((category) => ({
       id: category.id,
-      label: localizedCategoryLabel(category),
+      label: localizedCategoryLabel(category, categoryFallbackLabel),
       group: "Kategori" as const,
     }));
 
@@ -708,7 +856,7 @@ export function ThreeMashProductsPage(props: Props) {
     ? [
       {
         id: ALL_PRODUCTS_FILTER_ID,
-        label: tLocalized("Tüm Ürünler", "All Products"),
+        label: allProductsTitle,
         group: "Kategori",
       },
       ...fetchedCategories,
@@ -716,11 +864,32 @@ export function ThreeMashProductsPage(props: Props) {
     : fallbackCategories;
 
   const showSearchControl = props.showSearch !== false;
-  // Keep sorting visible on the product listing toolbar.
-  const showSortControl = true;
-  const showNavigationControls = props.showNavigation === true;
+  const showSortControl = props.showSort !== false;
+  const showNavigationControls = props.showNavigation !== false;
+  const showPageIntro = props.showPageIntro !== false;
+  const showGridLayout = props.showGridLayout !== false;
+  const showFavorites = props.showFavorites !== false;
+  const showPagination = props.showPagination !== false;
 
   const trimmedSearch = searchValue.trim();
+  const localizedEmptyMessage = isEnglishLocale()
+    ? props.emptyMessageEn
+    : props.emptyMessage;
+  const emptyStateMessage = localizedEmptyMessage?.trim()
+    ? studioText(props.emptyMessage, props.emptyMessageEn, "", "")
+    : trimmedSearch
+      ? studioText(
+        props.emptySearchMessage,
+        props.emptySearchMessageEn,
+        "Aramanızla eşleşen aktif ürün bulunamadı. Lütfen farklı kelimelerle tekrar deneyin.",
+        "No active products matching your search were found. Please try different keywords.",
+      )
+      : studioText(
+        props.emptyCategoryMessage,
+        props.emptyCategoryMessageEn,
+        "Bu kategoride listelenecek ürün bulunamadı.",
+        "No products were found in this category.",
+      );
   const fallbackProducts =
     unfilteredProductsRef.current.length > 0
       ? unfilteredProductsRef.current
@@ -1297,27 +1466,51 @@ useEffect(() => {
       <div className="tm-products-wrap">
         {/* Top Hero & Header Container */}
         <div className="tm-products-hero-container">
-          {/* Breadcrumb Navigation */}
-          <nav className="tm-products-breadcrumb" aria-label="Breadcrumb">
-            <a href="/" className="tm-products-breadcrumb-link">
-              {tLocalized("Ana Sayfa", "Home")}
-            </a>
-            <span className="tm-products-breadcrumb-sep" aria-hidden="true">&gt;</span>
-            <span className="tm-products-breadcrumb-current">{pageTitle}</span>
-          </nav>
-
-          <div className="tm-products-hero-main">
-            <div className="tm-products-hero-text">
-              <h1 className="tm-products-hero-title">{pageTitle}</h1>
-              <p className="tm-products-hero-subtitle">
-                {props.descriptionText ||
-                  tLocalized(
-                    "Profesyonel 3D baskı ve dental çözümlerini keşfedin.",
-                    "Explore professional 3D printing and dental solutions."
+          {showPageIntro ? (
+            <>
+              {/* Breadcrumb Navigation */}
+              <nav
+                className="tm-products-breadcrumb"
+                aria-label={studioText(
+                  props.breadcrumbLabel,
+                  props.breadcrumbLabelEn,
+                  "Sayfa yolu",
+                  "Breadcrumb",
+                )}
+              >
+                <a
+                  href={localizedHref(
+                    safeNavigationHref(props.homeHref, "/"),
                   )}
-              </p>
-            </div>
-          </div>
+                  className="tm-products-breadcrumb-link"
+                >
+                  {studioText(props.homeLinkText, props.homeLinkTextEn, "Ana Sayfa", "Home")}
+                </a>
+                <span className="tm-products-breadcrumb-sep" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 12 12"
+                    width="12"
+                    height="12"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="m4.5 2.5 3.5 3.5-3.5 3.5" />
+                  </svg>
+                </span>
+                <span className="tm-products-breadcrumb-current">{pageTitle}</span>
+              </nav>
+
+              <div className="tm-products-hero-main">
+                <div className="tm-products-hero-text">
+                  <h1 className="tm-products-hero-title">{pageTitle}</h1>
+                  <p className="tm-products-hero-subtitle">{descriptionText}</p>
+                </div>
+              </div>
+            </>
+          ) : null}
 
           {/* Pill Search Input Bar */}
           {showSearchControl ? (
@@ -1342,19 +1535,31 @@ useEffect(() => {
                   type="search"
                   className="tm-products-search-pill-input"
                   value={searchValue}
-                  placeholder={
-                    props.searchPlaceholder ||
-                    tLocalized("Ürün adı veya marka ara...", "Search product name or brand...")
-                  }
+                  placeholder={studioText(
+                    props.searchPlaceholder,
+                    props.searchPlaceholderEn,
+                    "Ürün adı, kategori, marka",
+                    "Product name, category, brand",
+                  )}
                   onInput={handleSearch}
                   onKeyDown={handleSearchKeyDown}
-                  aria-label={props.searchLabel || tLocalized("Ürün adı veya marka ara...", "Search product name or brand...")}
+                  aria-label={studioText(
+                    props.searchLabel,
+                    props.searchLabelEn,
+                    "Arama",
+                    "Search",
+                  )}
                 />
 
                 <button
                   type="button"
                   className="tm-products-search-pill-btn"
-                  aria-label={tLocalized("Ara", "Search")}
+                  aria-label={studioText(
+                    props.searchButtonAriaLabel,
+                    props.searchButtonAriaLabelEn,
+                    "Ara",
+                    "Search",
+                  )}
                   onClick={commitSearch}
                 >
                   <svg
@@ -1379,7 +1584,12 @@ useEffect(() => {
         {showNavigationControls ? (
           <div className="tm-products-categories-section">
             <h2 className="tm-products-categories-heading">
-              {tLocalized("Kategoriler", "Categories")}
+              {studioText(
+                props.categoryHeading,
+                props.categoryHeadingEn,
+                "Kategoriler",
+                "Categories",
+              )}
             </h2>
 
             <div
@@ -1404,22 +1614,54 @@ useEffect(() => {
               })}
             </div>
 
-            <div className="tm-products-categories-arrows" aria-hidden="true">
+            <div className="tm-products-categories-arrows">
               <button
                 type="button"
                 className="tm-products-category-arrow-btn"
-                aria-label={tLocalized("Geri", "Previous categories")}
+                aria-label={studioText(
+                  props.categoryPreviousAriaLabel,
+                  props.categoryPreviousAriaLabelEn,
+                  "Önceki kategoriler",
+                  "Previous categories",
+                )}
                 onClick={() => scrollCategories("left")}
               >
-                &lt;
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m10 3-5 5 5 5" />
+                </svg>
               </button>
               <button
                 type="button"
                 className="tm-products-category-arrow-btn"
-                aria-label={tLocalized("İleri", "Next categories")}
+                aria-label={studioText(
+                  props.categoryNextAriaLabel,
+                  props.categoryNextAriaLabelEn,
+                  "Sonraki kategoriler",
+                  "Next categories",
+                )}
                 onClick={() => scrollCategories("right")}
               >
-                &gt;
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m6 3 5 5-5 5" />
+                </svg>
               </button>
             </div>
           </div>
@@ -1431,10 +1673,23 @@ useEffect(() => {
           <div className="tm-products-toolbar-left">
             {trimmedSearch ? (
               <div className="tm-products-active-query-pill">
-                <span>{tLocalized("Arama:", "Search:")} <b>{trimmedSearch}</b></span>
+                <span>
+                  {studioText(
+                    props.activeSearchLabel,
+                    props.activeSearchLabelEn,
+                    "Arama:",
+                    "Search:",
+                  )}{" "}
+                  <b>{trimmedSearch}</b>
+                </span>
                 <button
                   type="button"
-                  aria-label={tLocalized("Aramayı temizle", "Clear search")}
+                  aria-label={studioText(
+                    props.clearSearchAriaLabel,
+                    props.clearSearchAriaLabelEn,
+                    "Aramayı temizle",
+                    "Clear search",
+                  )}
                   onClick={() => {
                     setSearchValue("");
                     committedSearchRef.current = "";
@@ -1444,7 +1699,19 @@ useEffect(() => {
                     }
                   }}
                 >
-                  ✕
+                  <svg
+                    viewBox="0 0 16 16"
+                    width="12"
+                    height="12"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="m4 4 8 8M12 4l-8 8" />
+                  </svg>
                 </button>
               </div>
             ) : null}
@@ -1453,7 +1720,12 @@ useEffect(() => {
             {showSortControl ? (
               <div className="tm-products-sort-wrapper" ref={sortControlRef}>
                 <span className="tm-products-sort-label">
-                  {localizeSortLabel(props.sortLabel) || tLocalized("Sırala:", "Sort:")}
+                  {studioText(
+                    props.sortLabel,
+                    props.sortLabelEn,
+                    "Önerilen",
+                    "Recommended",
+                  )}
                 </span>
 
                 <button
@@ -1503,49 +1775,79 @@ useEffect(() => {
           </div>
 
           {/* Grid Layout Switcher */}
-          <div className="tm-products-layout-switcher" role="group" aria-label={tLocalized("Grid görünümü", "Grid layout")}>
-            <button
-              type="button"
-              className={`tm-products-layout-btn${gridLayout === "grid-4" ? " is-active" : ""}`}
-              aria-label={tLocalized("4'lü Görünüm", "4 Columns View")}
-              onClick={() => setGridLayout("grid-4")}
+          {showGridLayout ? (
+            <div
+              className="tm-products-layout-switcher"
+              role="group"
+              aria-label={studioText(
+                props.layoutSwitcherAriaLabel,
+                props.layoutSwitcherAriaLabelEn,
+                "Izgara görünümü",
+                "Grid layout",
+              )}
             >
-              {/* 4 squares in 2x2 = represents 4-column grid */}
-              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
-                <rect x="1" y="1" width="6" height="6" rx="1" />
-                <rect x="9" y="1" width="6" height="6" rx="1" />
-                <rect x="1" y="9" width="6" height="6" rx="1" />
-                <rect x="9" y="9" width="6" height="6" rx="1" />
-              </svg>
-            </button>
+              <button
+                type="button"
+                className={`tm-products-layout-btn${gridLayout === "grid-4" ? " is-active" : ""}`}
+                aria-label={studioText(
+                  props.grid4AriaLabel,
+                  props.grid4AriaLabelEn,
+                  "4'lü Görünüm",
+                  "4 Columns View",
+                )}
+                onClick={() => setGridLayout("grid-4")}
+              >
+                {/* 4 squares in 2x2 = represents 4-column grid */}
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                  <rect x="1" y="1" width="6" height="6" rx="1" />
+                  <rect x="9" y="1" width="6" height="6" rx="1" />
+                  <rect x="1" y="9" width="6" height="6" rx="1" />
+                  <rect x="9" y="9" width="6" height="6" rx="1" />
+                </svg>
+              </button>
 
-            <button
-              type="button"
-              className={`tm-products-layout-btn${gridLayout === "grid-3" ? " is-active" : ""}`}
-              aria-label={tLocalized("3'lü Görünüm", "3 Columns View")}
-              onClick={() => setGridLayout("grid-3")}
-            >
-              {/* 3 vertical bars = represents 3-column grid */}
-              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
-                <rect x="1" y="1" width="4" height="14" rx="1" />
-                <rect x="6" y="1" width="4" height="14" rx="1" />
-                <rect x="11" y="1" width="4" height="14" rx="1" />
-              </svg>
-            </button>
-          </div>
+              <button
+                type="button"
+                className={`tm-products-layout-btn${gridLayout === "grid-3" ? " is-active" : ""}`}
+                aria-label={studioText(
+                  props.grid3AriaLabel,
+                  props.grid3AriaLabelEn,
+                  "3'lü Görünüm",
+                  "3 Columns View",
+                )}
+                onClick={() => setGridLayout("grid-3")}
+              >
+                {/* 3 vertical bars = represents 3-column grid */}
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                  <rect x="1" y="1" width="4" height="14" rx="1" />
+                  <rect x="6" y="1" width="4" height="14" rx="1" />
+                  <rect x="11" y="1" width="4" height="14" rx="1" />
+                </svg>
+              </button>
+            </div>
+          ) : null}
         </div>
 
         {/* Product Cards Grid Area */}
         {!productList ? (
           <div className="tm-products-setup-box">
-            {props.setupMessage ||
-              tLocalized(
-                "Ürünler kısa süre içinde burada listelenecek.",
-                "Products will be listed here shortly."
-              )}
+            {studioText(
+              props.setupMessage,
+              props.setupMessageEn,
+              "Arama sayfasının çalışması için Ürün Listesi alanını Tüm Ürünler olarak bağlayın.",
+              "For the search page to work, connect the Product List field to All Products.",
+            )}
           </div>
         ) : showProductSkeletons ? (
-          <div className={`tm-products-grid ${gridLayout}`} aria-label={tLocalized("Ürünler yükleniyor", "Loading products")}>
+        <div
+          className={`tm-products-grid ${gridLayout}`}
+          aria-label={studioText(
+            props.loadingProductsAriaLabel,
+            props.loadingProductsAriaLabelEn,
+            "Ürünler yükleniyor",
+            "Loading products",
+          )}
+        >
             {Array.from({ length: 8 }, (_, index) => (
               <ProductCardSkeleton index={index} key={index} />
             ))}
@@ -1559,6 +1861,7 @@ useEffect(() => {
                 index={index}
                 isFavorite={Boolean(favoriteIds[product.id])}
                 isHighlighted={product.id === highlightedProductId}
+                showFavorites={showFavorites}
                 onToggleFavorite={handleToggleFavorite}
                 key={product.id}
               />
@@ -1573,24 +1876,22 @@ useEffect(() => {
                 <line x1="8" y1="11" x2="14" y2="11" />
               </svg>
             </div>
-            <h2>{props.emptyTitle || tLocalized("Ürün bulunamadı", "Product not found")}</h2>
-            <p>
-              {props.emptyMessage ||
-                (trimmedSearch
-                  ? tLocalized(
-                    "Aramanızla eşleşen aktif ürün bulunamadı. Lütfen farklı kelimelerle tekrar deneyin.",
-                    "No active products matching your search were found. Please try with different keywords."
-                  )
-                  : tLocalized(
-                    "Bu kategoride listelenecek ürün bulunamadı.",
-                    "No products found in this category."
-                  ))}
-            </p>
+            <h2>
+              {studioText(
+                props.emptyTitle,
+                props.emptyTitleEn,
+                "Ürün bulunamadı",
+                "Product not found",
+              )}
+            </h2>
+            <p>{emptyStateMessage}</p>
           </div>
         )}
 
         {/* Pagination Section */}
-        {productList && (hasProductListPrevPage(productList) || hasProductListNextPage(productList)) ? (
+        {showPagination &&
+        productList &&
+        (hasProductListPrevPage(productList) || hasProductListNextPage(productList)) ? (
           <div className="tm-products-pagination-container">
             <button
               type="button"
@@ -1601,7 +1902,14 @@ useEffect(() => {
               <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
                 <path d="M15.5 10H4.5M9 5.5 4.5 10 9 14.5" />
               </svg>
-              <span>{props.prevPageText || tLocalized("Önceki", "Previous")}</span>
+              <span>
+                {studioText(
+                  props.prevPageText,
+                  props.prevPageTextEn,
+                  "Önceki",
+                  "Previous",
+                )}
+              </span>
             </button>
             <span className="tm-products-pagination-current">
               {productList.page || 1}
@@ -1612,7 +1920,14 @@ useEffect(() => {
               disabled={!hasProductListNextPage(productList)}
               onClick={() => goToPage((productList.page || 1) + 1)}
             >
-              <span>{props.nextPageText || tLocalized("Sonraki", "Next")}</span>
+              <span>
+                {studioText(
+                  props.nextPageText,
+                  props.nextPageTextEn,
+                  "Sonraki",
+                  "Next",
+                )}
+              </span>
               <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
                 <path d="M4.5 10h11M11 5.5l4.5 4.5-4.5 4.5" />
               </svg>

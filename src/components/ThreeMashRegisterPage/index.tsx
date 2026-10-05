@@ -7,7 +7,7 @@ import {
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import authCriticalStyles from "../authCriticalStyles";
-import { localizedHref, t, tLocalized, tProp } from "../../utils/i18n";
+import { isEnglishLocale, localizedHref, t, tLocalized, tProp } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
@@ -53,6 +53,11 @@ function richText(value: string | undefined, fallbackTr: string, fallbackEn?: st
 
 function href(value: string | undefined, fallback: string) {
   return safeNavigationHref(localizedHref(value || fallback), fallback);
+}
+
+function marketingConsentHref(value?: string) {
+  if (isEnglishLocale()) return "/en/pages/ticari-elektronik-ileti-onayi";
+  return href(value, "/pages/ticari-elektronik-ileti-onayi");
 }
 
 function themeColor(
@@ -381,10 +386,7 @@ export function ThreeMashRegisterPage(props: Props) {
             <span>
               {t("auth.marketingConsentPrefix", tLocalized("Kampanya, indirim ve duyurulardan haberdar olmak için", "To be informed about campaigns and updates,"))}{" "}
               <a
-                href={href(
-                  props.marketingHref,
-                  "/pages/ticari-elektronik-ileti-onayi",
-                )}
+                href={marketingConsentHref(props.marketingHref)}
               >
                 {t("auth.marketingConsentLink", tLocalized("Ticari Elektronik İleti Onayı", "Commercial Electronic Message Consent"))}
               </a>{" "}

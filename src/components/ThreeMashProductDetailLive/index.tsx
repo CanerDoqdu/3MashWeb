@@ -26,6 +26,7 @@ import {
   initProductOptionSetValues,
   isAddToCartEnabled,
   selectVariantValue,
+  type IkasImage,
   type IkasProduct,
   type IkasProductList,
   type IkasProductVariant,
@@ -42,17 +43,42 @@ import ThreeMashProductDetailTemplate, {
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { publishSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
-import { isEnglishLocale, isTurkishText, localizedHref, tLocalized, EN_TO_TR_ROUTE_MAP } from "../../utils/i18n";
+import { isEnglishLocale, isTurkishText, localizedHref, tLocalized, tProp, EN_TO_TR_ROUTE_MAP } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
 import { Props } from "./types";
+import type { Props as SingleProductProps } from "../ThreeMashSingleProduct/types";
 import { isCustomerAuthenticated } from "../../utils/auth";
 import { safeRedirect } from "../../utils/safeRedirect";
 
 type PlainObject = Record<string, unknown>;
 type PreviewSelection = Record<string, string>;
+type SingleProductRuntimeProps = Props & SingleProductProps & { renderMode?: string };
 
 const CRS_COMPOSITE_SLUG = "crs-composite-mukemmel-dayanimli-gecici-recinesi";
+
+function localizedStudioText(
+  valueTr: string | undefined,
+  valueEn: string | undefined,
+  fallbackTr: string,
+  fallbackEn: string,
+) {
+  return tProp(isEnglishLocale() ? valueEn : valueTr, fallbackTr, fallbackEn);
+}
+
+function hasStudioTextOverride(
+  valueTr: string | undefined,
+  valueEn: string | undefined,
+  fallbackTr: string,
+  fallbackEn: string,
+) {
+  const normalizedTr = valueTr?.trim();
+  const normalizedEn = valueEn?.trim();
+  return Boolean(
+    (normalizedTr && normalizedTr !== fallbackTr) ||
+    (normalizedEn && normalizedEn !== fallbackEn)
+  );
+}
 
 const CRS_GALLERY: ProductGalleryItem[] = [
   {
@@ -543,21 +569,12 @@ function safeLocationPathname() {
 }
 
 function productSlug(product: IkasProduct | null) {
-  const data = product as unknown as { slug?: unknown; handle?: unknown; url?: unknown; path?: unknown; href?: unknown } | null;
-  const raw = stringValue(data?.slug) || stringValue(data?.handle) || stringValue(data?.url) || stringValue(data?.path) || stringValue(data?.href) || (product ? slugify(product.name) : "");
-  let slug = raw.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop();
-  if (!slug) {
-    const pathname = safeLocationPathname();
-    slug = pathname.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop() || "";
-  }
-  if (slug) {
-    const trMapped = EN_TO_TR_ROUTE_MAP[`/${slug}`] || EN_TO_TR_ROUTE_MAP[slug];
-    if (trMapped) {
-      return trMapped.replace(/^\/+/, "");
-    }
-    return slug;
-  }
-  return "";
+  const data = product as unknown as { slug?: unknown; handle?: unknown; url?: unknown; path?: unknown } | null;
+  const raw = stringValue(data?.slug) || stringValue(data?.handle) || stringValue(data?.url) || stringValue(data?.path) || (product ? slugify(product.name) : "");
+  const productDataSlug = raw.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop();
+  if (productDataSlug) return productDataSlug;
+  const pathname = safeLocationPathname();
+  return pathname.toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop() || "";
 }
 
 function isCrsComposite(product: IkasProduct | null) {
@@ -789,127 +806,128 @@ function linkValue(source: unknown) {
   return "";
 }
 
-function productDetailPropOverrides(props: Props) {
+function setLocalizedOverride(
+  target: PlainObject,
+  key: string,
+  valueTr: string | undefined,
+  valueEn: string | undefined,
+  fallbackTr: string,
+  fallbackEn: string,
+  onlyCustom: boolean,
+) {
+  if (onlyCustom && !hasStudioTextOverride(valueTr, valueEn, fallbackTr, fallbackEn)) return;
+  const value = localizedStudioText(valueTr, valueEn, fallbackTr, fallbackEn).trim();
+  if (value) target[key] = value;
+}
+
+function productDetailPropOverrides(props: SingleProductRuntimeProps, onlyCustom = false) {
   const announcement: PlainObject = {};
   const breadcrumb: PlainObject = {};
   const hero: PlainObject = {};
 
-  const announcementStrongText = trimmedText(props.announcementStrongText);
-  if (announcementStrongText) {
-    announcement.enabled = true;
-    announcement.strongText = announcementStrongText;
-  }
+  setLocalizedOverride(announcement, "strongText", props.announcementStrongText, props.announcementStrongTextEn, "Fırsatı kaçırmayın.", "Don't miss the opportunity.", onlyCustom);
+  setLocalizedOverride(announcement, "longText", props.announcementText, props.announcementTextEn, "CE Class IIa CRS Composite'i cihazınızın parametreleriyle birlikte kalibre ederek, ücretsiz kurulum desteğiyle teslim ediyoruz.", "We deliver the CE Class IIa CRS Composite calibrated with your device parameters and provide free setup support.", onlyCustom);
+  setLocalizedOverride(announcement, "ctaText", props.announcementButtonText, props.announcementButtonTextEn, "Ücretsiz parametre uyumlaması →", "Free parameter matching →", onlyCustom);
 
-  const announcementText = trimmedText(props.announcementText);
-  if (announcementText) {
-    announcement.enabled = true;
-    announcement.longText = announcementText;
-  }
-
-  const announcementButtonText = trimmedText(props.announcementButtonText);
-  if (announcementButtonText) {
-    announcement.enabled = true;
-    announcement.ctaText = announcementButtonText;
-  }
+  if (Object.keys(announcement).length) announcement.enabled = true;
 
   const announcementButtonHref = linkValue(props.announcementButtonHref);
   if (announcementButtonHref) {
-    announcement.enabled = true;
+    if (props.showAnnouncement !== false) announcement.enabled = true;
     announcement.ctaHref = announcementButtonHref;
   }
 
-  const breadcrumbCategoryText = trimmedText(props.breadcrumbCategoryText || props.categoryText);
-  if (breadcrumbCategoryText && breadcrumbCategoryText !== tLocalized("Kategori", "Category")) breadcrumb.categoryText = breadcrumbCategoryText;
+  if (props.showAnnouncement === false) announcement.enabled = false;
+
+  setLocalizedOverride(breadcrumb, "homeText", props.breadcrumbHomeText, props.breadcrumbHomeTextEn, "Ana sayfa", "Home", onlyCustom);
+  const categoryUsesPrimaryProp = Boolean(trimmedText(props.breadcrumbCategoryText));
+  setLocalizedOverride(
+    breadcrumb,
+    "categoryText",
+    categoryUsesPrimaryProp ? props.breadcrumbCategoryText : props.categoryText,
+    categoryUsesPrimaryProp ? props.breadcrumbCategoryTextEn : props.categoryTextEn,
+    categoryUsesPrimaryProp ? "Dental Reçineler" : "Kategori",
+    categoryUsesPrimaryProp ? "Dental Resins" : "Category",
+    onlyCustom,
+  );
 
   const breadcrumbCategoryHref = linkValue(props.breadcrumbCategoryHref);
   if (breadcrumbCategoryHref) breadcrumb.categoryHref = breadcrumbCategoryHref;
+  const breadcrumbHomeHref = linkValue(props.breadcrumbHomeHref);
+  if (breadcrumbHomeHref) breadcrumb.homeHref = breadcrumbHomeHref;
 
-  const heroKicker = trimmedText(props.heroKicker);
-  if (heroKicker) hero.kicker = heroKicker;
+  setLocalizedOverride(hero, "kicker", props.heroKicker, props.heroKickerEn, "CRS Composite · Biyouyumlu Kron-Köprü Reçinesi", "CRS Composite · Biocompatible Crown-and-Bridge Resin", onlyCustom);
+  setLocalizedOverride(hero, "titleHtml", props.heroTitleHtml, props.heroTitleHtmlEn, "Daimi kron artık <em>baskıdan</em> çıkıyor.", "The permanent crown now comes out of a <em>print.</em>", onlyCustom);
+  setLocalizedOverride(hero, "leadHtml", props.heroDescriptionHtml, props.heroDescriptionHtmlEn, "Geçici ve daimi kuron-köprülerin katmanlı üretimi için biyouyumlu reçine. Sektörde önde gelen rakiplerine kıyasla <b>daha yüksek bükülme mukavemeti</b> ve hassas marjinal uyum sağlar; yarı saydamlık-opaklık arasında dengeli translüsentliğe sahiptir. Ağız koşullarına dayanıklıdır, tat ve koku yapmaz.", "A biocompatible resin for layered production of temporary and permanent crowns and bridges. It provides <b>higher flexural strength</b> and precise marginal fit compared to leading competitors; it has balanced translucency between semi-transparency and opacity. It is resistant to oral conditions and produces no taste or odor.", onlyCustom);
 
-  const heroTitleHtml = trimmedText(props.heroTitleHtml);
-  if (heroTitleHtml) hero.titleHtml = heroTitleHtml;
-
-  const heroDescriptionHtml = trimmedText(props.heroDescriptionHtml);
-  if (heroDescriptionHtml) hero.leadHtml = heroDescriptionHtml;
-
-  const heroPill1Label = trimmedText(props.heroPill1Label);
-  const heroPill1Value = trimmedText(props.heroPill1Value);
-  const heroPill2Label = trimmedText(props.heroPill2Label);
-  const heroPill2Value = trimmedText(props.heroPill2Value);
-  const heroPill3Label = trimmedText(props.heroPill3Label);
-  const heroPill3Value = trimmedText(props.heroPill3Value);
-  const heroPill4Label = trimmedText(props.heroPill4Label);
-  const heroPill4Value = trimmedText(props.heroPill4Value);
+  const pillInputs = [
+    [props.heroPill1Label, props.heroPill1LabelEn, props.heroPill1Value, props.heroPill1ValueEn, "eğilme mukavemeti", "flexural strength", "144 MPa", "144 MPa"],
+    [props.heroPill2Label, props.heroPill2LabelEn, props.heroPill2Value, props.heroPill2ValueEn, "eğilme modülü", "flexural modulus", "5000 MPa", "5000 MPa"],
+    [props.heroPill3Label, props.heroPill3LabelEn, props.heroPill3Value, props.heroPill3ValueEn, "Class IIa", "Class IIa", "CE", "CE"],
+    [props.heroPill4Label, props.heroPill4LabelEn, props.heroPill4Value, props.heroPill4ValueEn, "Sararma yapmaz", "Does not turn yellow", "", ""],
+    [props.heroPill5Label, props.heroPill5LabelEn, props.heroPill5Value, props.heroPill5ValueEn, "yapmaz", "free", "Tat ve koku", "Taste and odor"],
+    [props.heroPill6Label, props.heroPill6LabelEn, props.heroPill6Value, props.heroPill6ValueEn, "dayanıklıdır", "oral conditions", "Ağız koşullarına", "Resistant to"],
+  ] as const;
 
   const pills: Array<{ label: string; value?: string }> = [];
-  if (heroPill1Label || heroPill1Value) pills.push({ label: heroPill1Label, value: heroPill1Value || undefined });
-  if (heroPill2Label || heroPill2Value) pills.push({ label: heroPill2Label, value: heroPill2Value || undefined });
-  if (heroPill3Label || heroPill3Value) pills.push({ label: heroPill3Label, value: heroPill3Value || undefined });
-  if (heroPill4Label || heroPill4Value) pills.push({ label: heroPill4Label, value: heroPill4Value || undefined });
-  if (pills.length) hero.pills = pills;
+  pillInputs.forEach(([labelTr, labelEn, valueTr, valueEn, labelFallbackTr, labelFallbackEn, valueFallbackTr, valueFallbackEn], index) => {
+    if (index === 4 && props.showHeroPill5 !== true) return;
+    if (index === 5 && props.showHeroPill6 !== true) return;
+    const label = localizedStudioText(labelTr, labelEn, labelFallbackTr, labelFallbackEn).trim();
+    const value = localizedStudioText(valueTr, valueEn, valueFallbackTr, valueFallbackEn).trim();
+    if (label || value) pills.push({ label, value: value || undefined });
+  });
+  if (!onlyCustom || pills.some((pill, index) => index >= 4) || pillInputs.slice(0, 4).some(([labelTr, labelEn, valueTr, valueEn, labelFallbackTr, labelFallbackEn, valueFallbackTr, valueFallbackEn]) =>
+    hasStudioTextOverride(labelTr, labelEn, labelFallbackTr, labelFallbackEn) ||
+    hasStudioTextOverride(valueTr, valueEn, valueFallbackTr, valueFallbackEn)
+  )) hero.pills = pills;
 
-  const galleryBadge = trimmedText(props.galleryBadge);
-  if (galleryBadge) hero.galleryBadge = galleryBadge;
-
-  const selectedPrefix = trimmedText(props.selectedPrefix);
-  if (selectedPrefix) hero.selectedPrefix = selectedPrefix;
-
-  const summarySuffix = trimmedText(props.summarySuffix);
-  if (summarySuffix) hero.summarySuffix = summarySuffix;
-
-  const whatsappButtonText = trimmedText(props.whatsappButtonText);
-  if (whatsappButtonText) hero.whatsappText = whatsappButtonText;
+  setLocalizedOverride(hero, "galleryBadge", props.galleryBadge, props.galleryBadgeEn, "CE CLASS IIa", "CE CLASS IIa", onlyCustom);
+  setLocalizedOverride(hero, "selectedPrefix", props.selectedPrefix, props.selectedPrefixEn, "Seçiminiz:", "Your selection:", onlyCustom);
+  setLocalizedOverride(hero, "summarySuffix", props.summarySuffix, props.summarySuffixEn, "— parametre uyarlaması ve teknik destek dahil.", "— parameter matching and technical support included.", onlyCustom);
+  setLocalizedOverride(hero, "whatsappText", props.whatsappButtonText, props.whatsappButtonTextEn, "WhatsApp'tan sor", "Ask via WhatsApp", onlyCustom);
 
   const whatsappButtonHref = linkValue(props.whatsappButtonHref);
   if (whatsappButtonHref) hero.whatsappHref = whatsappButtonHref;
 
-  const trustBadges = [props.trustBadge1, props.trustBadge2, props.trustBadge3].map(trimmedText).filter(Boolean);
-  if (trustBadges.length) hero.trustBadges = trustBadges;
+  const trustBadges = [
+    localizedStudioText(props.trustBadge1, props.trustBadge1En, "Ücretsiz kargo", "Free shipping"),
+    localizedStudioText(props.trustBadge2, props.trustBadge2En, "Koşulsuz iade", "Hassle-free returns"),
+    localizedStudioText(props.trustBadge3, props.trustBadge3En, "Güvenli ödeme", "Secure payment"),
+  ].map(trimmedText).filter(Boolean);
+  if (!onlyCustom || [props.trustBadge1, props.trustBadge2, props.trustBadge3].some((value, index) =>
+    hasStudioTextOverride(
+      value,
+      [props.trustBadge1En, props.trustBadge2En, props.trustBadge3En][index],
+      ["Ücretsiz kargo", "Koşulsuz iade", "Güvenli ödeme"][index],
+      ["Free shipping", "Hassle-free returns", "Secure payment"][index],
+    )
+  )) hero.trustBadges = trustBadges;
 
   const overrides: PlainObject = {};
-  if (Object.keys(announcement).length) overrides.announcement = announcement;
+  if (Object.keys(announcement).length || props.showAnnouncement === false) overrides.announcement = announcement;
   if (Object.keys(breadcrumb).length) overrides.breadcrumb = breadcrumb;
   if (Object.keys(hero).length) overrides.hero = hero;
   return overrides;
 }
 
-function productDetailPropKey(props: Props) {
-  return [
-    props.announcementStrongText,
-    props.announcementText,
-    props.announcementButtonText,
-    linkValue(props.announcementButtonHref),
-    props.breadcrumbCategoryText,
-    linkValue(props.breadcrumbCategoryHref),
-    props.heroKicker,
-    props.heroTitleHtml,
-    props.heroDescriptionHtml,
-    props.heroPill1Label,
-    props.heroPill1Value,
-    props.heroPill2Label,
-    props.heroPill2Value,
-    props.heroPill3Label,
-    props.heroPill3Value,
-    props.heroPill4Label,
-    props.heroPill4Value,
-    props.galleryBadge,
-    props.selectedPrefix,
-    props.summarySuffix,
-    props.whatsappButtonText,
-    linkValue(props.whatsappButtonHref),
-    props.trustBadge1,
-    props.trustBadge2,
-    props.trustBadge3,
-    props.categoryText,
-  ]
-    .map((item) => trimmedText(item))
+function productDetailPropKey(props: SingleProductRuntimeProps) {
+  return Object.entries(props)
+    .filter(([key]) => key !== "product" && key !== "renderMode")
+    .map(([key, value]) => {
+      if (/^galleryImage[1-5]$/.test(key) || key === "trustBadgeIconImage") {
+        const image = value as IkasImage | null | undefined;
+        return image ? getDefaultSrc(image) : "";
+      }
+      return typeof value === "object" ? linkValue(value) : String(value ?? "");
+    })
     .join("\n");
 }
 
-function propsTemplateData(props: Props): ProductDetailTemplateData {
+function propsTemplateData(props: SingleProductRuntimeProps): ProductDetailTemplateData {
   const template = deepMerge(CRS_COMPOSITE_TEMPLATE(), parseTemplateJson(props.productTemplateJson));
   const merged = deepMerge(template, productDetailPropOverrides(props));
+  merged.hero.gallery = studioGallery(merged.hero.gallery, props, false);
   return {
     ...merged,
     key: `${merged.key || CRS_COMPOSITE_SLUG}-studio-preview`,
@@ -927,6 +945,53 @@ function deepMerge<T>(base: T, override: unknown): T {
   return next as T;
 }
 
+function studioGallery(
+  gallery: ProductGalleryItem[],
+  props: SingleProductRuntimeProps,
+  onlyCustom: boolean,
+): ProductGalleryItem[] {
+  const images: Array<IkasImage | null | undefined> = [
+    props.galleryImage1,
+    props.galleryImage2,
+    props.galleryImage3,
+    props.galleryImage4,
+    props.galleryImage5,
+  ];
+  const altTexts = [
+    [props.galleryImage1Alt, props.galleryImage1AltEn, "CRS Composite CE Class IIa sertifikalı geçici ve daimi reçinesi", "CRS Composite CE Class IIa certified temporary and permanent resin"],
+    [props.galleryImage2Alt, props.galleryImage2AltEn, "CRS Composite kron uygulaması", "CRS Composite crown application"],
+    [props.galleryImage3Alt, props.galleryImage3AltEn, "CRS Composite köprü uygulaması", "CRS Composite bridge application"],
+    [props.galleryImage4Alt, props.galleryImage4AltEn, "CRS Composite restorasyon", "CRS Composite restoration"],
+    [props.galleryImage5Alt, props.galleryImage5AltEn, "CRS Composite model üzerinde geçici", "Temporary on the CRS Composite model"],
+  ] as const;
+
+  return Array.from({ length: Math.max(gallery.length, images.length) }, (_, index) => {
+    const image = images[index];
+    const existing = gallery[index];
+    const [altTr, altEn, fallbackTr, fallbackEn] = altTexts[index];
+    const hasAltOverride = hasStudioTextOverride(altTr, altEn, fallbackTr, fallbackEn);
+    if (!image && !existing) return null;
+
+    const src = image ? getDefaultSrc(image) : existing?.src;
+    if (!src) return existing || null;
+
+    const alt = image
+      ? hasAltOverride
+        ? localizedStudioText(altTr, altEn, fallbackTr, fallbackEn)
+        : (typeof image.altText === "string" && image.altText.trim()) || localizedStudioText(altTr, altEn, fallbackTr, fallbackEn)
+      : !onlyCustom || hasAltOverride
+        ? localizedStudioText(altTr, altEn, fallbackTr, fallbackEn)
+        : existing?.alt || fallbackTr;
+
+    return {
+      ...(existing || {}),
+      src,
+      alt,
+      ...(image ? { thumbSrc: undefined } : {}),
+    };
+  }).filter((item): item is ProductGalleryItem => item !== null);
+}
+
 function productMediaGallery(product: IkasProduct, variant: IkasProductVariant | null): ProductGalleryItem[] {
   const mediaList = allVariantMedia(variant).filter((item) => !isMediaVideo(item));
   const gallery = mediaList
@@ -941,15 +1006,25 @@ function productMediaGallery(product: IkasProduct, variant: IkasProductVariant |
   return mainImage ? [{ src: getDefaultSrc(mainImage), alt: mainImage.altText || product.name }] : [];
 }
 
-function makeWhatsappHref(product: IkasProduct) {
+function makeWhatsappHref(product: IkasProduct, props: SingleProductRuntimeProps) {
   const productUrl = typeof window !== "undefined" ? window.location.href : getProductHref(product);
-  const message = `Merhaba, ${product.name} ile ilgileniyorum. Detaylı bilgi alabilir miyim? ${productUrl}`;
-  return `https://wa.me/905314326577?text=${encodeURIComponent(message)}`;
+  const phoneNumber = trimmedText(props.whatsappPhoneNumber).replace(/\D/g, "");
+  if (!/^\d{8,15}$/.test(phoneNumber)) return "";
+  const template = localizedStudioText(
+    props.whatsappMessageTemplate,
+    props.whatsappMessageTemplateEn,
+    "Merhaba, {productName} ile ilgileniyorum. Detaylı bilgi alabilir miyim? {productUrl}",
+    "Hello, I am interested in {productName}. Could I get more information? {productUrl}",
+  );
+  const message = template
+    .split("{productName}").join(product.name)
+    .split("{productUrl}").join(productUrl || "");
+  return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 }
 
-function genericProductData(product: IkasProduct, variant: IkasProductVariant | null, labels: Pick<Props, "addToCartText" | "addingToCartText" | "outOfStockText">): ProductDetailTemplateData {
+function genericProductData(product: IkasProduct, variant: IkasProductVariant | null, labels: SingleProductRuntimeProps): ProductDetailTemplateData {
   const firstCategory = product.categories?.[0];
-  const categoryText = categoryName(firstCategory) || tLocalized("Ürünler", "Products");
+  const categoryText = categoryName(firstCategory) || product.brand?.name || "";
   const categoryLink = categoryHref(firstCategory);
   const gallery = productMediaGallery(product, variant);
   const href = getProductHref(product) || `/${productSlug(product)}`;
@@ -957,26 +1032,26 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
     key: productSlug(product) || product.id || product.name,
     announcement: { enabled: false, strongText: "", ctaText: "", ctaHref: "#satinal" },
     breadcrumb: {
-      homeText: tLocalized("Ana sayfa", "Home"),
+      homeText: localizedStudioText(labels.breadcrumbHomeText, labels.breadcrumbHomeTextEn, "Ana sayfa", "Home"),
       homeHref: "/",
       categoryText,
-      categoryHref: categoryLink || "/",
-      productText: stringValue(product.name) || stringValue((product as any)?.title) || tLocalized("Ürün", "Product"),
+      categoryHref: categoryLink,
+      productText: product.name,
     },
     hero: {
       kicker: categoryText,
       titleHtml: product.name,
-      leadHtml: summaryText(product) || tLocalized("Bu ürün hakkında detaylı bilgi için bizimle iletişime geçebilirsiniz.", "Contact us for detailed information about this product."),
+      leadHtml: summaryText(product),
       pills: [],
       gallery,
-      selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
+      selectedPrefix: localizedStudioText(labels.selectedPrefix, labels.selectedPrefixEn, "Seçiminiz:", "Your selection:"),
       summarySuffix: "",
       buyHrefBase: href,
-      whatsappHref: makeWhatsappHref(product),
-      whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
-      addToCartText: labels.addToCartText || tLocalized("Sepete ekle", "Add to cart"),
-      addingToCartText: labels.addingToCartText || tLocalized("Ekleniyor...", "Adding..."),
-      outOfStockText: labels.outOfStockText || tLocalized("Stok yok", "Out of stock"),
+      whatsappHref: makeWhatsappHref(product, labels),
+      whatsappText: localizedStudioText(labels.whatsappButtonText, labels.whatsappButtonTextEn, "WhatsApp'tan sor", "Ask via WhatsApp"),
+      addToCartText: localizedStudioText(labels.addToCartText, labels.addToCartTextEn, "SEPETE EKLE", "ADD TO CART"),
+      addingToCartText: localizedStudioText(labels.addingToCartText, labels.addingToCartTextEn, "Ekleniyor...", "ADDING..."),
+      outOfStockText: localizedStudioText(labels.outOfStockText, labels.outOfStockTextEn, "Stok Yok", "OUT OF STOCK"),
       trustBadges: [],
     },
     ratings: {
@@ -1143,7 +1218,7 @@ function genericProductData(product: IkasProduct, variant: IkasProductVariant | 
 function templateData(
   product: IkasProduct,
   variant: IkasProductVariant | null,
-  props: Props
+  props: SingleProductRuntimeProps
 ) {
   const resolved = resolveProductDetailData(product) || genericProductData(product, variant, props);
 
@@ -1160,9 +1235,7 @@ function templateData(
     "trasformer-light-glass-mufla-sistemi",
   ]);
 
-  const labProduct =
-    typeof resolved.key === "string" &&
-    (LAB_PRODUCT_SLUGS.has(resolved.key) || Array.from(LAB_PRODUCT_SLUGS).some((slug) => resolved.key.startsWith(slug)));
+  const labProduct = typeof resolved.key === "string" && LAB_PRODUCT_SLUGS.has(resolved.key);
 
   const merged = labProduct
     ? resolved
@@ -1173,60 +1246,57 @@ function templateData(
       ),
       customJson(product)
     );
+  const studioMerged = deepMerge(merged, productDetailPropOverrides(props, true));
+  const gallery = studioGallery(
+    studioMerged.hero.gallery.length ? studioMerged.hero.gallery : productMediaGallery(product, variant),
+    props,
+    true,
+  );
 
   return {
-    ...merged,
-    key: `${merged.key}-${product.id || productSlug(product)}`,
-    breadcrumb: {
-      homeText: merged.breadcrumb?.homeText || tLocalized("Ana sayfa", "Home"),
-      homeHref: merged.breadcrumb?.homeHref || "/",
-      categoryText: merged.breadcrumb?.categoryText || tLocalized("Ürünler", "Products"),
-      categoryHref: merged.breadcrumb?.categoryHref || "/",
-      productText: merged.breadcrumb?.productText || stringValue(product?.name) || stringValue((product as any)?.title) || "Product",
-    },
+    ...studioMerged,
+    key: `${studioMerged.key}-${product.id || productSlug(product)}`,
     hero: {
-      ...merged.hero,
+      ...studioMerged.hero,
       addToCartText: labProduct
-        ? merged.hero.addToCartText
-        : props.addToCartText || merged.hero.addToCartText,
+        ? studioMerged.hero.addToCartText
+        : localizedStudioText(props.addToCartText, props.addToCartTextEn, "SEPETE EKLE", "ADD TO CART"),
       addingToCartText: labProduct
-        ? merged.hero.addingToCartText
-        : props.addingToCartText || merged.hero.addingToCartText,
+        ? studioMerged.hero.addingToCartText
+        : localizedStudioText(props.addingToCartText, props.addingToCartTextEn, "Ekleniyor...", "ADDING..."),
       outOfStockText: labProduct
-        ? merged.hero.outOfStockText
-        : props.outOfStockText || merged.hero.outOfStockText,
-      gallery: merged.hero.gallery.length
-        ? merged.hero.gallery
-        : productMediaGallery(product, variant),
+        ? studioMerged.hero.outOfStockText
+        : localizedStudioText(props.outOfStockText, props.outOfStockTextEn, "Stok Yok", "OUT OF STOCK"),
+      gallery,
     },
   };
 }
 
-function previewVariantGroups(selection: PreviewSelection): ProductVariantGroup[] {
+function previewVariantGroups(selection: PreviewSelection, props: SingleProductRuntimeProps): ProductVariantGroup[] {
   return [
     {
       id: "preview-color",
-      name: tLocalized("Renk", "Colour"),
+      name: localizedStudioText(props.previewColorLabel, props.previewColorLabelEn, "Renk", "Colour"),
       values: [
-        { id: tLocalized("A1", "A1"), name: tLocalized("A1", "A1"), color: "#ede9d0" },
-        { id: tLocalized("A2", "A2"), name: tLocalized("A2", "A2"), color: "#efead4" },
-        { id: tLocalized("A3", "A3"), name: tLocalized("A3", "A3"), color: "#e1d6b5" },
+        { id: "preview-color-1", name: localizedStudioText(props.previewColor1, props.previewColor1En, "A1", "A1"), color: props.previewColorHex1 || "#ede9d0" },
+        { id: "preview-color-2", name: localizedStudioText(props.previewColor2, props.previewColor2En, "A2", "A2"), color: props.previewColorHex2 || "#efead4" },
+        { id: "preview-color-3", name: localizedStudioText(props.previewColor3, props.previewColor3En, "A3", "A3"), color: props.previewColorHex3 || "#e1d6b5" },
       ].map((value) => ({
         ...value,
-        selected: (selection["preview-color"] || tLocalized("A1", "A1")) === value.id,
+        selected: (selection["preview-color"] || "preview-color-1") === value.id,
         hasStock: true,
         rawValue: { groupId: "preview-color", valueId: value.id },
       })),
     },
     {
       id: "preview-size",
-      name: tLocalized("Boyut", "Dimension"),
+      name: localizedStudioText(props.previewSizeLabel, props.previewSizeLabelEn, "Boyut", "Dimension"),
       values: [
-        { id: "500-gr", name: tLocalized("500 gr", "500g") },
-        { id: "1000-gr", name: tLocalized("1000 gr", "1000g") },
+        { id: "preview-size-1", name: localizedStudioText(props.previewSize1, props.previewSize1En, "500 gr", "500 g") },
+        { id: "preview-size-2", name: localizedStudioText(props.previewSize2, props.previewSize2En, "1000 gr", "1000 g") },
       ].map((value) => ({
         ...value,
-        selected: (selection["preview-size"] || "500-gr") === value.id,
+        selected: (selection["preview-size"] || "preview-size-1") === value.id,
         hasStock: true,
         rawValue: { groupId: "preview-size", valueId: value.id },
       })),
@@ -1235,38 +1305,27 @@ function previewVariantGroups(selection: PreviewSelection): ProductVariantGroup[
 }
 
 function variantGroups(product: IkasProduct): ProductVariantGroup[] {
-  if (!product || !Array.isArray(product.variantTypes) || !product.variantTypes.length) {
-    return [];
-  }
-  try {
-    return (getDisplayedProductVariantTypes(product) || []).map((variantType) => {
-      if (!variantType?.variantType) return null;
-      const typeName = variantType.variantType.name || "";
-      const rawValues = Array.isArray(variantType.displayedVariantValues) ? variantType.displayedVariantValues : [];
-      const values = uniqueDisplayedVariantValues(rawValues).map((item) => {
-        if (!item?.variantValue) return null;
-        const color = colorForVariantValue(product, variantType, item.variantValue);
-        const type = normalizedVariantText(typeName);
-        const isColor = type.includes("renk") || type.includes("color") || Boolean(color);
-        return {
-          id: item.variantValue.id || "",
-          name: item.variantValue.name || "",
-          selected: !!item.isSelected,
-          hasStock: !!item.hasStock,
-          color: isColor ? color || "#ede9d0" : undefined,
-          rawValue: item.variantValue,
-        };
-      }).filter(Boolean) as ProductVariantGroup["values"];
+  return (getDisplayedProductVariantTypes(product) || []).map((variantType) => {
+    const typeName = variantType.variantType.name || "";
+    const values = uniqueDisplayedVariantValues(variantType.displayedVariantValues).map((item) => {
+      const color = colorForVariantValue(product, variantType, item.variantValue);
+      const type = normalizedVariantText(typeName);
+      const isColor = type.includes("renk") || type.includes("color") || Boolean(color);
       return {
-        id: variantType.variantType.id || "",
-        name: typeName,
-        values,
+        id: item.variantValue.id,
+        name: item.variantValue.name || "",
+        selected: !!item.isSelected,
+        hasStock: !!item.hasStock,
+        color: isColor ? color || "#ede9d0" : undefined,
+        rawValue: item.variantValue,
       };
-    }).filter(Boolean) as ProductVariantGroup[];
-  } catch (error) {
-    debugError("ThreeMashProductDetailLive: variantGroups resolution failed", error);
-    return [];
-  }
+    });
+    return {
+      id: variantType.variantType.id,
+      name: typeName,
+      values,
+    };
+  });
 }
 
 function selectedSummary(data: ProductDetailTemplateData, groups: ProductVariantGroup[]) {
@@ -1280,7 +1339,7 @@ function themeToken(value: string | undefined, defaultValue: string, tokenName: 
   return `var(${tokenName}, ${defaultValue})`;
 }
 
-export function ThreeMashProductDetailLive(props: Props) {
+export function ThreeMashProductDetailLive(props: SingleProductRuntimeProps) {
   const [fetchedProduct, setFetchedProduct] = useState<IkasProduct | null>(null);
   const product = props.product || fetchedProduct;
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -1303,11 +1362,6 @@ export function ThreeMashProductDetailLive(props: Props) {
     const trTarget = EN_TO_TR_ROUTE_MAP[`/${rawSlug}`] || EN_TO_TR_ROUTE_MAP[path];
     const trSlug = trTarget ? trTarget.replace(/^\//, "") : rawSlug;
 
-    // If we already have static template data for this slug (lab products, systems, etc.),
-    // there is no need to search Ikas — doing so risks getting an unrelated product back
-    // (e.g. CRS Aligner as the top hit) and overriding the correct template display.
-    if (resolveProductDetailData({ slug: trSlug })) return;
-
     const searchQuery = trSlug.replace(/-/g, " ");
 
     apiSearchProducts({
@@ -1325,24 +1379,8 @@ export function ThreeMashProductDetailLive(props: Props) {
         const match =
           products.find((p) => {
             const s = productSlug(p);
-            const pName = slugify(p.name || "");
-            const pHref = stringValue((p as unknown as { href?: unknown })?.href).toLocaleLowerCase("tr").replace(/^\/+|\/+$/g, "").split("/").pop() || "";
-            return (
-              s === trSlug ||
-              s === rawSlug ||
-              pHref === trSlug ||
-              pHref === rawSlug ||
-              pName === trSlug ||
-              pName === rawSlug ||
-              (trSlug.includes("curie-m1") && (s.includes("curie-m1") || pName.includes("curie-m1") || pHref.includes("curie-m1"))) ||
-              (trSlug.includes("p16l") && (s.includes("p16l") || pName.includes("p16l") || pHref.includes("p16l")))
-            );
-          }) || products.find((p) => {
-            const s = productSlug(p);
-            const pName = slugify(p.name || "");
-            const tokens = trSlug.split("-").filter((t) => t.length > 2 && t !== "dental" && t !== "resin" && t !== "yazici" && t !== "printer");
-            return tokens.length > 0 && tokens.every((token) => s.includes(token) || pName.includes(token));
-          });
+            return s === trSlug || s === rawSlug;
+          }) || products[0];
 
         if (match) {
           setFetchedProduct(match);
@@ -1376,52 +1414,15 @@ export function ThreeMashProductDetailLive(props: Props) {
   const image = allVariantMedia(variant)[selectedImageIndex]?.image || (variant ? getProductVariantMainImage(variant)?.image : undefined);
   const detailPropKey = productDetailPropKey(props);
   const data = useMemo(
-    () => {
-      if (product) return templateData(product, variant, props);
-      if (props.showTemplatePreview === false) return null;
-      const initialPath = typeof window !== "undefined" ? window.location.pathname : "";
-      const pathSlug = initialPath.replace(/^\/en(\/|$)/, "/").replace(/\/+$/, "").replace(/^\//, "");
-      const resolvedDirect = resolveProductDetailData({ slug: pathSlug }, props.productTemplateJson);
-      if (resolvedDirect) {
-        return deepMerge(resolvedDirect, productDetailPropOverrides(props));
-      }
-      return propsTemplateData(props);
-    },
+    () => (product ? templateData(product, variant, props) : props.showTemplatePreview === false ? null : propsTemplateData(props)),
     [product?.id, version, props.addToCartText, props.addingToCartText, props.outOfStockText, props.productTemplateJson, props.showTemplatePreview, detailPropKey],
   );
   if (typeof window !== "undefined") {
     (window as unknown as { __THREE_MASH_PRODUCT_DETAIL_DATA__?: unknown }).__THREE_MASH_PRODUCT_DETAIL_DATA__ = data;
   }
-  const groups = useMemo(() => (product ? variantGroups(product) : previewVariantGroups(previewSelection)), [product?.id, version, previewSelection]);
-
-  const safeHasProductStock = (p: IkasProduct | null): boolean => {
-    if (!p) return false;
-    if (!Array.isArray(p.variants) || !p.variants.length) return true;
-    try {
-      return !!hasProductStock(p);
-    } catch {
-      return true;
-    }
-  };
-  const safeHasVariantStock = (v: IkasProductVariant | null): boolean => {
-    if (!v) return false;
-    try {
-      return !!hasProductVariantStock(v);
-    } catch {
-      return true;
-    }
-  };
-  const safeHasValidOptionValues = (p: IkasProduct | null): boolean => {
-    if (!p) return true;
-    try {
-      return !!hasProductValidOptionValues(p);
-    } catch {
-      return true;
-    }
-  };
-
-  const isInStock = !!product && !!variant && safeHasProductStock(product) && safeHasVariantStock(variant);
-  const requiresVariantSelection = !!product && !safeHasValidOptionValues(product);
+  const groups = useMemo(() => (product ? variantGroups(product) : previewVariantGroups(previewSelection, props)), [product?.id, version, previewSelection, detailPropKey]);
+  const isInStock = !!product && !!variant && hasProductStock(product) && hasProductVariantStock(variant);
+  const requiresVariantSelection = !!product && !hasProductValidOptionValues(product);
   // IKAS can return an incomplete variant in the Studio "Tekli Ürün" preview.
   // The native price helpers assume price data exists and can throw on undefined.discountPrice.
   // Keep this component render-safe when Studio gives us an incomplete variant.
@@ -1541,7 +1542,7 @@ export function ThreeMashProductDetailLive(props: Props) {
     if (!product || !variant || !isInStock || isAdding) return;
 
     if (isCustomerAuthenticated() !== "authenticated") {
-      setMessage(tLocalized("Lütfen giriş yapın.", "Please sign in."));
+      setMessage(localizedStudioText(props.loginRequiredMessage, props.loginRequiredMessageEn, "Lütfen giriş yapın.", "Please sign in."));
       window.setTimeout(() => {
         window.location.href = safeRedirect(localizedHref("/account/login"));
       }, 250);
@@ -1549,18 +1550,12 @@ export function ThreeMashProductDetailLive(props: Props) {
     }
 
     if (!hasProductValidOptionValues(product)) {
-      setMessage(
-        props.optionRequiredMessage ||
-        tLocalized("Lütfen gerekli ürün seçeneklerini tamamlayın.", "Please complete the required product options.")
-      );
+      setMessage(localizedStudioText(props.optionRequiredMessage, props.optionRequiredMessageEn, "Lütfen gerekli ürün seçeneklerini tamamlayın.", "Please complete the required product options."));
       return;
     }
 
     if (!isAddToCartEnabled(product)) {
-      setMessage(
-        props.addToCartErrorMessage ||
-        tLocalized("Ürün sepete eklenemiyor.", "The product cannot be added to the cart.")
-      );
+      setMessage(localizedStudioText(props.addToCartErrorMessage, props.addToCartErrorMessageEn, "Ürün sepete eklenemiyor.", "The product cannot be added to the cart."));
       return;
     }
 
@@ -1571,7 +1566,9 @@ export function ThreeMashProductDetailLive(props: Props) {
       rememberOrderLineImageFallback(
         product,
         variant,
-        image ? [getDefaultSrc(image)] : []
+        data?.hero.gallery[selectedImageIndex]?.src
+          ? [data.hero.gallery[selectedImageIndex].src]
+          : image ? [getDefaultSrc(image)] : []
       );
 
       const result = await addItemToCart(
@@ -1592,17 +1589,11 @@ export function ThreeMashProductDetailLive(props: Props) {
         // Server'dan arkada doğrula.
         void refreshGlobalCart();
       } else {
-        setMessage(
-          props.addToCartErrorMessage ||
-          tLocalized("Ürün sepete eklenemedi.", "The product could not be added to the cart.")
-        );
+        setMessage(localizedStudioText(props.addToCartErrorMessage, props.addToCartErrorMessageEn, "Ürün sepete eklenemedi.", "The product could not be added to the cart."));
       }
     } catch (error) {
       debugError("ThreeMashProductDetailLive add to cart failed", error);
-      setMessage(
-        props.addToCartErrorMessage ||
-        tLocalized("Ürün sepete eklenemedi. Lütfen daha sonra tekrar deneyin.", "The product could not be added to the cart. Please try again.")
-      );
+      setMessage(localizedStudioText(props.addToCartErrorMessage, props.addToCartErrorMessageEn, "Ürün sepete eklenemedi. Lütfen daha sonra tekrar deneyin.", "The product could not be added to the cart. Please try again."));
     } finally {
       setIsAdding(false);
     }
@@ -1612,19 +1603,31 @@ export function ThreeMashProductDetailLive(props: Props) {
     return (
       <section className="three-mash-product-detail-live" style={style}>
         <div className="tmpdl-setup">
-          {props.setupMessage || tLocalized("Ürün detayları kısa süre içinde burada gösterilecek.", "Product details will be shown here shortly.")}
+          {localizedStudioText(props.setupMessage, props.setupMessageEn, "Bu bölüm Ürün Sayfası için tasarlandı. Ürün alanını ikas ürün verisine bağlayın.", "This section is designed for product pages. Connect the product field to ikas product data.")}
         </div>
       </section>
     );
   }
 
-  if ((props as unknown as { renderMode?: string }).renderMode === "hero") {
+  if (props.renderMode === "hero") {
     return (
       <section className="three-mash-product-detail-live" style={style} data-product-detail-key={data.key}>
         <ProductDetailSectionScope data={data}>
           <ProductDetailHeroSection
             data={data}
             variantGroups={groups}
+            showBreadcrumb={props.showBreadcrumb !== false}
+            showGallery={props.showGallery !== false}
+            showGalleryBadge={props.showGalleryBadge !== false}
+            galleryThumbAriaLabel={localizedStudioText(props.galleryThumbAriaLabel, props.galleryThumbAriaLabelEn, "Ürün görseli", "Product image")}
+            trustBadgeIconSrc={props.trustBadgeIconImage ? getDefaultSrc(props.trustBadgeIconImage) : ""}
+            showHeroKicker={props.showHeroKicker !== false}
+            showHeroDescription={props.showHeroDescription !== false}
+            showHeroPills={props.showHeroPills !== false}
+            showSelectionSummary={props.showSelectionSummary !== false}
+            showAddToCartButton={props.showAddToCartButton !== false}
+            showWhatsAppButton={props.showWhatsAppButton !== false}
+            showTrustBadges={props.showTrustBadges !== false}
             selectedGalleryIndex={selectedImageIndex}
             onGallerySelect={setSelectedImageIndex}
             onVariantSelect={(value) => {
@@ -1644,7 +1647,7 @@ export function ThreeMashProductDetailLive(props: Props) {
             onAddToCart={handleAddToCart}
             isAddToCartDisabled={addDisabled}
             isAdding={isAdding}
-            message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || tLocalized("Stok yok", "Out of stock"))) : "")}
+            message={message || (product && !isInStock ? data.hero.outOfStockText : "")}
             price={safeFinalPrice(variant)}
             compareAtPrice={hasDiscount ? safeSellPrice(variant) : ""}
             selectedSummary={selectedSummary(data, groups)}
@@ -1659,6 +1662,13 @@ export function ThreeMashProductDetailLive(props: Props) {
       <ThreeMashProductDetailTemplate
         data={data}
         variantGroups={groups}
+        visibility={{
+          photos: props.showPhotos !== false,
+          card1: props.showUseCard1 !== false,
+          card2: props.showUseCard2 !== false,
+          devices: props.showDevices !== false,
+          ecosystem: props.showEcosystem !== false,
+        }}
         selectedGalleryIndex={selectedImageIndex}
         onGallerySelect={setSelectedImageIndex}
         onVariantSelect={(value) => {

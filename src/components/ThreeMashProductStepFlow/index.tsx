@@ -1,5 +1,5 @@
 import { Props } from "./types";
-import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
+import { isEnglishLocale, isTurkishText } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -10,57 +10,67 @@ function trimmedText(value: unknown, fallback = ""): string {
   return trimmed;
 }
 
+function localizedText(value: unknown, englishValue: unknown, turkishFallback: string, englishFallback: string): string {
+  const english = isEnglishLocale();
+  return trimmedText(english ? englishValue : value, english ? englishFallback : turkishFallback);
+}
+
 export function ThreeMashProductStepFlow(props: Props) {
   const index = trimmedText(props.sectionIndex, "07");
-  const label = trimmedText(props.sectionLabel, tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"));
+  const label = localizedText(props.sectionLabel, props.sectionLabelEn, "DİJİTAL İŞ AKIŞI", "DIGITAL WORKFLOW");
   const titleHtml = trimmedText(
-    props.titleHtml,
-    tLocalized('Adım adım iş akışı <span class="em">başlığı buraya gelecek.</span>', 'Step-by-step workflow <span class="em">title goes here.</span>')
+    isEnglishLocale() ? props.titleHtmlEn : props.titleHtml,
+    isEnglishLocale()
+      ? 'Step-by-step workflow <span class="em">title goes here.</span>'
+      : 'Adım adım iş akışı <span class="em">başlığı buraya gelecek.</span>'
   );
   const sideHtml = trimmedText(
-    props.sideHtml,
-    tLocalized("İş akışı ve üretim süreçlerinin aşamalarını anlatan genel açıklama metni buraya gelecek.", "General description explaining the workflow and production stages goes here."
-    )
+    isEnglishLocale() ? props.sideHtmlEn : props.sideHtml,
+    isEnglishLocale()
+      ? "General description explaining the workflow and production stages goes here."
+      : "İş akışı ve üretim süreçlerinin aşamalarını anlatan genel açıklama metni buraya gelecek."
   );
 
   const steps = [
     {
       num: trimmedText(props.step1Number, "01"),
-      title: trimmedText(props.step1Title, tLocalized("1. Aşama Başlığı", "Stage 1 Title")),
-      desc: trimmedText(props.step1Description, tLocalized("İş akışının 1. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 1 goes here.")),
-      tag: trimmedText(props.step1Tag, tLocalized("1. AŞAMA", "STAGE 1")),
+      title: localizedText(props.step1Title, props.step1TitleEn, "1. Aşama Başlığı", "Stage 1 Title"),
+      desc: localizedText(props.step1Description, props.step1DescriptionEn, "İş akışının 1. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 1 goes here."),
+      tag: localizedText(props.step1Tag, props.step1TagEn, "TASARIM", "DESIGN"),
+      show: props.showStep1 !== false,
     },
     {
       num: trimmedText(props.step2Number, "02"),
-      title: trimmedText(props.step2Title, tLocalized("2. Aşama Başlığı", "Stage 2 Title")),
-      desc: trimmedText(props.step2Description, tLocalized("İş akışının 2. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 2 goes here.")),
-      tag: trimmedText(props.step2Tag, tLocalized("2. AŞAMA", "STAGE 2")),
+      title: localizedText(props.step2Title, props.step2TitleEn, "2. Aşama Başlığı", "Stage 2 Title"),
+      desc: localizedText(props.step2Description, props.step2DescriptionEn, "İş akışının 2. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 2 goes here."),
+      tag: localizedText(props.step2Tag, props.step2TagEn, "BASKI", "PRINTING"),
+      show: props.showStep2 !== false,
     },
     {
       num: trimmedText(props.step3Number, "03"),
-      title: trimmedText(props.step3Title, tLocalized("3. Aşama Başlığı", "Stage 3 Title")),
-      desc: trimmedText(props.step3Description, tLocalized("İş akışının 3. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 3 goes here.")),
-      tag: trimmedText(props.step3Tag, tLocalized("3. AŞAMA", "STAGE 3")),
+      title: localizedText(props.step3Title, props.step3TitleEn, "3. Aşama Başlığı", "Stage 3 Title"),
+      desc: localizedText(props.step3Description, props.step3DescriptionEn, "İş akışının 3. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 3 goes here."),
+      tag: localizedText(props.step3Tag, props.step3TagEn, "POST-CURE", "POST-CURE"),
+      show: props.showStep3 !== false,
     },
     {
       num: trimmedText(props.step4Number, "04"),
-      title: trimmedText(props.step4Title, tLocalized("4. Aşama Başlığı", "Stage 4 Title")),
-      desc: trimmedText(props.step4Description, tLocalized("İş akışının 4. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 4 goes here.")),
-      tag: trimmedText(props.step4Tag, tLocalized("4. AŞAMA", "STAGE 4")),
+      title: localizedText(props.step4Title, props.step4TitleEn, "4. Aşama Başlığı", "Stage 4 Title"),
+      desc: localizedText(props.step4Description, props.step4DescriptionEn, "İş akışının 4. adımında yapılan işlemlerin detaylı açıklaması buraya gelecek.", "Detailed description for stage 4 goes here."),
+      tag: localizedText(props.step4Tag, props.step4TagEn, "TESLİMAT", "DELIVERY"),
+      show: props.showStep4 !== false,
     },
   ];
 
-  const ctaTitle = trimmedText(props.ctaTitle, tLocalized("Alt Aksiyon Kartı Başlığı", "Bottom Action Card Title"));
+  const ctaTitle = localizedText(props.ctaTitle, props.ctaTitleEn, "İş Akışınızı Birlikte Optimize Edelim", "Let's Optimize Your Workflow Together");
   const ctaDesc = trimmedText(
-    props.ctaDescription,
-    tLocalized("İş akışı ile ilgili danışmanlık veya teklif almak isteyenler için alt açıklama metni.", "Bottom description text for those seeking workflow consulting or a quote."
-    )
+    isEnglishLocale() ? props.ctaDescriptionEn : props.ctaDescription,
+    isEnglishLocale()
+      ? "Bottom description text for those seeking workflow consulting or a quote."
+      : "İş akışı ile ilgili danışmanlık veya teklif almak isteyenler için alt açıklama metni."
   );
-  const ctaBtnText = trimmedText(props.ctaButtonText, tLocalized("Aksiyon Buton Metni →", "Action Button Text →"));
-  const ctaBtnHref = safeNavigationHref(
-    props.ctaButtonHref,
-    "#"
-  );
+  const ctaBtnText = localizedText(props.ctaButtonText, props.ctaButtonTextEn, "Ücretsiz Danışmanlık Alın →", "Get Free Consultation →");
+  const ctaBtnHref = safeNavigationHref(props.ctaButtonHref, "#");
 
   return (
     <section className="tm-flow-section">
@@ -77,7 +87,7 @@ export function ThreeMashProductStepFlow(props: Props) {
         </div>
 
         <div className="tm-flow-steps">
-          {steps.map((step, idx) => (
+          {steps.filter((step) => step.show).map((step, idx) => (
             <article className="tm-flow-card" key={idx}>
               <div className="tm-flow-card-top">
                 <span className="tm-flow-step-num">{step.num}</span>
@@ -91,17 +101,19 @@ export function ThreeMashProductStepFlow(props: Props) {
           ))}
         </div>
 
-        <div className="tm-flow-cta-card">
-          <div className="tm-flow-cta-copy">
-            <h4>{ctaTitle}</h4>
-            <p>{ctaDesc}</p>
+        {props.showWorkflowCta !== false ? (
+          <div className="tm-flow-cta-card">
+            <div className="tm-flow-cta-copy">
+              <h4>{ctaTitle}</h4>
+              <p>{ctaDesc}</p>
+            </div>
+            {ctaBtnText ? (
+              <a className="tm-flow-cta-btn" href={ctaBtnHref} target="_blank" rel="noopener noreferrer">
+                {ctaBtnText}
+              </a>
+            ) : null}
           </div>
-          {ctaBtnText ? (
-            <a className="tm-flow-cta-btn" href={ctaBtnHref} target="_blank" rel="noopener noreferrer">
-              {ctaBtnText}
-            </a>
-          ) : null}
-        </div>
+        ) : null}
       </div>
     </section>
   );

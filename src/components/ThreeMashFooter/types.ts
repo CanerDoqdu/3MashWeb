@@ -15,7 +15,7 @@ export interface Props {
   /** Tam domain kullanmayın; kategori routeunu /yikama-kurleme-cihazlari olarak girin. */
   productLink3Href?: string;
   productLink4Text?: string;
-  /** Tam domain kullanmayın; kategori routeunu /zirkon-bloklar olarak girin. */
+  /** Kategori rotasını tam domain olmadan /masasustu-tarayicilar biçiminde girin. */
   productLink4Href?: string;
   companyLink1Text?: string;
   /** Hakkımızda sayfası için yayın routeu: /pages/hakkimizda. */
@@ -27,15 +27,16 @@ export interface Props {
   /** Tam domain kullanmayın; blog routeunu /blog olarak girin. */
   companyLink3Href?: string;
   companyLink4Text?: string;
-  /** Tam domain kullanmayın; iletişim routeunu /pages/iletisim olarak girin. */
+  /** SSS sayfası için yayın rotası /pages/sss biçimindedir. */
   companyLink4Href?: string;
   contactLink1Text?: string;
   /** Email için mailto: formatı kullanılır. */
   contactLink1Href?: string;
   contactLink2Text?: string;
-  /** Harita linki dış Linkidır. */
+  /** Harita bağlantısı için HTTPS adresi kullanın. */
   contactLink2Href?: string;
   contactLink3Text?: string;
+  /** Telefon bağlantısını tel:+ülke-kodu-numara biçiminde girin. */
   contactLink3Href?: string;
   copyrightText?: string;
   backgroundColor?: string;
@@ -63,7 +64,9 @@ export interface Props {
   logoImageAlt?: string;
   /** Logo görseli veya Logo SVG kullanın. İkisi de girilirse Logo SVG gösterilir. */
   logoSvg?: string;
+  /** Genişlik piksel cinsindendir; geçerli aralık 40–300 px. */
   logoImageWidth?: number;
+  /** Yükseklik piksel cinsindendir; geçerli aralık 12–100 px. */
   logoImageHeight?: number;
   logoImageXOffset?: number;
   logoImageYOffset?: number;
@@ -74,7 +77,9 @@ export interface Props {
   logoImageSaturation?: number;
   logoImageHue?: number;
   logoImageInvert?: number;
+  /** Genişlik piksel cinsindendir; geçerli aralık 40–300 px. */
   logoSvgWidth?: number;
+  /** Yükseklik piksel cinsindendir; geçerli aralık 12–100 px. */
   logoSvgHeight?: number;
   logoSvgXOffset?: number;
   logoSvgYOffset?: number;
@@ -90,21 +95,101 @@ export interface Props {
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
   productLink5Text?: string;
-  /** Tam domain kullanmayın; kategori routeunu /dental-firinlar olarak girin. */
+  /** Kategori rotasını tam domain olmadan /zirkon-bloklar biçiminde girin. */
   productLink5Href?: string;
+  /** Altıncı bağlantıyı gizlemek için görünürlük anahtarını kapatın. */
   productLink6Text?: string;
-  /** Beş ürün linki yeterliyse boş bırakın. */
+  /** Kategori rotasını tam domain olmadan /dental-firinlar biçiminde girin. */
   productLink6Href?: string;
   legalLink1Text?: string;
   /** KVKK sayfası için yayın routeu: /pages/kvkk. */
   legalLink1Href?: string;
   legalLink2Text?: string;
-  /** İade ve garanti sayfası için yayın routeu: /pages/iade-ve-garanti. */
+  /** Çerez tercihleri için # kullanın; bu bağlantı çerez ayarlarını açar. */
   legalLink2Href?: string;
   legalLink3Text?: string;
-  /** Mesafeli satış sayfası için yayın routeu: /pages/mesafeli-satis-sozlesmesi. */
+  /** İade ve garanti sayfası için yayın rotası /pages/iade-ve-garanti biçimindedir. */
   legalLink3Href?: string;
   legalLink4Text?: string;
-  /** Üyelik sözleşmesi sayfası için yayın routeu: /pages/uyelik-sozlesmesi. */
+  /** Mesafeli satış sayfası için yayın rotası /pages/mesafeli-satis-sozlesmesi biçimindedir. */
   legalLink4Href?: string;
+  descriptionTextEn?: string;
+  productColumnTitleEn?: string;
+  productLink1TextEn?: string;
+  productLink2TextEn?: string;
+  productLink3TextEn?: string;
+  productLink4TextEn?: string;
+  productLink5TextEn?: string;
+  productLink6TextEn?: string;
+  productFooterLinksEn?: IkasNavigationLinkList;
+  companyColumnTitleEn?: string;
+  companyLink1TextEn?: string;
+  companyLink2TextEn?: string;
+  companyLink3TextEn?: string;
+  companyLink4TextEn?: string;
+  companyFooterLinksEn?: IkasNavigationLinkList;
+  contactColumnTitleEn?: string;
+  contactLink1TextEn?: string;
+  contactLink2TextEn?: string;
+  contactLink3TextEn?: string;
+  contactFooterLinksEn?: IkasNavigationLinkList;
+  paymentMethodsLabel?: string;
+  paymentMethodsLabelEn?: string;
+  copyrightTextEn?: string;
+  legalLink1TextEn?: string;
+  legalLink2TextEn?: string;
+  legalLink3TextEn?: string;
+  legalLink4TextEn?: string;
+  showBrand?: boolean;
+  showDescription?: boolean;
+  showProductColumn?: boolean;
+  showCompanyColumn?: boolean;
+  showContactColumn?: boolean;
+  showSocialIcons?: boolean;
+  showPaymentBadges?: boolean;
+  showLegalInfo?: boolean;
+  showProductLink1?: boolean;
+  showProductLink2?: boolean;
+  showProductLink3?: boolean;
+  showProductLink4?: boolean;
+  showProductLink5?: boolean;
+  showProductLink6?: boolean;
+  showCompanyLink1?: boolean;
+  showLegalLink1?: boolean;
+  showCompanyLink2?: boolean;
+  showLegalLink2?: boolean;
+  showCompanyLink3?: boolean;
+  showLegalLink3?: boolean;
+  showCompanyLink4?: boolean;
+  showLegalLink4?: boolean;
+  showContactLink1?: boolean;
+  showContactLink2?: boolean;
+  showContactLink3?: boolean;
+  legalLink5Text?: string;
+  /** Üyelik sözleşmesi sayfası için yayın rotası /pages/uyelik-sozlesmesi biçimindedir. */
+  legalLink5Href?: string;
+  legalLink5TextEn?: string;
+  visaBadgeLabel?: string;
+  maestroBadgeLabel?: string;
+  mastercardBadgeLabel?: string;
+  showLegalLink5?: boolean;
+  /** Güvenli bağlantı için HTTPS adresi kullanın. */
+  facebookHref?: string;
+  facebookLabel?: string;
+  /** Güvenli bağlantı için HTTPS adresi kullanın. */
+  instagramHref?: string;
+  instagramLabel?: string;
+  /** Güvenli bağlantı için HTTPS adresi kullanın. */
+  youtubeHref?: string;
+  youtubeLabel?: string;
+  /** Güvenli bağlantı için HTTPS adresi kullanın. */
+  linkedinHref?: string;
+  linkedinLabel?: string;
+  facebookIconImage?: IkasImage | null;
+  instagramIconImage?: IkasImage | null;
+  youtubeIconImage?: IkasImage | null;
+  linkedinIconImage?: IkasImage | null;
+  visaBadgeImage?: IkasImage | null;
+  maestroBadgeImage?: IkasImage | null;
+  mastercardBadgeImage?: IkasImage | null;
 }

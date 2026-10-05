@@ -7,6 +7,7 @@ import {
   getProductVariantFormattedFinalPrice,
   getProductVariantMainImage,
   getSelectedProductVariant,
+  type IkasImage,
   type IkasProduct,
   type IkasProductList,
   type IkasProductVariant,
@@ -173,6 +174,24 @@ export type CategoryLandingData = {
 };
 
 export type CategoryLandingOverrides = {
+  showAnnouncement?: boolean;
+  showHero?: boolean;
+  showMetrics?: boolean;
+  showSelector?: boolean;
+  showFeature?: boolean;
+  showDetail?: boolean;
+  showFaq?: boolean;
+  showFinalCta?: boolean;
+  printerP16lImage?: IkasImage | null;
+  printerCurieImage?: IkasImage | null;
+  printerHalotImage?: IkasImage | null;
+  printerP16lImageAlt?: string;
+  printerP16lImageAltEn?: string;
+  printerCurieImageAlt?: string;
+  printerCurieImageAltEn?: string;
+  printerHalotImageAlt?: string;
+  printerHalotImageAltEn?: string;
+
   // announcement
   eyebrowText?: string;
   announcementText?: string;
@@ -883,19 +902,22 @@ function ProductCard({
   cardCtaText,
   kind,
   product,
+  preferLiveImage,
 }: {
   card: CategoryProductCard;
   cardCtaText: string;
   kind: CategoryLandingData["kind"];
   product: IkasProduct | null;
+  preferLiveImage: boolean;
 }) {
   const variant = product ? safeVariant(product) : null;
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image;
   const href = resolveHref(product ? getProductHref(product) : card.href);
   const liveImageSrc = image ? getDefaultSrc(image) : "";
-  const imageSrc = card.sourceIcon ? "" : card.imageSrc || liveImageSrc;
-  const imageAlt = card.imageAlt || image?.altText || card.title;
+  const imageSrc = card.sourceIcon ? "" : preferLiveImage && liveImageSrc ? liveImageSrc : card.imageSrc || liveImageSrc;
+  const imageAlt = preferLiveImage ? image?.altText || card.imageAlt || card.title : card.imageAlt || image?.altText || card.title;
+  const imageSrcSet = preferLiveImage || !card.imageSrc ? (image ? createMediaSrcset(image) : undefined) : undefined;
 
   return (
     <a className={`tmcl-product-card${card.hot ? " is-hot" : ""}`} href={href}>
@@ -903,10 +925,10 @@ function ProductCard({
         {card.tag && kind !== "resins" ? <span className={`tmcl-card-tag${card.hot ? " is-hot" : ""}`}>{card.tag}</span> : null}
         {card.status ? <span className="tmcl-card-status">{card.status}</span> : null}
         {imageSrc ? (
-          media?.isVideo && !card.imageSrc ? (
+          media?.isVideo && (preferLiveImage || !card.imageSrc) ? (
             <video src={imageSrc} muted playsInline loop autoPlay />
           ) : (
-            <img src={imageSrc} srcSet={card.imageSrc || !image ? undefined : createMediaSrcset(image)} alt={imageAlt} loading="lazy" decoding="async" />
+            <img src={imageSrc} srcSet={imageSrcSet} alt={imageAlt} loading="lazy" decoding="async" />
           )
         ) : kind === "printers" ? (
           <PrinterIcon />
@@ -1142,6 +1164,10 @@ export default function ThreeMashCategoryLanding(props: Props) {
     liveProducts.forEach((product) => map.set(normalize(product.name), product));
     return map;
   }, [liveProducts]);
+  const configuredProductIds = useMemo(
+    () => new Set((productList?.data || []).map((product) => product.id)),
+    [productList?.data],
+  );
   const heroMetrics = baseHeroMetrics.map((metric, index) => {
     const priceMetricIndex = data.kind === "washing" ? 1 : data.kind === "curing" || data.kind === "zircon" ? 3 : data.kind === "wash-cure" ? 3 : -1;
     if (index !== priceMetricIndex) return metric;
@@ -1168,7 +1194,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
     if (typeof window === "undefined") return;
 
     const payload = {
-      enabled: true,
+      enabled: props.showAnnouncement !== false,
       highlightText: textValue(props.eyebrowText, data.announcement.highlight),
       text: textValue(props.announcementText, data.announcement.text),
       ctaText: textValue(props.announcementCtaText, data.announcement.ctaText),
@@ -1194,6 +1220,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
     props.announcementText,
     props.announcementCtaText,
     props.announcementHref,
+    props.showAnnouncement,
   ]);
 
   // Smooth scroll logic
@@ -1240,6 +1267,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
   return (
     <section className={`three-mash-category-landing tmcl-${data.kind}`} style={categoryStyle(props) as any}>
       {/* HERO SECTION */}
+      {props.showHero !== false && (
       <div className="tmcl-hero">
         <div className="tmcl-wrap">
           <div className="tmcl-crumb">
@@ -1258,11 +1286,11 @@ export default function ThreeMashCategoryLanding(props: Props) {
           </h1>
           <p dangerouslySetInnerHTML={rich(richValue(props.heroDescriptionHtml, data.hero.descriptionHtml))} />
           <div className="tmcl-actions">
-            {heroButtons.map((button) => (
+            {heroButtons.filter((_, index) => index > 0 || props.showSelector !== false).map((button) => (
               <ButtonLink button={button} key={`${button.label}-${button.href}`} />
             ))}
           </div>
-          <div className="tmcl-value-strip">
+          {props.showMetrics !== false ? <div className="tmcl-value-strip">
             {heroMetrics.map((metric) => (
               <div key={`${metric.value}-${metric.label}`}>
                 <strong>
@@ -1272,11 +1300,13 @@ export default function ThreeMashCategoryLanding(props: Props) {
                 <span>{metric.label}</span>
               </div>
             ))}
-          </div>
+          </div> : null}
         </div>
       </div>
+      )}
 
       {/* SECTION 01: SELECTOR & PRODUCTS */}
+      {props.showSelector !== false && (
       <section className="tmcl-section" id={data.selector.anchorId}>
         <div className="tmcl-wrap">
           <SectionHead
@@ -1305,15 +1335,19 @@ export default function ThreeMashCategoryLanding(props: Props) {
           ) : null}
 
           <div className={`tmcl-product-grid tmcl-product-grid-${data.kind}`}>
-            {visibleCards.map((card) => (
-              <ProductCard
-                card={card}
-                cardCtaText={textValue(props.selectorCardCtaText, data.selector.cardCtaText)}
-                kind={data.kind}
-                product={liveProductsByTitle.get(normalize(card.title)) || findLiveProduct(liveProducts, card.title)}
-                key={card.title}
-              />
-            ))}
+            {visibleCards.map((card) => {
+              const product = liveProductsByTitle.get(normalize(card.title)) || findLiveProduct(liveProducts, card.title);
+              return (
+                <ProductCard
+                  card={card}
+                  cardCtaText={textValue(props.selectorCardCtaText, data.selector.cardCtaText)}
+                  kind={data.kind}
+                  product={product}
+                  preferLiveImage={Boolean(product && configuredProductIds.has(product.id))}
+                  key={card.title}
+                />
+              );
+            })}
             {!visibleCards.length && data.selector.emptyMessageHtml ? (
               <div className="tmcl-empty" dangerouslySetInnerHTML={rich(data.selector.emptyMessageHtml)} />
             ) : null}
@@ -1376,8 +1410,10 @@ export default function ThreeMashCategoryLanding(props: Props) {
           ) : null}
         </div>
       </section>
+      )}
 
       {/* SECTION 02: FEATURE / HIGHLIGHT */}
+      {props.showFeature !== false && (
       <section className="tmcl-section tmcl-section-tight" id={routeKey(data.detail.label)}>
         <div className="tmcl-wrap">
           <SectionIndex
@@ -1410,8 +1446,10 @@ export default function ThreeMashCategoryLanding(props: Props) {
           </div>
         </div>
       </section>
+      )}
 
       {/* SECTION 03: DETAIL / WHY NEEDED */}
+      {props.showDetail !== false && (
       <section className="tmcl-section tmcl-section-tight">
         <div className="tmcl-wrap">
           <SectionHead
@@ -1474,8 +1512,10 @@ export default function ThreeMashCategoryLanding(props: Props) {
           ) : null}
         </div>
       </section>
+      )}
 
       {/* SECTION 04: FAQ */}
+      {props.showFaq !== false && (
       <section className="tmcl-section tmcl-section-tight" id="sss">
         <div className="tmcl-wrap">
           <SectionIndex
@@ -1493,8 +1533,10 @@ export default function ThreeMashCategoryLanding(props: Props) {
           </div>
         </div>
       </section>
+      )}
 
       {/* FINAL CTA SECTION */}
+      {props.showFinalCta !== false && (
       <section className="tmcl-final">
         <div className="tmcl-wrap">
           <h2>
@@ -1512,6 +1554,7 @@ export default function ThreeMashCategoryLanding(props: Props) {
           </div>
         </div>
       </section>
+      )}
     </section>
   );
 }

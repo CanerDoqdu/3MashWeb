@@ -69,4 +69,86 @@ export interface Props {
   accentColor?: string;
   /** CRS Composite kaynak yapısındaki reusable template datası. Boş bırakılırsa ürünün varsayılan şablon datası kullanılır. */
   productTemplateJson?: string;
+  /** Erişilebilir görsel açıklaması. Boşsa ürün verisindeki metin korunur. */
+  photo1Alt?: string;
+  /** Erişilebilir görsel açıklaması. Boşsa ürün verisindeki metin korunur. */
+  photo2Alt?: string;
+  /** Erişilebilir görsel açıklaması. Boşsa ürün verisindeki metin korunur. */
+  photo3Alt?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  sectionLabelEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  titleHtmlEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  sideHtmlEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  photo1TitleEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  photo1TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  photo1AltEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  photo2TitleEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  photo2TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  photo2AltEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  photo3TitleEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  photo3TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  photo3AltEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  cardEyebrowEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  cardTitleEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  bullet1TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  bullet2TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  bullet3TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  bullet4TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  bullet5TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  bullet6TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  cardNoteEn?: string;
+  /** Kart 2 başlığını, maddelerini ve isteğe bağlı notunu zengin metin alanında düzenler. Boş bırakılırsa ürün verisindeki içerik korunur. */
+  card2ContentHtml?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  card2ContentHtmlEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  devicesEyebrowEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  devicesTitleEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  devicesTextHtmlEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  devicesChipsEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  ecoLabelEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  ecoTitleHtmlEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  ecoTextHtmlEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  ecoChipsEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  ecoButton1TextEn?: string;
+  /** İngilizce sayfada kullanılır. Boşsa ürün verisindeki mevcut İngilizce içerik korunur. */
+  ecoButton2TextEn?: string;
+  /** Üç mevcut uygulama görselini birlikte gösterir veya gizler. */
+  showPhotos?: boolean;
+  /** İlk mevcut kullanım kartını gösterir veya gizler. */
+  showUseCard1?: boolean;
+  /** İkinci mevcut kullanım kartını gösterir veya gizler. */
+  showUseCard2?: boolean;
+  /** Uyumlu cihazları ve marka etiketlerini gösterir veya gizler. */
+  showDevices?: boolean;
+  /** Tarama ekosistemi içeriğini gösterir veya gizler. */
+  showEcosystem?: boolean;
 }

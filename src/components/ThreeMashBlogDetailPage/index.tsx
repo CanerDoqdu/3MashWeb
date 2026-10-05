@@ -4,7 +4,11 @@ import {
   getIkasBlogFormattedDate,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { localizedHref, tLocalized, tProp } from "../../utils/i18n";
+import {
+  isEnglishLocale,
+  localizedHref,
+  tLocalized,
+} from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
@@ -27,6 +31,15 @@ function estimateReadingTime(html: string): number {
   const text = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
   const words = text ? text.split(" ").length : 0;
   return Math.max(1, Math.round(words / 200));
+}
+
+function localizedText(
+  value: string | undefined,
+  valueEn: string | undefined,
+  fallback: string,
+) {
+  const localizedValue = isEnglishLocale() ? valueEn : value;
+  return localizedValue?.trim() || fallback;
 }
 
 // ─── Component ──────────────────────────────────────────────────────────────
@@ -54,23 +67,41 @@ export function ThreeMashBlogDetailPage(props: Props) {
   } as any;
 
   // ── Resolved layout options ─────────────────────────────────────────────
-  const heroWidth = props.heroImageWidth || "wide";
-  const titleAlign = props.titleAlign || "left";
-  const headerSpacing = props.headerSpacing || "generous";
+  const heroWidth =
+    props.heroImageWidth === "column" || props.heroImageWidth === "full"
+      ? props.heroImageWidth
+      : "wide";
+  const titleAlign = props.titleAlign === "center" ? "center" : "left";
+  const headerSpacing =
+    props.headerSpacing === "compact" || props.headerSpacing === "normal"
+      ? props.headerSpacing
+      : "generous";
 
+  const showBackLink = props.showBackLink !== false;
   const showPublicationLabel = props.showPublicationLabel !== false;
   const showCategory = props.showCategory !== false;
   const showReadingTime = props.showReadingTime !== false;
   const showAuthor = props.showAuthor !== false;
+  const showExcerpt = props.showExcerpt !== false;
+  const showHeroImage = props.showHeroImage !== false;
+  const showArticleBody = props.showArticleBody !== false;
+  const showSetupMessage = props.showSetupMessage !== false;
 
   // ── Empty / setup state ─────────────────────────────────────────────────
   if (!blog) {
+    if (!showSetupMessage) return null;
     return (
       <section className="three-mash-blog-detail" style={style}>
         <div className="tm-bda-wrap">
           <div className="tm-bda-setup">
-            {props.setupMessage ||
-              tLocalized("Blog yazısı kısa süre içinde burada gösterilecek.", "Blog post will be displayed here shortly.")}
+            {localizedText(
+              props.setupMessage,
+              props.setupMessageEn,
+              tLocalized(
+                "Blog yazısı kısa süre içinde burada gösterilecek.",
+                "Blog post will be displayed here shortly.",
+              ),
+            )}
           </div>
         </div>
       </section>
@@ -93,14 +124,24 @@ export function ThreeMashBlogDetailPage(props: Props) {
       <div className="tm-bda-wrap">
 
         {/* ← Back link — quiet, editorial */}
-        <a
-          className="tm-bda-back"
-          href={safeNavigationHref(localizedHref(props.backLinkHref || tLocalized("/blog", "/blog")), tLocalized("/blog", "/blog"))}
-          aria-label={props.backLinkText || tLocalized("Blog'a dön", "Back to blog")}
-        >
-          <span aria-hidden="true">←</span>
-          <span>{props.backLinkText || tLocalized("Blog'a dön", "Back to blog")}</span>
-        </a>
+        {showBackLink ? (
+          <a
+            className="tm-bda-back"
+            href={safeNavigationHref(
+              localizedHref(props.backLinkHref || tLocalized("/blog", "/blog")),
+              tLocalized("/blog", "/blog"),
+            )}
+          >
+            <span aria-hidden="true">←</span>
+            <span>
+              {localizedText(
+                props.backLinkText,
+                props.backLinkTextEn,
+                tLocalized("Blog'a dön", "Back to blog"),
+              )}
+            </span>
+          </a>
+        ) : null}
 
         {/* ── Article header ────────────────────────────────────────────── */}
         <header
@@ -109,8 +150,12 @@ export function ThreeMashBlogDetailPage(props: Props) {
 
           {/* Publication eyebrow */}
           {showPublicationLabel && (
-            <span className="tm-bda-eyebrow" aria-label={tLocalized("Yayın etiketi", "Publication tag")}>
-              {tLocalized("MASH ACADEMY", "MASH ACADEMY")}
+            <span className="tm-bda-eyebrow">
+              {localizedText(
+                props.publicationLabelText,
+                props.publicationLabelTextEn,
+                "MASH ACADEMY",
+              )}
             </span>
           )}
 
@@ -123,7 +168,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
           <h1 className="tm-bda-title">{blog.title}</h1>
 
           {/* Subtitle / excerpt */}
-          {blog.shortDescription && (
+          {showExcerpt && blog.shortDescription && (
             <p className="tm-bda-subtitle">{blog.shortDescription}</p>
           )}
 
@@ -139,7 +184,12 @@ export function ThreeMashBlogDetailPage(props: Props) {
                 <>
                   <span className="tm-bda-meta-sep" aria-hidden="true">·</span>
                   <span className="tm-bda-meta-reading">
-                    {readingTime} {tLocalized("dk okuma", "min read")}
+                    {readingTime}{" "}
+                    {localizedText(
+                      props.readingTimeSuffix,
+                      props.readingTimeSuffixEn,
+                      tLocalized("dk okuma", "min read"),
+                    )}
                   </span>
                 </>
               )}
@@ -148,7 +198,7 @@ export function ThreeMashBlogDetailPage(props: Props) {
         </header>
 
         {/* ── Hero image ─────────────────────────────────────────────────── */}
-        {image && (
+        {showHeroImage && image && (
           <div className={`tm-bda-hero tm-bda-hero--${heroWidth}`}>
             <img
               src={getDefaultSrc(image)}
@@ -161,10 +211,14 @@ export function ThreeMashBlogDetailPage(props: Props) {
         )}
 
         {/* ── Article body ───────────────────────────────────────────────── */}
-        <div
-          className="tm-bda-body"
-          dangerouslySetInnerHTML={{ __html: sanitizeHtml(blog.blogContent?.content || "") }}
-        />
+        {showArticleBody ? (
+          <div
+            className="tm-bda-body"
+            dangerouslySetInnerHTML={{
+              __html: sanitizeHtml(blog.blogContent?.content || ""),
+            }}
+          />
+        ) : null}
 
       </div>
     </article>

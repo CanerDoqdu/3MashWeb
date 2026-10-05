@@ -61,8 +61,9 @@ function sideHtml(value?: string, enabled = true, props?: Props) {
   return html(source.replace(/dijitalleşti/gi, (match) => `<span class="tmproblem-glitch">${match}</span>`), props);
 }
 
-function anchorId(_value?: string) {
-  return tLocalized("sebep", "reason");
+function anchorId(value?: string) {
+  const custom = value?.trim();
+  return custom && /^[A-Za-z][\w:-]*$/.test(custom) ? custom : tLocalized("sebep", "reason");
 }
 
 function imageSource(value: unknown) {
@@ -128,39 +129,38 @@ function parseRangeValue(value?: string) {
 
 export function ThreeMashProblem(props: Props) {
   const en = isEnglishLocale();
-  const p = props as any;
 
   props = {
     ...props,
     indexText: en
-      ? (p.indexTextEn || tProp(props.indexText, "Sorunun Kaynağı", "Root of the Problem"))
+      ? (props.indexTextEn || tProp(props.indexText, "Sorunun Kaynağı", "Root of the Problem"))
       : props.indexText,
     titleText: en
-      ? (p.titleTextEn || tProp(props.titleText, "Kaybın görünmeyen sebebi:", "The unseen cause of loss:"))
+      ? (props.titleTextEn || tProp(props.titleText, "Kaybın görünmeyen sebebi:", "The unseen cause of loss:"))
       : props.titleText,
     titleEmphasis: en
-      ? (p.titleEmphasisEn || tProp(props.titleEmphasis, "ölçüsel hassasiyet.", "dimensional accuracy."))
+      ? (props.titleEmphasisEn || tProp(props.titleEmphasis, "ölçüsel hassasiyet.", "dimensional accuracy."))
       : props.titleEmphasis,
     sideHtml: en
-      ? (p.sideHtmlEn || tProp(props.sideHtml, "Diş hekimliği dijitalleşti; herkes benzer cihazlara erişiyor. Asıl fark, ürettiğiniz işin <b>ilk seferde</b> oturup oturmadığı.", "Dentistry went digital; everyone has access to similar machines. The real difference is whether your restoration seats on the <b>first try</b>."))
+      ? (props.sideHtmlEn || tProp(props.sideHtml, "Diş hekimliği dijitalleşti; herkes benzer cihazlara erişiyor. Asıl fark, ürettiğiniz işin <b>ilk seferde</b> oturup oturmadığı.", "Dentistry went digital; everyone has access to similar machines. The real difference is whether your restoration seats on the <b>first try</b>."))
       : props.sideHtml,
     badLabel: en
-      ? (p.badLabelEn || tProp(props.badLabel, "Piyasada yaygın kurulum", "Common market setup"))
+      ? (props.badLabelEn || tProp(props.badLabel, "Piyasada yaygın kurulum", "Common market setup"))
       : props.badLabel,
     badDescriptionHtml: en
-      ? (p.badDescriptionHtmlEn || tProp(props.badDescriptionHtml, "Yanlış parametre, reçine uyumsuzluğu ve eksik kalibrasyonla sapma <b>güvenli sınırın 2-5 katına</b> çıkabiliyor.", "With wrong parameters, resin mismatch, and lack of calibration, deviation can reach <b>2-5x the safe limit</b>."))
+      ? (props.badDescriptionHtmlEn || tProp(props.badDescriptionHtml, "Yanlış parametre, reçine uyumsuzluğu ve eksik kalibrasyonla sapma <b>güvenli sınırın 2-5 katına</b> çıkabiliyor.", "With wrong parameters, resin mismatch, and lack of calibration, deviation can reach <b>2-5x the safe limit</b>."))
       : props.badDescriptionHtml,
     goodLabel: en
-      ? (p.goodLabelEn || tProp(props.goodLabel, "3mash ekosistemiyle", "With 3mash ecosystem"))
+      ? (props.goodLabelEn || tProp(props.goodLabel, "3mash ekosistemiyle", "With 3mash ecosystem"))
       : props.goodLabel,
     goodDescriptionHtml: en
-      ? (p.goodDescriptionHtmlEn || tProp(props.goodDescriptionHtml, "Yazıcı, reçine ve kürleme <b>birlikte kalibre</b> edildiğinde: her baskıda tekrar edilebilir hassasiyet ve minimum tekrar oranı.", "When printer, resin, and curing are <b>calibrated together</b>: repeatable precision and minimal remake rate on every print."))
+      ? (props.goodDescriptionHtmlEn || tProp(props.goodDescriptionHtml, "Yazıcı, reçine ve kürleme <b>birlikte kalibre</b> edildiğinde: her baskıda tekrar edilebilir hassasiyet ve minimum tekrar oranı.", "When printer, resin, and curing are <b>calibrated together</b>: repeatable precision and minimal remake rate on every print."))
       : props.goodDescriptionHtml,
     hairNoteHtml: en
-      ? (p.hairNoteHtmlEn || tProp(props.hairNoteHtml, "<b>Ölçek için:</b> bir insan saç teli ~70 µm. Piyasadaki sapma saç telinin <b>5 katına</b> çıkabilirken, 3mash ±20 µm bandında kalır.", "<b>For scale:</b> a human hair is ~70 µm. Market deviation can reach <b>5x the thickness of a hair</b>; we work at <b>half the thickness of a human hair</b> — and we commit to this <b>on every print, not just once.</b>"))
+      ? (props.hairNoteHtmlEn || tProp(props.hairNoteHtml, "<b>Ölçek için:</b> bir insan saç teli ~70 µm. Piyasadaki sapma saç telinin <b>5 katına</b> çıkabilirken, 3mash ±20 µm bandında kalır.", "<b>For scale:</b> a human hair is ~70 µm. Market deviation can reach <b>5x the thickness of a hair</b>; we work at <b>half the thickness of a human hair</b> — and we commit to this <b>on every print, not just once.</b>"))
       : props.hairNoteHtml,
     referenceHtml: en
-      ? (p.referenceHtmlEn || tProp(props.referenceHtml, "Bilimsel dayanak: full-arch model doğruluğu sistemden sisteme <b>3–190 µm</b> arasında değişiyor (<a href=\"https://doi.org/10.3390/jcm9103357\" target=\"_blank\" rel=\"noopener noreferrer\">Etemad-Shahidi ve ark., <b>J Clin Med 2020</b></a>; <a href=\"https://doi.org/10.1016/j.jdent.2023.104532\" target=\"_blank\" rel=\"noopener noreferrer\">Németh ve ark., <b>J Dentistry 2023</b></a>). Tekrar oranı ve sebepleri: <a href=\"https://doi.org/10.1111/jopr.12995\" target=\"_blank\" rel=\"noopener noreferrer\"><b>McCracken ve ark., J Prosthodont 2019</b></a>.", "<b>Scientific basis:</b> Full-arch model accuracy varies from <b>3–190 µm</b> across systems (<a href=\"https://doi.org/10.3390/jcm9103357\" target=\"_blank\" rel=\"noopener noreferrer\">Etemad-Shahidi et al., <b>J Clin Med 2020</b></a>); SLA/DLP/PolyJet are among the most accurate technologies (<a href=\"https://doi.org/10.1016/j.jdent.2023.104532\" target=\"_blank\" rel=\"noopener noreferrer\">Németh et al., <b>J Dentistry 2023</b></a>). Repeatability and its contributing factors: <a href=\"https://doi.org/10.1111/jopr.12995\" target=\"_blank\" rel=\"noopener noreferrer\"><b>McCracken et al., J Prosthodont 2019</b></a>."))
+      ? (props.referenceHtmlEn || tProp(props.referenceHtml, "Bilimsel dayanak: full-arch model doğruluğu sistemden sisteme <b>3–190 µm</b> arasında değişiyor (<a href=\"https://doi.org/10.3390/jcm9103357\" target=\"_blank\" rel=\"noopener noreferrer\">Etemad-Shahidi ve ark., <b>J Clin Med 2020</b></a>; <a href=\"https://doi.org/10.1016/j.jdent.2023.104532\" target=\"_blank\" rel=\"noopener noreferrer\">Németh ve ark., <b>J Dentistry 2023</b></a>). Tekrar oranı ve sebepleri: <a href=\"https://doi.org/10.1111/jopr.12995\" target=\"_blank\" rel=\"noopener noreferrer\"><b>McCracken ve ark., J Prosthodont 2019</b></a>.", "<b>Scientific basis:</b> Full-arch model accuracy varies from <b>3–190 µm</b> across systems (<a href=\"https://doi.org/10.3390/jcm9103357\" target=\"_blank\" rel=\"noopener noreferrer\">Etemad-Shahidi et al., <b>J Clin Med 2020</b></a>); SLA/DLP/PolyJet are among the most accurate technologies (<a href=\"https://doi.org/10.1016/j.jdent.2023.104532\" target=\"_blank\" rel=\"noopener noreferrer\">Németh et al., <b>J Dentistry 2023</b></a>). Repeatability and its contributing factors: <a href=\"https://doi.org/10.1111/jopr.12995\" target=\"_blank\" rel=\"noopener noreferrer\"><b>McCracken et al., J Prosthodont 2019</b></a>."))
       : props.referenceHtml,
   };
 
@@ -168,7 +168,6 @@ export function ThreeMashProblem(props: Props) {
   const badRange = parseRangeValue(props.badValue);
   const [animatedBadValue, setAnimatedBadValue] = useState(() => (badRange ? `0–0${badRange.suffix}` : props.badValue || ""));
   const hairImage = imageSource(props.hairImageUrl);
-
   useEffect(() => {
     const range = parseRangeValue(props.badValue);
     if (!range || props.showBadValueCountUp === false) {
@@ -229,19 +228,19 @@ export function ThreeMashProblem(props: Props) {
   }, [props.badValue, props.showBadValueCountUp]);
 
   const themeStyle = {
-    "--tmproblem-bg": "var(--bg, #FAFAF7)",
-    "--tmproblem-text": "var(--ink, #0E0E0C)",
-    "--tmproblem-sub": "var(--sub, #55554E)",
-    "--tmproblem-muted": "var(--mut, #8F8F86)",
-    "--tmproblem-line": "var(--line, #E6E6E0)",
-    "--tmproblem-line-strong": "var(--line2, #D5D5CD)",
-    "--tmproblem-panel": "#FFFFFF",
-    "--tmproblem-accent": "var(--lime, #C7F136)",
-    "--tmproblem-accent-text": "var(--lime-ink, #3D4D0E)",
-    "--tmproblem-danger": "var(--red, #E2492F)",
-    "--tmproblem-bg-glow-color": "var(--lime, #C7F136)",
-    "--tmproblem-bg-glow-opacity": 0,
-    "--tmproblem-word-color": "var(--lime, #C7F136)",
+    "--tmproblem-bg": props.backgroundColor || "var(--bg, #FAFAF7)",
+    "--tmproblem-text": props.textColor || "var(--ink, #0E0E0C)",
+    "--tmproblem-sub": props.subTextColor || "var(--sub, #55554E)",
+    "--tmproblem-muted": props.mutedTextColor || "var(--mut, #8F8F86)",
+    "--tmproblem-line": props.lineColor || "var(--line, #E6E6E0)",
+    "--tmproblem-line-strong": props.lineStrongColor || "var(--line2, #D5D5CD)",
+    "--tmproblem-panel": props.panelColor || "#FFFFFF",
+    "--tmproblem-accent": props.accentColor || "var(--lime, #C7F136)",
+    "--tmproblem-accent-text": props.accentTextColor || "var(--lime-ink, #3D4D0E)",
+    "--tmproblem-danger": props.dangerColor || "var(--red, #E2492F)",
+    "--tmproblem-bg-glow-color": props.backgroundGlowColor || props.accentColor || "var(--lime, #C7F136)",
+    "--tmproblem-bg-glow-opacity": props.showBackgroundGlow === false ? 0 : numberInRange(props.backgroundGlowOpacity, 18, 0, 100) / 100,
+    "--tmproblem-word-color": props.styledPhraseColor || props.accentColor || "var(--lime, #C7F136)",
     "--tmproblem-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmproblem-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmproblem-hair-image-width": `${numberInRange(props.hairImageWidth, 58, 8, 140)}px`,
@@ -271,21 +270,21 @@ export function ThreeMashProblem(props: Props) {
           <h2>
             <RichInline value={props.titleText} wordStyle={props} /> <span className="tmproblem-title-em" dangerouslySetInnerHTML={html(props.titleEmphasis, props)} />
           </h2>
-          <div className="tmproblem-side" dangerouslySetInnerHTML={sideHtml(props.sideHtml, props.showDigitalGlitch !== false, props)} />
+          {props.showSideDescription !== false ? <div className="tmproblem-side" dangerouslySetInnerHTML={sideHtml(props.sideHtml, props.showDigitalGlitch !== false, props)} /> : null}
         </div>
 
         <div className="tmproblem-cards">
-          <article className="tmproblem-card tmproblem-card-bad">
+          {props.showBadCard !== false ? <article className="tmproblem-card tmproblem-card-bad">
             <div className="tmproblem-card-label" dangerouslySetInnerHTML={html(props.badLabel, props)} />
             <div className="tmproblem-card-value" dangerouslySetInnerHTML={html(hasRichBadValue ? props.badValue : animatedBadValue, props)} />
             <div className="tmproblem-card-description" dangerouslySetInnerHTML={html(props.badDescriptionHtml, props)} />
-          </article>
+          </article> : null}
 
-          <article className="tmproblem-card tmproblem-card-good">
+          {props.showGoodCard !== false ? <article className="tmproblem-card tmproblem-card-good">
             <div className="tmproblem-card-label" dangerouslySetInnerHTML={html(props.goodLabel, props)} />
             <div className="tmproblem-card-value" dangerouslySetInnerHTML={html(props.goodValue, props)} />
             <div className="tmproblem-card-description" dangerouslySetInnerHTML={html(props.goodDescriptionHtml, props)} />
-          </article>
+          </article> : null}
         </div>
 
         {props.showHairNote !== false ? (

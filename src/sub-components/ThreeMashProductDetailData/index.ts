@@ -15,7 +15,7 @@ const SHARED_PRODUCT_DETAIL_EVENT = "three-mash:product-detail-data";
 
 export const CRS_COMPOSITE_SLUG = "crs-composite-mukemmel-dayanimli-gecici-recinesi";
 export const CRS_SPLINT_HARD_SLUG = "crs-splint-hard-resin-sert-gece-plagi-recinesi";
-export const CRS_SPLINT_SOFT_SLUG = "crs-splint-soft-resin-dental-splint-gece-plak-recinesi";
+export const CRS_SPLINT_SOFT_SLUG = "crs-s  plint-soft-resin-dental-splint-gece-plak-recinesi";
 export const CRS_GUIDE_SLUG = tLocalized("guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", "guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber");
 export const CRS_IBT_SLUG = "crs-ibt-resin-ortodontik-ibt-recinesi";
 export const CRS_FLEXIT_SLUG = "crs-flexit-recin-protez-recinesi";
@@ -524,7 +524,7 @@ export function CRS_COMPOSITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-composite-mukemmel-dayanimli-gecici-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Composite%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Composite", "CRS Composite")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -776,7 +776,7 @@ export function CRS_SPLINT_HARD_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-splint-hard-resin-sert-gece-plagi-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Splint%20Hard%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Splint%20Hard%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Splint Hard Resin", "CRS Splint Hard Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -1024,7 +1024,7 @@ export function CRS_SPLINT_SOFT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-splint-soft-resin-dental-splint-gece-plak-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Splint%20Soft%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Splint%20Soft%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Splint Soft Resin", "CRS Splint Soft Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -1276,7 +1276,7 @@ export function CRS_GUIDE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: tLocalized("/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber", "/guide-resin-kilavuz-recinesi-biyouyumlu-cerrahi-rehber"),
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Guide%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Guide%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Guide Resin", "CRS Guide Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -1536,7 +1536,7 @@ export function CRS_IBT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-ibt-resin-ortodontik-ibt-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20IBT%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20IBT%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS IBT Resin", "CRS IBT Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -1804,7 +1804,7 @@ export function CRS_FLEXIT_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-flexit-recin-protez-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Flexit%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Flexit%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Flexit Reçinesi", "CRS Flexit Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -2076,7 +2076,7 @@ export function CRS_ALIGNER_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-aligner-memory-shape-ozellikli-aligner-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Aligner%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Aligner%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Aligner Resin", "CRS Aligner Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -2296,7 +2296,7 @@ export function CRS_DENTURE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-denture-biouyumlu-protez-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Denture%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Denture%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Denture Reçinesi", "CRS Denture Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -2498,7 +2498,7 @@ export function CRS_GINGIVA_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-gingiva-yirtilmaz-dis-eti-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Gingiva%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Gingiva%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Gingiva Reçinesi", "CRS Gingiva Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -2700,7 +2700,7 @@ export function CRS_MODEL_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-model-yuksek-hassasiyetli-model-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Model%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Model%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Model Reçinesi", "CRS Model Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -2890,7 +2890,7 @@ export function CRS_TRAY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-tray-resin-olcu-kasigi-3d-yazici-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Tray%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Tray%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Tray Resin", "CRS Tray Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -3080,7 +3080,7 @@ export function MASH_CLEAR_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/mash-clear-resin-dental-cerrahi-kilavuz-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=Mash%20Clear%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=Mash%20Clear%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("Mash Clear Resin", "Mash Clear Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -3265,7 +3265,7 @@ export function CRS_CAST_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/crs-cast-cekmeyen-dokum-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=CRS%20Cast%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=CRS%20Cast%20Reçinesi%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("CRS Cast Reçinesi", "CRS Cast Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -3426,7 +3426,7 @@ export function MASH_STUDY_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/mash-study-resin-dental-model-3d-yazici-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=Mash%20Study%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=Mash%20Study%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("Mash Study Resin", "Mash Study Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -3569,7 +3569,7 @@ export function MASH_TRIAL_PINK_PRODUCT_DETAIL_DATA(): ProductDetailTemplateData
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/mash-trial-pink-resin-dental-try-in-gecici-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=Mash%20Trial%20Pink%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=Mash%20Trial%20Pink%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("Mash Trial Pink Resin", "Mash Trial Pink Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -3713,7 +3713,7 @@ export function MASH_TRIAL_WHITE_PRODUCT_DETAIL_DATA(): ProductDetailTemplateDat
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— parametre uyumlaması ve teknik destek dahil.", "— including parameter matching and technical support."),
       buyHrefBase: "/mash-trial-white-resin-gecici-dental-recinesi",
-      whatsappHref: tLocalized("https://wa.me/905314326577?text=Mash%20Trial%20White%20Resin%20hakkında%20bilgi%20almak%20istiyorum", "https://wa.me/905314326577?text=Mash%20Trial%20White%20Resin%20hakkında%20bilgi%20almak%20istiyorum"),
+      whatsappHref: whatsappInquiryHref(tLocalized("Mash Trial White Resin", "Mash Trial White Resin")),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -3892,6 +3892,14 @@ function youtubePreview(href: string | undefined, fallback: string) {
   return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : fallback;
 }
 
+function whatsappInquiryHref(productName: string) {
+  const message = tLocalized(
+    `${productName} hakkında bilgi almak istiyorum`,
+    `I would like more information about ${productName}.`,
+  );
+  return `https://wa.me/905314326577?text=${encodeURIComponent(message)}`;
+}
+
 function sparePhotoSrc(config: PrinterSparePartConfig, index: number | undefined) {
   const usable = config.images.slice(1);
   if (usable.length) return usable[Math.min(Math.max((index || 1) - 2, 0), usable.length - 1)];
@@ -3974,7 +3982,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— uyumluluk kontrolü ve teknik destek dahil.", "— including compatibility check and technical support."),
       buyHrefBase: `/${config.slug}`,
-      whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
+      whatsappHref: whatsappInquiryHref(config.productText),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -4558,14 +4566,14 @@ export function printerSparePartDetailDataBySlug(): Record<string, ProductDetail
 
 function printerSparePartAliases(): Record<string, string[]> {
   return {
-    [CREALITY_HALOT_SKY_LCD_KIT_SLUG]: ["creality-halot-sky-lcd-ekran-kiti", "halot-sky-lcd-ekran-kiti", "6k-mono-lcd-ekran-kiti", "creality-halot-sky-lcd-screen-kit-6k-mono"],
-    [PIOCREAT_C01_LCD_KIT_SLUG]: ["piocreat-c01-lcd-ekran-kiti", "c01-lcd-ekran-kiti", "piocreat-c01-lcd-screen-kit"],
-    [ACF_FEP_FILM_SLUG]: ["seffaf-acf-film", "acf-film", "fep-film", tLocalized("lcd-dlp-recine-3d-yazicilar-icin", "lcd-dlp-recine-3d-yazicilar-icin"), "seffaf-fep-film", "seffaf-fep-film-3d-yazici", "transparent-fep-film-3d-printer", "transparent-acf-film"],
-    [MASH_P16L_MAINBOARD_SLUG]: ["mash-p16l-ana-kart", "p16l-ana-kart", "kontrol-karti", "mash-p16l-motherboard"],
-    [MASH_P16L_LARGE_BUILD_PLATE_SLUG]: [tLocalized("mash-p16l-buyuk-baski-tablasi", "mash-p16l-buyuk-baski-tablasi"), "211x118mm", "211x118-mm", tLocalized("p16l-buyuk-baski-tablasi", "p16l-buyuk-baski-tablasi"), "mash-p16l-large-build-platform-211x118mm", "mash-p16l-buyuk-baski-tablasi-211x118mm"],
-    [MASH_P16L_SMALL_BUILD_PLATE_SLUG]: [tLocalized("mash-p16l-kucuk-baski-tablasi", "mash-p16l-kucuk-baski-tablasi"), tLocalized("mash-p16l-kucuk-hizli-baski-tablasi", "mash-p16l-kucuk-hizli-baski-tablasi"), tLocalized("hizli-baski", "hizli-baski"), "tekli-vaka", "mash-p16l-small-build-platform", "mash-p16l-small-fast-build-platform", "mash-p16l-kucuk-baski-tablasi", "mash-p16l-kucuk-hizli-baski-tablasi"],
-    [MASH_P16L_LCD_SCREEN_SLUG]: ["mash-p16l-16k-monokrom-lcd-ekran", "p16l-16k-lcd", "p16l-lcd-ekran", "mash-p16l-16k-monokrom-lcd-ekran-yedek-parca", "mash-p16l-16k-monochrome-lcd-screen-spare-part"],
-    [MASH_P16L_RESIN_TANK_SLUG]: ["mash-p16l-recine-tanki", "p16l-recine-tanki", "800ml", "800-ml", "mash-p16l-recine-tanki-800ml", "mash-p16l-resin-tank-800ml"],
+    [CREALITY_HALOT_SKY_LCD_KIT_SLUG]: ["creality-halot-sky-lcd-ekran-kiti", "halot-sky-lcd-ekran-kiti", "6k-mono-lcd-ekran-kiti"],
+    [PIOCREAT_C01_LCD_KIT_SLUG]: ["piocreat-c01-lcd-ekran-kiti", "c01-lcd-ekran-kiti"],
+    [ACF_FEP_FILM_SLUG]: ["seffaf-acf-film", "acf-film", "fep-film", tLocalized("lcd-dlp-recine-3d-yazicilar-icin", "lcd-dlp-recine-3d-yazicilar-icin"), "seffaf-fep-film"],
+    [MASH_P16L_MAINBOARD_SLUG]: ["mash-p16l-ana-kart", "p16l-ana-kart", "kontrol-karti"],
+    [MASH_P16L_LARGE_BUILD_PLATE_SLUG]: [tLocalized("mash-p16l-buyuk-baski-tablasi", "mash-p16l-buyuk-baski-tablasi"), "211x118mm", "211x118-mm", tLocalized("p16l-buyuk-baski-tablasi", "p16l-buyuk-baski-tablasi")],
+    [MASH_P16L_SMALL_BUILD_PLATE_SLUG]: [tLocalized("mash-p16l-kucuk-baski-tablasi", "mash-p16l-kucuk-baski-tablasi"), tLocalized("mash-p16l-kucuk-hizli-baski-tablasi", "mash-p16l-kucuk-hizli-baski-tablasi"), tLocalized("hizli-baski", "hizli-baski"), "tekli-vaka"],
+    [MASH_P16L_LCD_SCREEN_SLUG]: ["mash-p16l-16k-monokrom-lcd-ekran", "p16l-16k-lcd", "p16l-lcd-ekran"],
+    [MASH_P16L_RESIN_TANK_SLUG]: ["mash-p16l-recine-tanki", "p16l-recine-tanki", "800ml", "800-ml"],
   };
 }
 
@@ -4670,7 +4678,7 @@ function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— vaka uyumu ve teknik destek dahil.", "— including case fit and technical support."),
       buyHrefBase: `/${config.slug}`,
-      whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
+      whatsappHref: whatsappInquiryHref(config.productText),
       whatsappText: tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       addingToCartText: tLocalized("Ekleniyor...", "Adding..."),
@@ -4941,9 +4949,9 @@ export function zirconBlockDetailDataBySlug(): Record<string, ProductDetailTempl
 }
 
 const ZIRCON_BLOCK_ALIASES: Record<string, string[]> = {
-  [ARGENZ_ST_MULTILAYER_SLUG]: ["argenz-st-multilayer", "st-multilayer-zirkon", "stml", "argenz-st-multilayer-zirkon-blok", "argenz-st-multilayer-zirconia-disc"],
-  [ARGENZ_HT_PLUS_SLUG]: ["argenz-ht-plus", "ht-plus-zirkon", "ht-zirkon-blok", "argenz-ht-plus-zirkon-blok", "argenz-ht-plus-zirconia-disc"],
-  [ARGENZ_HT_MULTILAYER_SLUG]: ["argenz-ht-multilayer", "ht-plus-multilayer", "ht-multilayer-zirkon", "html", "argenz-ht-multilayer-zirkon-blok", "argenz-ht-plus-multilayer-zirconia-disc"],
+  [ARGENZ_ST_MULTILAYER_SLUG]: ["argenz-st-multilayer", "st-multilayer-zirkon", "stml"],
+  [ARGENZ_HT_PLUS_SLUG]: ["argenz-ht-plus", "ht-plus-zirkon", "ht-zirkon-blok"],
+  [ARGENZ_HT_MULTILAYER_SLUG]: ["argenz-ht-multilayer", "ht-plus-multilayer", "ht-multilayer-zirkon", "html"],
 };
 
 type LabProductCategory = {
@@ -5197,7 +5205,7 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       selectedPrefix: tLocalized("Seçiminiz:", "Your selection:"),
       summarySuffix: tLocalized("— uyumluluk kontrolü ve teknik destek dahil.", "— including compatibility check and technical support."),
       buyHrefBase: `/${config.slug}`,
-      whatsappHref: `https://wa.me/905314326577?text=${encodeURIComponent(`${config.productText} hakkında bilgi almak istiyorum`)}`,
+      whatsappHref: whatsappInquiryHref(config.productText),
       whatsappText: quoteOnly ? tLocalized("Teklif alın", "Get a quote") : tLocalized("WhatsApp'tan sor", "Ask via WhatsApp"),
       addToCartText: tLocalized("Sepete ekle →", "Add to cart →"),
       disableAddToCart: quoteOnly,
@@ -6337,23 +6345,23 @@ export function labProductDetailDataBySlug(): Record<string, ProductDetailTempla
 }
 
 const LAB_PRODUCT_ALIASES: Record<string, string[]> = {
-  [MASH_W1E_ULTRASONIC_WASH_SLUG]: ["mash-w1e", "w1e", tLocalized("ultrasonik-yikama", "ultrasonik-yikama"), "washing-device", "washing-unit", "mash-w1e-ultrasonic-washing-unit", "ultrasonic-washing-unit", "mash-w1e-ultrasonik-yikama-cihazi", "mash-w1e-ultrasonic-washing-machine"],
-  [MASH_C1E_UV_CURING_SLUG]: ["mash-c1e", "c1e", tLocalized("uv-kurleme", "uv-kurleme"), "dental-post-cure", "mash-c1e-uv-kurleme-cihazi", "mash-c1e-uv-curing-device", "mash-c1e-smart-uv-curing-unit"],
-  [CREALITY_WASH_CURE_UW03_SLUG]: ["creality-wash-cure-uw-03", "creality-washcure-uw-03", "uw-03", "uw-02", "creality-washcure-uw-02", "creality-wash-and-cure-uw-02", "creality-wash-and-cure-uw-03"],
+  [MASH_W1E_ULTRASONIC_WASH_SLUG]: ["mash-w1e", "w1e", tLocalized("ultrasonik-yikama", "ultrasonik-yikama"), "washing-device", "washing-unit", "mash-w1e-ultrasonic-washing-unit", "ultrasonic-washing-unit"],
+  [MASH_C1E_UV_CURING_SLUG]: ["mash-c1e", "c1e", tLocalized("uv-kurleme", "uv-kurleme"), "dental-post-cure"],
+  [CREALITY_WASH_CURE_UW03_SLUG]: ["creality-wash-cure-uw-03", "creality-washcure-uw-03", "uw-03", "uw-02"],
   [THREESHAPE_E2_SLUG]: ["3shape-e2", "e2-yuksek-uretkenlik"],
   [THREESHAPE_E3_SLUG]: ["3shape-e3", "implant-bar-dogrulugu"],
   [THREESHAPE_E4_SLUG]: ["3shape-e4", tLocalized("hiz-ve-hassasiyet", "hiz-ve-hassasiyet")],
-  [NABERTHEM_LHT_02_17_LB_SPEED_SLUG]: ["lht-02-17-lb-speed", "nabertherm-lht-02-17", "naberthem-lht-02-17-lb-speed", "nabertherm-lht-02-17-lb-speed"],
-  [NABERTHEM_LHT_01_16_TURBO_FIRE_SLUG]: ["lht-01-16-turbo-fire", "nabertherm-lht-01-16", "naberthem-lht-01-16-turbo-fire", "nabertherm-lht-01-16-turbo-fire"],
-  [NABERTHEM_VL_01_12_LB_PRESS_SLUG]: ["vl-01-12-lb-press", "vl-01-12-lb-press-furnace", "vl-01-12-lb-pres", "press-furnace", "press-firini", "pres-firini", "naberthem-vl-01-12-lb-press-firini", "nabertherm-vl-01-12-lb-press-firini"],
-  [NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG]: ["vl-01-12-lb-porcelain", "vl-01-12-lb-porcelain-furnace", "porcelain-furnace", "porselen-firini", "naberthem-vl-01-12-lb-porselen-firini", "nabertherm-vl-01-12-lb-porselen-firini"],
-  [MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG]: ["mesa-grade-5-eli", "titanyum-disk", "titanium-disk", "mesa-grade-5-eli-titanyum-disk", "mesa-grade-5-eli-titanium-disc", "mesa-titanium-disk-grade-5-eli"],
-  [TRASFORMER_COMP_FLOW_SLUG]: ["trasformer-comp-flow", "comp-flow-siringa-kompozit", "trasformer-comp-flow-siringa-kompozit", "trasformer-comp-flow-syringe-composite", "transformer-comp-flow-syringe-composite"],
-  [TRASFORMER_LIGHT_GLASS_SLUG]: ["trasformer-light-glass", "light-glass-mufla", "trasformer-light-glass-mufla-sistemi"],
-  [MASH_P16L_PRINTER_SLUG]: ["mash-p16l", "385nm-16k", "16k-dental-3d-yazici", "mash-p16l-385nm-16k-dental-3d-printer"],
-  [MASH_CURIE_M1_DENTAL_SLUG]: ["mash-curie-m1-dental", "curie-m1-dental", "yerli-dental-3d-printer", "mash-curie-m1-dental-3d-printer", "curie-m1-dental-3d-printer", "mash-curie-m1-dental-dlp-3d-printer"],
+  [NABERTHEM_LHT_02_17_LB_SPEED_SLUG]: ["lht-02-17-lb-speed", "nabertherm-lht-02-17"],
+  [NABERTHEM_LHT_01_16_TURBO_FIRE_SLUG]: ["lht-01-16-turbo-fire", "nabertherm-lht-01-16"],
+  [NABERTHEM_VL_01_12_LB_PRESS_SLUG]: ["vl-01-12-lb-press", "vl-01-12-lb-press-furnace", "vl-01-12-lb-pres", "press-furnace", "press-firini", "pres-firini"],
+  [NABERTHEM_VL_01_12_LB_PORCELAIN_SLUG]: ["vl-01-12-lb-porcelain", "vl-01-12-lb-porcelain-furnace", "porcelain-furnace", "porselen-firini"],
+  [MESA_GRADE_5_ELI_TITANIUM_DISK_SLUG]: ["mesa-grade-5-eli", "titanyum-disk", "titanium-disk"],
+  [TRASFORMER_COMP_FLOW_SLUG]: ["trasformer-comp-flow", "comp-flow-siringa-kompozit"],
+  [TRASFORMER_LIGHT_GLASS_SLUG]: ["trasformer-light-glass", "light-glass-mufla"],
+  [MASH_P16L_PRINTER_SLUG]: ["mash-p16l", "385nm-16k", "16k-dental-3d-yazici"],
+  [MASH_CURIE_M1_DENTAL_SLUG]: ["mash-curie-m1-dental", "curie-m1-dental", "yerli-dental-3d-printer"],
   [MASH_CURIE_M1_JEWELRY_SLUG]: ["mash-curie-m1-jewelry", "curie-m1-jewelry", "jewelry-3d-printer", "kuyumculuk"],
-  [CREALITY_HALOT_SKY_6K_SLUG]: ["creality-halot-sky", "halot-sky-6k", "fabrika-cikisli-versiyon", "hassasiyeti-arttirilmis-versiyon", "creality-halot-sky-6k-1", "creality-halot-sky-6k-dental-3d-printer"],
+  [CREALITY_HALOT_SKY_6K_SLUG]: ["creality-halot-sky", "halot-sky-6k", "fabrika-cikisli-versiyon", "hassasiyeti-arttirilmis-versiyon"],
 };
 
 function isPlainObject(value: unknown): value is PlainObject {
@@ -6469,7 +6477,7 @@ function productLooksLikeMashClear(product: unknown) {
 function productLooksLikeCast(product: unknown) {
   const slug = productSlug(product);
   const name = slugifyProduct(stringValue((product as { name?: unknown } | null)?.name));
-  return slug === CRS_CAST_SLUG || slug.includes("crs-cast") || name.includes("crs-cast") || name.includes("cekmeyen-dokum") || name.includes("casting-resin");
+  return slug === CRS_CAST_SLUG || name.includes("crs-cast") || name.includes("cekmeyen-dokum");
 }
 
 function productLooksLikeStudy(product: unknown) {

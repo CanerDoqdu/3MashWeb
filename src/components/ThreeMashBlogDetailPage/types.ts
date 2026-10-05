@@ -2,9 +2,10 @@
 import type { IkasBlog } from "@ikas/bp-storefront";
 
 export interface Props {
-  /** Blog yazı rotasında geçerli ikas blog yazısına bağlayın. */
+  /** Güncel blog içeriği, başlık, kapak görseli ve kategorisi bu kayıttan alınır. */
   blog: IkasBlog | null;
   backLinkText?: string;
+  /** Güvenli yönlendirme için site içi yol kullanın. */
   backLinkHref?: string;
   setupMessage?: string;
   backgroundColor?: string;
@@ -12,18 +13,29 @@ export interface Props {
   mutedTextColor?: string;
   lineColor?: string;
   accentColor?: string;
-  /** Makale gövde yazı boyutu. Örnek: 18px, 20px. */
+  /** CSS ölçü birimi kullanın; ör. 19px. */
   bodyFontSize?: string;
-  /** Makale metninin maksimum genişliği. Örnek: 680px, 760px. */
+  /** CSS genişlik değeri kullanın; ör. 720px. */
   contentWidth?: string;
-  /** column: metin sütunuyla sınırlı · wide: daha geniş (varsayılan) · full: tam ekran genişliği */
+  /** column, wide veya full değerlerinden birini kullanın. */
   heroImageWidth?: string;
-  /** left: sola hizalı (varsayılan) · center: ortalı */
+  /** left veya center değerlerinden birini kullanın. */
   titleAlign?: string;
-  /** compact: dar · normal · generous: geniş (varsayılan) */
+  /** compact, normal veya generous değerlerinden birini kullanın. */
   headerSpacing?: string;
   showPublicationLabel?: boolean;
   showCategory?: boolean;
   showReadingTime?: boolean;
   showAuthor?: boolean;
+  backLinkTextEn?: string;
+  setupMessageEn?: string;
+  publicationLabelText?: string;
+  publicationLabelTextEn?: string;
+  readingTimeSuffix?: string;
+  readingTimeSuffixEn?: string;
+  showBackLink?: boolean;
+  showExcerpt?: boolean;
+  showHeroImage?: boolean;
+  showArticleBody?: boolean;
+  showSetupMessage?: boolean;
 }

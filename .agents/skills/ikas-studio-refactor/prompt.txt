@@ -1,0 +1,35 @@
+Bu görevde aşağıdaki skill dosyasını eksiksiz ve bağlayıcı talimat olarak kullan:
+
+C:\Users\caner\3MashWeb\.agents\skills\ikas-studio-refactor\SKILL.md
+
+Hedef component:
+[Component adı]
+[Component dosya yolu]
+
+Önce skill dosyasını tamamen oku. Hemen kod yazma. Önce şu analizi çıkar:
+
+1. Mevcut config prop’ları ve propGroups
+2. Kullanılan, kullanılmayan ve eksik prop’lar
+3. JSX içindeki tüm hardcoded metin, link, görsel ve accessibility stringleri
+4. Gizlenebilir mevcut alt bölümler
+5. Yeni eklenebilir slotlar
+6. Component’a özel davranışlar ve korunması gereken logic
+7. Yeni propGroup yapısı
+
+
+Önemli kurallar:
+- Bu bir küçük düzeltme değil, complete refactor.
+- Mevcut doğru prop’ları gereksiz yere silme; ancak kullanılmayan/eski prop’ları temizle.
+- Component’ın tamamını gizleyen showSection/showComponent ekleme.
+- Header logic’lerini diğer component’lara kopyalama.
+- Mobil/responsive prop’larını sadece gerçekten Studio’dan düzenlenmesi anlamlıysa ekle.
+- Tüm displayName’ler Türkçe, açıklayıcı ve emoji prefix’li olsun.
+- Prop grupları canonical sıraya göre oluşturulsun.
+- `ikas.config.json`, `types.ts`, `global-types.ts` ve `src/components/index.ts` elle düzenlenmesin; CLI kullanılsın.
+- Mevcut component'ın `id`, `name`, `entry`, `styles`, klasör adı ve export adı korunmalı. Component'ı silip yeniden ekleme, geçici component oluşturup silme veya generated export'u yenilemek için CLI kullanma; bunlar ID/placement bağını ve export yolunu bozabilir. Her CLI mutation grubundan önce/sonra bu kimlik alanlarının aynı kaldığını doğrula.
+- CLI config komutlarını paralel çalıştırma.
+- Her mutation grubundan sonra config’i tekrar doğrula.
+- JSX’te kullanıcıya görünen hiçbir hardcoded metin, link, görsel, aria-label, loading veya error metni bırakma.
+- Mevcut davranış, locale, güvenli link, hydration ve responsive logic korunmalı.
+
+Analiz raporunu çıkar ve kullanıcı onayı beklemeden refactor'a başla.

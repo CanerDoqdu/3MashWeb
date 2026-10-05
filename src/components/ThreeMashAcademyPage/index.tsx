@@ -9,6 +9,15 @@ function value(input: string | undefined, fallback: string) {
   return trimmed || fallback;
 }
 
+function localizedValue(
+  trInput: string | undefined,
+  enInput: string | undefined,
+  fallbackTr: string,
+  fallbackEn: string
+) {
+  return tLocalized(value(trInput, fallbackTr), value(enInput, fallbackEn));
+}
+
 function href(input: string | undefined, fallback = "#") {
   return safeNavigationHref(input, fallback);
 }
@@ -109,7 +118,7 @@ const criticalAcademyCss = `
 .three-mash-academy-page {
   width: 100%;
   overflow-x: hidden;
-  background: var(--tm-theme-bg, #fafaf7);
+  background: var(--tma-bg, var(--tm-theme-bg, #fafaf7));
   color: var(--tma-text, var(--tm-theme-text, #0e0e0c));
   font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
 }
@@ -160,16 +169,6 @@ export function ThreeMashAcademyPage(props: Props) {
   const sourcePastText =
     tLocalized("Geçmiş etkinliklerimiz arasında sektörde deneyimli isimlerin katıldığı paneller, uzmanlık seminerleri ve interaktif atölye çalışmaları bulunmaktadır. Ayrıca, yeni teknolojiler ve tedavi yöntemlerinin ele alındığı konferanslar düzenlemekteyiz. Bu etkinlikler sayesinde katılımcılarımız, sektördeki gelişmeleri yakından takip etmenin yanı sıra deneyimlerini paylaşarak birbirlerinden öğrenme fırsatı bulmaktadır.", "Our past events include panels featuring experienced names in the industry, expert seminars, and interactive workshops. We also organize conferences covering new technologies and treatment methods. Through these events, our participants get the chance to closely follow developments in the industry as well as learn from each other by sharing their experiences.");
 
-  const sourceIntroTitle = tLocalized("Bilgiyle büyüyen ekosistem.", "An ecosystem powered by knowledge.");
-  const sourceQuoteAuthor = tLocalized("M. Kemal Atatürk", "M. Kemal Atatürk");
-  const sourcePastTitle = tLocalized("Geçmiş Etkinlikler", "Past Events");
-  const sourceReadMore = tLocalized("Devamını Oku", "Read More");
-  const sourceTitle = tLocalized("Mash Academy", "Mash Academy");
-  const sourceQuote = tLocalized(
-    "Eğitimdir ki bir milleti ya hür bağımsız şanlı yüce bir toplum olarak yaşatır veya bir milleti esaret ve sefalete terk eder.",
-    "It is education that lifts a nation to a free, independent, glorious and elevated society, or abandons a nation to captivity and misery."
-  );
-
   const accentColor = themeColor(props.accentColor, "#C7F136", "--tm-theme-accent", ["#caff12"]);
   const headingColor = themeColor(props.headingColor, "#0E0E0C", "--tm-theme-text", ["#1f2933", "#111111", "#070707"]);
   const mutedColor = themeColor(props.mutedTextColor, "#55554e", "--tm-theme-sub", ["#555555", "#777777"]);
@@ -182,94 +181,196 @@ export function ThreeMashAcademyPage(props: Props) {
     "--tma-panel": themeColor(props.panelColor, "#F1F1EC", "--tm-theme-panel", ["#ffffff", "#fff"]),
     "--tma-accent": accentColor,
     "--tma-line": themeColor(props.lineColor, "#E6E6E0", "--tm-theme-line", ["#e8e8e8"]),
-    "--tma-quote": themeColor(props.quoteTextColor, "#0E0E0C", "--tm-theme-text", ["#070707", "#111111"]),
-    "--tma-quote-author": themeColor(props.quoteAuthorColor, "#55554e", "--tm-theme-sub", ["#2b2b2b"]),
     "--tma-heading": headingColor,
-    "--tma-intro-bg": themeColor(props.introBackgroundColor, "#F1F1EC", "--tm-theme-panel", ["#ffffff", "#fff"]),
-    "--tma-intro-text": themeColor(props.introTextColor, "#0E0E0C", "--tm-theme-text", ["#000000", "#111111"]),
     "--tma-card-title": themeColor(props.cardTitleColor, "#0E0E0C", "--tm-theme-text", ["#1f2933"]),
-    "--tma-event-date": themeColor(props.eventDateColor, "#8f8f86", "--tm-theme-muted", ["#777777"]),
-    "--tma-event-image-bg": themeColor(props.eventImageBackgroundColor, "#E6E6E0", "--tm-theme-line", ["#f7f7f7"]),
-    "--tma-read-more": themeColor(props.readMoreColor, "#0E0E0C", "--tm-theme-text", ["#32303d"]),
     "--tma-word-color": cssColor(props.styledPhraseColor, accentColor),
     "--tma-max": `${numberInRange(props.maxContentWidth, 1280, 720, 1800)}px`,
-    "--tma-quote-width": `${numberInRange(props.quoteWidthPercent, 50, 30, 100)}%`,
-    "--tma-quote-min": `${numberInRange(props.quoteMinWidth, 520, 260, 900)}px`,
-    "--tma-quote-padding": `${numberInRange(props.quotePadding, 30, 0, 96)}px`,
-    "--tma-gap": `${numberInRange(props.sectionGap, 32, 0, 120)}px`,
-    "--tma-intro-image-max": "560px",
     "--tma-event-gap": `${numberInRange(props.eventCardsGap, 24, 8, 80)}px`,
-    "--tma-event-ratio": value(props.eventImageRatio, "1 / 1"),
     "--tma-word-weight": props.styledPhraseBold === false ? "inherit" : "700",
     "--tma-word-style": props.styledPhraseItalic ? "italic" : "inherit",
   } as any;
 
+  const pageTitle = localizedValue(props.eyebrowText, props.eyebrowTextEn, "Mash Academy", "Mash Academy");
+  const quote = localizedValue(
+    props.titleText,
+    props.titleTextEn,
+    "Eğitimdir ki bir milleti ya hür bağımsız şanlı yüce bir toplum olarak yaşatır veya bir milleti esaret ve sefalete terk eder.",
+    "It is education that lifts a nation to a free, independent, glorious and elevated society, or abandons a nation to captivity and misery."
+  );
+  const quoteAuthor = localizedValue(props.quoteAuthorText, undefined, "M. Kemal Atatürk", "M. Kemal Atatürk");
+  const introTitle = localizedValue(
+    props.introTitleText,
+    props.introTitleTextEn,
+    "Bilgiyle büyüyen ekosistem.",
+    "An ecosystem powered by knowledge."
+  );
+  const description = localizedValue(props.descriptionHtml, props.descriptionHtmlEn, sourceDescription, sourceDescription);
+  const pastTitle = localizedValue(props.card3Title, props.card3TitleEn, "Geçmiş Etkinlikler", "Past Events");
+  const pastText = localizedValue(props.card3Text, props.card3TextEn, sourcePastText, sourcePastText);
+  const readMoreText = localizedValue(props.primaryButtonText, props.primaryButtonTextEn, "Devamını Oku", "Read More");
+  const event1FallbackTitle = "Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi Raporu";
+  const event1FallbackTitleEn = "Composite Crown Design Over IBAR with Blender for Dental Training Report";
+  const event1Title = localizedValue(props.card1Title, props.card1TitleEn, event1FallbackTitle, event1FallbackTitleEn);
+  const event1Text = localizedValue(
+    props.card1Text,
+    props.card1TextEn,
+    "''Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi\" webinarında, dijital diş hekimliği alanında yenilikçi yaklaşımlar ve IBAR destekli hibrit protez tasarımı ele alınmıştır.",
+    "In the webinar \"Composite Crown Design Over IBAR with Blender for Dental,\" innovative approaches in digital dentistry and IBAR-supported hybrid prosthesis design were discussed."
+  );
+  const event2FallbackTitle = "IBAR Tasarımı Eğitimi";
+  const event2FallbackTitleEn = "IBAR Design Training";
+  const event2Title = localizedValue(props.card2Title, props.card2TitleEn, event2FallbackTitle, event2FallbackTitleEn);
+  const event2Text = localizedValue(
+    props.card2Text,
+    props.card2TextEn,
+    "Eğitim Mash Academy tarafından, 23 Mart 2024 tarihinde Antalya'da organize edilmiştir. Eğitimcilerimizden Vahit Topçu \"Hibrit Protez Tasarımı\" ve Alihan Şahbaz \"IBAR Tasarımı\" eğitimi ile katılımcılara tecrübelerini aktarmıştır. Eğitimin sonunda 3D printer kullanımındaki sık karşılaşılan hatalar ve püf noktalara değinilmiştir.",
+    "The training was organized by Mash Academy in Antalya on March 23, 2024. Our instructors Vahit Topçu, with the \"Hybrid Denture Design\" training, and Alihan Şahbaz, with the \"IBAR Design\" training, shared their experience with participants. At the end of the training, common mistakes and tips in 3D printer use were covered."
+  );
+  const event3Title = localizedValue(props.event3Title, props.event3TitleEn, "Mash Academy Etkinliği", "Mash Academy Event");
+  const event3Text = localizedValue(
+    props.event3Text,
+    props.event3TextEn,
+    "Mash Academy etkinliğinde ele alınan konular ve katılımcılara sunulan deneyim hakkında bilgi.",
+    "Information about a Mash Academy event."
+  );
+  const event4Title = localizedValue(props.event4Title, props.event4TitleEn, "Mash Academy Etkinliği", "Mash Academy Event");
+  const event4Text = localizedValue(
+    props.event4Text,
+    props.event4TextEn,
+    "Mash Academy etkinliğinde ele alınan konular ve katılımcılara sunulan deneyim hakkında bilgi.",
+    "Information about a Mash Academy event."
+  );
+  const event3Image = imageUrl(props.event3ImageUrl, "");
+  const event3Href = safeNavigationHref(props.event3Href, "");
+  const event4Image = imageUrl(props.event4ImageUrl, "");
+  const event4Href = safeNavigationHref(props.event4Href, "");
+
   const events = [
-    {
-      image: academyEvent1Image,
-      fallbackTitle: tLocalized("Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi Raporu", "Composite Crown Design Over IBAR with Blender for Dental Training Report"),
-      fallbackText: tLocalized("''Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi\" webinarında, dijital diş hekimliği alanında yenilikçi yaklaşımlar ve IBAR destekli hibrit protez tasarımı ele alınmıştır.", "In the webinar \"Composite Crown Design Over IBAR with Blender for Dental,\" innovative approaches in digital dentistry and IBAR-supported hybrid prosthesis design were discussed."),
-      fallbackHref: tLocalized("/blog/blender-for-dental-ile-ibar-uzeri-composite-kron-tasarim-egitimi-raporu", "/blog/blender-for-dental-ile-ibar-uzeri-composite-kron-tasarim-egitimi-raporu"),
-      fallbackDate: "Apr 2, 2025",
-    },
-    {
-      image: academyEvent2Image,
-      fallbackTitle: tLocalized("IBAR Tasarımı Eğitimi", "IBAR Design Training"),
-      fallbackText: tLocalized("Eğitim Mash Academy tarafından, 23 Mart 2024 tarihinde Antalya'da organize edilmiştir. Eğitimcilerimizden Vahit Topçu \"Hibrit Protez Tasarımı\" ve Alihan Şahbaz \"IBAR Tasarımı\" eğitimi ile katılımcılara tecrübelerini aktarmıştır. Eğitimin sonunda 3D printer kullanımındaki sık karşılaşılan hatalar ve püf noktalara değinilmiştir.", "The training was organized by Mash Academy in Antalya on March 23, 2024. Our instructors Vahit Topçu, with the \"Hybrid Denture Design\" training, and Alihan Şahbaz, with the \"IBAR Design\" training, shared their experience with participants. At the end of the training, common mistakes and tips in 3D printer use were covered."),
-      fallbackHref: tLocalized("/blog/ibar-tasarimi-egitimi", "/blog/ibar-tasarimi-egitimi"),
-      fallbackDate: "Apr 5, 2024",
-    },
+    ...(props.showEvent1 !== false
+      ? [
+          {
+            key: "event1",
+            image: imageUrl(props.event1ImageUrl, academyEvent1Image),
+            imageAlt: localizedValue(props.event1ImageAlt, props.event1ImageAltEn, event1Title, event1Title),
+            date: localizedValue(props.event1Date, props.event1DateEn, "Apr 2, 2025", "Apr 2, 2025"),
+            title: event1Title,
+            text: event1Text,
+            href: href(
+              props.primaryButtonHref,
+              "/blog/blender-for-dental-ile-ibar-uzeri-composite-kron-tasarim-egitimi-raporu"
+            ),
+            buttonText: localizedValue(props.primaryButtonText, props.primaryButtonTextEn, "Devamını Oku", "Read More"),
+          },
+        ]
+      : []),
+    ...(props.showEvent2 !== false
+      ? [
+          {
+            key: "event2",
+            image: imageUrl(props.event2ImageUrl, academyEvent2Image),
+            imageAlt: localizedValue(props.event2ImageAlt, props.event2ImageAltEn, event2Title, event2Title),
+            date: localizedValue(props.event2Date, props.event2DateEn, "Apr 5, 2024", "Apr 5, 2024"),
+            title: event2Title,
+            text: event2Text,
+            href: href(props.secondaryButtonHref, "/blog/ibar-tasarimi-egitimi"),
+            buttonText: localizedValue(props.secondaryButtonText, props.secondaryButtonTextEn, "Devamını Oku", "Read More"),
+          },
+        ]
+      : []),
+    ...(props.showEvent3 === true && event3Image && event3Href
+      ? [
+          {
+            key: "event3",
+            image: event3Image,
+            imageAlt: localizedValue(props.event3ImageAlt, props.event3ImageAltEn, event3Title, event3Title),
+            date: props.event3Date?.trim() ?? "",
+            title: event3Title,
+            text: event3Text,
+            href: event3Href,
+            buttonText: readMoreText,
+          },
+        ]
+      : []),
+    ...(props.showEvent4 === true && event4Image && event4Href
+      ? [
+          {
+            key: "event4",
+            image: event4Image,
+            imageAlt: localizedValue(props.event4ImageAlt, props.event4ImageAltEn, event4Title, event4Title),
+            date: props.event4Date?.trim() ?? "",
+            title: event4Title,
+            text: event4Text,
+            href: event4Href,
+            buttonText: readMoreText,
+          },
+        ]
+      : []),
   ];
 
-  const descriptionParts = htmlParts(undefined, props, sourceDescription);
+  const descriptionParts = htmlParts(description, props);
   return (
     <section className="three-mash-academy-page" style={style}>
       <style dangerouslySetInnerHTML={{ __html: criticalAcademyCss }} />
       <div className="tma-shell">
-        <section className="tma-quote-section">
-          <h1 dangerouslySetInnerHTML={richText(undefined, props, sourceTitle)} />
-          <blockquote>
-            <p dangerouslySetInnerHTML={richText(undefined, props, sourceQuote)} />
-            <cite dangerouslySetInnerHTML={richText(undefined, props, sourceQuoteAuthor)} />
-          </blockquote>
-        </section>
+        {props.showQuoteSection !== false && (
+          <section className="tma-quote-section">
+            <h1 dangerouslySetInnerHTML={richText(pageTitle, props)} />
+            <blockquote>
+              <p dangerouslySetInnerHTML={richText(quote, props)} />
+              <cite dangerouslySetInnerHTML={richText(quoteAuthor, props)} />
+            </blockquote>
+          </section>
+        )}
 
-        <section className="tma-intro">
-          <div className="tma-intro-media">
-            <img src={academyIntroImage} alt={sourceTitle} loading="eager" decoding="async" />
-          </div>
-          <div className="tma-section-head">
-            <h2 dangerouslySetInnerHTML={richText(undefined, props, sourceIntroTitle)} />
-            <div className="tma-description-flow">
-              {descriptionParts.map((part, index) => (
-                <p key={index} dangerouslySetInnerHTML={{ __html: part }} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="tma-past">
-          <div className="tma-section-head">
-            <h2 dangerouslySetInnerHTML={richText(undefined, props, sourcePastTitle)} />
-          </div>
-          <p dangerouslySetInnerHTML={richText(undefined, props, sourcePastText)} />
-        </section>
-
-        <section className="tma-events" id="tma-events">
-          {events.map((event, index) => (
-            <article className="tma-card" key={index}>
-              <a className="tma-card-image" href={href(undefined, event.fallbackHref)}>
-                <img src={event.image} alt={event.fallbackTitle} loading="lazy" decoding="async" />
-              </a>
-              <div className="tma-card-body">
-                <span className="tma-card-date">{event.fallbackDate}</span>
-                <a className="tma-card-title" href={href(undefined, event.fallbackHref)} dangerouslySetInnerHTML={richText(undefined, props, event.fallbackTitle)} />
-                <p dangerouslySetInnerHTML={richText(undefined, props, event.fallbackText)} />
-                <a className="tma-read-more" href={href(undefined, event.fallbackHref)} dangerouslySetInnerHTML={richText(undefined, props, sourceReadMore)} />
+        {props.showIntroSection !== false && (
+          <section className={`tma-intro${props.showIntroImage === false ? " tma-intro-text-only" : ""}`}>
+            {props.showIntroImage !== false && (
+              <div className="tma-intro-media">
+                <img
+                  src={imageUrl(props.introImageUrl, academyIntroImage)}
+                  alt={localizedValue(props.introImageAlt, props.introImageAltEn, pageTitle, "Mash Academy")}
+                  loading="eager"
+                  decoding="async"
+                />
               </div>
-            </article>
-          ))}
-        </section>
+            )}
+            <div className="tma-section-head">
+              <h2 dangerouslySetInnerHTML={richText(introTitle, props)} />
+              <div className="tma-description-flow">
+                {descriptionParts.map((part, index) => (
+                  <p key={index} dangerouslySetInnerHTML={{ __html: part }} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {props.showPastSection !== false && (
+          <section className="tma-past">
+            <div className="tma-section-head">
+              <h2 dangerouslySetInnerHTML={richText(pastTitle, props)} />
+            </div>
+            <p dangerouslySetInnerHTML={richText(pastText, props)} />
+          </section>
+        )}
+
+        {props.showEventCards !== false && events.length > 0 && (
+          <section className={`tma-events${events.length === 1 ? " tma-events-single" : ""}`} id="tma-events">
+            {events.map((event) => (
+              <article className="tma-card" key={event.key}>
+                <a className="tma-card-image" href={event.href}>
+                  <img src={event.image} alt={event.imageAlt} loading="lazy" decoding="async" />
+                </a>
+                <div className="tma-card-body">
+                  {event.date && <span className="tma-card-date">{event.date}</span>}
+                  <a className="tma-card-title" href={event.href} dangerouslySetInnerHTML={richText(event.title, props)} />
+                  <p dangerouslySetInnerHTML={richText(event.text, props)} />
+                  <a className="tma-read-more" href={event.href} dangerouslySetInnerHTML={richText(event.buttonText, props)} />
+                </div>
+              </article>
+            ))}
+          </section>
+        )}
       </div>
     </section>
   );

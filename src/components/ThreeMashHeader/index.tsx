@@ -25,10 +25,10 @@ import { hydrateMissingOrderLineImageFallbacks, orderLineImageUrl, orderLineImag
 import { ecoBlocksIcon, ecoCuringIcon, ecoOvenIcon, ecoPrinterIcon, ecoResinIcon, ecoScannerIcon } from "../../assets/eco-icons-data";
 import threeMashHeaderLogoImage from "../../assets/three-mash-header-logo-final-data";
 import { categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
-import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale, resolveLocalizedUrl, EN_TO_TR_ROUTE_MAP } from "../../utils/i18n";
+import { tLocalized, tProp, isEnglishLocale, translateText, localizedHref, setPreferredLocale, resolveLocalizedUrl } from "../../utils/i18n";
 import { sanitizeHtml, sanitizeSvgMarkup } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
- 
+
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import {
@@ -223,13 +223,13 @@ function cartItemVariantText(item: IkasOrderLineItem) {
 const defaultSearchSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultAccountSvg = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const defaultCartSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M6.2 7.5h14l-1.4 8.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.5 4.5H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>`;
-const defaultOrdersSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="m4 7 8-4 8 4v10l-8 4-8-4V7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4.5 7.5 7.5 4 7.5-4M12 11.5V21" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
-const defaultAddressesSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>`;
-const defaultAcademySvg = `<svg viewBox="0 0 24 24" fill="none"><path d="m3 9 9-4 9 4-9 4-9-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 11.2V15c2.8 2.2 7.2 2.2 10 0v-3.8M21 10v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const defaultLogoutSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M14 5V4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 12h11m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const defaultOrdersSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="m4.5 7.2 7.5-3.8 7.5 3.8v9.6l-7.5 3.8-7.5-3.8V7.2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4.8 7.4 7.2 3.6 7.2-3.6M12 11v9.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+const defaultAddressesSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M18.5 10.2c0 4.8-6.5 10.3-6.5 10.3s-6.5-5.5-6.5-10.3a6.5 6.5 0 1 1 13 0Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10.2" r="2.3" stroke="currentColor" stroke-width="1.8"/></svg>`;
+const defaultAcademySvg = `<svg viewBox="0 0 24 24" fill="none"><path d="m2.5 9 9.5-4.5 9.5 4.5-9.5 4.5-9.5-4.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6.5 11.2V15.5c0 2.2 2.5 3.5 5.5 3.5s5.5-1.3 5.5-3.5v-4.3M21.5 10v5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const defaultLogoutSvg = `<svg viewBox="0 0 24 24" fill="none"><path d="M13.5 5V4.2a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v15.6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9.5 12h11m0 0-3.8-3.8m3.8 3.8-3.8 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const academyPageHref = "/pages/mash-academy";
 const defaultReferencesHomeHref = "/";
-const defaultReferencesSectionId = "guven";
+const defaultReferencesSectionId = "referanslar";
 const pendingReferencesScrollKey = "tmh-pending-references-scroll";
 const legacyAcademyRouteKeys = new Set(["academy", "mash-academy", "pages-mash-academy", "2tplvqpo-rovtvwz53h"]);
 /**
@@ -276,6 +276,9 @@ const criticalHeaderCss = `
   min-height: var(--tmh-announcement-fixed-height);
   overflow: visible;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--tmh-ann-bg);
   color: var(--tmh-ann-text);
   font-size: 13px;
@@ -286,15 +289,34 @@ const criticalHeaderCss = `
 .three-mash-header .tmh-announcement-inner {
   position: relative;
   width: min(100%, 1240px);
-  min-height: 100%;
+  min-height: var(--tmh-announcement-fixed-height);
   margin: 0 auto;
-  padding: 6px 90px 6px 32px;
+  padding: 8px 96px 8px 32px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  align-content: center;
+  gap: 6px;
+  row-gap: 2px;
   text-align: center;
   flex-wrap: wrap;
+}
+.three-mash-header .tmh-announcement-inner > b[data-tmh-ann-highlight],
+.three-mash-header .tmh-announcement-inner > span[data-tmh-ann-text],
+.three-mash-header .tmh-announcement-inner > a[data-tmh-ann-link] {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+.three-mash-header .tmh-announcement-lang {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  z-index: 102;
 }
 .three-mash-header .tmh-announcement b { color: var(--tmh-accent); font-weight: 600; }
 .three-mash-header .tmh-announcement a { color: #fff; text-decoration: underline; font-weight: 600; }
@@ -311,6 +333,9 @@ const criticalHeaderCss = `
 @media (max-width: 900px) {
   .three-mash-header {
     --tmh-announcement-fixed-height: 76px;
+  }
+  .three-mash-header .tmh-announcement-lang {
+    display: none;
   }
 }
   .three-mash-header .tmh-wrap {
@@ -483,9 +508,7 @@ function productAnnouncementFromData(data: ReturnType<typeof resolveProductDetai
 
 function announcementForRouteKey(routeKey: string): HeaderAnnouncementOverride | null {
   if (!routeKey) return null;
-  const enMapped = EN_TO_TR_ROUTE_MAP[`/${routeKey}`] || EN_TO_TR_ROUTE_MAP[routeKey];
-  const trRouteKey = enMapped ? enMapped.replace(/^\/+/, "") : routeKey;
-  const resolvedRouteKey = englishProductRouteAliases[routeKey] || trRouteKey;
+  const resolvedRouteKey = englishProductRouteAliases[routeKey] || routeKey;
 
   const productAnnouncement = productAnnouncementFromData(resolveProductDetailData({ slug: resolvedRouteKey }));
   if (productAnnouncement) return productAnnouncement;
@@ -506,7 +529,6 @@ function announcementForRouteKey(routeKey: string): HeaderAnnouncementOverride |
 
 const englishProductRouteAliases: Record<string, string> = {
   "mash-p16l-385nm-16k-dental-3d-printer": "mash-p16l-385nm-16k-dental-3d-yazici",
-  "mash-curie-m1-dental-3d-printer": "mash-curie-m1-dental-3d-yazici",
   "mash-curie-m1-dental-dlp-3d-printer": "mash-curie-m1-dental-3d-yazici",
   "creality-halot-sky-6k-dental-3d-printer": "creality-halot-sky-6k",
   "mash-w1e-ultrasonic-washing-unit": "mash-w1e-ultrasonik-yikama-cihazi",
@@ -806,7 +828,13 @@ function homeRouteTarget(value: string | undefined) {
   return localizedHref(withoutHash);
 }
 
-function referencesSectionTarget(homeHref?: string, sectionId?: string) {
+function referencesSectionTarget(homeHref?: string, sectionId?: string, customHref?: string) {
+  if (customHref && customHref.trim()) {
+    const raw = customHref.trim();
+    if (raw.startsWith("#")) return `/${raw}`;
+    if (!raw.startsWith("/") && !raw.startsWith("http")) return `/#${raw}`;
+    return raw;
+  }
   const homeTarget = homeRouteTarget(homeHref);
   return `${homeTarget}${sectionHash(sectionId, defaultReferencesSectionId)}`;
 }
@@ -863,21 +891,25 @@ function referencesClickTarget(homeHref: string | undefined, sectionId: string |
   };
 }
 
-function handleReferencesClick(event: MouseEvent, homeHref: string | undefined, sectionId: string | undefined) {
-  const { homeTarget, hash, targetId } = referencesClickTarget(homeHref, sectionId);
-  const section = document.getElementById(targetId) || document.querySelector(hash);
+function handleReferencesClick(
+  event: MouseEvent,
+  targetHref: string,
+  _homeHref?: string,
+  sectionId?: string
+) {
+  const rawHref = targetHref.trim();
+  const isHashTarget = rawHref.includes("#") || rawHref === "/" || (!rawHref.includes("/") && !rawHref.startsWith("http"));
+
+  if (!isHashTarget && rawHref.startsWith("/")) {
+    // Normal page link, let browser navigate naturally
+    return;
+  }
 
   event.preventDefault();
   event.stopPropagation();
 
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
-    safeHistoryPush(hash);
-    return;
-  }
-
-  savePendingReferencesScroll(targetId);
-  window.location.href = safeRedirect(homeTarget);
+  const cleanId = rawHref.includes("#") ? rawHref.split("#").pop() || "referanslar" : cleanSectionId(sectionId, defaultReferencesSectionId);
+  scrollToSectionWithOffset(cleanId);
 }
 
 function handleAnnouncementClick(event: MouseEvent, targetHref: string) {
@@ -1101,10 +1133,7 @@ function richText(value?: string, props?: Props) {
 }
 
 function announcementRichText(value: string | undefined, props: Props) {
-  const markup = richText(value, props).__html;
-  return {
-    __html: styleTextChunks(markup, props.announcementStyledPhrase, props.announcementWordStyleEnabled !== false, "tmh-ann-word-style"),
-  };
+  return richText(value, props);
 }
 
 function RichInline({ value, className, wordStyle }: { value?: string; className?: string; wordStyle?: Props }) {
@@ -1270,6 +1299,17 @@ function resolveActionIcon(image: unknown, svg: unknown, fallbackSvg: string, sh
   };
 }
 
+function renderFlagMedia(flagProp: unknown, defaultSvg: preact.JSX.Element, altText: string) {
+  const imgUrl = imageSource(flagProp);
+  if (imgUrl) {
+    return <img src={imgUrl} className="tmh-flag-svg" alt={altText} width="16" height="11" loading="lazy" decoding="async" />;
+  }
+  if (typeof flagProp === "string" && flagProp.includes("<svg")) {
+    return <span className="tmh-flag-svg" dangerouslySetInnerHTML={{ __html: sanitizeSvgMarkup(flagProp) }} />;
+  }
+  return defaultSvg;
+}
+
 function ProductLink({ item, wordStyle }: { item: MenuItem; wordStyle: Props }) {
   return (
     <a href={href(item.href)} className="tmh-mega-link">
@@ -1293,7 +1333,7 @@ function SearchSuggestionLink({ product }: { product: IkasProduct }) {
   const meta = product.brand?.name || product.categories?.[0]?.name || "";
 
   return (
-    <a className="tmh-search-suggestion" href={getProductHref(product)}>
+    <a className="tmh-search-suggestion" href={localizedHref(getProductHref(product))}>
       <span className="tmh-search-suggestion-media">
         {image ? (
           media?.isVideo ? (
@@ -1363,7 +1403,7 @@ function findSectionTargetElement(sectionId: string): HTMLElement | null {
     return document.querySelector("#ekosistem, .three-mash-ecosystem, .tmr-ecosystem");
   }
   if (cleanId === "guven" || cleanId === "referanslar") {
-    return document.querySelector("#guven, #referanslar, .three-mash-trust, .tmr-testimonials");
+    return document.querySelector("#referanslar, #guven, .three-mash-references, .three-mash-trust, .tmr-testimonials");
   }
   if (cleanId === "sss") {
     return document.querySelector("#sss, .three-mash-faq, .tmr-faq");
@@ -1435,20 +1475,27 @@ function FlowLink({
   onToast?: (msg: string) => void;
   onCloseMenu?: () => void;
 }) {
-  const itemHref = localizedHref(item.href) || "#";
+  const rawHref = item.href?.trim() || "/";
+  const itemHref = localizedHref(rawHref) || "#";
+  const isHashTarget = rawHref.includes("#") || rawHref === "/" || !rawHref.includes("/");
   const sectionId = flowSectionId(item);
-  const isFirstItem = item.number === "01" || itemHref === "/" || !sectionId || sectionId === tLocalized("giris", "giris");
+  const isFirstItem = (item.number === "01" && (rawHref === "/" || rawHref === "/#" || rawHref === "#")) || (!sectionId && rawHref === "/");
 
   return (
     <a
       href={itemHref}
       className="tmh-flow-link"
       onClick={(event) => {
+        if (!isHashTarget && !isFirstItem && rawHref.startsWith("/")) {
+          if (onCloseMenu) onCloseMenu();
+          return;
+        }
+
         event.preventDefault();
         event.stopPropagation();
         if (onCloseMenu) onCloseMenu();
 
-             if (isFirstItem) {
+        if (isFirstItem) {
           scrollToSectionWithOffset("__top__", () => {
             if (onToast) onToast(tLocalized("Şu an bu bölümdesiniz", "You're viewing this section"));
           });
@@ -1472,16 +1519,25 @@ function FlowLink({
   );
 }
 
-function whyMenuHref(fallback: string) {
-  const target = text(undefined, fallback).trim();
-  const hash = target.includes("#") ? `#${target.split("#").pop() || ""}` : target;
+function whyMenuHref(customHref: string | undefined, fallback: string) {
+  const target = text(customHref, fallback).trim();
+  if (!target || target === "/" || target === "/#" || target === "#") return target || fallback;
+
+  const hash = target.includes("#") ? `#${target.split("#").pop() || ""}` : (target.startsWith("/") ? "" : `#${target}`);
   const slug = routeTextKey(hash);
 
-  if (fallback === "/" || slug === "sorun" || slug === tLocalized("sebep", "reason") || slug === tLocalized("piyasada-yaygin-kurulum-250-500", "piyasada-yaygin-kurulum-250-500")) return tLocalized("/#sebep", "/#sebep");
+  if (slug === "sorun" || slug === tLocalized("sebep", "reason") || slug === tLocalized("piyasada-yaygin-kurulum-250-500", "piyasada-yaygin-kurulum-250-500")) return tLocalized("/#sebep", "/#sebep");
   if (slug === tLocalized("cozum", "cozum")) return tLocalized("/#cozum", "/#cozum");
   if (slug === tLocalized("kurleme", "kurleme") || slug === tLocalized("neden-gerekli", "neden-gerekli")) return tLocalized("/#kurleme", "/#kurleme");
   if (slug === tLocalized("iletisim-cta", "iletisim-cta") || slug === "kritik-son-adim" || slug === "son-adim") return tLocalized("/#iletisim-cta", "/#iletisim-cta");
-  return target.startsWith("#") ? `/${target}` : target;
+  if (slug === "ekosistem") return tLocalized("/#ekosistem", "/#ekosistem");
+  if (slug === "referanslar" || slug === "guven") return tLocalized("/#referanslar", "/#referanslar");
+  if (slug === "sss") return tLocalized("/#sss", "/#sss");
+  if (slug === "yatirim") return tLocalized("/#yatirim", "/#yatirim");
+
+  if (target.startsWith("#")) return `/${target}`;
+  if (!target.startsWith("/") && !target.startsWith("http")) return `/#${target}`;
+  return target;
 }
 
 function scrollToHeaderAnchor(section: Element, sectionId: string, _behavior: ScrollBehavior = "smooth") {
@@ -1523,11 +1579,15 @@ function handleHeaderAnchorNavigation(event: MouseEvent, rawHref: string | undef
 }
 
 function Logo({ props }: { props: Props }) {
-  const { logoText, logoHref, logoImageAlt } = props;
-  const logoImage = threeMashHeaderLogoImage;
+  const { logoText, logoHref, logoImageAlt, logoImageUrl } = props;
+  const logoImage = typeof logoImageUrl === "string" && logoImageUrl.trim()
+    ? logoImageUrl.trim()
+    : logoImageUrl && typeof logoImageUrl === "object" && "src" in logoImageUrl && (logoImageUrl as any).src
+    ? (logoImageUrl as any).src
+    : threeMashHeaderLogoImage;
 
   return (
-    <a className="tmh-logo" href={headerRouteHref(logoHref, "/")} aria-label={logoText}>
+    <a className="tmh-logo" href={headerRouteHref(logoHref, "/")} aria-label={logoText || "3mash"}>
       {/* NOTE: CSS-in-JS style for logo image wrapper dimensions */}
       <span
         className="tmh-logo-image-wrap"
@@ -1536,7 +1596,7 @@ function Logo({ props }: { props: Props }) {
           height: "25px",
         } as any}
       >
-        <img src={logoImage} alt={logoImageAlt || logoText} width="118" height="25" loading="eager" decoding="sync" />
+        <img src={logoImage} alt={logoImageAlt || logoText || "3mash"} width="118" height="25" loading="eager" decoding="sync" />
       </span>
     </a>
   );
@@ -1551,6 +1611,16 @@ function CaretIcon() {
 }
 
 export function ThreeMashHeader(props: Props) {
+  if (isEnglishLocale()) {
+    const localizedProps = { ...props } as Props & Record<string, unknown>;
+    for (const [key, value] of Object.entries(localizedProps)) {
+      if (!key.endsWith("En") || typeof value !== "string" || !value.trim()) continue;
+      const baseKey = key.slice(0, -2);
+      localizedProps[baseKey] = value;
+    }
+    props = localizedProps;
+  }
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
@@ -1595,7 +1665,7 @@ export function ThreeMashHeader(props: Props) {
   });
   const isAuthenticated = authState === "authenticated";
 
- useEffect(() => {
+  useEffect(() => {
     setIsHydrated(true);
 
     if (!customerStore._initialized && hasCustomerToken()) {
@@ -1627,7 +1697,7 @@ export function ThreeMashHeader(props: Props) {
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
   const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
   const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
-  const referencesTargetHref = referencesSectionTarget(props.referencesHomeHref, props.referencesSectionId);
+  const referencesTargetHref = referencesSectionTarget(props.referencesHomeHref, props.referencesSectionId, props.referencesHref);
   const searchProductList = resolvedSearchProductList || normalizeSearchProductList(props.searchProductList);
   const searchSuggestionItems = searchSuggestions(searchProductList?.data || [], searchQuery);
   const hasSearchSuggestions = isSearchOpen && searchQuery.trim().length > 0 && searchSuggestionItems.length > 0;
@@ -1664,48 +1734,101 @@ export function ThreeMashHeader(props: Props) {
   const productsFeatureCtaText = sourceRichText(props.productsFeatureCtaText, defaultProductsFeature.ctaText, [tLocalized("kesfet", "kesfet")]);
   const mobileSearchHref = searchPageHref(props.searchHref);
   const productPrimary: MenuItem[] = [
-    {
+    ...(props.showProduct1 !== false ? [{
       title: sourceRichText(props.product1Title, defaultProductPrimary[0].title),
       description: sourceRichText(props.product1Description, defaultProductPrimary[0].description, ["mash p1d (385 nm dlp) · p16l — ±20µm hassasiyet"]),
       href: productRouteHref(props.product1Href, defaultProductPrimary[0].href),
-      icon: ecoPrinterIcon,
-    },
-    {
+      icon: imageSource(props.product1IconImageUrl) || ecoPrinterIcon,
+    }] : []),
+    ...(props.showProduct2 !== false ? [{
       title: sourceRichText(props.product2Title, defaultProductPrimary[1].title),
       description: sourceRichText(props.product2Description, defaultProductPrimary[1].description, [tLocalized("c4p akilli kurleme · c1e ekonomik", "c4p smart curing · c1e economical")]),
       href: productRouteHref(props.product2Href, defaultProductPrimary[1].href),
-      icon: ecoScannerIcon,
-    },
-    {
+      icon: imageSource(props.product2IconImageUrl) || ecoScannerIcon,
+    }] : []),
+    ...(props.showProduct3 !== false ? [{
       title: sourceRichText(props.product3Title, defaultProductPrimary[2].title),
       description: sourceRichText(props.product3Description, defaultProductPrimary[2].description, ["crs · ce class iia biyouyumlu & model"]),
       href: productRouteHref(props.product3Href, defaultProductPrimary[2].href),
-      icon: ecoResinIcon,
-    },
+      icon: imageSource(props.product3IconImageUrl) || ecoResinIcon,
+    }] : []),
+    ...(props.showProduct7 && (props.product7Title || props.product7Href) ? [{
+      title: richTextValue(props.product7Title, ""),
+      description: richTextValue(props.product7Description, ""),
+      href: productRouteHref(props.product7Href, "/"),
+      icon: imageSource(props.product7IconImageUrl) || ecoPrinterIcon,
+    }] : []),
+    ...(props.showProduct9 && (props.product9Title || props.product9Href) ? [{
+      title: richTextValue(props.product9Title, ""),
+      description: richTextValue(props.product9Description, ""),
+      href: productRouteHref(props.product9Href, "/"),
+      icon: imageSource(props.product9IconImageUrl) || ecoPrinterIcon,
+    }] : []),
   ];
 
   // English storefront intentionally exposes only the allowed secondary product group.
   // Zirconia Blocks & Titanium and Dental Furnaces must not appear in /en.
   const productSecondary: MenuItem[] = isEnglishLocale()
     ? [
-      {
+      ...(props.showProduct4 !== false ? [{
         title: sourceRichText(props.product4Title, defaultProductSecondary[0].title),
         description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]),
         href: productRouteHref(props.product4Href, defaultProductSecondary[0].href),
-        icon: ecoCuringIcon,
-      },
+        icon: imageSource(props.product4IconImageUrl) || ecoCuringIcon,
+      }] : []),
+      ...(props.showProduct8 && (props.product8Title || props.product8Href) ? [{
+        title: richTextValue(props.product8Title, ""),
+        description: richTextValue(props.product8Description, ""),
+        href: productRouteHref(props.product8Href, "/"),
+        icon: imageSource(props.product8IconImageUrl) || ecoCuringIcon,
+      }] : []),
+      ...(props.showProduct10 && (props.product10Title || props.product10Href) ? [{
+        title: richTextValue(props.product10Title, ""),
+        description: richTextValue(props.product10Description, ""),
+        href: productRouteHref(props.product10Href, "/"),
+        icon: imageSource(props.product10IconImageUrl) || ecoCuringIcon,
+      }] : []),
     ]
     : [
-      { title: sourceRichText(props.product4Title, defaultProductSecondary[0].title), description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]), href: productRouteHref(props.product4Href, defaultProductSecondary[0].href), icon: ecoCuringIcon },
-      { title: sourceRichText(props.product5Title, defaultProductSecondary[1].title), description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]), href: productRouteHref(props.product5Href, defaultProductSecondary[1].href), icon: ecoBlocksIcon },
-      { title: sourceRichText(props.product6Title, defaultProductSecondary[2].title), description: sourceRichText(props.product6Description, defaultProductSecondary[2].description, ["sinterleme cozumleri"]), href: productRouteHref(props.product6Href, defaultProductSecondary[2].href), icon: ecoOvenIcon },
+      ...(props.showProduct4 !== false ? [{
+        title: sourceRichText(props.product4Title, defaultProductSecondary[0].title),
+        description: sourceRichText(props.product4Description, defaultProductSecondary[0].description, [tLocalized("lab icin hassas tarama", "lab icin hassas tarama")]),
+        href: productRouteHref(props.product4Href, defaultProductSecondary[0].href),
+        icon: imageSource(props.product4IconImageUrl) || ecoCuringIcon,
+      }] : []),
+      ...(props.showProduct5 !== false ? [{
+        title: sourceRichText(props.product5Title, defaultProductSecondary[1].title),
+        description: sourceRichText(props.product5Description, defaultProductSecondary[1].description, ["freze sarflari"]),
+        href: productRouteHref(props.product5Href, defaultProductSecondary[1].href),
+        icon: imageSource(props.product5IconImageUrl) || ecoBlocksIcon,
+      }] : []),
+      ...(props.showProduct6 !== false ? [{
+        title: sourceRichText(props.product6Title, defaultProductSecondary[2].title),
+        description: sourceRichText(props.product6Description, defaultProductSecondary[2].description, ["sinterleme cozumleri"]),
+        href: productRouteHref(props.product6Href, defaultProductSecondary[2].href),
+        icon: imageSource(props.product6IconImageUrl) || ecoOvenIcon,
+      }] : []),
+      ...(props.showProduct8 && (props.product8Title || props.product8Href) ? [{
+        title: richTextValue(props.product8Title, ""),
+        description: richTextValue(props.product8Description, ""),
+        href: productRouteHref(props.product8Href, "/"),
+        icon: imageSource(props.product8IconImageUrl) || ecoCuringIcon,
+      }] : []),
+      ...(props.showProduct10 && (props.product10Title || props.product10Href) ? [{
+        title: richTextValue(props.product10Title, ""),
+        description: richTextValue(props.product10Description, ""),
+        href: productRouteHref(props.product10Href, "/"),
+        icon: imageSource(props.product10IconImageUrl) || ecoCuringIcon,
+      }] : []),
     ];
 
   const whyItems: FlowItem[] = [
-    { number: text(props.why1Number, "01"), title: text(props.why1Title, tLocalized("Yılda $126K'ya varan görünmez kayıp", "Invisible loss up to $126K per year")), description: text(props.why1Description, tLocalized("Tekrarlanan işlerin kliniğinize gerçek maliyeti", "The true cost of remakes to your clinic")), href: "/" },
-    { number: text(props.why2Number, "02"), title: text(props.why2Title, tLocalized("Sebep: ölçüsel hassasiyet", "Reason: dimensional accuracy")), description: text(props.why2Description, tLocalized("250–500µm sapma bandı vs ±20µm güvenli bölge", "250–500µm deviation band vs ±20µm safe zone")), href: whyMenuHref(tLocalized("/#sebep", "/#reason")) },
-    { number: text(props.why3Number, "03"), title: text(props.why3Title, tLocalized("Çözüm: uyumlu ekosistem", "Solution: compatible ecosystem")), description: text(props.why3Description, tLocalized("Yazıcı + reçine + parametre bilgisi, birlikte kalibre", "Printer + resin + parameter knowledge, calibrated together")), href: whyMenuHref(tLocalized("/#cozum", "/#cozum")) },
-    { number: text(props.why4Number, "04"), title: text(props.why4Title, tLocalized("Ve kürleme — son %20'lik fark", "And curing — the final 20% difference")), description: text(props.why4Description, tLocalized("Doğru basılan iş, yanlış kürlenirse yine başarısız olur", "A properly printed job fails if improperly cured")), href: whyMenuHref(tLocalized("/#kurleme", "/#kurleme")) },
+    ...(props.showWhyItem1 !== false ? [{ number: text(props.why1Number, "01"), title: text(props.why1Title, tLocalized("Yılda $126K'ya varan görünmez kayıp", "Invisible loss up to $126K per year")), description: text(props.why1Description, tLocalized("Tekrarlanan işlerin kliniğinize gerçek maliyeti", "The true cost of remakes to your clinic")), href: whyMenuHref(props.why1Href, "/") }] : []),
+    ...(props.showWhyItem2 !== false ? [{ number: text(props.why2Number, "02"), title: text(props.why2Title, tLocalized("Sebep: ölçüsel hassasiyet", "Reason: dimensional accuracy")), description: text(props.why2Description, tLocalized("250–500µm sapma bandı vs ±20µm güvenli bölge", "250–500µm deviation band vs ±20µm safe zone")), href: whyMenuHref(props.why2Href, tLocalized("/#sebep", "/#reason")) }] : []),
+    ...(props.showWhyItem3 !== false ? [{ number: text(props.why3Number, "03"), title: text(props.why3Title, tLocalized("Çözüm: uyumlu ekosistem", "Solution: compatible ecosystem")), description: text(props.why3Description, tLocalized("Yazıcı + reçine + parametre bilgisi, birlikte kalibre", "Printer + resin + parameter knowledge, calibrated together")), href: whyMenuHref(props.why3Href, tLocalized("/#cozum", "/#cozum")) }] : []),
+    ...(props.showWhyItem4 !== false ? [{ number: text(props.why4Number, "04"), title: text(props.why4Title, tLocalized("Ve kürleme — son %20'lik fark", "And curing — the final 20% difference")), description: text(props.why4Description, tLocalized("Doğru basılan iş, yanlış kürlenirse yine başarısız olur", "A properly printed job fails if improperly cured")), href: whyMenuHref(props.why4Href, tLocalized("/#kurleme", "/#kurleme")) }] : []),
+    ...(props.showWhyItem5 && (props.why5Title || props.why5Href) ? [{ number: text(props.why5Number, "05"), title: text(props.why5Title, ""), description: text(props.why5Description, ""), href: whyMenuHref(props.why5Href, "/") }] : []),
+    ...(props.showWhyItem6 && (props.why6Title || props.why6Href) ? [{ number: text(props.why6Number, "06"), title: text(props.why6Title, ""), description: text(props.why6Description, ""), href: whyMenuHref(props.why6Href, "/") }] : []),
   ];
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -1738,6 +1861,14 @@ export function ThreeMashHeader(props: Props) {
     ? `${customerStore.customer.firstName ?? ""} ${customerStore.customer.lastName ?? ""}`.trim() || customerStore.customer.email
     : null;
 
+  const loginButtonText = tProp(props.profileLoginButtonText, "Giriş yap", "Log In");
+  const logoutButtonText = tProp(props.profileLink6Text, "Çıkış yap", "Sign Out");
+  const favoritesTarget = headerRouteHref(props.profileLink3Href, "/account/favorites");
+  const accountDetailsTarget = headerRouteHref(props.profileLink4Href, "/account");
+
+  const defaultFavoritesSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+  const defaultAccountDetailsSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+
   const profileLinks = [
     {
       icon: defaultOrdersSvg,
@@ -1763,6 +1894,26 @@ export function ThreeMashHeader(props: Props) {
       isProtected: true,
       isLogout: false,
     },
+    ...(props.profileLink3Text || props.profileLink3Href
+      ? [{
+        icon: defaultFavoritesSvg,
+        label: tProp(props.profileLink3Text, "Favorilerim", "My Favorites"),
+        link: isCurrentlyAuthed ? favoritesTarget : loginTarget,
+        authHref: favoritesTarget,
+        isProtected: true,
+        isLogout: false,
+      }]
+      : []),
+    ...(props.profileLink4Text || props.profileLink4Href
+      ? [{
+        icon: defaultAccountDetailsSvg,
+        label: tProp(props.profileLink4Text, "Hesap Bilgileri", "Account Details"),
+        link: isCurrentlyAuthed ? accountDetailsTarget : loginTarget,
+        authHref: accountDetailsTarget,
+        isProtected: true,
+        isLogout: false,
+      }]
+      : []),
     {
       icon: defaultAcademySvg,
       label: tProp(
@@ -1779,13 +1930,7 @@ export function ThreeMashHeader(props: Props) {
     },
     {
       icon: defaultLogoutSvg,
-      label: isCurrentlyAuthed
-        ? tProp(
-          props.profileLink6Text,
-          "Çıkış yap",
-          "Sign Out",
-        )
-        : tLocalized("Giriş Yap", "Log In"),
+      label: isCurrentlyAuthed ? logoutButtonText : loginButtonText,
       link: isCurrentlyAuthed ? "#" : loginTarget,
       authHref: loginTarget,
       isProtected: false,
@@ -1832,9 +1977,8 @@ export function ThreeMashHeader(props: Props) {
     "--tmh-panel": sourceThemeToken("#FFFFFF", "--tm-theme-surface"),
     "--tmh-source-panel": "var(--tm-theme-panel, #F1F1EC)",
     "--tmh-badge": sourceThemeToken("#E2492F", "--tm-theme-danger"),
-    "--tmh-why-card-glow": props.showWhyItemGlow === false ? "none" : "linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 10%, transparent), transparent 44%)",
-    "--tmh-why-card-hover-glow": props.showWhyItemGlow === false ? "none" : "linear-gradient(90deg, color-mix(in srgb, var(--tmh-accent) 18%, transparent), transparent 48%)",
-    // Older page instances can retain their former 32px Studio values. Keep the shared brand mark at the source size.
+    "--tmh-why-shimmer-opacity": props.showWhyItemGlow === false ? "0" : "1",
+    "--tmh-why-shimmer-anim": props.showWhyItemGlow === false ? "none" : "tmh-flow-shimmer 0.65s cubic-bezier(.4,0,.2,1) forwards",
     "--tmh-logo-image-width": `${numberInRange(props.logoImageWidth, 116, 116, 118)}px`,
     "--tmh-logo-image-height": `${numberInRange(props.logoImageHeight, 24, 24, 25)}px`,
     "--tmh-logo-image-x": `${numberInRange(props.logoImageXOffset, 0, -24, 24)}px`,
@@ -1856,8 +2000,10 @@ export function ThreeMashHeader(props: Props) {
     "--tmh-logo-svg-saturation": percentage(props.logoSvgSaturation, 100, 0, 300),
     "--tmh-logo-svg-hue": `${numberInRange(props.logoSvgHue, 0, -180, 180)}deg`,
     "--tmh-logo-svg-invert": percentage(props.logoSvgInvert, 0, 0, 100),
-    ...imageControlVars("tmh-action-icon-image", props, "actionIconImage", 22, 22, 36),
-    ...svgControlVars("tmh-action-icon-svg", props, "actionIconSvg", 22, 22, 36),
+    "--tmh-action-icon-image-width": "22px",
+    "--tmh-action-icon-image-height": "22px",
+    "--tmh-action-icon-svg-width": "22px",
+    "--tmh-action-icon-svg-height": "22px",
   };
 
   useEffect(() => {
@@ -2128,8 +2274,9 @@ export function ThreeMashHeader(props: Props) {
     const item = productsMenuRef.current;
     if (!item || typeof window === "undefined") return;
 
+    const hasFeature = props.showProductsFeatureCard !== false;
     const rect = item.getBoundingClientRect();
-    const panelWidth = Math.min(880, window.innerWidth - 32);
+    const panelWidth = Math.min(hasFeature ? 880 : 640, window.innerWidth - 32);
     const desiredLeft = rect.left + rect.width / 2 - panelWidth / 2;
     const clampedLeft = Math.min(window.innerWidth - panelWidth - 16, Math.max(16, desiredLeft));
     setProductsMenuLeft(clampedLeft - rect.left);
@@ -2183,7 +2330,7 @@ export function ThreeMashHeader(props: Props) {
 
     const firstSuggestion = searchSuggestionItems[0]?.product;
     if (firstSuggestion) {
-      const productHref = getProductHref(firstSuggestion);
+      const productHref = localizedHref(getProductHref(firstSuggestion));
       if (productHref && productHref !== "#") {
         window.location.href = safeRedirect(productHref);
         return;
@@ -2243,11 +2390,11 @@ export function ThreeMashHeader(props: Props) {
   return (
     <section className="three-mash-header" style={themeStyle}>
       {/* Preconnect and preload critical web fonts to eliminate layout shift (CLS) */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-<link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2" crossOrigin="anonymous" />
-<link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossOrigin="anonymous" />
-<link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/newsreader/v26/cY9kfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsMwaT9ZJFjSAgA.woff2" crossOrigin="anonymous" /><style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2" crossOrigin="anonymous" />
+      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossOrigin="anonymous" />
+      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/newsreader/v26/cY9kfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsMwaT9ZJFjSAgA.woff2" crossOrigin="anonymous" /><style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
       {props.showAnnouncement !== false && (
         <>
           <div className="tmh-announcement">
@@ -2260,95 +2407,105 @@ export function ThreeMashHeader(props: Props) {
                 onClick={(event) => handleAnnouncementClick(event, text(effectiveAnnouncementHref, defaultAnn.href))}
                 dangerouslySetInnerHTML={announcementRichText(announcementCtaText, props)}
               />
-              <div className="tmh-announcement-lang" ref={langDropdownRef}>
-                <button
-                  type="button"
-                  className="tmh-lang-trigger"
-                  aria-label={isEnglishLocale() ? "Language: English" : "Dil: Türkçe"}
-                  aria-expanded={isLangOpen}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsLangOpen((prev) => !prev);
-                  }}
-                >
-                  {isEnglishLocale() ? (
+              {props.showAnnouncementLangSwitch !== false && (
+                <div className="tmh-announcement-lang" ref={langDropdownRef}>
+                {(() => {
+                  const defaultTrFlag = (
+                    <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <rect width="1200" height="800" fill="#E30A17" rx="30" />
+                      <circle cx="425" cy="400" r="200" fill="#ffffff" />
+                      <circle cx="475" cy="400" r="160" fill="#E30A17" />
+                      <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81" />
+                    </svg>
+                  );
+                  const defaultEnFlag = (
+                    <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <rect width="60" height="40" fill="#012169" rx="2" />
+                      <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6" />
+                      <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5" />
+                      <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10" />
+                      <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6" />
+                    </svg>
+                  );
+                  const trFlagEl = renderFlagMedia(props.turkishFlagImage, defaultTrFlag, "TR");
+                  const enFlagEl = renderFlagMedia(props.englishFlagImage, defaultEnFlag, "EN");
+                  const trFullLabel = props.turkishText?.trim() || "Türkçe (TR)";
+                  const enFullLabel = props.englishText?.trim() || "English (EN)";
+                  const trShortLabel = trFullLabel.length <= 4 ? trFullLabel : (trFullLabel.match(/\(([^)]+)\)/)?.[1] || "TR");
+                  const enShortLabel = enFullLabel.length <= 4 ? enFullLabel : (enFullLabel.match(/\(([^)]+)\)/)?.[1] || "EN");
+
+                  return (
                     <>
-                      <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <rect width="60" height="40" fill="#012169" rx="2" />
-                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6" />
-                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5" />
-                        <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10" />
-                        <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6" />
-                      </svg>
-                      <span>EN</span>
-                    </> 
-                  ) : (
-                    <>
-                      <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <rect width="1200" height="800" fill="#E30A17" rx="30" />
-                        <circle cx="425" cy="400" r="200" fill="#ffffff" />
-                        <circle cx="475" cy="400" r="160" fill="#E30A17" />
-                        <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81" />
-                      </svg>
-                      <span>TR</span>
+                      <button
+                        type="button"
+                        className="tmh-lang-trigger"
+                        aria-label={isEnglishLocale() ? `Language: ${enFullLabel}` : `Dil: ${trFullLabel}`}
+                        aria-expanded={isLangOpen}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsLangOpen((prev) => !prev);
+                        }}
+                      >
+                        {isEnglishLocale() ? (
+                          <>
+                            {enFlagEl}
+                            <span>{enShortLabel}</span>
+                          </>
+                        ) : (
+                          <>
+                            {trFlagEl}
+                            <span>{trShortLabel}</span>
+                          </>
+                        )}
+                        <svg className={`tmh-lang-caret ${isLangOpen ? "is-open" : ""}`} width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </button>
+
+                      {isLangOpen && (
+                        <div className="tmh-lang-dropdown" role="menu">
+                          <button
+                            type="button"
+                            role="menuitem"
+                            className={`tmh-lang-option ${!isEnglishLocale() ? "is-active" : ""}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setIsLangOpen(false);
+                              setPreferredLocale("tr");
+                              if (typeof window === "undefined") return;
+                              const targetUrl = resolveLocalizedUrl("tr");
+                              window.location.href = safeRedirect(targetUrl);
+                            }}
+                          >
+                            {trFlagEl}
+                            <span>{trFullLabel}</span>
+                            {!isEnglishLocale() && <span className="tmh-lang-check">✓</span>}
+                          </button>
+
+                          <button
+                            type="button"
+                            role="menuitem"
+                            className={`tmh-lang-option ${isEnglishLocale() ? "is-active" : ""}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setIsLangOpen(false);
+                              setPreferredLocale("en");
+                              if (typeof window === "undefined") return;
+                              const targetUrl = resolveLocalizedUrl("en");
+                              window.location.href = safeRedirect(targetUrl);
+                            }}
+                          >
+                            {enFlagEl}
+                            <span>{enFullLabel}</span>
+                            {isEnglishLocale() && <span className="tmh-lang-check">✓</span>}
+                          </button>
+                        </div>
+                      )}
                     </>
-                  )}
-                  <svg className={`tmh-lang-caret ${isLangOpen ? "is-open" : ""}`} width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </button>
-
-                {isLangOpen && (
-                  <div className="tmh-lang-dropdown" role="menu">
-                    <button
-                      type="button"
-                      role="menuitem"
-                      className={`tmh-lang-option ${!isEnglishLocale() ? "is-active" : ""}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsLangOpen(false);
-                        setPreferredLocale("tr");
-                        if (typeof window === "undefined") return;
-                        const targetUrl = resolveLocalizedUrl("tr");
-                        window.location.href = safeRedirect(targetUrl);
-                      }}
-                    >
-                      <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <rect width="1200" height="800" fill="#E30A17" rx="30" />
-                        <circle cx="425" cy="400" r="200" fill="#ffffff" />
-                        <circle cx="475" cy="400" r="160" fill="#E30A17" />
-                        <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81" />
-                      </svg>
-                      <span>Türkçe (TR)</span>
-                      {!isEnglishLocale() && <span className="tmh-lang-check">✓</span>}
-                    </button>
-
-                    <button
-                      type="button"
-                      role="menuitem"
-                      className={`tmh-lang-option ${isEnglishLocale() ? "is-active" : ""}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsLangOpen(false);
-                        setPreferredLocale("en");
-                        if (typeof window === "undefined") return;
-                        const targetUrl = resolveLocalizedUrl("en");
-                        window.location.href = safeRedirect(targetUrl);
-                      }}
-                    >
-                      <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <rect width="60" height="40" fill="#012169" rx="2" />
-                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6" />
-                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5" />
-                        <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10" />
-                        <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6" />
-                      </svg>
-                      <span>English (EN)</span>
-                      {isEnglishLocale() && <span className="tmh-lang-check">✓</span>}
-                    </button>
-                  </div>
-                )}
+                  );
+                })()}
               </div>
+              )}
             </div>
           </div>
           <script dangerouslySetInnerHTML={{ __html: firstPaintAnnouncementScript() }} />
@@ -2373,17 +2530,30 @@ export function ThreeMashHeader(props: Props) {
                   <CaretIcon />
                 </button>
                 <div
-                  className="tmh-mega tmh-products-mega"
+                  className={`tmh-mega tmh-products-mega${props.showProductsFeatureCard === false ? " has-no-feature" : ""}`}
                   hidden={activeMenu !== "products"}
                   // NOTE: CSS-in-JS with dynamic positioning for mega menu
                   style={productsMenuLeft == null ? undefined : { "--tmh-products-mega-left": `${productsMenuLeft}px`, "--tmh-products-translate-x": "0px" } as any}
                 >
-                  <a className="tmh-feature" href={localizedHref(c4pRouteHref(text(props.productsFeatureHref, defaultProductsFeature.href)))}>
-                    <span className="tmh-micro" dangerouslySetInnerHTML={richText(productsFeatureEyebrow, props)} />
-                    <b dangerouslySetInnerHTML={richText(productsFeatureTitle, props)} />
-                    <span dangerouslySetInnerHTML={richText(productsFeatureDescription, props)} />
-                    <em dangerouslySetInnerHTML={richText(productsFeatureCtaText, props)} />
-                  </a>
+                  {props.showProductsFeatureCard !== false && (
+                    <a
+                      className="tmh-feature"
+                      href={localizedHref(c4pRouteHref(text(props.productsFeatureHref, defaultProductsFeature.href)))}
+                      style={{
+                        ...(props.featureCardBgColor ? { "--tmh-feature-bg": props.featureCardBgColor } : {}),
+                        ...(props.featureCardTextColor ? {
+                          "--tmh-feature-text": props.featureCardTextColor,
+                          "--tmh-feature-text-muted": props.featureCardTextColor + "99",
+                        } : {}),
+                        ...(props.featureCardAccentColor ? { "--tmh-feature-accent": props.featureCardAccentColor } : {}),
+                      } as any}
+                    >
+                      <span className="tmh-micro" dangerouslySetInnerHTML={richText(productsFeatureEyebrow, props)} />
+                      <b dangerouslySetInnerHTML={richText(productsFeatureTitle, props)} />
+                      <span dangerouslySetInnerHTML={richText(productsFeatureDescription, props)} />
+                      <em dangerouslySetInnerHTML={richText(productsFeatureCtaText, props)} />
+                    </a>
+                  )}
                   <div className="tmh-mega-column">
                     <span className="tmh-micro" dangerouslySetInnerHTML={richText(productsCol1Title, props)} />
                     {productPrimary.map((item, index) => (
@@ -2396,95 +2566,110 @@ export function ThreeMashHeader(props: Props) {
                       <ProductLink item={item} wordStyle={props} key={index} />
                     ))}
                   </div>
+                  {props.showAllProductsLink !== false && (
+                    <div className="tmh-products-mega-footer">
+                      <a className="tmh-all-products-link" href={localizedHref(props.allProductsHref || "/tum-urunler")}>
+                        <RichInline value={props.allProductsText || tLocalized("Tüm Ürünleri Gör →", "View All Products →")} wordStyle={props} />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </li>
 
-              <li
-                ref={whyMenuRef}
-                className={activeMenu === "why" ? "is-open" : ""}
-                onMouseEnter={() => openMenu("why")}
-                onMouseLeave={() => setActiveMenu(null)}
-                onFocusIn={() => openMenu("why")}
-              >
-                <button className="tmh-menu-trigger" type="button">
-                  <RichInline value={whyMenuText} wordStyle={props} />
-                  <CaretIcon />
-                </button>
-                <div
-                  className="tmh-mega tmh-flow-mega"
-                  hidden={activeMenu !== "why"}
-                  // NOTE: CSS-in-JS with dynamic positioning for mega menu
-                  style={whyMenuLeft == null ? undefined : { "--tmh-flow-mega-left": `${whyMenuLeft}px`, "--tmh-flow-translate-x": "0px" } as any}
+              {props.showWhyMenu !== false && (
+                <li
+                  ref={whyMenuRef}
+                  className={activeMenu === "why" ? "is-open" : ""}
+                  onMouseEnter={() => openMenu("why")}
+                  onMouseLeave={() => setActiveMenu(null)}
+                  onFocusIn={() => openMenu("why")}
                 >
-                  <div className="tmh-flow-grid">
-                    {whyItems.map((item, index) => (
-                      <FlowLink
-                        item={item}
-                        wordStyle={props}
-                        key={index}
-                        onToast={showToast}
-                        onCloseMenu={() => setActiveMenu(null)}
-                      />
-                    ))}
+                  <button className="tmh-menu-trigger" type="button">
+                    <RichInline value={whyMenuText} wordStyle={props} />
+                    <CaretIcon />
+                  </button>
+                  <div
+                    className="tmh-mega tmh-flow-mega"
+                    hidden={activeMenu !== "why"}
+                    // NOTE: CSS-in-JS with dynamic positioning for mega menu
+                    style={whyMenuLeft == null ? undefined : { "--tmh-flow-mega-left": `${whyMenuLeft}px`, "--tmh-flow-translate-x": "0px" } as any}
+                  >
+                    <div className="tmh-flow-grid">
+                      {whyItems.map((item, index) => (
+                        <FlowLink
+                          item={item}
+                          wordStyle={props}
+                          key={index}
+                          onToast={showToast}
+                          onCloseMenu={() => setActiveMenu(null)}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              )}
 
-              <li>
-                <a
-                  className="tmh-plain-link"
-                  href={referencesTargetHref}
-                  onClick={(event) => handleReferencesClick(event, props.referencesHomeHref, props.referencesSectionId)}
-                  onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}
-                >
-                  <RichInline value={referencesText} wordStyle={props} />
-                </a>
-              </li>
-              <li>
-                <a className="tmh-plain-link" href={academyPageTarget(props.academyHref)} onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}>
-                  <RichInline value={academyText} wordStyle={props} />
-                </a>
-              </li>
+              {props.showReferencesMenu !== false && (
+                <li>
+                  <a
+                    className="tmh-plain-link"
+                    href={referencesTargetHref}
+                    onClick={(event) => handleReferencesClick(event, referencesTargetHref, props.referencesHomeHref, props.referencesSectionId)}
+                    onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}
+                  >
+                    <RichInline value={referencesText} wordStyle={props} />
+                  </a>
+                </li>
+              )}
+              {props.showAcademyMenu !== false && (
+                <li>
+                  <a className="tmh-plain-link" href={academyPageTarget(props.academyHref)} onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}>
+                    <RichInline value={academyText} wordStyle={props} />
+                  </a>
+                </li>
+              )}
             </ul>
           </nav>
 
           <div className={`tmh-actions${isSearchOpen ? " is-search-open" : ""}`}>
-            <form className="tmh-inline-search" onSubmit={submitSearch}>
-              {isSearchOpen && (
-                <input
-                  ref={searchInputRef}
-                  className="tmh-inline-search-input"
-                  value={searchQuery}
-                  placeholder={props.searchPlaceholder || ""}
-                  aria-label={props.searchPlaceholder || ""}
-                  onInput={(event) => setSearchQuery((event.currentTarget as HTMLInputElement).value)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Escape") {
-                      setIsSearchOpen(false);
-                      setSearchQuery("");
-                    }
-                  }}
-                />
-              )}
-              <button
-                className="tmh-icon-button"
-                type="button"
-                aria-label={props.searchAriaLabel || ""}
-                aria-expanded={isSearchOpen}
-                onClick={toggleSearch}
-              >
-                <InlineIcon image={searchIcon.image} svg={searchIcon.svg} className="tmh-action-svg" />
-              </button>
-              {hasSearchSuggestions ? (
-                <div className="tmh-search-suggestions" role="listbox">
-                  {searchSuggestionItems.map((item) => (
-                    <SearchSuggestionLink product={item.product} key={item.product.id} />
-                  ))}
-                </div>
-              ) : null}
-            </form>
+            {props.showSearchButton !== false && (
+              <form className="tmh-inline-search" onSubmit={submitSearch}>
+                {isSearchOpen && (
+                  <input
+                    ref={searchInputRef}
+                    className="tmh-inline-search-input"
+                    value={searchQuery}
+                    placeholder={props.searchPlaceholder || ""}
+                    aria-label={props.searchPlaceholder || ""}
+                    onInput={(event) => setSearchQuery((event.currentTarget as HTMLInputElement).value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Escape") {
+                        setIsSearchOpen(false);
+                        setSearchQuery("");
+                      }
+                    }}
+                  />
+                )}
+                <button
+                  className="tmh-icon-button"
+                  type="button"
+                  aria-label={tLocalized("Arama", "Search")}
+                  aria-expanded={isSearchOpen}
+                  onClick={toggleSearch}
+                >
+                  <InlineIcon image={searchIcon.image} svg={searchIcon.svg} className="tmh-action-svg" />
+                </button>
+                {hasSearchSuggestions ? (
+                  <div className="tmh-search-suggestions" role="listbox">
+                    {searchSuggestionItems.map((item) => (
+                      <SearchSuggestionLink product={item.product} key={item.product.id} />
+                    ))}
+                  </div>
+                ) : null}
+              </form>
+            )}
             {props.showProfileMenu === false ? (
-              <a href={headerRouteHref(props.accountHref, isCurrentlyAuthed ? "/account" : "/account/login")} aria-label={props.accountAriaLabel || ""}>
+              <a href={headerRouteHref(props.accountHref, isCurrentlyAuthed ? "/account" : "/account/login")} aria-label={tLocalized("Hesabım", "My Account")}>
                 <InlineIcon image={accountIcon.image} svg={accountIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
@@ -2492,7 +2677,7 @@ export function ThreeMashHeader(props: Props) {
                 <button
                   className="tmh-action-button"
                   type="button"
-                  aria-label={props.accountAriaLabel || ""}
+                  aria-label={tLocalized("Hesabım", "My Account")}
                   aria-expanded={activeAction === "profile"}
                   onClick={() => toggleAction("profile")}
                 >
@@ -2524,7 +2709,7 @@ export function ThreeMashHeader(props: Props) {
               </div>
             )}
             {props.showStorePanel === false ? (
-              <a href={headerRouteHref(props.cartHref, "/cart")} aria-label={props.cartAriaLabel || ""} className="tmh-cart">
+              <a href={headerRouteHref(props.cartHref, "/cart")} aria-label={tLocalized("Sepetim", "My Cart")} className="tmh-cart">
                 <InlineIcon image={cartIcon.image} svg={cartIcon.svg} className="tmh-action-svg" />
               </a>
             ) : (
@@ -2532,7 +2717,7 @@ export function ThreeMashHeader(props: Props) {
                 <button
                   className="tmh-action-button tmh-cart"
                   type="button"
-                  aria-label={props.cartAriaLabel || ""}
+                  aria-label={tLocalized("Sepetim", "My Cart")}
                   aria-expanded={activeAction === "store"}
                   onClick={() => toggleAction("store")}
                 >
@@ -2650,50 +2835,101 @@ export function ThreeMashHeader(props: Props) {
           hidden={!isMobileMenuOpen}
         >
           <nav className="tmh-mobile-list" aria-label={mobileMenuLabel}>
-            <a href={mobileSearchHref} dangerouslySetInnerHTML={richText(productsMenuText, props)} />
-            <a className="tmh-mobile-accent-link" href={href(productPrimary[2]?.href)} dangerouslySetInnerHTML={richText(productPrimary[2]?.title, props)} />
-            <a href={href(productPrimary[0]?.href)} dangerouslySetInnerHTML={richText(productPrimary[0]?.title, props)} />
-            <a href={academyPageTarget(props.academyHref)} dangerouslySetInnerHTML={richText(academyText, props)} />
-            <a href={headerRouteHref(props.accountHref, isCurrentlyAuthed ? "/account" : "/account/login")} dangerouslySetInnerHTML={richText(accountMenuTitle, props)} />
-            <div className="tmh-mobile-lang-wrap">
-              <button
-                type="button"
-                className={`tmh-mobile-lang-btn ${!isEnglishLocale() ? "is-active" : ""}`}
-                onClick={() => {
-                  setPreferredLocale("tr");
-                  if (typeof window === "undefined") return;
-                  const targetUrl = resolveLocalizedUrl("tr");
-                  window.location.href = safeRedirect(targetUrl);
-                }}
-              >
-                <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <rect width="1200" height="800" fill="#E30A17" rx="30" />
-                  <circle cx="425" cy="400" r="200" fill="#ffffff" />
-                  <circle cx="475" cy="400" r="160" fill="#E30A17" />
-                  <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81" />
-                </svg>
-                <span>Türkçe</span>
-              </button>
-              <button
-                type="button"
-                className={`tmh-mobile-lang-btn ${isEnglishLocale() ? "is-active" : ""}`}
-                onClick={() => {
-                  setPreferredLocale("en");
-                  if (typeof window === "undefined") return;
-                  const targetUrl = resolveLocalizedUrl("en");
-                  window.location.href = safeRedirect(targetUrl);
-                }}
-              >
-                <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <rect width="60" height="40" fill="#012169" rx="2" />
-                  <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6" />
-                  <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5" />
-                  <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10" />
-                  <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6" />
-                </svg>
-                <span>English</span>
-              </button>
-            </div>
+            {props.showMobileProductsLink !== false && (
+              <a
+                href={headerRouteHref(props.mobileProductsHref, mobileSearchHref)}
+                dangerouslySetInnerHTML={richText(props.mobileProductsText || productsMenuText, props)}
+              />
+            )}
+            {props.showMobileHighlightLink !== false && (
+              <a
+                className="tmh-mobile-accent-link"
+                href={headerRouteHref(props.mobileHighlightHref, href(productPrimary[2]?.href))}
+                dangerouslySetInnerHTML={richText(props.mobileHighlightText || productPrimary[2]?.title, props)}
+              />
+            )}
+            {props.showMobileWhyLink !== false && (
+              <a
+                href={headerRouteHref(props.mobileWhyHref, "/#sebep")}
+                dangerouslySetInnerHTML={richText(props.mobileWhyText || whyMenuText, props)}
+              />
+            )}
+            {props.showMobileReferencesLink !== false && (
+              <a
+                href={headerRouteHref(props.mobileReferencesHref, "/#referanslar")}
+                dangerouslySetInnerHTML={richText(props.mobileReferencesText || referencesText, props)}
+              />
+            )}
+            {props.showMobileAcademyLink !== false && (
+              <a
+                href={academyPageTarget(props.mobileAcademyHref || props.academyHref)}
+                dangerouslySetInnerHTML={richText(props.mobileAcademyText || academyText, props)}
+              />
+            )}
+            {props.showMobileAccountLink !== false && (
+              <a
+                href={headerRouteHref(props.mobileAccountHref || props.accountHref, isCurrentlyAuthed ? "/account" : "/account/login")}
+                dangerouslySetInnerHTML={richText(
+                  isCurrentlyAuthed && customerDisplayName
+                    ? customerDisplayName
+                    : (isCurrentlyAuthed ? (props.mobileAccountText || accountMenuTitle) : (props.mobileLoginText || loginButtonText)),
+                  props
+                )}
+              />
+            )}
+            {props.showMobileLangSwitch !== false && (
+              <div className="tmh-mobile-lang-wrap">
+                <button
+                  type="button"
+                  className={`tmh-mobile-lang-btn ${!isEnglishLocale() ? "is-active" : ""}`}
+                  onClick={() => {
+                    setPreferredLocale("tr");
+                    if (typeof window === "undefined") return;
+                    const targetUrl = resolveLocalizedUrl("tr");
+                    window.location.href = safeRedirect(targetUrl);
+                  }}
+                >
+                  {renderFlagMedia(
+                    props.turkishFlagImage,
+                    (
+                      <svg className="tmh-flag-svg" viewBox="0 0 1200 800" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect width="1200" height="800" fill="#E30A17" rx="30" />
+                        <circle cx="425" cy="400" r="200" fill="#ffffff" />
+                        <circle cx="475" cy="400" r="160" fill="#E30A17" />
+                        <polygon fill="#ffffff" points="583.33,400 700.86,438.19 628.21,338.2 628.21,461.8 700.86,361.81" />
+                      </svg>
+                    ),
+                    "TR"
+                  )}
+                  <span>{props.turkishText ? (props.turkishText.includes("(") ? props.turkishText.split("(")[0].trim() : props.turkishText) : "Türkçe"}</span>
+                </button>
+                <button
+                  type="button"
+                  className={`tmh-mobile-lang-btn ${isEnglishLocale() ? "is-active" : ""}`}
+                  onClick={() => {
+                    setPreferredLocale("en");
+                    if (typeof window === "undefined") return;
+                    const targetUrl = resolveLocalizedUrl("en");
+                    window.location.href = safeRedirect(targetUrl);
+                  }}
+                >
+                  {renderFlagMedia(
+                    props.englishFlagImage,
+                    (
+                      <svg className="tmh-flag-svg" viewBox="0 0 60 40" width="16" height="11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect width="60" height="40" fill="#012169" rx="2" />
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#ffffff" strokeWidth="6" />
+                        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="2.5" />
+                        <path d="M30 0 v40 M0 20 h60" stroke="#ffffff" strokeWidth="10" />
+                        <path d="M30 0 v40 M0 20 h60" stroke="#C8102E" strokeWidth="6" />
+                      </svg>
+                    ),
+                    "EN"
+                  )}
+                  <span>{props.englishText ? (props.englishText.includes("(") ? props.englishText.split("(")[0].trim() : props.englishText) : "English"}</span>
+                </button>
+              </div>
+            )}
           </nav>
         </div>
       </header>

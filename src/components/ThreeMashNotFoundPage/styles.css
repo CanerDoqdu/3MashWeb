@@ -2,7 +2,7 @@
   width: 100%;
   min-height: var(--tm-404-min-height, 76vh);
   overflow: hidden;
-  background: var(--tm-theme-dark, #0e0e0c);
+  background: var(--tm-404-background, var(--tm-theme-dark, #0e0e0c));
   color: var(--tm-theme-bg, #fafaf7);
   font-family: var(--tm-theme-font-body, "Inter", system-ui, sans-serif);
 }
@@ -31,7 +31,7 @@
   min-height: var(--tm-404-min-height, 76vh);
   overflow: hidden;
   padding: clamp(42px, 8vw, 112px) clamp(34px, 9vw, 150px);
-  background: var(--tm-theme-dark, #0e0e0c);
+  background: var(--tm-404-background, var(--tm-theme-dark, #0e0e0c));
   color: var(--tm-theme-bg, #fafaf7);
 }
 
@@ -45,7 +45,7 @@
 }
 
 .tm-404-panel::after {
-  content: "404";
+  content: var(--tm-404-code, "");
   position: absolute;
   right: clamp(24px, 6vw, 86px);
   top: 50%;

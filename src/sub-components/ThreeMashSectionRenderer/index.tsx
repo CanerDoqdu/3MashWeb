@@ -10,6 +10,7 @@ import {
   hasProductVariantDiscount,
   type IkasCategory,
   type IkasCategoryList,
+  type IkasImage,
   type IkasNavigationLinkList,
   type IkasProduct,
   type IkasProductList,
@@ -21,7 +22,8 @@ import {
   profileMehmet,
 } from "../../assets/remaining-assets-data";
 import { tLocalized, isEnglishLocale, tProp, isTurkishText, localizedHref } from "../../utils/i18n";
-import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { sanitizeHtml, sanitizeSvgMarkup } from "../../utils/sanitizeHtml";
+import { safeNavigationHref } from "../../utils/safeRedirect";
 import {
   ecoBlocksIcon,
   ecoCuringIcon,
@@ -79,7 +81,7 @@ export const defaultSolutionHtml = `
 export const defaultCuringHtml = `
 <section class="tmr-section tmr-dark tmr-curing" id="kurleme">
   <div class="tmr-wrap">
-    <div class="tmr-index"><span class="tmr-index-number">04</span><span class="tmr-index-text">KRİTİK SON ADIM</span><span class="tmr-index-line"></span></div>
+    <div class="tmr-index"><span class="tmr-index-number">04</span><span class="tmr-index-text">Kritik Son Adım</span><span class="tmr-index-line"></span></div>
     <div class="tmr-head"><h2>Sadece yazıcı değil. Sonucu <span class="tmr-title-em">kürleme</span> tamamlar.</h2><div class="tmr-side">Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:</div></div>
     <div class="tmr-why-grid"><article><div>SEBEP 01</div><h3>Mekanik dayanım</h3><p>Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.</p></article><article id="piyasada-yaygin-kurulum-250-500" style="scroll-margin-top: 112px;"><div>SEBEP 02</div><h3>Ölçüsel doğruluk</h3><p>Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.</p></article><article><div>SEBEP 03</div><h3>Biyouyumluluk &amp; renk</h3><p>Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.</p></article></div>
     <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashW1eImage}" alt="Mash W1E Ultrasonik Yıkama Cihazı"></div><div class="tmr-product-body"><h3>Mash W1E Ultrasonik Yıkama Cihazı</h3><p>Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.</p><div class="tmr-spec"><div><span>İşlem</span><b>Ultrasonik temizleme</b></div><div><span>Akış</span><b>Yıkama → kürleme hazırlığı</b></div></div><a class="tmr-go" href="/mash-w1e-ultrasonik-yikama-cihazi">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${mashC1eImage}" alt="Mash C1E UV Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Mash C1E UV Kürleme Cihazı</h3><p>24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle <b>homojen UV post-curing</b> sağlar; mekanik dayanım, boyutsal doğruluk ve yüzey kalitesi hedefini tamamlar.</p><div class="tmr-spec"><div><span>Işık</span><b>24 LED / 360°</b></div><div><span>Spektrum</span><b>360-530 nm</b></div></div><a class="tmr-go" href="/mash-c1e-uv-kurleme-cihazi">İncele <span>→</span></a></div></article></div>
@@ -107,44 +109,7 @@ export const defaultFaqHtml = `<section id="sss" class="tmr-section tmr-section-
 export const defaultFinalHtml = `<section id="iletisim-cta" class="tmr-final"><div class="tmr-wrap"><h2>Bu görünmez kaybı <span>birlikte azaltalım.</span></h2><p>Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b class="tmr-final-white">elinizdeki cihazlarla bile.</b></p><div><a class="tmr-btn tmr-btn-lime" href="${consultationWhatsappHref}">Uzmana danış — ücretsiz</a><a class="tmr-btn tmr-btn-invert" href="${academyPageHref}">Mash Academy'yi keşfet</a></div></div></section>`;
 
 export function getDefaultFooterHtml() {
-  const defaultFooterLegalLinks: Array<[string, string]> = [
-    ["KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
-    [tLocalized("İade &amp; Garanti", "Return &amp; Warranty"), "/pages/iade-ve-garanti"],
-    [tLocalized("Mesafeli Satış", "Distance Sales"), "/pages/mesafeli-satis-sozlesmesi"],
-  ];
-  const footerDescriptionText = tLocalized(
-    "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada.",
-    "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together."
-  );
-  const defaultFooterProductLinks: Array<[string, string]> = [
-    [tLocalized("3D Yazıcılar", "3D Printers"), "/3d-yazicilar"],
-    [tLocalized("Dental Reçineler", "Dental Resins"), "/dental-3d-yazici-recineleri"],
-    [tLocalized("Yıkama &amp; Kürleme", "Wash &amp; Cure"), "/yikama-kurleme-cihazlari"],
-    [tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), "/masasustu-tarayicilar"],
-    [tLocalized("Zirkon Bloklar", "Zirconia Blocks"), "/zirkon-bloklar"],
-    [tLocalized("Dental Fırınlar", "Dental Furnaces"), "/dental-firinlar"],
-  ];
-  const defaultFooterCompanyLinks: Array<[string, string]> = [
-    [tLocalized("Hakkımızda", "About Us"), "/pages/about-us"],
-    [tLocalized("Mash Academy", "Mash Academy"), academyPageHref],
-    [tLocalized("Blog", "Blog"), "/blog"],
-    [tLocalized("Sıkça Sorulan Sorular", "FAQ"), "/pages/sss"],
-  ];
-  const defaultFooterContactLinks: Array<[string, string]> = [
-    ["info@3mash.com", "mailto:info@3mash.com"],
-    [tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Teknokent, Konyaaltı"), footerMapsHref],
-  ];
-  const footerLegalLinksHtml = defaultFooterLegalLinks
-    .map(([label, href]) => `<a href="${localizedHref(href)}">${label}</a>`)
-    .join("<span>·</span>");
-  const defaultFooterProductsHtml = defaultFooterProductLinks
-    .map(([label, href]) => `<a href="${localizedHref(href)}">${label}</a>`)
-    .join("");
-  const defaultFooterCompanyHtml = defaultFooterCompanyLinks
-    .map(([label, href]) => `<a href="${localizedHref(href)}">${label}</a>`)
-    .join("");
-
-  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="/"><img src="${threeMashFullLogoImage}" alt="3mash"></a><p>${footerDescriptionText}</p></div><div class="tmr-footer-link-col"><p class="tmr-footer-col-title">${tLocalized("Ürünler", "Products")}</p>${defaultFooterProductsHtml}</div><div class="tmr-footer-link-col"><p class="tmr-footer-col-title">${tLocalized("ŞİRKET", "COMPANY")}</p>${defaultFooterCompanyHtml}</div><div class="tmr-footer-link-col"><p class="tmr-footer-col-title">${tLocalized("İLETİŞİM", "CONTACT")}</p><a href="mailto:info@3mash.com">info@3mash.com</a><a href="${footerMapsHref}" target="_blank" rel="noopener noreferrer">${tLocalized("Antalya Teknokent, Konyaaltı", "Antalya Teknokent, Konyaaltı")}</a><div class="tmr-footer-social"><a href="https://www.facebook.com/3mashsocial/" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H13c-1.1 0-2 .9-2 2v2H8.8v3H11v5h3v-5h2.2l.5-3H14v-1.5c0-.3.2-.5.5-.5h2V8z"></path></svg></a><a href="https://instagram.com/3mashsocial" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.5"></circle><circle cx="16.5" cy="7.5" r="0.8"></circle></svg></a><a href="https://www.youtube.com/@3mashsocial" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5c.2-1.4 1-2.2 2.4-2.4C8.2 6 10.1 6 12 6s3.8 0 5.1.1c1.4.2 2.2 1 2.4 2.4.1.9.2 2.1.2 3.5s-.1 2.6-.2 3.5c-.2 1.4-1 2.2-2.4 2.4-1.3.1-3.2.1-5.1.1s-3.8 0-5.1-.1c-1.4-.2-2.2-1-2.4-2.4-.1-.9-.2-2.1-.2-3.5s.1-2.6.2-3.5z"></path><path d="m10.5 9.5 4 2.5-4 2.5z"></path></svg></a><a href="https://www.linkedin.com/company/3mash" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 10v8"></path><path d="M6.5 6.5v.1"></path><path d="M10.5 18v-8"></path><path d="M10.5 13.5c0-2.1 1.2-3.5 3.1-3.5s3 1.3 3 3.7V18"></path></svg></a></div>${footerPaymentBadges()}</div></div><div class="tmr-base"><span>${tLocalized("© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.", "© 2026 3MASH Technology Inc. All rights reserved.")}</span><div class="tmr-base-meta">${footerLegalLinksHtml}</div></div></div></footer>`;
+  return renderFooterHtml({});
 }
 
 export const defaultFooterHtml = new Proxy({} as { toString(): string }, {
@@ -158,27 +123,213 @@ export interface ThreeMashSectionRenderProps {
   productList?: IkasProductList;
   productCategoryList?: IkasCategoryList;
   productFooterLinks?: IkasNavigationLinkList;
+  productFooterLinksEn?: IkasNavigationLinkList;
   footerCategoryLimit?: number;
   companyFooterLinks?: IkasNavigationLinkList;
+  companyFooterLinksEn?: IkasNavigationLinkList;
   contactFooterLinks?: IkasNavigationLinkList;
+  contactFooterLinksEn?: IkasNavigationLinkList;
+  productColumnTitle?: string;
+  productColumnTitleEn?: string;
+  companyColumnTitle?: string;
+  companyColumnTitleEn?: string;
+  contactColumnTitle?: string;
+  contactColumnTitleEn?: string;
+  descriptionTextEn?: string;
+  productLink1Text?: string;
+  productLink1TextEn?: string;
+  productLink1Href?: string;
+  productLink2Text?: string;
+  productLink2TextEn?: string;
+  productLink2Href?: string;
+  productLink3Text?: string;
+  productLink3TextEn?: string;
+  productLink3Href?: string;
+  productLink4Text?: string;
+  productLink4TextEn?: string;
+  productLink4Href?: string;
+  productLink5Text?: string;
+  productLink5TextEn?: string;
+  productLink5Href?: string;
+  productLink6Text?: string;
+  productLink6TextEn?: string;
+  productLink6Href?: string;
+  companyLink1Text?: string;
+  companyLink1TextEn?: string;
+  companyLink1Href?: string;
+  companyLink2Text?: string;
+  companyLink2TextEn?: string;
+  companyLink2Href?: string;
+  companyLink3Text?: string;
+  companyLink3TextEn?: string;
+  companyLink3Href?: string;
+  companyLink4Text?: string;
+  companyLink4TextEn?: string;
+  companyLink4Href?: string;
+  contactLink1Text?: string;
+  contactLink1TextEn?: string;
+  contactLink1Href?: string;
+  contactLink2Text?: string;
+  contactLink2TextEn?: string;
+  contactLink2Href?: string;
+  contactLink3Text?: string;
+  contactLink3TextEn?: string;
+  contactLink3Href?: string;
+  showBrand?: boolean;
+  showProductColumn?: boolean;
+  showCompanyColumn?: boolean;
+  showContactColumn?: boolean;
+  showPaymentBadges?: boolean;
+  showProductLink1?: boolean;
+  showProductLink2?: boolean;
+  showProductLink3?: boolean;
+  showProductLink4?: boolean;
+  showProductLink5?: boolean;
+  showProductLink6?: boolean;
+  showCompanyLink1?: boolean;
+  showCompanyLink2?: boolean;
+  showCompanyLink3?: boolean;
+  showCompanyLink4?: boolean;
+  showContactLink1?: boolean;
+  showContactLink2?: boolean;
+  showContactLink3?: boolean;
+  showLegalInfo?: boolean;
+  showLegalLink1?: boolean;
+  showLegalLink2?: boolean;
+  showLegalLink3?: boolean;
+  showLegalLink4?: boolean;
+  showLegalLink5?: boolean;
+  paymentMethodsLabel?: string;
+  paymentMethodsLabelEn?: string;
+  visaBadgeLabel?: string;
+  visaBadgeImage?: IkasImage | null;
+  maestroBadgeLabel?: string;
+  maestroBadgeImage?: IkasImage | null;
+  mastercardBadgeLabel?: string;
+  mastercardBadgeImage?: IkasImage | null;
+  facebookIconImage?: IkasImage | null;
+  instagramIconImage?: IkasImage | null;
+  youtubeIconImage?: IkasImage | null;
+  linkedinIconImage?: IkasImage | null;
   curingProduct1Product?: IkasProduct | null;
   curingProduct2Product?: IkasProduct | null;
   sectionHtml?: string;
   sectionAnchorId?: string;
+  desktopWidth?: string;
+  desktopHeight?: string;
+  desktopPadding?: string;
+  desktopMargin?: string;
+  mobileWidth?: string;
+  mobileHeight?: string;
+  mobilePadding?: string;
+  mobileMargin?: string;
   indexNumber?: string;
   indexText?: string;
+  indexTextEn?: string;
   titleText?: string;
+  titleTextEn?: string;
   titleEmphasis?: string;
+  titleEmphasisEn?: string;
   sideHtml?: string;
+  sideHtmlEn?: string;
+  reason1Eyebrow?: string;
+  reason1EyebrowEn?: string;
+  reason1Title?: string;
+  reason1TitleEn?: string;
+  reason1DescriptionHtml?: string;
+  reason1DescriptionHtmlEn?: string;
+  reason2Eyebrow?: string;
+  reason2EyebrowEn?: string;
+  reason2Title?: string;
+  reason2TitleEn?: string;
+  reason2DescriptionHtml?: string;
+  reason2DescriptionHtmlEn?: string;
+  reason3Eyebrow?: string;
+  reason3EyebrowEn?: string;
+  reason3Title?: string;
+  reason3TitleEn?: string;
+  reason3DescriptionHtml?: string;
+  reason3DescriptionHtmlEn?: string;
+  curingProduct1Tag?: string;
+  curingProduct1TagEn?: string;
+  curingProduct1Title?: string;
+  curingProduct1TitleEn?: string;
+  curingProduct1DescriptionHtml?: string;
+  curingProduct1DescriptionHtmlEn?: string;
+  curingProduct1ImageUrl?: unknown;
+  curingProduct1ImageAlt?: string;
+  curingProduct1ImageAltEn?: string;
+  curingProduct1Spec1Label?: string;
+  curingProduct1Spec1LabelEn?: string;
+  curingProduct1Spec1Value?: string;
+  curingProduct1Spec1ValueEn?: string;
+  curingProduct1Spec2Label?: string;
+  curingProduct1Spec2LabelEn?: string;
+  curingProduct1Spec2Value?: string;
+  curingProduct1Spec2ValueEn?: string;
+  curingProduct1CtaText?: string;
+  curingProduct1CtaTextEn?: string;
+  curingProduct1CtaHref?: string;
+  curingProduct2Tag?: string;
+  curingProduct2TagEn?: string;
+  curingProduct2Title?: string;
+  curingProduct2TitleEn?: string;
+  curingProduct2DescriptionHtml?: string;
+  curingProduct2DescriptionHtmlEn?: string;
+  curingProduct2ImageUrl?: unknown;
+  curingProduct2ImageAlt?: string;
+  curingProduct2ImageAltEn?: string;
+  curingProduct2Spec1Label?: string;
+  curingProduct2Spec1LabelEn?: string;
+  curingProduct2Spec1Value?: string;
+  curingProduct2Spec1ValueEn?: string;
+  curingProduct2Spec2Label?: string;
+  curingProduct2Spec2LabelEn?: string;
+  curingProduct2Spec2Value?: string;
+  curingProduct2Spec2ValueEn?: string;
+  curingProduct2CtaText?: string;
+  curingProduct2CtaTextEn?: string;
+  curingProduct2CtaHref?: string;
+  readMoreText?: string;
+  readMoreTextEn?: string;
+  readMoreLink1Text?: string;
+  readMoreLink1TextEn?: string;
+  readMoreLink1Href?: string;
+  readMoreLink2Text?: string;
+  readMoreLink2TextEn?: string;
+  readMoreLink2Href?: string;
+  dynamicPriceLabel?: string;
+  dynamicPriceLabelEn?: string;
+  dynamicListPriceLabel?: string;
+  dynamicListPriceLabelEn?: string;
+  dynamicBrandLabel?: string;
+  dynamicBrandLabelEn?: string;
+  dynamicCategoryLabel?: string;
+  dynamicCategoryLabelEn?: string;
+  showReason1?: boolean;
+  showReason2?: boolean;
+  showReason3?: boolean;
+  showProduct1?: boolean;
+  showProduct2?: boolean;
+  showReadMore?: boolean;
+  showReadMoreLink1?: boolean;
+  showReadMoreLink2?: boolean;
   contentHtml?: string;
   eyebrowText?: string;
+  eyebrowTextEn?: string;
   valueText?: string;
+  valueTextEn?: string;
   descriptionHtml?: string;
+  descriptionHtmlEn?: string;
   ctaText?: string;
+  ctaTextEn?: string;
   ctaHref?: string;
   primaryButtonText?: string;
+  primaryButtonTextEn?: string;
   primaryButtonHref?: string;
+  primaryButtonHrefEn?: string;
   secondaryButtonText?: string;
+  secondaryButtonTextEn?: string;
   secondaryButtonHref?: string;
   logoText?: string;
   descriptionText?: string;
@@ -186,14 +337,22 @@ export interface ThreeMashSectionRenderProps {
   companyColumnHtml?: string;
   contactColumnHtml?: string;
   copyrightText?: string;
+  copyrightTextEn?: string;
   legalLink1Text?: string;
+  legalLink1TextEn?: string;
   legalLink1Href?: string;
   legalLink2Text?: string;
+  legalLink2TextEn?: string;
   legalLink2Href?: string;
   legalLink3Text?: string;
+  legalLink3TextEn?: string;
   legalLink3Href?: string;
   legalLink4Text?: string;
+  legalLink4TextEn?: string;
   legalLink4Href?: string;
+  legalLink5Text?: string;
+  legalLink5TextEn?: string;
+  legalLink5Href?: string;
   showSocialIcons?: boolean;
   instagramHref?: string;
   instagramLabel?: string;
@@ -204,7 +363,7 @@ export interface ThreeMashSectionRenderProps {
   facebookHref?: string;
   facebookLabel?: string;
   logoHref?: string;
-  logoImageUrl?: unknown;
+  logoImageUrl?: IkasImage | null;
   logoImageAlt?: string;
   logoSvg?: unknown;
   logoImageWidth?: number;
@@ -244,8 +403,19 @@ export interface ThreeMashSectionRenderProps {
   diagramImageInvert?: number;
   backgroundColor?: string;
   showBackgroundGlow?: boolean;
+  showReturnMetric?: boolean;
+  showDescription?: boolean;
+  showPrimaryButton?: boolean;
+  showSecondaryButton?: boolean;
+  showCta?: boolean;
   textColor?: string;
   subTextColor?: string;
+  buttonBackgroundColor?: string;
+  buttonTextColor?: string;
+  buttonRadius?: number;
+  primaryButtonBackgroundColor?: string;
+  primaryButtonTextColor?: string;
+  secondaryButtonTextColor?: string;
   mutedTextColor?: string;
   lineColor?: string;
   panelColor?: string;
@@ -254,12 +424,30 @@ export interface ThreeMashSectionRenderProps {
   accentTextColor?: string;
   accentSoftColor?: string;
   dangerColor?: string;
+  cardMediaStartColor?: string;
+  cardMediaEndColor?: string;
   hoverVideoAutoplayEnabled?: boolean;
   wordStyleEnabled?: boolean;
   styledPhrase?: string;
   styledPhraseColor?: string;
   styledPhraseBold?: boolean;
   styledPhraseItalic?: boolean;
+  reasonCardBackgroundColor?: string;
+  productMediaStartColor?: string;
+  productMediaEndColor?: string;
+  reasonCardRadius?: number;
+  productCardRadius?: number;
+  productImageWidth?: number;
+  productImageHeight?: number;
+  productImageXOffset?: number;
+  productImageYOffset?: number;
+  productImageFit?: string;
+  productImageOpacity?: number;
+  productImageBrightness?: number;
+  productImageContrast?: number;
+  productImageSaturation?: number;
+  productImageHue?: number;
+  productImageInvert?: number;
 }
 
 function html(value?: string, fallback = "") {
@@ -351,6 +539,28 @@ function parseOptionalDimension(
   const parsed = typeof value === "number" ? value : Number(value);
   if (!Number.isFinite(parsed)) return undefined;
   return `${Math.min(max, Math.max(min, parsed))}px`;
+}
+
+function safeLayoutValue(
+  value: unknown,
+  kind: "width" | "height" | "padding" | "margin",
+) {
+  if (typeof value !== "string") return undefined;
+  const tokens = value.trim().split(/\s+/).filter(Boolean);
+  const maxTokens = kind === "width" || kind === "height" ? 1 : 4;
+  if (!tokens.length || tokens.length > maxTokens) return undefined;
+
+  const isValidLength = (token: string) => {
+    if (token.toLowerCase() === "auto" && kind !== "padding") return true;
+    if (token.startsWith("-") && kind !== "margin") return false;
+
+    const unsigned = token.startsWith("-") ? token.slice(1) : token;
+    if (unsigned === "0") return true;
+
+    return /^(?:\d+(?:\.\d+)?|\.\d+)(?:px|%|rem|em|vw|vh|dvw|dvh|svw|svh|lvw|lvh)$/i.test(unsigned);
+  };
+
+  return tokens.every(isValidLength) ? tokens.join(" ") : undefined;
 }
 
 function percentage(
@@ -489,6 +699,13 @@ function imageSource(source: unknown, fallback: string) {
       image?: { url?: unknown; src?: unknown };
       file?: { url?: unknown; src?: unknown };
     };
+    if (typeof image.id === "string" && image.id) {
+      try {
+        return getDefaultSrc(source as IkasImage);
+      } catch {
+        return fallback;
+      }
+    }
     if (typeof image.url === "string") return imageIdToUrl(image.url);
     if (typeof image.src === "string") return imageIdToUrl(image.src);
     if (typeof image.imageUrl === "string") return imageIdToUrl(image.imageUrl);
@@ -643,17 +860,47 @@ function field(
   return inlineHtml(resolved);
 }
 
+function localizedValue(
+  props: ThreeMashSectionRenderProps,
+  key: string,
+  fallbackTr: string,
+  fallbackEn: string,
+) {
+  const localizedKey = isEnglishLocale() ? `${key}En` : key;
+  const current = raw(props, localizedKey);
+  return tProp(
+    typeof current === "string" ? current : undefined,
+    fallbackTr,
+    fallbackEn,
+  );
+}
+
+function localizedField(
+  props: ThreeMashSectionRenderProps,
+  key: string,
+  fallbackTr: string,
+  fallbackEn: string,
+) {
+  return inlineHtml(localizedValue(props, key, fallbackTr, fallbackEn));
+}
+
 function specs(
   props: ThreeMashSectionRenderProps,
   prefix: string,
   count: number,
   defaults: Array<[string, string]>,
+  localeOverrides = false,
 ) {
+  const resolveField = (key: string, fallback: string) =>
+    localeOverrides
+      ? localizedField(props, key, fallback, fallback)
+      : field(props, key, fallback);
+
   return defaults
     .slice(0, count)
     .map(([label, text], index) => {
       const number = index + 1;
-      return `<div><span>${field(props, `${prefix}Spec${number}Label`, label)}</span><b>${field(props, `${prefix}Spec${number}Value`, text)}</b></div>`;
+      return `<div><span>${resolveField(`${prefix}Spec${number}Label`, label)}</span><b>${resolveField(`${prefix}Spec${number}Value`, text)}</b></div>`;
     })
     .join("");
 }
@@ -798,18 +1045,24 @@ function solutionProducts(productList: IkasProductList | undefined) {
   ).slice(0, 6);
 }
 
-/**
- * DÜZELTME (#2b): Artık ctaHref burada localizedHref() ile SARMALANMIYOR.
- * localizedHref, productCard() içinde tek seferde uygulanıyor; burada da
- * uygulanırsa çift-localize (ör. /en/en/...) oluşabiliyordu.
- */
 function productCardDefaultsFromProduct(
   product: IkasProduct,
   defaults: ProductCardDefaults,
+  options?: {
+    imageFallback?: string;
+    labels?: {
+      price?: string;
+      list?: string;
+      brand?: string;
+      category?: string;
+    };
+  },
 ): ProductCardDefaults {
   const variant = selectedVariant(product);
   const media = variant ? getProductVariantMainImage(variant) : undefined;
-  const image = media?.image ? getDefaultSrc(media.image) : defaults.image;
+  const image = media?.image
+    ? getDefaultSrc(media.image)
+    : options?.imageFallback || defaults.image;
   const categoryName =
     product.categories?.[0]?.name || product.brand?.name || defaults.tag;
   const rawDescription =
@@ -826,10 +1079,15 @@ function productCardDefaultsFromProduct(
       : "";
   const specs: Array<[string, string]> = [];
 
-  if (finalPrice) specs.push([tLocalized("Fiyat", "Price"), finalPrice]);
-  if (sellPrice) specs.push([tLocalized("Liste", "List"), sellPrice]);
+  if (finalPrice) specs.push([options?.labels?.price || tLocalized("Fiyat", "Price"), finalPrice]);
+  if (sellPrice) specs.push([options?.labels?.list || tLocalized("Liste", "List"), sellPrice]);
   if (specs.length < 2 && categoryName)
-    specs.push([product.brand?.name ? tLocalized("Marka", "Brand") : tLocalized("Kategori", "Category"), categoryName]);
+    specs.push([
+      product.brand?.name
+        ? options?.labels?.brand || tLocalized("Marka", "Brand")
+        : options?.labels?.category || tLocalized("Kategori", "Category"),
+      categoryName,
+    ]);
 
   return {
     ...defaults,
@@ -840,8 +1098,7 @@ function productCardDefaultsFromProduct(
     descriptionHtml: escapeHtml(description),
     specs: specs.length ? specs : defaults.specs,
     ctaText: tLocalized("İncele", "Explore"),
-    // Ham (localize edilmemiş) ürün yolu — localize işlemi productCard() içinde yapılır.
-    ctaHref: getProductHref(product),
+    ctaHref: localizedHref(getProductHref(product)),
   };
 }
 
@@ -849,13 +1106,32 @@ function productCard(
   props: ThreeMashSectionRenderProps,
   prefix: string,
   defaults: ProductCardDefaults,
+  localeOverrides = false,
 ) {
   const selectedProduct = raw(props, `${prefix}Product`);
   if (isIkasProduct(selectedProduct)) {
+    const isCuringProduct = prefix === "curingProduct1" || prefix === "curingProduct2";
+    const dynamicLabels = isCuringProduct
+      ? {
+          price: plainText(localizedValue(props, "dynamicPriceLabel", "Fiyat", "Price")),
+          list: plainText(localizedValue(props, "dynamicListPriceLabel", "Liste", "List")),
+          brand: plainText(localizedValue(props, "dynamicBrandLabel", "Marka", "Brand")),
+          category: plainText(localizedValue(props, "dynamicCategoryLabel", "Kategori", "Category")),
+        }
+      : undefined;
+    const imageFallback = isCuringProduct
+      ? imageSource(raw(props, `${prefix}ImageUrl`), defaults.image)
+      : defaults.image;
     const productDefaults = productCardDefaultsFromProduct(
       selectedProduct,
       defaults,
+      { imageFallback, labels: dynamicLabels },
     );
+    if (isCuringProduct) {
+      productDefaults.ctaText = plainText(
+        localizedValue(props, `${prefix}CtaText`, "İncele", "Explore"),
+      );
+    }
     const tagClass = productDefaults.tagClass
       ? ` ${productDefaults.tagClass}`
       : "";
@@ -863,106 +1139,257 @@ function productCard(
     const media = isCrsResinCard
       ? `<div class="tmr-product-media tmr-product-media-${escapeAttr(prefix)}"><span class="tmr-tag${tagClass}">${escapeHtml(productDefaults.tag)}</span><img class="tmr-product-img is-left" src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a7753220-8b7a-4832-a428-c8678e941fda/1080/crs-tray-resin.webp" alt="CRS Tray Resin" loading="lazy" decoding="async"><img class="tmr-product-img is-center" src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/36167f47-c92f-4660-967c-d4a8faa86006/1080/crs-model-resin.webp" alt="CRS Model Resin" loading="lazy" decoding="async"><img class="tmr-product-img is-right" src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/7a581ce8-604c-47c0-bb9d-c05e4cdefae0/1080/denture-resin.webp" alt="CRS Denture Resin" loading="lazy" decoding="async"></div>`
       : `<div class="tmr-product-media tmr-product-media-${escapeAttr(prefix)}"><span class="tmr-tag${tagClass}">${escapeHtml(productDefaults.tag)}</span><img class="tmr-product-img ${productDefaults.imageClass}" src="${escapeAttr(productDefaults.image)}" alt="${escapeAttr(productDefaults.imageAlt)}"></div>`;
-    return `<article class="tmr-product">${media}<div class="tmr-product-body"><h3>${escapeHtml(productDefaults.title)}</h3><p>${productDefaults.descriptionHtml}</p><div class="tmr-spec">${productDefaults.specs.map(([label, text]) => `<div><span>${escapeHtml(label)}</span><b>${escapeHtml(text)}</b></div>`).join("")}</div><a class="tmr-go" href="${escapeAttr(localizedHref(productDefaults.ctaHref))}">${escapeHtml(productDefaults.ctaText)} <span>→</span></a></div></article>`;
+    return `<article class="tmr-product">${media}<div class="tmr-product-body"><h3>${escapeHtml(productDefaults.title)}</h3><p>${productDefaults.descriptionHtml}</p><div class="tmr-spec">${productDefaults.specs.map(([label, text]) => `<div><span>${escapeHtml(label)}</span><b>${escapeHtml(text)}</b></div>`).join("")}</div><a class="tmr-go" href="${escapeAttr(localizedHref(productDefaults.ctaHref))}">${escapeHtml(productDefaults.ctaText)} <span aria-hidden="true">→</span></a></div></article>`;
   }
 
   const isCrsResinCard = prefix === "solutionCard3";
+  const resolveField = (key: string, fallback: string) =>
+    localeOverrides
+      ? localizedField(props, key, fallback, fallback)
+      : field(props, key, fallback);
   const image = imageSource(raw(props, `${prefix}ImageUrl`), defaults.image);
-  const alt = field(props, `${prefix}ImageAlt`, defaults.imageAlt);
+  const alt = resolveField(`${prefix}ImageAlt`, defaults.imageAlt);
   const tagClass = defaults.tagClass ? ` ${defaults.tagClass}` : "";
   const media = isCrsResinCard
-    ? `<div class="tmr-product-media tmr-product-media-${escapeAttr(prefix)}"><span class="tmr-tag${tagClass}">${field(props, `${prefix}Tag`, defaults.tag)}</span><img class="tmr-product-img is-left" src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a7753220-8b7a-4832-a428-c8678e941fda/1080/crs-tray-resin.webp" alt="CRS Tray Resin" loading="lazy" decoding="async"><img class="tmr-product-img is-center" src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/36167f47-c92f-4660-967c-d4a8faa86006/1080/crs-model-resin.webp" alt="CRS Model Resin" loading="lazy" decoding="async"><img class="tmr-product-img is-right" src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/7a581ce8-604c-47c0-bb9d-c05e4cdefae0/1080/denture-resin.webp" alt="CRS Denture Resin" loading="lazy" decoding="async"></div>`
-    : `<div class="tmr-product-media tmr-product-media-${escapeAttr(prefix)}"><span class="tmr-tag${tagClass}">${field(props, `${prefix}Tag`, defaults.tag)}</span><img class="tmr-product-img ${defaults.imageClass}" src="${escapeAttr(image)}" alt="${escapeAttr(alt)}"></div>`;
+    ? `<div class="tmr-product-media tmr-product-media-${escapeAttr(prefix)}"><span class="tmr-tag${tagClass}">${resolveField(`${prefix}Tag`, defaults.tag)}</span><img class="tmr-product-img is-left" src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a7753220-8b7a-4832-a428-c8678e941fda/1080/crs-tray-resin.webp" alt="CRS Tray Resin" loading="lazy" decoding="async"><img class="tmr-product-img is-center" src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/36167f47-c92f-4660-967c-d4a8faa86006/1080/crs-model-resin.webp" alt="CRS Model Resin" loading="lazy" decoding="async"><img class="tmr-product-img is-right" src="https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/7a581ce8-604c-47c0-bb9d-c05e4cdefae0/1080/denture-resin.webp" alt="CRS Denture Resin" loading="lazy" decoding="async"></div>`
+    : `<div class="tmr-product-media tmr-product-media-${escapeAttr(prefix)}"><span class="tmr-tag${tagClass}">${resolveField(`${prefix}Tag`, defaults.tag)}</span><img class="tmr-product-img ${defaults.imageClass}" src="${escapeAttr(image)}" alt="${escapeAttr(alt)}"></div>`;
 
-  return `<article class="tmr-product">${media}<div class="tmr-product-body"><h3>${field(props, `${prefix}Title`, defaults.title)}</h3><p>${field(props, `${prefix}DescriptionHtml`, defaults.descriptionHtml)}</p><div class="tmr-spec">${specs(props, prefix, defaults.specs.length, defaults.specs)}</div><a class="tmr-go" href="${escapeAttr(localizedHref(linkHref(raw(props, `${prefix}CtaHref`), defaults.ctaHref)))}">${field(props, `${prefix}CtaText`, defaults.ctaText)} <span>→</span></a></div></article>`;
+  return `<article class="tmr-product">${media}<div class="tmr-product-body"><h3>${resolveField(`${prefix}Title`, defaults.title)}</h3><p>${resolveField(`${prefix}DescriptionHtml`, defaults.descriptionHtml)}</p><div class="tmr-spec">${specs(props, prefix, defaults.specs.length, defaults.specs, localeOverrides)}</div><a class="tmr-go" href="${escapeAttr(localizedHref(linkHref(raw(props, `${prefix}CtaHref`), defaults.ctaHref)))}">${resolveField(`${prefix}CtaText`, defaults.ctaText)} <span aria-hidden="true">→</span></a></div></article>`;
 }
 
 function solutionP1dCard(props: ThreeMashSectionRenderProps) {
-  const en = isEnglishLocale();
-  return productCard(props, "solutionCard1", {
-    tag: en ? "PROFESSIONAL" : "PROFESYONEL",
+  return solutionProductCard(props, "solutionCard1", {
+    tagTr: "PROFESYONEL",
+    tagEn: "PROFESSIONAL",
     image: p1dSectionCardImage,
-    imageAlt: tLocalized("MASH P1D", "MASH P1D"),
+    imageAltTr: "MASH P1D",
+    imageAltEn: "MASH P1D",
     imageClass: "tmr-machine-printer",
-    title: tLocalized("MASH P1D", "MASH P1D"),
-    descriptionHtml: en
-      ? "Professional DLP production with an optical system designed for the material. The engine of high-volume labs and clinics."
-      : tLocalized("Malzemeye göre tasarlanmış optik sistemle <b>profesyonel DLP</b> üretim. Yüksek hacimli lab ve kliniklerin motoru.", "<b>Professional DLP</b> production with an optical system designed around the material. The engine of high-volume labs and clinics."),
-    specs: en
-      ? [
-        ["Light source", "385 nm DLP"],
-        ["Accuracy", "±20 µm"],
-        ["Character", "Repeatability"],
-      ]
-      : [
-        [tLocalized("Işık kaynağı", "Light source"), "385 nm DLP"],
-        ["Hassasiyet", "±20 µm"],
-        ["Karakter", tLocalized("Tekrar edilebilirlik", "Repeatability")],
-      ],
-    ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
+    titleTr: "MASH P1D",
+    titleEn: "MASH P1D",
+    descriptionTr: "Malzemeye göre tasarlanmış optik sistemle <b>profesyonel DLP</b> üretim. Yüksek hacimli lab ve kliniklerin motoru.",
+    descriptionEn: "<b>Professional DLP</b> production with an optical system designed around the material. The engine of high-volume labs and clinics.",
+    specsTr: "<div><span>Işık kaynağı</span><b>385 nm DLP</b></div><div><span>Hassasiyet</span><b>±20 µm</b></div><div><span>Karakter</span><b>Tekrar edilebilirlik</b></div>",
+    specsEn: "<div><span>Light source</span><b>385 nm DLP</b></div><div><span>Accuracy</span><b>±20 µm</b></div><div><span>Character</span><b>Repeatability</b></div>",
+    ctaTextTr: "İncele",
+    ctaTextEn: "Explore",
     ctaHref: "/3d-yazicilar",
   });
 }
 
 function solutionSecondCard(props: ThreeMashSectionRenderProps) {
-  const en = isEnglishLocale();
-  return productCard(props, "solutionCard2", {
-    tag: en ? "ENTRY LEVEL" : tLocalized("GİRİŞ SEGMENTİ", "ENTRY SEGMENT"),
+  return solutionProductCard(props, "solutionCard2", {
+    tagTr: "GİRİŞ SEGMENTİ",
+    tagEn: "ENTRY LEVEL",
     image: p16lPrimaryImage,
-    imageAlt: tLocalized("MASH P16L", "MASH P16L"),
+    imageAltTr: "MASH P16L",
+    imageAltEn: "MASH P16L",
     imageClass: "tmr-machine-p16l",
-    title: tLocalized("MASH P16L", "MASH P16L"),
-    descriptionHtml: en
-      ? "3mash-revised LCD printer for those new to digital. Same parameter support, same technical team."
-      : tLocalized("Dijitale yeni geçenler için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.", "An <b>3mash-revised</b> LCD printer for those new to digital. Same parameter support, same technical team."),
-    specs: en
-      ? [
-        ["Technology", "LCD · revised"],
-        ["Role", "Entry to ecosystem"],
-        ["Support", "Setup + training"],
-      ]
-      : [
-        [tLocalized("Teknoloji", "Technology"), "LCD · revize"],
-        [tLocalized("Rol", "Role"), tLocalized("Ekosisteme giriş", "Entry into the ecosystem")],
-        [tLocalized("Destek", "Support"), tLocalized("Kurulum + eğitim", "Installation + training")],
-      ],
-    ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
+    titleTr: "MASH P16L",
+    titleEn: "MASH P16L",
+    descriptionTr: "Dijitale yeni geçenler için <b>3mash revizyonlu</b> LCD yazıcı. Aynı parametre desteği, aynı teknik ekip.",
+    descriptionEn: "An <b>3mash-revised</b> LCD printer for those new to digital. Same parameter support, same technical team.",
+    specsTr: "<div><span>Teknoloji</span><b>LCD · revize</b></div><div><span>Rol</span><b>Ekosisteme giriş</b></div><div><span>Destek</span><b>Kurulum + eğitim</b></div>",
+    specsEn: "<div><span>Technology</span><b>LCD · revised</b></div><div><span>Role</span><b>Entry into the ecosystem</b></div><div><span>Support</span><b>Installation + training</b></div>",
+    ctaTextTr: "İncele",
+    ctaTextEn: "Explore",
     ctaHref: "/3d-yazicilar",
   });
 }
 
 function solutionResinCategoryCard(props: ThreeMashSectionRenderProps) {
-  const en = isEnglishLocale();
-  return productCard(props, "solutionCard3", {
-    tag: en ? "OFFICIAL DISTRIBUTOR" : tLocalized("RESMİ DİSTRİBÜTÖR", "OFFICIAL DISTRIBUTOR"),
+  return solutionProductCard(props, "solutionCard3", {
+    tagTr: "RESMİ DİSTRİBÜTÖR",
+    tagEn: "OFFICIAL DISTRIBUTOR",
     image: crsModelBottleImage,
-    imageAlt: en ? "CRS Resins" : tLocalized("CRS Reçineler", "CRS Resins"),
+    imageAltTr: "CRS Reçineler",
+    imageAltEn: "CRS Resins",
     imageClass: "tmr-resin-bottle",
-    title: en ? "CRS Resins" : tLocalized("CRS Reçineler", "CRS Resins"),
-    descriptionHtml: en
-      ? "<b>CE Class IIa</b> biocompatible &amp; model resins; delivered <b>calibrated together</b> with your device parameters."
-      : tLocalized("<b>CE Class IIa</b> biyouyumlu &amp; model reçineleri; cihazınızın parametreleriyle <b>birlikte kalibre edilmiş</b> teslim edilir.", "<b>CE Class IIa</b> biocompatible &amp; model resins; delivered <b>calibrated together</b> with your device's parameters."),
-    specs: en
-      ? [
-        ["Certificate", tLocalized("CE Class IIa", "CE Class IIa")],
-        ["Application", "Model · temp · splint · guide"],
-        ["Compatibility", "Brand independent"],
-      ]
-      : [
-        ["Sertifika", tLocalized("CE Class IIa", "CE Class IIa")],
-        [tLocalized("Uygulama", "APPLICATION"), tLocalized("Model · geçici · splint · guide", "Model · temporary · splint · guide")],
-        [tLocalized("Uyum", "Compatibility"), tLocalized("Marka bağımsız", "Brand-independent")],
-      ],
-    ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
+    titleTr: "CRS Reçineler",
+    titleEn: "CRS Resins",
+    descriptionTr: "<b>CE Class IIa</b> biyouyumlu &amp; model reçineleri; cihazınızın parametreleriyle <b>birlikte kalibre edilmiş</b> teslim edilir.",
+    descriptionEn: "<b>CE Class IIa</b> biocompatible &amp; model resins; delivered <b>calibrated together</b> with your device parameters.",
+    specsTr: "<div><span>Sertifika</span><b>CE Class IIa</b></div><div><span>Uygulama</span><b>Model · geçici · splint · guide</b></div><div><span>Uyum</span><b>Marka bağımsız</b></div>",
+    specsEn: "<div><span>Certificate</span><b>CE Class IIa</b></div><div><span>Application</span><b>Model · temporary · splint · guide</b></div><div><span>Compatibility</span><b>Brand-independent</b></div>",
+    ctaTextTr: "İncele",
+    ctaTextEn: "Explore",
     ctaHref: "/dental-3d-yazici-recineleri",
+    resinImages: [
+      {
+        sourceKey: "solutionCard3ImageLeftUrl",
+        altKey: "solutionCard3ImageLeftAlt",
+        source: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/a7753220-8b7a-4832-a428-c8678e941fda/1080/crs-tray-resin.webp",
+        altTr: "CRS Tepsi Reçinesi",
+        altEn: "CRS Tray Resin",
+        className: "is-left",
+      },
+      {
+        sourceKey: "solutionCard3ImageCenterUrl",
+        altKey: "solutionCard3ImageCenterAlt",
+        source: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/36167f47-c92f-4660-967c-d4a8faa86006/1080/crs-model-resin.webp",
+        altTr: "CRS Model Reçinesi",
+        altEn: "CRS Model Resin",
+        className: "is-center",
+      },
+      {
+        sourceKey: "solutionCard3ImageRightUrl",
+        altKey: "solutionCard3ImageRightAlt",
+        source: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/7a581ce8-604c-47c0-bb9d-c05e4cdefae0/1080/denture-resin.webp",
+        altTr: "CRS Protez Reçinesi",
+        altEn: "CRS Denture Resin",
+        className: "is-right",
+      },
+    ],
   });
 }
 
-function solutionDefaultCards(props: ThreeMashSectionRenderProps) {
-  return `<div class="tmr-products">${solutionP1dCard(props)}${solutionSecondCard(props)}${solutionResinCategoryCard(props)}</div>`;
+type SolutionResinImage = {
+  sourceKey: string;
+  altKey: string;
+  source: string;
+  altTr: string;
+  altEn: string;
+  className: string;
+};
+
+type SolutionCardDefaults = {
+  tagTr: string;
+  tagEn: string;
+  image: string;
+  imageAltTr: string;
+  imageAltEn: string;
+  imageClass: string;
+  titleTr: string;
+  titleEn: string;
+  descriptionTr: string;
+  descriptionEn: string;
+  specsTr: string;
+  specsEn: string;
+  ctaTextTr: string;
+  ctaTextEn: string;
+  ctaHref: string;
+  resinImages?: SolutionResinImage[];
+};
+
+function solutionProductCard(
+  props: ThreeMashSectionRenderProps,
+  prefix: string,
+  defaults: SolutionCardDefaults,
+) {
+  const selectedProduct = raw(props, `${prefix}Product`);
+  const product = isIkasProduct(selectedProduct) ? selectedProduct : null;
+  const variant = product ? selectedVariant(product) : null;
+  const productMedia = variant ? getProductVariantMainImage(variant) : undefined;
+  const productImage = productMedia?.image;
+  const tag = localizedField(props, `${prefix}Tag`, defaults.tagTr, defaults.tagEn);
+  const title = localizedField(props, `${prefix}Title`, defaults.titleTr, defaults.titleEn);
+  const description = localizedField(
+    props,
+    `${prefix}DescriptionHtml`,
+    defaults.descriptionTr,
+    defaults.descriptionEn,
+  );
+  const specsHtml = localizedField(
+    props,
+    `${prefix}SpecsHtml`,
+    defaults.specsTr,
+    defaults.specsEn,
+  );
+  const image = productImage
+    ? getDefaultSrc(productImage)
+    : imageSource(raw(props, `${prefix}ImageUrl`), defaults.image);
+  const configuredImageAlt = raw(props, `${prefix}ImageAlt`);
+  const shouldUseProductAlt = Boolean(
+    productImage &&
+      (typeof configuredImageAlt !== "string" ||
+        !configuredImageAlt.trim() ||
+        configuredImageAlt === defaults.imageAltTr ||
+        configuredImageAlt === defaults.imageAltEn),
+  );
+  const imageAlt = escapeAttr(
+    plainText(
+      shouldUseProductAlt
+        ? productImage?.altText || product?.name || defaults.imageAltTr
+        : localizedValue(
+            props,
+            `${prefix}ImageAlt`,
+            defaults.imageAltTr,
+            defaults.imageAltEn,
+          ),
+    ),
+  );
+  const mediaMarkup = productImage
+    ? productMedia?.isVideo
+      ? `<video class="tmr-product-video" src="${escapeAttr(image)}" muted playsinline loop preload="metadata"></video>`
+      : `<img class="tmr-product-img" src="${escapeAttr(image)}" alt="${imageAlt}" loading="lazy" decoding="async">`
+    : defaults.resinImages
+    ? defaults.resinImages
+        .map((resinImage) => {
+          const source = imageSource(raw(props, resinImage.sourceKey), resinImage.source);
+          const alt = escapeAttr(
+            plainText(
+              localizedValue(props, resinImage.altKey, resinImage.altTr, resinImage.altEn),
+            ),
+          );
+          return `<img class="tmr-product-img ${resinImage.className}" src="${escapeAttr(source)}" alt="${alt}" loading="lazy" decoding="async">`;
+        })
+        .join("")
+    : image.trim()
+      ? `<img class="tmr-product-img ${escapeAttr(defaults.imageClass)}" src="${escapeAttr(image)}" alt="${imageAlt}" loading="lazy" decoding="async">`
+      : "";
+  const configuredHref = linkHref(raw(props, `${prefix}CtaHref`), defaults.ctaHref);
+  const fallbackHref = defaults.ctaHref ? localizedHref(defaults.ctaHref) : "";
+  const ctaHref = configuredHref
+    ? safeNavigationHref(localizedHref(configuredHref), fallbackHref)
+    : "";
+  const ctaText = localizedField(
+    props,
+    `${prefix}CtaText`,
+    defaults.ctaTextTr,
+    defaults.ctaTextEn,
+  );
+  const ctaMarkup = ctaHref
+    ? `<a class="tmr-go" href="${escapeAttr(ctaHref)}">${ctaText} <span aria-hidden="true">→</span></a>`
+    : "";
+
+  return `<article class="tmr-product"><div class="tmr-product-media tmr-product-media-${escapeAttr(prefix)}"><span class="tmr-tag">${tag}</span>${mediaMarkup}</div><div class="tmr-product-body"><h3>${title}</h3><p>${description}</p><div class="tmr-spec">${specsHtml}</div>${ctaMarkup}</div></article>`;
+}
+
+function solutionExtraCard(props: ThreeMashSectionRenderProps, number: 4 | 5 | 6) {
+  const prefix = `solutionCard${number}`;
+  const product = raw(props, `${prefix}Product`);
+  const image = imageSource(raw(props, `${prefix}ImageUrl`), "");
+
+  if (!isIkasProduct(product) && !image) return null;
+
+  return solutionProductCard(props, prefix, {
+    tagTr: "YENİ ÇÖZÜM",
+    tagEn: "NEW SOLUTION",
+    image: "",
+    imageAltTr: "Yeni çözüm ürünü görseli",
+    imageAltEn: "New solution product image",
+    imageClass: "tmr-solution-extra-image",
+    titleTr: "Yeni çözüm ürünü",
+    titleEn: "New solution product",
+    descriptionTr: "Bu alanı yeni ürününüzün kısa açıklamasıyla düzenleyin.",
+    descriptionEn: "Add a short description of your new product here.",
+    specsTr: "<div><span>Özellik</span><b>Ürün bilgisi</b></div>",
+    specsEn: "<div><span>Feature</span><b>Product detail</b></div>",
+    ctaTextTr: "Ürünü İncele",
+    ctaTextEn: "Explore product",
+    ctaHref: "",
+  });
 }
 
 export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
+  const desktopWidth = safeLayoutValue(raw(props, "desktopWidth"), "width");
+  const desktopHeight = safeLayoutValue(raw(props, "desktopHeight"), "height");
+  const desktopPadding = safeLayoutValue(raw(props, "desktopPadding"), "padding");
+  const desktopMargin = safeLayoutValue(raw(props, "desktopMargin"), "margin");
+  const mobileWidth = safeLayoutValue(raw(props, "mobileWidth"), "width");
+  const mobileHeight = safeLayoutValue(raw(props, "mobileHeight"), "height");
+  const mobilePadding = safeLayoutValue(raw(props, "mobilePadding"), "padding");
+  const mobileMargin = safeLayoutValue(raw(props, "mobileMargin"), "margin");
   const curingImageWidth = parseOptionalDimension(
     raw(props, "productImageWidth"),
     20,
@@ -975,6 +1402,14 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
   );
 
   return {
+    ...(desktopWidth !== undefined ? { "--tmr-page-desktop-width": desktopWidth } : {}),
+    ...(desktopHeight !== undefined ? { "--tmr-page-desktop-height": desktopHeight } : {}),
+    ...(desktopPadding !== undefined ? { "--tmr-page-desktop-padding": desktopPadding } : {}),
+    ...(desktopMargin !== undefined ? { "--tmr-page-desktop-margin": desktopMargin } : {}),
+    ...(mobileWidth !== undefined ? { "--tmr-page-mobile-width": mobileWidth } : {}),
+    ...(mobileHeight !== undefined ? { "--tmr-page-mobile-height": mobileHeight } : {}),
+    ...(mobilePadding !== undefined ? { "--tmr-page-mobile-padding": mobilePadding } : {}),
+    ...(mobileMargin !== undefined ? { "--tmr-page-mobile-margin": mobileMargin } : {}),
     "--tmr-bg": "var(--bg, #FAFAF7)",
     "--tmr-text": "var(--ink, #0E0E0C)",
     "--tmr-sub": "var(--sub, #55554E)",
@@ -983,12 +1418,15 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-line-strong": "var(--line2, #D5D5CD)",
     "--tmr-panel": "#FFFFFF",
     "--tmr-dark": "var(--dark, #0E0E0C)",
-    "--tmr-accent": "var(--lime, #DBFA37)",
+    "--tmr-accent": themeColor(
+      raw(props, "accentColor"),
+      "var(--lime, #C7F136)",
+    ),
     "--tmr-background-glow-factor": 0,
-    "--tmr-accent-text": "var(--lime-ink, #0E0E0C)",
-    "--tmr-accent-soft": "var(--lime-soft, rgba(219, 250, 55, 0.16))",
+    "--tmr-accent-text": "var(--lime-ink, #3D4D0E)",
+    "--tmr-accent-soft": "var(--lime-soft, #F2F8DC)",
     "--tmr-danger": "var(--red, #E2492F)",
-    "--tmr-word-color": "var(--lime, #DBFA37)",
+    "--tmr-word-color": themeColor(props.styledPhraseColor, "#C7F136"),
     "--tmr-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmr-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmr-solution-carousel-duration": `${numberInRange(raw(props, "carouselDurationSeconds"), 24, 4, 90)}s`,
@@ -1033,23 +1471,40 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
       0,
       100,
     ),
-    "--tmr-curing-background": "var(--dark, #0E0E0C)",
-    "--tmr-curing-reason-bg": "#161612",
-    "--tmr-curing-product-media-start": "#1D1D17",
-    "--tmr-curing-product-media-end": "#14140F",
+    "--tmr-curing-background": themeColor(props.backgroundColor, "#0E0E0C"),
+    "--tmr-curing-text": themeColor(props.textColor, "#FFFFFF"),
+    "--tmr-curing-sub": themeColor(props.subTextColor, "#A5A59A"),
+    "--tmr-curing-muted": themeColor(props.mutedTextColor, "#8B8B80"),
+    "--tmr-curing-line": themeColor(props.lineColor, "#26261F"),
+    "--tmr-curing-panel": themeColor(props.panelColor, "#161612"),
+    "--tmr-curing-accent": themeColor(props.accentColor, "#C7F136"),
+    "--tmr-curing-accent-text": themeColor(props.accentTextColor, "#3D4D0E"),
+    "--tmr-curing-accent-soft": themeColor(props.accentSoftColor, "#1C1C17"),
+    "--tmr-curing-reason-bg": themeColor(
+      raw(props, "reasonCardBackgroundColor"),
+      "#161612",
+    ),
+    "--tmr-curing-product-media-start": themeColor(
+      raw(props, "productMediaStartColor"),
+      "#1D1D17",
+    ),
+    "--tmr-curing-product-media-end": themeColor(
+      raw(props, "productMediaEndColor"),
+      "#14140F",
+    ),
     "--tmr-curing-reason-radius": `${numberInRange(raw(props, "reasonCardRadius"), 18, 0, 36)}px`,
     "--tmr-curing-product-radius": `${numberInRange(raw(props, "productCardRadius"), 20, 0, 36)}px`,
     ...(curingImageWidth
       ? {
-        "--tmr-curing-image-width": curingImageWidth,
-        "--tmr-curing-image-max-width": "100%",
-      }
+          "--tmr-curing-image-width": curingImageWidth,
+          "--tmr-curing-image-max-width": "100%",
+        }
       : {}),
     ...(curingImageHeight
       ? {
-        "--tmr-curing-image-height": curingImageHeight,
-        "--tmr-curing-image-max-height": "100%",
-      }
+          "--tmr-curing-image-height": curingImageHeight,
+          "--tmr-curing-image-max-height": "100%",
+        }
       : {}),
     "--tmr-curing-image-x": `${numberInRange(raw(props, "productImageXOffset"), 0, -90, 90)}px`,
     "--tmr-curing-image-y": `${numberInRange(raw(props, "productImageYOffset"), 0, -90, 90)}px`,
@@ -1085,12 +1540,12 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
       0,
       100,
     ),
-    "--tmr-roi-bg": "var(--lime, #DBFA37)",
-    "--tmr-roi-text": "var(--ink, #0E0E0C)",
-    "--tmr-roi-sub": "#2C3A09",
-    "--tmr-roi-eyebrow": "var(--lime-ink, #3D4D0E)",
-    "--tmr-roi-button-bg": "var(--ink, #0E0E0C)",
-    "--tmr-roi-button-text": "#FFFFFF",
+    "--tmr-roi-bg": themeColor(props.backgroundColor, "#C7F136"),
+    "--tmr-roi-text": themeColor(props.textColor, "#0E0E0C"),
+    "--tmr-roi-sub": themeColor(props.subTextColor, "#2C3A09"),
+    "--tmr-roi-eyebrow": themeColor(props.accentTextColor, "#3D4D0E"),
+    "--tmr-roi-button-bg": themeColor(props.buttonBackgroundColor, "#0E0E0C"),
+    "--tmr-roi-button-text": themeColor(props.buttonTextColor, "#FFFFFF"),
     "--tmr-roi-button-radius": `${numberInRange(raw(props, "buttonRadius"), 10, 0, 32)}px`,
     "--tmr-eco-icon-width": `${numberInRange(raw(props, "iconImageWidth"), 44, 12, 96)}px`,
     "--tmr-eco-icon-height": `${numberInRange(raw(props, "iconImageHeight"), 44, 12, 96)}px`,
@@ -1219,17 +1674,20 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
     "--tmr-final-bg": "var(--dark, #0E0E0C)",
     "--tmr-final-text": "#FFFFFF",
     "--tmr-final-sub": "#A5A59A",
-    "--tmr-final-primary-bg": "var(--lime, #DBFA37)",
+    "--tmr-final-primary-bg": "var(--lime, #C7F136)",
     "--tmr-final-primary-text": "var(--ink, #0E0E0C)",
     "--tmr-final-secondary-text": "#FFFFFF",
     "--tmr-final-button-radius": `${numberInRange(raw(props, "buttonRadius"), 10, 0, 32)}px`,
-    "--tmr-footer-bg": "var(--tm-theme-dark, #0E0E0C)",
-    "--tmr-footer-text": "#FFFFFF",
-    "--tmr-footer-muted": "#8B8B80",
-    "--tmr-footer-line": "#26261F",
-    // Footer instances may retain an old editor value. Match the global header brand mark on every page.
-    "--tmr-footer-logo-image-width": `${numberInRange(raw(props, "logoImageWidth"), 116, 116, 118)}px`,
-    "--tmr-footer-logo-image-height": `${numberInRange(raw(props, "logoImageHeight"), 24, 24, 25)}px`,
+    "--tmr-footer-bg": themeColor(raw(props, "backgroundColor"), "#0E0E0C"),
+    "--tmr-footer-text": themeColor(raw(props, "textColor"), "#FFFFFF"),
+    "--tmr-footer-muted": themeColor(
+      raw(props, "mutedTextColor"),
+      "#8B8B80",
+    ),
+    "--tmr-footer-line": themeColor(raw(props, "lineColor"), "#26261F"),
+    // Keep logo dimensions bounded while allowing meaningful Studio overrides.
+    "--tmr-footer-logo-image-width": `${numberInRange(raw(props, "logoImageWidth"), 116, 40, 300)}px`,
+    "--tmr-footer-logo-image-height": `${numberInRange(raw(props, "logoImageHeight"), 24, 12, 100)}px`,
     "--tmr-footer-logo-image-x": `${numberInRange(raw(props, "logoImageXOffset"), 0, -48, 48)}px`,
     "--tmr-footer-logo-image-y": `${numberInRange(raw(props, "logoImageYOffset"), 0, -48, 48)}px`,
     "--tmr-footer-logo-image-fit": imageFit(raw(props, "logoImageFit")),
@@ -1264,8 +1722,8 @@ export function threeMashThemeStyle(props: ThreeMashSectionRenderProps) {
       0,
       100,
     ),
-    "--tmr-footer-logo-svg-width": `${numberInRange(raw(props, "logoSvgWidth"), 116, 116, 118)}px`,
-    "--tmr-footer-logo-svg-height": `${numberInRange(raw(props, "logoSvgHeight"), 24, 24, 25)}px`,
+    "--tmr-footer-logo-svg-width": `${numberInRange(raw(props, "logoSvgWidth"), 116, 40, 300)}px`,
+    "--tmr-footer-logo-svg-height": `${numberInRange(raw(props, "logoSvgHeight"), 24, 12, 100)}px`,
     "--tmr-footer-logo-svg-x": `${numberInRange(raw(props, "logoSvgXOffset"), 0, -48, 48)}px`,
     "--tmr-footer-logo-svg-y": `${numberInRange(raw(props, "logoSvgYOffset"), 0, -48, 48)}px`,
     "--tmr-footer-logo-svg-opacity": percentage(
@@ -1315,22 +1773,174 @@ function indexedSection(
     contentHtml: string;
   },
 ) {
-  const isEn = isEnglishLocale();
-  const rawIndexText = value(props.indexText, defaults.indexText);
-  const displayIndexText = isEn ? rawIndexText.toUpperCase() : rawIndexText.toLocaleUpperCase("tr-TR");
   return `<section id="${escapeAttr(value(props.sectionAnchorId, defaults.anchor))}" class="tmr-section${defaults.className ? ` ${defaults.className}` : ""}">
   <div class="tmr-wrap">
-    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, defaults.indexNumber)}</span><span class="tmr-index-text" lang="${isEn ? "en" : "tr"}">${displayIndexText}</span><span class="tmr-index-line"></span></div>
+    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, defaults.indexNumber)}</span><span class="tmr-index-text">${value(props.indexText, defaults.indexText)}</span><span class="tmr-index-line"></span></div>
     <div class="tmr-head"><h2>${heading(value(props.titleText, defaults.titleText), value(props.titleEmphasis, defaults.titleEmphasis || ""))}</h2><div class="tmr-side">${value(props.sideHtml, defaults.sideHtml)}</div></div>
     ${value(props.contentHtml, defaults.contentHtml)}
   </div>
 </section>`;
 }
 
+function themeColor(value: unknown, fallback: string) {
+  const candidate = typeof value === "string" ? value.trim() : "";
+  return /^(?:#[\da-f]{3,8}|[a-z]+|(?:rgb|hsl)a?\([\d\s.,%/+\-]+\))$/i.test(candidate)
+    ? candidate
+    : fallback;
+}
+
+export function solutionThemeStyle(props: ThreeMashSectionRenderProps) {
+  return {
+    ...threeMashThemeStyle(props),
+    "--tmr-bg": themeColor(props.backgroundColor, "#FAFAF7"),
+    "--tmr-text": themeColor(props.textColor, "#0E0E0C"),
+    "--tmr-sub": themeColor(props.subTextColor, "#55554E"),
+    "--tmr-muted": themeColor(props.mutedTextColor, "#8F8F86"),
+    "--tmr-line": themeColor(props.lineColor, "#E6E6E0"),
+    "--tmr-panel": themeColor(props.panelColor, "#FFFFFF"),
+    "--tmr-accent": themeColor(props.accentColor, "#C7F136"),
+    "--tmr-accent-text": themeColor(props.accentTextColor, "#3D4D0E"),
+    "--tmr-accent-soft": themeColor(props.accentSoftColor, "#F2F8DC"),
+    "--tmr-danger": themeColor(props.dangerColor, "#E2492F"),
+    "--tmr-word-color": themeColor(
+      props.styledPhraseColor,
+      themeColor(props.accentColor, "#C7F136"),
+    ),
+    "--tmr-background-glow-factor": props.showBackgroundGlow === false ? 0 : 1,
+    "--tmr-solution-media-start": themeColor(
+      props.cardMediaStartColor,
+      "#F4F4EF",
+    ),
+    "--tmr-solution-media-end": themeColor(
+      props.cardMediaEndColor,
+      "#E9E9E2",
+    ),
+  };
+}
+
+export function finalThemeStyle(props: ThreeMashSectionRenderProps) {
+  const primaryButtonBackground = themeColor(
+    props.primaryButtonBackgroundColor,
+    "#C7F136",
+  );
+
+  return {
+    ...threeMashThemeStyle(props),
+    "--tmr-final-bg": themeColor(props.backgroundColor, "#0E0E0C"),
+    "--tmr-final-text": themeColor(props.textColor, "#FFFFFF"),
+    "--tmr-final-sub": themeColor(props.subTextColor, "#A5A59A"),
+    "--tmr-accent": themeColor(props.accentColor, "#C7F136"),
+    "--tmr-final-primary-bg": primaryButtonBackground,
+    "--tmr-final-primary-hover": props.primaryButtonBackgroundColor
+      ? `color-mix(in srgb, ${primaryButtonBackground} 85%, white)`
+      : "#D3F75C",
+    "--tmr-final-primary-text": themeColor(
+      props.primaryButtonTextColor,
+      "#0E0E0C",
+    ),
+    "--tmr-final-secondary-text": themeColor(
+      props.secondaryButtonTextColor,
+      "#FFFFFF",
+    ),
+  };
+}
+
+export function ecosystemThemeStyle(props: ThreeMashSectionRenderProps) {
+  return {
+    ...threeMashThemeStyle(props),
+    "--tmr-bg": themeColor(props.backgroundColor, "#FAFAF7"),
+    "--tmr-text": themeColor(props.textColor, "#0E0E0C"),
+    "--tmr-sub": themeColor(props.subTextColor, "#55554E"),
+    "--tmr-muted": themeColor(props.mutedTextColor, "#8F8F86"),
+    "--tmr-line": themeColor(props.lineColor, "#E6E6E0"),
+    "--tmr-panel": themeColor(props.panelColor, "#FFFFFF"),
+    "--tmr-accent": themeColor(props.accentColor, "#C7F136"),
+    "--tmr-accent-text": themeColor(props.accentTextColor, "#3D4D0E"),
+    "--tmr-accent-soft": themeColor(props.accentSoftColor, "#F2F8DC"),
+    "--tmr-word-color": themeColor(
+      props.styledPhraseColor,
+      themeColor(props.accentColor, "#C7F136"),
+    ),
+    "--tmr-background-glow-factor": props.showBackgroundGlow === false ? 0 : 1,
+  };
+}
+
+export function faqThemeStyle(props: ThreeMashSectionRenderProps) {
+  return {
+    ...threeMashThemeStyle(props),
+    "--tmr-bg": themeColor(props.backgroundColor, "#FAFAF7"),
+    "--tmr-text": themeColor(props.textColor, "#0E0E0C"),
+    "--tmr-sub": themeColor(props.subTextColor, "#55554E"),
+    "--tmr-muted": themeColor(props.mutedTextColor, "#8F8F86"),
+    "--tmr-line": themeColor(props.lineColor, "#E6E6E0"),
+    "--tmr-accent": themeColor(props.accentColor, "#C7F136"),
+    "--tmr-accent-text": themeColor(props.accentTextColor, "#3D4D0E"),
+  };
+}
+
+export function trustThemeStyle(props: ThreeMashSectionRenderProps) {
+  return {
+    ...threeMashThemeStyle(props),
+    "--tmr-bg": themeColor(props.backgroundColor, "#FAFAF7"),
+    "--tmr-text": themeColor(props.textColor, "#0E0E0C"),
+    "--tmr-sub": themeColor(props.subTextColor, "#55554E"),
+    "--tmr-muted": themeColor(props.mutedTextColor, "#8F8F86"),
+    "--tmr-line": themeColor(props.lineColor, "#E6E6E0"),
+    "--tmr-panel": themeColor(props.panelColor, "#FFFFFF"),
+    "--tmr-dark": themeColor(props.darkColor, "#0E0E0C"),
+    "--tmr-accent": themeColor(props.accentColor, "#C7F136"),
+    "--tmr-accent-text": themeColor(props.accentTextColor, "#3D4D0E"),
+    "--tmr-background-glow-factor": props.showBackgroundGlow === false ? 0 : 1,
+  };
+}
+
 const solutionContentHtml = solutionSetupHtml;
 
+/* Legacy static HTML blocks below are intentionally removed from execution.
+ * The active locale-aware render functions are defined after this block.
+ */
+/*
+const curingContentHtml = `<div class="tmr-why-grid"><article>
+
+
+<div>SEBEP 01</div><h4>Mekanik dayanım</h4><p>Eksik kürleme (undercure) kırılganlık demek — geçici kron ve köprülerin <b>sık kırılmasının</b> en yaygın görünmez sebebi.</p></article><article><div>SEBEP 02</div><h4>Ölçüsel doğruluk</h4><p>Fazla kürleme (overcure) malzemeyi <b>çeker ve deforme eder</b>. Yazıcıda kazanılan ±20 µm, kürleme ünitesinde kaybedilir.</p></article><article><div>SEBEP 03</div><h4>Biyouyumluluk &amp; renk</h4><p>Doğru dönüşüm derecesi <b>monomer salınımını</b> engeller; renk stabilitesi ve hasta güvenliği sağlar.</p></article></div>
+    <div class="tmr-products tmr-products-two"><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag tmr-lime-tag">YIKAMA</span><img class="tmr-product-img tmr-machine-phrozen" src="${mashW1eImage}" alt="Mash W1E Ultrasonik Yıkama Cihazı"></div><div class="tmr-product-body"><h3>Mash W1E Ultrasonik Yıkama Cihazı</h3><p>Baskı sonrası parçaların yüzeyindeki reçine kalıntılarını <b>ultrasonik yıkama</b> ile temizler; kürleme öncesi yüzeyi hazırlar.</p><div class="tmr-spec"><div><span>İşlem</span><b>Ultrasonik yıkama</b></div><div><span>Akış</span><b>Baskı sonrası temizlik</b></div></div><a class="tmr-go" href="/mash-w1e-ultrasonik-yikama-cihazi">İncele <span>→</span></a></div></article><article class="tmr-product"><div class="tmr-product-media"><span class="tmr-tag">KÜRLEME</span><img class="tmr-product-img tmr-machine-uw02" src="${mashC1eImage}" alt="Mash C1E UV Kürleme Cihazı"></div><div class="tmr-product-body"><h3>Mash C1E UV Kürleme Cihazı</h3><p>24 LED'li 360° ışık sistemi ve 360-530 nm geniş spektrum desteğiyle dental reçine baskılarda <b>UV post-curing</b> adımını tamamlar.</p><div class="tmr-spec"><div><span>Işık sistemi</span><b>360° / 24 LED</b></div><div><span>Spektrum</span><b>360-530 nm</b></div></div><a class="tmr-go" href="/mash-c1e-uv-kurleme-cihazi">İncele <span>→</span></a></div></article></div>
+    <p class="tmr-readmore">Derine inmek isteyenlere, Mash Academy'den: <a href="/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber">Overcure ve Undercure Nedir?</a> · <a href="/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi">385nm mi 405nm mi?</a></p>`;
+
+const ecosystemContentHtml = `<div class="tmr-eco"><a href="/3d-yazicilar"><span class="tmr-eco-icon"><img src="${ecoPrinterIcon}" alt="" aria-hidden="true"></span><span>3D Yazıcılar</span></a><a href="/dental-3d-yazici-recineleri"><span class="tmr-eco-icon"><img src="${ecoResinIcon}" alt="" aria-hidden="true"></span><span>Dental Reçineler</span></a><a href="/yikama-kurleme-cihazlari"><span class="tmr-eco-icon"><img src="${ecoScannerIcon}" alt="" aria-hidden="true"></span><span>Yıkama &amp; Kürleme</span></a><a href="/masasustu-tarayicilar"><span class="tmr-eco-icon"><img src="${ecoCuringIcon}" alt="" aria-hidden="true"></span><span>Masaüstü Tarayıcılar</span></a><a href="/zirkon-bloklar"><span class="tmr-eco-icon"><img src="${ecoBlocksIcon}" alt="" aria-hidden="true"></span><span>Zirkon Bloklar</span></a><a href="/dental-firinlar"><span class="tmr-eco-icon"><img src="${ecoOvenIcon}" alt="" aria-hidden="true"></span><span>Dental Fırınlar</span></a></div>`;
+
+const trustContentHtml = `<div class="tmr-testimonials"><article class="tmr-testimonial tmr-featured"><div class="tmr-quote">“</div><p>Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileMehmet}" alt="Mehmet İşlek"><div><b>Mehmet İşlek</b><small>ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik</small></div></div></article><article class="tmr-testimonial"><div class="tmr-quote">“</div><p>Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileBerkan}" alt="Berkan Öztaş"><div><b>Berkan Öztaş</b><small>DENTEK · Genel Müd. Yard.</small></div></div></article><article class="tmr-testimonial"><div class="tmr-quote">“</div><p>Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.</p><div class="tmr-who"><img class="tmr-avatar" src="${profileGoksel}" alt="Göksel Pişkin"><div><b>Göksel Pişkin</b><small>MIKRO LAB · Kurucu Ortak</small></div></div></article></div><div class="tmr-trusted">${trustedLabelMarkup}${bundledTrustedLogos}</div>`;
+
+const faqContentHtml = `<div class="tmr-faq"><details open><summary>Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?<span>+</span></summary><div>Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.</div></details><details><summary>Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?<span>+</span></summary><div>Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href="#">maliyet detay sayfamıza</a> bakabilirsiniz.</div></details><details><summary>3D baskıda kürleme (post-curing) neden kritik?<span>+</span></summary><div>Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.</div></details><details><summary>3mash yalnızca cihaz mı satıyor?<span>+</span></summary><div>Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.</div></details><details><summary>Elimdeki başka marka yazıcıyla çalışır mısınız?<span>+</span></summary><div>Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.</div></details></div>`;
+
+*/
+
 function solutionContent(props: ThreeMashSectionRenderProps) {
-  return `<div class="tmr-products" aria-label="${escapeAttr(field(props, "carouselAriaLabel", tLocalized("Çözüm ürünleri", "Solution products")))}">${solutionP1dCard(props)}${solutionSecondCard(props)}${solutionResinCategoryCard(props)}</div>`;
+  const cards = [
+    ...(raw(props, "showSolutionCard1") !== false
+      ? [solutionP1dCard(props)]
+      : []),
+    ...(raw(props, "showSolutionCard2") !== false
+      ? [solutionSecondCard(props)]
+      : []),
+    ...(raw(props, "showSolutionCard3") !== false
+      ? [solutionResinCategoryCard(props)]
+      : []),
+    ...(raw(props, "showSolutionCard4") === true
+      ? [solutionExtraCard(props, 4)]
+      : []),
+    ...(raw(props, "showSolutionCard5") === true
+      ? [solutionExtraCard(props, 5)]
+      : []),
+    ...(raw(props, "showSolutionCard6") === true
+      ? [solutionExtraCard(props, 6)]
+      : []),
+  ].filter(Boolean);
+  const ariaLabel = plainText(
+    localizedValue(props, "carouselAriaLabel", "Çözüm ürünleri", "Solution products"),
+  );
+
+  return `<div class="tmr-products" aria-label="${escapeAttr(ariaLabel)}">${cards.join("")}</div>`;
 }
 
 function curingReasons(props: ThreeMashSectionRenderProps) {
@@ -1370,13 +1980,18 @@ function curingReasons(props: ThreeMashSectionRenderProps) {
     ],
   ];
 
-  return `<div class="tmr-why-grid">${trDefaults
+  const cards = trDefaults
     .map(([eyebrowTr, titleTr, descriptionTr], index) => {
       const number = index + 1;
+      if (raw(props, `showReason${number}`) === false) return "";
       const [eyebrowEn, titleEn, descriptionEn] = enDefaults[index];
-      return `<article><div>${field(props, `reason${number}Eyebrow`, eyebrowTr, eyebrowEn)}</div><h3>${field(props, `reason${number}Title`, titleTr, titleEn)}</h3><p>${field(props, `reason${number}DescriptionHtml`, descriptionTr, descriptionEn)}</p></article>`;
+      return `<article><div>${localizedField(props, `reason${number}Eyebrow`, eyebrowTr, eyebrowEn)}</div><h3>${localizedField(props, `reason${number}Title`, titleTr, titleEn)}</h3><p>${localizedField(props, `reason${number}DescriptionHtml`, descriptionTr, descriptionEn)}</p></article>`;
     })
-    .join("")}</div>`;
+    .filter(Boolean);
+
+  return cards.length
+    ? `<div class="tmr-why-grid tmr-why-grid-count-${cards.length}">${cards.join("")}</div>`
+    : "";
 }
 
 function curingProducts(props: ThreeMashSectionRenderProps) {
@@ -1445,96 +2060,87 @@ function curingProducts(props: ThreeMashSectionRenderProps) {
     ...normalizedProps,
   };
 
-  const en = isEnglishLocale();
-  return `<div class="tmr-products tmr-products-two">${productCard(
-    staticCuringProps,
-    "curingProduct1",
-    {
-      tag: en ? "WASHING" : tLocalized("YIKAMA", "WASHING"),
-      tagClass: "tmr-lime-tag",
-      image: mashW1eImage,
-      imageAlt: tLocalized("Mash W1E Ultrasonik Yıkama Cihazı", "Mash W1E Ultrasonic Washing Device"),
-      imageClass: "tmr-machine-phrozen",
-      title: tLocalized("Mash W1E Ultrasonik Yıkama Cihazı", "Mash W1E Ultrasonic Washing Device"),
-      descriptionHtml: en
-        ? "Removes excess resin remaining on the surface after printing in a short time with <b>ultrasonic cleaning</b>; provides a clean surface before curing."
-        : tLocalized("Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.", "Removes excess resin remaining on the surface after resin printing quickly and precisely with <b>ultrasonic cleaning</b>; provides a clean surface before curing."),
-      specs: en
-        ? [
-          ["Process", "Ultrasonic cleaning"],
-          ["Workflow", "Washing → curing prep"],
-        ]
-        : [
-          [tLocalized("İşlem", "Process"), tLocalized("Ultrasonik temizleme", "ultrasonic cleaning")],
-          [tLocalized("Akış", "Workflow"), tLocalized("Yıkama → kürleme hazırlığı", "Washing → curing preparation")],
-        ],
-      ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
-      ctaHref: "/mash-w1e-ultrasonik-yikama-cihazi",
-    },
-  )}${productCard(staticCuringProps, "curingProduct2", {
-    tag: en ? "CURING" : tLocalized("KÜRLEME", "CURING"),
+  const washCard: ProductCardDefaults = {
+    tag: tLocalized("YIKAMA", "WASHING"),
+    tagClass: "tmr-lime-tag",
+    image: mashW1eImage,
+    imageAlt: tLocalized("Mash W1E Ultrasonik Yıkama Cihazı", "Mash W1E Ultrasonic Washing Device"),
+    imageClass: "tmr-machine-phrozen",
+    title: tLocalized("Mash W1E Ultrasonik Yıkama Cihazı", "Mash W1E Ultrasonic Washing Device"),
+    descriptionHtml: tLocalized(
+      "Reçine baskı sonrası yüzeyde kalan fazla reçineyi <b>ultrasonik temizleme</b> ile kısa sürede ve hassas biçimde uzaklaştırır; kürleme öncesi temiz yüzey sağlar.",
+      "Removes excess resin remaining on the surface after resin printing quickly and precisely with <b>ultrasonic cleaning</b>; provides a clean surface before curing.",
+    ),
+    specs: [
+      [tLocalized("İşlem", "Process"), tLocalized("Ultrasonik temizleme", "Ultrasonic cleaning")],
+      [tLocalized("Akış", "Workflow"), tLocalized("Yıkama → kürleme hazırlığı", "Washing → curing preparation")],
+    ],
+    ctaText: tLocalized("İncele", "Explore"),
+    ctaHref: "/mash-w1e-ultrasonik-yikama-cihazi",
+  };
+  const curingCard: ProductCardDefaults = {
+    tag: tLocalized("KÜRLEME", "CURING"),
     image: mashC1eImage,
     imageAlt: tLocalized("Mash C1E UV Kürleme Cihazı", "Mash C1E UV Curing Device"),
     imageClass: "tmr-machine-uw02",
     title: tLocalized("Mash C1E UV Kürleme Cihazı", "Mash C1E UV Curing Device"),
-    descriptionHtml: en
-      ? "Provides <b>homogenous UV post-curing</b> with its 24-LED 360° curing system and 360-530 nm wide spectrum support; completes mechanical strength, dimensional accuracy and surface quality goals."
-      : tLocalized("24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle <b>homojen UV post-curing</b> sağlar; mekanik dayanım, boyutsal doğruluk ve yüzey kalitesi hedefini tamamlar.", "Delivers <b>homogeneous UV post-curing</b> with a 24-LED 360° curing system and 360-530 nm wide spectrum support; completes the target for mechanical strength, dimensional accuracy, and surface quality."),
-    specs: en
-      ? [
-        ["Light", "24 LED / 360°"],
-        ["Spectrum", tLocalized("360-530 nm", "360-530nm")],
-      ]
-      : [
-        [tLocalized("Işık", "Light"), "24 LED / 360°"],
-        [tLocalized("Spektrum", "Spectrum"), tLocalized("360-530 nm", "360-530nm")],
-      ],
-    ctaText: en ? "Explore" : tLocalized("İncele", "Explore"),
+    descriptionHtml: tLocalized(
+      "Kürleme, polimer malzemelerin <b>sertleştirilme sürecidir.</b> 3D baskı tamamlandıktan sonra ürünün boyutsal kararlılığını ve yüzey dayanımını destekler. Mash C1E, 24 LED'li 360° kürleme sistemi ve 360-530 nm geniş spektrum desteğiyle reçine baskılarınızda <b>hızlı ve homojen kürleme</b> sunar. <b>Sararmayı önlemeye</b> yardımcı olan teknolojisi ve dahili fan sistemiyle güvenilir, profesyonel sonuçlar sağlar.",
+      "Curing is the <b>process of hardening polymer materials.</b> After 3D printing is complete, it supports the dimensional stability and surface durability of the product. With its 24-LED 360° curing system and wide 360–530 nm spectrum support, the Mash C1E offers <b>fast and homogeneous curing</b> for your resin prints. With technology that helps <b>prevent yellowing</b> and a built-in fan system, it delivers reliable, professional results.",
+    ),
+    specs: [
+      [tLocalized("Işık", "Light"), "24 LED / 360°"],
+      [tLocalized("Spektrum", "Spectrum"), tLocalized("360-530 nm", "360-530nm")],
+    ],
+    ctaText: tLocalized("İncele", "Explore"),
     ctaHref: "/mash-c1e-uv-kurleme-cihazi",
-  })}</div>`;
+  };
+  const cards = [
+    ...(raw(props, "showProduct1") !== false
+      ? [productCard(staticCuringProps, "curingProduct1", washCard, true)]
+      : []),
+    ...(raw(props, "showProduct2") !== false
+      ? [productCard(staticCuringProps, "curingProduct2", curingCard, true)]
+      : []),
+  ];
+
+  return cards.length
+    ? `<div class="tmr-products tmr-products-two${cards.length === 1 ? " tmr-products-single" : ""}">${cards.join("")}</div>`
+    : "";
 }
 
 function curingContent(props: ThreeMashSectionRenderProps) {
-  const readMoreTr = tLocalized("Derine inmek isteyenlere, Mash Academy'den:", "For those who want to go deeper, from Mash Academy:");
-  const readMoreEn = "For those who want to dive deeper, from Mash Academy:";
-  const link1Tr = tLocalized("Overcure ve Undercure Nedir?", "What Are Overcure and Undercure?");
-  const link1En = "What is Overcure and Undercure?";
-  const link2Tr = "385nm mi 405nm mi?";
-  const link2En = "385nm or 405nm?";
-  return `${curingReasons(props)}${curingProducts(props)}<p class="tmr-readmore">${field(props, "readMoreText", readMoreTr, readMoreEn)} <a href="${escapeAttr(localizedHref(field(props, "readMoreLink1Href", "/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber")))}">${field(props, "readMoreLink1Text", link1Tr, link1En)}</a> · <a href="${escapeAttr(localizedHref(field(props, "readMoreLink2Href", "/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi")))}">${field(props, "readMoreLink2Text", link2Tr, link2En)}</a></p>`;
+  const academyLinks = [
+    ...(raw(props, "showReadMoreLink1") !== false
+      ? [`<a href="${escapeAttr(localizedHref(field(props, "readMoreLink1Href", "/blog/dental-3d-baskida-overcure-ve-undercure-nedir-en-dogru-kurleme-icin-kapsamli-rehber")))}">${localizedField(props, "readMoreLink1Text", "Overcure ve Undercure Nedir?", "What is Overcure and Undercure?")}</a>`]
+      : []),
+    ...(raw(props, "showReadMoreLink2") !== false
+      ? [`<a href="${escapeAttr(localizedHref(field(props, "readMoreLink2Href", "/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi")))}">${localizedField(props, "readMoreLink2Text", "385nm mi 405nm mi?", "385nm or 405nm?")}</a>`]
+      : []),
+  ];
+  const readMore =
+    raw(props, "showReadMore") !== false && academyLinks.length
+      ? `<p class="tmr-readmore">${localizedField(props, "readMoreText", "Derine inmek isteyenlere, Mash Academy'den:", "For those who want to dive deeper, from Mash Academy:")} ${academyLinks.join(" · ")}</p>`
+      : "";
+
+  return `${curingReasons(props)}${curingProducts(props)}${readMore}`;
 }
 
-/**
- * DÜZELTME (#1): Kullanıcı editörden özel bir titleText/titleEmphasis girdiyse
- * artık bu değerler gerçekten kullanılır. Girilmediyse eski sabit-markup
- * (span sarmalayıcıları ile) fallback korunur.
- */
 function curingTitleHtml(props: ThreeMashSectionRenderProps) {
-  const en = isEnglishLocale();
-  const defaultTitleTr = tLocalized("Sadece yazıcı değil. Sonucu", "Not just the printer. The result");
-  const defaultTitleEn = "Not just the printer. Curing";
-  const defaultEmphasisTr = tLocalized("kürleme tamamlar.", "completes curing.");
-  const defaultEmphasisEn = "completes the result.";
-
-  const titleText = field(props, "titleText", defaultTitleTr, defaultTitleEn);
-  const titleEmphasis = field(props, "titleEmphasis", defaultEmphasisTr, defaultEmphasisEn);
-
-  const hasCustomTitle =
-    typeof props.titleText === "string" && props.titleText.trim() !== "";
-  const hasCustomEmphasis =
-    typeof props.titleEmphasis === "string" && props.titleEmphasis.trim() !== "";
-
-  if (hasCustomTitle || hasCustomEmphasis) {
-    return `${titleText} <span class="tmr-curing-keep"><span class="tmr-title-em">${titleEmphasis}</span></span>`;
-  }
-
-  if (en) {
-    return `Not just the printer. <span class="tmr-curing-keep"><span class="tmr-title-em">Curing</span></span><br>completes the result.`;
-  }
-  return tLocalized(
-    "Sadece yazıcı değil. <span class=\"tmr-curing-keep\">Sonucu <span class=\"tmr-title-em\">kürleme</span></span><br>tamamlar.",
-    "Not just the printer. <span class=\"tmr-curing-keep\">It is <span class=\"tmr-title-em\">curing</span></span><br>that completes the result.",
+  const titleText = localizedField(
+    props,
+    "titleText",
+    "Sadece yazıcı değil. Sonucu",
+    "Not just the printer. It is",
   );
+  const titleEmphasis = localizedField(
+    props,
+    "titleEmphasis",
+    "kürleme tamamlar.",
+    "curing that completes the result.",
+  );
+
+  return `${titleText} <span class="tmr-curing-keep"><span class="tmr-title-em">${titleEmphasis}</span></span>`;
 }
 
 function ecosystemContent(props: ThreeMashSectionRenderProps) {
@@ -1574,11 +2180,13 @@ function ecosystemContent(props: ThreeMashSectionRenderProps) {
   const cards = trTitles
     .map((titleTr, index) => {
       const number = index + 1;
+      if (raw(props, `showEcosystemItem${number}`) === false) return "";
+
       const titleEn = enTitles[index];
       const icon = showIcons
         ? `<span class="tmr-eco-icon"><img src="${escapeAttr(imageSource(raw(props, `ecosystemItem${number}IconImageUrl`), icons[index]))}" alt="" aria-hidden="true"></span>`
         : "";
-      return `<a class="tmr-eco-card tmr-eco-card-${number}" href="${escapeAttr(localizedHref(field(props, `ecosystemItem${number}Href`, hrefs[index])))}">${icon}<span>${field(props, `ecosystemItem${number}Title`, titleTr, titleEn)}</span></a>`;
+      return `<a class="tmr-eco-card tmr-eco-card-${number}" href="${escapeAttr(localizedHref(field(props, `ecosystemItem${number}Href`, hrefs[index])))}">${icon}<span>${localizedField(props, `ecosystemItem${number}Title`, titleTr, titleEn)}</span></a>`;
     })
     .join("");
   return `<div class="tmr-eco tmr-eco-list">${cards}</div>`;
@@ -1592,13 +2200,13 @@ function trustedLogos(props: ThreeMashSectionRenderProps) {
       if (raw(props, `trustedLogo${number}Enabled`) === false) return "";
       const src = imageSource(raw(props, `trustedLogo${number}ImageUrl`), logo);
       if (!src) return "";
-      const alt = field(
+      const alt = localizedField(
         props,
         `trustedLogo${number}ImageAlt`,
         `Güvenen marka ${number}`,
         `Trusted brand ${number}`,
       );
-      return `<span class="tmr-trusted-logo"><img src="${escapeAttr(src)}" alt="${escapeAttr(alt)}"></span>`;
+      return `<span class="tmr-trusted-logo"><img src="${escapeAttr(src)}" alt="${escapeAttr(alt)}" loading="lazy"></span>`;
     })
     .join("");
 
@@ -1606,227 +2214,417 @@ function trustedLogos(props: ThreeMashSectionRenderProps) {
 }
 
 function trustContent(props: ThreeMashSectionRenderProps) {
-  const trDefaults = [
-    [
-      profileMehmet,
-      tLocalized("Mehmet İşlek", "Mehmet İşlek"),
-      tLocalized("Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.", "Professionals trust professionals for absolute success. We collaborate with Mash on equipment selection, supply, training, and use."),
-      tLocalized("Mehmet İşlek", "Mehmet İşlek"),
-      tLocalized("ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik", "ATTELIA · Founding Chief Physician — a clinic designing smiles for 22 years"),
-    ],
-    [
-      profileBerkan,
-      tLocalized("Berkan Öztaş", "Berkan Öztaş"),
-      tLocalized("Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.", "Innovative and creative. A long-term, successful partnership in hardware, software, and materials."),
-      tLocalized("Berkan Öztaş", "Berkan Öztaş"),
-      tLocalized("DENTEK · Genel Müd. Yard.", "DENTEK · Assistant General Manager"),
-    ],
-    [
-      profileGoksel,
-      tLocalized("Göksel Pişkin", "Göksel Pişkin"),
-      tLocalized("Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.", "They've solved problems before we even encountered them. Always the same production quality — perfect results."),
-      tLocalized("Göksel Pişkin", "Göksel Pişkin"),
-      tLocalized("MIKRO LAB · Kurucu Ortak", "MIKRO LAB · Founding Partner"),
-    ],
+  const defaults = [
+    {
+      number: 1,
+      image: profileMehmet,
+      textTr: "Profesyoneller mutlak başarı için profesyonellere güvenir. Ekipman seçimi, temini, eğitimi ve kullanımında Mash ile iş birliği yapıyoruz.",
+      textEn: "Professionals trust professionals for absolute success. We collaborate with Mash in equipment selection, supply, training, and operation.",
+      nameTr: "Mehmet İşlek",
+      nameEn: "Mehmet İşlek",
+      roleTr: "ATTELIA · Kurucu Başhekim — 22 yıldır gülümseme tasarlayan klinik",
+      roleEn: "ATTELIA · Chief Physician & Founder — Designing smiles for 22 years",
+    },
+    {
+      number: 2,
+      image: profileBerkan,
+      textTr: "Yenilikçi ve yaratıcı. Donanım, yazılım ve malzemelerde uzun vadeli, başarılı bir iş birliği.",
+      textEn: "Innovative and creative. A long-term, successful collaboration across hardware, software, and materials.",
+      nameTr: "Berkan Öztaş",
+      nameEn: "Berkan Öztaş",
+      roleTr: "DENTEK · Genel Müd. Yard.",
+      roleEn: "DENTEK · Deputy General Manager",
+    },
+    {
+      number: 3,
+      image: profileGoksel,
+      textTr: "Sorunları biz daha yaşamadan çözmüşler. Her zaman aynı kalitede üretim — mükemmel sonuçlar.",
+      textEn: "They solved problems before we even encountered them. Consistent production quality every single time — excellent results.",
+      nameTr: "Göksel Pişkin",
+      nameEn: "Göksel Pişkin",
+      roleTr: "MIKRO LAB · Kurucu Ortak",
+      roleEn: "MIKRO LAB · Co-Founder",
+    },
+    {
+      number: 4,
+      image: "",
+      textTr: "Yeni müşteri yorumunuzu buraya ekleyin.",
+      textEn: "Add the new customer testimonial here.",
+      nameTr: "Yeni müşteri",
+      nameEn: "New customer",
+      roleTr: "Unvan veya kurum",
+      roleEn: "Role or organization",
+    },
+    {
+      number: 5,
+      image: "",
+      textTr: "Yeni müşteri yorumunuzu buraya ekleyin.",
+      textEn: "Add another customer testimonial here.",
+      nameTr: "Yeni müşteri",
+      nameEn: "New customer",
+      roleTr: "Unvan veya kurum",
+      roleEn: "Role or organization",
+    },
   ];
 
-  const enDefaults = [
-    [
-      profileMehmet,
-      tLocalized("Mehmet İşlek", "Mehmet İşlek"),
-      "Professionals trust professionals for absolute success. We collaborate with Mash in equipment selection, supply, training, and operation.",
-      tLocalized("Mehmet İşlek", "Mehmet İşlek"),
-      "ATTELIA · Chief Physician & Founder — Designing smiles for 22 years",
-    ],
-    [
-      profileBerkan,
-      tLocalized("Berkan Öztaş", "Berkan Öztaş"),
-      "Innovative and creative. A long-term, successful collaboration across hardware, software, and materials.",
-      tLocalized("Berkan Öztaş", "Berkan Öztaş"),
-      "DENTEK · Deputy General Manager",
-    ],
-    [
-      profileGoksel,
-      tLocalized("Göksel Pişkin", "Göksel Pişkin"),
-      "They solved problems before we even encountered them. Consistent production quality every single time — excellent results.",
-      tLocalized("Göksel Pişkin", "Göksel Pişkin"),
-      "MIKRO LAB · Co-Founder",
-    ],
-  ];
-
-  const cards = trDefaults
-    .map(([image, altTr, textTr, nameTr, roleTr], index) => {
-      const number = index + 1;
+  const cards = defaults
+    .filter(({ number }) =>
+      number <= 3
+        ? raw(props, `showTestimonial${number}`) !== false
+        : raw(props, `showTestimonial${number}`) === true,
+    )
+    .map((item, index) => {
+      const { number } = item;
+      const image = imageSource(
+        raw(props, `testimonial${number}ImageUrl`),
+        item.image,
+      );
+      const alt = localizedField(
+        props,
+        `testimonial${number}ImageAlt`,
+        number <= 3 ? item.nameTr : "Yeni müşteri profil fotoğrafı",
+        number <= 3 ? item.nameEn : "New customer profile photo",
+      );
+      const avatar = image
+        ? `<img class="tmr-avatar" src="${escapeAttr(image)}" alt="${escapeAttr(alt)}" loading="lazy">`
+        : '<span class="tmr-avatar" aria-hidden="true"></span>';
       const featured = index === 0 ? " tmr-featured" : "";
-      const [, altEn, textEn, nameEn, roleEn] = enDefaults[index];
-      return `<article class="tmr-testimonial${featured}"><div class="tmr-quote">“</div><p>${field(props, `testimonial${number}Text`, textTr, textEn)}</p><div class="tmr-who"><img class="tmr-avatar" src="${escapeAttr(imageSource(raw(props, `testimonial${number}ImageUrl`), image))}" alt="${escapeAttr(field(props, `testimonial${number}ImageAlt`, altTr, altEn))}"><div><b>${field(props, `testimonial${number}Name`, nameTr, nameEn)}</b><small>${field(props, `testimonial${number}Role`, roleTr, roleEn)}</small></div></div></article>`;
+
+      return `<article class="tmr-testimonial${featured}"><div class="tmr-quote" aria-hidden="true">“</div><p>${localizedField(props, `testimonial${number}Text`, item.textTr, item.textEn)}</p><div class="tmr-who">${avatar}<div><b>${localizedField(props, `testimonial${number}Name`, item.nameTr, item.nameEn)}</b><small>${localizedField(props, `testimonial${number}Role`, item.roleTr, item.roleEn)}</small></div></div></article>`;
     })
     .join("");
-  const label = tProp(raw(props, "trustedLabel") as string | undefined, "Güvenenler", "Trusted by");
-  return `<div class="tmr-testimonials">${cards}</div><div class="tmr-trusted"><span class="tmr-trusted-label"><span class="tmr-trusted-label-text">${label}</span><img src="${trustLogo3}" alt="" aria-hidden="true"></span>${trustedLogos(props)}</div>`;
+  const testimonialMarkup = cards ? `<div class="tmr-testimonials">${cards}</div>` : "";
+  const label = raw(props, "showTrustedLabel") === false
+    ? ""
+    : `<span class="tmr-trusted-label"><span class="tmr-trusted-label-text">${localizedField(props, "trustedLabel", "Güvenenler", "Trusted by")}</span><img src="${escapeAttr(imageSource(raw(props, "trustedLabelHoverImageUrl"), trustLogo3))}" alt="" aria-hidden="true"></span>`;
+  const logos = raw(props, "showTrustedLogos") === false
+    ? ""
+    : trustedLogos(props);
+  const trusted = label || logos
+    ? `<div class="tmr-trusted">${label}${logos}</div>`
+    : "";
+
+  return `${testimonialMarkup}${trusted}`;
 }
 
 function faqContent(props: ThreeMashSectionRenderProps) {
-  const trDefaults = [
-    [
-      tLocalized("Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?", "Why is dimensional accuracy so important in dental 3D printing?"),
-      tLocalized("Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.", "Because a restoration fitting the first time depends directly on dimensional accuracy. In national-scale clinical data, the most common causes of crown remakes are <b>proximal misfit, marginal errors, and aesthetic failure</b> — all three are precision problems. The 3mash ecosystem delivers <b>±20 µm</b> dimensional accuracy repeatably, <b>with every print</b> rather than just once — lowering the remake rate and hidden cost."),
-    ],
-    [
-      tLocalized("Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?", "How much does a crown remake actually cost?"),
-      tLocalized("Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"/pages/hesaplama\">maliyet detay sayfamıza</a> bakabilirsiniz.", "Roughly <b>~$500</b> — and most of that amount is not the lab fee, but <b>chair time</b> (re-prep, impression, and cementation appointment). Clinical overhead is modeled at ~$375 per hour; a single remake consumes most of it. You can check our <a href=\"/pages/hesaplama\">cost detail page</a> to calculate it with your own figures."),
-    ],
-    [
-      tLocalized("3D baskıda kürleme (post-curing) neden kritik?", "Why is curing (post-curing) critical in 3D printing?"),
-      tLocalized("Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.", "Because the print isn't finished when it comes out of the device. Undercuring causes <b>brittleness</b>, while overcuring causes <b>deformation</b> — you can lose the precision you gained on the printer during curing. 3mash's smart curing device manages the parameters automatically, removing this risk from user error."),
-    ],
-    [
-      tLocalized("3mash yalnızca cihaz mı satıyor?", "Does 3mash only sell devices?"),
-      tLocalized("Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.", "No. 3mash offers an integrated <b>production ecosystem</b>: it calibrates the printer, resin, and curing together, and stays by your side throughout the entire process with consulting, Mash Academy training, and after-sales technical support made up of <b>dental technicians + engineers</b>."),
-    ],
-    [
-      tLocalized("Elimdeki başka marka yazıcıyla çalışır mısınız?", "Do you work with the other-brand printer I already have?"),
-      tLocalized("Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.", "Yes. Since we have strong technical expertise on both the resin and printer side, our solutions are <b>brand-independent</b>; we can optimize your existing device's parameters to get it to the same result."),
-    ],
+  const defaults = [
+    {
+      number: 1,
+      questionTr: "Dental 3D baskıda ölçüsel hassasiyet neden bu kadar önemli?",
+      questionEn: "Why is dimensional accuracy so critical in dental 3D printing?",
+      answerTr: "Çünkü bir restorasyonun ilk seferde oturması doğrudan ölçüsel hassasiyete bağlıdır. Ulusal ölçekli klinik verilerde kron tekrarlarının en sık sebepleri <b>proksimal uyumsuzluk, marjinal hatalar ve estetik başarısızlıktır</b> — üçü de birer hassasiyet problemidir. 3mash ekosistemi <b>±20 µm</b> boyutsal hassasiyeti, tek seferlik değil <b>her baskıda</b> tekrar edilebilir şekilde sağlar; bu da tekrar oranını ve gizli maliyeti düşürür.",
+      answerEn: "Because whether a restoration seats on the first try directly depends on dimensional accuracy. In national clinical data, the most common reasons for crown remakes are <b>proximal misfit, marginal errors, and esthetic failure</b> — all accuracy problems. The 3mash ecosystem provides <b>±20 µm</b> dimensional accuracy repeatable <b>on every print</b>, which lowers remake rates and hidden costs.",
+    },
+    {
+      number: 2,
+      questionTr: "Bir kron tekrarının (remake) maliyeti gerçekte ne kadar?",
+      questionEn: "How much does a crown remake actually cost?",
+      answerTr: "Tahminî olarak <b>~500 dolar</b> — ve bu tutarın büyük kısmı lab ücreti değil, <b>koltuk süresidir</b> (yeniden prep, ölçü ve yapıştırma randevusu). Klinik işletme gideri saatte ~$375 modellenir; tek bir tekrar bunun çoğunu tüketir. Kendi kalemlerinizle hesaplamak için <a href=\"/pages/hesaplama\">maliyet detay sayfamıza</a> bakabilirsiniz.",
+      answerEn: "Estimated at <b>~$500</b> — and the majority is not lab fees, but <b>chairside time</b> (re-prep, impression, and seating appointment). Clinical overhead is modeled at ~$375/hr; a single remake consumes most of it. To calculate with your own numbers, visit our <a href=\"/pages/hesaplama\">cost calculation page</a>.",
+    },
+    {
+      number: 3,
+      questionTr: "3D baskıda kürleme (post-curing) neden kritik?",
+      questionEn: "Why is post-curing so critical in 3D printing?",
+      answerTr: "Çünkü baskı, cihazdan çıktığında henüz bitmemiştir. Yetersiz kürleme (undercure) <b>kırılganlık</b>, fazla kürleme (overcure) ise <b>deformasyon</b> yaratır — yazıcıda kazandığınız hassasiyeti kürlemede kaybedebilirsiniz. 3mash'in akıllı kürleme cihazı parametreleri otomatik yönetir ve bu riski kullanıcı hatasından arındırır.",
+      answerEn: "Because a print is not finished when it comes out of the machine. Undercure causes <b>brittleness</b>, while overcure causes <b>deformation</b> — you can lose the accuracy gained in the printer during curing. 3mash smart curing units manage parameters automatically to eliminate this risk.",
+    },
+    {
+      number: 4,
+      questionTr: "3mash yalnızca cihaz mı satıyor?",
+      questionEn: "Does 3mash only sell equipment?",
+      answerTr: "Hayır. 3mash entegre bir <b>üretim ekosistemi</b> sunar: yazıcı, reçine ve kürlemeyi birlikte kalibre eder; danışmanlık, Mash Academy eğitimleri ve <b>diş teknisyeni + mühendislerden</b> oluşan satış sonrası teknik destekle tüm süreçte yanınızda olur.",
+      answerEn: "No. 3mash offers an integrated <b>production ecosystem</b>: calibrating printer, resin, and curing together, accompanied by consulting, Mash Academy training, and after-sales technical support from <b>dental technicians + engineers</b>.",
+    },
+    {
+      number: 5,
+      questionTr: "Elimdeki başka marka yazıcıyla çalışır mısınız?",
+      questionEn: "Can you work with my existing third-party printer?",
+      answerTr: "Evet. Hem reçine hem yazıcı tarafında güçlü bir teknik birikime sahip olduğumuz için çözümlerimiz <b>marka bağımsızdır</b>; mevcut cihazınızın parametrelerini optimize ederek onu da aynı sonuca getirebiliriz.",
+      answerEn: "Yes. With our deep technical expertise across resins and printers, our solutions are <b>brand-independent</b>; we can optimize parameters for your existing equipment to achieve the same result.",
+    },
+    {
+      number: 6,
+      questionTr: "Yeni bir sık sorulan soru ekleyin.",
+      questionEn: "Add a new frequently asked question.",
+      answerTr: "Bu sorunun yanıtını buraya ekleyin.",
+      answerEn: "Add the answer to this question here.",
+    },
+    {
+      number: 7,
+      questionTr: "Başka bir sık sorulan soru ekleyin.",
+      questionEn: "Add another frequently asked question.",
+      answerTr: "Bu sorunun yanıtını buraya ekleyin.",
+      answerEn: "Add the answer to this question here.",
+    },
+    {
+      number: 8,
+      questionTr: "Bir diğer sık sorulan soru ekleyin.",
+      questionEn: "Add one more frequently asked question.",
+      answerTr: "Bu sorunun yanıtını buraya ekleyin.",
+      answerEn: "Add the answer to this question here.",
+    },
   ];
-
-  const enDefaults = [
-    [
-      "Why is dimensional accuracy so critical in dental 3D printing?",
-      "Because whether a restoration seats on the first try directly depends on dimensional accuracy. In national clinical data, the most common reasons for crown remakes are <b>proximal misfit, marginal errors, and esthetic failure</b> — all accuracy problems. The 3mash ecosystem provides <b>±20 µm</b> dimensional accuracy repeatable <b>on every print</b>, which lowers remake rates and hidden costs.",
-    ],
-    [
-      "How much does a crown remake actually cost?",
-      'Estimated at <b>~$500</b> — and the majority is not lab fees, but <b>chairside time</b> (re-prep, impression, and seating appointment). Clinical overhead is modeled at ~$375/hr; a single remake consumes most of it. To calculate with your own numbers, visit our <a href="/pages/hesaplama">cost calculation page</a>.',
-    ],
-    [
-      "Why is post-curing so critical in 3D printing?",
-      "Because a print is not finished when it comes out of the machine. Undercure causes <b>brittleness</b>, while overcure causes <b>deformation</b> — you can lose the accuracy gained in the printer during curing. 3mash smart curing units manage parameters automatically to eliminate this risk.",
-    ],
-    [
-      "Does 3mash only sell equipment?",
-      "No. 3mash offers an integrated <b>production ecosystem</b>: calibrating printer, resin, and curing together, accompanied by consulting, Mash Academy training, and after-sales technical support from <b>dental technicians + engineers</b>.",
-    ],
-    [
-      "Can you work with my existing third-party printer?",
-      "Yes. With our deep technical expertise across resins and printers, our solutions are <b>brand-independent</b>; we can optimize parameters for your existing equipment to achieve the same result.",
-    ],
-  ];
-
-  return `<div class="tmr-faq">${trDefaults
-    .map(([qTr, aTr], index) => {
-      const number = index + 1;
-      const [qEn, aEn] = enDefaults[index];
-      const open =
-        index === 0 && raw(props, "openFirstFaq") !== false ? " open" : "";
-      return `<details${open}><summary>${field(props, `faq${number}Question`, qTr, qEn)}<span>+</span></summary><div>${field(props, `faq${number}AnswerHtml`, aTr, aEn)}</div></details>`;
+  const visibleFaqs = defaults.filter(({ number }) =>
+    number <= 5
+      ? raw(props, `showFaq${number}`) !== false
+      : raw(props, `showFaq${number}`) === true,
+  );
+  const questions = visibleFaqs
+    .map((item, index) => {
+      const open = index === 0 && raw(props, "openFirstFaq") !== false
+        ? " open"
+        : "";
+      const question = localizedField(
+        props,
+        `faq${item.number}Question`,
+        item.questionTr,
+        item.questionEn,
+      );
+      const answer = localizedField(
+        props,
+        `faq${item.number}AnswerHtml`,
+        item.answerTr,
+        item.answerEn,
+      );
+      return `<details${open}><summary>${question}<span aria-hidden=\"true\">+</span></summary><div>${answer}</div></details>`;
     })
-    .join("")}</div>`;
+    .join("");
+
+  return questions ? `<div class=\"tmr-faq\">${questions}</div>` : "";
 }
 
 export function renderSolutionHtml(props: ThreeMashSectionRenderProps) {
-  return indexedSection(props, {
+  const localizedProps = {
+    ...props,
+    indexText: localizedValue(
+      props,
+      "indexText",
+      "Çözüm · Üretim Ekosistemi",
+      "Solution · Production Ecosystem",
+    ),
+    titleText: localizedValue(
+      props,
+      "titleText",
+      "Hassasiyet cihazdan çıkmaz;",
+      "Precision doesn't come from the device;",
+    ),
+    titleEmphasis: localizedValue(
+      props,
+      "titleEmphasis",
+      "uyumdan çıkar.",
+      "it comes from compatibility.",
+    ),
+    sideHtml: localizedValue(
+      props,
+      "sideHtml",
+      "Kuronun oturması üç şeyin senkronuna bağlı: <b>yazıcı, reçine, kürleme.</b> Biz üçünü birlikte kalibre edip saha birikimiyle teslim ediyoruz — elinizdeki başka marka cihaza bile.",
+      "A crown seating depends on three things in sync: <b>printer, resin, curing.</b> We calibrate all three together and deliver with field-proven knowledge — even for your existing third-party device.",
+    ),
+  };
+
+  return indexedSection(localizedProps, {
     anchor: "cozum",
     className: "tmr-section-tight tmr-solution",
     indexNumber: "03",
-    indexText: tProp(props.indexText as string | undefined, "Çözüm · Üretim Ekosistemi", "Solution · Production Ecosystem"),
-    titleText: tProp(props.titleText as string | undefined, "Hassasiyet cihazdan çıkmaz;", "Precision doesn't come from the device;"),
-    titleEmphasis: tProp(props.titleEmphasis as string | undefined, "uyumdan çıkar.", "it comes from compatibility."),
-    sideHtml: tProp(props.sideHtml as string | undefined,
-      "Kuronun oturması üç şeyin senkronuna bağlı: <b>yazıcı, reçine, kürleme.</b> Biz üçünü birlikte kalibre edip saha birikimiyle teslim ediyoruz — elinizdeki başka marka cihaza bile.",
-      "A crown seating depends on three things in sync: <b>printer, resin, curing.</b> We calibrate all three together and deliver with field-proven knowledge — even for your existing third-party device."),
+    indexText: "Çözüm · Üretim Ekosistemi",
+    titleText: "Hassasiyet cihazdan çıkmaz;",
+    titleEmphasis: "uyumdan çıkar.",
+    sideHtml: "Kuronun oturması üç şeyin senkronuna bağlı: <b>yazıcı, reçine, kürleme.</b> Biz üçünü birlikte kalibre edip saha birikimiyle teslim ediyoruz — elinizdeki başka marka cihaza bile.",
     contentHtml: solutionContent(props),
   });
 }
 
 export function renderCuringHtml(props: ThreeMashSectionRenderProps) {
-  const isEn = isEnglishLocale();
-  const rawCuringIndexText = tProp(props.indexText as string | undefined, "Kritik Son Adım", "Critical Final Step");
-  const displayCuringIndexText = isEn ? rawCuringIndexText.toUpperCase() : rawCuringIndexText.toLocaleUpperCase("tr-TR");
   return `<section id="${escapeAttr(value(props.sectionAnchorId, "kurleme"))}" class="tmr-section tmr-dark tmr-curing">
   <div class="tmr-wrap">
-    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, "04")}</span><span class="tmr-index-text" lang="${isEn ? "en" : "tr"}">${displayCuringIndexText}</span><span class="tmr-index-line"></span></div>
-    <div class="tmr-head"><h2>${curingTitleHtml(props)}</h2><div class="tmr-side">${tProp(props.sideHtml as string | undefined, "Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:", "The print is not finished when it leaves the device. A poorly cured job, <b>even if correctly printed</b>, will fail. Here are three reasons:")}</div></div>
+    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, "04")}</span><span class="tmr-index-text">${localizedField(props, "indexText", "Kritik Son Adım", "Critical Final Step")}</span><span class="tmr-index-line"></span></div>
+    <div class="tmr-head"><h2>${curingTitleHtml(props)}</h2><div class="tmr-side">${localizedField(props, "sideHtml", "Baskı, cihazdan çıktığında bitmemiştir. Yanlış kürlenen iş, <b>doğru basılmış olsa bile</b> başarısız olur. İşte üç sebep:", "The print is not finished when it leaves the device. A poorly cured job, <b>even if correctly printed</b>, will fail. Here are three reasons:")}</div></div>
     ${curingContent(props)}
   </div>
 </section>`;
 }
 
 export function renderEcosystemHtml(props: ThreeMashSectionRenderProps) {
-  return indexedSection(props, {
+  const localizedProps = {
+    ...props,
+    indexText: localizedValue(props, "indexText", "Uçtan Uca", "End to End"),
+    titleText: localizedValue(
+      props,
+      "titleText",
+      "Dijital akışın her parçası,",
+      "Every part of the digital workflow,",
+    ),
+    titleEmphasis: localizedValue(
+      props,
+      "titleEmphasis",
+      "tek çatı altında.",
+      "under one roof.",
+    ),
+    sideHtml: localizedValue(
+      props,
+      "sideHtml",
+      "Cihaz satıp gitmiyoruz: doğru ürün için <b>danışmanlık</b>, sürdürülebilirlik için <b>Academy eğitimleri</b>, satış sonrasında teknisyen + mühendis <b>teknik destek.</b>",
+      "We don't just sell devices: <b>consulting</b> for the right product, <b>Academy training</b> for sustainability, technician + engineer <b>technical support</b> after the sale.",
+    ),
+  };
+  return indexedSection(localizedProps, {
     anchor: "ekosistem",
     className: "tmr-ecosystem",
     indexNumber: "05",
-    indexText: tProp(props.indexText as string | undefined, "Uçtan Uca", "End to End"),
-    titleText: tProp(props.titleText as string | undefined, "Dijital akışın her parçası,", "Every part of the digital workflow,"),
-    titleEmphasis: tProp(props.titleEmphasis as string | undefined, "tek çatı altında.", "under one roof."),
-    sideHtml: tProp(props.sideHtml as string | undefined,
-      "Cihaz satıp gitmiyoruz: doğru ürün için <b>danışmanlık</b>, sürdürülebilirlik için <b>Academy eğitimleri</b>, satış sonrasında teknisyen + mühendis <b>teknik destek.</b>",
-      "We don't just sell devices: <b>consulting</b> for the right product, <b>Academy training</b> for sustainability, technician + engineer <b>technical support</b> after the sale."),
+    indexText: localizedProps.indexText,
+    titleText: localizedProps.titleText,
+    titleEmphasis: localizedProps.titleEmphasis,
+    sideHtml: localizedProps.sideHtml,
     contentHtml: ecosystemContent(props),
   });
 }
 
 export function renderTrustHtml(props: ThreeMashSectionRenderProps) {
-  return indexedSection(props, {
+  const localizedProps = {
+    ...props,
+    indexText: localizedValue(props, "indexText", "Referanslar", "References"),
+    titleText: localizedValue(
+      props,
+      "titleText",
+      "Türkiye'nin en büyük lab'ları neden",
+      "Why do Turkey's largest labs",
+    ),
+    titleEmphasis: localizedValue(
+      props,
+      "titleEmphasis",
+      "bizimle üretiyor?",
+      "produce with us?",
+    ),
+    sideHtml: localizedValue(
+      props,
+      "sideHtml",
+      "Kısa cevap hep aynı: tutarlılık. <b>580+</b> dental laboratuvar ve klinik bu sistemle üretiyor, çünkü sonuç <b>her seferinde</b> aynı çıkıyor.",
+      "The short answer is always the same: consistency. <b>580+</b> dental labs and clinics produce with this system because the result is the same <b>every single time.</b>",
+    ),
+  };
+
+  return indexedSection(localizedProps, {
     anchor: "guven",
     className: "tmr-section-tight tmr-trust-section",
     indexNumber: "06",
-    indexText: tProp(props.indexText as string | undefined, "Referanslar", "References"),
-    titleText: tProp(props.titleText as string | undefined, "Türkiye'nin en büyük lab'ları neden", "Why do Turkey's largest labs"),
-    titleEmphasis: tProp(props.titleEmphasis as string | undefined, "bizimle üretiyor?", "produce with us?"),
-    sideHtml: tProp(props.sideHtml as string | undefined,
-      "Kısa cevap hep aynı: tutarlılık. <b>580+</b> dental laboratuvar ve klinik bu sistemle üretiyor, çünkü sonuç <b>her seferinde</b> aynı çıkıyor.",
-      "The short answer is always the same: consistency. <b>580+</b> dental labs and clinics produce with this system because the result is the same <b>every single time.</b>"),
+    indexText: localizedProps.indexText,
+    titleText: localizedProps.titleText,
+    titleEmphasis: localizedProps.titleEmphasis,
+    sideHtml: localizedProps.sideHtml,
     contentHtml: trustContent(props),
   });
 }
 
 export function renderFaqHtml(props: ThreeMashSectionRenderProps) {
-  return indexedSection(props, {
+  const localizedProps = {
+    ...props,
+    indexText: localizedValue(
+      props,
+      "indexText",
+      "Sık Sorulanlar",
+      "Frequently Asked Questions",
+    ),
+    titleText: localizedValue(
+      props,
+      "titleText",
+      "Kısa, net cevaplar.",
+      "Short, clear answers.",
+    ),
+    sideHtml: localizedValue(
+      props,
+      "sideHtml",
+      "En kritik kararları hızlı vermeniz için, klinik ve laboratuvarlardan gelen soruları net cevaplarla topladık.",
+      "To help you make critical decisions quickly, we've compiled the most common questions from clinics and labs with clear answers.",
+    ),
+  };
+
+  return indexedSection(localizedProps, {
     anchor: "sss",
     className: "tmr-section-tight tmr-faq-section",
     indexNumber: "07",
-    indexText: tProp(props.indexText as string | undefined, "Sık Sorulanlar", "Frequently Asked Questions"),
-    titleText: tProp(props.titleText as string | undefined, "Kısa, net cevaplar.", "Short, clear answers."),
-    sideHtml: tProp(props.sideHtml as string | undefined,
-      "En kritik kararları hızlı vermeniz için, klinik ve laboratuvarlardan gelen soruları net cevaplarla topladık.",
-      "To help you make critical decisions quickly, we've compiled the most common questions from clinics and labs with clear answers."),
+    indexText: localizedProps.indexText,
+    titleText: localizedProps.titleText,
+    sideHtml: localizedProps.sideHtml,
     contentHtml: faqContent(props),
   });
 }
 
 export function renderRoiHtml(props: ThreeMashSectionRenderProps) {
-  const eyebrow = tProp(props.eyebrowText as string | undefined, "YATIRIMIN GERİ DÖNÜŞÜ", "RETURN ON INVESTMENT");
-  const desc = tProp(props.descriptionHtml as string | undefined,
+  const en = isEnglishLocale();
+  const localizedKey = (key: string) => en ? `${key}En` : key;
+  const eyebrow = field(props, localizedKey("eyebrowText"), "YATIRIMIN GERİ DÖNÜŞÜ", "RETURN ON INVESTMENT");
+  const roiValue = field(props, localizedKey("valueText"), "&lt; 6 ay", "&lt; 6 months");
+  const desc = field(props, localizedKey("descriptionHtml"),
     "3mash ekosistemine geçen bir klinik, yatırımını <b>6 aydan kısa sürede</b> geri kazanma potansiyeline sahip. Sonrasında bu verimlilik her yıl sürer: <b>yılda $72–162K'ya varan tasarruf potansiyeli.</b>",
     "A clinic switching to the 3mash ecosystem has the potential to recoup its investment in <b>under 6 months.</b> After that, the efficiency continues every year: <b>savings potential of $72–162K per year.</b>");
-  const ctaText = tProp(props.ctaText as string | undefined, "Kliniğiniz için hesaplayalım →", "Calculate for your clinic →");
-  return `<div id="${escapeAttr(field(props, "sectionAnchorId", "yatirim"))}" class="tmr-roi"><div class="tmr-wrap"><div class="tmr-roi-num"><span>${eyebrow}</span><b>${value(props.valueText, "&lt; 6 ay")}</b></div><p>${desc}</p><a class="tmr-btn" href="${escapeAttr(localizedHref(value(props.ctaHref, "/")))}">${ctaText}</a></div></div>`;
+  const ctaText = field(props, localizedKey("ctaText"), "Kliniğiniz için hesaplayalım →", "Calculate for your clinic →");
+  const metric = props.showReturnMetric !== false
+    ? `<div class="tmr-roi-num"><span>${eyebrow}</span><b>${roiValue}</b></div>`
+    : "";
+  const description = props.showDescription !== false ? `<p>${desc}</p>` : "";
+  const cta = props.showCta !== false
+    ? `<a class="tmr-btn" href="${escapeAttr(localizedHref(value(props.ctaHref, "/")))}">${ctaText}</a>`
+    : "";
+  return `<div id="${escapeAttr(field(props, "sectionAnchorId", "yatirim"))}" class="tmr-roi"><div class="tmr-wrap">${metric}${description}${cta}</div></div>`;
 }
 
-/**
- * DÜZELTME (#2a): normalizedInternalRouteHref zaten localizedHref() çağırıyor.
- * Kullanım noktasında localizedHref() tekrar çağrılmıyor (çift-localize riski
- * ortadan kalktı).
- */
 export function renderFinalHtml(props: ThreeMashSectionRenderProps) {
   const academyHref = normalizedInternalRouteHref(
     value(props.secondaryButtonHref, academyPageHref),
   );
-
-  const titleText = field(props, "titleText", tLocalized("Bu görünmez kaybı", "This invisible loss"), "Let's reduce this invisible loss");
-  const titleEmphasis = field(props, "titleEmphasis", tLocalized("birlikte azaltalım.", "let's reduce it together."), "together.");
-  const descriptionHtml = field(
+  const titleText = localizedField(
     props,
-    "descriptionHtml",
-    tLocalized("Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b class='tmr-final-white'>elinizdeki cihazlarla bile.</b>", "Let's review your current workflow together, identify where the loss is occurring, and build the right ecosystem for you — <b class='tmr-final-white'>even with the devices you already have.</b>"),
-    "Let's review your current workflow together; we'll identify where the loss occurs and set up the right ecosystem for you — <b class='tmr-final-white'>even with your existing equipment.</b>"
+    "titleText",
+    "Bu görünmez kaybı",
+    "Let's reduce this invisible loss",
   );
-  const primaryText = field(props, "primaryButtonText", tLocalized("Uzmana danış — ücretsiz", "consult an expert — free"), "Talk to an expert — free");
-  const secondaryText = field(props, "secondaryButtonText", tLocalized("Mash Academy'yi keşfet", "explore mash academy"), "Explore Mash Academy");
+  const titleEmphasis = localizedField(
+    props,
+    "titleEmphasis",
+    "birlikte azaltalım.",
+    "together.",
+  );
+  const descriptionHtml = props.showDescription === false
+    ? ""
+    : `<p>${localizedField(
+      props,
+      "descriptionHtml",
+      "Mevcut iş akışınızı birlikte inceleyelim; kaybın nerede oluştuğunu birlikte görelim ve size uygun ekosistemi kuralım — <b class='tmr-final-white'>elinizdeki cihazlarla bile.</b>",
+      "Let's review your current workflow together; we'll identify where the loss occurs and set up the right ecosystem for you — <b class='tmr-final-white'>even with your existing equipment.</b>",
+    )}</p>`;
+  const primaryText = localizedField(
+    props,
+    "primaryButtonText",
+    "Uzmana danış — ücretsiz",
+    "Talk to an expert — free",
+  );
+  const secondaryText = localizedField(
+    props,
+    "secondaryButtonText",
+    "Mash Academy'yi keşfet",
+    "Explore Mash Academy",
+  );
+  const primaryHref = localizedHref(
+    localizedValue(
+      props,
+      "primaryButtonHref",
+      consultationWhatsappHref,
+      "https://wa.me/905314326577?text=Hello%2C%20I%20would%20like%20a%20free%20consultation",
+    ),
+  );
+  const primaryButton = props.showPrimaryButton !== false
+    ? `<a class="tmr-btn tmr-btn-lime" href="${escapeAttr(primaryHref)}">${primaryText}</a>`
+    : "";
+  const secondaryButton = props.showSecondaryButton !== false
+    ? `<a class="tmr-btn tmr-btn-invert" href="${escapeAttr(localizedHref(academyHref))}">${secondaryText}</a>`
+    : "";
+  const actions = primaryButton || secondaryButton
+    ? `<div>${primaryButton}${secondaryButton}</div>`
+    : "";
 
-  return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(titleText, titleEmphasis)}</h2><p>${descriptionHtml}</p><div><a class="tmr-btn tmr-btn-lime" href="${escapeAttr(localizedHref(value(props.primaryButtonHref, consultationWhatsappHref)))}">${primaryText}</a><a class="tmr-btn tmr-btn-invert" href="${escapeAttr(academyHref)}">${secondaryText}</a></div></div></section>`;
+  return `<section id="${escapeAttr(field(props, "sectionAnchorId", "iletisim-cta"))}" class="tmr-final"><div class="tmr-wrap"><h2>${heading(titleText, titleEmphasis)}</h2>${descriptionHtml}${actions}</div></section>`;
 }
 
 function socialIcon(name: string) {
@@ -1845,7 +2643,16 @@ function socialHref(
   fallback = "",
 ) {
   const source = raw(props, key);
-  return typeof source === "string" && source.trim() ? source.trim() : fallback;
+  const candidate =
+    typeof source === "string" && source.trim() ? source.trim() : fallback;
+  try {
+    const url = new URL(candidate);
+    return url.protocol === "https:" && !url.username && !url.password
+      ? url.href
+      : "";
+  } catch {
+    return "";
+  }
 }
 
 function socialLabel(
@@ -1895,45 +2702,51 @@ function footerSocialLinks(props: ThreeMashSectionRenderProps) {
     .map(([icon, hrefKey, labelKey, fallbackHref, fallbackLabel]) => {
       const href = socialHref(props, hrefKey, fallbackHref);
       const label = escapeAttr(socialLabel(props, labelKey, fallbackLabel));
+      const customImage = imageSource(raw(props, `${icon}IconImage`), "");
+      const iconMarkup = customImage
+        ? `<img class="tmr-footer-social-image" src="${escapeAttr(customImage)}" alt="" aria-hidden="true" loading="lazy" decoding="async">`
+        : socialIcon(icon);
       if (!href)
-        return `<span class="tmr-footer-social-icon" aria-label="${label}" role="img">${socialIcon(icon)}</span>`;
-      return `<a href="${escapeAttr(href)}" aria-label="${label}" target="_blank" rel="noopener noreferrer">${socialIcon(icon)}</a>`;
+        return `<span class="tmr-footer-social-icon" aria-label="${label}" role="img">${iconMarkup}</span>`;
+      return `<a href="${escapeAttr(href)}" aria-label="${label}" target="_blank" rel="noopener noreferrer">${iconMarkup}</a>`;
     })
     .join("");
 
   return links ? `<div class="tmr-footer-social">${links}</div>` : "";
 }
 
-function footerPaymentBadges() {
-  return tLocalized("<div class=\"tmr-footer-payments\" aria-label=\"Ödeme yöntemleri\"><span class=\"tmr-payment-badge tmr-payment-visa\" aria-label=\"Visa\" role=\"img\">VISA</span><span class=\"tmr-payment-badge tmr-payment-maestro\" aria-label=\"Maestro\" role=\"img\"><span></span><span></span></span><span class=\"tmr-payment-badge tmr-payment-mastercard\" aria-label=\"Mastercard\" role=\"img\"><span></span><span></span></span></div>", "<div class=\"tmr-footer-payments\" aria-label=\"Payment methods\"><span class=\"tmr-payment-badge tmr-payment-visa\" aria-label=\"Visa\" role=\"img\">VISA</span><span class=\"tmr-payment-badge tmr-payment-maestro\" aria-label=\"Maestro\" role=\"img\"><span></span><span></span></span><span class=\"tmr-payment-badge tmr-payment-mastercard\" aria-label=\"Mastercard\" role=\"img\"><span></span><span></span></span></div>");
+function footerPaymentBadges(props: ThreeMashSectionRenderProps) {
+  const paymentMethodsLabel = localizedField(
+    props,
+    "paymentMethodsLabel",
+    "Ödeme yöntemleri",
+    "Payment methods",
+  );
+  const visaLabel = field(props, "visaBadgeLabel", "VISA");
+  const maestroLabel = field(props, "maestroBadgeLabel", "Maestro");
+  const mastercardLabel = field(props, "mastercardBadgeLabel", "Mastercard");
+  const badge = (
+    className: string,
+    label: string,
+    imageKey: string,
+    fallbackMarkup: string,
+  ) => {
+    const image = imageSource(raw(props, imageKey), "");
+    const visual = image
+      ? `<img class="tmr-payment-badge-image" src="${escapeAttr(image)}" alt="" aria-hidden="true" loading="lazy" decoding="async">`
+      : fallbackMarkup;
+    return `<span class="tmr-payment-badge ${className}" aria-label="${escapeAttr(label)}" role="img">${visual}</span>`;
+  };
+  return `<div class="tmr-footer-payments" aria-label="${escapeAttr(paymentMethodsLabel)}">${badge("tmr-payment-visa", visaLabel, "visaBadgeImage", visaLabel)}${badge("tmr-payment-maestro", maestroLabel, "maestroBadgeImage", "<span></span><span></span>")}${badge("tmr-payment-mastercard", mastercardLabel, "mastercardBadgeImage", "<span></span><span></span>")}</div>`;
 }
 
 function footerCopyrightText(props: ThreeMashSectionRenderProps) {
-  const fallback = tLocalized("© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.", "© 2026 3MASH Teknoloji A.Ş. All rights reserved.");
-  const current = value(props.copyrightText, fallback);
-  if (/all\s+rights\s+(reserved|preserved)/i.test(current)) return fallback;
-  if (
-    /3MASH\s+Teknoloji\s+A\.Ş\./i.test(current) &&
-    !/Tüm\s+hakları\s+saklıdır/i.test(current)
-  ) {
-    return current.replace(
-      /3MASH\s+Teknoloji\s+A\.Ş\./i,
-      tLocalized("3MASH Teknoloji A.Ş. Tüm hakları saklıdır.", "3MASH Teknoloji A.Ş. All rights reserved."),
-    );
-  }
-  return current;
-}
-
-function normalizeFooterLegalText(markup: string) {
-  return markup
-    .replace(
-      /All\s+rights\s+(reserved|preserved)\.?/gi,
-      tLocalized("Tüm hakları saklıdır.", "All rights reserved."),
-    )
-    .replace(
-      /(©\s*2026\s*3MASH\s+Teknoloji\s+A\.Ş\.)(?!\s*Tüm\s+hakları\s+saklıdır)/gi,
-      tLocalized("$1 Tüm hakları saklıdır.", "$1 All rights reserved."),
-    );
+  return localizedField(
+    props,
+    "copyrightText",
+    "© 2026 3MASH Teknoloji A.Ş. Tüm hakları saklıdır.",
+    "© 2026 3MASH Technology Inc. All rights reserved.",
+  );
 }
 
 function normalizeFooterMapsLinks(markup: string) {
@@ -1969,6 +2782,8 @@ function isFooterMapsLabel(label: unknown) {
 }
 
 function footerHrefForLabel(label: unknown, href: string) {
+  if (href.trim() && href.trim() !== "#") return href;
+
   const normalizedLabel = plainText(label).toLocaleLowerCase("tr-TR");
   const labelRoutes: Record<string, string> = {
     "mash academy": "/pages/mash-academy",
@@ -2023,10 +2838,24 @@ function footerHrefForLabel(label: unknown, href: string) {
   return isFooterMapsLabel(label) ? footerMapsHref : href;
 }
 
+function footerConfiguredHref(
+  label: unknown,
+  configuredHref: string,
+  fallbackHref = "",
+) {
+  const candidate = configuredHref.trim() || fallbackHref;
+  if (!candidate) return footerHrefForLabel(label, "");
+  const safeHref = internalSiteHref(candidate);
+  return safeHref ? footerHrefForLabel(label, safeHref) : "";
+}
+
 function internalSiteHref(href: string) {
   const trimmed = href.trim();
   if (!trimmed) return "";
-  if (/^(mailto:|tel:|#)/i.test(trimmed)) return trimmed;
+  if (/^(mailto:|tel:|#)/i.test(trimmed)) {
+    return safeNavigationHref(trimmed, "");
+  }
+  if (trimmed.startsWith("//")) return "";
 
   try {
     const url = new URL(trimmed);
@@ -2037,198 +2866,288 @@ function internalSiteHref(href: string) {
         ),
       );
     }
+    return url.protocol === "https:" && !url.username && !url.password
+      ? url.href
+      : "";
   } catch {
     // Relative route, keep as-is.
   }
 
-  return localizedHref(normalizedInternalRouteHref(trimmed));
+  const safeHref = safeNavigationHref(trimmed, "");
+  return safeHref ? localizedHref(normalizedInternalRouteHref(safeHref)) : "";
+}
+
+function isCookieSettingsHref(href: string, label: unknown) {
+  if (href !== "#") return false;
+  const normalized = plainText(label).toLocaleLowerCase("tr-TR");
+  return /(çerez|cerez|cookie)/.test(normalized);
 }
 
 function footerLegalLinks(props: ThreeMashSectionRenderProps) {
-  void props;
-  const en = isEnglishLocale();
-  const links = en
-    ? [
-      ["Privacy &amp; KVKK", localizedHref("/pages/gizlilik-politikasi-ve-kvkk")],
-      ["Cookie Settings", "#"],
-      ["Return &amp; Warranty", localizedHref("/pages/iade-ve-garanti")],
-      ["Distance Selling", localizedHref("/pages/mesafeli-satis-sozlesmesi")],
-    ]
-    : [
-      ["KVKK", localizedHref("/pages/gizlilik-politikasi-ve-kvkk")],
-      ["Çerez Tercihleri", "#"],
-      ["İade &amp; Garanti", localizedHref("/pages/iade-ve-garanti")],
-      ["Mesafeli Satış", localizedHref("/pages/mesafeli-satis-sozlesmesi")],
+  const defaults: Array<[string, string, string]> = [
+    ["KVKK", "Privacy & KVKK", "/pages/gizlilik-politikasi-ve-kvkk"],
+    ["Çerez Tercihleri", "Cookie Settings", "#"],
+    ["İade & Garanti", "Return & Warranty", "/pages/iade-ve-garanti"],
+    ["Mesafeli Satış", "Distance Selling", "/pages/mesafeli-satis-sozlesmesi"],
+    ["Üyelik Sözleşmesi", "Membership Agreement", "/pages/uyelik-sozlesmesi"],
+  ];
+  const links = defaults.flatMap(([fallbackTr, fallbackEn, fallbackHref], index) => {
+    const number = index + 1;
+    const visibility = raw(props, `showLegalLink${number}`);
+    if (
+      (number === 5 && visibility !== true) ||
+      (number < 5 && visibility === false)
+    ) {
+      return [];
+    }
+    const label = localizedField(
+      props,
+      `legalLink${number}Text`,
+      fallbackTr,
+      fallbackEn,
+    );
+    const hrefValue = raw(props, `legalLink${number}Href`);
+    const href = footerConfiguredHref(
+      label,
+      typeof hrefValue === "string" ? hrefValue : "",
+      fallbackHref,
+    );
+    if (!plainText(label) || !href) return [];
+    const cookieClass = isCookieSettingsHref(href, label)
+      ? ' class="tm-open-cookie-settings"'
+      : "";
+    return [
+      `<a href="${escapeAttr(href)}"${cookieClass}>${label}</a>`,
     ];
-  return links
-    .map(
-      ([text, target]) =>
-        `<a href="${escapeAttr(target)}" class="${target === '#' ? 'tm-open-cookie-settings' : ''}">${text}</a>`,
-    )
-    .join("<span>·</span>");
+  });
+  return links.join("<span>·</span>");
 }
 
 export function renderFooterHtml(props: ThreeMashSectionRenderProps) {
   const en = isEnglishLocale();
-  const logoVisual = `<img src="${escapeAttr(threeMashFullLogoImage)}" alt="${escapeAttr(field(props, "logoImageAlt", "3mash"))}">`;
-
-  function isCookieSettingsHref(href: string, label: unknown) {
-    if (href !== "#") return false;
-    const normalized = plainText(label).toLocaleLowerCase("tr-TR");
-    return /(çerez|cerez|cookie)/.test(normalized);
-  }
-
-  function navLinkList(
+  const title = (key: string, fallbackTr: string, fallbackEn: string) =>
+    localizedField(props, key, fallbackTr, fallbackEn);
+  const navLinkList = (
     list: IkasNavigationLinkList | undefined,
-    title: string,
-  ) {
+    columnTitle: string,
+  ) => {
     const seen = new Set<string>();
     const links = (list?.links || [])
       .map((link) => {
         const label = link?.label || "";
-        const href = internalSiteHref(linkHref(link, ""));
-        return { ...link, href: footerHrefForLabel(label, href) };
+        const href = footerConfiguredHref(
+          label,
+          linkHref(link, ""),
+        );
+        return { label, href, openInNewTab: link?.openInNewTab };
       })
       .filter((link) => {
-        if (!link?.label || !link.href) return false;
+        if (!link.label || !link.href) return false;
         const key = footerLinkKey(link.href);
         if (seen.has(key)) return false;
         seen.add(key);
         return true;
       });
     if (!links.length) return "";
-    return `<p class="tmr-footer-col-title">${title}</p>${links
+    return `<p class="tmr-footer-col-title">${columnTitle}</p>${links
       .map((link) => {
         const cookieClass = isCookieSettingsHref(link.href, link.label)
           ? ' class="tm-open-cookie-settings"'
           : "";
-        return `<a href="${escapeAttr(link.href)}"${cookieClass}${link.openInNewTab ? ' target="_blank" rel="noopener noreferrer"' : externalLinkAttrs(link.href)}>${escapeHtml(link.label)}</a>`;
+        const targetAttrs = link.openInNewTab
+          ? ' target="_blank" rel="noopener noreferrer"'
+          : externalLinkAttrs(link.href);
+        return `<a href="${escapeAttr(link.href)}"${cookieClass}${targetAttrs}>${escapeHtml(link.label)}</a>`;
       })
       .join("")}`;
-  }
-
-  function categoryLinkList(
+  };
+  const categoryLinkList = (
     categories: IkasCategoryList | undefined,
-    title: string,
-  ) {
+    columnTitle: string,
+  ) => {
     const limit = numberInRange(raw(props, "footerCategoryLimit"), 6, 1, 24);
     const seen = new Set<string>();
     const links = (categories?.data || [])
       .filter((category): category is IkasCategory =>
-        Boolean(
-          category &&
-          !category.deleted &&
-          category.name &&
-          getIkasCategoryHref(category),
-        ),
+        Boolean(category && !category.deleted && category.name),
       )
       .filter((category) => !isLegacyThemeCategoryName(category.name))
-      .filter((category) => {
-        const key = footerLinkKey(
-          internalSiteHref(getIkasCategoryHref(category)),
-        );
-        if (seen.has(key)) return false;
+      .flatMap((category) => {
+        const href = internalSiteHref(getIkasCategoryHref(category));
+        if (!href) return [];
+        const key = footerLinkKey(href);
+        if (seen.has(key)) return [];
         seen.add(key);
-        return true;
+        return [{ category, href }];
       })
       .slice(0, limit);
     if (!links.length) return "";
-    return `<p class="tmr-footer-col-title">${title}</p>${links
+    return `<p class="tmr-footer-col-title">${columnTitle}</p>${links
       .map(
-        (category) =>
-          `<a href="${escapeAttr(internalSiteHref(getIkasCategoryHref(category)))}">${escapeHtml(category.name)}</a>`,
+        ({ category, href }) =>
+          `<a href="${escapeAttr(href)}">${escapeHtml(category.name)}</a>`,
       )
       .join("")}`;
-  }
-
-  function linkList(
-    prefix: string,
-    title: string,
-    defaults: Array<[string, string]>,
-  ) {
-    void prefix;
+  };
+  const manualLinkList = (
+    prefix: "product" | "company" | "contact",
+    columnTitle: string,
+    defaults: Array<[string, string, string]>,
+  ) => {
     const seen = new Set<string>();
-    return `<p class="tmr-footer-col-title">${title}</p>${defaults
-      .map(([label, link]) => {
-        const resolvedHref = footerHrefForLabel(label, internalSiteHref(link));
-        const key = footerLinkKey(resolvedHref);
-        if (seen.has(key)) return "";
-        seen.add(key);
-        return `<a href="${escapeAttr(resolvedHref)}"${externalLinkAttrs(resolvedHref)}>${label}</a>`;
-      })
-      .join("")}`;
-  }
+    const links = defaults.flatMap(([fallbackTr, fallbackEn, fallbackHref], index) => {
+      const number = index + 1;
+      const visibility = raw(
+        props,
+        `show${prefix[0].toUpperCase()}${prefix.slice(1)}Link${number}`,
+      );
+      const isNewSlot = prefix === "contact" && number === 3;
+      if (
+        (isNewSlot && visibility !== true) ||
+        (!isNewSlot && visibility === false)
+      ) {
+        return [];
+      }
+      const label = localizedField(
+        props,
+        `${prefix}Link${number}Text`,
+        fallbackTr,
+        fallbackEn,
+      );
+      const hrefValue = raw(props, `${prefix}Link${number}Href`);
+      const href = footerConfiguredHref(
+        label,
+        typeof hrefValue === "string" ? hrefValue : "",
+        fallbackHref,
+      );
+      if (!plainText(label) || !href) return [];
+      const key = footerLinkKey(href);
+      if (seen.has(key)) return [];
+      seen.add(key);
+      const cookieClass = isCookieSettingsHref(href, label)
+        ? ' class="tm-open-cookie-settings"'
+        : "";
+      return [
+        `<a href="${escapeAttr(href)}"${cookieClass}${externalLinkAttrs(href)}>${label}</a>`,
+      ];
+    });
+    return links.length
+      ? `<p class="tmr-footer-col-title">${columnTitle}</p>${links.join("")}`
+      : "";
+  };
 
-  const productLinks: Array<[string, string]> = en
-    ? [
-      ["3D Printers", "/3d-yazicilar"],
-      ["Dental Resins", "/dental-3d-yazici-recineleri"],
-      ["Wash &amp; Cure", "/yikama-kurleme-cihazlari"],
-      ["Desktop Scanners", "/masasustu-tarayicilar"],
-      ["Zirconia Blocks", "/zirkon-bloklar"],
-      ["Dental Furnaces", "/dental-firinlar"],
-    ]
-    : [
-      ["3D Yazıcılar", "/3d-yazicilar"],
-      ["Dental Reçineler", "/dental-3d-yazici-recineleri"],
-      ["Yıkama &amp; Kürleme", "/yikama-kurleme-cihazlari"],
-      ["Masaüstü Tarayıcılar", "/masasustu-tarayicilar"],
-      ["Zirkon Bloklar", "/zirkon-bloklar"],
-      ["Dental Fırınlar", "/dental-firinlar"],
-    ];
-
-  const companyLinks: Array<[string, string]> = en
-    ? [
-      ["About Us", "/pages/about-us"],
-      ["Mash Academy", academyPageHref],
-      ["Blog", "/blog"],
-      ["FAQ", "/pages/faq"],
-    ]
-    : [
-      ["Hakkımızda", "/pages/about-us"],
-      ["Mash Academy", academyPageHref],
-      ["Blog", "/blog"],
-      ["SSS", "/pages/sss"],
-    ];
-
-  const contactLinks: Array<[string, string]> = [
-    ["info@3mash.com", "mailto:info@3mash.com"],
-    ["Antalya Teknokent, Konyaaltı", footerMapsHref],
+  const productTitle = title("productColumnTitle", "Ürünler", "Products");
+  const companyTitle = title("companyColumnTitle", "Şirket", "COMPANY");
+  const contactTitle = title("contactColumnTitle", "İletişim", "CONTACT");
+  const productDefaults: Array<[string, string, string]> = [
+    ["3D Yazıcılar", "3D Printers", "/3d-yazicilar"],
+    ["Dental Reçineler", "Dental Resins", "/dental-3d-yazici-recineleri"],
+    ["Yıkama & Kürleme", "Wash & Cure", "/yikama-kurleme-cihazlari"],
+    ["Masaüstü Tarayıcılar", "Desktop Scanners", "/masasustu-tarayicilar"],
+    ["Zirkon Bloklar", "Zirconia Blocks", "/zirkon-bloklar"],
+    ["Dental Fırınlar", "Dental Furnaces", "/dental-firinlar"],
   ];
-
-  const products = linkList("product", en ? "PRODUCTS" : "Ürünler", productLinks);
-  const company = linkList("company", en ? "COMPANY" : "ŞİRKET", companyLinks);
-  const socialLinks = footerSocialLinks(props);
-  const paymentBadges = footerPaymentBadges();
-  const contact = value(
-    undefined,
-    linkList("contact", en ? "CONTACT" : "İLETİŞİM", contactLinks) +
-    socialLinks +
-    paymentBadges,
+  const companyDefaults: Array<[string, string, string]> = [
+    ["Hakkımızda", "About Us", "/pages/about-us"],
+    ["Mash Academy", "Mash Academy", academyPageHref],
+    ["Blog", "Blog", "/blog"],
+    ["SSS", "FAQ", "/pages/sss"],
+  ];
+  const contactDefaults: Array<[string, string, string]> = [
+    ["info@3mash.com", "info@3mash.com", "mailto:info@3mash.com"],
+    [
+      "Antalya Teknokent, Konyaaltı",
+      "Antalya Teknokent, Konyaaltı",
+      footerMapsHref,
+    ],
+    ["Telefonla İletişim", "Call us", "tel:+905314326577"],
+  ];
+  const manualProducts = manualLinkList(
+    "product",
+    productTitle,
+    productDefaults,
   );
-  // DÜZELTME (#3): sabit metin yerine kullanıcı girdisini normalize eden
-  // footerCopyrightText(props) çağrılıyor.
-  const copyrightText = footerCopyrightText(props);
+  const selectedProductFooterLinks = en
+    ? props.productFooterLinksEn
+    : props.productFooterLinks;
+  const products =
+    categoryLinkList(props.productCategoryList, productTitle) ||
+    navLinkList(selectedProductFooterLinks, productTitle) ||
+    manualProducts;
+  const selectedCompanyFooterLinks = en
+    ? props.companyFooterLinksEn
+    : props.companyFooterLinks;
+  const company =
+    navLinkList(selectedCompanyFooterLinks, companyTitle) ||
+    manualLinkList("company", companyTitle, companyDefaults);
+  const selectedContactFooterLinks = en
+    ? props.contactFooterLinksEn
+    : props.contactFooterLinks;
+  const contactLinks =
+    navLinkList(selectedContactFooterLinks, contactTitle) ||
+    manualLinkList("contact", contactTitle, contactDefaults);
+  const socialLinks = footerSocialLinks(props);
+  const paymentBadges =
+    props.showPaymentBadges === false ? "" : footerPaymentBadges(props);
+  const contactContent =
+    contactLinks ||
+    (socialLinks || paymentBadges
+      ? `<p class="tmr-footer-col-title">${contactTitle}</p>`
+      : "");
+  const contact = `${contactContent}${socialLinks}${paymentBadges}`;
   const fallbackDescTr =
     "Dental klinik ve laboratuvarlar için entegre 3D baskı ekosistemi: yazıcı, reçine, kürleme çözümleri ve üretim uzmanlığı bir arada.";
   const fallbackDescEn =
     "Integrated 3D printing ecosystem for dental clinics and laboratories: printers, resins, curing solutions, and manufacturing expertise together.";
-  const descriptionText = field(
-    props,
-    "descriptionText",
-    fallbackDescTr,
-    fallbackDescEn,
-  );
-  const logoHref = en ? "/en" : internalSiteHref(field(props, "logoHref", "/"));
-  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols"><div><a class="tmr-footer-logo" href="${escapeAttr(logoHref)}">${logoVisual}</a><p>${descriptionText}</p></div><div class="tmr-footer-link-col">${products}</div><div class="tmr-footer-link-col">${company}</div><div class="tmr-footer-link-col">${contact}</div></div><div class="tmr-base"><span>${copyrightText}</span><div class="tmr-base-meta">${footerLegalLinks(props)}</div></div></div></footer>`;
+  const descriptionText =
+    props.showBrand === false || props.showDescription === false
+      ? ""
+      : localizedField(props, "descriptionText", fallbackDescTr, fallbackDescEn);
+  const logoSvg = sanitizeSvgMarkup(svgMarkup(props.logoSvg));
+  const selectedLogoImage = props.logoImageUrl
+    ? getDefaultSrc(props.logoImageUrl)
+    : "";
+  const logoVisual = logoSvg
+    ? `<span class="tmr-footer-logo-svg">${logoSvg}</span>`
+    : `<img src="${escapeAttr(selectedLogoImage || threeMashFullLogoImage)}" alt="${escapeAttr(field(props, "logoImageAlt", "3mash"))}">`;
+  const logoHrefValue =
+    typeof props.logoHref === "string" && props.logoHref.trim()
+      ? props.logoHref
+      : "/";
+  const logoHref = footerConfiguredHref("", logoHrefValue);
+  const logoText = escapeAttr(plainText(field(props, "logoText", "3mash")));
+  const logoLink = logoHref
+    ? `<a class="tmr-footer-logo" href="${escapeAttr(logoHref)}" aria-label="${logoText}">${logoVisual}</a>`
+    : `<span class="tmr-footer-logo" role="img" aria-label="${logoText}">${logoVisual}</span>`;
+  const logo = props.showBrand === false
+    ? ""
+    : `<div>${logoLink}${descriptionText ? `<p>${descriptionText}</p>` : ""}</div>`;
+  const columns = [
+    logo,
+    props.showProductColumn === false ? "" : `<div class="tmr-footer-link-col">${products}</div>`,
+    props.showCompanyColumn === false ? "" : `<div class="tmr-footer-link-col">${company}</div>`,
+    props.showContactColumn === false ? "" : `<div class="tmr-footer-link-col">${contact}</div>`,
+  ].filter(Boolean);
+  const copyright = props.showLegalInfo === false
+    ? ""
+    : footerCopyrightText(props);
+  const legalLinks = props.showLegalInfo === false
+    ? ""
+    : footerLegalLinks(props);
+  const legalInfo = copyright || legalLinks
+    ? `<div class="tmr-base">${copyright ? `<span>${copyright}</span>` : ""}${legalLinks ? `<div class="tmr-base-meta">${legalLinks}</div>` : ""}</div>`
+    : "";
+  return `<footer class="tmr-footer"><div class="tmr-wrap"><div class="tmr-footer-cols tmr-footer-cols--${columns.length}">${columns.join("")}</div>${legalInfo}</div></footer>`;
 }
 
 export function ThreeMashStaticSection({
   props,
   fallback,
+  styleOverrides,
 }: {
   props: ThreeMashSectionRenderProps;
   fallback?: string;
+  styleOverrides?: Record<string, string | number>;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -2238,7 +3157,7 @@ export function ThreeMashStaticSection({
       : fallback || "";
   const cleanedBaseHtml = stripInlineTypographyStyles(baseHtml);
   const renderedHtml = normalizeFooterMapsLinks(
-    normalizeFooterLegalText(styleTextChunks(cleanedBaseHtml, props)),
+    styleTextChunks(cleanedBaseHtml, props),
   );
   const rootClassName = `three-mash-remaining${/\btmr-(trust|faq)-section\b/.test(renderedHtml) ? " tmr-section-separator-visible" : ""}`;
 
@@ -2422,7 +3341,7 @@ export function ThreeMashStaticSection({
     <div
       ref={rootRef}
       className={rootClassName}
-      style={threeMashThemeStyle(props)}
+      style={{ ...threeMashThemeStyle(props), ...styleOverrides }}
     >
       <div dangerouslySetInnerHTML={html(renderedHtml)} />
     </div>

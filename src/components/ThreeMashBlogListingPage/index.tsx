@@ -12,7 +12,16 @@ import {
   type IkasBlog,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { tLocalized, tProp } from "../../utils/i18n";
+import { isEnglishLocale, tLocalized } from "../../utils/i18n";
+
+function localizedText(
+  value: string | undefined,
+  valueEn: string | undefined,
+  fallback: string,
+) {
+  const localizedValue = isEnglishLocale() ? valueEn : value;
+  return localizedValue?.trim() || fallback;
+}
 
 function themeToken(
   value: string | undefined,
@@ -29,12 +38,23 @@ function BlogCard({
   blog,
   readMoreText,
   featured = false,
+  showCategory,
+  showDate,
+  showExcerpt,
+  showReadMore,
 }: {
   blog: IkasBlog;
   readMoreText: string;
   featured?: boolean;
+  showCategory: boolean;
+  showDate: boolean;
+  showExcerpt: boolean;
+  showReadMore: boolean;
 }) {
   const image = blog.image;
+  const formattedDate = getIkasBlogFormattedDate(blog);
+  const hasMeta =
+    (showCategory && !!blog.category?.name) || (showDate && !!formattedDate);
   const href =
     getIkasBlogHref(blog) || `/blog/${blog.metadata?.slug || blog.id}`;
 
@@ -56,13 +76,19 @@ function BlogCard({
         )}
       </div>
       <div className="tm-blog-card-body">
-        <div className="tm-blog-card-meta">
-          {blog.category?.name ? <span>{blog.category.name}</span> : null}
-          <time>{getIkasBlogFormattedDate(blog)}</time>
-        </div>
+        {hasMeta ? (
+          <div className="tm-blog-card-meta">
+            {showCategory && blog.category?.name ? (
+              <span>{blog.category.name}</span>
+            ) : null}
+            {showDate && formattedDate ? <time>{formattedDate}</time> : null}
+          </div>
+        ) : null}
         <h2>{blog.title}</h2>
-        {blog.shortDescription ? <p>{blog.shortDescription}</p> : null}
-        <em>{readMoreText} →</em>
+        {showExcerpt && blog.shortDescription ? (
+          <p>{blog.shortDescription}</p>
+        ) : null}
+        {showReadMore ? <em>{readMoreText} →</em> : null}
       </div>
     </a>
   );
@@ -73,6 +99,18 @@ export function ThreeMashBlogListingPage(props: Props) {
   const blogs = blogList?.data || [];
   const categories = props.blogCategoryList?.data || [];
   const currentPage = blogList?.page ?? 1;
+  const readMoreText = localizedText(
+    props.readMoreText,
+    props.readMoreTextEn,
+    tLocalized("Oku", "Read"),
+  );
+  const showCardCategory = props.showCardCategory !== false;
+  const showCardDate = props.showCardDate !== false;
+  const showCardExcerpt = props.showCardExcerpt !== false;
+  const showReadMore = props.showReadMore !== false;
+  const showListHeader =
+    props.showPageIntro !== false ||
+    (!!blogList && props.showPostCount !== false);
 
   const handlePageChange = async (targetPage: number) => {
     if (!blogList || targetPage < 1) return;
@@ -108,28 +146,63 @@ export function ThreeMashBlogListingPage(props: Props) {
   return (
     <section className="three-mash-blog-page" style={style}>
       <div className="tm-blog-wrap">
-        <div className="tm-blog-head">
-          <div>
-            <p className="tm-blog-eyebrow">
-              {props.eyebrowText || tLocalized("MASH ACADEMY", "MASH ACADEMY")}
-            </p>
-            <h1>{props.titleText || tLocalized("Dental üretim notları.", "Dental manufacturing notes.")}</h1>
-            <span>
-              {props.descriptionText ||
-                tLocalized("ikas blog panelinden yayınlanan içerikler bu sayfada canlı olarak listelenir.", "Articles published from blog dashboard are listed live on this page."
-                )}
-            </span>
+        {showListHeader ? (
+          <div className="tm-blog-head">
+            {props.showPageIntro !== false ? (
+              <div>
+                <p className="tm-blog-eyebrow">
+                  {localizedText(
+                    props.eyebrowText,
+                    props.eyebrowTextEn,
+                    tLocalized("MASH ACADEMY", "MASH ACADEMY"),
+                  )}
+                </p>
+                <h1>
+                  {localizedText(
+                    props.titleText,
+                    props.titleTextEn,
+                    tLocalized(
+                      "Dental üretim notları.",
+                      "Dental manufacturing notes.",
+                    ),
+                  )}
+                </h1>
+                <span>
+                  {localizedText(
+                    props.descriptionText,
+                    props.descriptionTextEn,
+                    tLocalized(
+                      "ikas blog panelinden yayınlanan içerikler bu sayfada canlı olarak listelenir.",
+                      "Articles published from the ikas blog panel are listed live on this page.",
+                    ),
+                  )}
+                </span>
+              </div>
+            ) : null}
+            {blogList && props.showPostCount !== false ? (
+              <div className="tm-blog-count">
+                <strong>{blogList.count ?? blogs.length}</strong>
+                <span>
+                  {localizedText(
+                    props.postCountLabel,
+                    props.postCountLabelEn,
+                    tLocalized("yazı", "posts"),
+                  )}
+                </span>
+              </div>
+            ) : null}
           </div>
-          {blogList ? (
-            <div className="tm-blog-count">
-              <strong>{blogList.count ?? blogs.length}</strong>
-              <span>{tLocalized("yazı", "posts")}</span>
-            </div>
-          ) : null}
-        </div>
+        ) : null}
 
-        {categories.length > 0 ? (
-          <nav className="tm-blog-categories" aria-label={tLocalized("Blog kategorileri", "Blog categories")}>
+        {props.showCategoryNav !== false && categories.length > 0 ? (
+          <nav
+            className="tm-blog-categories"
+            aria-label={localizedText(
+              props.categoryNavLabel,
+              props.categoryNavLabelEn,
+              tLocalized("Blog kategorileri", "Blog categories"),
+            )}
+          >
             {categories.map((category) => (
               <a href={getIkasBlogCategoryHref(category)} key={category.id}>
                 {category.name}
@@ -139,10 +212,18 @@ export function ThreeMashBlogListingPage(props: Props) {
         ) : null}
 
         {!blogList ? (
-          <div className="tm-blog-setup">
-            {props.setupMessage ||
-              tLocalized("Blog yazıları kısa süre içinde burada listelenecek.", "Blog posts will be listed here shortly.")}
-          </div>
+          props.showSetupMessage !== false ? (
+            <div className="tm-blog-setup">
+              {localizedText(
+                props.setupMessage,
+                props.setupMessageEn,
+                tLocalized(
+                  "Blog yazıları kısa süre içinde burada listelenecek.",
+                  "Blog posts will be listed here shortly.",
+                ),
+              )}
+            </div>
+          ) : null
         ) : blogs.length > 0 ? (
           <>
             <div
@@ -151,39 +232,64 @@ export function ThreeMashBlogListingPage(props: Props) {
               {blogs.map((blog) => (
                 <BlogCard
                   blog={blog}
-                  readMoreText={props.readMoreText || tLocalized("Oku", "Read")}
+                  readMoreText={readMoreText}
+                  showCategory={showCardCategory}
+                  showDate={showCardDate}
+                  showExcerpt={showCardExcerpt}
+                  showReadMore={showReadMore}
                   key={blog.id}
                 />
               ))}
             </div>
-            <div className="tm-blog-pagination">
-              <button
-                type="button"
-                disabled={!hasBlogListPrevPage(blogList)}
-                onClick={() => handlePageChange(currentPage - 1)}
-              >
-                {tLocalized("Önceki", "Previous")}
-              </button>
-              <span>{currentPage}</span>
-              <button
-                type="button"
-                disabled={!hasBlogListNextPage(blogList)}
-                onClick={() => handlePageChange(currentPage + 1)}
-              >
-                {tLocalized("Sonraki", "Next")}
-              </button>
-            </div>
+            {props.showPagination !== false ? (
+              <div className="tm-blog-pagination">
+                <button
+                  type="button"
+                  disabled={!hasBlogListPrevPage(blogList)}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                >
+                  {localizedText(
+                    props.previousPageText,
+                    props.previousPageTextEn,
+                    tLocalized("Önceki", "Previous"),
+                  )}
+                </button>
+                <span>{currentPage}</span>
+                <button
+                  type="button"
+                  disabled={!hasBlogListNextPage(blogList)}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                >
+                  {localizedText(
+                    props.nextPageText,
+                    props.nextPageTextEn,
+                    tLocalized("Sonraki", "Next"),
+                  )}
+                </button>
+              </div>
+            ) : null}
           </>
-        ) : (
+        ) : props.showEmptyState !== false ? (
           <div className="tm-blog-empty">
-            <h2>{props.emptyTitle || tLocalized("Blog yazısı bulunamadı", "No blog posts found")}</h2>
+            <h2>
+              {localizedText(
+                props.emptyTitle,
+                props.emptyTitleEn,
+                tLocalized("Blog yazısı bulunamadı", "No blog posts found"),
+              )}
+            </h2>
             <p>
-              {props.emptyMessage ||
-                tLocalized("Bu listeye bağlı yayında olan blog yazısı yok.", "No published blog posts found for this list."
-                )}
+              {localizedText(
+                props.emptyMessage,
+                props.emptyMessageEn,
+                tLocalized(
+                  "Bu listeye bağlı yayında olan blog yazısı yok.",
+                  "No published blog posts are connected to this list.",
+                ),
+              )}
             </p>
           </div>
-        )}
+        ) : null}
       </div>
     </section>
   );
