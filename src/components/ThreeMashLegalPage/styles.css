@@ -8,6 +8,10 @@
   font-family: var(--tm-theme-font-body, "Inter", sans-serif);
 }
 
+.three-mash-legal-page.is-mesafeli.is-en {
+  padding-top: max(16px, var(--tmlp-pt));
+}
+
 .three-mash-legal-page *,
 .three-mash-legal-page *::before,
 .three-mash-legal-page *::after {

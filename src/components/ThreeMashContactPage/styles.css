@@ -88,12 +88,20 @@
   line-height: 0.96;
 }
 
-.tm-contact-hero p {
+.tm-contact-hero-description {
   max-width: 760px;
   margin: clamp(22px, 3vw, 34px) 0 0;
   color: #d8d8d0;
   font-size: clamp(16px, 1.15vw, 19px);
   line-height: 1.62;
+}
+
+.tm-contact-hero-description p {
+  margin: 0;
+}
+
+.tm-contact-hero-description p + p {
+  margin-top: 0.75em;
 }
 
 .tm-contact-direct {
@@ -152,11 +160,19 @@
   line-height: 1;
 }
 
-.tm-contact-info-panel p {
+.tm-contact-info-description {
   margin: 0;
   color: var(--tm-contact-muted, var(--tm-theme-sub, #55554e));
   font-size: 16px;
   line-height: 1.62;
+}
+
+.tm-contact-info-description p {
+  margin: 0;
+}
+
+.tm-contact-info-description p + p {
+  margin-top: 0.75em;
 }
 
 .tm-contact-info-list {

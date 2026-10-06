@@ -54,10 +54,6 @@ function titleText(key: LegalPageKey, value: string | undefined, valueEn: string
   return turkishTitle && isTurkishText(turkishTitle) ? turkishTitle : fallback;
 }
 
-function hasEmbeddedHeading(contentHtml: string) {
-  return /<h[1-6][\s>]/i.test(contentHtml.slice(0, 900));
-}
-
 function getMembershipDefaults() {
   return {
     agreementTitleText: tLocalized("ÜYELİK SÖZLEŞMESİ", "MEMBERSHIP AGREEMENT"),
@@ -168,7 +164,6 @@ export function ThreeMashLegalPage(props: LegalPageProps) {
     () => sanitizeHtml(translateText(contentHtml)),
     [contentHtml, isEn]
   );
-  const showStandaloneTitle = !hasEmbeddedHeading(contentHtml);
   const isKvkk = key === 'kvkk';
   const defaultMax = 1120;
   const style = {
@@ -181,9 +176,9 @@ export function ThreeMashLegalPage(props: LegalPageProps) {
   } as any;
 
   return (
-    <section className={`three-mash-legal-page is-${key}`} style={style}>
+    <section className={`three-mash-legal-page is-${key}${isEn ? ' is-en' : ''}`} style={style}>
       <article className="tmlp-shell">
-        {showStandaloneTitle && props.showPageTitle !== false ? (
+        {props.showPageTitle !== false ? (
           <h1>{translateText(titleText(key, props.titleText, props.titleTextEn, page.title))}</h1>
         ) : null}
         <div className="tmlp-content" dangerouslySetInnerHTML={{ __html: renderedContentHtml }} />

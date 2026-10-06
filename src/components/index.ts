@@ -81,3 +81,4 @@ export { default as ThreeMashWashCurePage } from "./ThreeMashWashCurePage/index"
 export { default as ThreeMashWashingListingPage } from "./ThreeMashWashingListingPage/index";
 export { default as ThreeMashZirconBlocksListingPage } from "./ThreeMashZirconBlocksListingPage/index";
 export { default as ThreeMashZirconBlocksPage } from "./ThreeMashZirconBlocksPage/index";
+export { default as KategoriUrunleriListeGenel } from "./KategoriUrunleriListeGenel/index";

@@ -1,6 +1,7 @@
 import { isEnglishLocale, localizedHref } from "../../utils/i18n";
 import { useEffect, useLayoutEffect, useState } from "preact/hooks";
 import { safeNavigationHref } from "../../utils/safeRedirect";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   customerLogin,
   customerStore,
@@ -21,13 +22,140 @@ const logoImageIds = [
   "de819199-332c-407c-82de-917418b2c2e1",
 ];
 
-function localizedText(valueTr: string | undefined, valueEn: string | undefined) {
+const accountTextDefaults = {
+  eyebrowText: ["Hesabım", "MY ACCOUNT"],
+  titleText: ["Üye Girişi", "Member Login"],
+  subtitleText: [
+    "Siparişlerinizi takip etmek, adreslerinizi yönetmek ve 3mash hesabınıza hızlıca erişmek için giriş yapın.",
+    "Log in to quickly track your orders, manage your addresses, and access your 3mash account.",
+  ],
+  loginTabText: ["Üye Girişi", "Member Login"],
+  registerTabText: ["Üye Ol", "Sign Up"],
+  emailLabel: ["Email", "E-mail"],
+  passwordLabel: ["Şifre", "Password"],
+  submitButtonText: ["Üye Girişi", "Sign In"],
+  forgotPasswordText: ["Parolamı Unuttum", "Forgot My Password"],
+  registerPromptText: ["Hesabınız yok mu?", "Do not have an account yet?"],
+  registerButtonText: ["Kayıt Ol", "Create Account"],
+  loadingText: ["Giriş yapılıyor...", "Signing in..."],
+  successMessage: [
+    "Giriş başarılı. Hesabınıza yönlendiriliyorsunuz.",
+    "Login successful. Redirecting to your account.",
+  ],
+  errorMessage: [
+    "Email veya şifre hatalı. Lütfen bilgilerinizi kontrol edin.",
+    "Email or password is incorrect. Please check your details.",
+  ],
+  recoverPasswordText: ["Şifremi Kurtar", "Recover Password"],
+  registerSubmitButtonText: ["Hesap Oluştur", "Create Account"],
+  registerLoadingText: ["Kaydınız oluşturuluyor...", "Creating account..."],
+  firstNameLabel: ["Ad", "First Name"],
+  lastNameLabel: ["Soyad", "Last Name"],
+  termsMembershipText: ["Üyelik Sözleşmesi", "Membership Agreement"],
+  termsAndText: ["ve", "and"],
+  termsKvkkText: ["KVKK Aydınlatma Metni", "KVKK Clarification Notice"],
+  termsAcceptedText: ["'ni okudum, kabul ediyorum. ", "have been read and accepted."],
+  marketingIntroText: [
+    "Kampanya, indirim ve duyurulardan haberdar olmak için",
+    "I have read and approve the",
+  ],
+  marketingConsentText: [
+    "Ticari Elektronik İleti Onayı",
+    "Commercial Electronic Message Consent",
+  ],
+  marketingAcceptedText: [
+    "metnini okudum, onaylıyorum. Tarafıma ticari elektronik ileti gönderilmesini kabul ediyorum.",
+    "notice and consent to receive commercial electronic messages.",
+  ],
+  forgotPasswordEyebrowText: ["HESAP", "ACCOUNT"],
+  forgotPasswordTitleText: ["Şifremi Unuttum", "Forgot Password"],
+  forgotPasswordDescriptionText: [
+    "Email adresinizi girin; şifre yenileme bağlantısını size gönderelim.",
+    "Enter your email and we will send you a password reset link.",
+  ],
+  forgotPasswordEmailLabel: ["Email", "E-mail"],
+  forgotPasswordSubmitText: ["Gönder", "Send"],
+  forgotPasswordSubmittingText: ["Gönderiliyor...", "Sending..."],
+  forgotPasswordSuccessText: [
+    "Şifre yenileme bağlantısı email adresinize gönderildi.",
+    "The password reset link was sent to your email.",
+  ],
+  forgotPasswordErrorText: [
+    "İşlem tamamlanamadı. Email adresinizi kontrol edin.",
+    "The request could not be completed. Check your email address.",
+  ],
+  forgotPasswordLoginPromptText: ["Hesabınıza giriş yapın.", "Log in to your account."],
+  forgotPasswordLoginLinkText: ["Üye Girişi", "Member Login"],
+  recoverPasswordEyebrowText: ["HESAP", "ACCOUNT"],
+  recoverPasswordTitleText: ["Şifremi Kurtar", "Recover Password"],
+  recoverPasswordDescriptionText: [
+    "Yeni şifrenizi belirleyin ve hesabınıza güvenli şekilde tekrar erişin.",
+    "Set your new password to regain access to your account securely.",
+  ],
+  recoverPasswordLabel: ["Şifre", "Password"],
+  recoverPasswordConfirmLabel: ["Şifre Tekrar", "Confirm Password"],
+  recoverPasswordSubmitText: ["Şifreyi Güncelle", "Update Password"],
+  recoverPasswordSubmittingText: ["Güncelleniyor...", "Updating..."],
+  recoverPasswordSuccessText: [
+    "Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz.",
+    "Your password has been updated. Redirecting to login.",
+  ],
+  recoverPasswordErrorText: [
+    "Şifreler eşleşmiyor veya bağlantı geçersiz.",
+    "The passwords do not match or the reset link is invalid.",
+  ],
+  recoverPasswordMismatchText: ["Şifreler eşleşmiyor.", "Passwords do not match."],
+  recoverPasswordLoginPromptText: ["Hesabınıza giriş yapın.", "Log in to your account."],
+  recoverPasswordLoginLinkText: ["Üye Girişi", "Member Login"],
+} as const satisfies Record<string, readonly [string, string]>;
+
+type AccountTextKey = keyof typeof accountTextDefaults;
+
+const accountLinkDefaults = {
+  registerTabHref: "/account/register",
+  forgotPasswordHref: "/account/forgot-password",
+  recoverPasswordHref: "/account/recover-password",
+  loginHref: "/account/login",
+  accountHref: "/account",
+  membershipAgreementHref: "/pages/uyelik-sozlesmesi",
+  kvkkNoticeHref: "/pages/gizlilik-politikasi-ve-kvkk",
+  commercialConsentHref: "/pages/ticari-elektronik-ileti-onayi",
+} as const;
+
+type AccountLinkKey = keyof typeof accountLinkDefaults;
+
+function localizedText(props: Props, key: AccountTextKey) {
   const isEn = isEnglishLocale();
-  return (isEn ? valueEn : valueTr)?.trim() ?? "";
+  const configuredValue = isEn
+    ? props[`${key}En` as keyof Props]
+    : props[key];
+  const fallback = accountTextDefaults[key][isEn ? 1 : 0];
+  const content =
+    typeof configuredValue === "string" && configuredValue.trim()
+      ? configuredValue.trim()
+      : fallback;
+  const inlineContent = content
+    .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
+    .replace(/^<p[^>]*>/i, "")
+    .replace(/<\/p>$/i, "")
+    .replace(/&lt;\/?p(?:\s[^&]*?)?&gt;/gi, "")
+    .replace(/&#0*60;\/?p(?:\s[^&]*?)?&#0*62;/gi, "");
+
+  return (
+    <span
+      dangerouslySetInnerHTML={{ __html: sanitizeHtml(inlineContent) }}
+    />
+  );
 }
 
-function href(value: string | undefined) {
-  return safeNavigationHref(localizedHref(value));
+function href(props: Props, key: AccountLinkKey) {
+  const configuredValue = props[key];
+  const path =
+    typeof configuredValue === "string" && configuredValue.trim()
+      ? configuredValue.trim()
+      : accountLinkDefaults[key];
+  const localizedPath = localizedHref(path);
+  return safeNavigationHref(localizedPath, localizedPath || accountLinkDefaults[key]);
 }
 
 function themeColor(
@@ -203,14 +331,14 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
       tab,
       localizedHref(
         tab === "register"
-          ? href(props.registerTabHref)
-          : href(props.loginHref),
+          ? href(props, "registerTabHref")
+          : href(props, "loginHref"),
       ),
     );
   }
 
   function navigateToLogin() {
-    navigateToMode("login", href(props.loginHref));
+    navigateToMode("login", href(props, "loginHref"));
   }
 
   async function submit(event: Event) {
@@ -267,7 +395,7 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
             sessionStorage.removeItem("tm_customer_cache");
           } catch {}
         }
-        setTimeout(() => Router.navigate(href(props.accountHref)), 350);
+        setTimeout(() => Router.navigate(href(props, "accountHref")), 350);
         return;
       }
       setStatus("error");
@@ -340,45 +468,24 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
           <div className="tma-auth-copy">
             <span>
               {authMode === "forgot-password"
-                ? localizedText(
-                    props.forgotPasswordEyebrowText,
-                    props.forgotPasswordEyebrowTextEn,
-                  )
+                ? localizedText(props, "forgotPasswordEyebrowText")
                 : authMode === "recover-password"
-                  ? localizedText(
-                      props.recoverPasswordEyebrowText,
-                      props.recoverPasswordEyebrowTextEn,
-                    )
-                  : localizedText(props.eyebrowText, props.eyebrowTextEn)}
+                  ? localizedText(props, "recoverPasswordEyebrowText")
+                  : localizedText(props, "eyebrowText")}
             </span>
             <h1>
               {authMode === "forgot-password"
-                ? localizedText(
-                    props.forgotPasswordTitleText,
-                    props.forgotPasswordTitleTextEn,
-                  )
+                ? localizedText(props, "forgotPasswordTitleText")
                 : authMode === "recover-password"
-                  ? localizedText(
-                      props.recoverPasswordTitleText,
-                      props.recoverPasswordTitleTextEn,
-                    )
-                  : localizedText(props.titleText, props.titleTextEn)}
+                  ? localizedText(props, "recoverPasswordTitleText")
+                  : localizedText(props, "titleText")}
             </h1>
             <p>
               {authMode === "forgot-password"
-                ? localizedText(
-                    props.forgotPasswordDescriptionText,
-                    props.forgotPasswordDescriptionTextEn,
-                  )
+                ? localizedText(props, "forgotPasswordDescriptionText")
                 : authMode === "recover-password"
-                  ? localizedText(
-                      props.recoverPasswordDescriptionText,
-                      props.recoverPasswordDescriptionTextEn,
-                    )
-                  : localizedText(
-                      props.subtitleText,
-                      props.subtitleTextEn,
-                    )}
+                  ? localizedText(props, "recoverPasswordDescriptionText")
+                  : localizedText(props, "subtitleText")}
             </p>
           </div>
 
@@ -392,37 +499,28 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
               type="button"
               onClick={() => switchTab("login")}
             >
-              {localizedText(props.loginTabText, props.loginTabTextEn)}
+              {localizedText(props, "loginTabText")}
             </button>
             <button
               className={activeTab === "register" ? "is-active" : ""}
               type="button"
               onClick={() => switchTab("register")}
             >
-              {localizedText(props.registerTabText, props.registerTabTextEn)}
+              {localizedText(props, "registerTabText")}
             </button>
           </div>}
 
           {(authMode === "forgot-password" || authMode === "recover-password") && (
             <h2 className="tma-auth-secondary-title">
               {authMode === "forgot-password"
-                ? localizedText(
-                    props.forgotPasswordTitleText,
-                    props.forgotPasswordTitleTextEn,
-                )
-                : localizedText(
-                  props.recoverPasswordTitleText,
-                  props.recoverPasswordTitleTextEn,
-                )}
+                ? localizedText(props, "forgotPasswordTitleText")
+                : localizedText(props, "recoverPasswordTitleText")}
             </h2>
           )}
 
           {authMode === "forgot-password" ? (
             <label className="tma-auth-field">
-              <span>* {localizedText(
-                props.forgotPasswordEmailLabel,
-                props.forgotPasswordEmailLabelEn,
-              )}</span>
+              <span>* {localizedText(props, "forgotPasswordEmailLabel")}</span>
               <input
                 name="email"
                 type="email"
@@ -437,10 +535,7 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
           ) : authMode === "recover-password" ? (
             <>
               <label className="tma-auth-field">
-                <span>* {localizedText(
-                  props.recoverPasswordLabel,
-                  props.recoverPasswordLabelEn,
-                )}</span>
+                <span>* {localizedText(props, "recoverPasswordLabel")}</span>
                 <input
                   name="password"
                   type="password"
@@ -453,10 +548,7 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
                 />
               </label>
               <label className="tma-auth-field">
-                <span>* {localizedText(
-                  props.recoverPasswordConfirmLabel,
-                  props.recoverPasswordConfirmLabelEn,
-                )}</span>
+                <span>* {localizedText(props, "recoverPasswordConfirmLabel")}</span>
                 <input
                   name="passwordAgain"
                   type="password"
@@ -472,7 +564,7 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
           ) : activeTab === "login" ? (
             <>
               <label className="tma-auth-field">
-                <span>* {localizedText(props.emailLabel, props.emailLabelEn)}</span>
+                <span>* {localizedText(props, "emailLabel")}</span>
                 <input
                   name="email"
                   type="email"
@@ -486,7 +578,7 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
               </label>
 
               <label className="tma-auth-field">
-                <span>* {localizedText(props.passwordLabel, props.passwordLabelEn)}</span>
+                <span>* {localizedText(props, "passwordLabel")}</span>
                 <input
                   name="password"
                   type="password"
@@ -502,7 +594,7 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
           ) : (
             <>
               <label className="tma-auth-field">
-                <span>* {localizedText(props.firstNameLabel, props.firstNameLabelEn)}</span>
+                <span>* {localizedText(props, "firstNameLabel")}</span>
                 <input
                   name="firstName"
                   autoComplete="given-name"
@@ -515,7 +607,7 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
               </label>
 
               <label className="tma-auth-field">
-                <span>* {localizedText(props.lastNameLabel, props.lastNameLabelEn)}</span>
+                <span>* {localizedText(props, "lastNameLabel")}</span>
                 <input
                   name="lastName"
                   autoComplete="family-name"
@@ -528,7 +620,7 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
               </label>
 
               <label className="tma-auth-field">
-                <span>* {localizedText(props.emailLabel, props.emailLabelEn)}</span>
+                <span>* {localizedText(props, "emailLabel")}</span>
                 <input
                   name="email"
                   type="email"
@@ -542,7 +634,7 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
               </label>
 
               <label className="tma-auth-field">
-                <span>* {localizedText(props.passwordLabel, props.passwordLabelEn)}</span>
+                <span>* {localizedText(props, "passwordLabel")}</span>
                 <input
                   name="password"
                   type="password"
@@ -565,14 +657,14 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
                   }
                 />
                 <span>
-                  <a href={href(props.membershipAgreementHref)}>
-                    {localizedText(props.termsMembershipText, props.termsMembershipTextEn)}
+                  <a href={href(props, "membershipAgreementHref")}>
+                    {localizedText(props, "termsMembershipText")}
                   </a>{" "}
-                  {localizedText(props.termsAndText, props.termsAndTextEn)}{" "}
-                  <a href={href(props.kvkkNoticeHref)}>
-                    {localizedText(props.termsKvkkText, props.termsKvkkTextEn)}
+                  {localizedText(props, "termsAndText")}{" "}
+                  <a href={href(props, "kvkkNoticeHref")}>
+                    {localizedText(props, "termsKvkkText")}
                   </a>{" "}
-                  {localizedText(props.termsAcceptedText, props.termsAcceptedTextEn)}
+                  {localizedText(props, "termsAcceptedText")}
                 </span>
               </label>
 
@@ -586,11 +678,11 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
                     }
                   />
                   <span>
-                    {localizedText(props.marketingIntroText, props.marketingIntroTextEn)}{" "}
-                    <a href={href(props.commercialConsentHref)}>
-                      {localizedText(props.marketingConsentText, props.marketingConsentTextEn)}
+                    {localizedText(props, "marketingIntroText")}{" "}
+                    <a href={href(props, "commercialConsentHref")}>
+                      {localizedText(props, "marketingConsentText")}
                     </a>{" "}
-                    {localizedText(props.marketingAcceptedText, props.marketingAcceptedTextEn)}
+                    {localizedText(props, "marketingAcceptedText")}
                   </span>
                 </label>
               )}
@@ -607,31 +699,19 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
           >
             {status === "loading"
               ? authMode === "forgot-password"
-                ? localizedText(
-                    props.forgotPasswordSubmittingText,
-                    props.forgotPasswordSubmittingTextEn,
-                  )
+                ? localizedText(props, "forgotPasswordSubmittingText")
                 : authMode === "recover-password"
-                  ? localizedText(
-                      props.recoverPasswordSubmittingText,
-                      props.recoverPasswordSubmittingTextEn,
-                    )
+                  ? localizedText(props, "recoverPasswordSubmittingText")
                   : activeTab === "login"
-                    ? localizedText(props.loadingText, props.loadingTextEn)
-                    : localizedText(props.registerLoadingText, props.registerLoadingTextEn)
+                    ? localizedText(props, "loadingText")
+                    : localizedText(props, "registerLoadingText")
               : authMode === "forgot-password"
-                ? localizedText(
-                    props.forgotPasswordSubmitText,
-                    props.forgotPasswordSubmitTextEn,
-                  )
+                ? localizedText(props, "forgotPasswordSubmitText")
                 : authMode === "recover-password"
-                  ? localizedText(
-                      props.recoverPasswordSubmitText,
-                      props.recoverPasswordSubmitTextEn,
-                    )
+                  ? localizedText(props, "recoverPasswordSubmitText")
                   : activeTab === "login"
-                    ? localizedText(props.submitButtonText, props.submitButtonTextEn)
-                    : localizedText(props.registerSubmitButtonText, props.registerSubmitButtonTextEn)}
+                    ? localizedText(props, "submitButtonText")
+                    : localizedText(props, "registerSubmitButtonText")}
           </button>
 
           {authMode === "login" && (
@@ -640,36 +720,36 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
                 {props.showForgotPasswordLink !== false && (
                   <a
                     className="tma-auth-underlink"
-                    href={href(props.forgotPasswordHref)}
+                    href={href(props, "forgotPasswordHref")}
                     onClick={(event) => {
                       event.preventDefault();
-                      navigateToMode("forgot-password", href(props.forgotPasswordHref));
+                      navigateToMode("forgot-password", href(props, "forgotPasswordHref"));
                     }}
                   >
-                    {localizedText(props.forgotPasswordText, props.forgotPasswordTextEn)}
+                    {localizedText(props, "forgotPasswordText")}
                   </a>
                 )}
 
                 {props.showRecoverPasswordLink !== false && (
                   <a
                     className="tma-auth-underlink"
-                    href={href(props.recoverPasswordHref)}
+                    href={href(props, "recoverPasswordHref")}
                     onClick={(event) => {
                       event.preventDefault();
-                      navigateToMode("recover-password", href(props.recoverPasswordHref));
+                      navigateToMode("recover-password", href(props, "recoverPasswordHref"));
                     }}
                   >
-                    {localizedText(props.recoverPasswordText, props.recoverPasswordTextEn)}
+                    {localizedText(props, "recoverPasswordText")}
                   </a>
                 )}
               </div>
 
               <div className="tma-auth-register-callout">
                 <span>
-                  {localizedText(props.registerPromptText, props.registerPromptTextEn)}
+                  {localizedText(props, "registerPromptText")}
                 </span>
                 <button type="button" onClick={() => switchTab("register")}>
-                  {localizedText(props.registerButtonText, props.registerButtonTextEn)}
+                  {localizedText(props, "registerButtonText")}
                 </button>
               </div>
             </>
@@ -681,31 +761,19 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
               props.showRecoverPasswordLoginLink !== false)) && (
             <div className="tma-auth-register-callout">
               <span>{authMode === "forgot-password"
-                ? localizedText(
-                    props.forgotPasswordLoginPromptText,
-                    props.forgotPasswordLoginPromptTextEn,
-                  )
-                : localizedText(
-                    props.recoverPasswordLoginPromptText,
-                    props.recoverPasswordLoginPromptTextEn,
-                  )}</span>
+                ? localizedText(props, "forgotPasswordLoginPromptText")
+                : localizedText(props, "recoverPasswordLoginPromptText")}</span>
               <a
                 className="tma-auth-secondary-link"
-                href={href(props.loginHref)}
+                href={href(props, "loginHref")}
                 onClick={(event) => {
                   event.preventDefault();
                   navigateToLogin();
                 }}
               >
                 {authMode === "forgot-password"
-                  ? localizedText(
-                      props.forgotPasswordLoginLinkText,
-                      props.forgotPasswordLoginLinkTextEn,
-                    )
-                  : localizedText(
-                      props.recoverPasswordLoginLinkText,
-                      props.recoverPasswordLoginLinkTextEn,
-                    )}
+                  ? localizedText(props, "forgotPasswordLoginLinkText")
+                  : localizedText(props, "recoverPasswordLoginLinkText")}
               </a>
             </div>
           )}
@@ -714,52 +782,25 @@ export function ThreeMashAccountPage(props: Props & { mode?: string }) {
             <p className={`tma-auth-status is-${status === "mismatch" ? "error" : status}`}>
               {status === "success"
                 ? authMode === "forgot-password"
-                  ? localizedText(
-                      props.forgotPasswordSuccessText,
-                      props.forgotPasswordSuccessTextEn,
-                    )
+                  ? localizedText(props, "forgotPasswordSuccessText")
                   : authMode === "recover-password"
-                    ? localizedText(
-                        props.recoverPasswordSuccessText,
-                        props.recoverPasswordSuccessTextEn,
-                      )
-                    : localizedText(
-                        props.successMessage,
-                        props.successMessageEn,
-                      )
+                    ? localizedText(props, "recoverPasswordSuccessText")
+                    : localizedText(props, "successMessage")
                 : status === "mismatch"
-                  ? localizedText(
-                      props.recoverPasswordMismatchText,
-                      props.recoverPasswordMismatchTextEn,
-                    )
+                  ? localizedText(props, "recoverPasswordMismatchText")
                 : status === "error"
                   ? authMode === "forgot-password"
-                    ? localizedText(
-                        props.forgotPasswordErrorText,
-                        props.forgotPasswordErrorTextEn,
-                      )
+                    ? localizedText(props, "forgotPasswordErrorText")
                     : authMode === "recover-password"
-                      ? localizedText(
-                          props.recoverPasswordErrorText,
-                          props.recoverPasswordErrorTextEn,
-                        )
-                      : localizedText(
-                          props.errorMessage,
-                          props.errorMessageEn,
-                        )
+                      ? localizedText(props, "recoverPasswordErrorText")
+                      : localizedText(props, "errorMessage")
                   : authMode === "forgot-password"
-                    ? localizedText(
-                        props.forgotPasswordSubmittingText,
-                        props.forgotPasswordSubmittingTextEn,
-                      )
+                    ? localizedText(props, "forgotPasswordSubmittingText")
                     : authMode === "recover-password"
-                      ? localizedText(
-                          props.recoverPasswordSubmittingText,
-                          props.recoverPasswordSubmittingTextEn,
-                        )
+                      ? localizedText(props, "recoverPasswordSubmittingText")
                       : activeTab === "login"
-                        ? localizedText(props.loadingText, props.loadingTextEn)
-                        : localizedText(props.registerLoadingText, props.registerLoadingTextEn)}
+                        ? localizedText(props, "loadingText")
+                        : localizedText(props, "registerLoadingText")}
             </p>
           )}
 

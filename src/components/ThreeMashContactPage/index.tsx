@@ -2,6 +2,7 @@ import { useState } from "preact/hooks";
 import { Props } from "./types";
 import { isEnglishLocale, tLocalized, tProp } from "../../utils/i18n";
 import { businessConfig } from "../../utils/businessConfig";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   safeCheckoutHref,
   safeMailAddress,
@@ -370,7 +371,10 @@ export function ThreeMashContactPage(props: Props) {
             >
               <div>
                 <h1>{titleText}</h1>
-                <p>{descriptionText}</p>
+                <div
+                  className="tm-contact-hero-description"
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(descriptionText) }}
+                />
               </div>
               {props.showDirectContact !== false && (
                 <div className="tm-contact-direct">
@@ -396,7 +400,10 @@ export function ThreeMashContactPage(props: Props) {
             <aside className="tm-contact-info-panel">
               <span className="tm-contact-section-code">{props.infoPanelCode || "01"}</span>
               <h2>{infoPanelTitle}</h2>
-              <p>{infoPanelDescription}</p>
+              <div
+                className="tm-contact-info-description"
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(infoPanelDescription) }}
+              />
               {props.showInfoList !== false && (
                 <div className="tm-contact-info-list">
                   <div>

@@ -488,12 +488,17 @@ function stripInlineTypographyStyles(markup: string) {
 }
 
 function inlineHtml(value: string) {
+  const normalized = value
+    .replace(/<p\b[^>]*>\s*(?:(?:&nbsp;)|<br\s*\/?>|\s)*<\/p>/gi, "")
+    .replace(/<\/p>\s*<p\b[^>]*>/gi, "<br />")
+    .replace(/^<p\b[^>]*>/i, "")
+    .replace(/<\/p>$/i, "")
+    .replace(/(?:<br\s*\/?>\s*){2,}/gi, "<br />")
+    .replace(/^(?:<br\s*\/?>\s*)+|(?:<br\s*\/?>\s*)+$/gi, "");
+
   return sanitizeHtml(
     stripInlineTypographyStyles(
-      value
-        .replace(/<\/p>\s*<p[^>]*>/gi, "<br />")
-        .replace(/^<p[^>]*>/i, "")
-        .replace(/<\/p>$/i, ""),
+      normalized,
     ),
   );
 }
@@ -609,6 +614,13 @@ function escapeHtml(value: unknown) {
 
 function heading(titleText: string, titleEmphasis = "") {
   return `${titleText}${titleEmphasis ? ` <span class="tmr-title-em">${titleEmphasis}</span>` : ""}`;
+}
+
+function headingText(source: string) {
+  const text = plainText(source)
+    .replace(/&nbsp;/gi, " ")
+    .trim();
+  return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 function imageIdToUrl(value: string) {
@@ -1357,11 +1369,6 @@ function solutionProductCard(
 
 function solutionExtraCard(props: ThreeMashSectionRenderProps, number: 4 | 5 | 6) {
   const prefix = `solutionCard${number}`;
-  const product = raw(props, `${prefix}Product`);
-  const image = imageSource(raw(props, `${prefix}ImageUrl`), "");
-
-  if (!isIkasProduct(product) && !image) return null;
-
   return solutionProductCard(props, prefix, {
     tagTr: "YENİ ÇÖZÜM",
     tagEn: "NEW SOLUTION",
@@ -1775,8 +1782,8 @@ function indexedSection(
 ) {
   return `<section id="${escapeAttr(value(props.sectionAnchorId, defaults.anchor))}" class="tmr-section${defaults.className ? ` ${defaults.className}` : ""}">
   <div class="tmr-wrap">
-    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, defaults.indexNumber)}</span><span class="tmr-index-text">${value(props.indexText, defaults.indexText)}</span><span class="tmr-index-line"></span></div>
-    <div class="tmr-head"><h2>${heading(value(props.titleText, defaults.titleText), value(props.titleEmphasis, defaults.titleEmphasis || ""))}</h2><div class="tmr-side">${value(props.sideHtml, defaults.sideHtml)}</div></div>
+    <div class="tmr-index"><span class="tmr-index-number">${value(props.indexNumber, defaults.indexNumber)}</span><span class="tmr-index-text">${inlineHtml(props.indexText?.trim() || defaults.indexText)}</span><span class="tmr-index-line"></span></div>
+    <div class="tmr-head"><h2>${heading(inlineHtml(props.titleText?.trim() || defaults.titleText), inlineHtml(props.titleEmphasis?.trim() || defaults.titleEmphasis || ""))}</h2><div class="tmr-side">${inlineHtml(props.sideHtml?.trim() || defaults.sideHtml)}</div></div>
     ${value(props.contentHtml, defaults.contentHtml)}
   </div>
 </section>`;
@@ -2423,6 +2430,8 @@ export function renderSolutionHtml(props: ThreeMashSectionRenderProps) {
       "A crown seating depends on three things in sync: <b>printer, resin, curing.</b> We calibrate all three together and deliver with field-proven knowledge — even for your existing third-party device.",
     ),
   };
+  localizedProps.titleText = headingText(localizedProps.titleText);
+  localizedProps.titleEmphasis = headingText(localizedProps.titleEmphasis);
 
   return indexedSection(localizedProps, {
     anchor: "cozum",

@@ -298,4 +298,12 @@ export interface Props {
   mobileAcademyTextEn?: string;
   mobileAccountTextEn?: string;
   mobileLoginTextEn?: string;
+  showActionIcons?: boolean;
+  styledPhrase?: string;
+  wordStyleEnabled?: boolean;
+  styledPhraseBold?: boolean;
+  styledPhraseItalic?: boolean;
+  announcementStyledPhraseBold?: boolean;
+  announcementStyledPhraseItalic?: boolean;
+  searchQueryParam?: string;
 }

@@ -125,6 +125,22 @@ Schema varsayılanını ve mevcut Studio placement değerini ayrı kontroller ol
   placement'taki boş override'ı doldurmaz. Editör bağlantısı yoksa placement'ı düzeltilmiş
   gibi raporlama; hangi katmanın doğrulanamadığını açıkça belirt.
 
+### 0.1.2 Toplu Varsayılan Doldurmada Ürün ve Kategori Sayfaları
+
+Kullanıcı proje genelindeki boş veya eksik prop varsayılanlarını doldurmayı istediğinde,
+ürün ve kategori sayfalarına ait `TEXT`/`RICH_TEXT` prop'larını bu toplu işlemin dışında
+tut. Buna ürün detay/içerik bileşenleri, ürün listeleri ve kategori landing/listing
+bileşenleri; ayrıca `PRODUCT`, `PRODUCT_LIST`, ürün şablonu veya kategori preset'lerinden
+gelen metinleri override eden alanlar dahildir.
+
+- Bu alanların boş veya eksik `defaultValue` değerlerini toplu doldurma amacıyla değiştirme;
+  ürün/kategori verisinden gelen mevcut render fallback'ini koru.
+- Başka ürün veya kategoriler için yanlış olacak sabit metin, bağlantı ya da sahte örnek
+  içerik üretme. Bu alanlar boş kalabilir ve toplu doldurma denetiminde eksik sayılmaz.
+- Bu istisna ürün/kategori prop'larını bir ürün veya kategori bağlamında açıkça düzenleme
+  isteğini engellemez; ancak bu durumda da yalnızca o bağlam için kaynakta veya placement'ta
+  doğrulanmış gerçek değer kullanılmalıdır.
+
 ### 0.2 RICH_TEXT Araç Çubuğu Component Prop'u Değildir
 
 `RICH_TEXT`, ikas Studio'da HTML/string içerik düzenleyicisidir ve kendi yerleşik araç

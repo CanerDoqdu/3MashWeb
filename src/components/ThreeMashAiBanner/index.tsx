@@ -1,5 +1,4 @@
 import { Props } from "./types";
-import "./styles.css";
 
 const LLM_LINK_ID = "tm-llm-agent-index";
 const LLM_META_ID = "tm-llm-agent-meta";

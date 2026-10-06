@@ -3,6 +3,7 @@ import type { JSX } from "preact";
 import { Props } from "./types";
 import { isEnglishLocale, tLocalized, tProp } from "../../utils/i18n";
 import { businessConfig } from "../../utils/businessConfig";
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   safeCheckoutHref,
   safeMailAddress,
@@ -184,7 +185,10 @@ export function ThreeMashContactPageV2(props: Props) {
             <div className="contact-v2-heading">
               <span className="contact-v2-kicker">{heroKickerText}</span>
               <h1>{titleText}</h1>
-              <p>{descriptionText}</p>
+              <div
+                className="contact-v2-description"
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(descriptionText) }}
+              />
             </div>
             {props.showDirectContact !== false && (
               <nav className="contact-v2-shortcuts" aria-label={heroKickerText}>
@@ -205,7 +209,10 @@ export function ThreeMashContactPageV2(props: Props) {
             <aside className="contact-v2-info">
               <span className="contact-v2-info-code">{props.infoPanelCode}</span>
               <h2>{infoPanelTitle}</h2>
-              <p className="contact-v2-info-description">{infoPanelDescription}</p>
+              <div
+                className="contact-v2-info-description"
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(infoPanelDescription) }}
+              />
               {props.showInfoList !== false && (
                 <dl className="contact-v2-details">
                   <div><dt>{responseTimeLabel}</dt><dd>{responseTimeValue}</dd></div>

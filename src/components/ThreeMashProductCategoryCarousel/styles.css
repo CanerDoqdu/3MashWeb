@@ -36,6 +36,10 @@
   letter-spacing: 0;
 }
 
+.tmpcc-head h2 p {
+  margin: 0;
+}
+
 .tmpcc-description {
   max-width: 720px;
   margin-top: 12px;

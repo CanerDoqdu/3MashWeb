@@ -278,18 +278,6 @@ function isPublicAuthPath(pathname?: string): boolean {
   );
 }
 
-function modeFromHref(nextHref: string, fallback: AccountMode): AccountMode {
-  try {
-    const pathname =
-      typeof window !== "undefined"
-        ? new URL(nextHref, window.location.origin).pathname
-        : nextHref;
-    return modeFromPathname(pathname, fallback);
-  } catch {
-    return fallback;
-  }
-}
-
 function normalizeHref(value: string | undefined, fallback = "/") {
   return safeNavigationHref(localizedHref(value), fallback);
 }
@@ -554,16 +542,11 @@ function AccountLayoutContent(props: DashboardProps) {
   // ── Navigation handler (sidebar clicks) ───────────────────────────
   // Uses buttons instead of <a href> so ikas router never intercepts.
   // URL is updated via pushState, right panel swaps via setMode.
-  function handleNavigate(nextHref: string) {
+  function handleNavigate(nextHref: string, nextMode: AccountMode) {
     if (!isStudio && (!hasCustomerToken() || isCustomerAuthenticated() === "unauthenticated")) {
       window.location.replace(safeRedirect(loginHref));
       return;
     }
-
-    const nextMode = modeFromHref(
-      nextHref,
-      (props.mode as AccountMode) || "account",
-    );
 
     // Already on this mode — no-op
     if (nextMode === mode) return;
@@ -750,7 +733,7 @@ function AccountLayoutContent(props: DashboardProps) {
                   <button
                     key={item.key}
                     type="button"
-                    onClick={() => handleNavigate(item.href)}
+                    onClick={() => handleNavigate(item.href, item.key)}
                     className={`tmai-nav-btn${mode === item.key ? " is-active" : ""}`}
                   >
                     {item.label}
@@ -775,7 +758,7 @@ function AccountLayoutContent(props: DashboardProps) {
                 </h2>
                 <button
                   type="button"
-                  onClick={() => handleNavigate(ordersHref)}
+                  onClick={() => handleNavigate(ordersHref, "orders")}
                   className={`tmai-nav-btn${mode === "orders" ? " is-active" : ""}`}
                 >
                   {localizedText(

@@ -28,6 +28,49 @@ function inlineHtml(value?: string) {
     .replace(/<\/p>$/i, ""));
 }
 
+function stripIncompleteAnchorTail(markup?: string) {
+  const source = markup || "";
+  const openAnchors: number[] = [];
+  let cursor = 0;
+
+  while (cursor < source.length) {
+    const tagStart = source.indexOf("<", cursor);
+    if (tagStart < 0) break;
+
+    const remaining = source.slice(tagStart);
+    const closingAnchor = /^<\/a\s*>/i.exec(remaining);
+    if (closingAnchor) {
+      openAnchors.pop();
+      cursor = tagStart + closingAnchor[0].length;
+      continue;
+    }
+
+    if (!/^<a\b/i.test(remaining)) {
+      cursor = tagStart + 1;
+      continue;
+    }
+
+    let quote = "";
+    let tagEnd = tagStart + 2;
+    for (; tagEnd < source.length; tagEnd += 1) {
+      const character = source[tagEnd];
+      if (quote) {
+        if (character === quote) quote = "";
+      } else if (character === '"' || character === "'") {
+        quote = character;
+      } else if (character === ">") {
+        break;
+      }
+    }
+
+    if (tagEnd === source.length) return source.slice(0, tagStart);
+    openAnchors.push(tagStart);
+    cursor = tagEnd + 1;
+  }
+
+  return openAnchors.length ? source.slice(0, openAnchors[0]) : source;
+}
+
 function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -295,7 +338,7 @@ export function ThreeMashProblem(props: Props) {
         ) : null}
 
         {props.showReference !== false ? (
-          <p className="tmproblem-reference" dangerouslySetInnerHTML={html(props.referenceHtml, props)} />
+          <p className="tmproblem-reference" dangerouslySetInnerHTML={html(stripIncompleteAnchorTail(props.referenceHtml), props)} />
         ) : null}
       </div>
     </section>

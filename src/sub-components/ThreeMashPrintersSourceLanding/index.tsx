@@ -88,6 +88,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
   }, [props.eyebrowText, props.announcementText, props.announcementCtaText, props.announcementHref, props.showAnnouncement]);
 
   const compareHref = "#karsilastirma-tablosu";
+  const primaryButtonHref = safeNavigationHref(props.primaryButtonHref, compareHref);
   const contactHref = localePath("/pages/iletisim", "/en/pages/iletisim");
   const resinsHref = localePath("/dental-3d-yazici-recineleri", "/en/dental-resins");
   const washCureHref = localePath("/yikama-kurleme-cihazlari", "/en/wash-and-cure-devices");
@@ -115,7 +116,7 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
           </h1>
           <p className="sub" dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.heroDescriptionHtml || tLocalized("Hassasiyet tesadüf değildir; <b>doğru dalga boyu</b>, termal stabilite ve kalibrasyonla kurulur. 3mash yazıcıları malzemeye göre tasarlanır: <b>385 nm</b> ışık reçinenin kürlenme spektrumuna tam uyar, entegre ısıtma viskoziteyi sabitler. Üstelik <b>gizli lisans veya RFID ücreti yok</b> — istediğiniz reçineyle çalışırsınız.", "Precision is not a coincidence; it's built with <b>the right wavelength</b>, thermal stability, and calibration. 3mash printers are designed around the material: <b>385 nm</b> light matches the resin's curing spectrum exactly, and integrated heating stabilizes viscosity. What's more, <b>there are no hidden license or RFID fees</b> — you can work with any resin you want.")) }} />
           <div className="cta">
-            {props.showSelector !== false && <a className="btn lime" href={compareHref} onClick={(event) => smoothAnchorClick(event, compareHref)}>{props.primaryButtonText || tLocalized("Yazıcıları karşılaştır ↓", "Compare printers ↓")}</a>}
+            {props.showSelector !== false && <a className="btn lime" href={primaryButtonHref} onClick={(event) => smoothAnchorClick(event, primaryButtonHref)}>{props.primaryButtonText || tLocalized("Yazıcıları karşılaştır ↓", "Compare printers ↓")}</a>}
             <a className="btn line" href={isEnglishLocale() ? contactHref : safeNavigationHref(props.secondaryButtonHref, contactHref)}>{props.secondaryButtonText || tLocalized("Bana uygun olanı öner", "Recommend the right one for me")}</a>
           </div>
           {props.showMetrics !== false && <div className="vstrip">

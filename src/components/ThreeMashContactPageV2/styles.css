@@ -66,12 +66,20 @@
   overflow-wrap: anywhere;
 }
 
-.contact-v2-heading p {
+.contact-v2-description {
   max-width: 620px;
   margin: 32px 0 0;
   color: var(--contact-v2-muted, var(--tm-theme-sub, #55554e));
   font-size: clamp(15px, 1.2vw, 18px);
   line-height: 1.75;
+}
+
+.contact-v2-description p {
+  margin: 0;
+}
+
+.contact-v2-description p + p {
+  margin-top: 0.75em;
 }
 
 .contact-v2-shortcuts {
@@ -162,6 +170,14 @@
   color: var(--contact-v2-muted, var(--tm-theme-sub, #55554e));
   font-size: 15px;
   line-height: 1.7;
+}
+
+.contact-v2-info-description p {
+  margin: 0;
+}
+
+.contact-v2-info-description p + p {
+  margin-top: 0.75em;
 }
 
 .contact-v2-details {
@@ -467,7 +483,7 @@
     font-size: clamp(56px, 16vw, 88px);
   }
 
-  .contact-v2-heading p {
+  .contact-v2-description {
     margin-top: 22px;
     font-size: 15px;
   }

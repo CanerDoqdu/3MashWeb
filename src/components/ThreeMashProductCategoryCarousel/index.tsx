@@ -464,7 +464,9 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
         {hasHeader ? (
           <div className="tmpcc-head">
             <div>
-              {fallbackTitle.trim() !== "" && <h2>{fallbackTitle}</h2>}
+              {fallbackTitle.trim() !== "" && (
+                <h2 dangerouslySetInnerHTML={html(fallbackTitle)} />
+              )}
               {fallbackDescription.trim() !== "" && (
                 <div className="tmpcc-description" dangerouslySetInnerHTML={html(fallbackDescription)} />
               )}

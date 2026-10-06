@@ -1,77 +1,12 @@
 import ThreeMashCategoryLanding from "../../sub-components/ThreeMashCategoryLanding";
-import type { CategoryLandingData, CategoryLandingOverrides } from "../../sub-components/ThreeMashCategoryLanding";
 import { dentalFurnacesCategoryData, dentalResinsCategoryData, desktopScannersCategoryData, printerSparePartsCategoryData, printersCategoryData, systemsCategoryData, titaniumDiscsCategoryData, washCureCategoryData, zirconBlocksCategoryData, categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
 import ThreeMashPrintersSourceLanding from "../../sub-components/ThreeMashPrintersSourceLanding";
 import { ThreeMashProductsPage } from "../ThreeMashProductsPage";
 import { listingProps } from "../ThreeMashProductListingPresets";
 import { getProductHref } from "@ikas/bp-storefront";
 import type { Props } from "./types";
-import { isEnglishLocale, tLocalized } from "../../utils/i18n";
+import { tLocalized } from "../../utils/i18n";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
-
-const categoryPropPrefixes: Record<CategoryLandingData["kind"], string> = {
-  printers: "printer",
-  resins: "resin",
-  "wash-cure": "washCure",
-  washing: "washing",
-  curing: "curing",
-  zircon: "zircon",
-  furnaces: "furnace",
-  scanners: "scanner",
-  spares: "spare",
-  systems: "system",
-  titanium: "titanium",
-};
-
-type CategoryOverrideKey = keyof CategoryLandingOverrides;
-
-const categoryOverrideKeys = [
-  "showAnnouncement", "showHero", "showMetrics", "showSelector", "showFeature", "showDetail", "showFaq", "showFinalCta",
-  "eyebrowText", "announcementText", "announcementCtaText", "announcementHref",
-  "heroTitlePrefix", "heroTitleEmphasis", "heroTitleSuffix", "heroDescriptionHtml", "primaryButtonText", "primaryButtonHref", "secondaryButtonText", "secondaryButtonHref",
-  "metric1Value", "metric1Emphasis", "metric1Label", "metric2Value", "metric2Emphasis", "metric2Label", "metric3Value", "metric3Emphasis", "metric3Label", "metric4Value", "metric4Emphasis", "metric4Label",
-  "selectorNumber", "selectorLabel", "selectorTitlePrefix", "selectorTitleEmphasis", "selectorTitleSuffix", "selectorSideHtml", "selectorCardCtaText",
-  "featureNumber", "featureLabel", "featureEyebrow", "featureTitlePrefix", "featureTitleEmphasis", "featureTitleSuffix", "featureDescriptionHtml", "featureHref", "featureCtaText",
-  "featureSpec1Label", "featureSpec1Value", "featureSpec2Label", "featureSpec2Value", "featureSpec3Label", "featureSpec3Value", "featureSpec4Label", "featureSpec4Value",
-  "detailNumber", "detailLabel", "detailTitlePrefix", "detailTitleEmphasis", "detailTitleSuffix", "detailSideHtml",
-  "detailCard1Title", "detailCard1DescriptionHtml", "detailCard2Title", "detailCard2DescriptionHtml", "detailCard3Title", "detailCard3DescriptionHtml", "detailCard4Title", "detailCard4DescriptionHtml",
-  "detailCalloutTitlePrefix", "detailCalloutTitleEmphasis", "detailCalloutTitleSuffix", "detailCalloutDescriptionHtml", "detailCalloutButton1Text", "detailCalloutButton1Href", "detailCalloutButton2Text", "detailCalloutButton2Href",
-  "faqNumber", "faqLabel", "faqTitle", "faqSideHtml", "faq1Question", "faq1AnswerHtml", "faq2Question", "faq2AnswerHtml", "faq3Question", "faq3AnswerHtml", "faq4Question", "faq4AnswerHtml", "faq5Question", "faq5AnswerHtml",
-  "finalTitlePrefix", "finalTitleEmphasis", "finalTitleSuffix", "finalDescriptionHtml", "finalPrimaryButtonText", "finalPrimaryButtonHref", "finalSecondaryButtonText", "finalSecondaryButtonHref",
-  "backgroundColor", "textColor", "mutedTextColor", "panelColor", "accentColor", "lineColor",
-  "printerP16lImage", "printerCurieImage", "printerHalotImage", "printerP16lImageAlt", "printerP16lImageAltEn", "printerCurieImageAlt", "printerCurieImageAltEn", "printerHalotImageAlt", "printerHalotImageAltEn",
-] satisfies readonly CategoryOverrideKey[];
-
-function categorySpecificOverrides(props: Props, kind: CategoryLandingData["kind"]): Partial<CategoryLandingOverrides> {
-  const prefix = categoryPropPrefixes[kind];
-  const englishLocale = isEnglishLocale();
-  const values = categoryOverrideKeys
-    .filter((key) => kind === "printers" || !key.startsWith("printer"))
-    .map((key) => {
-      const propName = `${prefix}${key[0].toUpperCase()}${key.slice(1)}` as keyof Props;
-      const isLocalizedText =
-        !key.startsWith("show") &&
-        !key.endsWith("Href") &&
-        !key.endsWith("Color") &&
-        !key.endsWith("Image") &&
-        !key.endsWith("AltEn");
-      if (englishLocale && isLocalizedText) {
-        const englishPropName = `${propName}En` as keyof Props;
-        return [key, props[englishPropName]] as const;
-      }
-      if (englishLocale && key.endsWith("AltEn")) {
-        return [key, props[propName]] as const;
-      }
-      const useEnglishFallback =
-        englishLocale &&
-        typeof props[propName] === "string" &&
-        key.endsWith("Href") &&
-        props[propName].startsWith("/") &&
-        !props[propName].startsWith("/en/");
-      return [key, useEnglishFallback ? undefined : props[propName]] as const;
-    });
-  return Object.fromEntries(values.filter(([, value]) => value !== undefined)) as Partial<CategoryLandingOverrides>;
-}
 
 function stringValue(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -405,17 +340,11 @@ export function ThreeMashCategoryProductsPage(props: Props) {
       : productListCategory || routeCategoryData;
 
   if (detectedCategoryData?.kind === "printers") {
-    return <ThreeMashPrintersSourceLanding {...categorySpecificOverrides(props, detectedCategoryData.kind)} />;
+    return <ThreeMashPrintersSourceLanding {...props} />;
   }
 
   if (detectedCategoryData) {
-    return (
-      <ThreeMashCategoryLanding
-        {...categorySpecificOverrides(props, detectedCategoryData.kind)}
-        data={detectedCategoryData}
-        productList={props.productList}
-      />
-    );
+    return <ThreeMashCategoryLanding {...props} data={detectedCategoryData} productList={props.productList} />;
   }
 
   return (

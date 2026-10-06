@@ -665,13 +665,13 @@ function firstPaintAnnouncementScript() {
 
 function getDefaultProductsFeature() {
   return {
-    eyebrow: tLocalized("YENİ · DÜNYADA İLK", "NEW · WORLD'S FIRST"),
-    title: tLocalized("MASH C1E<br>Akıllı Kürleme Cihazı", "MASH C1E<br>Smart Curing Unit"),
+    eyebrow: tLocalized("YENİ · DÜNYADA İLK", "NEW · WORLD FIRST"),
+    title: tLocalized("MASH C1E<br>Akıllı Kürleme Cihazı", "MASH C1E<br>Smart Post-Curing Solution"),
     description: tLocalized(
       "Post-curing'i kullanıcı hatasından arındırır: reçineye göre süre, sıcaklık ve dalga boyunu otomatik yönetir.",
-      "Eliminates user error in post-curing: automatically manages time, temperature, and wavelength based on resin."
+      "Automatically manages curing time, temperature, and wavelength by resin to eliminate user error and improve repeatability."
     ),
-    ctaText: tLocalized("Keşfet →", "Discover →"),
+    ctaText: tLocalized("Keşfet →", "Explore →"),
     href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"),
   };
 }
@@ -679,14 +679,14 @@ function getDefaultProductsFeature() {
 function getDefaultProductPrimary(): Required<MenuItem>[] {
   return [
     { title: tLocalized("3D Yazıcılar", "3D Printers"), description: tLocalized("P1D / P16L hassas baskı", "P1D / P16L precision printing"), href: "/3d-yazicilar", icon: ecoPrinterIcon },
-    { title: tLocalized("Yıkama & Kürleme", "Wash & Cure"), description: tLocalized("Yıkama ve akıllı kürleme", "Wash and smart curing"), href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"), icon: ecoScannerIcon },
+    { title: tLocalized("Yıkama & Kürleme", "Wash & Cure"), description: tLocalized("Yıkama ve akıllı kürleme", "Cleaning and intelligent curing"), href: tLocalized("/yikama-kurleme-cihazlari", "/yikama-kurleme-cihazlari"), icon: ecoScannerIcon },
     { title: tLocalized("Dental Reçineler", "Dental Resins"), description: tLocalized("Dental reçine seçenekleri", "Dental resin options"), href: "/dental-3d-yazici-recineleri", icon: ecoResinIcon },
   ];
 }
 
 function getDefaultProductSecondary(): Required<MenuItem>[] {
   return [
-    { title: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), description: tLocalized("Lab tarafında hassas veri", "Precise lab data"), href: "/masasustu-tarayicilar", icon: ecoCuringIcon },
+    { title: tLocalized("Masaüstü Tarayıcılar", "Desktop Scanners"), description: tLocalized("Lab tarafında hassas veri", "High-precision lab scanning"), href: "/masasustu-tarayicilar", icon: ecoCuringIcon },
     { title: tLocalized("Zirkon Bloklar & Titanyum", "Zirconia Blocks & Titanium"), description: tLocalized("Freze tarafının sarfları", "Milling consumables"), href: "/zirkon-bloklar", icon: ecoBlocksIcon },
     { title: tLocalized("Dental Fırınlar", "Dental Furnaces"), description: tLocalized("Sinterleme çözümleri", "Sintering solutions"), href: "/dental-firinlar", icon: ecoOvenIcon },
   ];
@@ -828,14 +828,14 @@ function homeRouteTarget(value: string | undefined) {
   return localizedHref(withoutHash);
 }
 
-function referencesSectionTarget(homeHref?: string, sectionId?: string, customHref?: string) {
+function referencesSectionTarget(sectionId?: string, customHref?: string) {
   if (customHref && customHref.trim()) {
     const raw = customHref.trim();
     if (raw.startsWith("#")) return `/${raw}`;
     if (!raw.startsWith("/") && !raw.startsWith("http")) return `/#${raw}`;
     return raw;
   }
-  const homeTarget = homeRouteTarget(homeHref);
+  const homeTarget = homeRouteTarget(undefined);
   return `${homeTarget}${sectionHash(sectionId, defaultReferencesSectionId)}`;
 }
 
@@ -894,7 +894,6 @@ function referencesClickTarget(homeHref: string | undefined, sectionId: string |
 function handleReferencesClick(
   event: MouseEvent,
   targetHref: string,
-  _homeHref?: string,
   sectionId?: string
 ) {
   const rawHref = targetHref.trim();
@@ -988,6 +987,10 @@ function searchSuggestions(products: IkasProduct[], query: string): SearchSugges
 function text(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
   return trimmed || fallback;
+}
+
+function isExplicitlyEnabled(value: unknown) {
+  return value === true || (typeof value === "string" && value.trim().toLowerCase() === "true");
 }
 
 const legacyThemeCategoryNames = new Set([
@@ -1133,7 +1136,11 @@ function richText(value?: string, props?: Props) {
 }
 
 function announcementRichText(value: string | undefined, props: Props) {
-  return richText(value, props);
+  const raw = isEnglishLocale() ? translateText(value) : value;
+  const markup = sanitizeHtml(inlineHtml(raw));
+  return {
+    __html: styleTextChunks(markup, props.styledPhrase, props.wordStyleEnabled !== false, "tmh-ann-word-style"),
+  };
 }
 
 function RichInline({ value, className, wordStyle }: { value?: string; className?: string; wordStyle?: Props }) {
@@ -1580,11 +1587,7 @@ function handleHeaderAnchorNavigation(event: MouseEvent, rawHref: string | undef
 
 function Logo({ props }: { props: Props }) {
   const { logoText, logoHref, logoImageAlt, logoImageUrl } = props;
-  const logoImage = typeof logoImageUrl === "string" && logoImageUrl.trim()
-    ? logoImageUrl.trim()
-    : logoImageUrl && typeof logoImageUrl === "object" && "src" in logoImageUrl && (logoImageUrl as any).src
-    ? (logoImageUrl as any).src
-    : threeMashHeaderLogoImage;
+  const logoImage = (logoImageUrl ? getDefaultSrc(logoImageUrl) : "") || threeMashHeaderLogoImage;
 
   return (
     <a className="tmh-logo" href={headerRouteHref(logoHref, "/")} aria-label={logoText || "3mash"}>
@@ -1697,7 +1700,7 @@ export function ThreeMashHeader(props: Props) {
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
   const accountIcon = resolveActionIcon(props.accountIconImageUrl, props.accountIconSvg, defaultAccountSvg, showActionIcons);
   const cartIcon = resolveActionIcon(props.cartIconImageUrl, props.cartIconSvg, defaultCartSvg, showActionIcons);
-  const referencesTargetHref = referencesSectionTarget(props.referencesHomeHref, props.referencesSectionId, props.referencesHref);
+  const referencesTargetHref = referencesSectionTarget(props.referencesSectionId, props.referencesHref);
   const searchProductList = resolvedSearchProductList || normalizeSearchProductList(props.searchProductList);
   const searchSuggestionItems = searchSuggestions(searchProductList?.data || [], searchQuery);
   const hasSearchSuggestions = isSearchOpen && searchQuery.trim().length > 0 && searchSuggestionItems.length > 0;
@@ -1990,16 +1993,6 @@ export function ThreeMashHeader(props: Props) {
     "--tmh-logo-image-saturation": percentage(props.logoImageSaturation, 100, 0, 300),
     "--tmh-logo-image-hue": `${numberInRange(props.logoImageHue, 0, -180, 180)}deg`,
     "--tmh-logo-image-invert": percentage(props.logoImageInvert, 0, 0, 100),
-    "--tmh-logo-svg-width": `${numberInRange(props.logoSvgWidth, 116, 116, 118)}px`,
-    "--tmh-logo-svg-height": `${numberInRange(props.logoSvgHeight, 24, 24, 25)}px`,
-    "--tmh-logo-svg-x": `${numberInRange(props.logoSvgXOffset, 0, -24, 24)}px`,
-    "--tmh-logo-svg-y": `${numberInRange(props.logoSvgYOffset, 0, -24, 24)}px`,
-    "--tmh-logo-svg-opacity": numberInRange(props.logoSvgOpacity, 100, 0, 100) / 100,
-    "--tmh-logo-svg-brightness": percentage(props.logoSvgBrightness, 100, 0, 220),
-    "--tmh-logo-svg-contrast": percentage(props.logoSvgContrast, 100, 0, 220),
-    "--tmh-logo-svg-saturation": percentage(props.logoSvgSaturation, 100, 0, 300),
-    "--tmh-logo-svg-hue": `${numberInRange(props.logoSvgHue, 0, -180, 180)}deg`,
-    "--tmh-logo-svg-invert": percentage(props.logoSvgInvert, 0, 0, 100),
     "--tmh-action-icon-image-width": "22px",
     "--tmh-action-icon-image-height": "22px",
     "--tmh-action-icon-svg-width": "22px",
@@ -2566,7 +2559,7 @@ export function ThreeMashHeader(props: Props) {
                       <ProductLink item={item} wordStyle={props} key={index} />
                     ))}
                   </div>
-                  {props.showAllProductsLink !== false && (
+                  {isExplicitlyEnabled(props.showAllProductsLink) && (
                     <div className="tmh-products-mega-footer">
                       <a className="tmh-all-products-link" href={localizedHref(props.allProductsHref || "/tum-urunler")}>
                         <RichInline value={props.allProductsText || tLocalized("Tüm Ürünleri Gör →", "View All Products →")} wordStyle={props} />
@@ -2614,7 +2607,7 @@ export function ThreeMashHeader(props: Props) {
                   <a
                     className="tmh-plain-link"
                     href={referencesTargetHref}
-                    onClick={(event) => handleReferencesClick(event, referencesTargetHref, props.referencesHomeHref, props.referencesSectionId)}
+                    onClick={(event) => handleReferencesClick(event, referencesTargetHref, props.referencesSectionId)}
                     onMouseEnter={() => { setActiveMenu(null); setActiveAction(null); }}
                   >
                     <RichInline value={referencesText} wordStyle={props} />
@@ -2732,7 +2725,7 @@ export function ThreeMashHeader(props: Props) {
                   className={`tmh-action-panel tmh-store-panel${activeAction === "store" ? " is-open" : ""}`}
                   hidden={activeAction !== "store"}
                 >
-                  <span className="tmh-action-panel-kicker">{text(props.cartAriaLabel, tLocalized("SEPETİM", "MY CART"))}</span>
+                  <span className="tmh-action-panel-kicker">{tLocalized("SEPETİM", "MY CART")}</span>
                   {cartStatus === "loading" || cartStatus === "idle" ? (
                     <div className="tmh-cart-live tmh-cart-loading-state">
                       <span className="tmh-cart-spinner" aria-hidden="true" />

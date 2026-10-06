@@ -520,13 +520,6 @@
   overflow-wrap: anywhere;
 }
 
-@media (min-width: 961px) {
-  .three-mash-hero {
-    /* Fill the viewport area below the 37px announcement and 70px nav. */
-    min-height: calc(100dvh - 107px);
-  }
-}
-
 @media (min-width: 1101px) and (max-width: 1400px) {
   .tmhero-copy h1 {
     font-size: 60px;
