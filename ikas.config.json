@@ -14672,7 +14672,7 @@
           "displayName": "📝 Bölüm Etiketi",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Seçim Kontrolü",
+          "defaultValue": "ÜRÜN ÖZELLİKLERİ",
           "description": "Numaranın yanındaki büyük harf etiket",
           "groupId": "content"
         },
@@ -14683,7 +14683,7 @@
           "required": false,
           "description": "Bölümün sol tarafındaki büyük h2 başlığı",
           "groupId": "content",
-          "defaultValue": "Doğru ürün, <span class='hl'>iş akışına</span> göre seçilir."
+          "defaultValue": "Buraya ürünün öne çıkan <span class=hl>özelliğini yazın.</span>"
         },
         {
           "name": "sideHtml",
@@ -14692,7 +14692,7 @@
           "required": false,
           "description": "Başlığın sağındaki açıklama paragrafı",
           "groupId": "content",
-          "defaultValue": "Halot-Sky seçimi yapılırken cihaz versiyonu, reçine uyumu ve hedeflenen hassasiyet birlikte kontrol edilmelidir."
+          "defaultValue": "Buraya ürünün hangi ihtiyacı karşıladığını ve kullanıcıya sağladığı faydayı yazın."
         },
         {
           "name": "panelTitleHtml",
@@ -14701,7 +14701,7 @@
           "required": false,
           "description": "Siyah panelin içindeki büyük h3 başlığı",
           "groupId": "content",
-          "defaultValue": "Creality Halot-Sky 6K için <span class='em'>kontrol listesi.</span>"
+          "defaultValue": "Buraya ürünün <span class=em>kullanım avantajlarını yazın.</span>"
         },
         {
           "name": "panelNote",
@@ -14710,7 +14710,7 @@
           "required": false,
           "description": "Başlığın hemen altındaki küçük gri not metni",
           "groupId": "content",
-          "defaultValue": "Satın alma öncesi kontrol edilmesi gereken başlıklar."
+          "defaultValue": "Her maddeye ürünün doğrulanmış bir özelliğini veya faydasını ekleyin."
         },
         {
           "name": "item1DescriptionHtml",
@@ -14719,7 +14719,7 @@
           "required": false,
           "description": "Örn: <b>%94</b> kullanıcı kole hattını net görüyor.",
           "groupId": "checklist",
-          "defaultValue": "Ürün, laboratuvarın mevcut cihaz ve üretim akışıyla <b>uyumlu</b> seçilmelidir."
+          "defaultValue": "Buraya ürünün 1. öne çıkan özelliğini veya faydasını yazın."
         },
         {
           "name": "item1Percent",
@@ -14735,7 +14735,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "groupId": "checklist",
-          "defaultValue": "Vaka tipi, kapasite ve teknik gereksinimler <b>satın alma öncesi</b> netleştirilmelidir."
+          "defaultValue": "Buraya ürünün 2. öne çıkan özelliğini veya faydasını yazın."
         },
         {
           "name": "item2Percent",
@@ -14751,7 +14751,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "groupId": "checklist",
-          "defaultValue": "Kurulum veya kullanım sonrası süreç için <b>teknik destek</b> planlanmalıdır."
+          "defaultValue": "Buraya ürünün 3. öne çıkan özelliğini veya faydasını yazın."
         },
         {
           "name": "item3Percent",
@@ -14798,7 +14798,7 @@
           "displayName": "🌐 İngilizce Bölüm Etiketi",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Selection Check",
+          "defaultValue": "PRODUCT FEATURES",
           "groupId": "contentLocale"
         },
         {
@@ -14806,7 +14806,7 @@
           "displayName": "🌐 İngilizce Ana Başlık",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "The right product is selected <span class='hl'>according to the workflow.</span>",
+          "defaultValue": "Add the product's key <span class=hl>feature here.</span>",
           "groupId": "contentLocale"
         },
         {
@@ -14814,7 +14814,7 @@
           "displayName": "🌐 İngilizce Yan Açıklama",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "When choosing the Halot-Sky, the device version, resin compatibility, and target precision should be checked together.",
+          "defaultValue": "Describe the need this product addresses and the benefit it provides here.",
           "groupId": "contentLocale"
         },
         {
@@ -14822,7 +14822,7 @@
           "displayName": "🌐 İngilizce Kontrol Listesi Başlığı",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Checklist for <span class='em'>Creality Halot-Sky 6K.</span>",
+          "defaultValue": "Add the product's <span class=em>usage benefits here.</span>",
           "groupId": "contentLocale"
         },
         {
@@ -14830,7 +14830,7 @@
           "displayName": "🌐 İngilizce Kontrol Listesi Notu",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Items that should be checked before purchase.",
+          "defaultValue": "Add a verified product feature or benefit to each item.",
           "groupId": "contentLocale"
         },
         {
@@ -14838,7 +14838,7 @@
           "displayName": "🌐 İngilizce 1. Madde",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "The product should be chosen to be <b>compatible</b> with the lab's existing devices and production workflow.",
+          "defaultValue": "Add the product's first key feature or benefit here.",
           "groupId": "checklistLocale"
         },
         {
@@ -14846,7 +14846,7 @@
           "displayName": "🌐 İngilizce 2. Madde",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Case type, capacity, and technical requirements should be clarified <b>before purchase</b>.",
+          "defaultValue": "Add the product's second key feature or benefit here.",
           "groupId": "checklistLocale"
         },
         {
@@ -14854,7 +14854,7 @@
           "displayName": "🌐 İngilizce 3. Madde",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "<b>Technical support</b> should be arranged for the installation or post-use process.",
+          "defaultValue": "Add the product's third key feature or benefit here.",
           "groupId": "checklistLocale"
         },
         {
@@ -14862,7 +14862,7 @@
           "displayName": "➕ 4. Madde Açıklaması",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Kurulum alanı, elektrik altyapısı ve çalışma koşulları önceden hazırlanmalıdır.",
+          "defaultValue": "Buraya ürünün 4. öne çıkan özelliğini veya faydasını yazın.",
           "groupId": "checklist"
         },
         {
@@ -14870,7 +14870,7 @@
           "displayName": "🌐 İngilizce 4. Madde",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Prepare the installation area, electrical supply, and operating conditions in advance.",
+          "defaultValue": "Add the product's fourth key feature or benefit here.",
           "groupId": "checklistLocale"
         },
         {
@@ -14886,7 +14886,7 @@
           "displayName": "➕ 5. Madde Açıklaması",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Üretim hacmine uygun bakım, yıkama ve kürleme planı oluşturulmalıdır.",
+          "defaultValue": "Buraya ürünün 5. öne çıkan özelliğini veya faydasını yazın.",
           "groupId": "checklist"
         },
         {
@@ -14894,7 +14894,7 @@
           "displayName": "🌐 İngilizce 5. Madde",
           "type": "RICH_TEXT",
           "required": false,
-          "defaultValue": "Plan maintenance, washing, and curing around the expected production volume.",
+          "defaultValue": "Add the product's fifth key feature or benefit here.",
           "groupId": "checklistLocale"
         },
         {
@@ -15172,7 +15172,7 @@
           "displayName": "🔗 Buton Metni",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Boyut seç →",
+          "defaultValue": "Buraya buton metnini yazın →",
           "description": "Alt butonun metni",
           "groupId": "specCta"
         },
@@ -15418,7 +15418,7 @@
           "displayName": "📝 Metrik 4 Adı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Ek teknik metrik 1",
+          "defaultValue": "Buraya 4. teknik özellik adını yazın.",
           "groupId": "metric4"
         },
         {
@@ -15426,7 +15426,7 @@
           "displayName": "🔢 Metrik 4 Değeri",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "—",
+          "defaultValue": "Teknik değeri girin",
           "groupId": "metric4"
         },
         {
@@ -15448,7 +15448,7 @@
           "displayName": "📝 Metrik 4 Açıklaması",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Ek teknik değere ilişkin açıklama.",
+          "defaultValue": "Buraya bu teknik değere ait kısa açıklamayı yazın.",
           "groupId": "metric4"
         },
         {
@@ -15456,7 +15456,7 @@
           "displayName": "🌐 İngilizce Metrik 4 Adı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Additional technical metric 1",
+          "defaultValue": "Add the fourth specification name here.",
           "groupId": "metric4English"
         },
         {
@@ -15464,7 +15464,7 @@
           "displayName": "🌐 İngilizce Metrik 4 Değeri",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "—",
+          "defaultValue": "Enter the specification value",
           "groupId": "metric4English"
         },
         {
@@ -15486,7 +15486,7 @@
           "displayName": "🌐 İngilizce Metrik 4 Açıklaması",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Explanation for the additional technical metric.",
+          "defaultValue": "Add a short explanation of this specification here.",
           "groupId": "metric4English"
         },
         {
@@ -15494,7 +15494,7 @@
           "displayName": "📝 Metrik 5 Adı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Ek teknik metrik 2",
+          "defaultValue": "Buraya 5. teknik özellik adını yazın.",
           "groupId": "metric5"
         },
         {
@@ -15502,7 +15502,7 @@
           "displayName": "🔢 Metrik 5 Değeri",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "—",
+          "defaultValue": "Teknik değeri girin",
           "groupId": "metric5"
         },
         {
@@ -15524,7 +15524,7 @@
           "displayName": "📝 Metrik 5 Açıklaması",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Ek teknik değere ilişkin açıklama.",
+          "defaultValue": "Buraya bu teknik değere ait kısa açıklamayı yazın.",
           "groupId": "metric5"
         },
         {
@@ -15532,7 +15532,7 @@
           "displayName": "🌐 İngilizce Metrik 5 Adı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Additional technical metric 2",
+          "defaultValue": "Add the fifth specification name here.",
           "groupId": "metric5English"
         },
         {
@@ -15540,7 +15540,7 @@
           "displayName": "🌐 İngilizce Metrik 5 Değeri",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "—",
+          "defaultValue": "Enter the specification value",
           "groupId": "metric5English"
         },
         {
@@ -15562,7 +15562,7 @@
           "displayName": "🌐 İngilizce Metrik 5 Açıklaması",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Explanation for the additional technical metric.",
+          "defaultValue": "Add a short explanation of this specification here.",
           "groupId": "metric5English"
         },
         {
@@ -15592,7 +15592,7 @@
           "type": "TEXT",
           "required": false,
           "groupId": "specCtaEnglish",
-          "defaultValue": "Select size →"
+          "defaultValue": "Add button text here →"
         },
         {
           "name": "specRow1LabelEn",
@@ -17399,7 +17399,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "Bölüm başlığını HTML biçimlendirmesiyle düzenler.",
-          "defaultValue": "Sıkça sorulan sorular <span class=em>ve yanıtlar.</span>",
+          "defaultValue": "Buraya ürünün <span class=em>sıkça sorulan sorular</span> başlığını yazın.",
           "groupId": "content"
         },
         {
@@ -17408,7 +17408,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "Başlığın yanında gösterilen açıklama.",
-          "defaultValue": "Bu ürünle ilgili en çok merak edilen konulara dair açıklamalar.",
+          "defaultValue": "Soru alanlarına müşterilerin ürünü almadan önce merak edebileceği konuları, yanıt alanlarına doğru bilgileri ekleyin.",
           "groupId": "content"
         },
         {
@@ -17426,7 +17426,7 @@
           "type": "TEXT",
           "required": false,
           "description": "1. mevcut SSS maddesinin Türkçe sorusu.",
-          "defaultValue": "1. Örnek soru metni buraya gelecek?",
+          "defaultValue": "Buraya ürünle ilgili sık sorulan 1. soruyu yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17435,7 +17435,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "1. mevcut SSS maddesinin Türkçe HTML destekli yanıtı.",
-          "defaultValue": "1. Soruya ait detaylı cevap metni buraya gelecek.",
+          "defaultValue": "Buraya 1. sorunun yanıtını yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17444,7 +17444,7 @@
           "type": "TEXT",
           "required": false,
           "description": "2. mevcut SSS maddesinin Türkçe sorusu.",
-          "defaultValue": "2. Örnek soru metni buraya gelecek?",
+          "defaultValue": "Buraya ürünle ilgili sık sorulan 2. soruyu yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17453,7 +17453,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "2. mevcut SSS maddesinin Türkçe HTML destekli yanıtı.",
-          "defaultValue": "2. Soruya ait detaylı cevap metni buraya gelecek.",
+          "defaultValue": "Buraya 2. sorunun yanıtını yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17462,7 +17462,7 @@
           "type": "TEXT",
           "required": false,
           "description": "3. mevcut SSS maddesinin Türkçe sorusu.",
-          "defaultValue": "3. Örnek soru metni buraya gelecek?",
+          "defaultValue": "Buraya ürünle ilgili sık sorulan 3. soruyu yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17471,7 +17471,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "3. mevcut SSS maddesinin Türkçe HTML destekli yanıtı.",
-          "defaultValue": "3. Soruya ait detaylı cevap metni buraya gelecek.",
+          "defaultValue": "Buraya 3. sorunun yanıtını yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17480,7 +17480,7 @@
           "type": "TEXT",
           "required": false,
           "description": "4. mevcut SSS maddesinin Türkçe sorusu.",
-          "defaultValue": "4. Soru metnini buraya girin.",
+          "defaultValue": "Buraya ürünle ilgili sık sorulan 4. soruyu yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17489,7 +17489,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "4. mevcut SSS maddesinin Türkçe HTML destekli yanıtı.",
-          "defaultValue": "4. sorunun cevabını buraya ekleyin.",
+          "defaultValue": "Buraya 4. sorunun yanıtını yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17498,7 +17498,7 @@
           "type": "TEXT",
           "required": false,
           "description": "5. mevcut SSS maddesinin Türkçe sorusu.",
-          "defaultValue": "5. Soru metnini buraya girin.",
+          "defaultValue": "Buraya ürünle ilgili sık sorulan 5. soruyu yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17507,7 +17507,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "5. mevcut SSS maddesinin Türkçe HTML destekli yanıtı.",
-          "defaultValue": "5. sorunun cevabını buraya ekleyin.",
+          "defaultValue": "Buraya 5. sorunun yanıtını yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17516,7 +17516,7 @@
           "type": "TEXT",
           "required": false,
           "description": "6. mevcut SSS maddesinin Türkçe sorusu.",
-          "defaultValue": "6. Soru metnini buraya girin.",
+          "defaultValue": "Buraya ürünle ilgili sık sorulan 6. soruyu yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17525,7 +17525,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "6. mevcut SSS maddesinin Türkçe HTML destekli yanıtı.",
-          "defaultValue": "6. sorunun cevabını buraya ekleyin.",
+          "defaultValue": "Buraya 6. sorunun yanıtını yazın.",
           "groupId": "faqExisting"
         },
         {
@@ -17578,7 +17578,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "titleHtml alanının İngilizce karşılığı.",
-          "defaultValue": "Frequently asked questions <span class=em>and answers.</span>",
+          "defaultValue": "Add the <span class=em>frequently asked questions</span> heading here.",
           "groupId": "contentLocale"
         },
         {
@@ -17587,7 +17587,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "sideHtml alanının İngilizce karşılığı.",
-          "defaultValue": "Explanations for the most frequently asked questions about this product.",
+          "defaultValue": "Add common pre-purchase questions and accurate answers in the question and answer fields.",
           "groupId": "contentLocale"
         },
         {
@@ -17596,7 +17596,7 @@
           "type": "TEXT",
           "required": false,
           "description": "English version of faq1Question.",
-          "defaultValue": "How does this product fit into the workflow?",
+          "defaultValue": "Add the first frequently asked question about this product here.",
           "groupId": "faqLocale"
         },
         {
@@ -17605,7 +17605,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "English version of faq1AnswerHtml.",
-          "defaultValue": "A practical overview of how this product integrates into the workflow and supports daily laboratory use.",
+          "defaultValue": "Add the answer to question 1 here.",
           "groupId": "faqLocale"
         },
         {
@@ -17614,7 +17614,7 @@
           "type": "TEXT",
           "required": false,
           "description": "English version of faq2Question.",
-          "defaultValue": "What should be checked before installation?",
+          "defaultValue": "Add the second frequently asked question about this product here.",
           "groupId": "faqLocale"
         },
         {
@@ -17623,7 +17623,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "English version of faq2AnswerHtml.",
-          "defaultValue": "Review compatibility, handling requirements, and the expected application to ensure a smooth setup.",
+          "defaultValue": "Add the answer to question 2 here.",
           "groupId": "faqLocale"
         },
         {
@@ -17632,7 +17632,7 @@
           "type": "TEXT",
           "required": false,
           "description": "English version of faq3Question.",
-          "defaultValue": "Which use cases are most suitable?",
+          "defaultValue": "Add the third frequently asked question about this product here.",
           "groupId": "faqLocale"
         },
         {
@@ -17641,7 +17641,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "English version of faq3AnswerHtml.",
-          "defaultValue": "Common workflow applications and best-fit scenarios are outlined here to guide selection and adoption.",
+          "defaultValue": "Add the answer to question 3 here.",
           "groupId": "faqLocale"
         },
         {
@@ -17650,7 +17650,7 @@
           "type": "TEXT",
           "required": false,
           "description": "English version of faq4Question.",
-          "defaultValue": "How should this product be stored?",
+          "defaultValue": "Add the fourth frequently asked question about this product here.",
           "groupId": "faqLocale"
         },
         {
@@ -17659,7 +17659,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "English version of faq4AnswerHtml.",
-          "defaultValue": "Follow the storage guidance supplied with the product to maintain its intended performance.",
+          "defaultValue": "Add the answer to question 4 here.",
           "groupId": "faqLocale"
         },
         {
@@ -17668,7 +17668,7 @@
           "type": "TEXT",
           "required": false,
           "description": "English version of faq5Question.",
-          "defaultValue": "Which materials are compatible with this product?",
+          "defaultValue": "Add the fifth frequently asked question about this product here.",
           "groupId": "faqLocale"
         },
         {
@@ -17677,7 +17677,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "English version of faq5AnswerHtml.",
-          "defaultValue": "Check the product documentation for compatible equipment, materials, and recommended settings.",
+          "defaultValue": "Add the answer to question 5 here.",
           "groupId": "faqLocale"
         },
         {
@@ -17686,7 +17686,7 @@
           "type": "TEXT",
           "required": false,
           "description": "English version of faq6Question.",
-          "defaultValue": "Where can I find technical support?",
+          "defaultValue": "Add the sixth frequently asked question about this product here.",
           "groupId": "faqLocale"
         },
         {
@@ -17695,7 +17695,7 @@
           "type": "RICH_TEXT",
           "required": false,
           "description": "English version of faq6AnswerHtml.",
-          "defaultValue": "Contact the product support team for setup guidance and technical assistance.",
+          "defaultValue": "Add the answer to question 6 here.",
           "groupId": "faqLocale"
         },
         {
@@ -18066,28 +18066,32 @@
           "displayName": "📝 Otomatik Carousel Başlığı",
           "type": "RICH_TEXT",
           "required": false,
-          "groupId": "content"
+          "groupId": "content",
+          "defaultValue": "Buraya ilgili ürünler bölümünün başlığını yazın."
         },
         {
           "name": "titleTextEn",
           "displayName": "🌐 İngilizce Otomatik Carousel Başlığı",
           "type": "RICH_TEXT",
           "required": false,
-          "groupId": "contentLocale"
+          "groupId": "contentLocale",
+          "defaultValue": "Add a heading for the related products section here."
         },
         {
           "name": "descriptionHtml",
           "displayName": "📝 Otomatik Carousel Açıklaması",
           "type": "RICH_TEXT",
           "required": false,
-          "groupId": "content"
+          "groupId": "content",
+          "defaultValue": "Buraya listelenecek ürünlerin hangi kategoriye veya ürün grubuna ait olduğunu açıklayın."
         },
         {
           "name": "descriptionHtmlEn",
           "displayName": "🌐 İngilizce Carousel Açıklaması",
           "type": "RICH_TEXT",
           "required": false,
-          "groupId": "contentLocale"
+          "groupId": "contentLocale",
+          "defaultValue": "Describe the category or product group shown in this carousel here."
         },
         {
           "name": "relatedLabelEn",
@@ -18368,7 +18372,7 @@
           "displayName": "📝 Ürün Yok Durum Mesajı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "İlgili ürünler kısa süre içinde burada listelenecek.",
+          "defaultValue": "Buraya gösterilecek kategori veya ürün listesini seçin; eşleşen ürünler burada listelenir.",
           "groupId": "content"
         },
         {
@@ -18376,7 +18380,7 @@
           "displayName": "🌐 İngilizce Ürün Yok Mesajı",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "Related products will be listed here shortly.",
+          "defaultValue": "Select the category or product list to display; matching products will appear here.",
           "groupId": "contentLocale"
         },
         {

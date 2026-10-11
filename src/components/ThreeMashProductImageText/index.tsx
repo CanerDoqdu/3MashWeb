@@ -57,7 +57,7 @@ function overrideUseCasesData(baseData: ProductDetailTemplateData | null, props:
   for (const [index, override] of photoOverrides.entries()) {
     const existing = photos[index];
     const src = imageSource(override.image);
-    if (!src && !existing?.src) continue;
+    if (!src && !existing) continue;
     photos[index] = {
       ...existing,
       src: src || existing?.src || "",

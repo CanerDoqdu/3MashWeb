@@ -6,6 +6,7 @@ import {
   type ProductDetailTemplateData,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { isEnglishLocale, isTurkishText, tLocalized } from "../../utils/i18n";
+import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 
 function trimmedText(value: unknown): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -31,7 +32,7 @@ function safeVideoHref(value: unknown): string {
   }
 }
 
-function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Props): ProductDetailTemplateData | null {
+function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Props, showPlaceholder: boolean): ProductDetailTemplateData | null {
   const currentVideo = baseData?.video;
 
   // 01. Bölüm Başlığı
@@ -41,7 +42,7 @@ function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Pr
   const sideHtml = trimmedText(props.sideHtml) || currentVideo?.sideHtml || "";
 
   const href = safeVideoHref(props.videoHref) || safeVideoHref(currentVideo?.href);
-  if (!href) return null;
+  if (!href && !showPlaceholder) return null;
 
   const base = baseData || ({
     key: "product-video",
@@ -54,24 +55,25 @@ function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Pr
     video: {
       index,
       label,
-      titleHtml,
-      sideHtml,
+      titleHtml: titleHtml || (showPlaceholder ? tLocalized("Buraya ürün tanıtım videosunun <span class=\"em\">başlığını yazın.</span>", "Add a <span class=\"em\">title</span> for the product video here.") : ""),
+      sideHtml: sideHtml || (showPlaceholder ? tLocalized("YouTube, Vimeo veya doğrudan video adresini Video URL alanına ekleyin.", "Add a YouTube, Vimeo, or direct video URL in the Video URL field.") : ""),
       href,
       image: currentVideo?.image || "",
       imageAlt: currentVideo?.imageAlt || "",
       title: currentVideo?.title || tLocalized("Ürün videosu", "Product video"),
-      text: currentVideo?.text || "",
+      text: currentVideo?.text || (showPlaceholder ? tLocalized("Video adresini ekleyerek bu bölümü tamamlayın.", "Add a video URL to complete this section.") : ""),
       meta: currentVideo?.meta || "",
     },
   };
 }
 
 export function ThreeMashProductVideo(props: Props) {
+  const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
   const rawData = sharedData || fallbackData;
 
-  const data = overrideVideoData(rawData, props);
+  const data = overrideVideoData(rawData, props, isStudio);
   if (!data) return null;
 
   return (
@@ -82,7 +84,7 @@ export function ThreeMashProductVideo(props: Props) {
         textColor: props.textColor,
       }}
     >
-      <ProductDetailVideoSection data={data} />
+      <ProductDetailVideoSection data={data} showEmptyState={isStudio} />
     </ProductDetailSectionScope>
   );
 }

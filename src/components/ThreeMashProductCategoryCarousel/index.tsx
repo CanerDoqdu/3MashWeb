@@ -24,6 +24,7 @@ import {
 import { tLocalized, localizedHref, translateText, isEnglishLocale, hasEnglishProductPage } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
+import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 
 function propString(value: unknown) {
   if (typeof value === "string") return value;
@@ -371,6 +372,7 @@ function sourceRelatedProduct(product: IkasProduct): ProductDetailRelatedProduct
 }
 
 export function ThreeMashProductCategoryCarousel(props: Props) {
+  const isStudio = isStudioEnvironment();
   const rawSourceData = useSharedProductDetailData(props.product, props.productTemplateJson);
 
   const rawRelated = rawSourceData?.related;
@@ -581,6 +583,11 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
             nextProductsLabel={localizedPropText(props.nextProductsLabel, props.nextProductsLabelEn, tLocalized("Sonraki ilgili ürünler", "Next related products"))}
             categoryProductsAriaLabel={localizedPropText(props.categoryProductsAriaLabel, props.categoryProductsAriaLabelEn, tLocalized("İlgili ürünler", "Related products"))}
             productLinkText={localizedPropText(props.relatedProductLinkText, props.relatedProductLinkTextEn, tLocalized("İncele", "View"))}
+            emptyMessage={isStudio
+              ? isLoading
+                ? localizedPropText(props.loadingProductsText, props.loadingProductsTextEn, tLocalized("Ürünler yükleniyor...", "Loading products..."))
+                : localizedPropText(props.setupMessage, props.setupMessageEn, tLocalized("Buraya gösterilecek kategori veya ürün listesini seçin.", "Select the category or product list to display here."))
+              : undefined}
           />
         ) : null}
         {props.showFinalCta !== false ? (

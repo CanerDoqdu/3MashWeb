@@ -27,14 +27,14 @@ function overrideFaqData(baseData: ProductDetailTemplateData | null, props: Prop
 
   const currentFaq = baseData.faq;
   const defaults = [
-    { q: "1. Örnek soru metni buraya gelecek?", qe: "How does this product fit into the workflow?", a: "1. Soruya ait detaylı cevap metni buraya gelecek.", ae: "A practical overview of how this product integrates into the workflow and supports daily laboratory use." },
-    { q: "2. Örnek soru metni buraya gelecek?", qe: "What should be checked before installation?", a: "2. Soruya ait detaylı cevap metni buraya gelecek.", ae: "Review compatibility, handling requirements, and the expected application to ensure a smooth setup." },
-    { q: "3. Örnek soru metni buraya gelecek?", qe: "Which use cases are most suitable?", a: "3. Soruya ait detaylı cevap metni buraya gelecek.", ae: "Common workflow applications and best-fit scenarios are outlined here to guide selection and adoption." },
-    { q: "4. Soru metnini buraya girin.", qe: "How should this product be stored?", a: "4. sorunun cevabını buraya ekleyin.", ae: "Follow the storage guidance supplied with the product to maintain its intended performance." },
-    { q: "5. Soru metnini buraya girin.", qe: "Which materials are compatible with this product?", a: "5. sorunun cevabını buraya ekleyin.", ae: "Check the product documentation for compatible equipment, materials, and recommended settings." },
-    { q: "6. Soru metnini buraya girin.", qe: "Where can I find technical support?", a: "6. sorunun cevabını buraya ekleyin.", ae: "Contact the product support team for setup guidance and technical assistance." },
-    { q: "Yeni soru 7 metnini buraya girin.", qe: "Enter the text for new question 7.", a: "7. yeni sorunun yanıtını buraya ekleyin.", ae: "Add the answer for new question 7 here." },
-    { q: "Yeni soru 8 metnini buraya girin.", qe: "Enter the text for new question 8.", a: "8. yeni sorunun yanıtını buraya ekleyin.", ae: "Add the answer for new question 8 here." },
+    { q: "Buraya ürünle ilgili sık sorulan 1. soruyu yazın.", qe: "Add the first frequently asked question about this product here.", a: "Buraya 1. sorunun yanıtını yazın.", ae: "Add the answer to question 1 here." },
+    { q: "Buraya ürünle ilgili sık sorulan 2. soruyu yazın.", qe: "Add the second frequently asked question about this product here.", a: "Buraya 2. sorunun yanıtını yazın.", ae: "Add the answer to question 2 here." },
+    { q: "Buraya ürünle ilgili sık sorulan 3. soruyu yazın.", qe: "Add the third frequently asked question about this product here.", a: "Buraya 3. sorunun yanıtını yazın.", ae: "Add the answer to question 3 here." },
+    { q: "Buraya ürünle ilgili sık sorulan 4. soruyu yazın.", qe: "Add the fourth frequently asked question about this product here.", a: "Buraya 4. sorunun yanıtını yazın.", ae: "Add the answer to question 4 here." },
+    { q: "Buraya ürünle ilgili sık sorulan 5. soruyu yazın.", qe: "Add the fifth frequently asked question about this product here.", a: "Buraya 5. sorunun yanıtını yazın.", ae: "Add the answer to question 5 here." },
+    { q: "Buraya ürünle ilgili sık sorulan 6. soruyu yazın.", qe: "Add the sixth frequently asked question about this product here.", a: "Buraya 6. sorunun yanıtını yazın.", ae: "Add the answer to question 6 here." },
+    { q: "Buraya ürünle ilgili yeni 7. soruyu yazın.", qe: "Add a new seventh question about this product here.", a: "Buraya 7. sorunun yanıtını yazın.", ae: "Add the answer to question 7 here." },
+    { q: "Buraya ürünle ilgili yeni 8. soruyu yazın.", qe: "Add a new eighth question about this product here.", a: "Buraya 8. sorunun yanıtını yazın.", ae: "Add the answer to question 8 here." },
   ];
   const inputs = [
     { q: props.faq1Question, qe: props.faq1QuestionEn, a: props.faq1AnswerHtml, ae: props.faq1AnswerHtmlEn, show: props.showFaqItem1 !== false },

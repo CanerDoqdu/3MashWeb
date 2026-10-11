@@ -865,26 +865,30 @@ export function ProductDetailUseCasesSection({
               >
                 <div className="tmpdt-pshot-im">
                   {photo.mediaType === tLocalized("video", "video") ? (
-                    <video
-                      src={photo.src}
-                      aria-label={photo.alt}
-                      width="100%"
-                      height="100%"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      style={photoTransformStyle(photo)}
-                    />
+                    photo.src ? (
+                      <video
+                        src={photo.src}
+                        aria-label={photo.alt}
+                        width="100%"
+                        height="100%"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        style={photoTransformStyle(photo)}
+                      />
+                    ) : null
                   ) : (
-                    <img
-                      src={photo.src}
-                      alt={photo.alt}
-                      loading="lazy"
-                      decoding="async"
-                      style={photoTransformStyle(photo)}
-                    />
+                    photo.src ? (
+                      <img
+                        src={photo.src}
+                        alt={photo.alt}
+                        loading="lazy"
+                        decoding="async"
+                        style={photoTransformStyle(photo)}
+                      />
+                    ) : null
                   )}
                 </div>
                 <div className="tmpdt-pshot-cp">
@@ -1056,7 +1060,7 @@ function isDirectVideoFile(url: string | undefined): boolean {
   return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url.trim());
 }
 
-export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplateData }) {
+export function ProductDetailVideoSection({ data, showEmptyState = false }: { data: ProductDetailTemplateData; showEmptyState?: boolean }) {
   const video = data.video;
   if (!video) return null;
 
@@ -1070,7 +1074,7 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
   const [isMuted, setIsMuted] = useState(true);
 
   const videoHref = video.href?.trim();
-  if (!videoHref) return null;
+  if (!videoHref && !showEmptyState) return null;
   const youtubeId = extractYouTubeId(videoHref);
   const isDirect = isDirectVideoFile(videoHref);
 
@@ -1150,9 +1154,9 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
         <SectionIndex index={video.index} label={video.label} />
         <SectionHead titleHtml={video.titleHtml} sideHtml={video.sideHtml} wide />
 
-        <div className={`tmpdt-vid${isPlaying ? " is-playing" : ""}`}>
+        <div className={`tmpdt-vid${videoHref && isPlaying ? " is-playing" : ""}`}>
           {/* Active Player (YouTube iframe or HTML5 video) */}
-          {shouldLoad ? (
+          {videoHref && shouldLoad ? (
             youtubeId ? (
               <iframe
                 ref={iframeRef}
@@ -1184,10 +1188,12 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
                 allowFullScreen
               />
             )
+          ) : !videoHref && showEmptyState ? (
+            <p>{t(video.text)}</p>
           ) : null}
 
           {/* Audio Toggle / Unmute Control */}
-          {isPlaying ? (
+          {videoHref && isPlaying ? (
             <button
               type="button"
               className="tmpdt-sound-btn"
@@ -1229,6 +1235,7 @@ export function ProductDetailRelatedSection({
   nextProductsLabel,
   categoryProductsAriaLabel,
   productLinkText,
+  emptyMessage,
 }: {
   data: ProductDetailTemplateData;
   products?: ProductDetailRelatedProduct[];
@@ -1242,13 +1249,28 @@ export function ProductDetailRelatedSection({
   nextProductsLabel?: string;
   categoryProductsAriaLabel?: string;
   productLinkText?: string;
+  emptyMessage?: string;
 }) {
   const related = data.related;
   const hasLiveProductSource = Array.isArray(products);
   const liveProducts = products?.filter((item) => item.id && item.title && item.href) || [];
   const relatedRailRef = useRef<HTMLDivElement>(null);
   const shouldUseLiveProducts = hasLiveProductSource && liveProducts.length > 0;
-  if (!shouldUseLiveProducts && !related?.items.length) return null;
+  if (!shouldUseLiveProducts && !related?.items.length) {
+    if (!emptyMessage) return null;
+    const emptyLabel = related?.label ?? tLocalized("İlgili Ürünler", "Related Products");
+    const emptyIndex = related?.index ?? "07";
+    const emptyTitle = titleHtml ?? related?.titleHtml ?? "";
+    return (
+      <section className="tmpdt-section tmpdt-section-tight">
+        <div className="tmpdt-wrap">
+          {showHeader ? <SectionIndex index={emptyIndex} label={emptyLabel} /> : null}
+          {showHeader ? <SectionHead titleHtml={emptyTitle} wide /> : null}
+          <p>{t(emptyMessage)}</p>
+        </div>
+      </section>
+    );
+  }
 
   function scrollRelated(direction: -1 | 1) {
     const rail = relatedRailRef.current;
