@@ -2312,6 +2312,152 @@ export function titaniumDiscsCategoryData(): CategoryLandingData {
 };
 }
 
+export function genericCategoryData(categoryName: string): CategoryLandingData {
+  const categoryTitle = categoryName.trim() || tLocalized("Ürünler", "Products");
+
+  return {
+    kind: "generic",
+    announcement: {
+      highlight: tLocalized("Yeni kategoriyi keşfedin", "Discover this category"),
+      text: tLocalized("İhtiyacınıza uygun ürünleri inceleyin.", "Explore products for your needs."),
+      href: "#kategori-urunleri",
+      ctaText: tLocalized("Ürünlere git →", "Browse products →"),
+    },
+    breadcrumb: {
+      homeLabel: tLocalized("Ana sayfa", "Home"),
+      homeHref: "/",
+      parentLabel: tLocalized("Ürünler", "Products"),
+      currentLabel: categoryTitle,
+    },
+    hero: {
+      titlePrefix: categoryTitle,
+      titleEmphasis: "",
+      descriptionHtml: tLocalized(
+        "Bu kategorideki ürünleri inceleyin ve ihtiyacınıza uygun seçeneği bulun.",
+        "Explore the products in this category and find the right option for your needs.",
+      ),
+      buttons: [
+        { label: tLocalized("Ürünleri incele ↓", "Browse products ↓"), href: "#kategori-urunleri", variant: "lime" },
+        { label: tLocalized("Ekibe danışın", "Ask our team"), href: contactHref(), variant: "line" },
+      ],
+      metrics: [],
+    },
+    selector: {
+      anchorId: "kategori-urunleri",
+      number: "01",
+      label: tLocalized("KATEGORİ ÜRÜNLERİ", "CATEGORY PRODUCTS"),
+      titlePrefix: tLocalized("Ürünleri", "Explore the"),
+      titleEmphasis: tLocalized("inceleyin", "products"),
+      sideHtml: tLocalized(
+        "Ürünlerin özelliklerini inceleyin ve seçenekleri karşılaştırın.",
+        "Review product details and compare the available options.",
+      ),
+      cardCtaText: tLocalized("Ürünü incele", "View product"),
+      emptyMessageHtml: tLocalized(
+        "Bu kategoride henüz ürün bulunmuyor.",
+        "There are no products in this category yet.",
+      ),
+      products: [],
+    },
+    feature: {
+      number: "02",
+      label: tLocalized("ÜRÜN SEÇİMİ", "CHOOSING A PRODUCT"),
+      content: {
+        eyebrow: tLocalized("İHTİYACINIZA GÖRE", "FOR YOUR NEEDS"),
+        titlePrefix: tLocalized("Size uygun", "Find the right"),
+        titleEmphasis: tLocalized("seçeneği bulun", "option"),
+        descriptionHtml: tLocalized(
+          "Ürün detaylarını ve teknik bilgileri inceleyerek seçenekleri ihtiyacınıza göre değerlendirin.",
+          "Review product details and technical information to compare options for your needs.",
+        ),
+        href: contactHref(),
+        ctaText: tLocalized("Ekibe danışın", "Ask our team"),
+        specs: [],
+      },
+    },
+    detail: {
+      number: "03",
+      label: tLocalized("NASIL SEÇİLİR?", "HOW TO CHOOSE"),
+      titlePrefix: tLocalized("Karar verirken", "What to"),
+      titleEmphasis: tLocalized("nelere bakmalı?", "consider"),
+      sideHtml: tLocalized(
+        "Ürün sayfalarındaki özellikleri, kullanım amacınızı ve ihtiyaç duyduğunuz desteği birlikte değerlendirin.",
+        "Consider product specifications, your intended use, and the support you may need.",
+      ),
+      whyCards: [
+        {
+          number: "01",
+          title: tLocalized("Kullanım amacınızı belirleyin", "Define your intended use"),
+          descriptionHtml: tLocalized(
+            "Ürünü hangi iş veya ihtiyaç için kullanacağınızı belirleyerek seçenekleri daraltın.",
+            "Narrow down the options by identifying the task or need the product will serve.",
+          ),
+        },
+        {
+          number: "02",
+          title: tLocalized("Ürün özelliklerini karşılaştırın", "Compare product details"),
+          descriptionHtml: tLocalized(
+            "Teknik özellikleri ve ürün açıklamalarını karşılaştırarak size uyan seçeneği değerlendirin.",
+            "Compare specifications and descriptions to assess which option suits you.",
+          ),
+        },
+        {
+          number: "03",
+          title: tLocalized("Gerekirse destek alın", "Ask for help if needed"),
+          descriptionHtml: tLocalized(
+            "Kararsız kaldığınız noktaları ekibimize iletip ürün seçimi konusunda destek alın.",
+            "Contact our team if you need help choosing between the available options.",
+          ),
+        },
+      ],
+    },
+    faq: {
+      number: "04",
+      label: tLocalized("SIKÇA SORULAN SORULAR", "FREQUENTLY ASKED QUESTIONS"),
+      title: tLocalized("Merak edilenler", "Common questions"),
+      sideHtml: tLocalized(
+        "Aradığınız yanıtı bulamazsanız ekibimizle iletişime geçebilirsiniz.",
+        "If you can't find the answer, get in touch with our team.",
+      ),
+      items: [
+        {
+          question: tLocalized("Ürünleri nasıl karşılaştırabilirim?", "How can I compare products?"),
+          answerHtml: tLocalized(
+            "Ürün kartından ürün detayına geçerek teknik özellikleri ve açıklamaları karşılaştırabilirsiniz.",
+            "Open a product page from its card to review and compare specifications and descriptions.",
+          ),
+        },
+        {
+          question: tLocalized("Hangi ürünün bana uygun olduğunu nasıl öğrenebilirim?", "How do I find the right product for me?"),
+          answerHtml: tLocalized(
+            "Kullanım amacınızı ve ihtiyaçlarınızı belirleyip ürün detaylarını inceleyin. Yardım için ekibimize danışabilirsiniz.",
+            "Start with your intended use and needs, then review the product details. You can contact our team for help.",
+          ),
+        },
+        {
+          question: tLocalized("Ürünlerle ilgili ek bilgi alabilir miyim?", "Can I get more information about a product?"),
+          answerHtml: tLocalized(
+            "Ürün sayfasındaki bilgileri inceleyebilir veya sorularınız için ekibimizle iletişime geçebilirsiniz.",
+            "Review the information on the product page or contact our team with any questions.",
+          ),
+        },
+      ],
+    },
+    finalCta: {
+      titlePrefix: tLocalized("Karar vermekte", "Need help"),
+      titleEmphasis: tLocalized("yardıma mı ihtiyacınız var?", "choosing?"),
+      descriptionHtml: tLocalized(
+        "İhtiyacınızı paylaşın; ekibimiz size uygun seçenekleri değerlendirmenize yardımcı olsun.",
+        "Tell us what you need and our team can help you review the available options.",
+      ),
+      buttons: [
+        { label: tLocalized("Ekibe danışın", "Talk to our team"), href: contactHref(), variant: "lime" },
+        { label: tLocalized("Ürünleri incele", "Browse products"), href: "#kategori-urunleri", variant: "inverse" },
+      ],
+    },
+  };
+}
+
 export function categoryLandingDataFromKey(value: string | undefined): CategoryLandingData | null {
   const key = normalizeCategoryKey(value);
 

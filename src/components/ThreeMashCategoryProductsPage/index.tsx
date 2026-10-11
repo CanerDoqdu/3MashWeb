@@ -1,15 +1,14 @@
 import ThreeMashCategoryLanding from "../../sub-components/ThreeMashCategoryLanding";
 import type { CategoryLandingData, CategoryLandingOverrides } from "../../sub-components/ThreeMashCategoryLanding";
-import { dentalFurnacesCategoryData, dentalResinsCategoryData, desktopScannersCategoryData, printerSparePartsCategoryData, printersCategoryData, systemsCategoryData, titaniumDiscsCategoryData, washCureCategoryData, zirconBlocksCategoryData, categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
+import { dentalFurnacesCategoryData, dentalResinsCategoryData, desktopScannersCategoryData, genericCategoryData, printerSparePartsCategoryData, printersCategoryData, systemsCategoryData, titaniumDiscsCategoryData, washCureCategoryData, zirconBlocksCategoryData, categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
 import ThreeMashPrintersSourceLanding from "../../sub-components/ThreeMashPrintersSourceLanding";
-import { ThreeMashProductsPage } from "../ThreeMashProductsPage";
-import { listingProps } from "../ThreeMashProductListingPresets";
 import { getProductHref } from "@ikas/bp-storefront";
 import type { Props } from "./types";
 import { isEnglishLocale, tLocalized } from "../../utils/i18n";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 
 const categoryPropPrefixes: Record<CategoryLandingData["kind"], string> = {
+  generic: "default",
   printers: "printer",
   resins: "resin",
   "wash-cure": "washCure",
@@ -42,12 +41,15 @@ const selectorProductOverrideKeys = ([1, 2, 3] as const).flatMap((index) => [
 ]) as CategoryOverrideKey[];
 
 const categoryOverrideKeys = [
+  "heroOrder", "selectorOrder", "featureOrder", "detailOrder", "faqOrder", "finalCtaOrder",
+  "detailCard1Number", "detailCard2Number", "detailCard3Number",
+  "detailWhyCard1Visible", "detailWhyCard2Visible", "detailWhyCard3Visible",
   "showAnnouncement", "showHero", "showMetrics", "showSelector", "showFeature", "showDetail", "showFaq", "showFinalCta",
   "breadcrumbHomeLabel", "breadcrumbHomeHref", "breadcrumbParentLabel", "breadcrumbParentHref", "breadcrumbCurrentLabel",
   "eyebrowText", "announcementText", "announcementCtaText", "announcementHref",
   "heroTitlePrefix", "heroTitleEmphasis", "heroTitleSuffix", "heroDescriptionHtml", "primaryButtonText", "primaryButtonHref", "secondaryButtonText", "secondaryButtonHref",
   "metric1Value", "metric1Emphasis", "metric1Label", "metric2Value", "metric2Emphasis", "metric2Label", "metric3Value", "metric3Emphasis", "metric3Label", "metric4Value", "metric4Emphasis", "metric4Label",
-  "selectorNumber", "selectorLabel", "selectorTitlePrefix", "selectorTitleEmphasis", "selectorTitleSuffix", "selectorSideHtml", "selectorCardCtaText",
+  "selectorNumber", "selectorLabel", "selectorTitlePrefix", "selectorTitleEmphasis", "selectorTitleSuffix", "selectorSideHtml", "selectorCardCtaText", "selectorEmptyMessageHtml",
   ...selectorProductOverrideKeys,
   "selectorCompareVisible",
   "selectorCompareColumn1Title", "selectorCompareColumn2Title", "selectorCompareColumn3Title", "selectorCompareColumn4Title",
@@ -72,9 +74,10 @@ function categorySpecificOverrides(props: Props, kind: CategoryLandingData["kind
   const values = categoryOverrideKeys
     .filter((key) => kind === "printers" || !key.startsWith("printer"))
     .map((key) => {
-      const propName = `${prefix}${key[0].toUpperCase()}${key.slice(1)}` as keyof Props;
+      const propName = (kind === "generic" ? key : `${prefix}${key[0].toUpperCase()}${key.slice(1)}`) as keyof Props;
       const isLocalizedText =
         !key.startsWith("show") &&
+        !key.endsWith("Order") &&
         !key.endsWith("Href") &&
         !key.endsWith("Color") &&
         !key.endsWith("Image") &&
@@ -447,15 +450,14 @@ export function ThreeMashCategoryProductsPage(props: Props) {
     );
   }
 
+  const categoryName = stringValue(props.productList?.category?.name);
+  const data = genericCategoryData(categoryName);
+
   return (
-    <ThreeMashProductsPage
-      {...listingProps(props, {
-        eyebrowText: tLocalized("ÜRÜN KATEGORİSİ", "PRODUCT CATEGORY"),
-        titleText: "",
-        descriptionText: tLocalized("Bu kategoriye ait güncel ürünleri tek yerden inceleyin.", "Browse the current products in this category in one place."),
-        showSort: false,
-        showNavigation: true,
-      })}
+    <ThreeMashCategoryLanding
+      data={data}
+      productList={props.productList}
+      {...categorySpecificOverrides(props, "generic")}
     />
   );
 }

@@ -112,7 +112,7 @@ export type CategorySectionHead = {
 };
 
 export type CategoryLandingData = {
-  kind: "resins" | "printers" | "wash-cure" | "washing" | "curing" | "zircon" | "furnaces" | "scanners" | "spares" | "systems" | "titanium";
+  kind: "generic" | "resins" | "printers" | "wash-cure" | "washing" | "curing" | "zircon" | "furnaces" | "scanners" | "spares" | "systems" | "titanium";
   announcement: {
     highlight: string;
     text: string;
@@ -175,6 +175,12 @@ export type CategoryLandingData = {
 
 export type CategoryLandingOverrides = {
   [key: string]: unknown;
+  heroOrder?: number;
+  selectorOrder?: number;
+  featureOrder?: number;
+  detailOrder?: number;
+  faqOrder?: number;
+  finalCtaOrder?: number;
   showAnnouncement?: boolean;
   showHero?: boolean;
   showMetrics?: boolean;
@@ -1090,6 +1096,11 @@ function categoryStyle(props: CategoryLandingOverrides) {
   };
 }
 
+function sectionOrder(value: unknown, fallback: number) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
+  return Math.min(6, Math.max(1, Math.round(value)));
+}
+
 function ButtonLink({ button }: { button: CategoryButton }) {
   const normalizedHref = resolveHref(button.href);
 
@@ -1764,10 +1775,13 @@ export default function ThreeMashCategoryLanding(props: Props) {
     };
   }, []);
 
-  return (
-    <section className={`three-mash-category-landing tmcl-${data.kind}`} style={categoryStyle(props) as any}>
+  const orderedSections = [
+    {
+      key: "hero",
+      order: sectionOrder(props.heroOrder, 1),
+      content: props.showHero !== false ? (
+      <>
       {/* HERO SECTION */}
-      {props.showHero !== false && (
       <div className="tmcl-hero">
         <div className="tmcl-wrap">
           <div className="tmcl-crumb">
@@ -1809,10 +1823,16 @@ export default function ThreeMashCategoryLanding(props: Props) {
           </div> : null}
         </div>
       </div>
-      )}
+      </>
+      ) : null,
+    },
 
+    {
+      key: "selector",
+      order: sectionOrder(props.selectorOrder, 2),
+      content: props.showSelector !== false ? (
+      <>
       {/* SECTION 01: SELECTOR & PRODUCTS */}
-      {props.showSelector !== false && (
       <section className="tmcl-section" id={data.selector.anchorId}>
         <div className="tmcl-wrap">
           <SectionHead
@@ -1921,17 +1941,26 @@ export default function ThreeMashCategoryLanding(props: Props) {
           ) : null}
         </div>
       </section>
-      )}
+      </>
+      ) : null,
+    },
 
+    {
+      key: "feature",
+      order: sectionOrder(props.featureOrder, 3),
+      content: props.showFeature !== false ? (
+      <>
       {/* SECTION 02: FEATURE / HIGHLIGHT */}
-      {props.showFeature !== false && (
       <section className="tmcl-section tmcl-section-tight" id={routeKey(data.detail.label)}>
         <div className="tmcl-wrap">
           <SectionIndex
             number={localizedTextProp(props, "featureNumber", data.feature.number)}
             label={localizedTextProp(props, "featureLabel", data.feature.label)}
           />
-          <div className="tmcl-flag">
+          <div
+            className="tmcl-flag"
+            style={data.kind === "generic" && !featureSpecs.length ? { gridTemplateColumns: "1fr" } : undefined}
+          >
             <div>
               <div className="tmcl-flag-tag">{localizedTextProp(props, "featureEyebrow", data.feature.content.eyebrow)}</div>
               <h3>
@@ -1946,21 +1975,27 @@ export default function ThreeMashCategoryLanding(props: Props) {
                 {localizedTextProp(props, "featureCtaText", data.feature.content.ctaText)}
               </a>
             </div>
-            <div className="tmcl-spec-table">
+            {featureSpecs.length || data.kind !== "generic" ? <div className="tmcl-spec-table">
               {featureSpecs.map((spec) => (
                 <div key={`${spec.label}-${spec.value}`}>
                   <span>{spec.label}</span>
                   <b>{spec.value}</b>
                 </div>
               ))}
-            </div>
+            </div> : null}
           </div>
         </div>
       </section>
-      )}
+      </>
+      ) : null,
+    },
 
+    {
+      key: "detail",
+      order: sectionOrder(props.detailOrder, 4),
+      content: props.showDetail !== false ? (
+      <>
       {/* SECTION 03: DETAIL / WHY NEEDED */}
-      {props.showDetail !== false && (
       <section className="tmcl-section tmcl-section-tight">
         <div className="tmcl-wrap">
           <SectionHead
@@ -2023,10 +2058,16 @@ export default function ThreeMashCategoryLanding(props: Props) {
           ) : null}
         </div>
       </section>
-      )}
+      </>
+      ) : null,
+    },
 
+    {
+      key: "faq",
+      order: sectionOrder(props.faqOrder, 5),
+      content: props.showFaq !== false ? (
+      <>
       {/* SECTION 04: FAQ */}
-      {props.showFaq !== false && (
       <section className="tmcl-section tmcl-section-tight" id="sss">
         <div className="tmcl-wrap">
           <SectionIndex
@@ -2044,10 +2085,16 @@ export default function ThreeMashCategoryLanding(props: Props) {
           </div>
         </div>
       </section>
-      )}
+      </>
+      ) : null,
+    },
 
+    {
+      key: "final-cta",
+      order: sectionOrder(props.finalCtaOrder, 6),
+      content: props.showFinalCta !== false ? (
+      <>
       {/* FINAL CTA SECTION */}
-      {props.showFinalCta !== false && (
       <section className="tmcl-final">
         <div className="tmcl-wrap">
           <h2>
@@ -2065,7 +2112,16 @@ export default function ThreeMashCategoryLanding(props: Props) {
           </div>
         </div>
       </section>
-      )}
+      </>
+      ) : null,
+    },
+  ].sort((left, right) => left.order - right.order);
+
+  return (
+    <section className={`three-mash-category-landing tmcl-${data.kind}`} style={categoryStyle(props) as any}>
+      {orderedSections.map((section) => (
+        <div key={section.key} style={{ display: "contents" }}>{section.content}</div>
+      ))}
     </section>
   );
 }

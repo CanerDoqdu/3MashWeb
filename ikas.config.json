@@ -35805,6 +35805,1062 @@
           "description": "Açıksa Canlı Ürün Listesindeki ilk 3 ürün kartlara bağlanır. Kapalıysa aşağıdaki elle düzenlenen kart içerikleri kullanılır.",
           "defaultValue": true,
           "groupId": "wash-cure-selector"
+        },
+        {
+          "name": "heroOrder",
+          "displayName": "↕️ Kategori Girişi Sırası",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 1,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "selectorOrder",
+          "displayName": "↕️ Ürünler Bölümü Sırası",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 2,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "featureOrder",
+          "displayName": "↕️ Ürün Seçimi Bölümü Sırası",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 3,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "detailOrder",
+          "displayName": "↕️ Seçim Rehberi Bölümü Sırası",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 4,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "faqOrder",
+          "displayName": "↕️ Sıkça Sorulanlar Bölümü Sırası",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 5,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "finalCtaOrder",
+          "displayName": "↕️ Kapanış Çağrısı Bölümü Sırası",
+          "type": "NUMBER",
+          "required": false,
+          "defaultValue": 6,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "showAnnouncement",
+          "displayName": "👁️ Duyuru Bandını Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "showHero",
+          "displayName": "👁️ Kategori Girişini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "showSelector",
+          "displayName": "👁️ Ürünler Bölümünü Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "showFeature",
+          "displayName": "👁️ Ürün Seçimi Bölümünü Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "showDetail",
+          "displayName": "👁️ Seçim Rehberini Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "showFaq",
+          "displayName": "👁️ Sıkça Sorulanları Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "showFinalCta",
+          "displayName": "👁️ Kapanış Çağrısını Göster",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-visibility"
+        },
+        {
+          "name": "breadcrumbHomeLabel",
+          "displayName": "📝 Ana Sayfa Bağlantı Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ana sayfa",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "breadcrumbHomeLabelEn",
+          "displayName": "🌐 İngilizce Ana Sayfa Bağlantı Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Home",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "breadcrumbHomeHref",
+          "displayName": "🔗 Ana Sayfa Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "breadcrumbParentLabel",
+          "displayName": "📝 Ürünler Bağlantı Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünler",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "breadcrumbParentLabelEn",
+          "displayName": "🌐 İngilizce Ürünler Bağlantı Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Products",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "eyebrowText",
+          "displayName": "📝 Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Yeni kategoriyi keşfedin",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "eyebrowTextEn",
+          "displayName": "🌐 İngilizce Duyuru Vurgu Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Discover this category",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "announcementText",
+          "displayName": "📝 Duyuru Açıklama Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İhtiyacınıza uygun ürünleri inceleyin.",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "announcementTextEn",
+          "displayName": "🌐 İngilizce Duyuru Açıklama Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Explore products for your needs.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "announcementCtaText",
+          "displayName": "📝 Duyuru Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünlere git →",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "announcementCtaTextEn",
+          "displayName": "🌐 İngilizce Duyuru Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Browse products →",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "announcementHref",
+          "displayName": "🔗 Duyuru Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#kategori-urunleri",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "heroDescriptionHtml",
+          "displayName": "📝 Kategori Giriş Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Bu kategorideki ürünleri inceleyin ve ihtiyacınıza uygun seçeneği bulun.",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "heroDescriptionHtmlEn",
+          "displayName": "🌐 İngilizce Kategori Giriş Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Explore the products in this category and find the right option for your needs.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "primaryButtonText",
+          "displayName": "📝 Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünleri incele ↓",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "primaryButtonTextEn",
+          "displayName": "🌐 İngilizce Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Browse products ↓",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "primaryButtonHref",
+          "displayName": "🔗 Birincil Buton Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#kategori-urunleri",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "secondaryButtonText",
+          "displayName": "📝 İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ekibe danışın",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "secondaryButtonTextEn",
+          "displayName": "🌐 İngilizce İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ask our team",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "secondaryButtonHref",
+          "displayName": "🔗 İkincil Buton Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/pages/iletisim",
+          "groupId": "generic-announcement-hero"
+        },
+        {
+          "name": "selectorNumber",
+          "displayName": "📝 Bölüm Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "01",
+          "groupId": "generic-selector"
+        },
+        {
+          "name": "selectorNumberEn",
+          "displayName": "🌐 İngilizce Bölüm Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "01",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "selectorLabel",
+          "displayName": "📝 Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "KATEGORİ ÜRÜNLERİ",
+          "groupId": "generic-selector"
+        },
+        {
+          "name": "selectorLabelEn",
+          "displayName": "🌐 İngilizce Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "CATEGORY PRODUCTS",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "selectorTitlePrefix",
+          "displayName": "📝 Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünleri",
+          "groupId": "generic-selector"
+        },
+        {
+          "name": "selectorTitlePrefixEn",
+          "displayName": "🌐 İngilizce Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Explore the",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "selectorTitleEmphasis",
+          "displayName": "📝 Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "inceleyin",
+          "groupId": "generic-selector"
+        },
+        {
+          "name": "selectorTitleEmphasisEn",
+          "displayName": "🌐 İngilizce Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "products",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "selectorSideHtml",
+          "displayName": "📝 Bölüm Yan Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürünlerin özelliklerini inceleyin ve seçenekleri karşılaştırın.",
+          "groupId": "generic-selector"
+        },
+        {
+          "name": "selectorSideHtmlEn",
+          "displayName": "🌐 İngilizce Bölüm Yan Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Review product details and compare the available options.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "selectorCardCtaText",
+          "displayName": "📝 Ürün Kartı Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünü incele",
+          "groupId": "generic-selector"
+        },
+        {
+          "name": "selectorCardCtaTextEn",
+          "displayName": "🌐 İngilizce Ürün Kartı Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "View product",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "selectorEmptyMessageHtml",
+          "displayName": "📝 Ürün Yoksa Gösterilecek Metin",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Bu kategoride henüz ürün bulunmuyor.",
+          "groupId": "generic-selector"
+        },
+        {
+          "name": "selectorEmptyMessageHtmlEn",
+          "displayName": "🌐 İngilizce Ürün Yoksa Gösterilecek Metin",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "There are no products in this category yet.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "featureNumber",
+          "displayName": "📝 Bölüm Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "02",
+          "groupId": "generic-feature"
+        },
+        {
+          "name": "featureNumberEn",
+          "displayName": "🌐 İngilizce Bölüm Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "02",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "featureLabel",
+          "displayName": "📝 Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "ÜRÜN SEÇİMİ",
+          "groupId": "generic-feature"
+        },
+        {
+          "name": "featureLabelEn",
+          "displayName": "🌐 İngilizce Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "CHOOSING A PRODUCT",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "featureEyebrow",
+          "displayName": "📝 Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "İHTİYACINIZA GÖRE",
+          "groupId": "generic-feature"
+        },
+        {
+          "name": "featureEyebrowEn",
+          "displayName": "🌐 İngilizce Üst Etiket",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "FOR YOUR NEEDS",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "featureTitlePrefix",
+          "displayName": "📝 Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Size uygun",
+          "groupId": "generic-feature"
+        },
+        {
+          "name": "featureTitlePrefixEn",
+          "displayName": "🌐 İngilizce Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Find the right",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "featureTitleEmphasis",
+          "displayName": "📝 Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "seçeneği bulun",
+          "groupId": "generic-feature"
+        },
+        {
+          "name": "featureTitleEmphasisEn",
+          "displayName": "🌐 İngilizce Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "option",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "featureDescriptionHtml",
+          "displayName": "📝 Bölüm Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürün detaylarını ve teknik bilgileri inceleyerek seçenekleri ihtiyacınıza göre değerlendirin.",
+          "groupId": "generic-feature"
+        },
+        {
+          "name": "featureDescriptionHtmlEn",
+          "displayName": "🌐 İngilizce Bölüm Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Review product details and technical information to compare options for your needs.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "featureHref",
+          "displayName": "🔗 Buton Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/pages/iletisim",
+          "groupId": "generic-feature"
+        },
+        {
+          "name": "featureCtaText",
+          "displayName": "📝 Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ekibe danışın",
+          "groupId": "generic-feature"
+        },
+        {
+          "name": "featureCtaTextEn",
+          "displayName": "🌐 İngilizce Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ask our team",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailNumber",
+          "displayName": "📝 Bölüm Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "03",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailNumberEn",
+          "displayName": "🌐 İngilizce Bölüm Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "03",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailLabel",
+          "displayName": "📝 Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "NASIL SEÇİLİR?",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailLabelEn",
+          "displayName": "🌐 İngilizce Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "HOW TO CHOOSE",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailTitlePrefix",
+          "displayName": "📝 Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Karar verirken",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailTitlePrefixEn",
+          "displayName": "🌐 İngilizce Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "What to",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailTitleEmphasis",
+          "displayName": "📝 Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "nelere bakmalı?",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailTitleEmphasisEn",
+          "displayName": "🌐 İngilizce Vurgulu Başlık",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "consider",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailSideHtml",
+          "displayName": "📝 Bölüm Yan Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürün sayfalarındaki özellikleri, kullanım amacınızı ve ihtiyaç duyduğunuz desteği birlikte değerlendirin.",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailSideHtmlEn",
+          "displayName": "🌐 İngilizce Bölüm Yan Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Consider product specifications, your intended use, and the support you may need.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailCard1Number",
+          "displayName": "📝 Kart 1 Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "01",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard1NumberEn",
+          "displayName": "🌐 İngilizce Kart 1 Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "01",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailCard1Title",
+          "displayName": "📝 Kart 1 Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Kullanım amacınızı belirleyin",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard1TitleEn",
+          "displayName": "🌐 İngilizce Kart 1 Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Define your intended use",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailCard1DescriptionHtml",
+          "displayName": "📝 Kart 1 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürünü hangi iş veya ihtiyaç için kullanacağınızı belirleyerek seçenekleri daraltın.",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard1DescriptionHtmlEn",
+          "displayName": "🌐 İngilizce Kart 1 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Narrow down the options by identifying the task or need the product will serve.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailWhyCard1Visible",
+          "displayName": "👁️ Kart 1 Görünsün",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard2Number",
+          "displayName": "📝 Kart 2 Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "02",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard2NumberEn",
+          "displayName": "🌐 İngilizce Kart 2 Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "02",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailCard2Title",
+          "displayName": "📝 Kart 2 Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürün özelliklerini karşılaştırın",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard2TitleEn",
+          "displayName": "🌐 İngilizce Kart 2 Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Compare product details",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailCard2DescriptionHtml",
+          "displayName": "📝 Kart 2 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Teknik özellikleri ve ürün açıklamalarını karşılaştırarak size uyan seçeneği değerlendirin.",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard2DescriptionHtmlEn",
+          "displayName": "🌐 İngilizce Kart 2 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Compare specifications and descriptions to assess which option suits you.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailWhyCard2Visible",
+          "displayName": "👁️ Kart 2 Görünsün",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard3Number",
+          "displayName": "📝 Kart 3 Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "03",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard3NumberEn",
+          "displayName": "🌐 İngilizce Kart 3 Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "03",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailCard3Title",
+          "displayName": "📝 Kart 3 Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Gerekirse destek alın",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard3TitleEn",
+          "displayName": "🌐 İngilizce Kart 3 Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ask for help if needed",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailCard3DescriptionHtml",
+          "displayName": "📝 Kart 3 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Kararsız kaldığınız noktaları ekibimize iletip ürün seçimi konusunda destek alın.",
+          "groupId": "generic-details"
+        },
+        {
+          "name": "detailCard3DescriptionHtmlEn",
+          "displayName": "🌐 İngilizce Kart 3 Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Contact our team if you need help choosing between the available options.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "detailWhyCard3Visible",
+          "displayName": "👁️ Kart 3 Görünsün",
+          "type": "BOOLEAN",
+          "required": false,
+          "defaultValue": true,
+          "groupId": "generic-details"
+        },
+        {
+          "name": "faqNumber",
+          "displayName": "📝 Bölüm Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "04",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faqNumberEn",
+          "displayName": "🌐 İngilizce Bölüm Numarası",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "04",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "faqLabel",
+          "displayName": "📝 Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "SIKÇA SORULAN SORULAR",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faqLabelEn",
+          "displayName": "🌐 İngilizce Bölüm Etiketi",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "FREQUENTLY ASKED QUESTIONS",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "faqTitle",
+          "displayName": "📝 Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Merak edilenler",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faqTitleEn",
+          "displayName": "🌐 İngilizce Bölüm Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Common questions",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "faqSideHtml",
+          "displayName": "📝 Bölüm Yan Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Aradığınız yanıtı bulamazsanız ekibimizle iletişime geçebilirsiniz.",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faqSideHtmlEn",
+          "displayName": "🌐 İngilizce Bölüm Yan Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "If you can't find the answer, get in touch with our team.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "faq1Question",
+          "displayName": "📝 Soru 1",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünleri nasıl karşılaştırabilirim?",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faq1QuestionEn",
+          "displayName": "🌐 İngilizce Soru 1",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "How can I compare products?",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "faq1AnswerHtml",
+          "displayName": "📝 Yanıt 1",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürün kartından ürün detayına geçerek teknik özellikleri ve açıklamaları karşılaştırabilirsiniz.",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faq1AnswerHtmlEn",
+          "displayName": "🌐 İngilizce Yanıt 1",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Open a product page from its card to review and compare specifications and descriptions.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "faq2Question",
+          "displayName": "📝 Soru 2",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Hangi ürünün bana uygun olduğunu nasıl öğrenebilirim?",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faq2QuestionEn",
+          "displayName": "🌐 İngilizce Soru 2",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "How do I find the right product for me?",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "faq2AnswerHtml",
+          "displayName": "📝 Yanıt 2",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Kullanım amacınızı ve ihtiyaçlarınızı belirleyip ürün detaylarını inceleyin. Yardım için ekibimize danışabilirsiniz.",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faq2AnswerHtmlEn",
+          "displayName": "🌐 İngilizce Yanıt 2",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Start with your intended use and needs, then review the product details. You can contact our team for help.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "faq3Question",
+          "displayName": "📝 Soru 3",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünlerle ilgili ek bilgi alabilir miyim?",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faq3QuestionEn",
+          "displayName": "🌐 İngilizce Soru 3",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Can I get more information about a product?",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "faq3AnswerHtml",
+          "displayName": "📝 Yanıt 3",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Ürün sayfasındaki bilgileri inceleyebilir veya sorularınız için ekibimizle iletişime geçebilirsiniz.",
+          "groupId": "generic-faq"
+        },
+        {
+          "name": "faq3AnswerHtmlEn",
+          "displayName": "🌐 İngilizce Yanıt 3",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Review the information on the product page or contact our team with any questions.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "finalTitlePrefix",
+          "displayName": "📝 Kapanış Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Karar vermekte",
+          "groupId": "generic-final"
+        },
+        {
+          "name": "finalTitlePrefixEn",
+          "displayName": "🌐 İngilizce Kapanış Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Need help",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "finalTitleEmphasis",
+          "displayName": "📝 Vurgulu Kapanış Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "yardıma mı ihtiyacınız var?",
+          "groupId": "generic-final"
+        },
+        {
+          "name": "finalTitleEmphasisEn",
+          "displayName": "🌐 İngilizce Vurgulu Kapanış Başlığı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "choosing?",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "finalDescriptionHtml",
+          "displayName": "📝 Kapanış Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "İhtiyacınızı paylaşın; ekibimiz size uygun seçenekleri değerlendirmenize yardımcı olsun.",
+          "groupId": "generic-final"
+        },
+        {
+          "name": "finalDescriptionHtmlEn",
+          "displayName": "🌐 İngilizce Kapanış Açıklaması",
+          "type": "RICH_TEXT",
+          "required": false,
+          "defaultValue": "Tell us what you need and our team can help you review the available options.",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "finalPrimaryButtonText",
+          "displayName": "📝 Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ekibe danışın",
+          "groupId": "generic-final"
+        },
+        {
+          "name": "finalPrimaryButtonTextEn",
+          "displayName": "🌐 İngilizce Birincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Talk to our team",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "finalPrimaryButtonHref",
+          "displayName": "🔗 Birincil Buton Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/pages/iletisim",
+          "groupId": "generic-final"
+        },
+        {
+          "name": "finalSecondaryButtonText",
+          "displayName": "📝 İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Ürünleri incele",
+          "groupId": "generic-final"
+        },
+        {
+          "name": "finalSecondaryButtonTextEn",
+          "displayName": "🌐 İngilizce İkincil Buton Metni",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "Browse products",
+          "groupId": "generic-english"
+        },
+        {
+          "name": "finalSecondaryButtonHref",
+          "displayName": "🔗 İkincil Buton Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "#kategori-urunleri",
+          "groupId": "generic-final"
+        },
+        {
+          "name": "backgroundColor",
+          "displayName": "🎨 Arka Plan Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#FAFAF7",
+          "groupId": "generic-colors"
+        },
+        {
+          "name": "textColor",
+          "displayName": "🎨 Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#0E0E0C",
+          "groupId": "generic-colors"
+        },
+        {
+          "name": "mutedTextColor",
+          "displayName": "🎨 İkincil Metin Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#55554e",
+          "groupId": "generic-colors"
+        },
+        {
+          "name": "panelColor",
+          "displayName": "🎨 Panel Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#F1F1EC",
+          "groupId": "generic-colors"
+        },
+        {
+          "name": "accentColor",
+          "displayName": "🎨 Vurgu Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#C7F136",
+          "groupId": "generic-colors"
+        },
+        {
+          "name": "lineColor",
+          "displayName": "🎨 Ayırıcı Çizgi Rengi",
+          "type": "COLOR",
+          "required": false,
+          "defaultValue": "#E6E6E0",
+          "groupId": "generic-colors"
+        },
+        {
+          "name": "breadcrumbParentHref",
+          "displayName": "🔗 Ürünler Bağlantısı",
+          "type": "TEXT",
+          "required": false,
+          "defaultValue": "/search",
+          "groupId": "generic-announcement-hero"
         }
       ],
       "propGroups": [
@@ -37117,6 +38173,48 @@
             {
               "id": "titanium-closing-en",
               "name": "🌐 Kapanış Çağrısı"
+            }
+          ]
+        },
+        {
+          "id": "generic-template",
+          "name": "🆕 Yeni Kategori Varsayılan Şablonu",
+          "children": [
+            {
+              "id": "generic-visibility",
+              "name": "👁️ Görünürlük ve Bölüm Sırası"
+            },
+            {
+              "id": "generic-announcement-hero",
+              "name": "📢 Duyuru ve Kategori Girişi"
+            },
+            {
+              "id": "generic-selector",
+              "name": "🛍️ Kategori Ürünleri"
+            },
+            {
+              "id": "generic-feature",
+              "name": "⭐ Ürün Seçimi"
+            },
+            {
+              "id": "generic-details",
+              "name": "📋 Seçim Rehberi"
+            },
+            {
+              "id": "generic-faq",
+              "name": "❓ Sıkça Sorulan Sorular"
+            },
+            {
+              "id": "generic-final",
+              "name": "📣 Kapanış Çağrısı"
+            },
+            {
+              "id": "generic-colors",
+              "name": "🎨 Renkler"
+            },
+            {
+              "id": "generic-english",
+              "name": "🌐 İngilizce İçerikleri"
             }
           ]
         }
