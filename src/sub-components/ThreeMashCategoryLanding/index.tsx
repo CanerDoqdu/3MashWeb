@@ -174,6 +174,7 @@ export type CategoryLandingData = {
 };
 
 export type CategoryLandingOverrides = {
+  [key: string]: unknown;
   showAnnouncement?: boolean;
   showHero?: boolean;
   showMetrics?: boolean;
@@ -182,6 +183,14 @@ export type CategoryLandingOverrides = {
   showDetail?: boolean;
   showFaq?: boolean;
   showFinalCta?: boolean;
+  breadcrumbHomeLabel?: string;
+  breadcrumbHomeLabelEn?: string;
+  breadcrumbHomeHref?: string;
+  breadcrumbParentLabel?: string;
+  breadcrumbParentLabelEn?: string;
+  breadcrumbParentHref?: string;
+  breadcrumbCurrentLabel?: string;
+  breadcrumbCurrentLabelEn?: string;
   printerP16lImage?: IkasImage | null;
   printerCurieImage?: IkasImage | null;
   printerHalotImage?: IkasImage | null;
@@ -229,7 +238,167 @@ export type CategoryLandingOverrides = {
   selectorTitleEmphasis?: string;
   selectorTitleSuffix?: string;
   selectorSideHtml?: string;
+  selectorSideHtmlEn?: string;
+  selectorFilter1Label?: string;
+  selectorFilter1LabelEn?: string;
+  selectorFilter2Label?: string;
+  selectorFilter2LabelEn?: string;
+  selectorFilter3Label?: string;
+  selectorFilter3LabelEn?: string;
+  selectorFilter4Label?: string;
+  selectorFilter4LabelEn?: string;
+  selectorFilter5Label?: string;
+  selectorFilter5LabelEn?: string;
+  selectorFilter6Label?: string;
+  selectorFilter6LabelEn?: string;
+  selectorFilter7Label?: string;
+  selectorFilter7LabelEn?: string;
   selectorCardCtaText?: string;
+  selectorProduct1Title?: string;
+  selectorProduct1TitleEn?: string;
+  selectorProduct1Href?: string;
+  selectorProduct1Image?: IkasImage | null;
+  selectorProduct1ImageAlt?: string;
+  selectorProduct1ImageAltEn?: string;
+  selectorProduct1DescriptionHtml?: string;
+  selectorProduct1DescriptionHtmlEn?: string;
+  selectorProduct1Visible?: boolean;
+  selectorProduct1Tag?: string;
+  selectorProduct1TagEn?: string;
+  selectorProduct1Spec1Label?: string;
+  selectorProduct1Spec1LabelEn?: string;
+  selectorProduct1Spec1Value?: string;
+  selectorProduct1Spec1ValueEn?: string;
+  selectorProduct1Spec2Label?: string;
+  selectorProduct1Spec2LabelEn?: string;
+  selectorProduct1Spec2Value?: string;
+  selectorProduct1Spec2ValueEn?: string;
+  selectorProduct1Spec3Label?: string;
+  selectorProduct1Spec3LabelEn?: string;
+  selectorProduct1Spec3Value?: string;
+  selectorProduct1Spec3ValueEn?: string;
+  selectorProduct2DescriptionHtml?: string;
+  selectorProduct2Title?: string;
+  selectorProduct2TitleEn?: string;
+  selectorProduct2Href?: string;
+  selectorProduct2Image?: IkasImage | null;
+  selectorProduct2ImageAlt?: string;
+  selectorProduct2ImageAltEn?: string;
+  selectorProduct2DescriptionHtmlEn?: string;
+  selectorProduct2Visible?: boolean;
+  selectorProduct2Tag?: string;
+  selectorProduct2TagEn?: string;
+  selectorProduct2Spec1Label?: string;
+  selectorProduct2Spec1LabelEn?: string;
+  selectorProduct2Spec1Value?: string;
+  selectorProduct2Spec1ValueEn?: string;
+  selectorProduct2Spec2Label?: string;
+  selectorProduct2Spec2LabelEn?: string;
+  selectorProduct2Spec2Value?: string;
+  selectorProduct2Spec2ValueEn?: string;
+  selectorProduct2Spec3Label?: string;
+  selectorProduct2Spec3LabelEn?: string;
+  selectorProduct2Spec3Value?: string;
+  selectorProduct2Spec3ValueEn?: string;
+  selectorProduct3DescriptionHtml?: string;
+  selectorProduct3Title?: string;
+  selectorProduct3TitleEn?: string;
+  selectorProduct3Href?: string;
+  selectorProduct3Image?: IkasImage | null;
+  selectorProduct3ImageAlt?: string;
+  selectorProduct3ImageAltEn?: string;
+  selectorProduct3DescriptionHtmlEn?: string;
+  selectorProduct3Visible?: boolean;
+  selectorProduct3Tag?: string;
+  selectorProduct3TagEn?: string;
+  selectorProduct3Spec1Label?: string;
+  selectorProduct3Spec1LabelEn?: string;
+  selectorProduct3Spec1Value?: string;
+  selectorProduct3Spec1ValueEn?: string;
+  selectorProduct3Spec2Label?: string;
+  selectorProduct3Spec2LabelEn?: string;
+  selectorProduct3Spec2Value?: string;
+  selectorProduct3Spec2ValueEn?: string;
+  selectorProduct3Spec3Label?: string;
+  selectorProduct3Spec3LabelEn?: string;
+  selectorProduct3Spec3Value?: string;
+  selectorProduct3Spec3ValueEn?: string;
+  selectorCompareColumn1Title?: string;
+  selectorCompareVisible?: boolean;
+  selectorCompareColumn1TitleEn?: string;
+  selectorCompareColumn2Title?: string;
+  selectorCompareColumn2TitleEn?: string;
+  selectorCompareColumn2Subtitle?: string;
+  selectorCompareColumn2SubtitleEn?: string;
+  selectorCompareColumn3Title?: string;
+  selectorCompareColumn3TitleEn?: string;
+  selectorCompareColumn3Subtitle?: string;
+  selectorCompareColumn3SubtitleEn?: string;
+  selectorCompareColumn4Title?: string;
+  selectorCompareColumn4TitleEn?: string;
+  selectorCompareColumn1Subtitle?: string;
+  selectorCompareColumn1SubtitleEn?: string;
+  selectorCompareColumn4Subtitle?: string;
+  selectorCompareColumn4SubtitleEn?: string;
+  selectorCompareRow1Label?: string;
+  selectorCompareRow1LabelEn?: string;
+  selectorCompareRow1Value1?: string;
+  selectorCompareRow1Value1En?: string;
+  selectorCompareRow1Value2?: string;
+  selectorCompareRow1Value2En?: string;
+  selectorCompareRow1Value3?: string;
+  selectorCompareRow1Value3En?: string;
+  selectorCompareRow2Label?: string;
+  selectorCompareRow2LabelEn?: string;
+  selectorCompareRow2Value1?: string;
+  selectorCompareRow2Value1En?: string;
+  selectorCompareRow2Value2?: string;
+  selectorCompareRow2Value2En?: string;
+  selectorCompareRow2Value3?: string;
+  selectorCompareRow2Value3En?: string;
+  selectorCompareRow3Label?: string;
+  selectorCompareRow3LabelEn?: string;
+  selectorCompareRow3Value1?: string;
+  selectorCompareRow3Value1En?: string;
+  selectorCompareRow3Value2?: string;
+  selectorCompareRow3Value2En?: string;
+  selectorCompareRow3Value3?: string;
+  selectorCompareRow3Value3En?: string;
+  selectorCompareRow4Label?: string;
+  selectorCompareRow4LabelEn?: string;
+  selectorCompareRow4Value1?: string;
+  selectorCompareRow4Value1En?: string;
+  selectorCompareRow4Value2?: string;
+  selectorCompareRow4Value2En?: string;
+  selectorCompareRow4Value3?: string;
+  selectorCompareRow4Value3En?: string;
+  selectorCompareRow5Label?: string;
+  selectorCompareRow5LabelEn?: string;
+  selectorCompareRow5Value1?: string;
+  selectorCompareRow5Value1En?: string;
+  selectorCompareRow5Value2?: string;
+  selectorCompareRow5Value2En?: string;
+  selectorCompareRow5Value3?: string;
+  selectorCompareRow5Value3En?: string;
+  selectorCompareRow6Label?: string;
+  selectorCompareRow6LabelEn?: string;
+  selectorCompareRow6Value1?: string;
+  selectorCompareRow6Value1En?: string;
+  selectorCompareRow6Value2?: string;
+  selectorCompareRow6Value2En?: string;
+  selectorCompareRow6Value3?: string;
+  selectorCompareRow6Value3En?: string;
+  selectorCompareRow7Label?: string;
+  selectorCompareRow7LabelEn?: string;
+  selectorCompareRow7Value1?: string;
+  selectorCompareRow7Value1En?: string;
+  selectorCompareRow7Value2?: string;
+  selectorCompareRow7Value2En?: string;
+  selectorCompareRow7Value3?: string;
+  selectorCompareRow7Value3En?: string;
+  selectorCompareNoteHtml?: string;
+  selectorCompareNoteHtmlEn?: string;
+  addSelectorCompareTable?: boolean;
 
   // feature
   featureNumber?: string;
@@ -269,6 +438,30 @@ export type CategoryLandingOverrides = {
   detailCard3DescriptionHtml?: string;
   detailCard4Title?: string;
   detailCard4DescriptionHtml?: string;
+  detailCard1TitleEn?: string;
+  detailCard1DescriptionHtmlEn?: string;
+  detailCard2TitleEn?: string;
+  detailCard2DescriptionHtmlEn?: string;
+  detailCard3TitleEn?: string;
+  detailCard3DescriptionHtmlEn?: string;
+  detailCard4TitleEn?: string;
+  detailCard4DescriptionHtmlEn?: string;
+  detailLineCard1Marker?: string;
+  detailLineCard1Item1?: string;
+  detailLineCard1Item1En?: string;
+  detailLineCard1Item2?: string;
+  detailLineCard1Item2En?: string;
+  detailLineCard1Item3?: string;
+  detailLineCard1Item3En?: string;
+  detailLineCard1Visible?: boolean;
+  detailLineCard2Marker?: string;
+  detailLineCard2Item1?: string;
+  detailLineCard2Item1En?: string;
+  detailLineCard2Item2?: string;
+  detailLineCard2Item2En?: string;
+  detailLineCard2Item3?: string;
+  detailLineCard2Item3En?: string;
+  detailLineCard2Visible?: boolean;
 
   // detail callout
   detailCalloutTitlePrefix?: string;
@@ -320,6 +513,7 @@ export type CategoryLandingOverrides = {
 interface Props extends CategoryLandingOverrides {
   data: CategoryLandingData;
   productList?: IkasProductList;
+  useLiveSelectorProducts?: boolean;
 }
 
 type CategoryAnnouncementWindow = Window & {
@@ -343,6 +537,37 @@ function textValue(value: string | undefined, fallback: string) {
 
 function richValue(value: string | undefined, fallback: string) {
   return value !== undefined && value.trim() ? value : fallback;
+}
+
+function localizedTextValue(value: unknown, valueEn: unknown, fallback: string) {
+  const localizedValue = isEnglishLocale() ? valueEn : value;
+  const text = typeof localizedValue === "string" ? localizedValue : "";
+  return text.trim() ? translateText(text.trim()) : translateText(fallback);
+}
+
+function localizedHtmlValue(value: unknown, valueEn: unknown, fallback: string) {
+  const localizedValue = isEnglishLocale() ? valueEn : value;
+  return typeof localizedValue === "string" && localizedValue.trim() ? localizedValue : fallback;
+}
+
+function localizedTextProp(props: CategoryLandingOverrides, key: string, fallback: string) {
+  const value = props[key];
+  const valueEn = props[`${key}En`];
+  return localizedTextValue(
+    typeof value === "string" ? value : undefined,
+    typeof valueEn === "string" ? valueEn : undefined,
+    fallback,
+  );
+}
+
+function localizedHtmlProp(props: CategoryLandingOverrides, key: string, fallback: string) {
+  const value = props[key];
+  const valueEn = props[`${key}En`];
+  return localizedHtmlValue(
+    typeof value === "string" ? value : undefined,
+    typeof valueEn === "string" ? valueEn : undefined,
+    fallback,
+  );
 }
 
 function routeKey(value: string) {
@@ -903,21 +1128,31 @@ function ProductCard({
   kind,
   product,
   preferLiveImage,
+  imageOverride,
+  imageAltOverride,
 }: {
   card: CategoryProductCard;
   cardCtaText: string;
   kind: CategoryLandingData["kind"];
   product: IkasProduct | null;
   preferLiveImage: boolean;
+  imageOverride?: IkasImage | null;
+  imageAltOverride?: string;
 }) {
   const variant = product ? safeVariant(product) : null;
   const media = variant ? getProductVariantMainImage(variant) : undefined;
   const image = media?.image;
-  const href = resolveHref(product ? getProductHref(product) : card.href);
+  const studioImage = imageOverride || null;
+  const studioImageSrc = studioImage ? getDefaultSrc(studioImage) : "";
+  const href = resolveHref(card.href);
   const liveImageSrc = image ? getDefaultSrc(image) : "";
-  const imageSrc = card.sourceIcon ? "" : preferLiveImage && liveImageSrc ? liveImageSrc : card.imageSrc || liveImageSrc;
-  const imageAlt = preferLiveImage ? image?.altText || card.imageAlt || card.title : card.imageAlt || image?.altText || card.title;
-  const imageSrcSet = preferLiveImage || !card.imageSrc ? (image ? createMediaSrcset(image) : undefined) : undefined;
+  const imageSrc = card.sourceIcon ? "" : studioImageSrc || (preferLiveImage && liveImageSrc ? liveImageSrc : card.imageSrc || liveImageSrc);
+  const imageAlt = imageAltOverride || (preferLiveImage ? image?.altText || card.imageAlt || card.title : card.imageAlt || image?.altText || card.title);
+  const imageSrcSet = studioImage
+    ? createMediaSrcset(studioImage)
+    : preferLiveImage || !card.imageSrc
+      ? (image ? createMediaSrcset(image) : undefined)
+      : undefined;
 
   return (
     <a className={`tmcl-product-card${card.hot ? " is-hot" : ""}`} href={href}>
@@ -925,7 +1160,7 @@ function ProductCard({
         {card.tag && kind !== "resins" ? <span className={`tmcl-card-tag${card.hot ? " is-hot" : ""}`}>{card.tag}</span> : null}
         {card.status ? <span className="tmcl-card-status">{card.status}</span> : null}
         {imageSrc ? (
-          media?.isVideo && (preferLiveImage || !card.imageSrc) ? (
+          media?.isVideo && !studioImageSrc && (preferLiveImage || !card.imageSrc) ? (
             <video src={imageSrc} muted playsInline loop autoPlay />
           ) : (
             <img src={imageSrc} srcSet={imageSrcSet} alt={imageAlt} loading="lazy" decoding="async" />
@@ -1003,15 +1238,15 @@ export default function ThreeMashCategoryLanding(props: Props) {
     if (index === 0) {
       return {
         ...button,
-        label: textValue(props.primaryButtonText, button.label),
-        href: textValue(props.primaryButtonHref, button.href),
+        label: localizedTextProp(props, "primaryButtonText", button.label),
+        href: localizedTextProp(props, "primaryButtonHref", button.href),
       };
     }
     if (index === 1) {
       return {
         ...button,
-        label: textValue(props.secondaryButtonText, button.label),
-        href: textValue(props.secondaryButtonHref, button.href),
+        label: localizedTextProp(props, "secondaryButtonText", button.label),
+        href: localizedTextProp(props, "secondaryButtonHref", button.href),
       };
     }
     return button;
@@ -1021,33 +1256,33 @@ export default function ThreeMashCategoryLanding(props: Props) {
     if (index === 0) {
       return {
         ...metric,
-        value: textValue(props.metric1Value, metric.value),
-        emphasis: props.metric1Emphasis !== undefined ? props.metric1Emphasis : metric.emphasis,
-        label: textValue(props.metric1Label, metric.label),
+        value: localizedTextProp(props, "metric1Value", metric.value),
+        emphasis: localizedTextProp(props, "metric1Emphasis", metric.emphasis || ""),
+        label: localizedTextProp(props, "metric1Label", metric.label),
       };
     }
     if (index === 1) {
       return {
         ...metric,
-        value: textValue(props.metric2Value, metric.value),
-        emphasis: props.metric2Emphasis !== undefined ? props.metric2Emphasis : metric.emphasis,
-        label: textValue(props.metric2Label, metric.label),
+        value: localizedTextProp(props, "metric2Value", metric.value),
+        emphasis: localizedTextProp(props, "metric2Emphasis", metric.emphasis || ""),
+        label: localizedTextProp(props, "metric2Label", metric.label),
       };
     }
     if (index === 2) {
       return {
         ...metric,
-        value: textValue(props.metric3Value, metric.value),
-        emphasis: props.metric3Emphasis !== undefined ? props.metric3Emphasis : metric.emphasis,
-        label: textValue(props.metric3Label, metric.label),
+        value: localizedTextProp(props, "metric3Value", metric.value),
+        emphasis: localizedTextProp(props, "metric3Emphasis", metric.emphasis || ""),
+        label: localizedTextProp(props, "metric3Label", metric.label),
       };
     }
     if (index === 3) {
       return {
         ...metric,
-        value: textValue(props.metric4Value, metric.value),
-        emphasis: props.metric4Emphasis !== undefined ? props.metric4Emphasis : metric.emphasis,
-        label: textValue(props.metric4Label, metric.label),
+        value: localizedTextProp(props, "metric4Value", metric.value),
+        emphasis: localizedTextProp(props, "metric4Emphasis", metric.emphasis || ""),
+        label: localizedTextProp(props, "metric4Label", metric.label),
       };
     }
     return metric;
@@ -1057,47 +1292,95 @@ export default function ThreeMashCategoryLanding(props: Props) {
     const lKey = `featureSpec${index + 1}Label` as keyof CategoryLandingOverrides;
     const vKey = `featureSpec${index + 1}Value` as keyof CategoryLandingOverrides;
     return {
-      label: textValue(props[lKey] as string | undefined, spec.label),
-      value: textValue(props[vKey] as string | undefined, spec.value),
+      label: localizedTextProp(props, String(lKey), spec.label),
+      value: localizedTextProp(props, String(vKey), spec.value),
     };
   });
 
   const detailLineCards = data.detail.lineCards?.map((card, index) => {
-    const tKey = `detailCard${index + 1}Title` as keyof CategoryLandingOverrides;
-    const dKey = `detailCard${index + 1}DescriptionHtml` as keyof CategoryLandingOverrides;
+    const cardIndex = index + 1;
+    const tKey = `detailCard${cardIndex}Title` as keyof CategoryLandingOverrides;
+    const tEnKey = `detailCard${cardIndex}TitleEn` as keyof CategoryLandingOverrides;
+    const dKey = `detailCard${cardIndex}DescriptionHtml` as keyof CategoryLandingOverrides;
+    const dEnKey = `detailCard${cardIndex}DescriptionHtmlEn` as keyof CategoryLandingOverrides;
+    const markerKey = `detailLineCard${cardIndex}Marker` as keyof CategoryLandingOverrides;
+    const visibleKey = `detailLineCard${cardIndex}Visible` as keyof CategoryLandingOverrides;
     return {
       ...card,
-      title: textValue(props[tKey] as string | undefined, card.title),
-      descriptionHtml: richValue(props[dKey] as string | undefined, card.descriptionHtml),
+      marker: localizedTextProp(props, String(markerKey), card.marker),
+      title: localizedTextValue(
+        props[tKey] as string | undefined,
+        props[tEnKey] as string | undefined,
+        card.title,
+      ),
+      descriptionHtml: localizedHtmlValue(
+        props[dKey] as string | undefined,
+        props[dEnKey] as string | undefined,
+        card.descriptionHtml,
+      ),
+      items: card.items.map((item, itemIndex) => {
+        const itemKey = `detailLineCard${cardIndex}Item${itemIndex + 1}` as keyof CategoryLandingOverrides;
+        const itemEnKey = `detailLineCard${cardIndex}Item${itemIndex + 1}En` as keyof CategoryLandingOverrides;
+        return localizedTextValue(
+          props[itemKey] as string | undefined,
+          props[itemEnKey] as string | undefined,
+          item,
+        );
+      }),
+      visible: props[visibleKey] !== false,
     };
-  });
+  }).filter((card) => card.visible);
 
   const detailWhyCards = data.detail.whyCards?.map((card, index) => {
-    const tKey = `detailCard${index + 1}Title` as keyof CategoryLandingOverrides;
-    const dKey = `detailCard${index + 1}DescriptionHtml` as keyof CategoryLandingOverrides;
+    const cardIndex = index + 1;
+    const nKey = `detailCard${cardIndex}Number` as keyof CategoryLandingOverrides;
+    const tKey = `detailCard${cardIndex}Title` as keyof CategoryLandingOverrides;
+    const tEnKey = `detailCard${cardIndex}TitleEn` as keyof CategoryLandingOverrides;
+    const dKey = `detailCard${cardIndex}DescriptionHtml` as keyof CategoryLandingOverrides;
+    const dEnKey = `detailCard${cardIndex}DescriptionHtmlEn` as keyof CategoryLandingOverrides;
     return {
       ...card,
-      title: textValue(props[tKey] as string | undefined, card.title),
-      descriptionHtml: richValue(props[dKey] as string | undefined, card.descriptionHtml),
+      number: localizedTextProp(props, String(nKey), card.number),
+      title: localizedTextValue(
+        props[tKey] as string | undefined,
+        props[tEnKey] as string | undefined,
+        card.title,
+      ),
+      descriptionHtml: localizedHtmlValue(
+        props[dKey] as string | undefined,
+        props[dEnKey] as string | undefined,
+        card.descriptionHtml,
+      ),
+      visible: props[`detailWhyCard${cardIndex}Visible`] !== false,
     };
-  });
+  }).filter((card) => card.visible);
 
   const detailCalloutButtons = (data.detail.callout?.buttons || []).map((btn, index) => {
     const tKey = `detailCalloutButton${index + 1}Text` as keyof CategoryLandingOverrides;
     const hKey = `detailCalloutButton${index + 1}Href` as keyof CategoryLandingOverrides;
     return {
       ...btn,
-      label: textValue(props[tKey] as string | undefined, btn.label),
-      href: textValue(props[hKey] as string | undefined, btn.href),
+      label: localizedTextProp(props, String(tKey), btn.label),
+      href: localizedTextProp(props, String(hKey), btn.href),
     };
   });
 
   const faqItems = (data.faq.items || []).map((item, index) => {
     const qKey = `faq${index + 1}Question` as keyof CategoryLandingOverrides;
+    const qEnKey = `faq${index + 1}QuestionEn` as keyof CategoryLandingOverrides;
     const aKey = `faq${index + 1}AnswerHtml` as keyof CategoryLandingOverrides;
+    const aEnKey = `faq${index + 1}AnswerHtmlEn` as keyof CategoryLandingOverrides;
     return {
-      question: textValue(props[qKey] as string | undefined, item.question),
-      answerHtml: richValue(props[aKey] as string | undefined, item.answerHtml),
+      question: localizedTextValue(
+        props[qKey] as string | undefined,
+        props[qEnKey] as string | undefined,
+        item.question,
+      ),
+      answerHtml: localizedHtmlValue(
+        props[aKey] as string | undefined,
+        props[aEnKey] as string | undefined,
+        item.answerHtml,
+      ),
     };
   });
 
@@ -1105,20 +1388,32 @@ export default function ThreeMashCategoryLanding(props: Props) {
     if (index === 0) {
       return {
         ...button,
-        label: textValue(props.finalPrimaryButtonText, button.label),
-        href: textValue(props.finalPrimaryButtonHref, button.href),
+        label: localizedTextProp(props, "finalPrimaryButtonText", button.label),
+        href: localizedTextProp(props, "finalPrimaryButtonHref", button.href),
       };
     }
     if (index === 1) {
       return {
         ...button,
-        label: textValue(props.finalSecondaryButtonText, button.label),
-        href: textValue(props.finalSecondaryButtonHref, button.href),
+        label: localizedTextProp(props, "finalSecondaryButtonText", button.label),
+        href: localizedTextProp(props, "finalSecondaryButtonHref", button.href),
       };
     }
     return button;
   });
 
+  const selectorFilters = data.selector.filters?.map((filter, index) => {
+    const labelKey = `selectorFilter${index + 1}Label` as keyof CategoryLandingOverrides;
+    const labelEnKey = `selectorFilter${index + 1}LabelEn` as keyof CategoryLandingOverrides;
+    return {
+      ...filter,
+      label: localizedTextValue(
+        props[labelKey] as string | undefined,
+        props[labelEnKey] as string | undefined,
+        filter.label,
+      ),
+    };
+  });
   const [activeFilter, setActiveFilter] = useState(data.selector.filters?.[0]?.id || "all");
   const [extraProducts, setExtraProducts] = useState<IkasProduct[]>([]);
 
@@ -1168,26 +1463,227 @@ export default function ThreeMashCategoryLanding(props: Props) {
     () => new Set((productList?.data || []).map((product) => product.id)),
     [productList?.data],
   );
+  const useDynamicSelectorProducts =
+    Boolean(productList?.data?.length) &&
+    (data.kind !== "wash-cure" || props.useLiveSelectorProducts !== false);
   const heroMetrics = baseHeroMetrics.map((metric, index) => {
     const priceMetricIndex = data.kind === "washing" ? 1 : data.kind === "curing" || data.kind === "zircon" ? 3 : data.kind === "wash-cure" ? 3 : -1;
     if (index !== priceMetricIndex) return metric;
-    const liveProduct = findLiveProduct(liveProducts, data.selector.products[0]?.title || "");
+    const liveProduct = useDynamicSelectorProducts
+      ? productList?.data?.[0]
+      : findLiveProduct(liveProducts, data.selector.products[0]?.title || "");
     const livePrice = liveProduct ? liveProductStatus(liveProduct) : "";
-    return livePrice ? { ...metric, value: livePrice, emphasis: "" } : { ...metric, value: "", emphasis: "" };
+    return {
+      ...metric,
+      value: livePrice,
+      emphasis: "",
+      label: useDynamicSelectorProducts && liveProduct ? liveProduct.name : metric.label,
+    };
   });
   const productCards = useMemo(
     () =>
-      liveProductCards(
-        liveProducts,
-        data.selector.products,
-        data.selector.filters,
-        data.kind === "wash-cure" || data.kind === "resins" || data.kind === "zircon",
-        data.kind,
-      ),
-    [data.selector.filters, data.selector.products, liveProducts, data.kind],
+      useDynamicSelectorProducts
+        ? liveProductCards(
+            productList?.data || [],
+            data.selector.products,
+            selectorFilters,
+            false,
+            data.kind,
+          )
+        : liveProductCards(
+            liveProducts,
+            data.selector.products,
+            selectorFilters,
+            data.kind === "wash-cure" || data.kind === "resins" || data.kind === "zircon",
+            data.kind,
+          ),
+    [selectorFilters, data.selector.products, liveProducts, data.kind, productList?.data, useDynamicSelectorProducts],
   );
-  const visibleCards = productCards.filter((card) => activeFilter === "all" || card.filterId === activeFilter);
-  const compare = data.selector.compare;
+  const cardDescriptionOverrides = [
+    [props.selectorProduct1DescriptionHtml, props.selectorProduct1DescriptionHtmlEn],
+    [props.selectorProduct2DescriptionHtml, props.selectorProduct2DescriptionHtmlEn],
+    [props.selectorProduct3DescriptionHtml, props.selectorProduct3DescriptionHtmlEn],
+  ];
+  const cardTitleOverrides = [
+    [props.selectorProduct1Title, props.selectorProduct1TitleEn],
+    [props.selectorProduct2Title, props.selectorProduct2TitleEn],
+    [props.selectorProduct3Title, props.selectorProduct3TitleEn],
+  ];
+  const cardHrefOverrides = [
+    [props.selectorProduct1Href, props.selectorProduct1HrefEn],
+    [props.selectorProduct2Href, props.selectorProduct2HrefEn],
+    [props.selectorProduct3Href, props.selectorProduct3HrefEn],
+  ];
+  const cardImageOverrides = [
+    props.selectorProduct1Image,
+    props.selectorProduct2Image,
+    props.selectorProduct3Image,
+  ];
+  const cardImageAltOverrides = [
+    [props.selectorProduct1ImageAlt, props.selectorProduct1ImageAltEn],
+    [props.selectorProduct2ImageAlt, props.selectorProduct2ImageAltEn],
+    [props.selectorProduct3ImageAlt, props.selectorProduct3ImageAltEn],
+  ];
+  const cardTagOverrides = [
+    [props.selectorProduct1Tag, props.selectorProduct1TagEn],
+    [props.selectorProduct2Tag, props.selectorProduct2TagEn],
+    [props.selectorProduct3Tag, props.selectorProduct3TagEn],
+  ];
+  const cardVisibility = [
+    props.selectorProduct1Visible,
+    props.selectorProduct2Visible,
+    props.selectorProduct3Visible,
+  ];
+  const cardSpecOverrides = [
+    [
+      [
+        props.selectorProduct1Spec1Label,
+        props.selectorProduct1Spec1LabelEn,
+        props.selectorProduct1Spec1Value,
+        props.selectorProduct1Spec1ValueEn,
+      ],
+      [
+        props.selectorProduct1Spec2Label,
+        props.selectorProduct1Spec2LabelEn,
+        props.selectorProduct1Spec2Value,
+        props.selectorProduct1Spec2ValueEn,
+      ],
+      [
+        props.selectorProduct1Spec3Label,
+        props.selectorProduct1Spec3LabelEn,
+        props.selectorProduct1Spec3Value,
+        props.selectorProduct1Spec3ValueEn,
+      ],
+    ],
+    [
+      [
+        props.selectorProduct2Spec1Label,
+        props.selectorProduct2Spec1LabelEn,
+        props.selectorProduct2Spec1Value,
+        props.selectorProduct2Spec1ValueEn,
+      ],
+      [
+        props.selectorProduct2Spec2Label,
+        props.selectorProduct2Spec2LabelEn,
+        props.selectorProduct2Spec2Value,
+        props.selectorProduct2Spec2ValueEn,
+      ],
+      [
+        props.selectorProduct2Spec3Label,
+        props.selectorProduct2Spec3LabelEn,
+        props.selectorProduct2Spec3Value,
+        props.selectorProduct2Spec3ValueEn,
+      ],
+    ],
+    [
+      [
+        props.selectorProduct3Spec1Label,
+        props.selectorProduct3Spec1LabelEn,
+        props.selectorProduct3Spec1Value,
+        props.selectorProduct3Spec1ValueEn,
+      ],
+      [
+        props.selectorProduct3Spec2Label,
+        props.selectorProduct3Spec2LabelEn,
+        props.selectorProduct3Spec2Value,
+        props.selectorProduct3Spec2ValueEn,
+      ],
+      [
+        props.selectorProduct3Spec3Label,
+        props.selectorProduct3Spec3LabelEn,
+        props.selectorProduct3Spec3Value,
+        props.selectorProduct3Spec3ValueEn,
+      ],
+    ],
+  ];
+  const visibleCards = productCards
+    .map((card, index) => {
+      const [tag, tagEn] = cardTagOverrides[index] || [];
+      const [title, titleEn] = cardTitleOverrides[index] || [];
+      const [imageAlt, imageAltEn] = cardImageAltOverrides[index] || [];
+      const specOverrides = cardSpecOverrides[index] || [];
+      const specs = Array.from({ length: Math.max(card.specs?.length || 0, specOverrides.length) }, (_, specIndex) => {
+        const spec = card.specs?.[specIndex];
+        const [label, labelEn, value, valueEn] = specOverrides[specIndex] || [];
+        return {
+          label: localizedTextValue(label, labelEn, spec?.label || ""),
+          value: localizedTextValue(value, valueEn, spec?.value || ""),
+        };
+      }).filter((spec) => spec.label || spec.value);
+      return {
+        ...card,
+        title: localizedTextValue(title, titleEn, card.title),
+        href: localizedTextValue(
+          cardHrefOverrides[index]?.[0],
+          cardHrefOverrides[index]?.[1],
+          card.href,
+        ),
+        descriptionHtml: localizedHtmlValue(
+          cardDescriptionOverrides[index]?.[0],
+          cardDescriptionOverrides[index]?.[1],
+          card.descriptionHtml,
+        ),
+        imageAlt: localizedTextValue(imageAlt, imageAltEn, card.imageAlt || card.title),
+        tag: localizedTextValue(tag, tagEn, card.tag || ""),
+        slotIndex: index,
+        specs,
+      };
+    })
+    .filter((card, index) => cardVisibility[index] !== false && (activeFilter === "all" || card.filterId === activeFilter));
+  const compareSource = data.selector.compare;
+  const compare = props.selectorCompareVisible === false || (!compareSource && props.addSelectorCompareTable !== true)
+    ? undefined
+    : (() => {
+        const columnOverrides = [
+          [props.selectorCompareColumn1Title, props.selectorCompareColumn1TitleEn, props.selectorCompareColumn1Subtitle, props.selectorCompareColumn1SubtitleEn],
+          [props.selectorCompareColumn2Title, props.selectorCompareColumn2TitleEn, props.selectorCompareColumn2Subtitle, props.selectorCompareColumn2SubtitleEn],
+          [props.selectorCompareColumn3Title, props.selectorCompareColumn3TitleEn, props.selectorCompareColumn3Subtitle, props.selectorCompareColumn3SubtitleEn],
+          [props.selectorCompareColumn4Title, props.selectorCompareColumn4TitleEn, props.selectorCompareColumn4Subtitle, props.selectorCompareColumn4SubtitleEn],
+        ];
+        const rowOverrides = Array.from({ length: 7 }, (_, rowIndex) => {
+          const row = rowIndex + 1;
+          const label = props[`selectorCompareRow${row}Label` as keyof CategoryLandingOverrides] as string | undefined;
+          const labelEn = props[`selectorCompareRow${row}LabelEn` as keyof CategoryLandingOverrides] as string | undefined;
+          return {
+            label: [label, labelEn],
+            values: [1, 2, 3].map((column) => [
+              props[`selectorCompareRow${row}Value${column}` as keyof CategoryLandingOverrides] as string | undefined,
+              props[`selectorCompareRow${row}Value${column}En` as keyof CategoryLandingOverrides] as string | undefined,
+            ]),
+          };
+        });
+        const sourceColumns = compareSource?.columns || [];
+        const columns = Array.from({ length: compareSource?.columns.length || 4 }, (_, index) => {
+          const column = sourceColumns[index];
+          const [title, titleEn, subtitle, subtitleEn] = columnOverrides[index] || [];
+          const productTitle = index > 0 ? data.selector.products[index - 1]?.title || "" : "";
+          return {
+            title: localizedTextValue(title, titleEn, column?.title || productTitle || tLocalized("Özellik", "Feature")),
+            subtitle: localizedTextValue(subtitle, subtitleEn, column?.subtitle || ""),
+          };
+        });
+        const sourceRows = compareSource?.rows || [];
+        const rows = rowOverrides.map((override, index) => {
+          const row = sourceRows[index];
+          return {
+            label: localizedTextValue(override.label[0], override.label[1], row?.label || ""),
+            values: override.values.map(([cell, cellEn], valueIndex) =>
+              localizedHtmlValue(cell, cellEn, row?.values[valueIndex] || ""),
+            ),
+          };
+        }).filter((row) => row.label || row.values.some((value) => value.trim()));
+        if (!rows.length) return undefined;
+
+        return {
+          columns,
+          rows,
+          noteHtml: localizedHtmlValue(
+            props.selectorCompareNoteHtml,
+            props.selectorCompareNoteHtmlEn,
+            compareSource?.noteHtml || "",
+          ),
+        };
+      })();
 
   // Announcement bar payload
   useLayoutEffect(() => {
@@ -1195,10 +1691,10 @@ export default function ThreeMashCategoryLanding(props: Props) {
 
     const payload = {
       enabled: props.showAnnouncement !== false,
-      highlightText: textValue(props.eyebrowText, data.announcement.highlight),
-      text: textValue(props.announcementText, data.announcement.text),
-      ctaText: textValue(props.announcementCtaText, data.announcement.ctaText),
-      href: textValue(props.announcementHref, data.announcement.href),
+      highlightText: localizedTextProp(props, "eyebrowText", data.announcement.highlight),
+      text: localizedTextProp(props, "announcementText", data.announcement.text),
+      ctaText: localizedTextProp(props, "announcementCtaText", data.announcement.ctaText),
+      href: localizedTextProp(props, "announcementHref", data.announcement.href),
     };
     const targetWindow = window as CategoryAnnouncementWindow;
     targetWindow.__THREE_MASH_PRODUCT_ANNOUNCEMENT__ = payload;
@@ -1217,9 +1713,13 @@ export default function ThreeMashCategoryLanding(props: Props) {
     data.announcement.href,
     data.announcement.text,
     props.eyebrowText,
+    props.eyebrowTextEn,
     props.announcementText,
+    props.announcementTextEn,
     props.announcementCtaText,
+    props.announcementCtaTextEn,
     props.announcementHref,
+    props.announcementHrefEn,
     props.showAnnouncement,
   ]);
 
@@ -1271,20 +1771,26 @@ export default function ThreeMashCategoryLanding(props: Props) {
       <div className="tmcl-hero">
         <div className="tmcl-wrap">
           <div className="tmcl-crumb">
-            <a href={resolveHref(data.breadcrumb.homeHref)}>{data.breadcrumb.homeLabel}</a>
+            <a href={resolveHref(localizedTextProp(props, "breadcrumbHomeHref", data.breadcrumb.homeHref))}>
+              {localizedTextValue(props.breadcrumbHomeLabel, props.breadcrumbHomeLabelEn, data.breadcrumb.homeLabel)}
+            </a>
             {"  /  "}
-            <a href={resolveHref(parentCategoryHref(data))}>{data.breadcrumb.parentLabel}</a>
+            <a href={resolveHref(localizedTextProp(props, "breadcrumbParentHref", parentCategoryHref(data)))}>
+              {localizedTextValue(props.breadcrumbParentLabel, props.breadcrumbParentLabelEn, data.breadcrumb.parentLabel)}
+            </a>
             {"  /  "}
-            <span aria-current="page">{data.breadcrumb.currentLabel}</span>
+            <span aria-current="page">
+              {localizedTextValue(props.breadcrumbCurrentLabel, props.breadcrumbCurrentLabelEn, data.breadcrumb.currentLabel)}
+            </span>
           </div>
           <h1>
             {titleWithEmphasis(
-              textValue(props.heroTitlePrefix, data.hero.titlePrefix),
-              textValue(props.heroTitleEmphasis, data.hero.titleEmphasis),
-              props.heroTitleSuffix !== undefined ? props.heroTitleSuffix : data.hero.titleSuffix
+              localizedTextProp(props, "heroTitlePrefix", data.hero.titlePrefix),
+              localizedTextProp(props, "heroTitleEmphasis", data.hero.titleEmphasis),
+              localizedTextProp(props, "heroTitleSuffix", data.hero.titleSuffix || "")
             )}
           </h1>
-          <p dangerouslySetInnerHTML={rich(richValue(props.heroDescriptionHtml, data.hero.descriptionHtml))} />
+          <p dangerouslySetInnerHTML={rich(localizedHtmlProp(props, "heroDescriptionHtml", data.hero.descriptionHtml))} />
           <div className="tmcl-actions">
             {heroButtons.filter((_, index) => index > 0 || props.showSelector !== false).map((button) => (
               <ButtonLink button={button} key={`${button.label}-${button.href}`} />
@@ -1311,17 +1817,17 @@ export default function ThreeMashCategoryLanding(props: Props) {
         <div className="tmcl-wrap">
           <SectionHead
             section={{
-              number: textValue(props.selectorNumber, data.selector.number),
-              label: textValue(props.selectorLabel, data.selector.label),
-              titlePrefix: textValue(props.selectorTitlePrefix, data.selector.titlePrefix),
-              titleEmphasis: textValue(props.selectorTitleEmphasis, data.selector.titleEmphasis),
-              titleSuffix: props.selectorTitleSuffix !== undefined ? props.selectorTitleSuffix : data.selector.titleSuffix,
-              sideHtml: richValue(props.selectorSideHtml, data.selector.sideHtml),
+              number: localizedTextProp(props, "selectorNumber", data.selector.number),
+              label: localizedTextProp(props, "selectorLabel", data.selector.label),
+              titlePrefix: localizedTextProp(props, "selectorTitlePrefix", data.selector.titlePrefix),
+              titleEmphasis: localizedTextProp(props, "selectorTitleEmphasis", data.selector.titleEmphasis),
+              titleSuffix: localizedTextProp(props, "selectorTitleSuffix", data.selector.titleSuffix || ""),
+              sideHtml: localizedHtmlProp(props, "selectorSideHtml", data.selector.sideHtml),
             }}
           />
-          {data.selector.filters?.length ? (
-            <div className="tmcl-filter-chips" aria-label={textValue(props.selectorLabel, data.selector.label)}>
-              {data.selector.filters.map((filter) => (
+          {selectorFilters?.length ? (
+            <div className="tmcl-filter-chips" aria-label={localizedTextProp(props, "selectorLabel", data.selector.label)}>
+              {selectorFilters.map((filter) => (
                 <button
                   type="button"
                   className={filter.id === activeFilter ? "is-active" : ""}
@@ -1336,20 +1842,25 @@ export default function ThreeMashCategoryLanding(props: Props) {
 
           <div className={`tmcl-product-grid tmcl-product-grid-${data.kind}`}>
             {visibleCards.map((card) => {
-              const product = liveProductsByTitle.get(normalize(card.title)) || findLiveProduct(liveProducts, card.title);
+              const slotIndex = card.slotIndex;
+              const sourceTitle = productCards[slotIndex]?.title || card.title;
+              const product = liveProductsByTitle.get(normalize(sourceTitle)) || findLiveProduct(liveProducts, sourceTitle);
+              const [imageAlt, imageAltEn] = cardImageAltOverrides[slotIndex] || [];
               return (
                 <ProductCard
                   card={card}
-                  cardCtaText={textValue(props.selectorCardCtaText, data.selector.cardCtaText)}
+                  cardCtaText={localizedTextProp(props, "selectorCardCtaText", data.selector.cardCtaText)}
                   kind={data.kind}
                   product={product}
                   preferLiveImage={Boolean(product && configuredProductIds.has(product.id))}
+                  imageOverride={cardImageOverrides[slotIndex]}
+                  imageAltOverride={localizedTextValue(imageAlt, imageAltEn, "") || undefined}
                   key={card.title}
                 />
               );
             })}
             {!visibleCards.length && data.selector.emptyMessageHtml ? (
-              <div className="tmcl-empty" dangerouslySetInnerHTML={rich(data.selector.emptyMessageHtml)} />
+              <div className="tmcl-empty" dangerouslySetInnerHTML={rich(localizedHtmlProp(props, "selectorEmptyMessageHtml", data.selector.emptyMessageHtml))} />
             ) : null}
           </div>
 
@@ -1417,22 +1928,22 @@ export default function ThreeMashCategoryLanding(props: Props) {
       <section className="tmcl-section tmcl-section-tight" id={routeKey(data.detail.label)}>
         <div className="tmcl-wrap">
           <SectionIndex
-            number={textValue(props.featureNumber, data.feature.number)}
-            label={textValue(props.featureLabel, data.feature.label)}
+            number={localizedTextProp(props, "featureNumber", data.feature.number)}
+            label={localizedTextProp(props, "featureLabel", data.feature.label)}
           />
           <div className="tmcl-flag">
             <div>
-              <div className="tmcl-flag-tag">{textValue(props.featureEyebrow, data.feature.content.eyebrow)}</div>
+              <div className="tmcl-flag-tag">{localizedTextProp(props, "featureEyebrow", data.feature.content.eyebrow)}</div>
               <h3>
                 {titleWithEmphasis(
-                  textValue(props.featureTitlePrefix, data.feature.content.titlePrefix),
-                  textValue(props.featureTitleEmphasis, data.feature.content.titleEmphasis),
-                  props.featureTitleSuffix !== undefined ? props.featureTitleSuffix : data.feature.content.titleSuffix
+                  localizedTextProp(props, "featureTitlePrefix", data.feature.content.titlePrefix),
+                  localizedTextProp(props, "featureTitleEmphasis", data.feature.content.titleEmphasis),
+                  localizedTextProp(props, "featureTitleSuffix", data.feature.content.titleSuffix || "")
                 )}
               </h3>
-              <p dangerouslySetInnerHTML={rich(richValue(props.featureDescriptionHtml, data.feature.content.descriptionHtml))} />
-              <a href={resolveHref(textValue(props.featureHref, data.feature.content.href))}>
-                {textValue(props.featureCtaText, data.feature.content.ctaText)}
+              <p dangerouslySetInnerHTML={rich(localizedHtmlProp(props, "featureDescriptionHtml", data.feature.content.descriptionHtml))} />
+              <a href={resolveHref(localizedTextProp(props, "featureHref", data.feature.content.href))}>
+                {localizedTextProp(props, "featureCtaText", data.feature.content.ctaText)}
               </a>
             </div>
             <div className="tmcl-spec-table">
@@ -1454,12 +1965,12 @@ export default function ThreeMashCategoryLanding(props: Props) {
         <div className="tmcl-wrap">
           <SectionHead
             section={{
-              number: textValue(props.detailNumber, data.detail.number),
-              label: textValue(props.detailLabel, data.detail.label),
-              titlePrefix: textValue(props.detailTitlePrefix, data.detail.titlePrefix),
-              titleEmphasis: textValue(props.detailTitleEmphasis, data.detail.titleEmphasis),
-              titleSuffix: props.detailTitleSuffix !== undefined ? props.detailTitleSuffix : data.detail.titleSuffix,
-              sideHtml: richValue(props.detailSideHtml, data.detail.sideHtml),
+              number: localizedTextProp(props, "detailNumber", data.detail.number),
+              label: localizedTextProp(props, "detailLabel", data.detail.label),
+              titlePrefix: localizedTextProp(props, "detailTitlePrefix", data.detail.titlePrefix),
+              titleEmphasis: localizedTextProp(props, "detailTitleEmphasis", data.detail.titleEmphasis),
+              titleSuffix: localizedTextProp(props, "detailTitleSuffix", data.detail.titleSuffix || ""),
+              sideHtml: localizedHtmlProp(props, "detailSideHtml", data.detail.sideHtml),
             }}
           />
           {detailLineCards?.length ? (
@@ -1496,12 +2007,12 @@ export default function ThreeMashCategoryLanding(props: Props) {
               <div>
                 <h3>
                   {titleWithEmphasis(
-                    textValue(props.detailCalloutTitlePrefix, data.detail.callout.titlePrefix),
-                    textValue(props.detailCalloutTitleEmphasis, data.detail.callout.titleEmphasis),
-                    props.detailCalloutTitleSuffix !== undefined ? props.detailCalloutTitleSuffix : data.detail.callout.titleSuffix
+                    localizedTextProp(props, "detailCalloutTitlePrefix", data.detail.callout.titlePrefix),
+                    localizedTextProp(props, "detailCalloutTitleEmphasis", data.detail.callout.titleEmphasis),
+                    localizedTextProp(props, "detailCalloutTitleSuffix", data.detail.callout.titleSuffix || "")
                   )}
                 </h3>
-                <p dangerouslySetInnerHTML={rich(richValue(props.detailCalloutDescriptionHtml, data.detail.callout.descriptionHtml))} />
+                <p dangerouslySetInnerHTML={rich(localizedHtmlProp(props, "detailCalloutDescriptionHtml", data.detail.callout.descriptionHtml))} />
               </div>
               <div className="tmcl-callout-actions">
                 {detailCalloutButtons.map((button) => (
@@ -1519,12 +2030,12 @@ export default function ThreeMashCategoryLanding(props: Props) {
       <section className="tmcl-section tmcl-section-tight" id="sss">
         <div className="tmcl-wrap">
           <SectionIndex
-            number={textValue(props.faqNumber, data.faq.number)}
-            label={textValue(props.faqLabel, data.faq.label)}
+            number={localizedTextProp(props, "faqNumber", data.faq.number)}
+            label={localizedTextProp(props, "faqLabel", data.faq.label)}
           />
           <div className="tmcl-section-head">
-            <h2>{textValue(props.faqTitle, data.faq.title)}</h2>
-            <div className="tmcl-section-side" dangerouslySetInnerHTML={rich(richValue(props.faqSideHtml, data.faq.sideHtml))} />
+            <h2>{localizedTextProp(props, "faqTitle", data.faq.title)}</h2>
+            <div className="tmcl-section-side" dangerouslySetInnerHTML={rich(localizedHtmlProp(props, "faqSideHtml", data.faq.sideHtml))} />
           </div>
           <div className="tmcl-faq">
             {faqItems.map((item, index) => (
@@ -1541,12 +2052,12 @@ export default function ThreeMashCategoryLanding(props: Props) {
         <div className="tmcl-wrap">
           <h2>
             {titleWithEmphasis(
-              textValue(props.finalTitlePrefix, data.finalCta.titlePrefix),
-              textValue(props.finalTitleEmphasis, data.finalCta.titleEmphasis),
-              props.finalTitleSuffix !== undefined ? props.finalTitleSuffix : data.finalCta.titleSuffix
+              localizedTextProp(props, "finalTitlePrefix", data.finalCta.titlePrefix),
+              localizedTextProp(props, "finalTitleEmphasis", data.finalCta.titleEmphasis),
+              localizedTextProp(props, "finalTitleSuffix", data.finalCta.titleSuffix || "")
             )}
           </h2>
-          <p dangerouslySetInnerHTML={rich(richValue(props.finalDescriptionHtml, data.finalCta.descriptionHtml))} />
+          <p dangerouslySetInnerHTML={rich(localizedHtmlProp(props, "finalDescriptionHtml", data.finalCta.descriptionHtml))} />
           <div className="tmcl-actions tmcl-final-actions">
             {finalButtons.map((button) => (
               <ButtonLink button={button} key={`${button.label}-${button.href}`} />

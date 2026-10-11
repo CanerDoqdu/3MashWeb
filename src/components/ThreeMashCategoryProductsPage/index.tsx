@@ -23,14 +23,38 @@ const categoryPropPrefixes: Record<CategoryLandingData["kind"], string> = {
   titanium: "titanium",
 };
 
-type CategoryOverrideKey = keyof CategoryLandingOverrides;
+type CategoryOverrideKey = Extract<keyof CategoryLandingOverrides, string>;
+
+const selectorProductOverrideKeys = ([1, 2, 3] as const).flatMap((index) => [
+  `selectorProduct${index}Title`,
+  `selectorProduct${index}Href`,
+  `selectorProduct${index}Image`,
+  `selectorProduct${index}ImageAlt`,
+  `selectorProduct${index}DescriptionHtml`,
+  `selectorProduct${index}Tag`,
+  `selectorProduct${index}Visible`,
+  `selectorProduct${index}Spec1Label`,
+  `selectorProduct${index}Spec1Value`,
+  `selectorProduct${index}Spec2Label`,
+  `selectorProduct${index}Spec2Value`,
+  `selectorProduct${index}Spec3Label`,
+  `selectorProduct${index}Spec3Value`,
+]) as CategoryOverrideKey[];
 
 const categoryOverrideKeys = [
   "showAnnouncement", "showHero", "showMetrics", "showSelector", "showFeature", "showDetail", "showFaq", "showFinalCta",
+  "breadcrumbHomeLabel", "breadcrumbHomeHref", "breadcrumbParentLabel", "breadcrumbParentHref", "breadcrumbCurrentLabel",
   "eyebrowText", "announcementText", "announcementCtaText", "announcementHref",
   "heroTitlePrefix", "heroTitleEmphasis", "heroTitleSuffix", "heroDescriptionHtml", "primaryButtonText", "primaryButtonHref", "secondaryButtonText", "secondaryButtonHref",
   "metric1Value", "metric1Emphasis", "metric1Label", "metric2Value", "metric2Emphasis", "metric2Label", "metric3Value", "metric3Emphasis", "metric3Label", "metric4Value", "metric4Emphasis", "metric4Label",
   "selectorNumber", "selectorLabel", "selectorTitlePrefix", "selectorTitleEmphasis", "selectorTitleSuffix", "selectorSideHtml", "selectorCardCtaText",
+  ...selectorProductOverrideKeys,
+  "selectorCompareVisible",
+  "selectorCompareColumn1Title", "selectorCompareColumn2Title", "selectorCompareColumn3Title", "selectorCompareColumn4Title",
+  "selectorCompareRow1Label", "selectorCompareRow1Value1", "selectorCompareRow1Value2", "selectorCompareRow1Value3",
+  "selectorCompareRow2Label", "selectorCompareRow2Value1", "selectorCompareRow2Value2", "selectorCompareRow2Value3",
+  "selectorCompareRow3Label", "selectorCompareRow3Value1", "selectorCompareRow3Value2", "selectorCompareRow3Value3",
+  "selectorCompareNoteHtml",
   "featureNumber", "featureLabel", "featureEyebrow", "featureTitlePrefix", "featureTitleEmphasis", "featureTitleSuffix", "featureDescriptionHtml", "featureHref", "featureCtaText",
   "featureSpec1Label", "featureSpec1Value", "featureSpec2Label", "featureSpec2Value", "featureSpec3Label", "featureSpec3Value", "featureSpec4Label", "featureSpec4Value",
   "detailNumber", "detailLabel", "detailTitlePrefix", "detailTitleEmphasis", "detailTitleSuffix", "detailSideHtml",
@@ -54,6 +78,7 @@ function categorySpecificOverrides(props: Props, kind: CategoryLandingData["kind
         !key.endsWith("Href") &&
         !key.endsWith("Color") &&
         !key.endsWith("Image") &&
+        !key.endsWith("Visible") &&
         !key.endsWith("AltEn");
       if (englishLocale && isLocalizedText) {
         const englishPropName = `${propName}En` as keyof Props;
@@ -411,9 +436,13 @@ export function ThreeMashCategoryProductsPage(props: Props) {
   if (detectedCategoryData) {
     return (
       <ThreeMashCategoryLanding
-        {...categorySpecificOverrides(props, detectedCategoryData.kind)}
         data={detectedCategoryData}
         productList={props.productList}
+        useLiveSelectorProducts={
+          detectedCategoryData.kind === "wash-cure" &&
+          props.washCureSelectorUseLiveProducts !== false
+        }
+        {...categorySpecificOverrides(props, detectedCategoryData.kind)}
       />
     );
   }

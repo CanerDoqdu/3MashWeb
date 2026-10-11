@@ -619,7 +619,7 @@ export function washCureCategoryData(): CategoryLandingData {
       { value: "3", emphasis: tLocalized("cihaz", "devices"), label: tLocalized("yıkama ve kürleme adımları", "washing and curing steps") },
       { value: "360", emphasis: "°", label: tLocalized("C1E ışık sistemi", "C1E light system") },
       { value: "24", emphasis: "LED", label: tLocalized("C1E UV kürleme düzeni", "C1E UV curing setup") },
-      { value: "16.453", emphasis: "TRY", label: tLocalized("W1E başlangıç fiyatı", "W1E starting price") },
+      { value: "₺", emphasis: "16,534.00", label: tLocalized("W1E başlangıç fiyatı", "W1E starting price") },
     ],
   },
   selector: {
@@ -637,7 +637,7 @@ export function washCureCategoryData(): CategoryLandingData {
         descriptionHtml:
           tLocalized("3D baskı sonrası parçaların yüzeyindeki reçine kalıntılarını temizlemek için konumlanan <b>ultrasonik yıkama</b> cihazı.", "An <b>ultrasonic washing</b> device positioned to clean resin residue from the surface of parts after 3D printing."),
         href: "/mash-w1e-ultrasonik-yikama-cihazi",
-        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/1080/mash-w1e-washing-device.webp",
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/2ed9f9dd-4203-4c95-9dd3-c9e321bdd354/image_1080.webp",
         imageAlt: tLocalized("Mash W1E ultrasonik yıkama cihazı", "Mash W1E ultrasonic washing device"),
         tag: tLocalized("YIKAMA", "WASHING"),
         status: "",
@@ -666,12 +666,12 @@ export function washCureCategoryData(): CategoryLandingData {
         ],
       },
       {
-        title: tLocalized("Creality UW02 - Yıkama & Kürleme Cihazı", "Creality UW02 - Washing & Curing Device"),
+        title: tLocalized("Creality Wash&Cure UW-03", "Creality Wash&Cure UW-03"),
         descriptionHtml:
           tLocalized("Reçine 3D baskılar için yıkama ve UV kürleme adımlarını <b>tek post-process akışında</b> toplayan cihaz.", "A device that combines the washing and UV curing steps for resin 3D prints <b>in a single post-processing workflow</b>."),
         href: "/creality-washcure-uw-02",
-        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/1080/washcure-website-4.webp",
-        imageAlt: tLocalized("Creality UW02 yıkama ve kürleme cihazı", "Creality UW02 washing and curing device"),
+        imageSrc: "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/d984fa46-ceee-4778-aca0-2d2fe65b4a73/image_1080.webp",
+        imageAlt: tLocalized("Creality Wash&Cure UW-03", "Creality Wash&Cure UW-03"),
         tag: tLocalized("YIKAMA + KÜRLEME", "WASHING + CURING"),
         status: "",
         tone: "#F1F1EC",
@@ -755,7 +755,7 @@ export function washCureCategoryData(): CategoryLandingData {
       {
         question: tLocalized("Bu kategoride hangi ürün var?", "Which products are in this category?"),
         answerHtml:
-          tLocalized("Bu kategoride Mash W1E Ultrasonik Yıkama Cihazı, Mash C1E UV Kürleme Cihazı ve Creality UW02 - Yıkama & Kürleme Cihazı birlikte konumlanır.", "This category features the Mash W1E Ultrasonic Washing Device, the Mash C1E UV Curing Device, and the Creality UW02 - Washing & Curing Device together."),
+          tLocalized("Bu kategoride Mash W1E Ultrasonik Yıkama Cihazı, Mash C1E UV Kürleme Cihazı ve Creality Wash&Cure UW-03 birlikte konumlanır.", "This category features the Mash W1E Ultrasonic Washing Device, the Mash C1E UV Curing Device, and the Creality Wash&Cure UW-03 together."),
       },
       {
         question: tLocalized("C1E hangi ışık sistemiyle çalışır?", "Which light system does the C1E work with?"),

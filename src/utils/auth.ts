@@ -93,17 +93,31 @@ export function hasCustomerToken(): boolean {
   }
 }
 
+let customerStoreInitPromise: Promise<void> | null = null;
+
+export function initializeCustomerStore(): Promise<void> {
+  if (customerStore._initialized) return Promise.resolve();
+  if (!customerStoreInitPromise) {
+    customerStoreInitPromise = initCustomerStore(customerStore).finally(() => {
+      customerStoreInitPromise = null;
+    });
+  }
+  return customerStoreInitPromise;
+}
+
 /**
- * Synchronously resolves the customer authentication state.
- * A session without a stored customerToken is NEVER authenticated.
+ * Resolve the canonical auth state from the actual store lifecycle instead of mixing
+ * token presence, hydration timing, and cached browser state into separate decisions.
  */
 export function isCustomerAuthenticated(): CustomerAuthState {
   if (typeof window === "undefined") return "unauthenticated";
 
-  // If there is no token in storage, the user is unauthenticated
+  if (isStudioPreviewActive()) {
+    return "authenticated";
+  }
+
   const hasToken = hasCustomerToken();
   if (!hasToken) {
-    // Clean up any residual in-memory state
     if (customerStore.customer) {
       try {
         customerStore.customer = null;
@@ -113,13 +127,16 @@ export function isCustomerAuthenticated(): CustomerAuthState {
     return "unauthenticated";
   }
 
-  // Token exists: check if customer model is already resolved
-  if (customerStore.customer) return "authenticated";
-
-  // Token exists, but store hasn't initialized customer model yet
   if (!customerStore._initialized) return "loading";
-
   return customerStore.customer ? "authenticated" : "unauthenticated";
+}
+
+let logoutInProgress = false;
+
+export function redirectToLogin(redirectHref = "/account/login"): void {
+  if (typeof window === "undefined" || logoutInProgress) return;
+  const target = localizedHref(redirectHref);
+  window.location.replace(safeRedirect(target));
 }
 
 /**
@@ -145,25 +162,29 @@ export function clearClientAuthStorage(): void {
  * Wipes in-memory session, clears cart, dispatches events, and redirects if on a protected route.
  */
 function handleCrossTabLogout(): void {
-  clearClientAuthStorage();
-
+  logoutInProgress = true;
   try {
-    customerStore.customer = null;
-    (customerStore as any)._token = null;
-    customerStore._favoriteProducts = [];
-    customerStore._isFavoriteProductsLoaded = false;
-  } catch {}
+    clearClientAuthStorage();
 
-  clearGlobalCart();
+    try {
+      customerStore.customer = null;
+      (customerStore as any)._token = null;
+      customerStore._favoriteProducts = [];
+      customerStore._isFavoriteProductsLoaded = false;
+    } catch {}
 
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(new CustomEvent("3mash-cart-updated"));
-    window.dispatchEvent(new CustomEvent("3mash-auth-updated"));
+    clearGlobalCart();
 
-    if (isProtectedPath(window.location.pathname)) {
-      const target = localizedHref("/account/login");
-      window.location.replace(safeRedirect(target));
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("3mash-cart-updated"));
+      window.dispatchEvent(new CustomEvent("3mash-auth-updated"));
     }
+  } finally {
+    logoutInProgress = false;
+  }
+
+  if (typeof window !== "undefined" && isProtectedPath(window.location.pathname)) {
+    redirectToLogin();
   }
 }
 
@@ -202,61 +223,65 @@ export async function performLogout(options?: {
   forceRedirect?: boolean;
   redirectTarget?: string;
 }): Promise<void> {
-  // 1. Purge client storage immediately
-  clearClientAuthStorage();
-
-  // 2. Set multi-tab logout timestamp for StorageEvent fallback
+  logoutInProgress = true;
   try {
-    localStorage.setItem(LOGOUT_TIMESTAMP_KEY, Date.now().toString());
-  } catch {}
+    // 1. Purge client storage immediately
+    clearClientAuthStorage();
 
-  try {
-    sessionStorage.setItem("tm_studio_logged_out", "1");
-  } catch {}
+    // 2. Set multi-tab logout timestamp for StorageEvent fallback
+    try {
+      localStorage.setItem(LOGOUT_TIMESTAMP_KEY, Date.now().toString());
+    } catch {}
 
-  // 3. Broadcast to other tabs immediately
-  try {
-    if (typeof window !== "undefined" && typeof BroadcastChannel !== "undefined") {
-      const channel = new BroadcastChannel(AUTH_BROADCAST_CHANNEL);
-      channel.postMessage({ type: "LOGOUT", timestamp: Date.now() });
-      channel.close();
+    try {
+      sessionStorage.setItem("tm_studio_logged_out", "1");
+    } catch {}
+
+    // 3. Broadcast logout to other tabs immediately
+    try {
+      if (typeof window !== "undefined" && typeof BroadcastChannel !== "undefined") {
+        const channel = new BroadcastChannel(AUTH_BROADCAST_CHANNEL);
+        channel.postMessage({ type: "LOGOUT", timestamp: Date.now() });
+        channel.close();
+      }
+    } catch {}
+
+    // 4. Invalidate the ikas store
+    try {
+      await logout(customerStore);
+    } catch {}
+
+    // 5. Invalidate in-memory store references
+    try {
+      customerStore.customer = null;
+      (customerStore as any)._token = null;
+      customerStore._favoriteProducts = [];
+      customerStore._isFavoriteProductsLoaded = false;
+    } catch {}
+
+    clearGlobalCart();
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("3mash-cart-updated"));
+      window.dispatchEvent(new CustomEvent("3mash-auth-updated"));
     }
-  } catch {}
-
-  // 4. Invalidate ikas store
-  try {
-    await logout(customerStore);
-  } catch {}
-
-  // 5. Invalidate in-memory store references
-  try {
-    customerStore.customer = null;
-    (customerStore as any)._token = null;
-    customerStore._favoriteProducts = [];
-    customerStore._isFavoriteProductsLoaded = false;
-  } catch {}
-
-  clearGlobalCart();
+  } finally {
+    logoutInProgress = false;
+  }
 
   if (typeof window !== "undefined") {
-    window.dispatchEvent(new CustomEvent("3mash-cart-updated"));
-    window.dispatchEvent(new CustomEvent("3mash-auth-updated"));
-
     const onProtected = isProtectedPath(window.location.pathname);
     if (onProtected || options?.forceRedirect) {
-      const target = localizedHref(options?.redirectTarget || "/account/login");
-      window.location.replace(safeRedirect(target));
+      redirectToLogin(options?.redirectTarget || "/account/login");
     }
   }
 }
 
 /**
  * Subscribe to auth state changes via MobX reaction and window events.
- * Automatically triggers initCustomerStore when a token exists but the store
+ * Automatically initializes the customer store when a token exists but the store
  * hasn't been initialized yet. Returns an unsubscribe function.
  */
-let _sharedAuthInitPromise: Promise<void> | null = null;
-
 export function subscribeAuthState(
   callback: (state: CustomerAuthState) => void,
 ): () => void {
@@ -270,15 +295,15 @@ export function subscribeAuthState(
     !customerStore._initialized &&
     hasCustomerToken()
   ) {
-    if (!_sharedAuthInitPromise) {
-      _sharedAuthInitPromise = initCustomerStore(customerStore)
-        .catch(() => {})
-        .finally(() => {
-          _sharedAuthInitPromise = null;
-        });
-    }
-    _sharedAuthInitPromise.then(handleUpdate);
+    initializeCustomerStore()
+      .then(handleUpdate)
+      .catch((error) => {
+        console.error("Failed to initialize customer authentication state.", error);
+        handleUpdate();
+      });
   }
+
+  handleUpdate();
 
   const dispose = reaction(
     () => [
@@ -312,4 +337,3 @@ export function subscribeAuthState(
     }
   };
 }
-

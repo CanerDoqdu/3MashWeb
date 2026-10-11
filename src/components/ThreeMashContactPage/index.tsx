@@ -1,7 +1,7 @@
 import { useState } from "preact/hooks";
 import { Props } from "./types";
 import { isEnglishLocale, tLocalized, tProp } from "../../utils/i18n";
-import { businessConfig } from "../../utils/businessConfig";
+import { getBusinessConfig } from "../../utils/businessConfig";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   safeCheckoutHref,
@@ -92,7 +92,8 @@ function mailHref(
   },
   includePhone: boolean,
 ) {
-  const safeRecipient = safeMailAddress(recipient, businessConfig.recipientEmail) || businessConfig.recipientEmail;
+  const fallbackEmail = getBusinessConfig().recipientEmail;
+  const safeRecipient = safeMailAddress(recipient, fallbackEmail) || fallbackEmail;
   const subject = `${subjectPrefix} - ${form.firstName} ${form.lastName}`.trim();
   const phone = form.phone.trim() ? `${dialCode} ${form.phone.trim()}` : "-";
   const body = [
@@ -290,7 +291,8 @@ export function ThreeMashContactPage(props: Props) {
     "Phone country code",
   );
 
-  const recipient = safeMailAddress(text(props.recipientEmail, businessConfig.recipientEmail), businessConfig.recipientEmail) || businessConfig.recipientEmail;
+  const fallbackEmail = getBusinessConfig().recipientEmail;
+  const recipient = safeMailAddress(text(props.recipientEmail, fallbackEmail), fallbackEmail) || fallbackEmail;
   const style = {
     "--tm-contact-bg": themeColor(
       props.backgroundColor,

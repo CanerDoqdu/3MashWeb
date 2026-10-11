@@ -3,8 +3,6 @@ import {
   customerStore,
   getFavoriteProducts,
   getOrders,
-  initCustomerStore,
-  reaction,
   type IkasCustomer,
   type IkasOrder,
   type IkasProduct,
@@ -16,7 +14,7 @@ import {
   FavoritesView,
   ForgotPasswordView,
   isStudioEnvironment,
-  mockStudioCustomer,
+  getMockStudioCustomer,
   mockStudioOrders,
   OrdersView,
   RecoverPasswordView,
@@ -29,7 +27,7 @@ import ProtectedRoute from "../../sub-components/ProtectedRoute";
 import {
   performLogout,
   hasCustomerToken,
-  isCustomerAuthenticated,
+  initializeCustomerStore,
   isStudioPreviewActive,
 } from "../../utils/auth";
 
@@ -374,6 +372,7 @@ function dashboardStyle(props: DashboardProps) {
 
 function AccountLayoutContent(props: DashboardProps) {
   const isStudio = isStudioPreviewActive();
+  const [studioCustomer] = useState(() => getMockStudioCustomer());
 
   // ── Initial mode from URL (or prop if set by ikas Studio preview) ──
   const [mode, setMode] = useState<AccountMode>(() => {
@@ -390,7 +389,7 @@ function AccountLayoutContent(props: DashboardProps) {
   // ── Customer state ────────────────────────────────────────────────
   const [customer, setCustomer] = useState<IkasCustomer | null>(() => {
     if (customerStore.customer) return customerStore.customer;
-    if (isStudio) return mockStudioCustomer;
+    if (isStudio) return studioCustomer;
     return null;
   });
 
@@ -418,33 +417,11 @@ function AccountLayoutContent(props: DashboardProps) {
     }
   }, [customer]);
 
-  // ── Listen to browser popstate (back/forward), pageshow (bfcache) & storage (multi-tab) ─
+  // Keep the visible account panel in sync with browser back/forward navigation.
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    function handleAuthVerification() {
-      if (isStudio) return true;
-      const currentPath = typeof window !== "undefined" ? window.location.pathname : "";
-      if (isPublicAuthPath(currentPath) || mode === "forgot-password" || mode === "recover-password") {
-        return true;
-      }
-      if (!hasCustomerToken() || isCustomerAuthenticated() === "unauthenticated") {
-        setCustomer(null);
-        setOrders([]);
-        setFavorites([]);
-        setSidebarName("");
-        window.location.replace(safeRedirect(loginHref));
-        return false;
-      }
-      return true;
-    }
-
-    function handlePageShow() {
-      handleAuthVerification();
-    }
-
     function handlePopState() {
-      if (!handleAuthVerification()) return;
       setMode(
         modeFromPathname(
           window.location.pathname.replace(/\/+$/, ""),
@@ -453,38 +430,12 @@ function AccountLayoutContent(props: DashboardProps) {
       );
     }
 
-    function handleStorage(e: StorageEvent) {
-      if (e.key === "customerToken" || e.key === "tm_logout_timestamp" || e.key === null) {
-        handleAuthVerification();
-      }
-    }
-
-    function handleAuthUpdated() {
-      handleAuthVerification();
-    }
-
-    window.addEventListener("pageshow", handlePageShow);
     window.addEventListener("popstate", handlePopState);
-    window.addEventListener("storage", handleStorage);
-    window.addEventListener("3mash-auth-updated", handleAuthUpdated);
-
-    const disposeAuthReaction = reaction(
-      () => [
-        customerStore._token,
-        customerStore._initialized,
-        customerStore.customer,
-      ],
-      handleAuthVerification,
-    );
 
     return () => {
-      window.removeEventListener("pageshow", handlePageShow);
       window.removeEventListener("popstate", handlePopState);
-      window.removeEventListener("storage", handleStorage);
-      window.removeEventListener("3mash-auth-updated", handleAuthUpdated);
-      disposeAuthReaction();
     };
-  }, [props.mode, isStudio]);
+  }, [props.mode]);
 
   // ── Load customer + section data on mount / mode change ───────────
   useEffect(() => {
@@ -495,9 +446,11 @@ function AccountLayoutContent(props: DashboardProps) {
         let currentCustomer = customerStore.customer;
         if (!currentCustomer && hasCustomerToken()) {
           try {
-            await initCustomerStore(customerStore);
+            await initializeCustomerStore();
             currentCustomer = customerStore.customer;
-          } catch {}
+          } catch (error) {
+            console.error("Failed to initialize customer account data.", error);
+          }
         }
 
         if (mounted) {
@@ -509,8 +462,8 @@ function AccountLayoutContent(props: DashboardProps) {
               localStorage.removeItem("tm_customer_cache");
             } catch {}
           } else if (isStudio) {
-            setCustomer(mockStudioCustomer);
-            setSidebarName(customerName(mockStudioCustomer));
+            setCustomer(studioCustomer);
+            setSidebarName(customerName(studioCustomer));
           }
         }
 
@@ -526,7 +479,7 @@ function AccountLayoutContent(props: DashboardProps) {
       } catch {
         if (mounted) {
           if (isStudio) {
-            setCustomer(mockStudioCustomer);
+            setCustomer(studioCustomer);
             if (mode === "orders") setOrders(mockStudioOrders);
           }
         }
@@ -537,17 +490,12 @@ function AccountLayoutContent(props: DashboardProps) {
     return () => {
       mounted = false;
     };
-  }, [mode, isStudio]);
+  }, [mode, isStudio, studioCustomer]);
 
   // ── Navigation handler (sidebar clicks) ───────────────────────────
   // Uses buttons instead of <a href> so ikas router never intercepts.
   // URL is updated via pushState, right panel swaps via setMode.
   function handleNavigate(nextHref: string, nextMode: AccountMode) {
-    if (!isStudio && (!hasCustomerToken() || isCustomerAuthenticated() === "unauthenticated")) {
-      window.location.replace(safeRedirect(loginHref));
-      return;
-    }
-
     // Already on this mode — no-op
     if (nextMode === mode) return;
 
@@ -641,7 +589,7 @@ function AccountLayoutContent(props: DashboardProps) {
     },
   ].filter((item) => item.visible && item.label.trim() && item.href);
 
-  const effectiveCustomer = customer || (isStudio ? mockStudioCustomer : null);
+  const effectiveCustomer = customer || (isStudio ? studioCustomer : null);
   const addresses = effectiveCustomer?.addresses || [];
 
   // ── Right panel content ───────────────────────────────────────────

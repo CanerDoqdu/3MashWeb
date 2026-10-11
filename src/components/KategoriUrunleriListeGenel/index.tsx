@@ -1,12 +1,51 @@
-import ThreeMashCategoryLanding from "../../sub-components/ThreeMashCategoryLanding";
+import ThreeMashCategoryLanding, { type CategoryLandingData, type CategoryLandingOverrides } from "../../sub-components/ThreeMashCategoryLanding";
 import { dentalFurnacesCategoryData, dentalResinsCategoryData, desktopScannersCategoryData, printerSparePartsCategoryData, printersCategoryData, systemsCategoryData, titaniumDiscsCategoryData, washCureCategoryData, zirconBlocksCategoryData, categoryLandingDataFromKey } from "../../sub-components/ThreeMashCategoryLanding/presets";
 import ThreeMashPrintersSourceLanding from "../../sub-components/ThreeMashPrintersSourceLanding";
 import { ThreeMashProductsPage } from "../ThreeMashProductsPage";
 import { listingProps } from "../ThreeMashProductListingPresets";
 import { getProductHref } from "@ikas/bp-storefront";
 import type { Props } from "./types";
-import { tLocalized } from "../../utils/i18n";
+import { isEnglishLocale, tLocalized } from "../../utils/i18n";
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
+
+function categorySpecificOverrides(
+  props: Props,
+  kind: CategoryLandingData["kind"],
+): Partial<CategoryLandingOverrides> {
+  if (kind === "wash-cure") {
+    return {
+      selectorCompareVisible: props.washCureSelectorCompareVisible,
+    };
+  }
+
+  if (kind !== "resins") return {};
+
+  const values = Object.entries(props).flatMap(([propName, value]) => {
+    if (!propName.startsWith("resinFilter") && !propName.startsWith("resinLine")) return [];
+
+    const isEnglishProp = propName.endsWith("En");
+    const categoryKey = isEnglishProp ? propName.slice(0, -2) : propName;
+    const filterMatch = categoryKey.match(/^resinFilter(\d+)Label$/);
+    const lineMatch = categoryKey.match(/^resinLine(\d+)(Visible|Marker|Item\d+)$/);
+    let overrideKey: string | undefined;
+    if (filterMatch) {
+      overrideKey = `selectorFilter${filterMatch[1]}Label`;
+    } else if (lineMatch) {
+      const suffix = lineMatch[2] === "Visible"
+        ? "Visible"
+        : lineMatch[2] === "Marker"
+          ? "Marker"
+          : lineMatch[2];
+      overrideKey = `detailLineCard${lineMatch[1]}${suffix}`;
+    }
+
+    if (!overrideKey || value === undefined || value === null) return [];
+    if (typeof value === "string" && !value.trim()) return [];
+    return [[isEnglishProp ? `${overrideKey}En` : overrideKey, value] as const];
+  });
+
+  return Object.fromEntries(values) as Partial<CategoryLandingOverrides>;
+}
 
 function stringValue(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -338,13 +377,28 @@ export function ThreeMashCategoryProductsPage(props: Props) {
     routeCategoryData?.kind === "wash-cure"
       ? washCureCategoryData()
       : productListCategory || routeCategoryData;
+  const categoryOverrides = detectedCategoryData
+    ? categorySpecificOverrides(props, detectedCategoryData.kind)
+    : {};
 
   if (detectedCategoryData?.kind === "printers") {
-    return <ThreeMashPrintersSourceLanding {...props} />;
+    return <ThreeMashPrintersSourceLanding {...props} {...categoryOverrides} />;
   }
 
   if (detectedCategoryData) {
-    return <ThreeMashCategoryLanding {...props} data={detectedCategoryData} productList={props.productList} />;
+    return (
+      <ThreeMashCategoryLanding
+        {...props}
+        {...categoryOverrides}
+        data={detectedCategoryData}
+        productList={props.productList}
+        useLiveSelectorProducts={
+          detectedCategoryData.kind === "wash-cure"
+            ? props.washCureSelectorUseLiveProducts
+            : undefined
+        }
+      />
+    );
   }
 
   return (

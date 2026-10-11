@@ -3,16 +3,18 @@ import {
   getDefaultSrc,
   getProductFirstCategory,
   getProductHref,
+  getProductListFilterCategories,
   getProductListInitialData,
   getProductVariantFormattedFinalPrice,
   getProductVariantMainImage,
   initProductList,
+  apiSearchProducts,
   type IkasProduct,
   type IkasProductList,
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { resolveSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import {
   ProductDetailFinalCtaSection,
   ProductDetailRelatedSection,
@@ -150,6 +152,73 @@ function categoryName(category: unknown) {
   if (!category || typeof category !== "object") return "";
   const data = category as Record<string, unknown>;
   return text(data.name || data.title);
+}
+
+function categoryHref(category: unknown) {
+  if (!category || typeof category !== "object") return "";
+  const data = category as Record<string, unknown>;
+  const href = text(data.href || data.path);
+  const slug = text(data.slug || (data.metaData as { slug?: unknown } | undefined)?.slug);
+  if (href) return href.startsWith("/") ? href : `/${href}`;
+  if (slug) return slug.startsWith("/") ? slug : `/${slug}`;
+  return categoryName(category)
+    ? `/${searchKey(categoryName(category)).replace(/\s+/g, "-")}`
+    : "";
+}
+
+function categoryPathKey(value: string) {
+  let path = value;
+  if (/^https?:\/\//i.test(value)) {
+    try {
+      path = new URL(value).pathname;
+    } catch {
+      path = value;
+    }
+  }
+  const lastSegment = path
+    .split(/[?#]/, 1)[0]
+    .replace(/^\/en(?=\/)/, "")
+    .split("/")
+    .filter(Boolean)
+    .at(-1) || "";
+  try {
+    return searchKey(decodeURIComponent(lastSegment));
+  } catch {
+    return searchKey(lastSegment);
+  }
+}
+
+function productBelongsToCategory(product: IkasProduct, category: unknown, targetPath: string, targetNameKey: string) {
+  const categories = [...(product.categories || [])];
+  const firstCategory = autoCategory(product);
+  if (firstCategory && !categories.includes(firstCategory)) categories.push(firstCategory);
+  const targetId = categoryId(category);
+  return categories.some((item) =>
+    (targetId && categoryId(item) === targetId) ||
+    categoryPathKey(categoryHref(item)) === targetPath ||
+    (targetNameKey && searchKey(categoryName(item)) === targetNameKey),
+  );
+}
+
+function relatedCategoryCatalogList(): IkasProductList {
+  return initProductList({
+    type: "ALL",
+    sort: "DEFAULT",
+    limit: 1,
+    pageType: "CUSTOM",
+    productListPropValue: {
+      id: "product-category-carousel-related-category-catalog",
+      productListType: "ALL",
+      initialSort: "DEFAULT",
+      initialLimit: 1,
+      productCount: null,
+      productIds: [],
+      usePageFilter: false,
+      category: null,
+      brand: null,
+      relatedProductsType: null,
+    },
+  });
 }
 
 function autoCategory(product?: IkasProduct | null) {
@@ -302,7 +371,7 @@ function sourceRelatedProduct(product: IkasProduct): ProductDetailRelatedProduct
 }
 
 export function ThreeMashProductCategoryCarousel(props: Props) {
-  const rawSourceData = resolveSharedProductDetailData(props.product, props.productTemplateJson);
+  const rawSourceData = useSharedProductDetailData(props.product, props.productTemplateJson);
 
   const rawRelated = rawSourceData?.related;
   const rawFinalCta = rawSourceData?.finalCta;
@@ -328,6 +397,7 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
   } : rawSourceData;
 
   const [resolvedProducts, setResolvedProducts] = useState<IkasProduct[] | null>(null);
+  const [relatedCardImages, setRelatedCardImages] = useState<Record<string, { src: string; alt: string }>>({});
   const [isLoading, setIsLoading] = useState(false);
   const requestKeyRef = useRef("");
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -422,6 +492,70 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
   };
 
   const effectiveProducts = products.map(sourceRelatedProduct);
+  const relatedItems = sourceData?.related?.items || [];
+  const lastRelatedItem = relatedItems[relatedItems.length - 1];
+  const relatedCardImageKey = lastRelatedItem ? `${lastRelatedItem.href}:${lastRelatedItem.title}` : "";
+
+  useEffect(() => {
+    const item = sourceData?.related?.items?.[sourceData.related.items.length - 1];
+    if (!item) {
+      setRelatedCardImages({});
+      return undefined;
+    }
+
+    const manualImage = props.relatedCardImage ? getDefaultSrc(props.relatedCardImage) : "";
+    if (manualImage) {
+      setRelatedCardImages({
+        [item.href]: {
+          src: manualImage,
+          alt: props.relatedCardImage?.altText || item.title,
+        },
+      });
+      return undefined;
+    }
+    let isMounted = true;
+    setRelatedCardImages({});
+    void (async () => {
+      try {
+        const targetPath = categoryPathKey(item.href);
+        const targetNameKey = searchKey(item.title);
+        const categoryCatalog = relatedCategoryCatalogList();
+        await getProductListInitialData(categoryCatalog);
+        const categories = getProductListFilterCategories(categoryCatalog);
+        const targetCategory = categories.find((category) => categoryPathKey(categoryHref(category)) === targetPath) ||
+          categories.find((category) => searchKey(categoryName(category)) === targetNameKey);
+        const targetId = categoryId(targetCategory);
+        const lookupTerm = targetPath.split("/").filter(Boolean).at(-1)?.replace(/[-_]+/g, " ") || item.title;
+        const response = await apiSearchProducts({
+          input: {
+            ...(targetId ? { categoryIdList: [targetId] } : { query: lookupTerm }),
+            page: 1,
+            perPage: 40,
+          },
+        } as Parameters<typeof apiSearchProducts>[0]);
+        const fallbackProducts = response?.data?.data || [];
+        const fallbackProduct = fallbackProducts.find((product) =>
+          (targetId || productBelongsToCategory(product, targetCategory, targetPath, targetNameKey)) &&
+          !!sourceRelatedProduct(product).image,
+        );
+        const productImage = fallbackProduct ? sourceRelatedProduct(fallbackProduct) : null;
+
+        if (!productImage?.image || !isMounted) return;
+        setRelatedCardImages({
+          [item.href]: {
+            src: productImage.image,
+            alt: productImage.imageAlt || productImage.title || item.title,
+          },
+        });
+      } catch (error) {
+        debugError("ThreeMashProductCategoryCarousel related card image fetch failed", error);
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [sourceData?.key, relatedCardImageKey, props.relatedCardImage]);
 
   if (sourceData) {
     return (
@@ -438,6 +572,7 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
           <ProductDetailRelatedSection
             data={sourceData}
             products={effectiveProducts}
+            relatedCardImages={relatedCardImages}
             showHeader={props.showHeader}
             showArrows={props.showArrows}
             scrollByCards={props.scrollByCards}

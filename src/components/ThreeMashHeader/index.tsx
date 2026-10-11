@@ -4,7 +4,6 @@ import {
   cartStore,
   createMediaSrcset,
   customerStore,
-  initCustomerStore,
   getDefaultSrc,
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getProductHref,
@@ -35,7 +34,6 @@ import {
   performLogout,
   isCustomerAuthenticated,
   subscribeAuthState,
-  hasCustomerToken,
   type CustomerAuthState,
 } from "../../utils/auth";
 import {
@@ -460,7 +458,7 @@ function announcementOverridePayload(value: unknown): HeaderAnnouncementOverride
   const data = value as HeaderAnnouncementOverride;
   if (data.enabled === false) return null;
   if (!data.highlightText && !data.text && !data.ctaText) return null;
-  return data;
+  return { ...data };
 }
 
 function safeLocationPathname() {
@@ -502,7 +500,7 @@ function productAnnouncementFromData(data: ReturnType<typeof resolveProductDetai
     highlightText: productAnnouncement.strongText,
     text: productAnnouncement.longText || "",
     ctaText: productAnnouncement.ctaText,
-    href: productAnnouncement.ctaHref,
+    href: productAnnouncement.ctaHref === "#satinal" ? "#uygulama" : productAnnouncement.ctaHref,
   };
 }
 
@@ -1658,8 +1656,9 @@ export function ThreeMashHeader(props: Props) {
   const productsMenuRef = useRef<HTMLLIElement>(null);
   const whyMenuRef = useRef<HTMLLIElement>(null);
 
-  // ── Compute announcement fresh on every render (no stale content) ──
-  const productAnnouncement = currentProductAnnouncement();
+  const [productAnnouncement, setProductAnnouncement] = useState<HeaderAnnouncementOverride | null>(
+    () => currentProductAnnouncement(),
+  );
 
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -1671,30 +1670,20 @@ export function ThreeMashHeader(props: Props) {
   useEffect(() => {
     setIsHydrated(true);
 
-    if (!customerStore._initialized && hasCustomerToken()) {
-      initCustomerStore(customerStore)
-        .then(() => {
-          setAuthState(isCustomerAuthenticated());
-        })
-        .catch(() => { });
-    }
-
     const unsubscribe = subscribeAuthState((nextState) => {
       setAuthState(nextState);
     });
 
-    // Safety poll: catches late store init from other components or
-    // race conditions where MobX reaction misses the change.
-    const pollId = setInterval(() => {
-      const next = isCustomerAuthenticated();
-      setAuthState((prev) => (prev !== next ? next : prev));
-    }, 800);
-
     return () => {
       unsubscribe();
-      clearInterval(pollId);
     };
   }, []);
+
+  useEffect(() => {
+    if (authState === "authenticated") {
+      void initGlobalCart();
+    }
+  }, [authState]);
 
   const showActionIcons = props.showActionIcons !== false;
   const searchIcon = resolveActionIcon(props.searchIconImageUrl, props.searchIconSvg, defaultSearchSvg, showActionIcons);
@@ -1855,8 +1844,7 @@ export function ThreeMashHeader(props: Props) {
 
   // ── Profile links in dropdown ─────────────────────────────────────
   const loginTarget = headerRouteHref(props.accountHref, "/account/login");
-  // Ensure user is only treated as authed when a valid token exists in storage
-  const isCurrentlyAuthed = isHydrated && hasCustomerToken() && (isAuthenticated || !!customerStore.customer);
+  const isCurrentlyAuthed = isHydrated && isAuthenticated;
   const ordersTarget = headerRouteHref(props.profileLink1Href, "/account/orders");
   const addressesTarget = headerRouteHref(props.profileLink2Href, "/account/addresses");
 
@@ -1948,7 +1936,7 @@ export function ThreeMashHeader(props: Props) {
       return;
     }
     event.preventDefault();
-    const authed = isAuthenticated || isCustomerAuthenticated() === "authenticated" || hasCustomerToken();
+    const authed = isAuthenticated;
     const destination = item.isProtected
       ? (authed ? (item.authHref || item.link) : loginTarget)
       : item.link;
@@ -2073,7 +2061,7 @@ export function ThreeMashHeader(props: Props) {
 
     const scrollToPendingSection = () => {
       const sectionId = safeDecodeURI(pendingHash.slice(1));
-      const section = document.getElementById(sectionId) || document.querySelector(pendingHash);
+      const section = findSectionTargetElement(sectionId);
       if (!section) {
         attempts += 1;
         if (attempts < 90) {
@@ -2148,15 +2136,15 @@ export function ThreeMashHeader(props: Props) {
   }, []);
 
   useLayoutEffect(() => {
-    // Announcement is now computed fresh on every render, so no state update needed.
-    // Event listener kept for potential future dynamic announcement updates.
     function handleProductAnnouncement(event: Event) {
-      // The announcement will be re-computed on the next render via currentProductAnnouncement()
-      // which reads from window.__THREE_MASH_PRODUCT_ANNOUNCEMENT__
-      // For immediate UI update, a state trigger could be added here if needed.
+      const payload = announcementOverridePayload(
+        (event as CustomEvent<unknown>).detail,
+      );
+      setProductAnnouncement(payload || routeAnnouncementOverride());
     }
 
     window.addEventListener("three-mash:product-announcement", handleProductAnnouncement);
+    setProductAnnouncement(currentProductAnnouncement());
     return () => window.removeEventListener("three-mash:product-announcement", handleProductAnnouncement);
   }, []);
 
@@ -2174,7 +2162,7 @@ export function ThreeMashHeader(props: Props) {
     void initGlobalCart();
 
     const syncCart = () => {
-      setCart(cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
+      setCart(getCurrentCart());
       setCartStatus(getCartStatus());
     };
     window.addEventListener("3mash-cart-updated", syncCart);
@@ -2382,12 +2370,10 @@ export function ThreeMashHeader(props: Props) {
 
   return (
     <section className="three-mash-header" style={themeStyle}>
-      {/* Preconnect and preload critical web fonts to eliminate layout shift (CLS) */}
+      {/* Warm up the shared theme font connections. */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2" crossOrigin="anonymous" />
-      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossOrigin="anonymous" />
-      <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/newsreader/v26/cY9kfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsMwaT9ZJFjSAgA.woff2" crossOrigin="anonymous" /><style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
+      <style dangerouslySetInnerHTML={{ __html: criticalHeaderCss }} />
       {props.showAnnouncement !== false && (
         <>
           <div className="tmh-announcement">

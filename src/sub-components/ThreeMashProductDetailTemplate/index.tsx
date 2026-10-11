@@ -238,6 +238,7 @@ type Props = {
   compareAtPrice?: string;
   selectedSummary: string;
   relatedProducts?: ProductDetailRelatedProduct[];
+  relatedCardImages?: Record<string, { src: string; alt: string }>;
 };
 
 type ProductDetailSectionVisibility = {
@@ -419,7 +420,7 @@ function Gallery({
   const imageRef = useRef<HTMLImageElement>(null);
 
   return (
-    <div className="tmpdt-gal">
+    <div className={`tmpdt-gal${data.key.startsWith("argenz-") ? " is-argenz-zircon" : ""}`}>
       <div className="tmpdt-gal-main">
         {showGalleryBadge !== false && data.hero.galleryBadge ? <span className="tmpdt-cebadge">{data.hero.galleryBadge}</span> : null}
         {selected ? (
@@ -656,7 +657,7 @@ export function ProductDetailHeroSection(props: Props) {
               </>
             ) : null}
             <span>/</span>
-            <span>{props.data.breadcrumb.productText}</span>
+            <span>{t(props.data.breadcrumb.productText)}</span>
           </div>
         ) : null}
         <div className="tmpdt-phero" id="satinal" ref={heroRef}>
@@ -1218,6 +1219,7 @@ export function ProductDetailVideoSection({ data }: { data: ProductDetailTemplat
 export function ProductDetailRelatedSection({
   data,
   products,
+  relatedCardImages,
   titleHtml,
   showHeader = true,
   showArrows = true,
@@ -1230,6 +1232,7 @@ export function ProductDetailRelatedSection({
 }: {
   data: ProductDetailTemplateData;
   products?: ProductDetailRelatedProduct[];
+  relatedCardImages?: Record<string, { src: string; alt: string }>;
   titleHtml?: string;
   showHeader?: boolean;
   showArrows?: boolean;
@@ -1314,20 +1317,22 @@ export function ProductDetailRelatedSection({
           </div>
         ) : (
           <div className="tmpdt-rgrid">
-            {related?.items.map((item) => {
+            {related?.items.map((item, itemIndex) => {
+              const isLastRelatedCard = itemIndex === related.items.length - 1;
               const isAllResins =
                 item.href === "/dental-3d-yazici-recineleri" ||
                 item.tag === "TÜM HAT" ||
                 item.tag === "FULL RANGE" ||
                 item.title?.toLowerCase().includes("tüm reçineler") ||
                 item.title?.toLowerCase().includes("all resins");
-              const image = relatedProductImage(item);
+              const cardImageOverride = relatedCardImages?.[item.href];
+              const image = cardImageOverride || relatedProductImage(item);
               return (
                 <article className="tmpdt-rc" key={item.title}>
                   <a className="tmpdt-rc-live-link" href={localizedHref(item.href)} target={openLinksInNewTab ? "_blank" : undefined} rel={openLinksInNewTab ? "noopener noreferrer" : undefined}>
                     <div className="tmpdt-rc-ph" style={{ background: item.background }}>
                       <span className={`tmpdt-rc-tag${item.tagVariant === "ce" ? " is-ce" : ""}`}>{t(item.tag)}</span>
-                      {isAllResins ? (
+                      {isAllResins && !(isLastRelatedCard && cardImageOverride) ? (
                         <div className="tmpdt-rc-trio" aria-hidden="true">
                           <img
                             className="tmpdt-rc-trio-img is-left"
@@ -1353,7 +1358,7 @@ export function ProductDetailRelatedSection({
                         </div>
                       ) : image ? (
                         <img className="tmpdt-rc-live-img" src={image.src} alt={image.alt} loading="lazy" decoding="async" />
-                      ) : (
+                      ) : isLastRelatedCard ? null : (
                         <svg viewBox="0 0 48 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true">
                           <path d="M18 6h12v8l5 7v31a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V21l5-7V6z" />
                           <line x1="18" y1="6" x2="30" y2="6" />
@@ -1447,7 +1452,11 @@ export function ThreeMashProductDetailTemplate(props: Props) {
       <ProductDetailEcosystemSection data={props.data} visible={props.visibility?.ecosystem !== false} />
       <ProductDetailFaqSection data={props.data} />
       <ProductDetailVideoSection data={props.data} />
-      <ProductDetailRelatedSection data={props.data} products={props.relatedProducts} />
+      <ProductDetailRelatedSection
+        data={props.data}
+        products={props.relatedProducts}
+        relatedCardImages={props.relatedCardImages}
+      />
       <ProductDetailFinalCtaSection data={props.data} />
     </section>
   );

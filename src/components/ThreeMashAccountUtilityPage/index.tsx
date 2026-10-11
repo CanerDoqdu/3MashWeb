@@ -28,7 +28,7 @@ import type { Props as AccountInfoProps } from "../ThreeMashAccountInfoPage/type
 import { localizedHref, t, tLocalized, isEnglishLocale } from "../../utils/i18n";
 export { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
-import { businessConfig } from "../../utils/businessConfig";
+import { getBusinessConfig } from "../../utils/businessConfig";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 
 export type DashboardProps = Props &
@@ -169,29 +169,31 @@ export function pageDescription(mode: string, props: DashboardProps) {
  * URL parameters (?studio=, ?preview=) and document.referrer are NOT checked
  * because they are attacker-controllable.
  */
-export const mockStudioCustomer: IkasCustomer = {
-  id: "studio-preview-customer",
-  firstName: "Caner",
-  lastName: tLocalized("Doğdu", "Born"),
-  email: businessConfig.recipientEmail,
-  phone: "+905321234567",
-  addresses: [
-    {
-      id: "addr-studio-1",
-      title: "Ofis Adresi",
-      address: tLocalized("Antalya Teknokent, Ar-Ge 2 Binası, Konyaaltı", "Antalya Teknokent, R&D Building 2, Konyaaltı"),
-      // NOTE: Mock data objects for studio preview — intentionally incomplete.
-      city: { name: "Antalya" } as any,
-      district: { name: tLocalized("Konyaaltı", "Konyaaltı") } as any,
-      country: { name: tLocalized("Türkiye", "Turkey") } as any,
-      postalCode: "07070",
-      firstName: "Caner",
-      lastName: tLocalized("Doğdu", "Born"),
-      phone: "+905321234567",
-    } as any,
-  ],
-  favoriteProducts: [],
-} as any;
+export function getMockStudioCustomer(): IkasCustomer {
+  return {
+    id: "studio-preview-customer",
+    firstName: "Caner",
+    lastName: tLocalized("Doğdu", "Born"),
+    email: getBusinessConfig().recipientEmail,
+    phone: "+905321234567",
+    addresses: [
+      {
+        id: "addr-studio-1",
+        title: "Ofis Adresi",
+        address: tLocalized("Antalya Teknokent, Ar-Ge 2 Binası, Konyaaltı", "Antalya Teknokent, R&D Building 2, Konyaaltı"),
+        // NOTE: Mock data objects for studio preview — intentionally incomplete.
+        city: { name: "Antalya" } as any,
+        district: { name: tLocalized("Konyaaltı", "Konyaaltı") } as any,
+        country: { name: tLocalized("Türkiye", "Turkey") } as any,
+        postalCode: "07070",
+        firstName: "Caner",
+        lastName: tLocalized("Doğdu", "Born"),
+        phone: "+905321234567",
+      } as any,
+    ],
+    favoriteProducts: [],
+  } as any;
+}
 
 export const mockStudioOrders: IkasOrder[] = [
   {

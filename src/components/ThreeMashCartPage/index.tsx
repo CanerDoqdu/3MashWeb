@@ -9,7 +9,6 @@ import {
   getOrderLineItemFormattedFinalPriceWithQuantity,
   getOrderLineItemFormattedFinalUnitPrice,
   initCouponCodeForm,
-  initCustomerStore,
   removeCouponCodeForm,
   removeItem,
   setCouponCodeFormCouponCode,
@@ -35,6 +34,7 @@ import {
 } from "../cartState";
 import { t, tLocalized, tProp, isEnglishLocale, localizedHref } from "../../utils/i18n";
 import { safeCheckoutHref, safeNavigationHref } from "../../utils/safeRedirect";
+import { initializeCustomerStore } from "../../utils/auth";
 
 const categoryProductsPageHref = "/dental-3d-yazici-recineleri";
 const legacyContinueShoppingHrefs = new Set([
@@ -351,14 +351,12 @@ export function ThreeMashCartPage(props: Props) {
     );
 
     // Customer ayrı initialize olsun.
-    void initCustomerStore(
-      customerStore
-    ).then(() => {
+    void initializeCustomerStore().then(() => {
       if (!mounted) return;
 
-      setCustomer(
-        customerStore.customer
-      );
+      setCustomer(customerStore.customer);
+    }).catch((error) => {
+      console.error("Failed to initialize customer data for the cart.", error);
     });
 
     // Server cart arkada doğrulansın.
@@ -372,11 +370,7 @@ export function ThreeMashCartPage(props: Props) {
 
   useEffect(() => {
     const syncCart = () => {
-      setCartState(
-        cartStore.cart
-          ? ({ ...cartStore.cart } as IkasCart)
-          : null
-      );
+      setCartState(getCurrentCart());
       setCartStatus(getCartStatus());
     };
 

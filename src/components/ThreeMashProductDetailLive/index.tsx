@@ -11,6 +11,7 @@ import {
   getDisplayedProductVariantTypes,
   getProductFirstCategory,
   getProductHref,
+  getProductListFilterCategories,
   getProductListInitialData,
   getProductOptionSet,
   getProductVariantFormattedFinalPrice,
@@ -439,10 +440,10 @@ function categoryId(category: unknown) {
 }
 
 function categoryHref(category: unknown) {
-  const data = category as { href?: unknown; path?: unknown; slug?: unknown; name?: unknown; title?: unknown } | undefined;
+  const data = category as { href?: unknown; path?: unknown; slug?: unknown; name?: unknown; title?: unknown; metaData?: { slug?: unknown } } | undefined;
   const href = stringValue(data?.href);
   const path = stringValue(data?.path);
-  const slug = stringValue(data?.slug);
+  const slug = stringValue(data?.slug) || stringValue(data?.metaData?.slug);
   const name = categoryName(category);
   if (href) return href;
   if (path) return path.startsWith("/") ? path : `/${path}`;
@@ -481,6 +482,49 @@ function categoryProductList(product: IkasProduct | null, limit: number): IkasPr
       relatedProductsType: null,
     },
   });
+}
+
+function relatedCategoryCatalogList(): IkasProductList {
+  return initProductList({
+    type: "ALL",
+    sort: "DEFAULT",
+    limit: 1,
+    pageType: "CUSTOM",
+    productListPropValue: {
+      id: "product-detail-related-category-catalog",
+      productListType: "ALL",
+      initialSort: "DEFAULT",
+      initialLimit: 1,
+      productCount: null,
+      productIds: [],
+      usePageFilter: false,
+      category: null,
+      brand: null,
+      relatedProductsType: null,
+    },
+  });
+}
+
+function categoryPathKey(value: string) {
+  let path = value;
+  if (/^https?:\/\//i.test(value)) {
+    try {
+      path = new URL(value).pathname;
+    } catch {
+      path = value;
+    }
+  }
+  const lastSegment = path
+    .split(/[?#]/, 1)[0]
+    .replace(/^\/en(?=\/)/, "")
+    .split("/")
+    .filter(Boolean)
+    .at(-1) || "";
+  try {
+    return slugify(decodeURIComponent(lastSegment));
+  } catch {
+    return slugify(lastSegment);
+  }
 }
 
 function listProducts(productList: IkasProductList | undefined) {
@@ -1346,6 +1390,7 @@ export function ThreeMashProductDetailLive(props: SingleProductRuntimeProps) {
   const [version, setVersion] = useState(0);
   const [previewSelection, setPreviewSelection] = useState<PreviewSelection>({});
   const [relatedProducts, setRelatedProducts] = useState<ProductDetailRelatedProduct[] | undefined>(undefined);
+  const [relatedCardImages, setRelatedCardImages] = useState<Record<string, { src: string; alt: string }>>({});
 
   // If props.product is missing (e.g. on /en routes where ikas doesn't pass the product object),
   // recover by resolving the slug from the URL and fetching via apiSearchProducts.
@@ -1415,6 +1460,65 @@ export function ThreeMashProductDetailLive(props: SingleProductRuntimeProps) {
     () => (product ? templateData(product, variant, props) : props.showTemplatePreview === false ? null : propsTemplateData(props)),
     [product?.id, version, props.addToCartText, props.addingToCartText, props.outOfStockText, props.productTemplateJson, props.showTemplatePreview, detailPropKey],
   );
+  const relatedItems = data?.related?.items || [];
+  const lastRelatedCard = relatedItems[relatedItems.length - 1];
+  const relatedCardImageKey = lastRelatedCard
+    ? `${lastRelatedCard.href}:${lastRelatedCard.title}`
+    : "";
+
+  useEffect(() => {
+    const item = relatedItems[relatedItems.length - 1];
+    if (!item) {
+      setRelatedCardImages({});
+      return undefined;
+    }
+
+    let isMounted = true;
+    setRelatedCardImages({});
+    void (async () => {
+      try {
+        const targetPath = categoryPathKey(item.href);
+        const targetNameKey = slugify(item.title);
+        const categoryCatalog = relatedCategoryCatalogList();
+        await getProductListInitialData(categoryCatalog);
+        const categories = getProductListFilterCategories(categoryCatalog);
+        const targetCategory = categories.find((category) => categoryPathKey(categoryHref(category)) === targetPath) ||
+          categories.find((category) => slugify(categoryName(category)) === targetNameKey);
+        const id = categoryId(targetCategory);
+        const lookupTerm = targetPath.split("/").filter(Boolean).at(-1)?.replace(/[-_]+/g, " ") || item.title;
+        const response = await apiSearchProducts({
+          input: {
+            ...(id ? { categoryIdList: [id] } : { query: lookupTerm }),
+            page: 1,
+            perPage: 40,
+          },
+        } as Parameters<typeof apiSearchProducts>[0]);
+        const fallbackProducts = response?.data?.data || [];
+        const fallbackProduct = fallbackProducts.find((candidate) => {
+          const productCategories = candidate.categories || [];
+          const matchesCategory = Boolean(id) || productCategories.some((category) =>
+            categoryPathKey(categoryHref(category)) === targetPath ||
+            (targetNameKey && slugify(categoryName(category)) === targetNameKey),
+          );
+          return matchesCategory && !!relatedProduct(candidate).image;
+        });
+        const productImage = fallbackProduct ? relatedProduct(fallbackProduct) : null;
+        if (!productImage?.image || !isMounted) return;
+        setRelatedCardImages({
+          [item.href]: {
+            src: productImage.image,
+            alt: productImage.imageAlt || productImage.title || item.title,
+          },
+        });
+      } catch (error) {
+        debugError("ThreeMashProductDetailLive related card image fetch failed", error);
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [data?.key, relatedCardImageKey]);
   if (typeof window !== "undefined") {
     (window as unknown as { __THREE_MASH_PRODUCT_DETAIL_DATA__?: unknown }).__THREE_MASH_PRODUCT_DETAIL_DATA__ = data;
   }
@@ -1683,6 +1787,7 @@ export function ThreeMashProductDetailLive(props: SingleProductRuntimeProps) {
         compareAtPrice={hasDiscount ? safeSellPrice(variant) : ""}
         selectedSummary={selectedSummary(data, groups)}
         relatedProducts={relatedProducts}
+        relatedCardImages={relatedCardImages}
       />
     </section>
   );

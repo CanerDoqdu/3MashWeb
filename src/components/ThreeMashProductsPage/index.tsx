@@ -1,5 +1,10 @@
 import { localizedHref, isEnglishLocale, tLocalized, hasEnglishProductPage } from "../../utils/i18n";
-import { hasCustomerToken } from "../../utils/auth";
+import {
+  hasCustomerToken,
+  initializeCustomerStore,
+  isCustomerAuthenticated,
+  redirectToLogin,
+} from "../../utils/auth";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import { debugError } from "../../utils/debugError";
 import { useEffect, useRef, useState } from "preact/hooks";
@@ -22,7 +27,6 @@ import {
   hasProductListNextPage,
   hasProductListPrevPage,
   hasProductVariantDiscount,
-  initCustomerStore,
   initProductList,
   reaction,
   removeProductFromFavorites,
@@ -328,6 +332,7 @@ function ProductCard({
   }}
                   src={imageSrc}
                   srcSet={createMediaSrcset(image)}
+                  sizes="(max-width: 560px) 40vw, (max-width: 860px) 41vw, (max-width: 1140px) 26vw, 240px"
                   alt={image.altText || product.name}
                   loading="lazy"
                   decoding="async"
@@ -659,12 +664,14 @@ export function ThreeMashProductsPage(props: Props) {
     let mounted = true;
 
     async function loadFavorites() {
-      if (!customerStore._initialized && hasCustomerToken()) {
+      if (isCustomerAuthenticated() === "loading" && hasCustomerToken()) {
         try {
-          await initCustomerStore(customerStore);
-        } catch {}
+          await initializeCustomerStore();
+        } catch (error) {
+          console.error("Failed to initialize customer favorites.", error);
+        }
       }
-      if (!customerStore.customer) {
+      if (isCustomerAuthenticated() !== "authenticated") {
         if (mounted) setFavoriteIds({});
         return;
       }
@@ -1133,6 +1140,19 @@ export function ThreeMashProductsPage(props: Props) {
       sort: sourceProductList.sort || "DEFAULT",
       limit: Math.max(sourceProductList.limit || 12, 500),
       pageType: "CUSTOM",
+      excludedFields: [
+        "description",
+        "shortDescription",
+        "translations",
+        "tags",
+        "salesChannels",
+        "salesChannelIds",
+        "customerReviewSummaries",
+        "attributes",
+        "averageRating",
+        "reviewCount",
+        "stars",
+      ],
       productListPropValue: {
         ...sourceProductList.productListPropValue,
         id: "all-products-category-catalog",
@@ -1427,14 +1447,18 @@ useEffect(() => {
   }
 
   async function handleToggleFavorite(productId: string) {
-    if (!customerStore._initialized && hasCustomerToken()) {
+    let authState = isCustomerAuthenticated();
+    if (authState === "loading" && hasCustomerToken()) {
       try {
-        await initCustomerStore(customerStore);
-      } catch {}
+        await initializeCustomerStore();
+      } catch (error) {
+        console.error("Failed to initialize customer favorites.", error);
+      }
+      authState = isCustomerAuthenticated();
     }
 
-    if (!customerStore.customer && !hasCustomerToken()) {
-      window.location.href = safeRedirect(localizedHref("/account/login"));
+    if (authState !== "authenticated") {
+      redirectToLogin();
       return;
     }
 

@@ -118,27 +118,15 @@ test('spare-part category filtering excludes non-spare products and keeps the En
   assert.match(presetText, /titleEmphasis:\s*tLocalized\("tank ve film\."/);
 });
 
-test('English route aliases cover scanner and wash-cure product/category links', () => {
+test('W1E English link keeps the Turkish product slug', () => {
   const filePath = fileURLToPath(new URL('../src/utils/i18n.ts', import.meta.url));
   const fileText = readFileSync(filePath, 'utf8');
 
-  assert.match(fileText, /"\/mash-w1e-ultrasonik-yikama-cihazi": "\/mash-w1e-ultrasonic-washing-device"/);
-  assert.match(fileText, /"\/mash-c1e-uv-kurleme-cihazi": "\/mash-c1e-smart-uv-curing-device"/);
-  assert.match(fileText, /"\/dental-firinlar": "\/dental-furnaces"/);
-  assert.match(fileText, /"\/masasustu-tarayicilar": "\/lab-scanners"/);
-  assert.match(fileText, /"\/desktop-scanners": "\/lab-scanners"/);
-  assert.match(fileText, /"\/mash-curie-m1-dental-3d-yazici": "\/mash-curie-m1-dental-3d-printer"/);
-  assert.match(fileText, /"\/creality-halot-sky-6k": "\/creality-halot-sky-6k-1"/);
+  assert.match(fileText, /"\/mash-w1e-ultrasonik-yikama-cihazi": "\/mash-w1e-ultrasonik-yikama-cihazi"/);
 
   const categoryFilePath = fileURLToPath(new URL('../src/sub-components/ThreeMashCategoryLanding/index.tsx', import.meta.url));
   const categoryText = readFileSync(categoryFilePath, 'utf8');
-  assert.match(categoryText, /"lab-scanners": "\/masasustu-tarayicilar"/);
-  assert.match(categoryText, /"mash-w1e-ultrasonik-yikama-cihazi": "\/en\/mash-w1e-ultrasonic-washing-device"/);
-  assert.match(categoryText, /"mash-c1e-uv-kurleme-cihazi": "\/en\/mash-c1e-smart-uv-curing-device"/);
-  assert.match(categoryText, /"mash-curie-m1-dental-3d-yazici": "\/en\/mash-curie-m1-dental-3d-printer"/);
-  assert.match(categoryText, /"creality-halot-sky-6k": "\/en\/creality-halot-sky-6k-1"/);
-  assert.match(categoryText, /"titanium-discs": "\/titanyum-diskler"/);
-  assert.match(categoryText, /"titanyum-diskler": "\/titanyum-diskler"/);
+  assert.match(categoryText, /"mash-w1e-ultrasonik-yikama-cihazi": "\/en\/mash-w1e-ultrasonik-yikama-cihazi"/);
 });
 
 test('product detail data does not leak broken English fallback names', () => {

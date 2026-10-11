@@ -1,8 +1,8 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasProduct, IkasProductList } from "@ikas/bp-storefront";
+import type { IkasProduct, IkasProductList, IkasImage } from "@ikas/bp-storefront";
 
 export interface Props {
-  /** Kategori otomatik seçimi ve ürün verisi için kullanılır. */
+  /** Bu sayfadaki ürünü seçin. Otomatik mod, bu ürünün kategorisine göre ürünleri listeler. */
   product?: IkasProduct | null;
   /** İlgili ürünler başlığının yanındaki sıra numarası. */
   relatedIndex?: string;
@@ -28,9 +28,9 @@ export interface Props {
   accentColor?: string;
   /** Gelişmiş ürün şablonu JSON verisi; boş bırakıldığında ürün verisinin otomatik çözümlemesi kullanılır. */
   productTemplateJson?: string;
-  /** auto veya manual. Auto, seçili ürünün kategorisini kullanır. */
+  /** auto seçili ürünün kategorisini kullanır; manual ise Manuel Carousel Ürünleri alanındaki kaynağı kullanır. */
   sourceMode?: string;
-  /** Manuel kaynak modu seçildiğinde gösterilecek ürün listesi. */
+  /** Ürün Kaynağı manual seçildiğinde carousel'de gösterilecek ürün kaynağını belirler. */
   productList?: IkasProductList;
   /** 1 ile 40 arasında. */
   productLimit?: number;
@@ -102,4 +102,6 @@ export interface Props {
   relatedProductLinkText?: string;
   relatedProductLinkTextEn?: string;
   textColor?: string;
+  /** İsteğe bağlı elle seçilen görsel; otomatik kategori ürün görselinin yerine kullanılır. */
+  relatedCardImage?: IkasImage | null;
 }

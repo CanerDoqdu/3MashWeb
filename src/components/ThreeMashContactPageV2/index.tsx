@@ -2,7 +2,7 @@ import { useState } from "preact/hooks";
 import type { JSX } from "preact";
 import { Props } from "./types";
 import { isEnglishLocale, tLocalized, tProp } from "../../utils/i18n";
-import { businessConfig } from "../../utils/businessConfig";
+import { getBusinessConfig } from "../../utils/businessConfig";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
   safeCheckoutHref,
@@ -68,9 +68,10 @@ function createMailtoHref(
   labels: { firstName: string; lastName: string; email: string; phone: string },
   includePhone: boolean,
 ) {
+  const fallbackEmail = getBusinessConfig().recipientEmail;
   const safeRecipient =
-    safeMailAddress(recipient, businessConfig.recipientEmail) ||
-    businessConfig.recipientEmail;
+    safeMailAddress(recipient, fallbackEmail) ||
+    fallbackEmail;
   const subject = `${subjectPrefix} - ${form.firstName} ${form.lastName}`.trim();
   const phone = form.phone.trim() ? `${dialCode} ${form.phone.trim()}` : "-";
   const body = [
@@ -135,9 +136,10 @@ export function ThreeMashContactPageV2(props: Props) {
   const buttonText = localizedText(props.buttonText, props.buttonTextEn, "Gönder", "Send");
   const successText = localizedText(props.successText, props.successTextEn, "Mail uygulamanız açılıyor.", "Opening mail app...");
   const phoneCountryAriaLabel = localizedText(props.phoneCountryAriaLabel, props.phoneCountryAriaLabelEn, "Telefon ülke kodu", "Phone country code");
+  const fallbackEmail = getBusinessConfig().recipientEmail;
   const recipient =
-    safeMailAddress(props.recipientEmail, businessConfig.recipientEmail) ||
-    businessConfig.recipientEmail;
+    safeMailAddress(props.recipientEmail, fallbackEmail) ||
+    fallbackEmail;
   const locationHref =
     safeCheckoutHref(props.locationHref) ||
     "https://maps.google.com/?q=Antalya%20Teknokent%20Konyaalt%C4%B1";

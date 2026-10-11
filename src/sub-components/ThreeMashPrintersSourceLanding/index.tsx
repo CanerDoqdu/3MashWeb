@@ -3,8 +3,18 @@ import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
 import { isEnglishLocale, translateText, tLocalized, localizedHref } from "../../utils/i18n";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
-import { getDefaultSrc } from "@ikas/bp-storefront";
+import {
+  getDefaultSrc,
+  getProductHref,
+  getProductVariantFormattedFinalPrice,
+  getProductVariantMainImage,
+  getSelectedProductVariant,
+  type IkasImage,
+  type IkasProduct,
+  type IkasProductList,
+} from "@ikas/bp-storefront";
 import type { CategoryLandingOverrides } from "../ThreeMashCategoryLanding";
+import { printersCategoryData } from "../ThreeMashCategoryLanding/presets";
 
 const curieM1MainImage =
   "https://cdn.myikas.com/images/cf198e6e-64d0-4718-8ad4-1fc8e54e3dd2/302ffc22-20c4-49b7-8d16-b303e079f0cf/1080/1.webp";
@@ -22,11 +32,38 @@ type AnnouncementWindow = Window & {
   };
 };
 
-type Props = CategoryLandingOverrides;
+type Props = CategoryLandingOverrides & {
+  productList?: IkasProductList;
+  printerProduct1Status?: string;
+  printerProduct1StatusEn?: string;
+  printerProduct2Status?: string;
+  printerProduct2StatusEn?: string;
+  printerProduct3Status?: string;
+  printerProduct3StatusEn?: string;
+};
 
 function textValue(value: string | undefined, fallback: string) {
   const trimmed = value?.trim();
   return trimmed ? translateText(trimmed) : translateText(fallback);
+}
+
+function localizedTextValue(value: string | undefined, valueEn: string | undefined, fallback: string) {
+  const localizedValue = isEnglishLocale() ? valueEn : value;
+  return localizedValue?.trim() ? translateText(localizedValue.trim()) : translateText(fallback);
+}
+
+function localizedHtmlValue(value: string | undefined, valueEn: string | undefined, fallback: string) {
+  const localizedValue = isEnglishLocale() ? valueEn : value;
+  return localizedValue?.trim() ? localizedValue : fallback;
+}
+
+function normalizedProductName(value: string) {
+  return value.trim().toLocaleLowerCase("tr-TR").replace(/\s+/g, " ");
+}
+
+function liveProductDescription(product: IkasProduct) {
+  const productContent = product as IkasProduct & { shortDescription?: string; description?: string };
+  return productContent.shortDescription || productContent.description || "";
 }
 
 function smoothAnchorClick(event: Event, rawHref: string) {
@@ -97,6 +134,124 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
     "/en/blog/dental-3d-baskida-dogru-dalga-boyu-secimi-385nm-mi-405nm-mi"
   );
   const p16lHref = printerProductHref("/mash-p16l-385nm-16k-dental-3d-yazici", "/en/mash-p16l-385nm-16k-dental-3d-printer");
+  const printerData = printersCategoryData();
+  const presetProducts = printerData.selector.products;
+  const liveProducts = props.productList?.data || [];
+  const defaultImages = [p16lPrimaryImage, curieM1MainImage, halotSkyPrinterImage];
+  const defaultHrefs = [
+    p16lHref,
+    printerProductHref("/mash-curie-m1-dental-3d-yazici", "/en/mash-curie-m1-dental-3d-printer"),
+    printerProductHref("/creality-halot-sky-6k", "/en/creality-halot-sky-6k-1"),
+  ];
+  const printerCards = (liveProducts.length ? liveProducts : presetProducts).map((product, index) => {
+    const liveProduct = liveProducts.length ? product as IkasProduct : undefined;
+    const productName = liveProduct?.name || (product as typeof presetProducts[number]).title;
+    const preset = presetProducts.find((card) => normalizedProductName(card.title) === normalizedProductName(productName))
+      || presetProducts[index];
+    const slot = index + 1;
+    const slotTitle = slot <= 3 ? props[`selectorProduct${slot}Title` as keyof Props] as string | undefined : undefined;
+    const slotTitleEn = slot <= 3 ? props[`selectorProduct${slot}TitleEn` as keyof Props] as string | undefined : undefined;
+    const slotHref = slot <= 3 ? props[`selectorProduct${slot}Href` as keyof Props] as string | undefined : undefined;
+    const slotImage = slot <= 3 ? props[`selectorProduct${slot}Image` as keyof Props] as IkasImage | null | undefined : undefined;
+    const slotImageAlt = slot <= 3 ? props[`selectorProduct${slot}ImageAlt` as keyof Props] as string | undefined : undefined;
+    const slotImageAltEn = slot <= 3 ? props[`selectorProduct${slot}ImageAltEn` as keyof Props] as string | undefined : undefined;
+    const legacyImage = [props.printerP16lImage, props.printerCurieImage, props.printerHalotImage][index];
+    const legacyImageAlt = [
+      [props.printerP16lImageAlt, props.printerP16lImageAltEn],
+      [props.printerCurieImageAlt, props.printerCurieImageAltEn],
+      [props.printerHalotImageAlt, props.printerHalotImageAltEn],
+    ][index] || [];
+    const slotDescription = slot <= 3 ? props[`selectorProduct${slot}DescriptionHtml` as keyof Props] as string | undefined : undefined;
+    const slotDescriptionEn = slot <= 3 ? props[`selectorProduct${slot}DescriptionHtmlEn` as keyof Props] as string | undefined : undefined;
+    const slotTag = slot <= 3 ? props[`selectorProduct${slot}Tag` as keyof Props] as string | undefined : undefined;
+    const slotTagEn = slot <= 3 ? props[`selectorProduct${slot}TagEn` as keyof Props] as string | undefined : undefined;
+    const status = slot <= 3
+      ? props[`printerProduct${slot}Status` as keyof Props] as string | undefined
+      : undefined;
+    const statusEn = slot <= 3
+      ? props[`printerProduct${slot}StatusEn` as keyof Props] as string | undefined
+      : undefined;
+    const variant = liveProduct
+      ? getSelectedProductVariant(liveProduct) || liveProduct.variants?.[0] || null
+      : null;
+    const media = variant ? getProductVariantMainImage(variant) : undefined;
+    const studioImageSrc = slotImage ? getDefaultSrc(slotImage) : "";
+    const liveHref = liveProduct ? getProductHref(liveProduct) || "" : "";
+    const fallbackHref = defaultHrefs[index] || preset?.href || "#";
+    const dynamicTag = liveProduct?.brand?.name || liveProduct?.categories?.[0]?.name || "";
+    const slotVisible = slot <= 3
+      ? props[`selectorProduct${slot}Visible` as keyof Props] !== false
+      : true;
+    const specOverrides = slot <= 3
+      ? [1, 2, 3].map((specIndex) => {
+          const base = `selectorProduct${slot}Spec${specIndex}`;
+          return {
+            label: localizedTextValue(
+              props[`${base}Label` as keyof Props] as string | undefined,
+              props[`${base}LabelEn` as keyof Props] as string | undefined,
+              preset?.specs?.[specIndex - 1]?.label || "",
+            ),
+            value: localizedTextValue(
+              props[`${base}Value` as keyof Props] as string | undefined,
+              props[`${base}ValueEn` as keyof Props] as string | undefined,
+              preset?.specs?.[specIndex - 1]?.value || "",
+            ),
+          };
+        })
+      : (preset?.specs || []);
+    const isLivePreset = Boolean(liveProduct && preset && normalizedProductName(preset.title) === normalizedProductName(productName));
+    const liveStatus = variant ? getProductVariantFormattedFinalPrice(variant) : "";
+    return {
+      index,
+      visible: slotVisible,
+      hot: preset?.hot || index === 0,
+      title: localizedTextValue(slotTitle, slotTitleEn, productName),
+      href: safeNavigationHref(slotHref, liveHref || fallbackHref),
+      imageSrc: studioImageSrc || (legacyImage ? getDefaultSrc(legacyImage) : media?.image ? getDefaultSrc(media.image) : defaultImages[index] || ""),
+      imageAlt: localizedTextValue(
+        slotImageAlt,
+        slotImageAltEn,
+        localizedTextValue(legacyImageAlt[0], legacyImageAlt[1], media?.image?.altText || preset?.imageAlt || productName),
+      ),
+      imageClass: index === 0 ? "printer-img-p16l" : index === 1 ? "printer-img-curie" : index === 2 ? "printer-img-halot" : "",
+      tag: localizedTextValue(slotTag, slotTagEn, liveProduct ? dynamicTag : preset?.tag || ""),
+      status: localizedTextValue(status, statusEn, liveProduct ? liveStatus : preset?.status || ""),
+      descriptionHtml: localizedHtmlValue(
+        slotDescription,
+        slotDescriptionEn,
+        liveProduct ? liveProductDescription(liveProduct) || preset?.descriptionHtml || "" : preset?.descriptionHtml || "",
+      ),
+      specs: isLivePreset || !liveProduct
+        ? specOverrides.filter((spec) => spec.label || spec.value)
+        : [],
+    };
+  }).filter((card) => card.visible);
+  const printerCompare = printerData.selector.compare;
+  const compareColumns = printerCompare?.columns.map((column, index) => {
+    const title = props[`selectorCompareColumn${index + 1}Title` as keyof Props] as string | undefined;
+    const titleEn = props[`selectorCompareColumn${index + 1}TitleEn` as keyof Props] as string | undefined;
+    const subtitle = props[`selectorCompareColumn${index + 1}Subtitle` as keyof Props] as string | undefined;
+    const subtitleEn = props[`selectorCompareColumn${index + 1}SubtitleEn` as keyof Props] as string | undefined;
+    return {
+      title: localizedTextValue(title, titleEn, column.title),
+      subtitle: localizedTextValue(subtitle, subtitleEn, column.subtitle || ""),
+    };
+  }) || [];
+  const compareRows = Array.from({ length: 7 }, (_, index) => {
+    const rowNumber = index + 1;
+    const defaultRow = printerCompare?.rows[index];
+    const label = props[`selectorCompareRow${rowNumber}Label` as keyof Props] as string | undefined;
+    const labelEn = props[`selectorCompareRow${rowNumber}LabelEn` as keyof Props] as string | undefined;
+    const values = [1, 2, 3].map((column) => {
+      const value = props[`selectorCompareRow${rowNumber}Value${column}` as keyof Props] as string | undefined;
+      const valueEn = props[`selectorCompareRow${rowNumber}Value${column}En` as keyof Props] as string | undefined;
+      return localizedHtmlValue(value, valueEn, defaultRow?.values[column - 1] || "");
+    });
+    return {
+      label: localizedTextValue(label, labelEn, defaultRow?.label || ""),
+      values,
+    };
+  }).filter((row) => row.label || row.values.some((value) => value.trim()));
 
   return (
     <div className="three-mash-printers-source" style={{
@@ -109,7 +264,17 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
       {props.showHero !== false && <div className="hero">
         <div className="wrap">
           <div className="crumb">
-            <a href={localizedHref("/")}>{tLocalized("Ana sayfa", "Home")}</a> &nbsp;/&nbsp; <a href={localizedHref("/search")}>{tLocalized("Ürünler", "Products")}</a> &nbsp;/&nbsp; <span aria-current="page">{tLocalized("3D Yazıcılar", "3D Printers")}</span>
+            <a href={safeNavigationHref(props.breadcrumbHomeHref, localizedHref("/"))}>
+              {localizedTextValue(props.breadcrumbHomeLabel, props.breadcrumbHomeLabelEn, tLocalized("Ana sayfa", "Home"))}
+            </a>
+            &nbsp;/&nbsp;
+            <a href={safeNavigationHref(props.breadcrumbParentHref, localizedHref("/search"))}>
+              {localizedTextValue(props.breadcrumbParentLabel, props.breadcrumbParentLabelEn, tLocalized("Ürünler", "Products"))}
+            </a>
+            &nbsp;/&nbsp;
+            <span aria-current="page">
+              {localizedTextValue(props.breadcrumbCurrentLabel, props.breadcrumbCurrentLabelEn, tLocalized("3D Yazıcılar", "3D Printers"))}
+            </span>
           </div>
           <h1>
             {textValue(props.heroTitlePrefix, tLocalized("±20 mikron", "±20 microns"))} <span className="em">{textValue(props.heroTitleEmphasis, tLocalized("burada doğar.", "is born here."))}</span>
@@ -149,67 +314,59 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
             <div className="side" dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.selectorSideHtml || tLocalized("En yüksek çözünürlük, en yüksek hız ya da en uygun giriş — üçü de aynı 3mash desteğiyle ve <b>gizli ücret olmadan</b> gelir.", "Highest resolution, highest speed, or the best entry point — all three come with the same 3mash support and <b>without hidden fees</b>.")) }} />
           </div>
           <div className="pgrid">
-            <div className="pc hot">
-              <div className="ph"><span className="tag hot">{tLocalized("EN YÜKSEK ÇÖZÜNÜRLÜK", "HIGHEST RESOLUTION")}</span><span className="st">{tLocalized("Satışta", "For sale")}</span><img className="printer-img printer-img-p16l" src={props.printerP16lImage ? getDefaultSrc(props.printerP16lImage) : p16lPrimaryImage} alt={tLocalized(props.printerP16lImageAlt || "MASH P16L dental 3D yazıcı", props.printerP16lImageAltEn || "MASH P16L dental 3D printer")} loading="lazy" /></div>
-              <div className="bd">
-                <h3>{tLocalized("MASH P16L", "MASH P16L")}</h3>
-                <div className="ds">{tLocalized("385 nm profesyonel dental yazıcı.", "385 nm professional dental printer.")} <b>16K</b> {tLocalized("ultra çözünürlük ve termal kontrolle en detaylı yüzey ve keskin marjin.", "ultra resolution and thermal control deliver the most detailed surfaces and the sharpest margins.")}</div>
-                <div className="kv">
-                  <div><span>{tLocalized("Çözünürlük", "Resolution")}</span><b>14×19 µm · 16K</b></div>
-                  <div><span>{tLocalized("Işık", "Light")}</span><b>385 nm UV</b></div>
-                  <div><span>{tLocalized("Kalibrasyon", "Calibration")}</span><b>{tLocalized("8 nokta dikey kilit", "8-point vertical lock")}</b></div>
+            {printerCards.map((card) => (
+              <div className={`pc${card.hot ? " hot" : ""}`} key={`${card.title}-${card.href}`}>
+                <div className={`ph${card.index === 2 ? " ph-halot" : ""}`}>
+                  {card.tag ? <span className={`tag${card.hot ? " hot" : ""}`}>{card.tag}</span> : null}
+                  {card.status ? <span className="st">{card.status}</span> : null}
+                  {card.imageSrc ? <img className={`printer-img ${card.imageClass}`} src={card.imageSrc} alt={card.imageAlt} loading="lazy" /> : null}
                 </div>
-                <a className="go" href={safeNavigationHref(props.featureHref, p16lHref)}>{textValue(props.selectorCardCtaText, tLocalized("İncele", "View"))} <span>→</span></a>
-              </div>
-            </div>
-            <div className="pc">
-              <div className="ph"><span className="tag">{tLocalized("YERLİ · HIZLI", "LOCAL · FAST")}</span><span className="st">{tLocalized("Talep üzerine", "On request")}</span><img className="printer-img printer-img-curie" src={props.printerCurieImage ? getDefaultSrc(props.printerCurieImage) : curieM1MainImage} alt={tLocalized(props.printerCurieImageAlt || "Mash CURIE M1 dental 3D yazıcı", props.printerCurieImageAltEn || "Mash CURIE M1 dental 3D printer")} loading="lazy" /></div>
-              <div className="bd">
-                <h3>{tLocalized("Mash CURIE M1", "Mash CURIE M1")}</h3>
-                <div className="ds">{tLocalized("Antalya Teknokent'te üretilen", "Made at Antalya Teknokent, this")} <b>{tLocalized("tamamen yerli", "fully domestic")}</b> {tLocalized("yazıcı. Hız ve düşük toplam maliyet için tasarlandı.", "printer is designed for speed and a low total cost of ownership.")}</div>
-                <div className="kv">
-                  <div><span>{tLocalized("Hassasiyet", "Precision")}</span><b>{tLocalized("±20 µm tekrarlanabilir", "±20 µm repeatable")}</b></div>
-                  <div><span>{tLocalized("Hız", "Speed")}</span><b>{tLocalized("14 dk'da geçici kron", "Temporary crown in 14 minutes")}</b></div>
-                  <div><span>{tLocalized("Kalibrasyon", "Calibration")}</span><b>{tLocalized("6 aya kadar gerekmez", "Not required for up to 6 months")}</b></div>
+                <div className="bd">
+                  <h3>{card.title}</h3>
+                  <div className="ds" dangerouslySetInnerHTML={{ __html: sanitizeHtml(card.descriptionHtml) }} />
+                  {card.specs.length ? (
+                    <div className="kv">
+                      {card.specs.map((spec, specIndex) => (
+                        <div key={`${spec.label}-${specIndex}`}>
+                          <span>{spec.label}</span>
+                          <b dangerouslySetInnerHTML={{ __html: sanitizeHtml(spec.value) }} />
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                  <a className="go" href={card.href}>
+                    {textValue(props.selectorCardCtaText, tLocalized("İncele", "View"))} <span>→</span>
+                  </a>
                 </div>
-                <a className="go" href={printerProductHref("/mash-curie-m1-dental-3d-yazici", "/en/mash-curie-m1-dental-3d-printer")}>{textValue(props.selectorCardCtaText, tLocalized("İncele", "View"))} <span>→</span></a>
               </div>
-            </div>
-            <div className="pc">
-              <div className="ph ph-halot"><span className="tag">{tLocalized("EKONOMİK GİRİŞ", "ECONOMICAL ENTRY")}</span><span className="st">{tLocalized("Talep üzerine", "On request")}</span><img className="printer-img printer-img-halot" src={props.printerHalotImage ? getDefaultSrc(props.printerHalotImage) : halotSkyPrinterImage} alt={tLocalized(props.printerHalotImageAlt || "Creality Halot-Sky 6K dental 3D yazıcı", props.printerHalotImageAltEn || "Creality Halot-Sky 6K dental 3D printer")} loading="lazy" /></div>
-              <div className="bd">
-                <h3>{tLocalized("Creality Halot-Sky 6K", "Creality Halot-Sky 6K")}</h3>
-                <div className="ds">{tLocalized("6K çözünürlük;", "6K resolution; the")} <b>{tLocalized("3mash iyileştirmeli", "3mash-enhanced")}</b> {tLocalized("versiyonda", "version guarantees")} <b>±15 µm</b>{tLocalized(" garanti.", ".")} {tLocalized("$10.000'lık cihaz kalitesine çok daha uygun fiyata.", "Quality close to a $10,000 device at a far more affordable price.")}</div>
-                <div className="kv">
-                  <div><span>{tLocalized("Çözünürlük", "Resolution")}</span><b>{tLocalized("6K", "6K")}</b></div>
-                  <div><span>{tLocalized("Hassasiyet", "Precision")}</span><b>{tLocalized("±15 µm (arttırılmış)", "±15 µm (enhanced)")}</b></div>
-                  <div><span>{tLocalized("Versiyon", "Version")}</span><b>{tLocalized("Fabrika / Arttırılmış", "Factory / Enhanced")}</b></div>
-                </div>
-                <a className="go" href={printerProductHref("/creality-halot-sky-6k", "/en/creality-halot-sky-6k-1")}>{textValue(props.selectorCardCtaText, tLocalized("İncele", "View"))} <span>→</span></a>
-              </div>
-            </div>
+            ))}
           </div>
 
+          {props.selectorCompareVisible !== false ? <>
           <div className="cmp" id="karsilastirma-tablosu">
             <table>
               <thead><tr>
-                <th>{tLocalized("Özellik", "Feature")}</th>
-                <th>{tLocalized("MASH P16L", "MASH P16L")}<span className="t">{tLocalized("En yüksek çözünürlük", "Highest resolution")}</span></th>
-                <th>{tLocalized("Mash CURIE M1", "Mash CURIE M1")}<span className="t">{tLocalized("Hız + yerli", "Speed + domestic")}</span></th>
-                <th>{tLocalized("Creality Halot-Sky 6K", "Creality Halot-Sky 6K")}<span className="t">{tLocalized("Ekonomik giriş", "Economical entry")}</span></th>
+                {compareColumns.map((column, index) => (
+                  <th key={`${column.title}-${index}`}>
+                    {column.title}
+                    {column.subtitle ? <span className="t">{column.subtitle}</span> : null}
+                  </th>
+                ))}
               </tr></thead>
               <tbody>
-                <tr><td>{tLocalized("Çözünürlük / Hassasiyet", "Resolution / Precision")}</td><td><b>14×19 µm</b> · 16K</td><td><b>±20 µm</b> {tLocalized("tekrarlanabilir", "repeatable")}</td><td><b>±15 µm</b> {tLocalized("(arttırılmış)", "(enhanced)")}</td></tr>
-                <tr><td>{tLocalized("Işık kaynağı", "Light source")}</td><td>385 nm UV</td><td>{tLocalized("Yerli optik sistem", "Domestic optical system")}</td><td>6K LCD</td></tr>
-                <tr><td>{tLocalized("Hız", "Speed")}</td><td>{tLocalized("Yüksek detay odaklı", "Detail-focused")}</td><td><b>{tLocalized("14 dk'da", "14 min")}</b> {tLocalized("geçici kron", "for a temporary crown")}</td><td>{tLocalized("Standart", "Standard")}</td></tr>
-                <tr><td>{tLocalized("Termal kontrol", "Thermal control")}</td><td>{tLocalized("Entegre ısıtma (25/30°C)", "Integrated heating (25/30°C)")}</td><td>—</td><td>—</td></tr>
-                <tr><td>{tLocalized("Kalibrasyon", "Calibration")}</td><td>{tLocalized("8 nokta dikey kilit · aylarca stabil", "8-point vertical lock · stable for months")}</td><td>{tLocalized("6 aya kadar gerekmez", "Not required for up to 6 months")}</td><td>{tLocalized("3mash servis desteği", "3mash service support")}</td></tr>
-                <tr><td>{tLocalized("Gizli lisans / RFID", "Hidden license / RFID")}</td><td className="yes">{tLocalized("Yok", "None")}</td><td className="yes">{tLocalized("Yok", "None")}</td><td className="yes">{tLocalized("Yok", "None")}</td></tr>
-                <tr><td>{tLocalized("En uygun", "Best for")}</td><td>{tLocalized("Detay & keskin marjin gereken işler", "Work requiring detail & sharp margins")}</td><td>{tLocalized("Yüksek hacim, hız, düşük TCO", "High volume, speed, low TCO")}</td><td>{tLocalized("Dijitale ekonomik giriş", "An economical entry into digital")}</td></tr>
+                {compareRows.map((row) => (
+                  <tr key={row.label}>
+                    <td>{row.label}</td>
+                    {row.values.map((value, index) => (
+                      <td dangerouslySetInnerHTML={{ __html: sanitizeHtml(value) }} key={`${row.label}-${index}`} />
+                    ))}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-          <p className="note">{tLocalized("Not: Tüm 3mash yazıcılarında", "Note: All 3mash printers come with")} <b>{tLocalized("gizli lisans veya RFID ücreti yoktur", "no hidden license or RFID fee")}</b> {tLocalized("ve dilediğiniz marka reçineyle çalışabilirsiniz. Stok durumu için ekibimize danışın.", "and let you work with any resin brand you prefer. Ask our team about stock availability.")}</p>
+          <p className="note" dangerouslySetInnerHTML={{ __html: sanitizeHtml(localizedHtmlValue(props.selectorCompareNoteHtml, props.selectorCompareNoteHtmlEn, printerCompare?.noteHtml || "")) }} />
+          </> : null}
         </div>
       </section>
       )}

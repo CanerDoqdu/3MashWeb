@@ -4070,7 +4070,7 @@ function printerSparePartDetail(config: PrinterSparePartConfig): ProductDetailTe
       }
       : undefined,
     related: {
-      index: "07",
+      index: config.videoHref ? "07" : "06",
       label: tLocalized("İlgili Yedek Parçalar", "Related Spare Parts"),
       titleHtml: tLocalized("Aynı cihazda <span class=\"em\">birlikte çalışanlar.</span>", "Those who <span class=\"em\">work together</span> on the same device."),
       items: spareRelatedItems(config.slug),
@@ -4602,7 +4602,6 @@ type ZirconBlockConfig = {
 };
 
 const ZIRCON_CATEGORY = {
-  text: tLocalized("Zirkon Bloklar", "Zirconia Blocks"),
   href: "/zirkon-bloklar",
 };
 
@@ -4664,7 +4663,7 @@ function zirconBlockDetail(config: ZirconBlockConfig): ProductDetailTemplateData
     breadcrumb: {
       homeText: tLocalized("Ana sayfa", "Home"),
       homeHref: "/",
-      categoryText: ZIRCON_CATEGORY.text,
+      categoryText: tLocalized("Zirkon Bloklar", "Zirconia Blocks"),
       categoryHref: ZIRCON_CATEGORY.href,
       productText: config.productText,
     },
@@ -4949,9 +4948,9 @@ export function zirconBlockDetailDataBySlug(): Record<string, ProductDetailTempl
 }
 
 const ZIRCON_BLOCK_ALIASES: Record<string, string[]> = {
-  [ARGENZ_ST_MULTILAYER_SLUG]: ["argenz-st-multilayer", "st-multilayer-zirkon", "stml"],
-  [ARGENZ_HT_PLUS_SLUG]: ["argenz-ht-plus", "ht-plus-zirkon", "ht-zirkon-blok"],
-  [ARGENZ_HT_MULTILAYER_SLUG]: ["argenz-ht-multilayer", "ht-plus-multilayer", "ht-multilayer-zirkon", "html"],
+  [ARGENZ_ST_MULTILAYER_SLUG]: ["argenz-st-multilayer", "argenz-st-multilayer-zirkon-blok", "st-multilayer-zirkon", "stml"],
+  [ARGENZ_HT_PLUS_SLUG]: ["argenz-ht-plus", "argenz-ht-plus-zirkon-blok", "ht-plus-zirkon", "ht-zirkon-blok"],
+  [ARGENZ_HT_MULTILAYER_SLUG]: ["argenz-ht-multilayer", "argenz-ht-multilayer-zirkon-blok", "ht-plus-multilayer", "ht-multilayer-zirkon", "html"],
 };
 
 type LabProductCategory = {
@@ -5306,7 +5305,7 @@ function labProductDetail(config: LabProductConfig): ProductDetailTemplateData {
       }
       : undefined,
     related: {
-      index: "07",
+      index: config.videoHref ? "07" : "06",
       label: config.category.relatedLabel,
       titleHtml: config.category.relatedTitleHtml,
       items: labRelatedItems(config),

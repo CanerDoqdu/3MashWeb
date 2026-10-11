@@ -1,5 +1,3 @@
-import { stringValue, castObject, isString } from "../types/typeGuards";
-
 type BusinessConfig = {
   merchantId: string;
   whatsappNumber: string;
@@ -14,7 +12,7 @@ const defaultConfig: BusinessConfig = {
   recipientEmail: "info@3mash.com",
 };
 
-function getRuntimeConfig(): BusinessConfig {
+export function getBusinessConfig(): BusinessConfig {
   // Environment variables (from build or runtime)
   const runtimeEnv =
     typeof window !== "undefined" && (window as any).__THREEMASH_ENV__
@@ -50,17 +48,16 @@ function getRuntimeConfig(): BusinessConfig {
   };
 }
 
-export const businessConfig = getRuntimeConfig();
-
 export function getMerchantImageBaseUrl() {
-  return `https://cdn.myikas.com/images/${businessConfig.merchantId}/`;
+  return `https://cdn.myikas.com/images/${getBusinessConfig().merchantId}/`;
 }
 
 export function getWhatsAppHref(message?: string) {
   const encodedMessage = message ? `?text=${encodeURIComponent(message)}` : "";
-  return `https://wa.me/${businessConfig.whatsappNumber}${encodedMessage}`;
+  return `https://wa.me/${getBusinessConfig().whatsappNumber}${encodedMessage}`;
 }
 
-export function getGoogleMapsHref(query = businessConfig.mapsQuery) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+export function getGoogleMapsHref(query?: string) {
+  const mapsQuery = query ?? getBusinessConfig().mapsQuery;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
 }

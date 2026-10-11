@@ -10,11 +10,13 @@ type CartListener = (cart: IkasCart | null, status: CartStatus, error: Error | n
 
 const CART_CACHE_KEY = "3mash-cart-cache-v1";
 const CART_LOAD_TIMEOUT_MS = 10000;
+const CART_LOAD_RETRY_DELAYS_MS = [500, 1500] as const;
 
 const listeners = new Set<CartListener>();
 
 let initialized = false;
 let initializing: Promise<void> | null = null;
+let cartGeneration = 0;
 let cartStatus: CartStatus = "idle";
 let cartError: Error | null = null;
 
@@ -84,15 +86,29 @@ function setStatus(status: CartStatus, error: Error | null = null) {
 }
 
 function withCartTimeout<T>(promise: Promise<T>) {
-  return Promise.race([
-    promise,
-    new Promise<T>((_, reject) => {
-      setTimeout(
-        () => reject(new Error("Cart loading timed out")),
-        CART_LOAD_TIMEOUT_MS,
-      );
-    }),
-  ]);
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<T>((_, reject) => {
+    timeoutId = setTimeout(
+      () => reject(new Error("Cart loading timed out")),
+      CART_LOAD_TIMEOUT_MS,
+    );
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timeoutId !== undefined) clearTimeout(timeoutId);
+  });
+}
+
+async function withCartRetries<T>(operation: () => Promise<T>): Promise<T> {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await operation();
+    } catch (error) {
+      const retryDelay = CART_LOAD_RETRY_DELAYS_MS[attempt];
+      if (retryDelay === undefined) throw error;
+      await new Promise<void>((resolve) => setTimeout(resolve, retryDelay));
+    }
+  }
 }
 
 export function getCurrentCart() {
@@ -112,7 +128,7 @@ export function getCartError(): Error | null {
 }
 
 export function hasCartItemsInMemory(): boolean {
-  const c = currentCart || (cartStore.cart ? ({ ...cartStore.cart } as IkasCart) : null);
+  const c = currentCart;
   if (!c?.orderLineItems) return false;
   return c.orderLineItems.some(
     (item) => !item.deleted && Number(item.quantity || 0) > 0
@@ -138,19 +154,29 @@ export function publishCartFromIkasStore() {
 }
 
 export async function refreshGlobalCart() {
+  const generation = cartGeneration;
   setStatus("loading");
 
   try {
-    await withCartTimeout(
-      waitForCartStoreInit(cartStore).then(() => getCart()),
+    await withCartRetries(() =>
+      withCartTimeout(
+        waitForCartStoreInit(cartStore).then(async () => {
+          if (generation !== cartGeneration) return;
+          await getCart();
+        }),
+      ),
     );
+    if (generation !== cartGeneration) return;
     initialized = true;
     setStatus("ready");
   } catch (error) {
-    initialized = true;
+    if (generation !== cartGeneration) return;
+    initialized = false;
     setStatus("error", error instanceof Error ? error : new Error("Cart refresh failed"));
   } finally {
-    publish(cloneCart());
+    if (generation === cartGeneration) {
+      publish(cloneCart());
+    }
   }
 }
 
@@ -164,35 +190,42 @@ export function initGlobalCart() {
   }
 
   setStatus("loading");
+  const generation = cartGeneration;
 
-  initializing = (async () => {
+  const task = (async () => {
     try {
-      await withCartTimeout(waitForCartStoreInit(cartStore));
+      await withCartRetries(async () => {
+        await withCartTimeout(waitForCartStoreInit(cartStore));
 
-      if (cartStore.cart) {
-        publish(cloneCart());
-      }
+        if (generation !== cartGeneration) return;
+        await withCartTimeout(getCart());
+      });
 
-      await withCartTimeout(getCart());
-
+      if (generation !== cartGeneration) return;
       initialized = true;
       setStatus("ready");
       publish(cloneCart());
     } catch (error) {
-      initialized = true;
+      if (generation !== cartGeneration) return;
+      initialized = false;
       setStatus("error", error instanceof Error ? error : new Error("Cart initialization failed"));
     } finally {
-      initializing = null;
-      notify();
+      if (generation === cartGeneration) {
+        initializing = null;
+        notify();
+      }
     }
   })();
 
-  return initializing;
+  initializing = task;
+  return task;
 }
 
 export function clearGlobalCart() {
+  cartGeneration++;
+  initializing = null;
   currentCart = null;
-  initialized = true;
+  initialized = false;
   cartError = null;
   cartStatus = "ready";
   if (typeof window !== "undefined") {
