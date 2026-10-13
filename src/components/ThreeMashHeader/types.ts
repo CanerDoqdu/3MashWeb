@@ -306,4 +306,7 @@ export interface Props {
   announcementStyledPhraseBold?: boolean;
   announcementStyledPhraseItalic?: boolean;
   searchQueryParam?: string;
+  showShopperVideo?: boolean;
+  /** YouTube Shorts, YouTube veya doğrudan video dosyası bağlantısı. */
+  shopperVideoHref?: string;
 }

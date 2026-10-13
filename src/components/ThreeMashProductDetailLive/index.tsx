@@ -42,20 +42,27 @@ import ThreeMashProductDetailTemplate, {
   type ProductDetailRelatedProduct,
   type ProductVariantGroup,
 } from "../../sub-components/ThreeMashProductDetailTemplate";
-import { publishSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import {
+  MASH_P16L_PRINTER_SLUG,
+  isAlternateProductPageEnabled,
+  publishAlternateProductPageEnabled,
+  publishSharedProductDetailData,
+  resolveProductDetailData,
+  useAlternateProductPageEnabled,
+} from "../../sub-components/ThreeMashProductDetailData";
 import { rememberOrderLineImageFallback } from "../ThreeMashOrderLineImage";
 import { isEnglishLocale, isTurkishText, tLocalized, tProp, EN_TO_TR_ROUTE_MAP } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { debugError } from "../../utils/debugError";
 import { Props } from "./types";
 import type { Props as SingleProductProps } from "../ThreeMashSingleProduct/types";
+import MashP16LAlternatePage from "../../sub-components/MashP16LAlternatePage";
 
 type PlainObject = Record<string, unknown>;
 type PreviewSelection = Record<string, string>;
 type SingleProductRuntimeProps = Props & SingleProductProps & { renderMode?: string };
 
 const CRS_COMPOSITE_SLUG = "crs-composite-mukemmel-dayanimli-gecici-recinesi";
-
 function localizedStudioText(
   valueTr: string | undefined,
   valueEn: string | undefined,
@@ -1351,6 +1358,7 @@ function themeToken(value: string | undefined, defaultValue: string, tokenName: 
 
 export function ThreeMashProductDetailLive(props: SingleProductRuntimeProps) {
   const [fetchedProduct, setFetchedProduct] = useState<IkasProduct | null>(null);
+  const alternateProductPageEnabled = useAlternateProductPageEnabled();
   const product = props.product || fetchedProduct;
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
@@ -1427,6 +1435,10 @@ export function ThreeMashProductDetailLive(props: SingleProductRuntimeProps) {
   const data = useMemo(
     () => (product ? templateData(product, variant, props) : props.showTemplatePreview === false ? null : propsTemplateData(props)),
     [product?.id, version, props.addToCartText, props.addingToCartText, props.outOfStockText, props.productTemplateJson, props.showTemplatePreview, detailPropKey],
+  );
+  const isAlternateMASHPage = Boolean(
+    props.enableAlternateMASHPage === true &&
+    (data?.key === MASH_P16L_PRINTER_SLUG || data?.key.startsWith(`${MASH_P16L_PRINTER_SLUG}-`)),
   );
   const relatedItems = data?.related?.items || [];
   const lastRelatedCard = relatedItems[relatedItems.length - 1];
@@ -1599,6 +1611,13 @@ export function ThreeMashProductDetailLive(props: SingleProductRuntimeProps) {
     data?.announcement?.ctaHref,
   ]);
 
+  useLayoutEffect(() => {
+    if (props.renderMode !== "hero") return;
+
+    publishAlternateProductPageEnabled(isAlternateMASHPage);
+    return () => publishAlternateProductPageEnabled(false);
+  }, [isAlternateMASHPage, props.renderMode]);
+
   const style = {
     "--tmpdt-bg": themeToken(props.backgroundColor, "#FAFAF7", "--tm-theme-bg"),
     "--tmpdt-ink": themeToken(props.textColor, "#0E0E0C", "--tm-theme-text"),
@@ -1661,6 +1680,13 @@ export function ThreeMashProductDetailLive(props: SingleProductRuntimeProps) {
     }
   }
 
+  if (
+    props.renderMode !== "hero" &&
+    (alternateProductPageEnabled || isAlternateProductPageEnabled())
+  ) {
+    return null;
+  }
+
   if (!data) {
     return (
       <section className="three-mash-product-detail-live" style={style}>
@@ -1673,91 +1699,106 @@ export function ThreeMashProductDetailLive(props: SingleProductRuntimeProps) {
 
   if (props.renderMode === "hero") {
     return (
-      <section className="three-mash-product-detail-live" style={style} data-product-detail-key={data.key}>
-        <ProductDetailSectionScope data={data}>
-          <ProductDetailHeroSection
+      <>
+        <section className="three-mash-product-detail-live" style={style} data-product-detail-key={data.key}>
+          <ProductDetailSectionScope
             data={data}
-            variantGroups={groups}
-            showBreadcrumb={props.showBreadcrumb !== false}
-            showGallery={props.showGallery !== false}
-            showGalleryBadge={props.showGalleryBadge !== false}
-            galleryThumbAriaLabel={localizedStudioText(props.galleryThumbAriaLabel, props.galleryThumbAriaLabelEn, "Ürün görseli", "Product image")}
-            trustBadgeIconSrc={props.trustBadgeIconImage ? getDefaultSrc(props.trustBadgeIconImage) : ""}
-            showHeroKicker={props.showHeroKicker !== false}
-            showHeroDescription={props.showHeroDescription !== false}
-            showHeroPills={props.showHeroPills !== false}
-            showSelectionSummary={props.showSelectionSummary !== false}
-            showAddToCartButton={props.showAddToCartButton !== false}
-            showWhatsAppButton={props.showWhatsAppButton !== false}
-            showTrustBadges={props.showTrustBadges !== false}
-            selectedGalleryIndex={selectedImageIndex}
-            onGallerySelect={setSelectedImageIndex}
-            onVariantSelect={(value) => {
-              if (!product) {
-                const item = value as { groupId?: string; valueId?: string };
-                if (item.groupId && item.valueId) setPreviewSelection((current) => ({ ...current, [item.groupId as string]: item.valueId as string }));
-                return;
-              }
-              // NOTE: selectVariantValue is from @ikas/bp-storefront (third-party).
-              // Its type signature is not available at compile time, so we use any here.
-              // The value is from internal component callbacks (trusted source).
-              selectVariantValue(product, value as any, true);
-              setSelectedImageIndex(0);
-              setMessage("");
-              setVersion((current) => current + 1);
+            colorOverrides={{
+              backgroundColor: themeToken(props.backgroundColor, "#FAFAF7", "--tm-theme-bg"),
+              textColor: themeToken(props.textColor, "#0E0E0C", "--tm-theme-text"),
+              mutedTextColor: themeToken(props.mutedTextColor, "#55554e", "--tm-theme-sub"),
+              panelColor: themeToken(props.panelColor, "#F1F1EC", "--tm-theme-panel"),
+              lineColor: themeToken(props.lineColor, "#E6E6E0", "--tm-theme-line"),
+              accentColor: themeToken(props.accentColor, "#C7F136", "--tm-theme-accent"),
             }}
-            onAddToCart={handleAddToCart}
-            isAddToCartDisabled={addDisabled}
-            isAdding={isAdding}
-            message={message || (product && !isInStock ? data.hero.outOfStockText : "")}
-            price={safeFinalPrice(variant)}
-            compareAtPrice={hasDiscount ? safeSellPrice(variant) : ""}
-            selectedSummary={selectedSummary(data, groups)}
-          />
-        </ProductDetailSectionScope>
-      </section>
+          >
+            <ProductDetailHeroSection
+              data={data}
+              variantGroups={groups}
+              showBreadcrumb={props.showBreadcrumb !== false}
+              showGallery={props.showGallery !== false}
+              showGalleryBadge={props.showGalleryBadge !== false}
+              galleryThumbAriaLabel={localizedStudioText(props.galleryThumbAriaLabel, props.galleryThumbAriaLabelEn, "Ürün görseli", "Product image")}
+              trustBadgeIconSrc={props.trustBadgeIconImage ? getDefaultSrc(props.trustBadgeIconImage) : ""}
+              showHeroKicker={props.showHeroKicker !== false}
+              showHeroDescription={props.showHeroDescription !== false}
+              showHeroPills={props.showHeroPills !== false}
+              showSelectionSummary={props.showSelectionSummary !== false}
+              showAddToCartButton={props.showAddToCartButton !== false}
+              showWhatsAppButton={props.showWhatsAppButton !== false}
+              showTrustBadges={props.showTrustBadges !== false}
+              selectedGalleryIndex={selectedImageIndex}
+              onGallerySelect={setSelectedImageIndex}
+              onVariantSelect={(value) => {
+                if (!product) {
+                  const item = value as { groupId?: string; valueId?: string };
+                  if (item.groupId && item.valueId) setPreviewSelection((current) => ({ ...current, [item.groupId as string]: item.valueId as string }));
+                  return;
+                }
+                // NOTE: selectVariantValue is from @ikas/bp-storefront (third-party).
+                // Its type signature is not available at compile time, so we use any here.
+                // The value is from internal component callbacks (trusted source).
+                selectVariantValue(product, value as any, true);
+                setSelectedImageIndex(0);
+                setMessage("");
+                setVersion((current) => current + 1);
+              }}
+              onAddToCart={handleAddToCart}
+              isAddToCartDisabled={addDisabled}
+              isAdding={isAdding}
+              message={message || (product && !isInStock ? data.hero.outOfStockText : "")}
+              price={safeFinalPrice(variant)}
+              compareAtPrice={hasDiscount ? safeSellPrice(variant) : ""}
+              selectedSummary={selectedSummary(data, groups)}
+            />
+          </ProductDetailSectionScope>
+        </section>
+        {isAlternateMASHPage ? (
+          <MashP16LAlternatePage />
+        ) : null}
+      </>
     );
   }
 
   return (
-    <section className="three-mash-product-detail-live" style={style} data-product-detail-key={data.key}>
-      <ThreeMashProductDetailTemplate
-        data={data}
-        variantGroups={groups}
-        visibility={{
-          photos: props.showPhotos !== false,
-          card1: props.showUseCard1 !== false,
-          card2: props.showUseCard2 !== false,
-          devices: props.showDevices !== false,
-          ecosystem: props.showEcosystem !== false,
-        }}
-        selectedGalleryIndex={selectedImageIndex}
-        onGallerySelect={setSelectedImageIndex}
-        onVariantSelect={(value) => {
-          if (!product) {
-            const item = value as { groupId?: string; valueId?: string };
-            if (item.groupId && item.valueId) setPreviewSelection((current) => ({ ...current, [item.groupId as string]: item.valueId as string }));
-            return;
-          }
-          // NOTE: selectVariantValue is from @ikas/bp-storefront (third-party).
-          // Its type signature is not available at compile time, so we use any here.
-          // The value is from internal component callbacks (trusted source).
-          selectVariantValue(product, value as any, true);
-          setSelectedImageIndex(0);
-          setMessage("");
-          setVersion((current) => current + 1);
-        }}
-        onAddToCart={handleAddToCart}
-        isAddToCartDisabled={addDisabled}
-        isAdding={isAdding}
-        message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || tLocalized("Stok yok", "Out of stock"))) : "")}
-        price={safeFinalPrice(variant)}
-        compareAtPrice={hasDiscount ? safeSellPrice(variant) : ""}
-        selectedSummary={selectedSummary(data, groups)}
-        relatedProducts={relatedProducts}
-        relatedCardImages={relatedCardImages}
-      />
-    </section>
+      <section className="three-mash-product-detail-live" style={style} data-product-detail-key={data.key}>
+        <ThreeMashProductDetailTemplate
+          data={data}
+          variantGroups={groups}
+          visibility={{
+            photos: props.showPhotos !== false,
+            card1: props.showUseCard1 !== false,
+            card2: props.showUseCard2 !== false,
+            devices: props.showDevices !== false,
+            ecosystem: props.showEcosystem !== false,
+          }}
+          selectedGalleryIndex={selectedImageIndex}
+          onGallerySelect={setSelectedImageIndex}
+          onVariantSelect={(value) => {
+            if (!product) {
+              const item = value as { groupId?: string; valueId?: string };
+              if (item.groupId && item.valueId) setPreviewSelection((current) => ({ ...current, [item.groupId as string]: item.valueId as string }));
+              return;
+            }
+            // NOTE: selectVariantValue is from @ikas/bp-storefront (third-party).
+            // Its type signature is not available at compile time, so we use any here.
+            // The value is from internal component callbacks (trusted source).
+            selectVariantValue(product, value as any, true);
+            setSelectedImageIndex(0);
+            setMessage("");
+            setVersion((current) => current + 1);
+          }}
+          onAddToCart={handleAddToCart}
+          isAddToCartDisabled={addDisabled}
+          isAdding={isAdding}
+          message={message || (product && !isInStock ? (isEnglishLocale() ? "Out of stock" : (data.hero.outOfStockText || tLocalized("Stok yok", "Out of stock"))) : "")}
+          price={safeFinalPrice(variant)}
+          compareAtPrice={hasDiscount ? safeSellPrice(variant) : ""}
+          selectedSummary={selectedSummary(data, groups)}
+          relatedProducts={relatedProducts}
+          relatedCardImages={relatedCardImages}
+        />
+      </section>
   );
 }
 

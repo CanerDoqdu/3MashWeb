@@ -1,5 +1,5 @@
 import { getDefaultSrc, IkasImage } from "@ikas/bp-storefront";
-import { safeNavigationHref } from "./safeRedirect";
+import { safeExternalNavigationHref } from "./safeRedirect";
 import { sanitizeHtml } from "./sanitizeHtml";
 import { isEnglishLocale } from "./i18n";
 
@@ -39,7 +39,7 @@ export function referenceImage(
 }
 
 export function referenceHref(value: string | undefined, fallback: string) {
-  return safeNavigationHref(value, fallback);
+  return safeExternalNavigationHref(value, fallback);
 }
 
 export function escapeReferenceHtml(value: string) {

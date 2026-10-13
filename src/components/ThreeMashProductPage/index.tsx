@@ -1,5 +1,6 @@
 import { tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
+import { useAlternateProductPageEnabled } from "../../sub-components/ThreeMashProductDetailData";
 import { machineP16L, resinBottle } from "../../assets/remaining-assets-data";
 import p1dPrinterImage from "../../assets/p1d-printer-data";
 import { safeNavigationHref } from "../../utils/safeRedirect";
@@ -220,6 +221,8 @@ function SpecRow({ label, value, wordStyle }: { label?: string; value?: string; 
 }
 
 export function ThreeMashProductPage(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+
   const template = templatePreset(props.templatePreset);
   const productImage = imageSource(props.productImageUrl) || presetImage(props.imagePreset || template?.imagePreset);
   const themeStyle = {

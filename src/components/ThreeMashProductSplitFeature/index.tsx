@@ -1,5 +1,5 @@
 import { Props } from "./types";
-import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useAlternateProductPageEnabled, useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import {
   ProductDetailRatingsSection,
   ProductDetailSectionScope,
@@ -106,7 +106,7 @@ function overrideRatingsData(baseData: ProductDetailTemplateData, props: Props):
   };
 }
 
-export function ThreeMashProductSplitFeature(props: Props) {
+function ThreeMashProductSplitFeatureContent(props: Props) {
   const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product, props.productTemplateJson);
   const fallbackData = props.product ? resolveProductDetailData(props.product, props.productTemplateJson) : null;
@@ -128,6 +128,11 @@ export function ThreeMashProductSplitFeature(props: Props) {
       <ProductDetailRatingsSection data={data} />
     </ProductDetailSectionScope>
   );
+}
+
+export function ThreeMashProductSplitFeature(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+  return <ThreeMashProductSplitFeatureContent {...props} />;
 }
 
 export default ThreeMashProductSplitFeature;

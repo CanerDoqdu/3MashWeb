@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "preact/hooks";
 import { basicSliderImages } from "../../assets/basic-slider-images-data";
 import { Props } from "./types";
-import { resolveSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import {
+  resolveSharedProductDetailData,
+  useAlternateProductPageEnabled,
+} from "../../sub-components/ThreeMashProductDetailData";
 import { tLocalized } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 
@@ -234,10 +237,11 @@ function ImageItem({ image, cloneIndex }: { image: SliderImage; cloneIndex?: num
 }
 
 export function ThreeMashProductsBasicSlider(props: Props) {
+  const alternatePageEnabled = useAlternateProductPageEnabled();
   const sourceData = resolveSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
 
   const sliderRef = useRef<HTMLDivElement>(null);
-  const sectionVisible = !sourceData && sectionIsVisible(props);
+  const sectionVisible = !alternatePageEnabled && !sourceData && sectionIsVisible(props);
   const images = sectionVisible ? sliderImages(props) : [];
   const itemCount = images.length;
 
@@ -272,6 +276,8 @@ export function ThreeMashProductsBasicSlider(props: Props) {
       observer?.disconnect();
     };
   }, [itemCount, sectionVisible]);
+
+  if (alternatePageEnabled) return null;
 
   if (sourceData) return null;
 

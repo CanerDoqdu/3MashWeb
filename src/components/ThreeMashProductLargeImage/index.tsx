@@ -1,6 +1,6 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useAlternateProductPageEnabled, useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailSectionScope, ProductDetailSpecHighlightSection, type ProductDetailTemplateData } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderSpecHighlight } from "../../sub-components/ThreeMashProductSectionPlaceholder";
 import { isEnglishLocale, isTurkishText, tLocalized } from "../../utils/i18n";
@@ -22,7 +22,7 @@ function imageSource(value: unknown): string {
   }
 }
 
-export function ThreeMashProductLargeImage(props: Props) {
+function ThreeMashProductLargeImageContent(props: Props) {
   const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product, (props as Record<string, unknown>).productTemplateJson);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
@@ -30,7 +30,10 @@ export function ThreeMashProductLargeImage(props: Props) {
 
   if (src) {
     return (
-      <section className="three-mash-product-large-image">
+      <section
+        className="three-mash-product-large-image"
+        style={props.backgroundColor ? { backgroundColor: props.backgroundColor } : undefined}
+      >
         <div className="tmplg-wrap">
           <div className="tmplg-frame">
             <img
@@ -49,7 +52,10 @@ export function ThreeMashProductLargeImage(props: Props) {
 
   if (data?.specHighlight) {
     return (
-      <ProductDetailSectionScope data={data}>
+      <ProductDetailSectionScope
+        data={data}
+        colorOverrides={{ backgroundColor: props.backgroundColor }}
+      >
         <ProductDetailSpecHighlightSection data={data} />
       </ProductDetailSectionScope>
     );
@@ -59,10 +65,18 @@ export function ThreeMashProductLargeImage(props: Props) {
 
   const placeholderData = makePlaceholderSpecHighlight();
   return (
-    <ProductDetailSectionScope data={placeholderData}>
+    <ProductDetailSectionScope
+      data={placeholderData}
+      colorOverrides={{ backgroundColor: props.backgroundColor }}
+    >
       <ProductDetailSpecHighlightSection data={placeholderData} />
     </ProductDetailSectionScope>
   );
+}
+
+export function ThreeMashProductLargeImage(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+  return <ThreeMashProductLargeImageContent {...props} />;
 }
 
 export default ThreeMashProductLargeImage;

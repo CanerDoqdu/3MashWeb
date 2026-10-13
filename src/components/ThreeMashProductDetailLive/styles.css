@@ -1,4 +1,6 @@
 
+@import "../../sub-components/MashP16LAlternatePage/styles.css";
+
 .three-mash-product-detail-live {
   width: 100%;
   background: var(--tmpdt-bg, var(--tm-theme-bg, #FAFAF7));

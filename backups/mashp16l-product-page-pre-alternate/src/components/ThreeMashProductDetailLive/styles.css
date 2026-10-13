@@ -1,0 +1,31 @@
+
+@import "../../sub-components/ThreeMashShopperVideo/styles.css";
+
+.three-mash-product-detail-live {
+  width: 100%;
+  background: var(--tmpdt-bg, var(--tm-theme-bg, #FAFAF7));
+  color: var(--tmpdt-ink, var(--tm-theme-text, #0E0E0C));
+  container-type: inline-size;
+}
+
+.three-mash-product-detail-live,
+.three-mash-product-detail-live * {
+  box-sizing: border-box;
+}
+
+.tmpdl-setup {
+  width: min(920px, calc(100% - 40px));
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  margin: 40px auto;
+  border: 1px dashed var(--tmpdt-line, var(--tm-theme-line, #E6E6E0));
+  border-radius: 18px;
+  padding: 28px;
+  background: #fff;
+  color: var(--tmpdt-sub, var(--tm-theme-sub, #55554e));
+  font-family: var(--tm-theme-font-body, "Inter", sans-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+}

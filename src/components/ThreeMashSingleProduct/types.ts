@@ -159,4 +159,5 @@ export interface Props {
   showTrustBadges?: boolean;
   showHeroPill5?: boolean;
   showHeroPill6?: boolean;
+  enableAlternateMASHPage?: boolean;
 }

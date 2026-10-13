@@ -4,7 +4,7 @@ import crsCompositeSararmaImage from "../../assets/crs-composite-sararma-data";
 import { crsModelBottleImage } from "../../assets/crs-model-data";
 import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
-import { safeNavigationHref } from "../../utils/safeRedirect";
+import { safeExternalNavigationHref } from "../../utils/safeRedirect";
 import {
   machineP16L,
   machineUW02,
@@ -260,7 +260,7 @@ function richHtml(value: string | undefined, fallback: string) {
 }
 
 function safeHref(value: string | undefined, fallback: string) {
-  return safeNavigationHref(value, fallback);
+  return safeExternalNavigationHref(value, fallback);
 }
 
 export function ThreeMashReferences(props: Props) {

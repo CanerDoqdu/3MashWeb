@@ -1,5 +1,5 @@
 import { Props } from "./types";
-import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useAlternateProductPageEnabled, useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import {
   ProductDetailSectionScope,
   ProductDetailVideoSection,
@@ -67,7 +67,7 @@ function overrideVideoData(baseData: ProductDetailTemplateData | null, props: Pr
   };
 }
 
-export function ThreeMashProductVideo(props: Props) {
+function ThreeMashProductVideoContent(props: Props) {
   const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
@@ -87,6 +87,11 @@ export function ThreeMashProductVideo(props: Props) {
       <ProductDetailVideoSection data={data} showEmptyState={isStudio} />
     </ProductDetailSectionScope>
   );
+}
+
+export function ThreeMashProductVideo(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+  return <ThreeMashProductVideoContent {...props} />;
 }
 
 export default ThreeMashProductVideo;

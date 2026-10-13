@@ -1,2 +1,4 @@
 allowBuilds:
   esbuild: false
+patchedDependencies:
+  '@ikas/component-cli@2.9.1': patches/@ikas__component-cli@2.9.1.patch

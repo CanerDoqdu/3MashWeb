@@ -249,11 +249,18 @@ type ProductDetailSectionVisibility = {
   ecosystem?: boolean;
 };
 
-function templateStyle(colorOverrides?: { backgroundColor?: string; textColor?: string; accentColor?: string; lineColor?: string }) {
+function templateStyle(colorOverrides?: {
+  backgroundColor?: string;
+  textColor?: string;
+  mutedTextColor?: string;
+  panelColor?: string;
+  accentColor?: string;
+  lineColor?: string;
+}) {
   return {
     "--tmpdt-bg": colorOverrides?.backgroundColor || "var(--tm-theme-bg, #FAFAF7)",
     "--tmpdt-ink": colorOverrides?.textColor || "var(--tm-theme-text, #0E0E0C)",
-    "--tmpdt-sub": "var(--tm-theme-sub, #55554e)",
+    "--tmpdt-sub": colorOverrides?.mutedTextColor || "var(--tm-theme-sub, #55554e)",
     "--tmpdt-mut": "var(--tm-theme-muted, #8f8f86)",
     "--tmpdt-line": colorOverrides?.lineColor || "var(--tm-theme-line, #E6E6E0)",
     "--tmpdt-line2": "var(--tm-theme-line-strong, #d5d5cd)",
@@ -261,7 +268,7 @@ function templateStyle(colorOverrides?: { backgroundColor?: string; textColor?: 
     "--tmpdt-lime-ink": "var(--tm-theme-accent-text, #3d4d0e)",
     "--tmpdt-lime-soft": "var(--tm-theme-accent-soft, #F2F8DC)",
     "--tmpdt-red": "var(--tm-theme-danger, #E2492F)",
-    "--tmpdt-panel": "var(--tm-theme-panel, #F1F1EC)",
+    "--tmpdt-panel": colorOverrides?.panelColor || "var(--tm-theme-panel, #F1F1EC)",
     "--tmpdt-dark": "var(--tm-theme-dark, #0E0E0C)",
   } as any;
 }
@@ -274,12 +281,26 @@ export function ProductDetailSectionScope({
 }: {
   data: ProductDetailTemplateData;
   children: ComponentChildren;
-  colorOverrides?: { backgroundColor?: string; textColor?: string; accentColor?: string; lineColor?: string };
+  colorOverrides?: {
+    backgroundColor?: string;
+    textColor?: string;
+    mutedTextColor?: string;
+    panelColor?: string;
+    accentColor?: string;
+    lineColor?: string;
+  };
   id?: string;
 }) {
   const style = useMemo(
     () => templateStyle(colorOverrides),
-    [colorOverrides?.backgroundColor, colorOverrides?.textColor, colorOverrides?.accentColor, colorOverrides?.lineColor],
+    [
+      colorOverrides?.backgroundColor,
+      colorOverrides?.textColor,
+      colorOverrides?.mutedTextColor,
+      colorOverrides?.panelColor,
+      colorOverrides?.accentColor,
+      colorOverrides?.lineColor,
+    ],
   );
   return (
     <section id={id} lang={isEnglishLocale() ? "en" : "tr"} className="three-mash-product-detail-template" style={style} data-product-template-key={data.key}>

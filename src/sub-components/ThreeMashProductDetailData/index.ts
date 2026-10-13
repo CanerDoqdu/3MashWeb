@@ -12,6 +12,16 @@ import { curieM1DentalPrintersImage, curieM1DentalSectionVideo } from "../../ass
 
 type PlainObject = Record<string, unknown>;
 const SHARED_PRODUCT_DETAIL_EVENT = "three-mash:product-detail-data";
+const ALTERNATE_PRODUCT_PAGE_EVENT = "three-mash:alternate-product-page";
+const ALTERNATE_PAGE_LEGACY_SECTIONS_STYLE_ID = "three-mash-alternate-page-legacy-sections";
+const ALTERNATE_PAGE_LEGACY_SECTION_SELECTORS = [
+  ".cc_2tplvqpo_product_split_feature",
+  ".cc_2tplvqpo_product_metrics",
+  ".cc_2tplvqpo_product_image_text",
+  ".cc_2tplvqpo_product_accordion_faq",
+  ".cc_2tplvqpo_product_video",
+  ".cc_2tplvqpo_product_category_carousel",
+];
 
 export const CRS_COMPOSITE_SLUG = "crs-composite-mukemmel-dayanimli-gecici-recinesi";
 export const CRS_SPLINT_HARD_SLUG = "crs-splint-hard-resin-sert-gece-plagi-recinesi";
@@ -6676,6 +6686,68 @@ export function publishSharedProductDetailData(data: ProductDetailTemplateData |
   if (typeof window === "undefined") return;
   (window as unknown as { __THREE_MASH_PRODUCT_DETAIL_DATA__?: unknown }).__THREE_MASH_PRODUCT_DETAIL_DATA__ = data;
   window.dispatchEvent(new CustomEvent(SHARED_PRODUCT_DETAIL_EVENT, { detail: data }));
+}
+
+function currentAlternateProductPageEnabled() {
+  if (typeof window === "undefined") return false;
+  return (
+    (window as unknown as { __THREE_MASH_ALTERNATE_PRODUCT_PAGE__?: unknown })
+      .__THREE_MASH_ALTERNATE_PRODUCT_PAGE__ === true ||
+    document.documentElement.getAttribute("data-three-mash-alternate-product-page") === "true" ||
+    document.querySelector(".mashp16l-reference") !== null
+  );
+}
+
+export function isAlternateProductPageEnabled() {
+  return currentAlternateProductPageEnabled();
+}
+
+export function publishAlternateProductPageEnabled(enabled: boolean) {
+  if (typeof window === "undefined") return;
+  (window as unknown as { __THREE_MASH_ALTERNATE_PRODUCT_PAGE__?: unknown })
+    .__THREE_MASH_ALTERNATE_PRODUCT_PAGE__ = enabled;
+  if (enabled) {
+    document.documentElement.setAttribute("data-three-mash-alternate-product-page", "true");
+    // Sibling Studio placements may render before their own mode subscriptions run.
+    let style = document.getElementById(ALTERNATE_PAGE_LEGACY_SECTIONS_STYLE_ID);
+    if (!style) {
+      style = document.createElement("style");
+      style.id = ALTERNATE_PAGE_LEGACY_SECTIONS_STYLE_ID;
+      style.textContent = `${ALTERNATE_PAGE_LEGACY_SECTION_SELECTORS.map(
+        (selector) => `html[data-three-mash-alternate-product-page="true"] ${selector}`,
+      ).join(", ")} { display: none !important; }`;
+      document.head.append(style);
+    }
+  } else {
+    document.documentElement.removeAttribute("data-three-mash-alternate-product-page");
+    document.getElementById(ALTERNATE_PAGE_LEGACY_SECTIONS_STYLE_ID)?.remove();
+  }
+  window.dispatchEvent(new CustomEvent(ALTERNATE_PRODUCT_PAGE_EVENT, { detail: enabled }));
+}
+
+export function useAlternateProductPageEnabled() {
+  const [, setVersion] = useState(0);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const update = () => setVersion((version) => version + 1);
+    update();
+    window.addEventListener(ALTERNATE_PRODUCT_PAGE_EVENT, update);
+    const observer = new MutationObserver(() => update());
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-three-mash-alternate-product-page"],
+      childList: true,
+      subtree: true,
+    });
+    return () => {
+      window.removeEventListener(ALTERNATE_PRODUCT_PAGE_EVENT, update);
+      observer.disconnect();
+    };
+  }, []);
+
+  return currentAlternateProductPageEnabled();
 }
 
 export function useSharedProductDetailData(product: unknown, productTemplateJson?: unknown) {

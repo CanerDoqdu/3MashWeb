@@ -51,6 +51,20 @@ function richText(value: string | undefined, fallbackTr: string, fallbackEn?: st
   return sanitizeHtml(inlineHtml(raw));
 }
 
+function styledTitle(value: string, props: Props) {
+  const target = props.styledPhrase?.trim();
+  if (props.wordStyleEnabled === false || !target) return value;
+
+  const matcher = new RegExp(target.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+  return value
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (!part || part.startsWith("<")) return part;
+      return part.replace(matcher, (match) => `<span class="tmrpg-word-style">${match}</span>`);
+    })
+    .join("");
+}
+
 function href(value: string | undefined, fallback: string) {
   return safeNavigationHref(localizedHref(value || fallback), fallback);
 }
@@ -241,6 +255,11 @@ export function ThreeMashRegisterPage(props: Props) {
       "--tm-theme-text",
       ["#ffffff", "#fff"],
     ),
+    "--tmrpg-word-color": themeColor(
+      props.styledPhraseColor,
+      "#C7F136",
+      "--tm-theme-accent",
+    ),
     "--tmrpg-auth-dark": "var(--tm-theme-dark, #0E0E0C)",
     "--tmrpg-auth-visual": `url(${image})`,
   } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
@@ -256,10 +275,13 @@ export function ThreeMashRegisterPage(props: Props) {
             <span>{text(props.eyebrowText, "HESAP", "ACCOUNT")}</span>
             <h1
               dangerouslySetInnerHTML={{
-                __html: richText(
-                  props.titleText,
-                  tLocalized("3mash hesabınızı oluşturun.", "Create your 3mash account."),
-                  "Create your 3mash account.",
+                __html: styledTitle(
+                  richText(
+                    props.titleText,
+                    tLocalized("3mash hesabınızı oluşturun.", "Create your 3mash account."),
+                    "Create your 3mash account.",
+                  ),
+                  props,
                 ),
               }}
             />

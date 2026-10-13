@@ -1,3 +1,5 @@
+@import "../../sub-components/ThreeMashShopperVideo/styles.css";
+
 .three-mash-header {
   --tmh-announcement-fixed-height: 37px;
   --tmh-nav-fixed-height: 70px;

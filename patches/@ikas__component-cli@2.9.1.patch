@@ -1,0 +1,146 @@
+diff --git a/dist/commands/config.js b/dist/commands/config.js
+index c7c01b66c422abde0dcb01fdac07261b71dd865e..2ff46dbc55a9e3bf3a86b90ffd04bf8de1cecfc1 100644
+--- a/dist/commands/config.js
++++ b/dist/commands/config.js
+@@ -66,9 +66,6 @@ function resolveComponent(config, ref) {
+     }
+     return found;
+ }
+-function getComponentNames(config) {
+-    return config.components.map((c) => c.name);
+-}
+ /**
+  * Emit a structured JSON error for unknown filteredComponentIds entries and exit non-zero.
+  * Lists valid `{ id, name }` pairs so the LLM/caller can recover.
+@@ -519,7 +516,7 @@ async function addComponent(name, options) {
+     config.components.push(newComponent);
+     saveConfig(configPath, config);
+     // Update barrel export
+-    updateBarrelExport(process.cwd(), getComponentNames(config));
++    updateBarrelExport(process.cwd(), config.components);
+     // Regenerate global types
+     regenerateGlobalTypes(config);
+     console.log(JSON.stringify({
+@@ -1416,7 +1413,7 @@ function removeComponent(ref) {
+         fs.rmSync(componentDir, { recursive: true });
+     }
+     // Update barrel export
+-    updateBarrelExport(process.cwd(), getComponentNames(config));
++    updateBarrelExport(process.cwd(), config.components);
+     console.log(JSON.stringify({
+         success: true,
+         removedComponentId: component.id,
+diff --git a/dist/commands/dev.js b/dist/commands/dev.js
+index 1649c05d6e55679a5a175e146176e76d57f6d801..5900a2fa45160822f7c6efc57b8933d5881fa8b9 100644
+--- a/dist/commands/dev.js
++++ b/dist/commands/dev.js
+@@ -552,8 +552,7 @@ function createEditorHandlers(configPath, getConfig, setConfig, wsServer) {
+             writeConfig(configPath, config);
+             setConfig(config);
+             // Update barrel export
+-            const allNames = config.components.map((c) => c.name);
+-            updateBarrelExport(process.cwd(), allNames);
++            updateBarrelExport(process.cwd(), config.components);
+             // Regenerate global types
+             writeGlobalTypesFile(config);
+             console.log(chalk.green(`  Created component: ${pascalName}`));
+diff --git a/dist/utils/component-helpers.js b/dist/utils/component-helpers.js
+index 43a29cd274ff537a7482a441ead6973e9aac4bb5..d54cf4e61625077a088e0bccbcc03e40a1053699 100644
+--- a/dist/utils/component-helpers.js
++++ b/dist/utils/component-helpers.js
+@@ -542,15 +542,87 @@ export function generateStylesFile(componentName, type) {
+ /**
+  * Update the barrel export file (src/components/index.ts) to include all components
+  */
+-export function updateBarrelExport(projectRoot, componentNames) {
++export function updateBarrelExport(projectRoot, components) {
+     const indexPath = path.resolve(projectRoot, "src/components/index.ts");
+-    const content = componentNames
+-        .map((name) => {
+-        const pascal = toPascalCase(name);
+-        return `export { ${pascal} } from "./${pascal}/index";`;
+-    })
+-        .join("\n") + "\n";
+-    fs.writeFileSync(indexPath, content);
++    const componentsDir = path.resolve(projectRoot, "src/components");
++    const existingContent = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8") : "";
++    const lines = [];
++    const existingSources = new Set();
++    const existingAliases = new Set();
++
++    for (const line of existingContent.split(/\r?\n/).filter(Boolean)) {
++        const sourceMatches = [...line.matchAll(/\bfrom\s*["']([^"']+)["']/g)];
++        const hasMissingComponentSource = sourceMatches.some(([ , source ]) => {
++            if (!source.startsWith(".")) {
++                return false;
++            }
++            const resolved = path.resolve(componentsDir, source);
++            const isComponentPath = resolved.startsWith(`${componentsDir}${path.sep}`);
++            const exists = [
++                resolved,
++                `${resolved}.ts`,
++                `${resolved}.tsx`,
++                path.join(resolved, "index.ts"),
++                path.join(resolved, "index.tsx"),
++            ].some((candidate) => fs.existsSync(candidate));
++            return isComponentPath && !exists;
++        });
++        if (hasMissingComponentSource) {
++            continue;
++        }
++        lines.push(line);
++        for (const [, source] of sourceMatches) {
++            existingSources.add(source.replace(/\\/g, "/"));
++        }
++        const exportsMatch = line.match(/export\s*\{([^}]+)\}/);
++        if (exportsMatch) {
++            for (const item of exportsMatch[1].split(",")) {
++                const alias = item.trim().match(/\bas\s+([A-Za-z_$][\w$]*)$/)?.[1];
++                if (alias) {
++                    existingAliases.add(alias);
++                }
++            }
++        }
++    }
++
++    for (const component of components) {
++        if (!component?.name || !component.entry) {
++            throw new Error("Every component must have a name and entry path to update barrel exports.");
++        }
++        const entryPath = path.resolve(projectRoot, component.entry);
++        const relativeEntry = path.relative(componentsDir, entryPath);
++        if (path.isAbsolute(relativeEntry) || relativeEntry === ".." || relativeEntry.startsWith(`..${path.sep}`)) {
++            throw new Error(`Component entry must be inside src/components: ${component.entry}`);
++        }
++        if (!fs.existsSync(entryPath)) {
++            throw new Error(`Component entry does not exist: ${component.entry}`);
++        }
++        const componentDirectory = path.dirname(relativeEntry).split(path.sep).join("/");
++        const source = `./${componentDirectory}/index`;
++        if (existingSources.has(source)) {
++            continue;
++        }
++        let alias = toPascalCase(component.name)
++            .normalize("NFKD")
++            .replace(/[\u0300-\u036f]/g, "")
++            .replace(/[^A-Za-z0-9_$]/g, "");
++        if (!alias) {
++            alias = "Component";
++        } else if (!/^[A-Za-z_$]/.test(alias)) {
++            alias = `Component${alias}`;
++        }
++        const baseAlias = alias;
++        let suffix = 2;
++        while (existingAliases.has(alias)) {
++            alias = `${baseAlias}${suffix}`;
++            suffix += 1;
++        }
++        existingAliases.add(alias);
++        existingSources.add(source);
++        lines.push(`export { default as ${alias} } from "${source}";`);
++    }
++
++    fs.writeFileSync(indexPath, lines.join("\n") + (lines.length ? "\n" : ""));
+ }
+ /**
+  * Convert flat config-format prop groups into an IThemePropGroup[] hierarchy.

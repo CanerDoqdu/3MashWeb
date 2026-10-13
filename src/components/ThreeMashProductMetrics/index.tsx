@@ -1,5 +1,5 @@
 import { Props } from "./types";
-import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useAlternateProductPageEnabled, useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import {
   ProductDetailMetricsSection,
   ProductDetailSectionScope,
@@ -141,7 +141,7 @@ function overrideMetricsData(baseData: ProductDetailTemplateData | null, props: 
   };
 }
 
-export function ThreeMashProductMetrics(props: Props) {
+function ThreeMashProductMetricsContent(props: Props) {
   const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
@@ -156,6 +156,11 @@ export function ThreeMashProductMetrics(props: Props) {
       <ProductDetailMetricsSection data={data} />
     </ProductDetailSectionScope>
   );
+}
+
+export function ThreeMashProductMetrics(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+  return <ThreeMashProductMetricsContent {...props} />;
 }
 
 export default ThreeMashProductMetrics;

@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 import { Props } from "./types";
-import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useAlternateProductPageEnabled, useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import { ProductDetailFaqSection, ProductDetailSectionScope, type ProductDetailTemplateData } from "../../sub-components/ThreeMashProductDetailTemplate";
 import { makePlaceholderFaq } from "../../sub-components/ThreeMashProductSectionPlaceholder";
 import { tLocalized, isEnglishLocale, isTurkishText, translateText } from "../../utils/i18n";
@@ -118,7 +118,7 @@ function overrideFaqData(baseData: ProductDetailTemplateData | null, props: Prop
   };
 }
 
-export function ThreeMashProductAccordionFaq(props: Props) {
+function ThreeMashProductAccordionFaqContent(props: Props) {
   const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product, props.productTemplateJson);
   const fallbackData = props.product ? resolveProductDetailData(props.product) : null;
@@ -140,6 +140,11 @@ export function ThreeMashProductAccordionFaq(props: Props) {
       <ProductDetailFaqSection data={data} />
     </ProductDetailSectionScope>
   );
+}
+
+export function ThreeMashProductAccordionFaq(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+  return <ThreeMashProductAccordionFaqContent {...props} />;
 }
 
 export default ThreeMashProductAccordionFaq;

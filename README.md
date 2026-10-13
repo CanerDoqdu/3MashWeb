@@ -1,1 +1,1 @@
-İkas CLI
+İkas Studio Theme

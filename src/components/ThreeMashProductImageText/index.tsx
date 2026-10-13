@@ -1,6 +1,6 @@
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useAlternateProductPageEnabled, useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import {
   ProductDetailEcosystemSection,
   ProductDetailSectionScope,
@@ -188,7 +188,7 @@ function overrideUseCasesData(baseData: ProductDetailTemplateData | null, props:
   };
 }
 
-export function ThreeMashProductImageText(props: Props) {
+function ThreeMashProductImageTextContent(props: Props) {
   const isStudio = isStudioEnvironment();
   const sharedData = useSharedProductDetailData(props.product, props.productTemplateJson);
   const fallbackData = props.product ? resolveProductDetailData(props.product, props.productTemplateJson) : null;
@@ -219,6 +219,11 @@ export function ThreeMashProductImageText(props: Props) {
       <ProductDetailEcosystemSection data={data} visible={isSectionVisible(props.showEcosystem)} />
     </ProductDetailSectionScope>
   );
+}
+
+export function ThreeMashProductImageText(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+  return <ThreeMashProductImageTextContent {...props} />;
 }
 
 export default ThreeMashProductImageText;

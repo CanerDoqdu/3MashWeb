@@ -3,6 +3,7 @@ import { Props } from "./types";
 import { isEnglishLocale, isTurkishText } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { safeNavigationHref } from "../../utils/safeRedirect";
+import { useAlternateProductPageEnabled } from "../../sub-components/ThreeMashProductDetailData";
 
 function trimmedText(value: unknown, fallback = ""): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -27,6 +28,8 @@ function imageSource(value: unknown, fallback = ""): string {
 }
 
 export function ThreeMashProductCertificates(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+
   const index = trimmedText(props.sectionIndex, "08");
   const label = localizedText(props.sectionLabel, props.sectionLabelEn, "SERTİFİKALAR & RAPORLAR", "CERTIFICATES & REPORTS");
   const titleHtml = trimmedText(

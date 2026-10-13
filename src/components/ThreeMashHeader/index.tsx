@@ -36,6 +36,7 @@ import {
   subscribeAuthState,
   type CustomerAuthState,
 } from "../../utils/auth";
+import ThreeMashShopperVideo from "../../sub-components/ThreeMashShopperVideo";
 import {
   ACF_FEP_FILM_SLUG,
   ARGENZ_HT_MULTILAYER_SLUG,
@@ -470,6 +471,20 @@ function safeLocationPathname() {
   } catch {
     return "";
   }
+}
+
+function isHomepagePath(pathname: string) {
+  const rawPath = pathname.split(/[?#]/, 1)[0].trim().toLowerCase();
+  if (!rawPath) return false;
+  const path = `/${rawPath.replace(/^\/+|\/+$/g, "")}`;
+  return path === "/" || path === "/en";
+}
+
+function isShopperVideoHomepage() {
+  if (typeof window !== "undefined") return isHomepagePath(window.location.pathname);
+
+  const storefrontPath = IkasStorefrontConfig.getCurrentPath?.();
+  return typeof storefrontPath === "string" && isHomepagePath(storefrontPath);
 }
 
 function currentProductAnnouncement() {
@@ -1661,6 +1676,41 @@ export function ThreeMashHeader(props: Props) {
   );
 
   const [isHydrated, setIsHydrated] = useState(false);
+  const [showShopperVideo, setShowShopperVideo] = useState(isShopperVideoHomepage);
+
+  useEffect(() => {
+    const updateShopperVideoVisibility = () => {
+      setShowShopperVideo(isShopperVideoHomepage());
+    };
+    const notifyLocationChange = () => {
+      window.dispatchEvent(new Event("3mash:locationchange"));
+    };
+    const originalPushState = window.history.pushState;
+    const originalReplaceState = window.history.replaceState;
+    const pushState: History["pushState"] = function (this: History, ...args) {
+      const result = originalPushState.apply(this, args);
+      notifyLocationChange();
+      return result;
+    };
+    const replaceState: History["replaceState"] = function (this: History, ...args) {
+      const result = originalReplaceState.apply(this, args);
+      notifyLocationChange();
+      return result;
+    };
+
+    window.history.pushState = pushState;
+    window.history.replaceState = replaceState;
+    window.addEventListener("3mash:locationchange", updateShopperVideoVisibility);
+    window.addEventListener("popstate", updateShopperVideoVisibility);
+    updateShopperVideoVisibility();
+
+    return () => {
+      window.removeEventListener("3mash:locationchange", updateShopperVideoVisibility);
+      window.removeEventListener("popstate", updateShopperVideoVisibility);
+      if (window.history.pushState === pushState) window.history.pushState = originalPushState;
+      if (window.history.replaceState === replaceState) window.history.replaceState = originalReplaceState;
+    };
+  }, []);
 
   const [authState, setAuthState] = useState<CustomerAuthState>(() => {
     return isCustomerAuthenticated();
@@ -1950,8 +2000,11 @@ export function ThreeMashHeader(props: Props) {
     "Quickly access your orders, support, and account settings.",
   );
 
+  const backgroundColor = (
+    props as Props & { backgroundColor?: string }
+  ).backgroundColor;
   const themeStyle = {
-    "--tmh-bg": sourceThemeToken("#FAFAF7", "--tm-theme-bg"),
+    "--tmh-bg": themeToken(backgroundColor, "#FAFAF7", "--tm-theme-bg"),
     "--tmh-ann-bg": sourceThemeToken("#0E0E0C", "--tm-theme-announcement-bg"),
     "--tmh-ann-text": sourceThemeToken("#CFCFC6", "--tm-theme-announcement-text"),
     "--tmh-word-color": sourceThemeToken("#C7F136", "--tm-theme-accent"),
@@ -2918,6 +2971,12 @@ export function ThreeMashHeader(props: Props) {
           <span className="tmh-toast-dot" />
           <span>{toastMessage}</span>
         </div>
+      )}
+      {showShopperVideo && props.showShopperVideo !== false && (
+        <ThreeMashShopperVideo
+          videoHref={props.shopperVideoHref?.trim() || "https://www.youtube.com/shorts/gu7H7_whoB0?feature=share"}
+          title={tLocalized("Ürün tanıtım videosu", "Product video")}
+        />
       )}
     </section>
   );

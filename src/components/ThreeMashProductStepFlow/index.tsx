@@ -2,6 +2,7 @@ import { Props } from "./types";
 import { isEnglishLocale, isTurkishText } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { safeNavigationHref } from "../../utils/safeRedirect";
+import { useAlternateProductPageEnabled } from "../../sub-components/ThreeMashProductDetailData";
 
 function trimmedText(value: unknown, fallback = ""): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -16,6 +17,8 @@ function localizedText(value: unknown, englishValue: unknown, turkishFallback: s
 }
 
 export function ThreeMashProductStepFlow(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+
   const index = trimmedText(props.sectionIndex, "07");
   const label = localizedText(props.sectionLabel, props.sectionLabelEn, "DİJİTAL İŞ AKIŞI", "DIGITAL WORKFLOW");
   const titleHtml = trimmedText(

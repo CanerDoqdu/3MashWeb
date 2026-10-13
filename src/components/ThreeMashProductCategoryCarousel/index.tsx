@@ -14,7 +14,7 @@ import {
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
-import { useSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
+import { useAlternateProductPageEnabled, useSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import {
   ProductDetailFinalCtaSection,
   ProductDetailRelatedSection,
@@ -371,7 +371,7 @@ function sourceRelatedProduct(product: IkasProduct): ProductDetailRelatedProduct
   };
 }
 
-export function ThreeMashProductCategoryCarousel(props: Props) {
+function ThreeMashProductCategoryCarouselContent(props: Props) {
   const isStudio = isStudioEnvironment();
   const rawSourceData = useSharedProductDetailData(props.product, props.productTemplateJson);
 
@@ -567,6 +567,7 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
         colorOverrides={{
           backgroundColor: props.backgroundColor,
           textColor: props.textColor,
+          mutedTextColor: props.mutedTextColor,
           accentColor: props.accentColor,
         }}
       >
@@ -664,6 +665,11 @@ export function ThreeMashProductCategoryCarousel(props: Props) {
       </div>
     </section>
   );
+}
+
+export function ThreeMashProductCategoryCarousel(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+  return <ThreeMashProductCategoryCarouselContent {...props} />;
 }
 
 export default ThreeMashProductCategoryCarousel;

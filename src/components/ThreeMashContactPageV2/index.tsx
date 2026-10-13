@@ -1,7 +1,7 @@
 import { useState } from "preact/hooks";
 import type { JSX } from "preact";
 import { Props } from "./types";
-import { isEnglishLocale, tLocalized, tProp } from "../../utils/i18n";
+import { isEnglishLocale, localizedHref, tProp } from "../../utils/i18n";
 import { getBusinessConfig } from "../../utils/businessConfig";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import {
@@ -20,19 +20,19 @@ type ContactForm = {
 };
 
 const phoneCountries = [
-  { iso: "TR", nameTr: "Türkiye", nameEn: "Turkey", dialCode: "+90" },
-  { iso: "US", nameTr: "Amerika Birleşik Devletleri", nameEn: "United States", dialCode: "+1" },
-  { iso: "GB", nameTr: "Birleşik Krallık", nameEn: "United Kingdom", dialCode: "+44" },
-  { iso: "DE", nameTr: "Almanya", nameEn: "Germany", dialCode: "+49" },
-  { iso: "FR", nameTr: "Fransa", nameEn: "France", dialCode: "+33" },
-  { iso: "NL", nameTr: "Hollanda", nameEn: "Netherlands", dialCode: "+31" },
-  { iso: "IT", nameTr: "İtalya", nameEn: "Italy", dialCode: "+39" },
-  { iso: "ES", nameTr: "İspanya", nameEn: "Spain", dialCode: "+34" },
-  { iso: "AE", nameTr: "Birleşik Arap Emirlikleri", nameEn: "United Arab Emirates", dialCode: "+971" },
-  { iso: "SA", nameTr: "Suudi Arabistan", nameEn: "Saudi Arabia", dialCode: "+966" },
-  { iso: "IQ", nameTr: "Irak", nameEn: "Iraq", dialCode: "+964" },
-  { iso: "AZ", nameTr: "Azerbaycan", nameEn: "Azerbaijan", dialCode: "+994" },
-  { iso: "SL", nameTr: "Sierra Leone", nameEn: "Sierra Leone", dialCode: "+232" },
+  { iso: "TR", dialCode: "+90", flag: "🇹🇷" },
+  { iso: "US", dialCode: "+1", flag: "🇺🇸" },
+  { iso: "GB", dialCode: "+44", flag: "🇬🇧" },
+  { iso: "DE", dialCode: "+49", flag: "🇩🇪" },
+  { iso: "FR", dialCode: "+33", flag: "🇫🇷" },
+  { iso: "NL", dialCode: "+31", flag: "🇳🇱" },
+  { iso: "IT", dialCode: "+39", flag: "🇮🇹" },
+  { iso: "ES", dialCode: "+34", flag: "🇪🇸" },
+  { iso: "AE", dialCode: "+971", flag: "🇦🇪" },
+  { iso: "SA", dialCode: "+966", flag: "🇸🇦" },
+  { iso: "IQ", dialCode: "+964", flag: "🇮🇶" },
+  { iso: "AZ", dialCode: "+994", flag: "🇦🇿" },
+  { iso: "SL", dialCode: "+232", flag: "🇸🇱" },
 ];
 
 function localizedText(
@@ -128,11 +128,36 @@ export function ThreeMashContactPageV2(props: Props) {
   const extraInfo2Value = localizedText(props.extraInfo2Value, props.extraInfo2ValueEn, "İletişim detayınızı buraya ekleyin.", "Add your contact details here.");
   const firstNameLabel = localizedText(props.firstNameLabel, props.firstNameLabelEn, "Ad", "First Name");
   const lastNameLabel = localizedText(props.lastNameLabel, props.lastNameLabelEn, "Soyad", "Last Name");
-  const emailLabel = localizedText(props.emailLabel, props.emailLabelEn, "Email", "E-mail");
+  const emailLabel = localizedText(
+    props.emailLabel?.trim().toLocaleLowerCase("tr-TR") === "email"
+      ? undefined
+      : props.emailLabel,
+    props.emailLabelEn,
+    "E-posta",
+    "E-mail",
+  );
   const phoneLabel = localizedText(props.phoneLabel, props.phoneLabelEn, "Telefon", "Phone");
   const messageLabel = localizedText(props.messageLabel, props.messageLabelEn, "Mesaj", "Message");
-  const kvkkTextBefore = localizedText(props.kvkkTextBefore, props.kvkkTextBeforeEn, "Kişisel verilerin korunması kanunu", "Personal data protection law");
-  const kvkkLinkText = localizedText(props.kvkkLinkText, props.kvkkLinkTextEn, "okudum, onaylıyorum", "I have read and agree");
+  const kvkkTextBefore = localizedText(
+    props.kvkkTextBefore === "Kişisel verilerin korunması kanunu"
+      ? undefined
+      : props.kvkkTextBefore,
+    props.kvkkTextBeforeEn === "Personal data protection law"
+      ? undefined
+      : props.kvkkTextBeforeEn,
+    "Kişisel verilerin korunması aydınlatma metnini",
+    "I have read and agree to the",
+  );
+  const kvkkLinkText = localizedText(
+    props.kvkkLinkText === "okudum, onaylıyorum"
+      ? undefined
+      : props.kvkkLinkText,
+    props.kvkkLinkTextEn === "I have read and agree"
+      ? undefined
+      : props.kvkkLinkTextEn,
+    "okudum ve kabul ediyorum",
+    "Privacy Notice",
+  );
   const buttonText = localizedText(props.buttonText, props.buttonTextEn, "Gönder", "Send");
   const successText = localizedText(props.successText, props.successTextEn, "Mail uygulamanız açılıyor.", "Opening mail app...");
   const phoneCountryAriaLabel = localizedText(props.phoneCountryAriaLabel, props.phoneCountryAriaLabelEn, "Telefon ülke kodu", "Phone country code");
@@ -143,9 +168,11 @@ export function ThreeMashContactPageV2(props: Props) {
   const locationHref =
     safeCheckoutHref(props.locationHref) ||
     "https://maps.google.com/?q=Antalya%20Teknokent%20Konyaalt%C4%B1";
-  const kvkkHref = safeNavigationHref(
-    props.kvkkHref,
-    tLocalized("/pages/gizlilik-politikasi-ve-kvkk", "/pages/gizlilik-politikasi-ve-kvkk"),
+  const kvkkHref = localizedHref(
+    safeNavigationHref(
+      props.kvkkHref,
+      "/pages/gizlilik-politikasi-ve-kvkk",
+    ),
   );
   const phoneCountry =
     phoneCountries.find((country) => country.iso === phoneCountryIso) ||
@@ -180,7 +207,11 @@ export function ThreeMashContactPageV2(props: Props) {
   }
 
   return (
-    <section className="three-mash-contact-page-v2" style={style}>
+    <section
+      className="three-mash-contact-page-v2"
+      lang={isEnglishLocale() ? "en" : "tr"}
+      style={style}
+    >
       <div className="contact-v2-shell">
         {props.showHero !== false && (
           <header className={`contact-v2-intro${props.showDirectContact === false ? " contact-v2-intro--single" : ""}`}>
@@ -209,7 +240,6 @@ export function ThreeMashContactPageV2(props: Props) {
         <div className={`contact-v2-workspace${props.showInfoPanel === false || props.showContactForm === false ? " contact-v2-workspace--single" : ""}`}>
           {props.showInfoPanel !== false && (
             <aside className="contact-v2-info">
-              <span className="contact-v2-info-code">{props.infoPanelCode}</span>
               <h2>{infoPanelTitle}</h2>
               <div
                 className="contact-v2-info-description"
@@ -233,7 +263,6 @@ export function ThreeMashContactPageV2(props: Props) {
           {props.showContactForm !== false && (
             <form className="contact-v2-form" onSubmit={submit}>
               <div className="contact-v2-form-top">
-                <span className="contact-v2-form-mark" aria-hidden="true">{props.infoPanelCode}</span>
                 <a href={safeMailtoHref(recipient, directEmailSubjectText, "")}>{recipient}</a>
               </div>
               <div className="contact-v2-fields">
@@ -256,12 +285,11 @@ export function ThreeMashContactPageV2(props: Props) {
                       <select aria-label={phoneCountryAriaLabel} value={phoneCountry.iso} onChange={(event) => setPhoneCountryIso((event.currentTarget as HTMLSelectElement).value)}>
                         {phoneCountries.map((country) => (
                           <option key={country.iso} value={country.iso}>
-                            {`${isEnglishLocale() ? country.nameEn : country.nameTr} ${country.dialCode}`}
+                            {`${country.flag} ${country.dialCode}`}
                           </option>
                         ))}
                       </select>
-                      <span className="contact-v2-dial-code">{phoneCountry.dialCode}</span>
-                      <input value={form.phone} inputMode="tel" autoComplete="tel" onInput={(event) => updateField("phone", (event.currentTarget as HTMLInputElement).value)} />
+                      <input type="tel" value={form.phone} inputMode="tel" autoComplete="tel" onInput={(event) => updateField("phone", (event.currentTarget as HTMLInputElement).value)} />
                     </div>
                   </label>
                 )}

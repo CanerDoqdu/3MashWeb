@@ -3,6 +3,7 @@ import { Props } from "./types";
 import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { safeNavigationHref } from "../../utils/safeRedirect";
+import { useAlternateProductPageEnabled } from "../../sub-components/ThreeMashProductDetailData";
 
 function trimmedText(value: unknown, fallback = ""): string {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -22,6 +23,8 @@ function imageSource(value: unknown, fallback = ""): string {
 }
 
 export function ThreeMashProductPackageContent(props: Props) {
+  if (useAlternateProductPageEnabled()) return null;
+
   const index = trimmedText(props.sectionIndex, "06");
   const label = trimmedText(props.sectionLabel, tLocalized("BÖLÜM ETİKETİ", "SECTION LABEL"));
   const titleHtml = trimmedText(
@@ -96,7 +99,10 @@ export function ThreeMashProductPackageContent(props: Props) {
   );
 
   return (
-    <section className="tm-pkg-section">
+    <section
+      className="tm-pkg-section"
+      style={props.backgroundColor ? { backgroundColor: props.backgroundColor } : undefined}
+    >
       <div className="tm-pkg-wrap">
         <div className="tm-pkg-idx">
           <span className="tm-pkg-idx-n">{index}</span>

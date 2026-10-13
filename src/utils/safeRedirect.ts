@@ -83,6 +83,34 @@ export function safeNavigationHref(url?: string, fallback = "/"): string {
   }
 }
 
+export function safeExternalNavigationHref(url?: string, fallback = "/"): string {
+  const trimmed = (url ?? "").trim();
+  if (!trimmed || trimmed === "#") return fallback;
+  if (trimmed.startsWith("//") || isBlockedScheme(trimmed)) return fallback;
+  if (isAllowedProtocol(trimmed)) return trimmed;
+
+  const base = typeof window === "undefined" ? "https://3mash.com" : window.location.href;
+
+  try {
+    const parsed = new URL(trimmed, base);
+    if (
+      (parsed.protocol !== "http:" && parsed.protocol !== "https:") ||
+      parsed.username ||
+      parsed.password
+    ) {
+      return fallback;
+    }
+
+    if (parsed.origin === new URL(base).origin) {
+      return `${parsed.pathname}${parsed.search}${parsed.hash}` || fallback;
+    }
+
+    return parsed.href;
+  } catch {
+    return fallback;
+  }
+}
+
 export function safeMailAddress(value?: string, fallback = ""): string {
   const candidate = (value ?? "").trim().replace(/[\r\n\t\u0000]+/g, "");
   if (!candidate) return fallback;
