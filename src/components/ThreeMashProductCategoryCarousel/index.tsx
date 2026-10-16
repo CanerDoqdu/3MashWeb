@@ -14,6 +14,7 @@ import {
   type IkasProductVariant,
 } from "@ikas/bp-storefront";
 import { Props } from "./types";
+import { resolveThemeColor } from "../../utils/themeColor";
 import { useAlternateProductPageEnabled, useSharedProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
 import {
   ProductDetailFinalCtaSection,
@@ -470,12 +471,12 @@ function ThreeMashProductCategoryCarouselContent(props: Props) {
   }
 
   const style = {
-    "--tmpcc-bg": text(props.backgroundColor, "#ffffff"),
-    "--tmpcc-text": text(props.textColor, "#0E0E0C"),
-    "--tmpcc-muted": text(props.mutedTextColor, "#55554e"),
-    "--tmpcc-card-bg": text(props.cardBackgroundColor, "#ffffff"),
-    "--tmpcc-arrow-bg": text(props.arrowBackgroundColor, "#ffffff"),
-    "--tmpcc-arrow": text(props.arrowColor, "#0E0E0C"),
+    "--tmpcc-bg": resolveThemeColor(props.backgroundColor) || "#ffffff",
+    "--tmpcc-text": resolveThemeColor(props.textColor) || "#0E0E0C",
+    "--tmpcc-muted": resolveThemeColor(props.mutedTextColor) || "#55554e",
+    "--tmpcc-card-bg": resolveThemeColor(props.cardBackgroundColor) || "#ffffff",
+    "--tmpcc-arrow-bg": resolveThemeColor(props.arrowBackgroundColor) || "#ffffff",
+    "--tmpcc-arrow": resolveThemeColor(props.arrowColor) || "#0E0E0C",
     "--tmpcc-max": cssLength(props.maxWidth, 1280, 480, 2560),
     "--tmpcc-pt": cssLength(props.paddingTop, 64, 0, 320),
     "--tmpcc-pb": cssLength(props.paddingBottom, 0, 0, 320),

@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Props } from "./types";
 import { isEnglishLocale, localizedHref } from "../../utils/i18n";
@@ -439,11 +440,11 @@ export function ThreeMashCostDetailPage(props: Props) {
   });
 
   const customStyle = {
-    "--bg": props.backgroundColor || "#FAFAF7",
-    "--ink": props.textColor || "#0E0E0C",
-    "--sub": props.mutedTextColor || "#55554E",
-    "--lime": props.accentColor || "#C7F136",
-    "--line": props.lineColor || "#E6E6E0",
+    "--bg": resolveThemeColor(props.backgroundColor) || "#FAFAF7",
+    "--ink": resolveThemeColor(props.textColor) || "#0E0E0C",
+    "--sub": resolveThemeColor(props.mutedTextColor) || "#55554E",
+    "--lime": resolveThemeColor(props.accentColor) || "#C7F136",
+    "--line": resolveThemeColor(props.lineColor) || "#E6E6E0",
   } as any; // CSS-in-JS: dynamic properties use CSS custom variable names
 
   const showHero = props.showHero !== false;

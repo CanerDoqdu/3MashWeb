@@ -1,6 +1,7 @@
 import { aboutPage } from "../ThreeMashPageData/sourceData";
 import { Props } from "./types";
 import { tLocalized } from "../../utils/i18n";
+import { resolveThemeColor } from "../../utils/themeColor";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { getDefaultSrc, type IkasImage } from "@ikas/bp-storefront";
 
@@ -38,7 +39,7 @@ function themeColor(
   token: string,
   legacyDefaults: string[] = [],
 ) {
-  const trimmed = input?.trim();
+  const trimmed = resolveThemeColor(input);
   const normalized = trimmed?.toLowerCase();
   const defaults = [fallback, ...legacyDefaults].map((item) =>
     item.toLowerCase(),
@@ -52,7 +53,7 @@ function themeColor(
 }
 
 function imageUrl(input: string | undefined, fallback: string) {
-  const trimmed = input?.trim();
+  const trimmed = resolveThemeColor(input);
   if (!trimmed) return fallback;
   return trimmed.startsWith("theme-images/")
     ? `https://cdn.myikas.com/images/${trimmed}/image_3840.webp`

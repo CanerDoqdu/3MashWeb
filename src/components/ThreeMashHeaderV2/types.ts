@@ -1,5 +1,5 @@
 // This file is auto-generated — do not edit manually.
-import type { IkasImage, IkasProductList } from "@ikas/bp-storefront";
+import type { IkasImage, IkasProductList, IkasVideo } from "@ikas/bp-storefront";
 import type { LogoImageFit } from "../../global-types";
 
 export interface Props {
@@ -324,4 +324,7 @@ export interface Props {
   shopperVideoHref?: string;
   /** Canlı arama önerileri ve hızlı sonuçlar için Tüm Ürünler listesini bağlayın. */
   searchProductList?: IkasProductList;
+  shopperVideo?: IkasVideo | null;
+  shopperVideoWindowWidth?: number;
+  shopperVideoWindowHeight?: number;
 }

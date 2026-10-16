@@ -5,6 +5,8 @@
   left: 16px;
   width: clamp(112px, 8vw, 132px);
   aspect-ratio: 9 / 16;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
   overflow: hidden;
   border-radius: 22px;
   background: #080808;
@@ -27,6 +29,13 @@
 .tmpv-shopper-video-hit-area {
   overflow: hidden;
   border-radius: inherit;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.tmpv-shopper-video-hit-area:active {
+  cursor: grabbing;
 }
 
 .tmpv-shopper-mini-embed {
@@ -116,6 +125,19 @@
   height: 22px;
 }
 
+.tmpv-shopper-youtube-link {
+  display: block;
+  width: fit-content;
+  margin: 10px 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #181818;
+  color: #fff;
+  font: 600 13px/1.2 var(--tm-theme-font-body, "Inter", sans-serif);
+  text-decoration: none;
+}
+
+.tmpv-shopper-youtube-link:focus-visible,
 .tmpv-shopper-modal-close:focus-visible {
   outline: 2px solid var(--tm-theme-accent, #dbfa37);
   outline-offset: 2px;

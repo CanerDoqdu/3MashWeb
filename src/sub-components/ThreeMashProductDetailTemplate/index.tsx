@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { ComponentChildren } from "preact";
 import { resolveProductDetailData } from "../ThreeMashProductDetailData";
@@ -258,17 +259,17 @@ function templateStyle(colorOverrides?: {
   lineColor?: string;
 }) {
   return {
-    "--tmpdt-bg": colorOverrides?.backgroundColor || "var(--tm-theme-bg, #FAFAF7)",
-    "--tmpdt-ink": colorOverrides?.textColor || "var(--tm-theme-text, #0E0E0C)",
-    "--tmpdt-sub": colorOverrides?.mutedTextColor || "var(--tm-theme-sub, #55554e)",
+    "--tmpdt-bg": resolveThemeColor(colorOverrides?.backgroundColor) || "var(--tm-theme-bg, #FAFAF7)",
+    "--tmpdt-ink": resolveThemeColor(colorOverrides?.textColor) || "var(--tm-theme-text, #0E0E0C)",
+    "--tmpdt-sub": resolveThemeColor(colorOverrides?.mutedTextColor) || "var(--tm-theme-sub, #55554e)",
     "--tmpdt-mut": "var(--tm-theme-muted, #8f8f86)",
-    "--tmpdt-line": colorOverrides?.lineColor || "var(--tm-theme-line, #E6E6E0)",
+    "--tmpdt-line": resolveThemeColor(colorOverrides?.lineColor) || "var(--tm-theme-line, #E6E6E0)",
     "--tmpdt-line2": "var(--tm-theme-line-strong, #d5d5cd)",
-    "--tmpdt-lime": colorOverrides?.accentColor || "var(--tm-theme-accent, #C7F136)",
+    "--tmpdt-lime": resolveThemeColor(colorOverrides?.accentColor) || "var(--tm-theme-accent, #C7F136)",
     "--tmpdt-lime-ink": "var(--tm-theme-accent-text, #3d4d0e)",
     "--tmpdt-lime-soft": "var(--tm-theme-accent-soft, #F2F8DC)",
     "--tmpdt-red": "var(--tm-theme-danger, #E2492F)",
-    "--tmpdt-panel": colorOverrides?.panelColor || "var(--tm-theme-panel, #F1F1EC)",
+    "--tmpdt-panel": resolveThemeColor(colorOverrides?.panelColor) || "var(--tm-theme-panel, #F1F1EC)",
     "--tmpdt-dark": "var(--tm-theme-dark, #0E0E0C)",
   } as any;
 }
@@ -1449,9 +1450,9 @@ export function ProductDetailFinalCtaSection({
   }
 
   return (
-    <section className="tmpdt-final" style={{ backgroundColor }}>
+    <section className="tmpdt-final" style={{ backgroundColor: resolveThemeColor(backgroundColor) }}>
       <div className="tmpdt-wrap">
-        {titleHtml !== "" && <h2 style={{ color: textColor }} dangerouslySetInnerHTML={html(finalCta.titleHtml)} />}
+        {titleHtml !== "" && <h2 style={{ color: resolveThemeColor(textColor) }} dangerouslySetInnerHTML={html(finalCta.titleHtml)} />}
         {textHtml !== "" && <p dangerouslySetInnerHTML={html(finalCta.textHtml)} />}
         {(primaryText !== "" || secondaryText !== "") && (
           <div className="tmpdt-final-actions">

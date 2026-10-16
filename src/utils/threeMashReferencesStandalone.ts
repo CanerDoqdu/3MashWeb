@@ -2,6 +2,7 @@ import { getDefaultSrc, IkasImage } from "@ikas/bp-storefront";
 import { safeExternalNavigationHref } from "./safeRedirect";
 import { sanitizeHtml } from "./sanitizeHtml";
 import { isEnglishLocale } from "./i18n";
+import { resolveThemeColor } from "./themeColor";
 
 type AppearanceProps = {
   backgroundColor?: string;
@@ -57,10 +58,10 @@ export function referencesRootStyle(props: AppearanceProps): Record<string, stri
   const paddingBottom = finiteNumber(props.paddingBottom, 92);
 
   return {
-    "--tm-ref-bg": props.backgroundColor?.trim() || "var(--tm-theme-bg, #FAFAF7)",
-    "--tm-ref-text": props.textColor?.trim() || "var(--tm-theme-text, #0E0E0C)",
-    "--tm-ref-muted": props.mutedTextColor?.trim() || "var(--tm-theme-sub, #55554e)",
-    "--tm-ref-line": props.lineColor?.trim() || "var(--tm-theme-line, #E6E6E0)",
+    "--tm-ref-bg": resolveThemeColor(props.backgroundColor) || "var(--tm-theme-bg, #FAFAF7)",
+    "--tm-ref-text": resolveThemeColor(props.textColor) || "var(--tm-theme-text, #0E0E0C)",
+    "--tm-ref-muted": resolveThemeColor(props.mutedTextColor) || "var(--tm-theme-sub, #55554e)",
+    "--tm-ref-line": resolveThemeColor(props.lineColor) || "var(--tm-theme-line, #E6E6E0)",
     "--tm-ref-max": `${maxWidth}px`,
     "--tm-ref-pt": `${paddingTop}px`,
     "--tm-ref-pb": `${paddingBottom}px`,

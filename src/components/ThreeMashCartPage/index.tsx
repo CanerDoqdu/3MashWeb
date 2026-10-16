@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { useEffect, useState } from "preact/hooks";
 import {
   cartStore,
@@ -395,21 +396,12 @@ export function ThreeMashCartPage(props: Props) {
   const itemCount = cartItemCount(items);
 
   const style = {
-    "--tmcart-bg": text(props.backgroundColor, "var(--tm-theme-bg, #fafaf7)"),
-    "--tmcart-text": text(props.textColor, "var(--tm-theme-text, #0e0e0c)"),
-    "--tmcart-muted": text(
-      props.mutedTextColor,
-      "var(--tm-theme-sub, #55554e)",
-    ),
-    "--tmcart-line": text(props.lineColor, "var(--tm-theme-line, #e6e6e0)"),
-    "--tmcart-button-bg": text(
-      props.buttonBackgroundColor,
-      "var(--tm-theme-accent, #c7f136)",
-    ),
-    "--tmcart-button-text": text(
-      props.buttonTextColor,
-      "var(--tm-theme-text, #0e0e0c)",
-    ),
+    "--tmcart-bg": resolveThemeColor(props.backgroundColor) || "var(--tm-theme-bg, #fafaf7)",
+    "--tmcart-text": resolveThemeColor(props.textColor) || "var(--tm-theme-text, #0e0e0c)",
+    "--tmcart-muted": resolveThemeColor(props.mutedTextColor) || "var(--tm-theme-sub, #55554e)",
+    "--tmcart-line": resolveThemeColor(props.lineColor) || "var(--tm-theme-line, #e6e6e0)",
+    "--tmcart-button-bg": resolveThemeColor(props.buttonBackgroundColor) || "var(--tm-theme-accent, #c7f136)",
+    "--tmcart-button-text": resolveThemeColor(props.buttonTextColor) || "var(--tm-theme-text, #0e0e0c)",
   } as any; // CSS-in-JS: dynamic CSS custom properties for theme styling
   async function applyCoupon() {
     const code = couponCode.trim();

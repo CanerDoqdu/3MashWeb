@@ -5,6 +5,7 @@ import {
   tProp,
 } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
+import { resolveThemeColor } from "../../utils/themeColor";
 
 function text(value: string | undefined, fallbackTr: string, fallbackEn?: string) {
   return tProp(value, fallbackTr, fallbackEn || fallbackTr);
@@ -38,7 +39,7 @@ function themeColor(
   token: string,
   legacyDefaults: string[] = [],
 ) {
-  const trimmed = input?.trim();
+  const trimmed = resolveThemeColor(input);
   const normalized = trimmed?.toLowerCase();
   const defaults = [fallback, ...legacyDefaults].map((item) =>
     item.toLowerCase(),

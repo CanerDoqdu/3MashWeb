@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { localizedHref, isEnglishLocale, tLocalized, hasEnglishProductPage } from "../../utils/i18n";
 import {
   hasCustomerToken,
@@ -90,7 +91,7 @@ function themeToken(
   defaultValue: string,
   tokenName: string,
 ) {
-  const trimmed = value?.trim();
+  const trimmed = resolveThemeColor(value);
   if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase())
     return trimmed;
   return `var(${tokenName}, ${defaultValue})`;
@@ -926,12 +927,12 @@ export function ThreeMashProductsPage(props: Props) {
   );
 
   const style: Record<string, string> = {};
-  if (props.backgroundColor?.trim()) style["--tm-products-bg"] = props.backgroundColor.trim();
-  if (props.textColor?.trim()) style["--tm-products-text"] = props.textColor.trim();
-  if (props.mutedTextColor?.trim()) style["--tm-products-muted"] = props.mutedTextColor.trim();
-  if (props.cardColor?.trim()) style["--tm-products-card"] = props.cardColor.trim();
-  if (props.lineColor?.trim()) style["--tm-products-line"] = props.lineColor.trim();
-  if (props.accentColor?.trim()) style["--tm-products-accent"] = props.accentColor.trim();
+  if (props.backgroundColor?.trim()) style["--tm-products-bg"] = resolveThemeColor(props.backgroundColor);
+  if (props.textColor?.trim()) style["--tm-products-text"] = resolveThemeColor(props.textColor);
+  if (props.mutedTextColor?.trim()) style["--tm-products-muted"] = resolveThemeColor(props.mutedTextColor);
+  if (props.cardColor?.trim()) style["--tm-products-card"] = resolveThemeColor(props.cardColor);
+  if (props.lineColor?.trim()) style["--tm-products-line"] = resolveThemeColor(props.lineColor);
+  if (props.accentColor?.trim()) style["--tm-products-accent"] = resolveThemeColor(props.accentColor);
 
   function syncListingToUrl(
     updates: {

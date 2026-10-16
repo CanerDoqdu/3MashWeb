@@ -90,4 +90,19 @@ export interface Props {
   showEvent3?: boolean;
   showEvent4?: boolean;
   showArchiveSection?: boolean;
+  quotePortraitImage?: IkasImage | null;
+  quotePortraitAlt?: string;
+  quotePortraitAltEn?: string;
+  quoteFrameImage?: IkasImage | null;
+  quoteAuthorTextEn?: string;
+  introBackgroundColor?: string;
+  introTitleColor?: string;
+  introTextColor?: string;
+  introMutedTextColor?: string;
+  introAccentColor?: string;
+  archiveBackgroundColor?: string;
+  archiveTitleColor?: string;
+  archiveTextColor?: string;
+  archiveAccentColor?: string;
+  archiveBorderColor?: string;
 }

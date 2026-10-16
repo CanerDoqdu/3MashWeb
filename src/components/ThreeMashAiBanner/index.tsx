@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { Props } from "./types";
 
 const LLM_LINK_ID = "tm-llm-agent-index";
@@ -19,8 +20,8 @@ function safeIndexUrl(value: string): string {
 }
 
 function colorValue(value: string, fallback: string): string {
-  const candidate = value.trim();
-  return /^(?:#[\da-f]{3,8}|[a-z]+|(?:rgb|hsl)a?\([\d\s.,%/+-]+\))$/i.test(candidate)
+  const candidate = resolveThemeColor(value);
+  return /^(?:#[\da-f]{3,8}|[a-z]+|(?:rgb|hsl)a?\([\d\s.,%/+-]+\)|var\(--[\w-]+(?:\s*,\s*(?:#[\da-f]{3,8}|[a-z]+))?\))$/i.test(candidate)
     ? candidate
     : fallback;
 }

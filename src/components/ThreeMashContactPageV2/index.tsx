@@ -4,6 +4,7 @@ import { Props } from "./types";
 import { isEnglishLocale, localizedHref, tProp } from "../../utils/i18n";
 import { getBusinessConfig } from "../../utils/businessConfig";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { resolveThemeColor } from "../../utils/themeColor";
 import {
   safeCheckoutHref,
   safeMailAddress,
@@ -50,7 +51,7 @@ function themeColor(
   token: string,
   legacyDefaults: string[] = [],
 ) {
-  const trimmed = input?.trim();
+  const trimmed = resolveThemeColor(input);
   const defaults = [fallback, ...legacyDefaults].map((value) => value.toLowerCase());
 
   if (!trimmed || defaults.includes(trimmed.toLowerCase())) {

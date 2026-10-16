@@ -3,6 +3,7 @@ import { p16lPrimaryImage } from "../../assets/solution-p16l-media-data";
 import { isEnglishLocale, translateText, tLocalized, localizedHref } from "../../utils/i18n";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { resolveThemeColor } from "../../utils/themeColor";
 import {
   getDefaultSrc,
   getProductHref,
@@ -255,11 +256,11 @@ export default function ThreeMashPrintersSourceLanding(props: Props) {
 
   return (
     <div className="three-mash-printers-source" style={{
-      "--p-bg": textValue(props.backgroundColor, "var(--tm-theme-bg, #FAFAF7)"),
-      "--p-ink": textValue(props.textColor, "#0d0d0b"),
-      "--p-sub": textValue(props.mutedTextColor, "#4f514a"),
-      "--p-line": textValue(props.lineColor, "#deded6"),
-      "--p-lime": textValue(props.accentColor, "#c7f136"),
+      "--p-bg": resolveThemeColor(props.backgroundColor) || "var(--tm-theme-bg, #FAFAF7)",
+      "--p-ink": resolveThemeColor(props.textColor) || "#0d0d0b",
+      "--p-sub": resolveThemeColor(props.mutedTextColor) || "#4f514a",
+      "--p-line": resolveThemeColor(props.lineColor) || "#deded6",
+      "--p-lime": resolveThemeColor(props.accentColor) || "#c7f136",
     } as any}>
       {props.showHero !== false && <div className="hero">
         <div className="wrap">

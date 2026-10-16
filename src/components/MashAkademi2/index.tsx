@@ -1,5 +1,6 @@
 import type { JSX } from "preact";
-import { academyEvent1Image, academyEvent2Image, academyIntroImage } from "../MashAkademiV2/source-assets";
+import { resolveThemeColor } from "../../utils/themeColor";
+import { academyEvent1Image, academyEvent2Image } from "../MashAkademiV2/source-assets";
 import type { Props } from "./types";
 import { tLocalized } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
@@ -32,6 +33,16 @@ interface ThemeStyle extends JSX.CSSProperties {
   "--ma-gap": string;
   "--ma-word-weight": string;
   "--ma-word-style": string;
+  "--ma-intro-background": string;
+  "--ma-intro-heading": string;
+  "--ma-intro-text": string;
+  "--ma-intro-muted": string;
+  "--ma-intro-accent": string;
+  "--ma-archive-background": string;
+  "--ma-archive-heading": string;
+  "--ma-archive-text": string;
+  "--ma-archive-accent": string;
+  "--ma-archive-line": string;
 }
 
 const sourceDescription =
@@ -202,7 +213,23 @@ export function MashAkademi2(props: MashAkademi2Props) {
     "Eğitimdir ki bir milleti ya hür bağımsız şanlı yüce bir toplum olarak yaşatır veya bir milleti esaret ve sefalete terk eder.",
     "It is education that lifts a nation to a free, independent, glorious and elevated society, or abandons a nation to captivity and misery."
   );
-  const quoteAuthor = value(props.quoteAuthorText, "M. Kemal Atatürk");
+  const quoteAuthor = localizedValue(
+    props.quoteAuthorText,
+    props.quoteAuthorTextEn,
+    "M. Kemal Atatürk",
+    "M. Kemal Atatürk"
+  );
+  const quotePortrait = imageUrl(
+    props.quotePortraitImage,
+    "https://upload.wikimedia.org/wikipedia/commons/1/1e/Kemal_Atat%C3%BCrk_portrait.jpg"
+  );
+  const quotePortraitAlt = localizedValue(
+    props.quotePortraitAlt,
+    props.quotePortraitAltEn,
+    "Mustafa Kemal Atatürk portresi",
+    "Portrait of Mustafa Kemal Atatürk"
+  );
+  const quoteFrame = imageUrl(props.quoteFrameImage, "");
   const archiveTitle = localizedValue(
     props.archiveTitle,
     props.archiveTitleEn,
@@ -211,24 +238,34 @@ export function MashAkademi2(props: MashAkademi2Props) {
   );
   const archiveText = localizedValue(props.archiveText, props.archiveTextEn, sourceArchiveText, sourceArchiveTextEn);
 
-  const accent = props.accentColor?.trim() || "#b4ff39";
-  const heading = props.headingColor?.trim() || "#f5f7fb";
-  const muted = props.mutedTextColor?.trim() || "#a8b2c3";
-  const text = props.textColor?.trim() || "#f5f7fb";
+  const accent = resolveThemeColor(props.accentColor) || "#b8ff4a";
+  const heading = resolveThemeColor(props.headingColor) || "#f7fbff";
+  const muted = resolveThemeColor(props.mutedTextColor) || "#d2dfef";
+  const text = resolveThemeColor(props.textColor) || "#edf5ff";
   const style: ThemeStyle = {
-    "--ma-bg": props.backgroundColor?.trim() || "#080d16",
+    "--ma-bg": resolveThemeColor(props.backgroundColor) || "#0a1320",
     "--ma-text": text,
     "--ma-muted": muted,
-    "--ma-panel": props.panelColor?.trim() || "#111a28",
+    "--ma-panel": resolveThemeColor(props.panelColor) || "#101b2a",
     "--ma-accent": accent,
-    "--ma-line": props.lineColor?.trim() || "#263346",
+    "--ma-line": resolveThemeColor(props.lineColor) || "#2b3c4e",
     "--ma-heading": heading,
-    "--ma-card-title": props.cardTitleColor?.trim() || "#f5f7fb",
-    "--ma-word-color": props.styledPhraseColor?.trim() || accent,
+    "--ma-card-title": resolveThemeColor(props.cardTitleColor) || "#f6fbff",
+    "--ma-word-color": resolveThemeColor(props.styledPhraseColor) || accent,
     "--ma-max": `${boundedNumber(props.maxContentWidth, 1280, 720, 1800)}px`,
     "--ma-gap": `${boundedNumber(props.eventCardsGap, 24, 8, 80)}px`,
     "--ma-word-weight": props.styledPhraseBold === false ? "inherit" : "700",
     "--ma-word-style": props.styledPhraseItalic ? "italic" : "inherit",
+    "--ma-intro-background": resolveThemeColor(props.introBackgroundColor) || "#122436",
+    "--ma-intro-heading": resolveThemeColor(props.introTitleColor) || "#c4d8e6",
+    "--ma-intro-text": resolveThemeColor(props.introTextColor) || "#c1d3df",
+    "--ma-intro-muted": resolveThemeColor(props.introMutedTextColor) || "#9fb5c2",
+    "--ma-intro-accent": resolveThemeColor(props.introAccentColor) || "#b8e65b",
+    "--ma-archive-background": resolveThemeColor(props.archiveBackgroundColor) || "#172722",
+    "--ma-archive-heading": resolveThemeColor(props.archiveTitleColor) || "#bcd8c4",
+    "--ma-archive-text": resolveThemeColor(props.archiveTextColor) || "#a8c2ad",
+    "--ma-archive-accent": resolveThemeColor(props.archiveAccentColor) || "#a7cf73",
+    "--ma-archive-line": resolveThemeColor(props.archiveBorderColor) || "#365644",
   };
 
   const event1Title = localizedValue(
@@ -240,7 +277,7 @@ export function MashAkademi2(props: MashAkademi2Props) {
   const event1Text = localizedValue(
     props.card1Text,
     props.card1TextEn,
-    "''Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi\" webinarında, dijital diş hekimliği alanında yenilikçi yaklaşımlar ve IBAR destekli hibrit protez tasarımı ele alınmıştır.",
+    "Blender for Dental ile IBAR Üzeri Composite Kron Tasarım Eğitimi webinarında, dijital diş hekimliği alanında yenilikçi yaklaşımlar ve IBAR destekli hibrit protez tasarımı ele alınmıştır.",
     "In the webinar \"Composite Crown Design Over IBAR with Blender for Dental,\" innovative approaches in digital dentistry and IBAR-supported hybrid prosthesis design were discussed."
   );
   const event2Title = localizedValue(props.card2Title, props.card2TitleEn, "IBAR Tasarımı Eğitimi", "IBAR Design Training");
@@ -289,8 +326,16 @@ export function MashAkademi2(props: MashAkademi2Props) {
   }
 
   const descriptionParts = paragraphParts(description, props);
-  const introImage = imageUrl(props.introImageUrl, academyIntroImage);
-  const introImageAlt = localizedValue(props.introImageAlt, props.introImageAltEn, pageTitle, "Mash Academy");
+  const introImage = imageUrl(
+    props.introImageUrl,
+    "https://images.unsplash.com/photo-1727250877958-f262a4eb21cd?auto=format&fit=crop&w=1400&q=85"
+  );
+  const introImageAlt = localizedValue(
+    props.introImageAlt,
+    props.introImageAltEn,
+    "Diş kliniğinde birlikte çalışan iki sağlık profesyoneli",
+    "Two dental professionals working together in a clinic"
+  );
 
   return (
     <section className="mash-akademi2" style={style}>
@@ -320,19 +365,23 @@ export function MashAkademi2(props: MashAkademi2Props) {
                 </a>
               )}
             </div>
-            <span className="ma-intro-orbit" aria-hidden="true" />
-            <span className="ma-intro-index" aria-hidden="true">01</span>
           </section>
         )}
 
         {props.showQuoteSection !== false && (
-          <section className="ma-quote glass-panel">
-            <span className="ma-quote-symbol" aria-hidden="true">“</span>
-            <blockquote>
-              <p dangerouslySetInnerHTML={richText(quote, props)} />
-              <cite dangerouslySetInnerHTML={richText(quoteAuthor, props)} />
-            </blockquote>
-            <span className="ma-quote-index" aria-hidden="true">02</span>
+          <section className="ma-quote">
+            <div className="ma-quote-portrait">
+              <img src={quotePortrait} alt={quotePortraitAlt} loading="eager" decoding="async" />
+              {quoteFrame && <img className="ma-quote-frame" src={quoteFrame} alt="" aria-hidden="true" />}
+            </div>
+            <div className="ma-quote-copy">
+              <span className="ma-quote-eyebrow" dangerouslySetInnerHTML={richText(pageTitle, props)} />
+              <span className="ma-quote-symbol" aria-hidden="true">“</span>
+              <blockquote>
+                <p dangerouslySetInnerHTML={richText(quote, props)} />
+                <cite dangerouslySetInnerHTML={richText(quoteAuthor, props)} />
+              </blockquote>
+            </div>
           </section>
         )}
 

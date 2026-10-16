@@ -1195,7 +1195,7 @@
           "displayName": "🔗 Link 3: Favorilerim Rotası",
           "type": "TEXT",
           "required": false,
-          "defaultValue": "/account/favorites",
+          "defaultValue": "/account/favorite-products",
           "groupId": "profilLinkler"
         },
         {

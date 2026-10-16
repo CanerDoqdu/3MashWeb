@@ -3,6 +3,7 @@ import { translateText, tLocalized, isEnglishLocale, isTurkishText } from '../..
 import { sanitizeHtml } from '../../utils/sanitizeHtml';
 import { useMemo } from 'preact/hooks';
 import { Props } from './types';
+import { resolveThemeColor } from '../../utils/themeColor';
 
 type LegalPageProps = Props & {
   titleText?: string;
@@ -167,9 +168,9 @@ export function ThreeMashLegalPage(props: LegalPageProps) {
   const isKvkk = key === 'kvkk';
   const defaultMax = 1120;
   const style = {
-    '--tmlp-bg': text(props.backgroundColor, '#ffffff'),
-    '--tmlp-text': text(props.textColor, '#000000'),
-    '--tmlp-muted': text(props.mutedTextColor, '#6d6d6d'),
+    '--tmlp-bg': resolveThemeColor(props.backgroundColor) || '#ffffff',
+    '--tmlp-text': resolveThemeColor(props.textColor) || '#000000',
+    '--tmlp-muted': resolveThemeColor(props.mutedTextColor) || '#6d6d6d',
     '--tmlp-max': String(maxWidthValue(props.maxWidth, defaultMax)) + 'px',
     '--tmlp-pt': String(numberValue(props.paddingTop, key === 'mesafeli' ? 16 : isKvkk ? 16 : 24)) + 'px',
     '--tmlp-pb': String(numberValue(props.paddingBottom, key === 'mesafeli' ? 32 : isKvkk ? 16 : 64)) + 'px',

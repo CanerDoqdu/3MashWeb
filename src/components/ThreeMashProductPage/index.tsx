@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
 import { useAlternateProductPageEnabled } from "../../sub-components/ThreeMashProductDetailData";
@@ -88,7 +89,7 @@ function percentage(value: unknown, fallback: number, min: number, max: number) 
 }
 
 function themeToken(value: string | undefined, defaultValue: string, tokenName: string) {
-  const trimmed = value?.trim();
+  const trimmed = resolveThemeColor(value);
   if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase()) return trimmed;
   return `var(${tokenName}, ${defaultValue})`;
 }

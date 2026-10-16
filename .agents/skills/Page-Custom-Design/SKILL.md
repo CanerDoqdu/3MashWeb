@@ -136,47 +136,6 @@ sizes, fix the measured differences, and only then move to the next section.
   with the switch off and on, and test a non-P16L product to confirm the shared template
   remains unchanged.
 
-## Section 1 reference example: reveal banner
-
-This is a measured example for the lower-page reveal banner in the UniFormation reference,
-not the existing product purchase hero. Apply the user-requested differences: use the
-site's Inter font, make the hand-drawn green underline use the site's lime accent, and
-remove the `WATCH VIDEO` control. Preserve the reference copy unless the user asks to
-change it:
-
-- Heading: `UniFormation GK3 Pro`
-- Emphasized line: `385nm Light Source`
-- Remaining copy: `High-Precision` and `Pro-level Light Control for Sharper Results`
-
-Measured reference at a 1440×900 browser viewport:
-
-- Banner: about 1425×570 CSS px (2.5:1); desktop artwork is 3000×1200.
-- Content occupies the left half; text box is about 572 px wide, beginning about 70 px
-  from the left edge and vertically centered.
-- Heading: Poppins 40/48 px; body: Poppins 20/28 px. In this project use Inter at the
-  same measured sizes, not Poppins.
-- Desktop copy is white; the drawn underline beneath `385nm Light Source` is green in
-  the reference. Use `var(--tm-theme-accent)` for the requested theme-lime underline.
-- Reference reveal applies opacity/translateY motion to successive content items, with
-  staggered delays (about 0.2s increments); the underline stroke draws over about 1.3s.
-  Recreate this on the banner only, without importing the Shopify theme's global scripts.
-
-Measured at 390×844:
-
-- Banner: about 375×517 CSS px (roughly 0.725:1), using a separate portrait source whose
-  intrinsic dimensions are about 1228×1694 (the browser may deliver a resized variant).
-- Content is centered, about 345 px wide with 15 px side inset, and sits at the bottom
-  of the banner with 30 px top/bottom content padding.
-- Heading: 28/33.6 px; body: 18/25.2 px; paragraph centered.
-- Mobile image uses `object-fit: cover`; verify crop and focal position against the live
-  reference, not only the asset dimensions.
-
-Tablet was also observed at 768×1024: the landscape banner remains 2.5:1 and the copy
-stays in the left half. Recheck wrapping and alignment around the actual 750 px breakpoint.
-The old alternate hero CSS is not this measured layout; replace its section-specific rules
-when implementing the reveal banner rather than treating its current 520–840 px min-height
-as the reference.
-
 ## Completion checklist
 
 - [ ] Correct product, active template, render order, and fixed hero/footer boundaries

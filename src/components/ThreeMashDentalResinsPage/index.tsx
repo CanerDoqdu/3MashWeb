@@ -1,5 +1,6 @@
 import { ThreeMashFooter } from "../ThreeMashFooter";
 import { ThreeMashHeader } from "../ThreeMashHeader";
+import { resolveThemeColor } from "../../utils/themeColor";
 import type { Props } from "./types";
 import { localizedHref } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
@@ -17,8 +18,8 @@ export function ThreeMashDentalResinsPage(props: Props) {
     <>
       <ThreeMashHeader logoText="mash" />
       <main className="three-mash-empty-product-page" aria-hidden={!contentVisible} style={{
-        background: props.backgroundColor || "#fafaf7",
-        color: props.textColor || "#0e0e0c",
+        background: resolveThemeColor(props.backgroundColor) || "#fafaf7",
+        color: resolveThemeColor(props.textColor) || "#0e0e0c",
       }}>
         {contentVisible ? (
           <section className="three-mash-empty-product-content">

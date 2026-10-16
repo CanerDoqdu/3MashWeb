@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { useEffect, useRef } from "preact/hooks";
 import { basicSliderImages } from "../../assets/basic-slider-images-data";
 import { Props } from "./types";
@@ -199,13 +200,14 @@ function objectFit(value: unknown) {
 }
 
 function backgroundColor(value: unknown) {
-  const normalized = text(value, "#ffffff").toLowerCase();
+  const resolved = resolveThemeColor(value);
+  const normalized = resolved.toLowerCase();
   if (normalized === "#fafaf7" || normalized === "#fafa f7" || normalized === "var(--tm-theme-bg, #ffffff)") return "#ffffff";
-  return text(value, "#ffffff");
+  return resolved || "#ffffff";
 }
 
 function themeToken(value: string | undefined, fallback: string, token: string) {
-  const trimmed = value?.trim();
+  const trimmed = resolveThemeColor(value);
   if (trimmed && trimmed.toLowerCase() !== fallback.toLowerCase()) return trimmed;
   return `var(${token}, ${fallback})`;
 }

@@ -1,0 +1,174 @@
+.ozellestirilebilir-icerik-bolumu {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--desktop-padding-top, 0) var(--desktop-padding-side, 24px) var(--desktop-padding-bottom, 0);
+}
+
+.ozellestirilebilir-icerik-bolumu *,
+.ozellestirilebilir-icerik-bolumu *::before,
+.ozellestirilebilir-icerik-bolumu *::after {
+  box-sizing: border-box;
+}
+
+.ozellestirilebilir-icerik-bolumu-inner {
+  width: 100%;
+  max-width: var(--content-max-width, 1280px);
+  margin: 0 auto;
+}
+
+.ozellestirilebilir-icerik-bolumu-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 56px);
+  width: 100%;
+}
+
+.ozellestirilebilir-icerik-bolumu-layout:not(.has-copy),
+.ozellestirilebilir-icerik-bolumu-layout:not(.has-media),
+.ozellestirilebilir-icerik-bolumu-layout.video-image.has-one-media {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ozellestirilebilir-icerik-bolumu-layout.layout-gorsel-ustte,
+.ozellestirilebilir-icerik-bolumu-layout.layout-gorsel-altta,
+.ozellestirilebilir-icerik-bolumu-layout.layout-video-ustte,
+.ozellestirilebilir-icerik-bolumu-layout.layout-video-altta,
+.ozellestirilebilir-icerik-bolumu-layout.video-image.layout-alt-alta {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ozellestirilebilir-icerik-bolumu-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: var(--copy-align, flex-start);
+  gap: 16px;
+}
+
+.ozellestirilebilir-icerik-bolumu-title {
+  width: 100%;
+  font-size: var(--title-font-size, 42px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.ozellestirilebilir-icerik-bolumu-description {
+  width: 100%;
+  font-size: var(--description-font-size, 16px);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.ozellestirilebilir-icerik-bolumu-description > :first-child {
+  margin-top: 0;
+}
+
+.ozellestirilebilir-icerik-bolumu-description > :last-child {
+  margin-bottom: 0;
+}
+
+.ozellestirilebilir-icerik-bolumu-media {
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--media-border-radius, 12px);
+}
+
+.ozellestirilebilir-icerik-bolumu-media img,
+.ozellestirilebilir-icerik-bolumu-media video {
+  display: block;
+  width: 100%;
+  max-height: 72vh;
+}
+
+.ozellestirilebilir-icerik-bolumu-media img {
+  height: 100%;
+  min-height: 240px;
+  object-position: center;
+}
+
+.ozellestirilebilir-icerik-bolumu-media video {
+  min-height: 240px;
+  background: #090b10;
+}
+
+.ozellestirilebilir-icerik-bolumu-button {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.3;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.ozellestirilebilir-icerik-bolumu-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.ozellestirilebilir-icerik-bolumu-single-media {
+  width: 100%;
+}
+
+.ozellestirilebilir-icerik-bolumu-single-media.is-wide {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  max-width: 100vw;
+  transform: translateX(-50%);
+}
+
+.ozellestirilebilir-icerik-bolumu-single-media .ozellestirilebilir-icerik-bolumu-media img,
+.ozellestirilebilir-icerik-bolumu-single-media .ozellestirilebilir-icerik-bolumu-media video {
+  max-height: none;
+}
+
+.ozellestirilebilir-icerik-bolumu-layout.video-image .ozellestirilebilir-icerik-bolumu-media img,
+.ozellestirilebilir-icerik-bolumu-layout.video-image .ozellestirilebilir-icerik-bolumu-media video {
+  height: 100%;
+}
+
+.ozellestirilebilir-icerik-bolumu-layout.video-image.layout-alt-alta .ozellestirilebilir-icerik-bolumu-media img,
+.ozellestirilebilir-icerik-bolumu-layout.video-image.layout-alt-alta .ozellestirilebilir-icerik-bolumu-media video {
+  max-height: 72vh;
+}
+
+@media (max-width: 767px) {
+  .ozellestirilebilir-icerik-bolumu {
+    padding: var(--mobile-padding-top, 0) var(--mobile-padding-side, 16px) var(--mobile-padding-bottom, 0);
+  }
+
+  .ozellestirilebilir-icerik-bolumu-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .ozellestirilebilir-icerik-bolumu-layout.image-text.layout-gorsel-sagda .ozellestirilebilir-icerik-bolumu-media,
+  .ozellestirilebilir-icerik-bolumu-layout.video-text.layout-video-sagda .ozellestirilebilir-icerik-bolumu-media {
+    order: -1;
+  }
+
+  .ozellestirilebilir-icerik-bolumu-title {
+    font-size: min(var(--title-font-size, 42px), 36px);
+  }
+
+  .ozellestirilebilir-icerik-bolumu-media img,
+  .ozellestirilebilir-icerik-bolumu-media video {
+    max-height: 70vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ozellestirilebilir-icerik-bolumu-button {
+    transition: none;
+  }
+}

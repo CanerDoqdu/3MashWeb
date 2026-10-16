@@ -63,3 +63,9 @@ export { default as ThreeMashWashCurePage } from "./ThreeMashWashCurePage/index"
 export { default as ThreeMashZirconBlocksPage } from "./ThreeMashZirconBlocksPage/index";
 export { default as OzellestirilebilirBolum } from "./OzellestirilebilirBolum/index";
 export { default as MashAkademi2 } from "./MashAkademi2/index";
+export { default as BlogKategoriSayfas } from "./ThreeMashBlogListingPage/index";
+export { default as OzellestirilebilirIcerikBolumu } from "./OzellestirilebilirIcerikBolumu/index";
+export { default as ThreeMashCategoryProductsPage } from "./ThreeMashCategoryProductsPage/index";
+export { default as KategoriUrunleriListeGenel } from "./KategoriUrunleriListeGenel/index";
+export { default as KategoriUrunleriListeYeni } from "./KategoriUrunleriListeYeni/index";
+export { default as KategoriSayfalari } from "./KategoriSayfalari/index";

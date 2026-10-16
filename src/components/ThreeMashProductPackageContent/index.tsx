@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import { tLocalized, isEnglishLocale, isTurkishText } from "../../utils/i18n";
@@ -101,7 +102,7 @@ export function ThreeMashProductPackageContent(props: Props) {
   return (
     <section
       className="tm-pkg-section"
-      style={props.backgroundColor ? { backgroundColor: props.backgroundColor } : undefined}
+      style={props.backgroundColor ? { backgroundColor: resolveThemeColor(props.backgroundColor) } : undefined}
     >
       <div className="tm-pkg-wrap">
         <div className="tm-pkg-idx">

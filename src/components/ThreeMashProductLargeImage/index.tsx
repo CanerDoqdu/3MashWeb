@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { getDefaultSrc } from "@ikas/bp-storefront";
 import { Props } from "./types";
 import { useAlternateProductPageEnabled, useSharedProductDetailData, resolveProductDetailData } from "../../sub-components/ThreeMashProductDetailData";
@@ -32,7 +33,7 @@ function ThreeMashProductLargeImageContent(props: Props) {
     return (
       <section
         className="three-mash-product-large-image"
-        style={props.backgroundColor ? { backgroundColor: props.backgroundColor } : undefined}
+        style={props.backgroundColor ? { backgroundColor: resolveThemeColor(props.backgroundColor) } : undefined}
       >
         <div className="tmplg-wrap">
           <div className="tmplg-frame">
@@ -54,7 +55,7 @@ function ThreeMashProductLargeImageContent(props: Props) {
     return (
       <ProductDetailSectionScope
         data={data}
-        colorOverrides={{ backgroundColor: props.backgroundColor }}
+        colorOverrides={{ backgroundColor: resolveThemeColor(props.backgroundColor) }}
       >
         <ProductDetailSpecHighlightSection data={data} />
       </ProductDetailSectionScope>
@@ -67,7 +68,7 @@ function ThreeMashProductLargeImageContent(props: Props) {
   return (
     <ProductDetailSectionScope
       data={placeholderData}
-      colorOverrides={{ backgroundColor: props.backgroundColor }}
+      colorOverrides={{ backgroundColor: resolveThemeColor(props.backgroundColor) }}
     >
       <ProductDetailSpecHighlightSection data={placeholderData} />
     </ProductDetailSectionScope>

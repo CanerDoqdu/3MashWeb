@@ -1,3 +1,4 @@
+import { resolveThemeColor, resolveThemeColorWithAlpha } from "../../utils/themeColor";
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import {
   apiSearchProducts,
@@ -30,6 +31,7 @@ import { debugError } from "../../utils/debugError";
 
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeNavigationHref, safeRedirect } from "../../utils/safeRedirect";
+import { isStudioEnvironment } from "../../utils/isStudioEnvironment";
 import {
   performLogout,
   isCustomerAuthenticated,
@@ -481,10 +483,27 @@ function isHomepagePath(pathname: string) {
 }
 
 function isShopperVideoHomepage() {
-  if (typeof window !== "undefined") return isHomepagePath(window.location.pathname);
+  if (typeof window !== "undefined" && isStudioEnvironment()) {
+    try {
+      const studioPage = window.parent.document
+        .querySelector(".form-select-header-title-placeholder-text")
+        ?.textContent?.trim();
+      return studioPage === "Anasayfa";
+    } catch {
+      return false;
+    }
+  }
 
-  const storefrontPath = IkasStorefrontConfig.getCurrentPath?.();
-  return typeof storefrontPath === "string" && isHomepagePath(storefrontPath);
+  try {
+    const storefrontPath = IkasStorefrontConfig.getCurrentPath?.();
+    if (typeof storefrontPath === "string" && storefrontPath.trim()) {
+      return isHomepagePath(storefrontPath);
+    }
+  } catch {
+    // Fall back to the browser path when storefront route information is unavailable.
+  }
+
+  return typeof window !== "undefined" && isHomepagePath(window.location.pathname);
 }
 
 function currentProductAnnouncement() {
@@ -1231,7 +1250,7 @@ function percentage(value: unknown, fallback: number, min: number, max: number) 
 }
 
 function themeToken(value: string | undefined, defaultValue: string, tokenName: string) {
-  const trimmed = value?.trim();
+  const trimmed = resolveThemeColor(value);
   if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase()) return trimmed;
   return `var(${tokenName}, ${defaultValue})`;
 }
@@ -1904,7 +1923,7 @@ export function ThreeMashHeader(props: Props) {
 
   const loginButtonText = tProp(props.profileLoginButtonText, "Giriş yap", "Log In");
   const logoutButtonText = tProp(props.profileLink6Text, "Çıkış yap", "Sign Out");
-  const favoritesTarget = headerRouteHref(props.profileLink3Href, "/account/favorites");
+  const favoritesTarget = "/account/favorite-products";
   const accountDetailsTarget = headerRouteHref(props.profileLink4Href, "/account");
 
   const defaultFavoritesSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
@@ -2572,12 +2591,12 @@ export function ThreeMashHeader(props: Props) {
                       className="tmh-feature"
                       href={localizedHref(c4pRouteHref(text(props.productsFeatureHref, defaultProductsFeature.href)))}
                       style={{
-                        ...(props.featureCardBgColor ? { "--tmh-feature-bg": props.featureCardBgColor } : {}),
+                        ...(props.featureCardBgColor ? { "--tmh-feature-bg": resolveThemeColor(props.featureCardBgColor) } : {}),
                         ...(props.featureCardTextColor ? {
-                          "--tmh-feature-text": props.featureCardTextColor,
-                          "--tmh-feature-text-muted": props.featureCardTextColor + "99",
+                          "--tmh-feature-text": resolveThemeColor(props.featureCardTextColor),
+                          "--tmh-feature-text-muted": resolveThemeColorWithAlpha(props.featureCardTextColor, "99", 60),
                         } : {}),
-                        ...(props.featureCardAccentColor ? { "--tmh-feature-accent": props.featureCardAccentColor } : {}),
+                        ...(props.featureCardAccentColor ? { "--tmh-feature-accent": resolveThemeColor(props.featureCardAccentColor) } : {}),
                       } as any}
                     >
                       <span className="tmh-micro" dangerouslySetInnerHTML={richText(productsFeatureEyebrow, props)} />
@@ -2974,7 +2993,10 @@ export function ThreeMashHeader(props: Props) {
       )}
       {showShopperVideo && props.showShopperVideo !== false && (
         <ThreeMashShopperVideo
-          videoHref={props.shopperVideoHref?.trim() || "https://www.youtube.com/shorts/gu7H7_whoB0?feature=share"}
+          videoSrc={props.shopperVideo?.videoSrc?.trim() || ""}
+          fallbackVideoHref={props.shopperVideoHref?.trim() || "https://www.youtube.com/shorts/gu7H7_whoB0?feature=share"}
+          windowWidth={props.shopperVideoWindowWidth}
+          windowHeight={props.shopperVideoWindowHeight}
           title={tLocalized("Ürün tanıtım videosu", "Product video")}
         />
       )}

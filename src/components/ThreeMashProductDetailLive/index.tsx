@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { useEffect, useLayoutEffect, useMemo, useState } from "preact/hooks";
 import {
   publishCartFromIkasStore,
@@ -1295,9 +1296,9 @@ function previewVariantGroups(selection: PreviewSelection, props: SingleProductR
       id: "preview-color",
       name: localizedStudioText(props.previewColorLabel, props.previewColorLabelEn, "Renk", "Colour"),
       values: [
-        { id: "preview-color-1", name: localizedStudioText(props.previewColor1, props.previewColor1En, "A1", "A1"), color: props.previewColorHex1 || "#ede9d0" },
-        { id: "preview-color-2", name: localizedStudioText(props.previewColor2, props.previewColor2En, "A2", "A2"), color: props.previewColorHex2 || "#efead4" },
-        { id: "preview-color-3", name: localizedStudioText(props.previewColor3, props.previewColor3En, "A3", "A3"), color: props.previewColorHex3 || "#e1d6b5" },
+        { id: "preview-color-1", name: localizedStudioText(props.previewColor1, props.previewColor1En, "A1", "A1"), color: resolveThemeColor(props.previewColorHex1) || "#ede9d0" },
+        { id: "preview-color-2", name: localizedStudioText(props.previewColor2, props.previewColor2En, "A2", "A2"), color: resolveThemeColor(props.previewColorHex2) || "#efead4" },
+        { id: "preview-color-3", name: localizedStudioText(props.previewColor3, props.previewColor3En, "A3", "A3"), color: resolveThemeColor(props.previewColorHex3) || "#e1d6b5" },
       ].map((value) => ({
         ...value,
         selected: (selection["preview-color"] || "preview-color-1") === value.id,
@@ -1351,7 +1352,7 @@ function selectedSummary(data: ProductDetailTemplateData, groups: ProductVariant
 }
 
 function themeToken(value: string | undefined, defaultValue: string, tokenName: string) {
-  const trimmed = value?.trim();
+  const trimmed = resolveThemeColor(value);
   if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase()) return trimmed;
   return `var(${tokenName}, ${defaultValue})`;
 }

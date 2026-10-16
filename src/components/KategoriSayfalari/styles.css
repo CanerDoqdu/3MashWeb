@@ -1,0 +1,28 @@
+.kategori-sayfalari {
+  width: 100%;
+  padding: 64px 24px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.kategori-sayfalari-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.kategori-sayfalari h2 {
+  margin: 0 0 16px 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/*
+ * Responsive: use the theme's breakpoints in CSS. CSS media queries can't use
+ * var(), so write the min-width/max-width yourself and use `bp(<breakpointId>)`
+ * for the value — it resolves to the breakpoint's `<width>px` at render time
+ * against the store's live width. Get <breakpointId> from
+ * `npx ikas-component list-theme-globals` (breakpoints[].id) — use the id, not the name.
+ *
+ * @media (max-width: bp(_AbC123)) { .kategori-sayfalari { padding: 32px 16px; } }
+ * @media (min-width: bp(_AbC123)) { .kategori-sayfalari-inner { display: flex; gap: 24px; } }
+ */

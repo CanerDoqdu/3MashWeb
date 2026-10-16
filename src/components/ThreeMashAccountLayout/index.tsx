@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { useEffect, useRef, useState } from "preact/hooks";
 import {
   customerStore,
@@ -254,7 +255,7 @@ function modeFromPathname(pathname: string, fallback: AccountMode): AccountMode 
   if (p === "/account" || p === "/hesabim") return "account";
   if (p === "/account/addresses" || p === "/adreslerim") return "addresses";
   if (
-    p === "/account/favorites" ||
+    p === "/account/favorite-products" ||
     p === "/account/favorite-products" ||
     p === "/favorilerim"
   )
@@ -305,7 +306,7 @@ function themeColor(
   token: string,
   legacyDefaults: string[] = [],
 ) {
-  const trimmed = input?.trim();
+  const trimmed = resolveThemeColor(input);
   const normalized = trimmed?.toLowerCase();
   const defaults = [fallback, ...legacyDefaults].map((item) =>
     item.toLowerCase(),

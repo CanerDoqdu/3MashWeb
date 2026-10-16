@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import {
   createMediaSrcset,
   getBlogListNextPage,
@@ -28,7 +29,7 @@ function themeToken(
   defaultValue: string,
   tokenName: string,
 ) {
-  const trimmed = value?.trim();
+  const trimmed = resolveThemeColor(value);
   if (trimmed && trimmed.toLowerCase() !== defaultValue.toLowerCase())
     return trimmed;
   return `var(${tokenName}, ${defaultValue})`;

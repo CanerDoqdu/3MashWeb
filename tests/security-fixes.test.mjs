@@ -43,16 +43,23 @@ test('safeCheckoutHref only allows relative or HTTPS checkout destinations', () 
   assert.equal(safeCheckoutHref('//evil.example/checkout'), '');
 });
 
-test('isStudioEnvironment only trusts ikas host boundaries', () => {
+test('isStudioEnvironment only trusts ikas host boundaries inside an iframe', () => {
   const originalWindow = globalThis.window;
   try {
-    globalThis.window = { location: { hostname: 'preview.ikasapps.com' } };
+    globalThis.window = { location: { hostname: 'preview.ikasapps.com' }, self: {}, top: {} };
     assert.equal(isStudioEnvironment(), true);
-    globalThis.window = { location: { hostname: 'evilikasapps.com' } };
+    globalThis.window = { location: { hostname: 'evilikasapps.com' }, self: {}, top: {} };
     assert.equal(isStudioEnvironment(), false);
-    globalThis.window = { location: { hostname: 'preview.myikas.com' } };
+    globalThis.window = { location: { hostname: 'preview.myikas.com' }, self: {}, top: {} };
     assert.equal(isStudioEnvironment(), true);
-    globalThis.window = { location: { hostname: 'evilmyikas.com' } };
+    const standaloneWindow = {};
+    globalThis.window = {
+      location: { hostname: 'preview.myikas.com' },
+      self: standaloneWindow,
+      top: standaloneWindow,
+    };
+    assert.equal(isStudioEnvironment(), false);
+    globalThis.window = { location: { hostname: 'evilmyikas.com' }, self: {}, top: {} };
     assert.equal(isStudioEnvironment(), false);
   } finally {
     globalThis.window = originalWindow;
@@ -114,7 +121,7 @@ test('spare-part category filtering excludes non-spare products and keeps the En
 
   assert.match(categoryText, /if \(kind === "spares"\) return matchesAny\(spareSignals\);/);
   assert.match(categoryText, /const spareSignals = \[/);
-  assert.match(presetText, /titlePrefix:\s*tLocalized\("Elektronik, tabla,", "Electronic, tray,"\)/);
+  assert.match(presetText, /titlePrefix:\s*tLocalized\("Elektronik, tabla,", "Electronics, build plate,"\)/);
   assert.match(presetText, /titleEmphasis:\s*tLocalized\("tank ve film\."/);
 });
 
@@ -150,7 +157,7 @@ test('recover password success redirects to the account login route instead of h
   const utilityFile = fileURLToPath(new URL('../src/components/ThreeMashAccountUtilityPage/index.tsx', import.meta.url));
   const utilityText = readFileSync(utilityFile, 'utf8');
 
-  assert.match(utilityText, /Router\.navigate\(localizedHref\("\/account\/login"\)\)/);
+  assert.match(utilityText, /Router\.navigate\(href\(props\.loginHref\)\)/);
   assert.doesNotMatch(utilityText, /Router\.navigateToPage\("LOGIN"\)/);
 });
 
@@ -160,7 +167,14 @@ test('forgot-password and recover-password use the public auth page shell instea
 
   assert.match(utilityText, /mode === "forgot-password"|mode === "recover-password"/);
   assert.match(utilityText, /ThreeMashAccountPage/);
-  assert.doesNotMatch(utilityText, /return <ThreeMashAccountLayout \{\.\.\.props\} \/>/);
+  assert.match(
+    utilityText,
+    /if \(isPublicAuthMode\(props\.mode\)\) \{\s*return <ThreeMashAccountPage \{\.\.\.props\} \/>;\s*\}/,
+  );
+  assert.ok(
+    utilityText.indexOf('if (isPublicAuthMode(props.mode))') <
+      utilityText.indexOf('return <ThreeMashAccountLayout {...props} />'),
+  );
 });
 
 test('generic product fallback does not ship template placeholder text', () => {

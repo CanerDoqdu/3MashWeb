@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { academyEvent1Image, academyEvent2Image, academyIntroImage } from "./source-assets";
 import { Props } from "./types";
 import { tLocalized } from "../../utils/i18n";
@@ -91,12 +92,12 @@ function numberInRange(input: unknown, fallback: number, min: number, max: numbe
 }
 
 function cssColor(input: string | undefined, fallback: string) {
-  const trimmed = input?.trim();
+  const trimmed = resolveThemeColor(input);
   return trimmed || fallback;
 }
 
 function themeColor(input: string | undefined, fallback: string, token: string, legacyDefaults: string[] = []) {
-  const trimmed = input?.trim();
+  const trimmed = resolveThemeColor(input);
   const normalized = trimmed?.toLowerCase();
   const defaults = [fallback, ...legacyDefaults].map((item) => item.toLowerCase());
 

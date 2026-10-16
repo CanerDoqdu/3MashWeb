@@ -1,6 +1,7 @@
 import { getDefaultSrc, type IkasImage } from "@ikas/bp-storefront";
 import { aboutPage } from "../ThreeMashPageData/sourceData";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { resolveThemeColor } from "../../utils/themeColor";
 import { tLocalized } from "../../utils/i18n";
 import { Props } from "./types";
 
@@ -30,7 +31,7 @@ function themeColor(
   token: string,
   legacyDefaults: string[] = [],
 ) {
-  const trimmed = input?.trim();
+  const trimmed = resolveThemeColor(input);
   const defaults = [fallback, ...legacyDefaults].map((color) => color.toLowerCase());
   if (!trimmed || defaults.includes(trimmed.toLowerCase())) {
     return `var(${token}, ${fallback})`;

@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "preact/hooks";
 import { tLocalized } from "../../utils/i18n";
 
 interface Props {
-  videoHref: string;
+  videoSrc: string;
+  fallbackVideoHref?: string;
+  windowWidth?: number;
+  windowHeight?: number;
   poster?: string;
   title: string;
 }
@@ -48,14 +51,8 @@ function getYouTubeVideo(href: string): YouTubeVideo | null {
     const modalParams = new URLSearchParams({
       ...sharedParams,
       autoplay: "1",
-      controls: "0",
-      disablekb: "1",
-      enablejsapi: "1",
-      fs: "0",
-      iv_load_policy: "3",
+      controls: "1",
       loop: "1",
-      modestbranding: "1",
-      mute: "1",
       playlist: videoId,
     });
     return {
@@ -67,14 +64,31 @@ function getYouTubeVideo(href: string): YouTubeVideo | null {
   }
 }
 
-export default function ThreeMashShopperVideo({ videoHref, poster, title }: Props) {
+function getWindowDimension(value?: number): number | undefined {
+  return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : undefined;
+}
+
+export default function ThreeMashShopperVideo({
+  videoSrc,
+  fallbackVideoHref = "",
+  windowWidth,
+  windowHeight,
+  poster,
+  title,
+}: Props) {
   const videoHitAreaRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const miniYouTubeRef = useRef<HTMLIFrameElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dragRef = useRef<{ pointerId: number; startX: number; startY: number; startLeft: number; startTop: number } | null>(null);
+  const didDragRef = useRef(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const youtubeVideo = getYouTubeVideo(videoHref);
+  const [position, setPosition] = useState<{ left: number; top: number } | null>(null);
+  const youtubeVideo = videoSrc ? null : getYouTubeVideo(fallbackVideoHref);
+  const directVideoSrc = videoSrc || fallbackVideoHref;
+  const safeWindowWidth = getWindowDimension(windowWidth);
+  const safeWindowHeight = getWindowDimension(windowHeight);
 
   useEffect(() => {
     if (!youtubeVideo) return;
@@ -148,6 +162,11 @@ export default function ThreeMashShopperVideo({ videoHref, poster, title }: Prop
       <aside
         className="tmpv-shopper"
         aria-label={title}
+        style={{
+          ...(position ? { left: `${position.left}px`, top: `${position.top}px`, transform: "none" } : {}),
+          ...(safeWindowWidth !== undefined ? { width: safeWindowWidth } : {}),
+          ...(safeWindowHeight !== undefined ? { height: safeWindowHeight } : {}),
+        }}
       >
         <div
           ref={videoHitAreaRef}
@@ -155,7 +174,56 @@ export default function ThreeMashShopperVideo({ videoHref, poster, title }: Prop
           role="button"
           tabIndex={0}
           aria-label={tLocalized("Videoyu büyüt ve oynat", "Expand and play video")}
-          onClick={() => setIsExpanded(true)}
+          onPointerDown={(event) => {
+            if (event.button !== 0) return;
+            const bounds = event.currentTarget.parentElement?.getBoundingClientRect();
+            if (!bounds) return;
+
+            didDragRef.current = false;
+            dragRef.current = {
+              pointerId: event.pointerId,
+              startX: event.clientX,
+              startY: event.clientY,
+              startLeft: bounds.left,
+              startTop: bounds.top,
+            };
+            event.currentTarget.setPointerCapture(event.pointerId);
+          }}
+          onPointerMove={(event) => {
+            const drag = dragRef.current;
+            if (!drag || drag.pointerId !== event.pointerId) return;
+
+            const deltaX = event.clientX - drag.startX;
+            const deltaY = event.clientY - drag.startY;
+            if (!didDragRef.current && Math.hypot(deltaX, deltaY) < 5) return;
+
+            didDragRef.current = true;
+            const bounds = event.currentTarget.parentElement?.getBoundingClientRect();
+            if (!bounds) return;
+
+            setPosition({
+              left: Math.max(0, Math.min(window.innerWidth - bounds.width, drag.startLeft + deltaX)),
+              top: Math.max(0, Math.min(window.innerHeight - bounds.height, drag.startTop + deltaY)),
+            });
+          }}
+          onPointerUp={(event) => {
+            if (dragRef.current?.pointerId !== event.pointerId) return;
+            dragRef.current = null;
+            if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+              event.currentTarget.releasePointerCapture(event.pointerId);
+            }
+          }}
+          onPointerCancel={() => {
+            dragRef.current = null;
+            didDragRef.current = false;
+          }}
+          onClick={() => {
+            if (didDragRef.current) {
+              didDragRef.current = false;
+              return;
+            }
+            setIsExpanded(true);
+          }}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {
               event.preventDefault();
@@ -184,7 +252,7 @@ export default function ThreeMashShopperVideo({ videoHref, poster, title }: Prop
               ref={videoRef}
               className="wht-neo-shopper-video"
               data-role="videoPlayer"
-              src={videoHref}
+              src={directVideoSrc}
               poster={poster || undefined}
               playsInline
               autoPlay
@@ -231,17 +299,28 @@ export default function ThreeMashShopperVideo({ videoHref, poster, title }: Prop
               </svg>
             </button>
             {youtubeVideo ? (
-              <iframe
-                className="tmpv-shopper-modal-embed"
-                src={youtubeVideo.modalEmbedHref}
-                title={title}
-                allow="autoplay; encrypted-media; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
+              <>
+                <iframe
+                  className="tmpv-shopper-modal-embed"
+                  src={youtubeVideo.modalEmbedHref}
+                  title={title}
+                  allow="autoplay; encrypted-media; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+                <a
+                  className="tmpv-shopper-youtube-link"
+                  href={fallbackVideoHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {tLocalized("YouTube'da aç", "Open on YouTube")}
+                </a>
+              </>
             ) : (
               <video
                 className="tmpv-shopper-modal-embed"
-                src={videoHref}
+                src={directVideoSrc}
                 poster={poster || undefined}
                 autoPlay
                 controls

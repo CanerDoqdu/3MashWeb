@@ -10,6 +10,7 @@ import authCriticalStyles from "../authCriticalStyles";
 import { isEnglishLocale, localizedHref, t, tLocalized, tProp } from "../../utils/i18n";
 import { safeNavigationHref } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { resolveThemeColor } from "../../utils/themeColor";
 
 const defaultAuthImage =
   "https://cdn.myikas.com/images/theme-images/a6f9541f-702d-431d-9744-9d4f494c94af/image_1080.webp";
@@ -80,7 +81,7 @@ function themeColor(
   token: string,
   legacyDefaults: string[] = [],
 ) {
-  const trimmed = input?.trim();
+  const trimmed = resolveThemeColor(input);
   const normalized = trimmed?.toLowerCase();
   const defaults = [fallback, ...legacyDefaults].map((item) =>
     item.toLowerCase(),

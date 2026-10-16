@@ -16,6 +16,7 @@ import { tLocalized, isEnglishLocale, translateText, localizedHref } from "../..
 import { safeDecodeURI } from "../../utils/safeDecodeURI";
 import { safeRedirect } from "../../utils/safeRedirect";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { resolveThemeColor } from "../../utils/themeColor";
 
 export type CategoryButton = {
   label: string;
@@ -1085,14 +1086,14 @@ function titleWithEmphasis(prefix: string, emphasis: string, suffix?: string) {
 
 function categoryStyle(props: CategoryLandingOverrides) {
   return {
-    "--tmcl-bg": textValue(props.backgroundColor, "var(--tm-theme-bg, #FAFAF7)"),
-    "--tmcl-ink": textValue(props.textColor, "var(--tm-theme-text, #0E0E0C)"),
-    "--tmcl-sub": textValue(props.mutedTextColor, "var(--tm-theme-sub, #55554e)"),
-    "--tmcl-mut": textValue(props.mutedTextColor, "var(--tm-theme-muted, #8f8f86)"),
-    "--tmcl-line": textValue(props.lineColor, "var(--tm-theme-line, #E6E6E0)"),
-    "--tmcl-line2": textValue(props.lineColor, "var(--tm-theme-line-strong, #d5d5cd)"),
-    "--tmcl-lime": textValue(props.accentColor, "var(--tm-theme-accent, #C7F136)"),
-    "--tmcl-panel": textValue(props.panelColor, "var(--tm-theme-panel, #F1F1EC)"),
+    "--tmcl-bg": resolveThemeColor(props.backgroundColor) || "var(--tm-theme-bg, #FAFAF7)",
+    "--tmcl-ink": resolveThemeColor(props.textColor) || "var(--tm-theme-text, #0E0E0C)",
+    "--tmcl-sub": resolveThemeColor(props.mutedTextColor) || "var(--tm-theme-sub, #55554e)",
+    "--tmcl-mut": resolveThemeColor(props.mutedTextColor) || "var(--tm-theme-muted, #8f8f86)",
+    "--tmcl-line": resolveThemeColor(props.lineColor) || "var(--tm-theme-line, #E6E6E0)",
+    "--tmcl-line2": resolveThemeColor(props.lineColor) || "var(--tm-theme-line-strong, #d5d5cd)",
+    "--tmcl-lime": resolveThemeColor(props.accentColor) || "var(--tm-theme-accent, #C7F136)",
+    "--tmcl-panel": resolveThemeColor(props.panelColor) || "var(--tm-theme-panel, #F1F1EC)",
   };
 }
 

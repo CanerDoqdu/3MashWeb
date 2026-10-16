@@ -1,3 +1,4 @@
+import { resolveThemeColor } from "../../utils/themeColor";
 import { useEffect, useRef } from "preact/hooks";
 import {
   createMediaSrcset,
@@ -1790,8 +1791,8 @@ function indexedSection(
 }
 
 function themeColor(value: unknown, fallback: string) {
-  const candidate = typeof value === "string" ? value.trim() : "";
-  return /^(?:#[\da-f]{3,8}|[a-z]+|(?:rgb|hsl)a?\([\d\s.,%/+\-]+\))$/i.test(candidate)
+  const candidate = resolveThemeColor(value);
+  return /^(?:#[\da-f]{3,8}|[a-z]+|(?:rgb|hsl)a?\([\d\s.,%/+\-]+\)|var\(--[\w-]+(?:\s*,\s*(?:#[\da-f]{3,8}|[a-z]+))?\))$/i.test(candidate)
     ? candidate
     : fallback;
 }

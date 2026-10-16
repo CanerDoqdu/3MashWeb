@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { isEnglishLocale, tProp, tLocalized } from "../../utils/i18n";
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { resolveThemeColor } from "../../utils/themeColor";
 import { Props } from "./types";
 
 function stripInlineTypographyStyles(markup: string) {
@@ -271,19 +272,19 @@ export function ThreeMashProblem(props: Props) {
   }, [props.badValue, props.showBadValueCountUp]);
 
   const themeStyle = {
-    "--tmproblem-bg": props.backgroundColor || "var(--bg, #FAFAF7)",
-    "--tmproblem-text": props.textColor || "var(--ink, #0E0E0C)",
-    "--tmproblem-sub": props.subTextColor || "var(--sub, #55554E)",
-    "--tmproblem-muted": props.mutedTextColor || "var(--mut, #8F8F86)",
-    "--tmproblem-line": props.lineColor || "var(--line, #E6E6E0)",
-    "--tmproblem-line-strong": props.lineStrongColor || "var(--line2, #D5D5CD)",
-    "--tmproblem-panel": props.panelColor || "#FFFFFF",
-    "--tmproblem-accent": props.accentColor || "var(--lime, #C7F136)",
-    "--tmproblem-accent-text": props.accentTextColor || "var(--lime-ink, #3D4D0E)",
-    "--tmproblem-danger": props.dangerColor || "var(--red, #E2492F)",
-    "--tmproblem-bg-glow-color": props.backgroundGlowColor || props.accentColor || "var(--lime, #C7F136)",
+    "--tmproblem-bg": resolveThemeColor(props.backgroundColor) || "var(--bg, #FAFAF7)",
+    "--tmproblem-text": resolveThemeColor(props.textColor) || "var(--ink, #0E0E0C)",
+    "--tmproblem-sub": resolveThemeColor(props.subTextColor) || "var(--sub, #55554E)",
+    "--tmproblem-muted": resolveThemeColor(props.mutedTextColor) || "var(--mut, #8F8F86)",
+    "--tmproblem-line": resolveThemeColor(props.lineColor) || "var(--line, #E6E6E0)",
+    "--tmproblem-line-strong": resolveThemeColor(props.lineStrongColor) || "var(--line2, #D5D5CD)",
+    "--tmproblem-panel": resolveThemeColor(props.panelColor) || "#FFFFFF",
+    "--tmproblem-accent": resolveThemeColor(props.accentColor) || "var(--lime, #C7F136)",
+    "--tmproblem-accent-text": resolveThemeColor(props.accentTextColor) || "var(--lime-ink, #3D4D0E)",
+    "--tmproblem-danger": resolveThemeColor(props.dangerColor) || "var(--red, #E2492F)",
+    "--tmproblem-bg-glow-color": resolveThemeColor(props.backgroundGlowColor) || resolveThemeColor(props.accentColor) || "var(--lime, #C7F136)",
     "--tmproblem-bg-glow-opacity": props.showBackgroundGlow === false ? 0 : numberInRange(props.backgroundGlowOpacity, 18, 0, 100) / 100,
-    "--tmproblem-word-color": props.styledPhraseColor || props.accentColor || "var(--lime, #C7F136)",
+    "--tmproblem-word-color": resolveThemeColor(props.styledPhraseColor) || resolveThemeColor(props.accentColor) || "var(--lime, #C7F136)",
     "--tmproblem-word-weight": props.styledPhraseBold ? "800" : "inherit",
     "--tmproblem-word-style": props.styledPhraseItalic ? "italic" : "inherit",
     "--tmproblem-hair-image-width": `${numberInRange(props.hairImageWidth, 58, 8, 140)}px`,

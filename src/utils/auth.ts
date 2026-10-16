@@ -11,12 +11,12 @@ export type CustomerAuthState =
 /**
  * Checks if the given or current pathname represents a protected account route.
  * Public account routes (/account/login, /account/register, /account/forgot-password, /account/recover-password) return false.
- * Protected account routes (/account, /account/orders, /account/addresses, /account/favorites, etc.) return true.
+ * Protected account routes (/account, /account/orders, /account/addresses, /account/favorite-products, etc.) return true.
  */
 /**
  * Checks if the given or current pathname represents a protected account route.
  * Public account routes (/account/login, /account/register, /account/forgot-password, /account/recover-password) return false.
- * Protected account routes (/account, /account/orders, /account/addresses, /account/favorites, etc.) return true.
+ * Protected account routes (/account, /account/orders, /account/addresses, /account/favorite-products, etc.) return true.
  */
 export function isProtectedPath(rawPath?: string | null): boolean {
   let path = rawPath;
